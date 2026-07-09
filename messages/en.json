@@ -1,0 +1,16 @@
+{
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "caseStudies": "Case Studies",
+    "contact": "Contact"
+  },
+  "home": {
+    "heroTitle": "Juan Carlos Angulo: Software Engineering & Technical SEO",
+    "heroSubtitle": "High-performance architectures and organic growth strategies"
+  },
+  "common": {
+    "readMore": "Read more",
+    "viewAll": "View all"
+  }
+}

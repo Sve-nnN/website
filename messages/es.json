@@ -1,0 +1,16 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "blog": "Blog",
+    "caseStudies": "Casos de éxito",
+    "contact": "Contacto"
+  },
+  "home": {
+    "heroTitle": "Juan Carlos Angulo: Ingeniería de Software y SEO Técnico",
+    "heroSubtitle": "Arquitecturas de alto rendimiento y estrategias de crecimiento orgánico"
+  },
+  "common": {
+    "readMore": "Leer más",
+    "viewAll": "Ver todos"
+  }
+}
