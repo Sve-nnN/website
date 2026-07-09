@@ -24,13 +24,14 @@ Decimal phases appear between their surrounding integers in numeric order.
 ### Phase 1: Schema Foundation
 **Goal**: Backend Payload corre sobre PostgreSQL con disciplina de schema (`push:false`, migraciones committeadas) y solo las colecciones necesarias para contenido público, listas para recibir el contenido migrado y bilingüe de fases posteriores.
 **Depends on**: Nothing (first phase)
-**Requirements**: SCHEMA-01, SCHEMA-02, SCHEMA-03, SCHEMA-04, SCHEMA-05, SCHEMA-06
+**Requirements**: SCHEMA-01, SCHEMA-02, SCHEMA-03, SCHEMA-04, SCHEMA-05, SCHEMA-06, SCHEMA-07
 **Success Criteria** (what must be TRUE):
   1. El backend arranca contra PostgreSQL vía `@payloadcms/db-postgres` con `push:false`, sin ningún push automático de schema en ningún entorno
-  2. Solo existen las colecciones esenciales (Pages, Posts, Authors, CaseStudies, Categories, Media, Testimonials, Works, Clientes, Users) — no hay rastro de AdBanners, BrokenLinks, GSCMetrics, KeywordMetrics, PageMetrics ni dinorank
+  2. Solo existen las colecciones esenciales (Pages, Posts, Authors, CaseStudies, Categories, Media, Testimonials, Clientes, Users) — no hay rastro de Works, AdBanners, BrokenLinks, GSCMetrics, KeywordMetrics, PageMetrics ni dinorank
   3. Un cambio de schema se aplica exclusivamente vía `payload migrate:create`/`payload migrate`, con el archivo de migración commiteado en el repo
-  4. Un editor puede crear un case study con campos estructurados (problema, enfoque, métrica destacada, stack) y un testimonio con atribución estructurada (nombre, rol, empresa), sin recurrir a rich text libre para esos datos
-  5. La librería de blocks disponible para Pages tiene entre 12 y 14 blocks consolidados (no ~35 variantes casi-duplicadas)
+  4. Un editor puede crear un case study siguiendo el modelo `ariannalupi.com/casos/` (hero con métrica principal, metadatos cliente/sector/período/servicios, 4 KPIs en tarjetas, secciones "El cliente"/"El reto"/"La solución"/"Resultados" con comparativa antes-después, conclusión) y un testimonio con atribución estructurada (nombre, rol, empresa), sin recurrir a rich text libre para esos datos
+  5. Un editor puede crear una entrada en Clientes con nombre, logo y link a su web, pensada solo para alimentar el carrusel de logos (sin campos de case study)
+  6. La librería de blocks disponible para Pages tiene entre 12 y 14 blocks consolidados (no ~35 variantes casi-duplicadas)
 **Plans**: TBD
 
 Plans:
@@ -70,7 +71,7 @@ Plans:
 **Requirements**: MIGR-01, MIGR-02, MIGR-03, MIGR-04, MIGR-05, MIGR-06
 **Success Criteria** (what must be TRUE):
   1. Existe un inventario congelado de URLs vivas del sitio actual (crawleado desde sitemap/GSC) que sirve como contrato de verificación
-  2. Correr el script ETL standalone puebla el backend Postgres con Media → Authors/Categories → Posts/CaseStudies/Testimonials/Works en ese orden, usando la Local API de Payload en ambos configs (no SQL crudo)
+  2. Correr el script ETL standalone puebla el backend Postgres con Media → Authors/Categories → Posts/CaseStudies/Testimonials/Clientes en ese orden, usando la Local API de Payload en ambos configs (no SQL crudo); el contenido de la colección Works actual (retirada) se audita manualmente y se absorbe como case study si corresponde, no se migra 1:1 como colección
   3. Cada documento migrado conserva su slug/URL verbatim del sitio original (ninguno regenerado desde el título), verificable comparando el inventario congelado contra las URLs nuevas
   4. Las relaciones entre documentos migrados (ej. post → author, post → categoría) resuelven correctamente gracias a la tabla de remapeo ObjectId → ID Postgres
   5. Los medios migrados están re-subidos a Cloudinary (no solo URLs copiadas) y las referencias dentro de rich text/blocks apuntan a las nuevas URLs de Cloudinary; toda URL que cambió intencionalmente tiene su entrada correspondiente en el mapa de redirects 301

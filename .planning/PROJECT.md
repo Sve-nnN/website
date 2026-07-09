@@ -18,7 +18,7 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 
 - [ ] Réplica de contenido: home, blog (posts + listado), case studies (+ listado), authors (+ listado), contact, privacy, terms, search — mismas páginas que el sitio actual
 - [ ] Bilingüe EN/ES (next-intl o localización nativa de Payload) igual que el sitio actual
-- [ ] Backend Payload limpio: solo colecciones necesarias para el contenido público (Pages, Posts, Authors, CaseStudies, Categories, Media, Testimonials, Works/Clientes, Users) — sin AdBanners, BrokenLinks, GSCMetrics, KeywordMetrics, PageMetrics, dinorank, internal-links tooling
+- [ ] Backend Payload limpio: solo colecciones necesarias para el contenido público (Pages, Posts, Authors, CaseStudies, Categories, Media, Testimonials, Clientes, Users) — sin Works (reemplazado por CaseStudies enriquecido), sin AdBanners, BrokenLinks, GSCMetrics, KeywordMetrics, PageMetrics, dinorank, internal-links tooling
 - [ ] Plugin SEO de Payload (`@payloadcms/plugin-seo`) tabbed en Pages/Posts, metas, OG, canonical
 - [ ] Sitemaps XML (pages/posts/authors/categories) y `robots.txt`
 - [ ] `llms.txt` / `llms-full.txt` (el sitio actual ya los tiene — mantener para GEO/AI search)
@@ -44,6 +44,7 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 - Referencia de frontend/deploy en Hostinger: `/Users/juan/Documents/Codigo/Arianna/apturio/website` — Next.js 15 + Payload 3, `output: 'standalone'`, corre como Node app en Hostinger VPS/Cloud, Postgres vía Neon (pooler), storage S3-compatible (Cloudflare R2) via `@payloadcms/storage-vercel-blob`-equivalente condicional por env vars.
 - Referencia de backend limpio: `/Users/juan/Documents/Codigo/Arianna/aprendoclub/aprendoclub` — Payload 3.85 con Postgres, colecciones lean (Users, Media, Testimonios, ClientesTrabajados, Programas, TeamMembers, Faq, Pages, Category, Author, BlogPost), plugins mínimos (nested-docs, redirects, seo), sin tooling interno.
 - Se detectó y resolvió una carpeta `.planning` huérfana en `/Users/juan/Documents/Codigo/.planning` (movida a `.planning.orphan-backup-20260709`) que interfería con la detección de raíz de proyecto de gsd-sdk.
+- Modelo de case study a replicar (referencia de competencia de Juan, `ariannalupi.com/casos/ecommerce-vape/`): hero con métrica principal (ej. "$41K → $76K"), metadatos (cliente/sector/período/servicios), 4 KPIs en tarjetas, sección "El cliente" (contexto), "El reto" (lista de problemas), "La solución" (proceso en pasos numerados), "Resultados" (comparativa antes/después por período), conclusión estratégica, CTA doble. Coincide con el patrón "métrica en el titular" ya identificado en FEATURES.md.
 
 ## Constraints
 
@@ -62,6 +63,7 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | Hosting: Hostinger Cloud/Business con Node.js | Confirmado por Juan — plan soporta Node.js persistente, necesario para Payload | ✓ Good |
 | Base de datos: PostgreSQL | Alinea con backend de referencia (aprendoclub) y evita depender de Mongo Atlas externo en Hostinger | ✓ Good |
 | Idiomas: EN + ES | Mismo alcance SEO internacional que el sitio actual | ✓ Good |
+| Works vs Clientes: se elimina Works, Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link a web); CaseStudies se enriquece con el modelo estructurado de ariannalupi.com/casos/ | Juan no quiere "Works" como concepto separado — prefiere case studies ricos como vitrina principal, y Clientes como pieza aparte solo para credibilidad visual (logos) | ✓ Good |
 
 ## Evolution
 

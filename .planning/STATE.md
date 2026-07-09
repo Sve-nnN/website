@@ -51,9 +51,9 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 3 (Cloudinary): confianza MEDIA en ambos adapters de comunidad candidatos — requiere spike hands-on contra cuenta real antes de comprometerse
+- Phase 3 (Cloudinary): adapter custom sobre `@payloadcms/plugin-cloud-storage` es ahora la opción primaria (referencia validada `github.com/Sahitya1707/payload-cloudinary`, target Payload 3.33 → verificar compatibilidad con 3.85 en el spike); paquetes de comunidad quedan como fallback
 - Phase 6 (Hostinger): tier real contratado y `max_connections` de Postgres deben confirmarse contra el plan provisto antes de finalizar dimensionamiento de pool
-- Phase 1: decisión de contenido pendiente sobre si Works y Clientes son colecciones separadas (como en aprendoclub) — resolver durante planning de Phase 1, no es puramente arquitectónico
+- ~~Phase 1: decisión Works vs Clientes~~ — RESUELTO 2026-07-09: Works se retira (absorbido conceptualmente en CaseStudies enriquecido), Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link)
 
 ## Deferred Items
 

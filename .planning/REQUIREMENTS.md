@@ -8,11 +8,12 @@
 ### SCHEMA (Fundación Postgres + colecciones limpias)
 
 - [ ] **SCHEMA-01**: Backend corre sobre PostgreSQL vía `@payloadcms/db-postgres` con `push:false` desde el día uno (nunca push automático en prod)
-- [ ] **SCHEMA-02**: Colecciones limitadas a lo esencial para contenido público: Pages, Posts, Authors, CaseStudies, Categories, Media, Testimonials, Works, Clientes, Users — sin AdBanners, BrokenLinks, GSCMetrics, KeywordMetrics, PageMetrics ni integraciones dinorank
+- [ ] **SCHEMA-02**: Colecciones limitadas a lo esencial para contenido público: Pages, Posts, Authors, CaseStudies, Categories, Media, Testimonials, Clientes, Users — sin Works (reemplazado por CaseStudies), sin AdBanners, BrokenLinks, GSCMetrics, KeywordMetrics, PageMetrics ni integraciones dinorank
 - [ ] **SCHEMA-03**: Migraciones de schema versionadas y committeadas (`payload migrate:create` / `payload migrate`), aplicadas en build/deploy, nunca manual en producción
-- [ ] **SCHEMA-04**: Case studies con campos estructurados (problema → enfoque → métrica destacada → stack), no solo rich text libre
+- [ ] **SCHEMA-04**: Case studies con campos estructurados siguiendo el modelo de referencia (`ariannalupi.com/casos/`): hero con métrica principal, metadatos (cliente/sector/período/servicios), 4 KPIs en tarjetas, sección "El cliente" (contexto), "El reto" (lista de problemas), "La solución" (proceso en pasos numerados), "Resultados" (comparativa antes/después por período), conclusión — no solo rich text libre
 - [ ] **SCHEMA-05**: Testimonios con atribución estructurada (nombre, rol, empresa) — no citas anónimas
 - [ ] **SCHEMA-06**: Librería de blocks consolidada (~12-14 blocks) reemplazando los ~35 blocks casi-duplicados del sitio actual
+- [ ] **SCHEMA-07**: Colección Clientes independiente (nombre, logo, link a sitio web) para alimentar el carrusel de logos de clientes — sin campos de case study, solo credibilidad visual
 
 ### I18N (Bilingüe + SEO)
 
@@ -25,14 +26,14 @@
 
 ### MEDIA (Cloudinary)
 
-- [ ] **MEDIA-01**: Adapter de storage Cloudinary validado mediante spike (`payload-storage-cloudinary` o `@jhb.software/payload-cloudinary-plugin`) contra una cuenta real de Cloudinary, con fallback documentado a adapter custom si ambos fallan
+- [ ] **MEDIA-01**: Adapter de storage Cloudinary validado mediante spike — adapter custom sobre `@payloadcms/plugin-cloud-storage` (portado de la referencia `github.com/Sahitya1707/payload-cloudinary`, Payload 3.33→3.85) como primera opción, con `@jhb.software/payload-cloudinary-plugin` o `payload-storage-cloudinary` como fallback si el custom encuentra un bloqueo real
 - [ ] **MEDIA-02**: Registro del plugin de storage gateado por env vars (fallback a disco local en dev)
 - [ ] **MEDIA-03**: Transformaciones automáticas (`f_auto,q_auto`) para Core Web Vitals, compatibles con `next/image`
 
 ### MIGRATION (Mongo → Postgres, contenido 1:1)
 
 - [ ] **MIGR-01**: Inventario congelado de URLs vivas del sitio actual (crawleado desde sitemap/GSC) como contrato antes de migrar
-- [ ] **MIGR-02**: Script ETL standalone (fuera de `app/`) que usa Payload Local API en ambos configs (Mongo origen read-only, Postgres destino), en orden de dependencia: Media → Authors/Categories → Posts/CaseStudies/Testimonials/Works
+- [ ] **MIGR-02**: Script ETL standalone (fuera de `app/`) que usa Payload Local API en ambos configs (Mongo origen read-only, Postgres destino), en orden de dependencia: Media → Authors/Categories → Posts/CaseStudies/Testimonials/Clientes
 - [ ] **MIGR-03**: Slugs/URLs copiados verbatim del sitio actual (nunca regenerados desde el título)
 - [ ] **MIGR-04**: Tabla de remapeo ObjectId (Mongo) → ID nuevo (Postgres) para preservar relaciones
 - [ ] **MIGR-05**: Medios re-subidos a Cloudinary (no solo copia de URL), con URLs reescritas en todos los campos incluyendo rich text/blocks
@@ -77,7 +78,8 @@ Explicitly excluded. Documented to prevent scope creep.
 | `@payloadcms/plugin-mcp`, `@payloadcms/plugin-form-builder`, admin-bar, dashboard-analytics | Plugins no esenciales para el sitio público; contacto se resuelve con lógica simple + Resend, no formbuilder genérico |
 | Múltiples funnels de lead-gen concurrentes | Anti-patrón identificado en research de competencia — un solo CTA: formulario de contacto |
 | Plugin de comentarios en blog | No aporta a la credibilidad E-E-A-T buscada; mantenimiento extra sin valor claro para v1 |
-| Adapter custom de Cloudinary (por defecto) | Se prueban primero los dos paquetes de comunidad viables en spike; el custom queda como fallback documentado, no como plan A |
+| Colección Works | Se retira — Juan prefiere case studies enriquecidos como vitrina principal en vez de un concepto separado y más liviano; el contenido de Works no tiene réplica 1:1 obligatoria, se absorbe conceptualmente en CaseStudies durante el content audit de Fase 1 |
+| Paquetes de comunidad de Cloudinary como primera opción | Se prueba primero el adapter custom sobre `@payloadcms/plugin-cloud-storage` (referencia validada `github.com/Sahitya1707/payload-cloudinary`); los paquetes de comunidad quedan como fallback, no como plan A — decisión actualizada tras research adicional |
 
 ## Traceability
 
@@ -91,6 +93,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SCHEMA-04 | Phase 1 | Pending |
 | SCHEMA-05 | Phase 1 | Pending |
 | SCHEMA-06 | Phase 1 | Pending |
+| SCHEMA-07 | Phase 1 | Pending |
 | I18N-01 | Phase 2 | Pending |
 | I18N-02 | Phase 2 | Pending |
 | I18N-03 | Phase 2 | Pending |
@@ -119,8 +122,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DEPLOY-05 | Phase 6 | Pending |
 
 **Coverage:**
-- v1 requirements: 32 total
-- Mapped to phases: 32
+- v1 requirements: 33 total
+- Mapped to phases: 33
 - Unmapped: 0 ✓
 
 ---
