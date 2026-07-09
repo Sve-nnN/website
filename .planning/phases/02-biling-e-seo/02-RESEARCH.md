@@ -529,20 +529,23 @@ export async function GET() {
 
 ## Open Questions
 
-1. **Should llms.txt content be locale-specific?**
+1. **Should llms.txt content be locale-specific?** (RESOLVED)
    - What we know: CONTEXT.md specifies a single global (matching aprendoclub's pattern), doesn't mention locale-awareness
    - What's unclear: whether AI crawlers/agents benefit from a Spanish vs English variant given the site's bilingual content
    - Recommendation: Ship single non-localized global this phase (matches locked decision literally); revisit only if explicitly requested later
+   - Resolution: 02-02 implemented the `Llms` global as non-localized (`payload.updateGlobal({ slug: 'llms', data: {...} })` with no `locale` param); 02-04's `llms.txt`/`llms-full.txt` routes serve that single global verbatim, no per-locale variants shipped this phase.
 
-2. **Redirects-lookup implementation: live Local API query in middleware vs cached map via hook**
+2. **Redirects-lookup implementation: live Local API query in middleware vs cached map via hook** (RESOLVED)
    - What we know: Local API is Node-only; `runtime: 'nodejs'` middleware is supported in Next.js 15+ for self-hosted deploys
    - What's unclear: whether a live DB query on every middleware invocation (every request) introduces unacceptable latency for a low-traffic personal site — probably negligible given a single Postgres connection pool already sized small (`max: 3-5` per ARCHITECTURE.md), but not benchmarked
    - Recommendation: Start with live Local API query (simpler, always-fresh); the planner should size a Wave/task to spike this and fall back to a cached map only if latency proves to be a real problem
+   - Resolution: 02-03's `src/middleware.ts` implements the live Local API query (`payload.find({ collection: 'redirects', where: { from: { equals: pathname } }, limit: 1 })`) on every request, no caching layer added — matches the recommendation; 02-05 exercises it end to end against a seeded redirect doc and confirms no observable latency problem at this site's scale.
 
-3. **Pages collection slug for the home page**
+3. **Pages collection slug for the home page** (RESOLVED)
    - What we know: `Pages.slug` field exists, no explicit `home`/`index` convention documented in current collection code
    - What's unclear: how `app/sitemap.ts` and the `[locale]/[slug]` catch-all route should special-case the home page (empty-string vs literal `home` slug)
    - Recommendation: Planner should confirm the home-page slug convention as part of task breakdown — likely resolved when the actual `[locale]/page.tsx` (home) vs `[locale]/[slug]/page.tsx` (generic Pages) route split is implemented
+   - Resolution: Home page uses literal slug `'home'` in the `pages` collection (`payload.find({ collection: 'pages', where: { slug: { equals: 'home' } } })` in 02-03's `[locale]/page.tsx` and seeded by 02-05); `sitemap.ts` (02-04) special-cases `prefix === '' && doc.slug === 'home'` to map it to the site root path instead of `/home`.
 
 ## Security Domain
 
