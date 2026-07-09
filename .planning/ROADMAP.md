@@ -32,10 +32,19 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Un editor puede crear un case study siguiendo el modelo `ariannalupi.com/casos/` (hero con métrica principal, metadatos cliente/sector/período/servicios, 4 KPIs en tarjetas, secciones "El cliente"/"El reto"/"La solución"/"Resultados" con comparativa antes-después, conclusión) y un testimonio con atribución estructurada (nombre, rol, empresa), sin recurrir a rich text libre para esos datos
   5. Un editor puede crear una entrada en Clientes con nombre, logo y link a su web, pensada solo para alimentar el carrusel de logos (sin campos de case study)
   6. La librería de blocks disponible para Pages tiene entre 12 y 14 blocks consolidados (no ~35 variantes casi-duplicadas)
-**Plans**: TBD
+**Plans**: 10 plans (6 waves)
 
 Plans:
-- [ ] 01-01: TBD
+- [ ] 01-01-PLAN.md — Project scaffold (package.json/tsconfig/next.config) + shared access/slug/deepMerge utilities
+- [ ] 01-02-PLAN.md — Users, Media, Categories, Posts collections
+- [ ] 01-03-PLAN.md — Authors, Clientes, Testimonials collections
+- [ ] 01-04-PLAN.md — CaseStudies collection (structured KPI/challenge/solution/results model)
+- [ ] 01-05-PLAN.md — Hero, Content, ArchiveBlock, CallToAction, FAQ, MediaBlock block configs
+- [ ] 01-06-PLAN.md — TestimonialsCarousel, ContactFormBlock, Code, RelatedPosts, TableOfContentsBlock, ResultsSection, Section block configs
+- [ ] 01-07-PLAN.md — Pages collection (registers all 13 consolidated blocks)
+- [ ] 01-08-PLAN.md — payload.config.ts wiring (9 collections, plugins, push:false Postgres adapter)
+- [ ] 01-09-PLAN.md — App router scaffold ((payload)/(frontend) route groups) + generate importmap/types
+- [ ] 01-10-PLAN.md — [BLOCKING] Neon Postgres schema push via payload migrate:create/migrate
 
 ### Phase 2: Bilingüe + SEO
 **Goal**: El sitio tiene routing y contenido bilingüe EN/ES con paridad completa, y la capa de SEO técnico (metas, sitemaps, llms.txt, JSON-LD, redirects) queda operativa antes de que exista contenido migrado, para que la migración no tenga que remapear locales después.
@@ -119,7 +128,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Schema Foundation | 0/TBD | Not started | - |
+| 1. Schema Foundation | 0/10 | Not started | - |
 | 2. Bilingüe + SEO | 0/TBD | Not started | - |
 | 3. Cloudinary Media Spike | 0/TBD | Not started | - |
 | 4. Migración Mongo → Postgres | 0/TBD | Not started | - |
