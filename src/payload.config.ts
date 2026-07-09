@@ -4,10 +4,13 @@ import { fileURLToPath } from 'url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
+import { cloudStoragePlugin } from '@payloadcms/plugin-cloud-storage'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
+
+import { cloudinaryAdapter } from './lib/cloudinary-adapter'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -22,6 +25,15 @@ import { Llms } from './globals/Llms'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+
+// MUST stay identical to the hasCloudinaryCreds boolean in
+// src/collections/Media/index.ts — both independently compute this from the
+// same three env vars (RESEARCH.md Pitfall 2 / key_links).
+const hasCloudinaryCreds = Boolean(
+  process.env.CLOUDINARY_CLOUD_NAME &&
+    process.env.CLOUDINARY_API_KEY &&
+    process.env.CLOUDINARY_API_SECRET,
+)
 
 export default buildConfig({
   admin: { user: Users.slug },
@@ -69,6 +81,20 @@ export default buildConfig({
     redirectsPlugin({
       collections: ['pages', 'posts', 'case-studies', 'categories', 'authors'],
     }),
+    ...(hasCloudinaryCreds
+      ? [
+          cloudStoragePlugin({
+            collections: {
+              media: {
+                adapter: cloudinaryAdapter,
+                disableLocalStorage: true,
+                generateFileURL: ({ filename }: { filename: string }) =>
+                  cloudinaryAdapter().generateFileURL(filename),
+              },
+            },
+          }),
+        ]
+      : []),
   ],
   sharp,
   typescript: {
