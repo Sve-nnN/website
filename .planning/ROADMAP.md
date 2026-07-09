@@ -41,11 +41,11 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 
 - [x] 01-01-PLAN.md — Project scaffold (package.json/tsconfig/next.config) + shared access/slug/deepMerge utilities
-- [ ] 01-02-PLAN.md — Users, Media, Categories, Posts collections
+- [x] 01-02-PLAN.md — Users, Media, Categories, Posts collections
 - [x] 01-03-PLAN.md — Authors, Clientes, Testimonials collections
 - [x] 01-04-PLAN.md — CaseStudies collection (structured KPI/challenge/solution/results model)
-- [ ] 01-05-PLAN.md — Hero, Content, ArchiveBlock, CallToAction, FAQ, MediaBlock block configs
-- [ ] 01-06-PLAN.md — TestimonialsCarousel, ContactFormBlock, Code, RelatedPosts, TableOfContentsBlock, ResultsSection, Section block configs
+- [x] 01-05-PLAN.md — Hero, Content, ArchiveBlock, CallToAction, FAQ, MediaBlock block configs
+- [x] 01-06-PLAN.md — TestimonialsCarousel, ContactFormBlock, Code, RelatedPosts, TableOfContentsBlock, ResultsSection, Section block configs
 - [ ] 01-07-PLAN.md — Pages collection (registers all 13 consolidated blocks)
 - [ ] 01-08-PLAN.md — payload.config.ts wiring (9 collections, plugins, push:false Postgres adapter)
 - [ ] 01-09-PLAN.md — App router scaffold ((payload)/(frontend) route groups) + generate importmap/types
@@ -153,7 +153,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Schema Foundation | 3/10 | In Progress|  |
+| 1. Schema Foundation | 6/10 | In Progress|  |
 | 2. Bilingüe + SEO | 0/TBD | Not started | - |
 | 3. Cloudinary Media Spike | 0/TBD | Not started | - |
 | 4. Migración Mongo → Postgres | 0/TBD | Not started | - |
