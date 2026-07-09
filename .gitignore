@@ -14,8 +14,8 @@ dist/
 .env*.local
 !.env.example
 
-# payload
-media/
+# payload (root-level upload directory only — do not match src/collections/Media)
+/media/
 
 # misc
 .DS_Store
