@@ -56,7 +56,7 @@ Plans:
 **Depends on**: Phase 1
 **Requirements**: MEDIA-01, MEDIA-02, MEDIA-03
 **Success Criteria** (what must be TRUE):
-  1. Un archivo subido desde el admin de Payload en un entorno con credenciales de Cloudinary configuradas termina almacenado en Cloudinary (no en disco local), usando `payload-storage-cloudinary`, `@jhb.software/payload-cloudinary-plugin`, o el adapter custom documentado como fallback si ambos paquetes de comunidad fallan el spike
+  1. Un archivo subido desde el admin de Payload en un entorno con credenciales de Cloudinary configuradas termina almacenado en Cloudinary (no en disco local), usando un adapter custom sobre `@payloadcms/plugin-cloud-storage` (basado en la referencia `github.com/Sahitya1707/payload-cloudinary`, portado de Payload 3.33 a 3.85), con `@jhb.software/payload-cloudinary-plugin` o `payload-storage-cloudinary` como fallback si el adapter custom encuentra un bloqueo real
   2. En un entorno sin credenciales de Cloudinary, el mismo flujo de subida cae automáticamente a disco local sin romper el admin
   3. Una imagen servida desde Cloudinary se renderiza correctamente vía `next/image` con transformaciones `f_auto,q_auto` aplicadas (verificable en la URL generada)
 **Plans**: TBD
