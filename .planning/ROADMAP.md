@@ -158,7 +158,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Schema Foundation | 10/10 | Complete    | 2026-07-09 |
-| 2. Bilingüe + SEO | 5/5 | Complete   | 2026-07-09 |
+| 2. Bilingüe + SEO | 5/5 | Complete    | 2026-07-09 |
 | 3. Cloudinary Media Spike | 0/TBD | Not started | - |
 | 4. Migración Mongo → Postgres | 0/TBD | Not started | - |
 | 5. Frontend Pages | 0/TBD | Not started | - |
