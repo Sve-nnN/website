@@ -89,7 +89,7 @@ Plans:
 
 Plans:
 
-- [ ] 03-01-PLAN.md — Install cloudinary + @payloadcms/plugin-cloud-storage, with legitimacy checkpoint
+- [x] 03-01-PLAN.md — Install cloudinary + @payloadcms/plugin-cloud-storage, with legitimacy checkpoint
 - [ ] 03-02-PLAN.md — Ported/corrected Cloudinary adapter, conditional config wiring, imageSizes gating, [BLOCKING] schema migration
 - [ ] 03-03-PLAN.md — Real end-to-end Cloudinary upload validation + next/image browser checkpoint
 
@@ -161,7 +161,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 |-------|----------------|--------|-----------|
 | 1. Schema Foundation | 10/10 | Complete    | 2026-07-09 |
 | 2. Bilingüe + SEO | 5/5 | Complete    | 2026-07-09 |
-| 3. Cloudinary Media Spike | 0/TBD | Not started | - |
+| 3. Cloudinary Media Spike | 1/3 | In Progress|  |
 | 4. Migración Mongo → Postgres | 0/TBD | Not started | - |
 | 5. Frontend Pages | 0/TBD | Not started | - |
 | 6. Deploy + Cutover | 0/TBD | Not started | - |
