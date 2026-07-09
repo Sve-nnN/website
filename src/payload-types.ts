@@ -104,10 +104,14 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
-  locale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('es' | 'en') | ('es' | 'en')[];
+  globals: {
+    llms: Llm;
+  };
+  globalsSelect: {
+    llms: LlmsSelect<false> | LlmsSelect<true>;
+  };
+  locale: 'es' | 'en';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -1571,6 +1575,30 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Files for AI agents (llms.txt standard). Editable here; published at /llms.txt and /llms-full.txt.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "llms".
+ */
+export interface Llm {
+  id: number;
+  llmsTxt: string;
+  llmsFull: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "llms_select".
+ */
+export interface LlmsSelect<T extends boolean = true> {
+  llmsTxt?: T;
+  llmsFull?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
