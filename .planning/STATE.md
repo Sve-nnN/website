@@ -1,3 +1,19 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: executing
+stopped_at: Completed 01-01-PLAN.md (project scaffold + shared utilities)
+last_updated: "2026-07-09T18:53:08.474Z"
+last_activity: 2026-07-09
+progress:
+  total_phases: 6
+  completed_phases: 0
+  total_plans: 10
+  completed_plans: 2
+  percent: 0
+---
+
 # Project State
 
 ## Project Reference
@@ -10,15 +26,16 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 1 of 6 (Schema Foundation)
-Plan: 0 of TBD in current phase
-Status: Ready to plan
-Last activity: 2026-07-09 — Roadmap creado, 6 fases derivadas de research y requirements, 32/32 requerimientos v1 mapeados
+Plan: 1 of 10 in current phase
+Status: Ready to execute
+Last activity: 2026-07-09
 
 Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 0
 - Average duration: - min
 - Total execution time: 0 hours
@@ -30,10 +47,12 @@ Progress: [░░░░░░░░░░] 0%
 | - | - | - | - |
 
 **Recent Trend:**
+
 - Last 5 plans: -
 - Trend: -
 
 *Updated after each plan completion*
+| Phase 01 P01 | 12 | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -44,6 +63,8 @@ Recent decisions affecting current work:
 
 - Roadmap: Estructura de 6 fases en capas horizontales (Schema → Bilingüe/SEO → Cloudinary spike → Migración → Frontend → Deploy), siguiendo la propuesta de research/SUMMARY.md sin modificaciones
 - Roadmap: Phase 4 (Migración) depende de Phase 2 y Phase 3 juntas — la migración no puede empezar hasta que i18n y storage estén resueltos, para no reescribir contenido migrado después
+- [Phase ?]: next pinned to 15.4.11 (not 15.5.20) because @payloadcms/next@3.85.2 peerDependencies exclude the entire 15.5.x line — Discovered during 01-01 npm install; 15.4.11 is the highest version satisfying the actual peer range while staying on Next 15
+- [Phase 01]: .gitignore left unchanged — pre-existing .planning/CLAUDE.md paths already tracked in git, adding them would break future commit workflow
 
 ### Pending Todos
 
@@ -65,7 +86,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09
-Stopped at: ROADMAP.md y STATE.md creados; REQUIREMENTS.md ya tenía traceability completa (32/32) y no requirió cambios
+Last session: 2026-07-09T18:53:08.471Z
+Stopped at: Completed 01-01-PLAN.md (project scaffold + shared utilities)
 Resume file: None
 </content>
