@@ -4,13 +4,13 @@ milestone: v1.0
 milestone_name: milestone
 status: verifying
 stopped_at: Completed 01-10-PLAN.md (initial migration generated and applied to live Neon Postgres — Phase 1 complete)
-last_updated: "2026-07-09T19:24:01.537Z"
+last_updated: "2026-07-09T20:45:11.880Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 6
   completed_phases: 1
-  total_plans: 10
-  completed_plans: 10
+  total_plans: 15
+  completed_plans: 14
   percent: 17
 ---
 
@@ -84,6 +84,7 @@ None yet.
 - Phase 3 (Cloudinary): adapter custom sobre `@payloadcms/plugin-cloud-storage` es ahora la opción primaria (referencia validada `github.com/Sahitya1707/payload-cloudinary`, target Payload 3.33 → verificar compatibilidad con 3.85 en el spike); paquetes de comunidad quedan como fallback
 - Phase 6 (Hostinger): tier real contratado y `max_connections` de Postgres deben confirmarse contra el plan provisto antes de finalizar dimensionamiento de pool
 - ~~Phase 1: decisión Works vs Clientes~~ — RESUELTO 2026-07-09: Works se retira (absorbido conceptualmente en CaseStudies enriquecido), Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link)
+- Plan 02-05 Task 1 (seed script): permission classifier blocked execution of 'npx tsx scripts/seed-phase2.ts' against the production Neon DB (additive INSERT test data — Author/Category/Page/Post/CaseStudy/Redirect/Llms), same escalation pattern as the Phase 1 migration block. Script is written, idempotent, and type-checks clean. Needs Juan's direct authorization in the orchestrator transcript before running. Once run, the already-built Task 2 detail pages can be curl-verified end to end per plan verification steps.
 
 ## Deferred Items
 
@@ -95,7 +96,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T19:15:13.847Z
+Last session: 2026-07-09T20:45:11.877Z
 Stopped at: Completed 01-10-PLAN.md (initial migration generated and applied to live Neon Postgres — Phase 1 complete)
 Resume file: None
 </content>
