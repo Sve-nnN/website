@@ -9,7 +9,7 @@
 
 - [x] **SCHEMA-01**: Backend corre sobre PostgreSQL vía `@payloadcms/db-postgres` con `push:false` desde el día uno (nunca push automático en prod)
 - [x] **SCHEMA-02**: Colecciones limitadas a lo esencial para contenido público: Pages, Posts, Authors, CaseStudies, Categories, Media, Testimonials, Clientes, Users — sin Works (reemplazado por CaseStudies), sin AdBanners, BrokenLinks, GSCMetrics, KeywordMetrics, PageMetrics ni integraciones dinorank
-- [ ] **SCHEMA-03**: Migraciones de schema versionadas y committeadas (`payload migrate:create` / `payload migrate`), aplicadas en build/deploy, nunca manual en producción
+- [x] **SCHEMA-03**: Migraciones de schema versionadas y committeadas (`payload migrate:create` / `payload migrate`), aplicadas en build/deploy, nunca manual en producción
 - [ ] **SCHEMA-04**: Case studies con campos estructurados siguiendo el modelo de referencia (`ariannalupi.com/casos/`): hero con métrica principal, metadatos (cliente/sector/período/servicios), 4 KPIs en tarjetas, sección "El cliente" (contexto), "El reto" (lista de problemas), "La solución" (proceso en pasos numerados), "Resultados" (comparativa antes/después por período), conclusión — no solo rich text libre
 - [ ] **SCHEMA-05**: Testimonios con atribución estructurada (nombre, rol, empresa) — no citas anónimas
 - [x] **SCHEMA-06**: Librería de blocks consolidada (~12-14 blocks) reemplazando los ~35 blocks casi-duplicados del sitio actual
@@ -89,7 +89,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | SCHEMA-01 | Phase 1 | Complete |
 | SCHEMA-02 | Phase 1 | Complete |
-| SCHEMA-03 | Phase 1 | Pending |
+| SCHEMA-03 | Phase 1 | Complete |
 | SCHEMA-04 | Phase 1 | Pending |
 | SCHEMA-05 | Phase 1 | Pending |
 | SCHEMA-06 | Phase 1 | Complete |

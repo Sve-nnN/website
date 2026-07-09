@@ -13,7 +13,7 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Schema Foundation** - Postgres + colecciones limpias con disciplina de migraciones desde el día uno
+- [x] **Phase 1: Schema Foundation** - Postgres + colecciones limpias con disciplina de migraciones desde el día uno (completed 2026-07-09)
 - [ ] **Phase 2: Bilingüe + SEO** - Routing EN/ES, plugin SEO, sitemaps, llms.txt, redirects funcionando
 - [ ] **Phase 3: Cloudinary Media Spike** - Adapter de storage Cloudinary validado y wireado
 - [ ] **Phase 4: Migración Mongo → Postgres** - Contenido actual migrado 1:1 con URLs y medios preservados
@@ -49,7 +49,7 @@ Plans:
 - [x] 01-07-PLAN.md — Pages collection (registers all 13 consolidated blocks)
 - [x] 01-08-PLAN.md — payload.config.ts wiring (9 collections, plugins, push:false Postgres adapter)
 - [x] 01-09-PLAN.md — App router scaffold ((payload)/(frontend) route groups) + generate importmap/types
-- [ ] 01-10-PLAN.md — [BLOCKING] Neon Postgres schema push via payload migrate:create/migrate
+- [x] 01-10-PLAN.md — [BLOCKING] Neon Postgres schema push via payload migrate:create/migrate
 
 ### Phase 2: Bilingüe + SEO
 
@@ -153,7 +153,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Schema Foundation | 9/10 | In Progress|  |
+| 1. Schema Foundation | 10/10 | Complete   | 2026-07-09 |
 | 2. Bilingüe + SEO | 0/TBD | Not started | - |
 | 3. Cloudinary Media Spike | 0/TBD | Not started | - |
 | 4. Migración Mongo → Postgres | 0/TBD | Not started | - |
