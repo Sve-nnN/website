@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: executing
 stopped_at: Completed 01-01-PLAN.md (project scaffold + shared utilities)
-last_updated: "2026-07-09T19:04:10.637Z"
+last_updated: "2026-07-09T19:07:02.690Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 6
@@ -54,6 +54,7 @@ Progress: [░░░░░░░░░░] 0%
 *Updated after each plan completion*
 | Phase 01 P01 | 12 | 2 tasks | 8 files |
 | Phase 01-schema-foundation P07 | 12min | 1 tasks | 1 files |
+| Phase 01-schema-foundation P08 | 6min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -67,6 +68,8 @@ Recent decisions affecting current work:
 - [Phase ?]: next pinned to 15.4.11 (not 15.5.20) because @payloadcms/next@3.85.2 peerDependencies exclude the entire 15.5.x line — Discovered during 01-01 npm install; 15.4.11 is the highest version satisfying the actual peer range while staying on Next 15
 - [Phase 01]: .gitignore left unchanged — pre-existing .planning/CLAUDE.md paths already tracked in git, adding them would break future commit workflow
 - [Phase 01-schema-foundation]: 01-07: Followed plan interfaces template verbatim for Pages collection (individual block imports, no barrel re-export); SEO tab fields deferred entirely to plugin-seo tabbedUI in Wave 4
+- [Phase ?]: push:false hard-coded como literal boolean en postgresAdapter (payload.config.ts) — nunca condicional, per RESEARCH.md Pitfall 3
+- [Phase ?]: resendAdapter wired en payload.config.ts desde el día uno, aunque el uso del formulario de contacto es scope de Fase 5
 
 ### Pending Todos
 
