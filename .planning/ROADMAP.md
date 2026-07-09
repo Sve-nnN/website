@@ -68,8 +68,8 @@ Plans:
 
 Plans:
 
-- [ ] 02-01-PLAN.md — next-intl install + i18n routing/request config + message catalogs + next.config.mjs wiring
-- [ ] 02-02-PLAN.md — payload.config.ts localization block + Media.alt fix + Llms global + [BLOCKING] Neon migration
+- [x] 02-01-PLAN.md — next-intl install + i18n routing/request config + message catalogs + next.config.mjs wiring
+- [x] 02-02-PLAN.md — payload.config.ts localization block + Media.alt fix + Llms global + [BLOCKING] Neon migration
 - [ ] 02-03-PLAN.md — middleware (next-intl + redirects execution) + [locale] restructure + home page with Person JSON-LD
 - [ ] 02-04-PLAN.md — sitemap.ts, robots.ts, llms.txt/llms-full.txt route handlers
 - [ ] 02-05-PLAN.md — seed test content + blog/case-study detail pages with Article/CreativeWork/BreadcrumbList JSON-LD + end-to-end verification
@@ -158,7 +158,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Schema Foundation | 10/10 | Complete    | 2026-07-09 |
-| 2. Bilingüe + SEO | 0/TBD | Not started | - |
+| 2. Bilingüe + SEO | 2/5 | In Progress|  |
 | 3. Cloudinary Media Spike | 0/TBD | Not started | - |
 | 4. Migración Mongo → Postgres | 0/TBD | Not started | - |
 | 5. Frontend Pages | 0/TBD | Not started | - |
