@@ -18,11 +18,11 @@
 ### I18N (Bilingüe + SEO)
 
 - [ ] **I18N-01**: Sitio bilingüe EN/ES con next-intl para routing/UI y localización nativa de Payload para campos de contenido, paridad completa entre ambos idiomas en cada tipo de contenido
-- [ ] **I18N-02**: `@payloadcms/plugin-seo` habilitado (tabbed) en Pages, Posts y CaseStudies — metas, OG, canonical
+- [x] **I18N-02**: `@payloadcms/plugin-seo` habilitado (tabbed) en Pages, Posts y CaseStudies — metas, OG, canonical
 - [ ] **I18N-03**: Sitemaps XML (pages/posts/authors/categories) y `robots.txt` generados dinámicamente, sin plugin oficial de sitemap (patrón `app/sitemap.ts` consultando Local API)
 - [ ] **I18N-04**: `llms.txt` / `llms-full.txt` mantenidos para descubribilidad GEO/AI search
-- [ ] **I18N-05**: JSON-LD schema markup (Person, Article, BreadcrumbList) escrito a mano en las páginas relevantes
-- [ ] **I18N-06**: `@payloadcms/plugin-redirects` instalado con middleware/route handler que ejecuta los redirects (el plugin solo gestiona la colección)
+- [x] **I18N-05**: JSON-LD schema markup (Person, Article, BreadcrumbList) escrito a mano en las páginas relevantes
+- [x] **I18N-06**: `@payloadcms/plugin-redirects` instalado con middleware/route handler que ejecuta los redirects (el plugin solo gestiona la colección)
 
 ### MEDIA (Cloudinary)
 
@@ -95,11 +95,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SCHEMA-06 | Phase 1 | Complete |
 | SCHEMA-07 | Phase 1 | Complete |
 | I18N-01 | Phase 2 | Pending |
-| I18N-02 | Phase 2 | Pending |
+| I18N-02 | Phase 2 | Complete |
 | I18N-03 | Phase 2 | Pending |
 | I18N-04 | Phase 2 | Pending |
-| I18N-05 | Phase 2 | Pending |
-| I18N-06 | Phase 2 | Pending |
+| I18N-05 | Phase 2 | Complete |
+| I18N-06 | Phase 2 | Complete |
 | MEDIA-01 | Phase 3 | Pending |
 | MEDIA-02 | Phase 3 | Pending |
 | MEDIA-03 | Phase 3 | Pending |

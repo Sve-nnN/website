@@ -14,7 +14,7 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Schema Foundation** - Postgres + colecciones limpias con disciplina de migraciones desde el día uno (completed 2026-07-09)
-- [ ] **Phase 2: Bilingüe + SEO** - Routing EN/ES, plugin SEO, sitemaps, llms.txt, redirects funcionando
+- [x] **Phase 2: Bilingüe + SEO** - Routing EN/ES, plugin SEO, sitemaps, llms.txt, redirects funcionando (completed 2026-07-09)
 - [ ] **Phase 3: Cloudinary Media Spike** - Adapter de storage Cloudinary validado y wireado
 - [ ] **Phase 4: Migración Mongo → Postgres** - Contenido actual migrado 1:1 con URLs y medios preservados
 - [ ] **Phase 5: Frontend Pages** - Todas las páginas públicas renderizando contenido migrado con diferenciadores competitivos
@@ -72,7 +72,7 @@ Plans:
 - [x] 02-02-PLAN.md — payload.config.ts localization block + Media.alt fix + Llms global + [BLOCKING] Neon migration
 - [x] 02-03-PLAN.md — middleware (next-intl + redirects execution) + [locale] restructure + home page with Person JSON-LD
 - [x] 02-04-PLAN.md — sitemap.ts, robots.ts, llms.txt/llms-full.txt route handlers
-- [ ] 02-05-PLAN.md — seed test content + blog/case-study detail pages with Article/CreativeWork/BreadcrumbList JSON-LD + end-to-end verification
+- [x] 02-05-PLAN.md — seed test content + blog/case-study detail pages with Article/CreativeWork/BreadcrumbList JSON-LD + end-to-end verification
 
 ### Phase 3: Cloudinary Media Spike
 
@@ -158,7 +158,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Schema Foundation | 10/10 | Complete    | 2026-07-09 |
-| 2. Bilingüe + SEO | 4/5 | In Progress|  |
+| 2. Bilingüe + SEO | 5/5 | Complete   | 2026-07-09 |
 | 3. Cloudinary Media Spike | 0/TBD | Not started | - |
 | 4. Migración Mongo → Postgres | 0/TBD | Not started | - |
 | 5. Frontend Pages | 0/TBD | Not started | - |

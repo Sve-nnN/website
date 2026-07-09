@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 01-10-PLAN.md (initial migration generated and applied to live Neon Postgres — Phase 1 complete)
-last_updated: "2026-07-09T20:45:11.880Z"
+stopped_at: Completed 02-05-PLAN.md — Phase 2 complete (5/5 plans), i18n/SEO pipeline verified end to end
+last_updated: "2026-07-09T20:56:35.081Z"
 last_activity: 2026-07-09
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 15
-  completed_plans: 14
-  percent: 17
+  completed_plans: 15
+  percent: 33
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 1 — Schema Foundation
+**Current focus:** Phase 2 — Bilingüe + SEO (complete); next up Phase 3 — Cloudinary Media Spike
 
 ## Current Position
 
 Phase: 2 of 6 (bilingüe + seo)
-Plan: Not started
-Status: Phase complete — ready for verification
+Plan: 5 of 5 — complete
+Status: Phase 2 complete (5/5 plans) — i18n/SEO pipeline verified end to end; ready for Phase 3
 Last activity: 2026-07-09
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [███░░░░░░░] 33%
 
 ## Performance Metrics
 
@@ -57,6 +57,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 01-schema-foundation P08 | 6min | 1 tasks | 1 files |
 | Phase 01-schema-foundation P09 | 6min | 2 tasks | 9 files |
 | Phase 01-schema-foundation P10 | 5min | 2 tasks | 3 files |
+| Phase 02-biling-e-seo P05 | 25min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -84,7 +85,7 @@ None yet.
 - Phase 3 (Cloudinary): adapter custom sobre `@payloadcms/plugin-cloud-storage` es ahora la opción primaria (referencia validada `github.com/Sahitya1707/payload-cloudinary`, target Payload 3.33 → verificar compatibilidad con 3.85 en el spike); paquetes de comunidad quedan como fallback
 - Phase 6 (Hostinger): tier real contratado y `max_connections` de Postgres deben confirmarse contra el plan provisto antes de finalizar dimensionamiento de pool
 - ~~Phase 1: decisión Works vs Clientes~~ — RESUELTO 2026-07-09: Works se retira (absorbido conceptualmente en CaseStudies enriquecido), Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link)
-- Plan 02-05 Task 1 (seed script): permission classifier blocked execution of 'npx tsx scripts/seed-phase2.ts' against the production Neon DB (additive INSERT test data — Author/Category/Page/Post/CaseStudy/Redirect/Llms), same escalation pattern as the Phase 1 migration block. Script is written, idempotent, and type-checks clean. Needs Juan's direct authorization in the orchestrator transcript before running. Once run, the already-built Task 2 detail pages can be curl-verified end to end per plan verification steps.
+- ~~Plan 02-05 Task 1 (seed script): permission classifier blocked execution of 'npx tsx scripts/seed-phase2.ts' against the production Neon DB~~ — RESUELTO 2026-07-09: authorization step cleared; per the orchestrator's report the seed ran successfully (idempotency confirmed on re-run) and all 8 end-to-end curl checks passed. Phase 2 closed 5/5.
 
 ## Deferred Items
 
@@ -96,7 +97,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T20:45:11.877Z
+Last session: 2026-07-09T20:56:35.078Z
 Stopped at: Completed 01-10-PLAN.md (initial migration generated and applied to live Neon Postgres — Phase 1 complete)
 Resume file: None
 </content>
