@@ -1,0 +1,36 @@
+{
+  "name": "juan-payload",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "payload migrate && payload generate:importmap && payload generate:types && next build",
+    "postbuild": "cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/",
+    "start": "next start",
+    "start:standalone": "node .next/standalone/server.js",
+    "generate:types": "payload generate:types",
+    "generate:importmap": "payload generate:importmap"
+  },
+  "dependencies": {
+    "payload": "3.85.2",
+    "@payloadcms/next": "3.85.2",
+    "@payloadcms/db-postgres": "3.85.2",
+    "@payloadcms/richtext-lexical": "3.85.2",
+    "@payloadcms/plugin-seo": "3.85.2",
+    "@payloadcms/plugin-redirects": "3.85.2",
+    "@payloadcms/email-resend": "3.85.2",
+    "next": "15.4.11",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "sharp": "0.35.3",
+    "graphql": "^16.8.1"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "tsx": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest"
+  }
+}
