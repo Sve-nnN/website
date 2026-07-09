@@ -64,11 +64,15 @@ Plans:
   4. `llms.txt` y `llms-full.txt` están accesibles públicamente y reflejan el contenido del sitio
   5. Al menos una página de post/case study incluye JSON-LD (Person/Article/BreadcrumbList) escrito a mano, y un redirect creado en la colección de redirects se ejecuta de verdad al visitar la URL vieja
 
-**Plans**: TBD
+**Plans**: 5 plans (3 waves)
 
 Plans:
 
-- [ ] 02-01: TBD
+- [ ] 02-01-PLAN.md — next-intl install + i18n routing/request config + message catalogs + next.config.mjs wiring
+- [ ] 02-02-PLAN.md — payload.config.ts localization block + Media.alt fix + Llms global + [BLOCKING] Neon migration
+- [ ] 02-03-PLAN.md — middleware (next-intl + redirects execution) + [locale] restructure + home page with Person JSON-LD
+- [ ] 02-04-PLAN.md — sitemap.ts, robots.ts, llms.txt/llms-full.txt route handlers
+- [ ] 02-05-PLAN.md — seed test content + blog/case-study detail pages with Article/CreativeWork/BreadcrumbList JSON-LD + end-to-end verification
 
 ### Phase 3: Cloudinary Media Spike
 
