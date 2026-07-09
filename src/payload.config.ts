@@ -18,6 +18,7 @@ import { Categories } from './collections/Categories'
 import { CaseStudies } from './collections/CaseStudies'
 import { Testimonials } from './collections/Testimonials'
 import { Clientes } from './collections/Clientes'
+import { Llms } from './globals/Llms'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -43,12 +44,27 @@ export default buildConfig({
     defaultFromName: 'Juan Carlos Angulo',
     apiKey: process.env.RESEND_API_KEY || '',
   }),
+  // MUST stay in sync with src/i18n/routing.ts's defaultLocale — two independent
+  // defaultLocale settings that can silently drift (RESEARCH.md Pitfall 2).
+  localization: {
+    locales: [
+      { code: 'es', label: 'Español' },
+      { code: 'en', label: 'English' },
+    ],
+    defaultLocale: 'es',
+    fallback: true,
+  },
   collections: [Users, Media, Pages, Posts, Authors, Categories, CaseStudies, Testimonials, Clientes],
+  globals: [Llms],
   plugins: [
     seoPlugin({
       collections: ['pages', 'posts', 'case-studies'],
       uploadsCollection: 'media',
       tabbedUI: true,
+      generateTitle: ({ doc }: { doc: { title?: string } }) =>
+        doc?.title ? `${doc.title} | Juan Carlos Angulo` : 'Juan Carlos Angulo',
+      generateDescription: ({ doc }: { doc: { heroSubtitle?: string; excerpt?: string } }) =>
+        doc?.heroSubtitle ?? doc?.excerpt ?? '',
     }),
     redirectsPlugin({
       collections: ['pages', 'posts', 'case-studies', 'categories', 'authors'],
