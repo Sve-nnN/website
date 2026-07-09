@@ -85,11 +85,13 @@ Plans:
   2. En un entorno sin credenciales de Cloudinary, el mismo flujo de subida cae automáticamente a disco local sin romper el admin
   3. Una imagen servida desde Cloudinary se renderiza correctamente vía `next/image` con transformaciones `f_auto,q_auto` aplicadas (verificable en la URL generada)
 
-**Plans**: TBD
+**Plans**: 3 plans (3 waves)
 
 Plans:
 
-- [ ] 03-01: TBD
+- [ ] 03-01-PLAN.md — Install cloudinary + @payloadcms/plugin-cloud-storage, with legitimacy checkpoint
+- [ ] 03-02-PLAN.md — Ported/corrected Cloudinary adapter, conditional config wiring, imageSizes gating, [BLOCKING] schema migration
+- [ ] 03-03-PLAN.md — Real end-to-end Cloudinary upload validation + next/image browser checkpoint
 
 ### Phase 4: Migración Mongo → Postgres
 
