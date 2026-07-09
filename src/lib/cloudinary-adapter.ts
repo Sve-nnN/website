@@ -32,16 +32,24 @@ export const cloudinaryAdapter = () => ({
     // Return metadata instead of mutating `file` — mutation is a no-op under the
     // afterChange-hook architecture in @payloadcms/plugin-cloud-storage@3.85.2
     // (RESEARCH.md Pitfall 1).
+    // mimeType comes from the original upload (file.mimeType), NOT
+    // uploadResult.format — Cloudinary's `format` is a file extension
+    // (e.g. "jpg"), not a MIME type (e.g. "image/jpeg"), and Payload's
+    // Media collection validates this field strictly.
     return {
       filename: uploadResult.public_id,
-      mimeType: uploadResult.format,
+      mimeType: file.mimeType,
       filesize: uploadResult.bytes,
     }
   },
 
   async handleDelete({ filename }: Parameters<HandleDelete>[0]) {
+    // `filename` is already the full public_id (e.g. "media/test-image") as
+    // stored by handleUpload — do NOT prepend "media/" again here, that
+    // produces "media/media/test-image", which doesn't match the real
+    // Cloudinary asset and silently no-ops the delete.
     try {
-      await cloudinary.uploader.destroy(`media/${filename.replace(/\.[^/.]+$/, '')}`)
+      await cloudinary.uploader.destroy(filename.replace(/\.[^/.]+$/, ''))
     } catch (error) {
       console.error('Cloudinary Delete Error:', error)
     }
