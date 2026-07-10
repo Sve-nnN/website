@@ -26,9 +26,9 @@
 
 ### MEDIA (Cloudinary)
 
-- [ ] **MEDIA-01**: Adapter de storage Cloudinary validado mediante spike — adapter custom sobre `@payloadcms/plugin-cloud-storage` (portado de la referencia `github.com/Sahitya1707/payload-cloudinary`, Payload 3.33→3.85) como primera opción, con `@jhb.software/payload-cloudinary-plugin` o `payload-storage-cloudinary` como fallback si el custom encuentra un bloqueo real
-- [ ] **MEDIA-02**: Registro del plugin de storage gateado por env vars (fallback a disco local en dev)
-- [ ] **MEDIA-03**: Transformaciones automáticas (`f_auto,q_auto`) para Core Web Vitals, compatibles con `next/image`
+- [x] **MEDIA-01**: Adapter de storage Cloudinary validado mediante spike — adapter custom sobre `@payloadcms/plugin-cloud-storage` (portado de la referencia `github.com/Sahitya1707/payload-cloudinary`, Payload 3.33→3.85) como primera opción, con `@jhb.software/payload-cloudinary-plugin` o `payload-storage-cloudinary` como fallback si el custom encuentra un bloqueo real
+- [x] **MEDIA-02**: Registro del plugin de storage gateado por env vars (fallback a disco local en dev)
+- [x] **MEDIA-03**: Transformaciones automáticas (`f_auto,q_auto`) para Core Web Vitals, compatibles con `next/image`
 
 ### MIGRATION (Mongo → Postgres, contenido 1:1)
 
@@ -100,9 +100,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | I18N-04 | Phase 2 | Complete |
 | I18N-05 | Phase 2 | Complete |
 | I18N-06 | Phase 2 | Complete |
-| MEDIA-01 | Phase 3 | Pending |
-| MEDIA-02 | Phase 3 | Pending |
-| MEDIA-03 | Phase 3 | Pending |
+| MEDIA-01 | Phase 3 | Complete |
+| MEDIA-02 | Phase 3 | Complete |
+| MEDIA-03 | Phase 3 | Complete |
 | MIGR-01 | Phase 4 | Pending |
 | MIGR-02 | Phase 4 | Pending |
 | MIGR-03 | Phase 4 | Pending |
