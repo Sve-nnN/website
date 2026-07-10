@@ -194,7 +194,11 @@ Plans:
   3. El bloque `.dark` en `globals.css` usa una paleta ember/navy derivada de `05-UI-SPEC.md` (no los grises genéricos de shadcn), sin exponer ningún control de UI para cambiar de tema
   4. El contraste WCAG del nuevo set de tokens dark se verifica antes de cerrar la fase (no se difiere a la verificación final)
 
-**Plans**: TBD
+**Plans**: 1 plan (1 wave)
+
+Plans:
+
+- [ ] 07-01-PLAN.md — Shadow/motion tokens + Tailwind mapping + prefers-reduced-motion rule + ember/navy .dark rebrand + WCAG contrast verification script
 
 ### Phase 8: shadcn Primitives + Global Chrome
 
