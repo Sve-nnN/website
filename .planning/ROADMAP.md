@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Bilingüe + SEO** - Routing EN/ES, plugin SEO, sitemaps, llms.txt, redirects funcionando (completed 2026-07-09)
 - [x] **Phase 3: Cloudinary Media Spike** - Adapter de storage Cloudinary validado y wireado (completed 2026-07-09)
 - [x] **Phase 4: Migración Mongo → Postgres** - Contenido actual migrado 1:1 con URLs y medios preservados (completed 2026-07-10)
-- [ ] **Phase 5: Frontend Pages** - Todas las páginas públicas renderizando contenido migrado con diferenciadores competitivos
+- [x] **Phase 5: Frontend Pages** - Todas las páginas públicas renderizando contenido migrado con diferenciadores competitivos (completed 2026-07-10)
 - [ ] **Phase 6: Deploy + Cutover** - Sitio en producción en Hostinger con checklist de go-live verificado
 
 ## Phase Details
@@ -148,7 +148,7 @@ Plans:
 - [x] 05-10-PLAN.md — Authors listing + profile (E-E-A-T card + posts/case studies by author)
 - [x] 05-11-PLAN.md — Search (@payloadcms/plugin-search across posts/case-studies/authors) + /search page
 - [x] 05-12-PLAN.md — Contact (Resend wiring) + Privacy + Terms (ported real legal copy)
-- [ ] 05-13-PLAN.md — [BLOCKING] Bilingual QA walkthrough + final requirements coverage checkpoint
+- [x] 05-13-PLAN.md — [BLOCKING] Bilingual QA walkthrough + final requirements coverage checkpoint
 
 **UI hint**: yes
 
@@ -182,6 +182,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Bilingüe + SEO | 5/5 | Complete    | 2026-07-09 |
 | 3. Cloudinary Media Spike | 3/3 | Complete   | 2026-07-09 |
 | 4. Migración Mongo → Postgres | 8/8 | Complete   | 2026-07-10 |
-| 5. Frontend Pages | 12/13 | In Progress|  |
+| 5. Frontend Pages | 13/13 | Complete   | 2026-07-10 |
 | 6. Deploy + Cutover | 0/TBD | Not started | - |
 </content>

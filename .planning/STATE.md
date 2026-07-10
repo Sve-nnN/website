@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: in-progress
-stopped_at: Completed 05-12-PLAN.md (contact/privacy/terms); phase 5 plan 13 (05-13) blocked at its mandatory human-verify checkpoint (bilingual QA walkthrough) — awaiting Juan's direct verification
-last_updated: "2026-07-10T05:12:38.154Z"
+status: executing
+stopped_at: Completed 05-13-PLAN.md (bilingual QA walkthrough); Phase 5 (13/13 plans) complete
+last_updated: "2026-07-10T05:28:41.371Z"
 last_activity: 2026-07-10
 progress:
   total_phases: 6
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 39
-  completed_plans: 38
-  percent: 97
+  completed_plans: 39
+  percent: 83
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 5 — Frontend Pages (12/13 plans complete, autonomous work done); plan 13 (05-13) is the phase's only checkpoint — a human bilingual QA walkthrough — and is blocked awaiting Juan's direct verification per its own checkpoint protocol
+**Current focus:** Phase 5 — Frontend Pages COMPLETE (13/13 plans, all 6 CONT-* requirements satisfied end-to-end, confirmed by Juan's direct bilingual walkthrough against real production data). Ready to begin Phase 6 — Deploy + Cutover, carrying forward two explicit pre-deploy action items (author E-E-A-T content population, real Resend API key).
 
 ## Current Position
 
-Phase: 5 of 6 (frontend pages)
-Plan: 12 of 13 complete; 05-13 blocked at its `checkpoint:human-verify` (Task 2)
-Status: All autonomous Phase 5 work complete (Waves 1-4, 12 plans) and independently smoke-tested against real Neon Postgres data. Wave 5 (05-13) Task 1 (build + coverage audit) complete; Task 2 requires Juan's direct bilingual walkthrough per its own checklist — cannot be auto-approved (visual/functional human verification, plus a real Resend send test).
+Phase: 5 of 6 (frontend pages) — COMPLETE
+Plan: 13 of 13 complete
+Status: Phase 5 closed. Ready to plan Phase 6 (Deploy + Cutover).
 Last activity: 2026-07-10
 
-Progress: [██████████] 97%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -94,6 +94,7 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-01: shadcn@2.10.0 CLI pinned explicitly (not `npx shadcn@latest`, which resolves to a redesigned 4.x CLI with an incompatible Nova/Vega preset system) to honor the UI-SPEC's locked new-york/neutral/CSS-vars preset
 - [Phase 05]: 05-09: CaseStudies had no `author` relationship (a real data-model gap) — added directly rather than a checkpoint:decision, since the plan itself recommended this and exactly 1 real Author exists to backfill against
 - [Phase 05]: 05-12: found and fixed a real, sitewide bilingual-content bug — Content block's `richText` field was missing `localized: true`, and 4 seed scripts (home/blog/contact/legal-pages) regenerated block/array ids on every locale's update, silently orphaning the previous locale's localized data (Hero title/subtitle, ArchiveBlock emptyState copy, Content richText). Both root causes fixed; all 5 affected pages re-verified correct in both locales against the real running server.
+- [Phase ?]: [Phase 05] 05-13: bilingual QA walkthrough completed directly by Juan against real dev server + real Neon Postgres data; all 10 checklist items verified (2 with explicitly logged, non-blocking caveats: category-tab click-filtering and FeaturedContent admin edit-reload confirmed via code/database-level evidence due to Arc browser click-interaction limitation)
 
 ### Pending Todos
 
@@ -101,8 +102,9 @@ None yet.
 
 ### Blockers/Concerns
 
-- [Phase 05] 05-12/05-13: `RESEND_API_KEY` in `.env` is a placeholder/invalid value (confirmed via direct 401 from Resend's API) — real contact-form email delivery cannot be verified end-to-end until Juan sets a real Resend API key. Contact-form logic (validation, honeypot, graceful-failure redirect) verified correct by direct invocation; only the actual send is blocked.
-- [Phase 05] 05-13 Task 2 (bilingual QA walkthrough) is a mandatory `checkpoint:human-verify` — cannot be auto-approved. Requires Juan's direct visual/functional confirmation across 10 checklist items (see 05-13-PLAN.md), including a real contact-form send test once a real Resend key is set.
+- [Phase 05 → Phase 06 pre-deploy blocker] `RESEND_API_KEY` in `.env` is still a placeholder/invalid value (confirmed via direct 401 from Resend's API) — real contact-form email delivery cannot be verified or used in production until Juan obtains and sets a real Resend API key. Contact-form logic (validation, honeypot, graceful-failure redirect) verified correct by direct invocation; only the actual send is blocked. Explicit pre-deploy blocker for Phase 6, confirmed still open by 05-13's direct human verification.
+- [Phase 05 → Phase 06 follow-up] Author E-E-A-T fields (`credentials[]`, `yearsExperience`, `socialLinks[]`) are correctly modeled and wired end-to-end (confirmed via direct Postgres query) but not populated for the one real migrated author — Juan needs to fill these in via `/admin` before this differentiator is visibly live. Content-population task, not a code gap.
+- ~~[Phase 05] 05-13 Task 2 (bilingual QA walkthrough) is a mandatory `checkpoint:human-verify`~~ — RESUELTO 2026-07-10: Juan completed the direct bilingual walkthrough against the real dev server and real Neon Postgres data. All 10 checklist items verified (2 with explicitly logged, non-blocking caveats — see 05-13-SUMMARY.md and 05-VERIFICATION.md). Phase 5 closed 13/13.
 - Phase 3 (Cloudinary): adapter custom sobre `@payloadcms/plugin-cloud-storage` es ahora la opción primaria (referencia validada `github.com/Sahitya1707/payload-cloudinary`, target Payload 3.33 → verificar compatibilidad con 3.85 en el spike); paquetes de comunidad quedan como fallback
 - Phase 6 (Hostinger): tier real contratado y `max_connections` de Postgres deben confirmarse contra el plan provisto antes de finalizar dimensionamiento de pool
 - ~~Phase 1: decisión Works vs Clientes~~ — RESUELTO 2026-07-09: Works se retira (absorbido conceptualmente en CaseStudies enriquecido), Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link)
@@ -118,7 +120,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T02:53:41.235Z
-Stopped at: Completed 04-08-PLAN.md (redirects + final phase-4 verification report); phase 4 (8/8 plans) complete
+Last session: 2026-07-10T05:28:41.367Z
+Stopped at: Completed 05-13-PLAN.md (bilingual QA walkthrough); Phase 5 (13/13 plans) complete
 Resume file: None
 </content>
