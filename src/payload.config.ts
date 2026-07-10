@@ -89,7 +89,7 @@ export default buildConfig({
                 adapter: cloudinaryAdapter,
                 disableLocalStorage: true,
                 generateFileURL: ({ filename }: { filename: string }) =>
-                  cloudinaryAdapter().generateFileURL(filename),
+                  cloudinaryAdapter().generateFileURL({ filename }),
               },
             },
           }),

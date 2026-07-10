@@ -55,9 +55,13 @@ export const cloudinaryAdapter = () => ({
     }
   },
 
-  generateFileURL(filename: string) {
+  generateFileURL({ filename }: { filename: string }) {
+    // The plugin calls this with an options object ({ collection, filename,
+    // prefix, size }), NOT a bare string — `filename` here is already the
+    // full public_id (e.g. "media/test-image") as stored by handleUpload,
+    // same as handleDelete receives. Do NOT prepend "media/" again.
     // f_auto,q_auto per MEDIA-03 — official Cloudinary syntax.
-    return cloudinary.url(`media/${filename}`, {
+    return cloudinary.url(filename, {
       secure: true,
       fetch_format: 'auto',
       quality: 'auto',
