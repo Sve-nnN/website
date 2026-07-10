@@ -72,3 +72,32 @@ This confirms zero schema/type drift across the entire milestone range — from 
 | WCAG AA contrast (light + dark, 20 checks) | PASS (4 light-theme failures found and fixed) |
 | Hardcoded-content grep (Phase 7-10 files) | PASS (0 genuine findings; 1 pre-existing fallback investigated and confirmed out of scope) |
 | config.ts/payload-types.ts diff (2e22e9b..HEAD) | PASS (empty diff) |
+
+## Re-verification against final diff (post Phase 10.6-10.8)
+
+This plan originally ran before Phases 10.6, 10.7, and 10.8 executed (see commit order: `46110fb`/`d50a554` predate `2cb09f7`..`675f5ad`). Phase 11's closing pass re-ran both checks against the now-fully-accumulated milestone state to confirm the new blocks/fields introduced by 10.6-10.8 (Footer `dynamicColumns`, `AboutSection`, `TestimonialSection`, Hero `links`/`breadcrumbs`) didn't introduce a new contrast pairing or hardcoded content.
+
+**(a) WCAG contrast re-run.** `node_modules/.bin/tsx scripts/check-wcag-contrast-full.ts` against current HEAD: **20/20 PASS**, identical ratios to the original run (`globals.css` token values untouched by 10.6-10.8 — the new components only consume existing tokens: `bg-secondary`/`text-secondary-foreground`, `text-primary`, `border-primary`, `text-muted-foreground`, `bg-muted`; no new token pairing was introduced).
+
+**(b) Hardcoded-content grep re-run**, scoped to the files added/changed by Phase 10.6-10.8 (`src/blocks/AboutSection/Component.tsx`, `src/blocks/TestimonialSection/Component.tsx`, `src/blocks/Hero/Component.tsx`, `src/components/SiteFooter.tsx`, `src/components/SiteHeader.tsx`) read in full: all rendered text is sourced from Payload fields/props (`eyebrow`, `title`, `paragraphs[].text`, `quote`, `authorName`, `authorRole`, `footer.columns`/`dynamicColumns`/`socialLinks`/`legalLinks`/`copyrightText`, `header.navItems`/`ctaButton`/`logo`) or is genuine UI chrome (`aria-label="Menu"`, `"Navigation menu"` sr-only title, breadcrumb `/` separator glyph, `aria-label="Breadcrumb"`). The one previously-flagged pre-existing fallback (`SiteHeader.tsx`'s `"Juan Carlos Angulo"` logo fallback) is unchanged and remains confirmed out of scope (Phase 5-era, not touched by 7-10.8).
+
+**Result: zero new hardcoded-content violations, zero new contrast regressions.**
+
+**(c) config.ts/payload-types.ts diff — now legitimately non-empty.** Re-running `git diff --stat 2e22e9b..HEAD -- 'src/blocks/*/config.ts' src/payload-types.ts` against current HEAD (which now includes 10.6-10.8) shows:
+
+```
+src/blocks/AboutSection/config.ts       |  58 +++++++++
+src/blocks/Hero/config.ts               |  41 +++++++
+src/blocks/TestimonialSection/config.ts |  40 +++++++
+src/payload-types.ts                    | 206 +++++++++++++++++++++++++++-----
+```
+
+This is **expected, intentional schema growth**, not drift: `AboutSection`/`TestimonialSection` are Phase 10.7's new blocks and Hero's `links`/`breadcrumbs` fields are Phase 10.8's enrichment — both shipped with committed Postgres migrations (`src/migrations/20260710_164937_phase10_7_about_testimonial_sections.ts`, `src/migrations/20260710_165940_phase10_8_hero_cta_breadcrumbs.ts`) and `payload-types.ts` was regenerated via `payload generate:types` in-plan (10.7-04, 10.8-03), not hand-edited. The UI-13 "zero unexplained diff" bar is about undocumented/uncommitted schema drift, not about legitimate new-field commits with migrations — this diff is fully accounted for by 10.6-10.8's own plan artifacts. Re-confirmed: no *undocumented* schema drift exists.
+
+**Updated summary:**
+
+| Check | Result |
+|-------|--------|
+| WCAG AA contrast (both themes, post 10.6-10.8) | PASS (20/20, unchanged) |
+| Hardcoded-content grep (10.6-10.8 new files) | PASS (0 genuine findings) |
+| config.ts/payload-types.ts diff (2e22e9b..HEAD) | Non-empty, but fully explained by 10.6-10.8's committed migrations — no undocumented drift |
