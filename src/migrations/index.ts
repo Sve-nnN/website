@@ -8,6 +8,7 @@ import * as migration_20260710_043753_phase5_case_studies_author from './2026071
 import * as migration_20260710_044516_phase5_search_plugin from './20260710_044516_phase5_search_plugin';
 import * as migration_20260710_050300_phase5_content_block_localized_richtext from './20260710_050300_phase5_content_block_localized_richtext';
 import * as migration_20260710_150154_phase10_5_footer_dynamic_columns from './20260710_150154_phase10_5_footer_dynamic_columns';
+import * as migration_20260710_164937_phase10_7_about_testimonial_sections from './20260710_164937_phase10_7_about_testimonial_sections';
 
 export const migrations = [
   {
@@ -58,6 +59,11 @@ export const migrations = [
   {
     up: migration_20260710_150154_phase10_5_footer_dynamic_columns.up,
     down: migration_20260710_150154_phase10_5_footer_dynamic_columns.down,
-    name: '20260710_150154_phase10_5_footer_dynamic_columns'
+    name: '20260710_150154_phase10_5_footer_dynamic_columns',
+  },
+  {
+    up: migration_20260710_164937_phase10_7_about_testimonial_sections.up,
+    down: migration_20260710_164937_phase10_7_about_testimonial_sections.down,
+    name: '20260710_164937_phase10_7_about_testimonial_sections'
   },
 ];
