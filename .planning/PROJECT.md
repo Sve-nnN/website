@@ -67,12 +67,15 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 
 ## Current Milestone: v1.1 UI/UX Polish Pass
 
-**Goal:** Todos los componentes del sitio (home, blog, case studies, authors, contact, header/footer, formularios, cards) reciben una pasada de diseño profesional — estética moderna, agradable, alineada a la marca de Juan — antes del deploy a producción en Hostinger.
+**Goal:** Todos los componentes del sitio (home, blog, case studies, authors, contact, header/footer, formularios, cards) reciben una pasada de diseño profesional — estética moderna, agradable, alineada a la marca de Juan — antes del deploy a producción en Hostinger. **Scope expandido 2026-07-10** tras feedback directo de Juan sobre el estado acumulado de Phases 7-10.5: no alcanza con pulir lo que ya existe — el milestone ahora incluye auditar los 16 bloques actuales contra los ~39 bloques que tenía el sitio Payload viejo (`JuanPortfolio`), agregar los bloques/componentes que falten (informado por research de qué patrones son tabla-stakes vs diferenciadores), y poblarlos con contenido real/de muestra para poder verlos y validarlos visualmente — no solo dejarlos construidos sin contenido.
 
 **Target features:**
 - Auditoría visual completa de todos los componentes/bloques Payload-editables construidos en Phase 5 (RenderBlocks registry: 16 bloques, heros, cards, byline, footer/header)
-- Refinamiento de sistema de diseño (tipografía, color, espaciado, densidad) informado por research de competidores + referencia del proyecto hermano `auditor` (`/Users/juan/Documents/Codigo/Personal/juantech/auditor/apps/web` — dark-first, acento lime, tokens.css con rampas de color/espaciado/tipografía consistentes)
-- Mantener el hard rule de Phase 5: todo contenido sigue siendo editable desde Payload, este milestone es visual/CSS/componentes, no reintroduce contenido hardcodeado
+- Refinamiento de sistema de diseño (tipografía, color, espaciado, densidad) informado por research de competidores + referencia del proyecto hermano `auditor` (`/Users/juan/Documents/Codigo/Personal/juantech/auditor/apps/web` — fuentes Array/Khand/Geist, tokens.css con rampas de color/espaciado/tipografía consistentes)
+- Comparación de gaps de componentes contra el sitio Payload viejo (`/Users/juan/Documents/Codigo/Personal/juantech/JuanPortfolio`, ~39 bloques vs los 16 actuales) — decidir cuáles son gaps reales a cerrar vs decisiones intencionales de simplificación ya tomadas en Phase 1 (ej. Works fue retirado a propósito)
+- Componentes nuevos que se agreguen deben poblarse con contenido real o de muestra representativo para poder verlos/validarlos, no quedar construidos-pero-vacíos
+- Mantener el hard rule de Phase 5: todo contenido sigue siendo editable desde Payload, ningún componente nuevo hardcodea contenido
+- Header/footer con navegación completa y footer rico con columnas dinámicas (últimos posts/case studies) — trabajo ya iniciado en Phase 10.5, continúa dentro del scope expandido
 - Fase 6 (Deploy + Cutover) queda en pausa — retoma después de que este milestone cierre
 
 ## Evolution
