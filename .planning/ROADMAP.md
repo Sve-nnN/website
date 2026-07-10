@@ -273,7 +273,13 @@ Plans:
   3. Un grep de contenido hardcodeado (strings de prueba, badges/stats sin campo Payload backing) en todos los bloques tocados por este milestone devuelve cero diffs en `src/blocks/*/config.ts` y `payload-types.ts`
   4. Un Lighthouse móvil corrido tras todos los cambios visuales no muestra regresión respecto al baseline de producción capturado antes de esta fase
 
-**Plans**: TBD
+**Plans**: 3 plans (2 waves)
+
+Plans:
+
+- [ ] 11-01-PLAN.md — Contraste WCAG AA en ambos temas (light/dark, tokens completos) + grep final de contenido hardcodeado + diff config.ts/payload-types.ts en el rango completo del milestone
+- [ ] 11-02-PLAN.md — Layout `/es` contra contenido real más largo en home/authors/case-studies (páginas no cubiertas por Phase 10)
+- [ ] 11-03-PLAN.md — Lighthouse móvil sobre build de producción local, baseline pre-milestone vs HEAD actual (sustituto documentado del baseline de producción, ya que Phase 6 sigue en pausa)
 
 ## Progress
 
@@ -292,5 +298,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 8. shadcn Primitives + Global Chrome | 2/2 | Complete   | 2026-07-10 |
 | 9. Hero + Resultados/KPI + Tipografía | 3/3 | Complete   | 2026-07-10 |
 | 10. Cards/Listados + Autoría E-E-A-T | 2/2 | Complete   | 2026-07-10 |
-| 11. Verificación Cruzada Final | 0/TBD | Not started | - |
+| 11. Verificación Cruzada Final | 0/3 | Not started | - |
 </content>
