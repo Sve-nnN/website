@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 Phase: 4 of 6 (migración mongo → postgres)
 Plan: 01 of 8 complete, executing 02-08 in sequence
-Status: Phase 4 plans 01-05 complete (dump/URL-inventory/libs; Media 11/15; Authors 1/1 + Categories 5/5; Testimonials 1/1 + Clientes 6/6; Posts 72/73 with 1 orphan skip), moving to plan 06 (case studies)
+Status: Phase 4 plans 01-06 complete (dump/URL-inventory/libs; Media 11/15; Authors 1/1 + Categories 5/5; Testimonials 1/1 + Clientes 6/6; Posts 72/73; CaseStudies 0/0 confirmed empty source), moving to plan 07 (works audit — human checkpoint)
 Last activity: 2026-07-10
 
 Progress: [███████░░░] 73%
