@@ -25,8 +25,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 8: shadcn Primitives + Global Chrome** - Primitivas shadcn refinadas con los nuevos tokens + header/footer restyled (completed 2026-07-10)
 - [x] **Phase 9: Hero + Resultados/KPI + Tipografía** - Hero de mayor impacto, KPIs de case studies reforzados, jerarquía tipográfica en contenido largo (completed 2026-07-10)
 - [x] **Phase 10: Cards/Listados + Autoría E-E-A-T** - Tratamiento visual consistente en bloques tipo card + credenciales de autor prominentes (completed 2026-07-10)
-- [ ] **Phase 10.5 [INSERTED]: Typography + Header/Footer Overhaul** - Nueva tipografía (Array/Khand/Geist, misma que `auditor`), header con navegación completa, footer rico con columnas dinámicas (últimos posts/case studies), mobile-first estricto (pausa Phase 11 hasta cerrar esta)
-- [ ] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil sin regresión (re-planea/re-corre tras Phase 10.5, dado que tipografía/header/footer cambian sustancialmente el estado a verificar)
+- [~] **Phase 10.5 [INSERTED]: Typography + Header/Footer Overhaul** - SUPERSEDED 2026-07-10 by milestone v1.2 (broader scope: full component audit + gap-fill vs JuanPortfolio + content population, requested by Juan mid-execution). Wave 1 (fonts + Footer dynamicColumns schema) already committed and carries forward as groundwork; Wave 2/3 (header/footer restyle, mobile verification) folded into v1.2's roadmap instead of continuing here.
+- [ ] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil sin regresión (pausada — se re-planea al final de v1.2, cuando el estado visual esté realmente final)
 
 ## Phase Details
 
