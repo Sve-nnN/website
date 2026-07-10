@@ -136,18 +136,18 @@ Plans:
 
 Plans:
 
-- [ ] 05-01-PLAN.md — Design system bootstrap (Tailwind + shadcn init, Inter/Fraunces fonts, color/spacing/typography tokens, Container/Prose primitives)
-- [ ] 05-02-PLAN.md — Header/Footer/FeaturedContent globals + Authors E-E-A-T expansion + migration + Phase 1/2 fixture cleanup
-- [ ] 05-03-PLAN.md — FeaturedPostsBlock/FeaturedCaseStudiesBlock/ClientLogosBlock configs + ArchiveBlock category-filter extension + Pages registration + migration
-- [ ] 05-04-PLAN.md — RenderBlocks registry + renderers for all 16 registered Pages blocks
-- [ ] 05-05-PLAN.md — SiteHeader/SiteFooter + AuthorByline/AuthorCard (E-E-A-T) + deterministic hero-image fallback utility
-- [ ] 05-06-PLAN.md — Home page (Hero + Featured Case Studies + About + Client Logos + Featured Posts + Testimonials + Contact CTA)
-- [ ] 05-07-PLAN.md — Blog listing (featured section + category-filterable chronological grid)
-- [ ] 05-08-PLAN.md — Blog post detail (hero fallback, author E-E-A-T byline, related posts, table of contents)
-- [ ] 05-09-PLAN.md — Case studies listing + detail (KPIs, challenge/solution/results, author byline)
-- [ ] 05-10-PLAN.md — Authors listing + profile (E-E-A-T card + posts/case studies by author)
-- [ ] 05-11-PLAN.md — Search (@payloadcms/plugin-search across posts/case-studies/authors) + /search page
-- [ ] 05-12-PLAN.md — Contact (Resend wiring) + Privacy + Terms (ported real legal copy)
+- [x] 05-01-PLAN.md — Design system bootstrap (Tailwind + shadcn init, Inter/Fraunces fonts, color/spacing/typography tokens, Container/Prose primitives)
+- [x] 05-02-PLAN.md — Header/Footer/FeaturedContent globals + Authors E-E-A-T expansion + migration + Phase 1/2 fixture cleanup
+- [x] 05-03-PLAN.md — FeaturedPostsBlock/FeaturedCaseStudiesBlock/ClientLogosBlock configs + ArchiveBlock category-filter extension + Pages registration + migration
+- [x] 05-04-PLAN.md — RenderBlocks registry + renderers for all 16 registered Pages blocks
+- [x] 05-05-PLAN.md — SiteHeader/SiteFooter + AuthorByline/AuthorCard (E-E-A-T) + deterministic hero-image fallback utility
+- [x] 05-06-PLAN.md — Home page (Hero + Featured Case Studies + About + Client Logos + Featured Posts + Testimonials + Contact CTA)
+- [x] 05-07-PLAN.md — Blog listing (featured section + category-filterable chronological grid)
+- [x] 05-08-PLAN.md — Blog post detail (hero fallback, author E-E-A-T byline, related posts, table of contents)
+- [x] 05-09-PLAN.md — Case studies listing + detail (KPIs, challenge/solution/results, author byline)
+- [x] 05-10-PLAN.md — Authors listing + profile (E-E-A-T card + posts/case studies by author)
+- [x] 05-11-PLAN.md — Search (@payloadcms/plugin-search across posts/case-studies/authors) + /search page
+- [x] 05-12-PLAN.md — Contact (Resend wiring) + Privacy + Terms (ported real legal copy)
 - [ ] 05-13-PLAN.md — [BLOCKING] Bilingual QA walkthrough + final requirements coverage checkpoint
 
 **UI hint**: yes
@@ -182,6 +182,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Bilingüe + SEO | 5/5 | Complete    | 2026-07-09 |
 | 3. Cloudinary Media Spike | 3/3 | Complete   | 2026-07-09 |
 | 4. Migración Mongo → Postgres | 8/8 | Complete   | 2026-07-10 |
-| 5. Frontend Pages | 0/13 | Not started | - |
+| 5. Frontend Pages | 12/13 | In Progress|  |
 | 6. Deploy + Cutover | 0/TBD | Not started | - |
 </content>

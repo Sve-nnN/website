@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 04-08-PLAN.md (redirects + final phase-4 verification report); phase 4 (8/8 plans) complete
-last_updated: "2026-07-10T02:53:48.146Z"
+status: in-progress
+stopped_at: Completed 05-12-PLAN.md (contact/privacy/terms); phase 5 plan 13 (05-13) blocked at its mandatory human-verify checkpoint (bilingual QA walkthrough) — awaiting Juan's direct verification
+last_updated: "2026-07-10T05:12:38.154Z"
 last_activity: 2026-07-10
 progress:
   total_phases: 6
   completed_phases: 4
-  total_plans: 26
-  completed_plans: 26
-  percent: 67
+  total_plans: 39
+  completed_plans: 38
+  percent: 97
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 4 — Migración Mongo → Postgres (complete, 8/8 plans); next up Phase 5 — Frontend
+**Current focus:** Phase 5 — Frontend Pages (12/13 plans complete, autonomous work done); plan 13 (05-13) is the phase's only checkpoint — a human bilingual QA walkthrough — and is blocked awaiting Juan's direct verification per its own checkpoint protocol
 
 ## Current Position
 
-Phase: 4 of 6 (migración mongo → postgres)
-Plan: 8 of 8 complete
-Status: Phase 4 complete and verified against real production data (independent verifier: 5/5 truths, score passed — see 04-VERIFICATION.md). Media gap (4/15 unrecoverable due to juan-tech.com DEPLOYMENT_DISABLED) resolved by Juan: accepted as permanent loss, not referenced by any migrated content. Two items still open for Phase 5: (1) replicate the old site's per-slug deterministic heroImage fallback (pool of 53 pre-existing Cloudinary images `portfolio/fallback-image-1..53`) since 0/73 posts ever had heroImage by original design; (2) decide whether to clean up 4 test fixtures left in the real DB by Phases 1-2 (Test Author X, test-post, test-case-study, /legacy-test-url) before they appear on public pages.
+Phase: 5 of 6 (frontend pages)
+Plan: 12 of 13 complete; 05-13 blocked at its `checkpoint:human-verify` (Task 2)
+Status: All autonomous Phase 5 work complete (Waves 1-4, 12 plans) and independently smoke-tested against real Neon Postgres data. Wave 5 (05-13) Task 1 (build + coverage audit) complete; Task 2 requires Juan's direct bilingual walkthrough per its own checklist — cannot be auto-approved (visual/functional human verification, plus a real Resend send test).
 Last activity: 2026-07-10
 
-Progress: [███████░░░] 67%
+Progress: [██████████] 97%
 
 ## Performance Metrics
 
@@ -91,6 +91,9 @@ Recent decisions affecting current work:
 - [Phase ?]: Phase 4 verification (04-VERIFICATION.md): 0 URL deltas, 0 redirects needed -- verbatim-slug pipeline held across all 7 migrated collections; independent verifier confirmed 4/15 media assets lost to external juan-tech.com DEPLOYMENT_DISABLED are NOT referenced by any migrated document (orphaned assets, zero content impact)
 - [Phase 04]: Juan confirmed accepting the 4/15 media loss permanently ("no veo problema con eso, esas imágenes creo que igual no las vamos a usar") -- no backup sourcing needed
 - [Phase 04]: 0/73 real posts had heroImage in the source by original design, not a migration gap -- JuanPortfolio's PostHero computes a deterministic per-slug fallback at render time against 53 pre-existing Cloudinary images (portfolio/fallback-image-1..53, verified reachable); Phase 5 must replicate this fallback pattern client-side, not backfill heroImage in the DB
+- [Phase 05]: 05-01: shadcn@2.10.0 CLI pinned explicitly (not `npx shadcn@latest`, which resolves to a redesigned 4.x CLI with an incompatible Nova/Vega preset system) to honor the UI-SPEC's locked new-york/neutral/CSS-vars preset
+- [Phase 05]: 05-09: CaseStudies had no `author` relationship (a real data-model gap) — added directly rather than a checkpoint:decision, since the plan itself recommended this and exactly 1 real Author exists to backfill against
+- [Phase 05]: 05-12: found and fixed a real, sitewide bilingual-content bug — Content block's `richText` field was missing `localized: true`, and 4 seed scripts (home/blog/contact/legal-pages) regenerated block/array ids on every locale's update, silently orphaning the previous locale's localized data (Hero title/subtitle, ArchiveBlock emptyState copy, Content richText). Both root causes fixed; all 5 affected pages re-verified correct in both locales against the real running server.
 
 ### Pending Todos
 
@@ -98,6 +101,8 @@ None yet.
 
 ### Blockers/Concerns
 
+- [Phase 05] 05-12/05-13: `RESEND_API_KEY` in `.env` is a placeholder/invalid value (confirmed via direct 401 from Resend's API) — real contact-form email delivery cannot be verified end-to-end until Juan sets a real Resend API key. Contact-form logic (validation, honeypot, graceful-failure redirect) verified correct by direct invocation; only the actual send is blocked.
+- [Phase 05] 05-13 Task 2 (bilingual QA walkthrough) is a mandatory `checkpoint:human-verify` — cannot be auto-approved. Requires Juan's direct visual/functional confirmation across 10 checklist items (see 05-13-PLAN.md), including a real contact-form send test once a real Resend key is set.
 - Phase 3 (Cloudinary): adapter custom sobre `@payloadcms/plugin-cloud-storage` es ahora la opción primaria (referencia validada `github.com/Sahitya1707/payload-cloudinary`, target Payload 3.33 → verificar compatibilidad con 3.85 en el spike); paquetes de comunidad quedan como fallback
 - Phase 6 (Hostinger): tier real contratado y `max_connections` de Postgres deben confirmarse contra el plan provisto antes de finalizar dimensionamiento de pool
 - ~~Phase 1: decisión Works vs Clientes~~ — RESUELTO 2026-07-09: Works se retira (absorbido conceptualmente en CaseStudies enriquecido), Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link)

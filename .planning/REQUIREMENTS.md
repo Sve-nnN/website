@@ -41,12 +41,12 @@
 
 ### CONTENT (Páginas públicas)
 
-- [ ] **CONT-01**: Réplica de todas las páginas actuales — home, blog (posts + listado), case studies (+ listado), authors (+ listado), contact, privacy, terms, search
-- [ ] **CONT-02**: Autor con bio + credenciales visibles en cada post/case study (E-E-A-T)
-- [ ] **CONT-03**: Blog con taxonomía de categorías y sección de posts destacados (no solo cronológico)
-- [ ] **CONT-04**: Búsqueda vía `@payloadcms/plugin-search`
-- [ ] **CONT-05**: Formulario de contacto funcional enviando emails vía Resend (`@payloadcms/email-resend`)
-- [ ] **CONT-06**: Analytics vía Google Search Console + GA4 externos, sin dashboards ni tooling SEO interno en el admin de Payload
+- [x] **CONT-01**: Réplica de todas las páginas actuales — home, blog (posts + listado), case studies (+ listado), authors (+ listado), contact, privacy, terms, search
+- [x] **CONT-02**: Autor con bio + credenciales visibles en cada post/case study (E-E-A-T)
+- [x] **CONT-03**: Blog con taxonomía de categorías y sección de posts destacados (no solo cronológico)
+- [x] **CONT-04**: Búsqueda vía `@payloadcms/plugin-search`
+- [x] **CONT-05**: Formulario de contacto funcional enviando emails vía Resend (`@payloadcms/email-resend`)
+- [x] **CONT-06**: Analytics vía Google Search Console + GA4 externos, sin dashboards ni tooling SEO interno en el admin de Payload
 
 ### DEPLOY (Hostinger + cutover)
 
@@ -109,12 +109,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MIGR-04 | Phase 4 | Complete |
 | MIGR-05 | Phase 4 | Complete |
 | MIGR-06 | Phase 4 | Complete |
-| CONT-01 | Phase 5 | Pending |
-| CONT-02 | Phase 5 | Pending |
-| CONT-03 | Phase 5 | Pending |
-| CONT-04 | Phase 5 | Pending |
-| CONT-05 | Phase 5 | Pending |
-| CONT-06 | Phase 5 | Pending |
+| CONT-01 | Phase 5 | Complete |
+| CONT-02 | Phase 5 | Complete |
+| CONT-03 | Phase 5 | Complete |
+| CONT-04 | Phase 5 | Complete |
+| CONT-05 | Phase 5 | Complete |
+| CONT-06 | Phase 5 | Complete |
 | DEPLOY-01 | Phase 6 | Pending |
 | DEPLOY-02 | Phase 6 | Pending |
 | DEPLOY-03 | Phase 6 | Pending |
