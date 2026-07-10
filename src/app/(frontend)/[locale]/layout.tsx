@@ -5,6 +5,8 @@ import { setRequestLocale } from 'next-intl/server'
 import { Fraunces, Inter } from 'next/font/google'
 
 import { routing } from '@/i18n/routing'
+import { SiteHeader } from '@/components/SiteHeader'
+import { SiteFooter } from '@/components/SiteFooter'
 import '../../globals.css'
 
 const inter = Inter({
@@ -41,7 +43,11 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${inter.variable} ${fraunces.variable}`}>
       <body className="font-sans">
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <SiteHeader locale={locale} />
+          {children}
+          <SiteFooter locale={locale} />
+        </NextIntlClientProvider>
       </body>
     </html>
   )
