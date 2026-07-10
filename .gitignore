@@ -33,6 +33,9 @@ scripts/.phase10-fixture-state.json
 # evidence produced by scripts/verify-mobile-viewport.mjs, not source code
 scripts/.mobile-verify-screenshots/
 
+# Phase 11-03 Lighthouse — downloaded Chrome-for-Testing binary, not source code
+.lighthouse-chrome/
+
 # misc
 .DS_Store
 *.pem
