@@ -33,11 +33,19 @@ export function HeroComponent(props: HeroBlockProps) {
       )}
       <Container className="relative z-10">
         {title && (
-          <h1 className={isHome ? 'font-display text-display' : 'font-display text-heading'}>
+          <h1
+            className={
+              isHome
+                ? 'font-display text-display tracking-tight'
+                : 'font-display text-heading tracking-tight'
+            }
+          >
             {title}
           </h1>
         )}
-        {subtitle && <p className="mt-4 text-body max-w-2xl">{subtitle}</p>}
+        {subtitle && (
+          <p className="mt-6 text-body max-w-2xl text-secondary-foreground/80">{subtitle}</p>
+        )}
       </Container>
     </section>
   )
