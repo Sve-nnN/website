@@ -6,6 +6,8 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 
 **Milestone v1.1 — UI/UX Polish Pass:** Antes de retomar Phase 6 (Deploy + Cutover, en pausa), el sitio recibe una pasada de pulido visual profesional sobre los 16 bloques Payload-editables y componentes shadcn ya construidos en Phase 5. El camino va de fundación de tokens (elevación/motion CSS-puro, dark-mode branded, sin toggle) a primitivas shadcn + chrome global (máximo apalancamiento, se propaga a los 16 bloques), a hero/resultados/tipografía de contenido largo, a cards/listados + autoría E-E-A-T, y cierra con una verificación cruzada final (contraste, layout ES, grep de contenido hardcodeado, Lighthouse móvil). Motion/animación (carruseles, scroll-reveal) y un toggle visible de dark mode quedan explícitamente diferidos por decisión de Juan — UI-03 es solo corrección de tokens, sin UI de cambio de tema.
 
+**Scope expandido 2026-07-10 (post Phase 10.5 Wave 1):** Tras feedback directo de Juan rechazando la dirección visual acumulada de Phases 7-10 como insuficiente, el milestone se amplía con tres fases nuevas (10.6, 10.7, 10.8) insertadas entre Phase 10.5 y Phase 11: completar header/footer con verificación mobile real, cerrar los gaps de componentes identificados contra el sitio Payload viejo (`JuanPortfolio`, `COMPONENT-GAP-ANALYSIS.md`) agregando y **poblando** dos bloques nuevos, y enriquecer el bloque Hero con CTA/breadcrumbs también poblados. Disciplina mobile-first (~375px primero) se vuelve la práctica estándar de verificación desde aquí en adelante, reforzada explícitamente en Phase 11. Phase 10.5 queda cerrada con alcance reducido a solo lo que ya completó (tipografía + schema de Footer); el trabajo de restyle de header/footer que tenía pendiente se absorbe en Phase 10.6.
+
 ## Phases
 
 **Phase Numbering:**
@@ -25,8 +27,11 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 8: shadcn Primitives + Global Chrome** - Primitivas shadcn refinadas con los nuevos tokens + header/footer restyled (completed 2026-07-10)
 - [x] **Phase 9: Hero + Resultados/KPI + Tipografía** - Hero de mayor impacto, KPIs de case studies reforzados, jerarquía tipográfica en contenido largo (completed 2026-07-10)
 - [x] **Phase 10: Cards/Listados + Autoría E-E-A-T** - Tratamiento visual consistente en bloques tipo card + credenciales de autor prominentes (completed 2026-07-10)
-- [~] **Phase 10.5 [INSERTED]: Typography + Header/Footer Overhaul** - SUPERSEDED 2026-07-10 by milestone v1.2 (broader scope: full component audit + gap-fill vs JuanPortfolio + content population, requested by Juan mid-execution). Wave 1 (fonts + Footer dynamicColumns schema) already committed and carries forward as groundwork; Wave 2/3 (header/footer restyle, mobile verification) folded into v1.2's roadmap instead of continuing here.
-- [ ] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil sin regresión (pausada — se re-planea al final de v1.2, cuando el estado visual esté realmente final)
+- [x] **Phase 10.5 [INSERTED]: Typography + Footer Schema** - Tipografía Array/Khand/Geist wireada + campo dynamicColumns del Footer con migración commiteada (completed 2026-07-10; alcance reducido — restyle de header/footer pasa a Phase 10.6)
+- [ ] **Phase 10.6 [INSERTED]: Header/Footer Completion + Mobile Verification** - Nav mobile-first completa, footer con contenido dinámico realmente renderizado, verificación real con Playwright en 375/768/1280px
+- [ ] **Phase 10.7 [INSERTED]: Component Gap-Fill (AboutSection + TestimonialSection)** - Dos bloques nuevos identificados por el gap-analysis contra JuanPortfolio, construidos y poblados con contenido real/de muestra
+- [ ] **Phase 10.8 [INSERTED]: Hero Enrichment (CTA + Breadcrumbs)** - Campos de CTA/links y breadcrumbs agregados al Hero existente y poblados con datos reales
+- [ ] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil, disciplina mobile-first confirmada de punta a punta
 
 ## Phase Details
 
@@ -262,42 +267,85 @@ Plans:
 
 **UI hint**: yes
 
-### Phase 10.5 [INSERTED]: Typography + Header/Footer Overhaul
+### Phase 10.5 [INSERTED]: Typography + Footer Schema
 
-**Goal**: El sitio adopta la dirección tipográfica de `auditor` (Array/Khand/Geist Sans/Geist Mono) reemplazando Inter+Fraunces, y el header/footer pasan de "simples/vacíos" a navegación completa + columnas ricas con contenido dinámico (últimos 5 posts, últimos 5 case studies) editable desde Payload — todo verificado mobile-first. Insertada tras feedback visual directo de Juan sobre el estado acumulado de Phases 7-10.
+**Goal**: El sitio adopta la dirección tipográfica de `auditor` (Array/Khand/Geist Sans/Geist Mono) reemplazando Inter+Fraunces, y el global Footer gana el campo de schema `dynamicColumns` con migración commiteada — sentando fuentes y schema como base para que Phase 10.6 construya el restyle real de header/footer sobre ellos. Insertada tras feedback visual directo de Juan sobre el estado acumulado de Phases 7-10; alcance reducido 2026-07-10 (ver nota de scope expandido en Overview) — el restyle de header/footer y la verificación mobile que originalmente vivían aquí (Wave 2/3) se absorben en Phase 10.6.
 **Depends on**: Phase 10
-**Requirements**: (ad-hoc, fuera de UI-01..UI-14 — feedback directo de Juan post-Phase-10: 10.5-SC1, 10.5-SC2, 10.5-SC3, 10.5-SC4, 10.5-SC5)
+**Requirements**: UI-15, UI-16
 **Success Criteria** (what must be TRUE):
 
   1. Las cuatro familias tipográficas (Array display, Khand headings/UI, Geist Sans body, Geist Mono código) están self-hosted y wireadas, reemplazando toda referencia a Inter/Fraunces en el codebase
-  2. `SiteHeader` muestra navegación visible (no solo logo+CTA) verificada mobile-first (menú hamburguesa/Sheet en mobile primero, luego nav horizontal en desktop)
-  3. `SiteFooter` tiene columnas manuales editables (ya existente) MÁS al menos una sección de contenido dinámico (últimos posts, últimos case studies) computada en render desde Payload, no hardcodeada — requiere nueva migración de schema
-  4. El layout mobile (~375px) de header y footer se verifica de forma real (no solo "riesgo bajo asumido"), antes que desktop
-  5. `payload-types.ts` refleja el nuevo campo de Footer vía migración commiteada (`push:false` respetado)
+  2. El global Footer expone el campo `dynamicColumns` en su schema (fuente: últimos posts / últimos case studies), con migración commiteada y `payload-types.ts` actualizado (`push:false` respetado)
 
-**Plans**: 5 plans (3 waves)
+**Plans**: 2 plans (2 waves)
 
 Plans:
 
 - [x] 10.5-01-PLAN.md — Typography swap: Array/Khand/Geist Sans/Geist Mono, tailwind tokens, codebase-wide font-heading migration
 - [x] 10.5-02-PLAN.md — Footer schema: dynamicColumns field + migrate:create + payload-types.ts
-- [ ] 10.5-03-PLAN.md — Header restyle: mobile Sheet first, then desktop nav
-- [ ] 10.5-04-PLAN.md — Footer restyle + dynamic content wiring (latest posts/case studies via Local API)
-- [ ] 10.5-05-PLAN.md — Real mobile-viewport verification (Playwright, 375/768/1280px) + Juan's visual sign-off
+
+### Phase 10.6 [INSERTED]: Header/Footer Completion + Mobile Verification
+
+**Goal**: `SiteHeader` y `SiteFooter` completan el trabajo de chrome global que Phase 10.5 dejó a nivel de fuentes/schema — navegación mobile-first realmente visible en el header, columnas dinámicas del footer efectivamente renderizando datos de Payload, y una verificación mobile real con herramienta headless que reemplaza el "riesgo bajo asumido" de fases previas.
+**Depends on**: Phase 10.5
+**Requirements**: UI-17, UI-18, UI-19
+**Success Criteria** (what must be TRUE):
+
+  1. `SiteHeader` muestra navegación completa y visible en mobile (~375px) vía menú hamburguesa/Sheet, con nav horizontal completa en desktop — ambos estados verificados por separado, no solo el desktop
+  2. `SiteFooter` combina sus columnas manuales editables (ya existentes) con la sección de contenido dinámico (`dynamicColumns` de Phase 10.5) efectivamente renderizada con datos reales (últimos posts/case studies) desde Payload, sin quedar vacía ni con placeholder
+  3. Un run de Playwright (u equivalente headless) contra 375px/768px/1280px confirma que header y footer no rompen layout ni ocultan contenido crítico en ningún breakpoint, con evidencia (screenshots o assertions) adjunta al cierre de la fase
+  4. El footer deja de transmitir sensación de "vacío": al menos 2 columnas manuales más la sección dinámica son visibles simultáneamente en el viewport de desktop
+
+**Plans**: TBD
+
+### Phase 10.7 [INSERTED]: Component Gap-Fill (AboutSection + TestimonialSection)
+
+**Goal**: Los dos gaps genuinos de bloque identificados en `COMPONENT-GAP-ANALYSIS.md` contra el sitio Payload viejo (`JuanPortfolio`) — `AboutSection` (bio narrativa E-E-A-T) y `TestimonialSection` (spotlight de una cita dentro de un case study) — existen como bloques Payload-editables completos y están poblados con contenido real o de muestra representativo, para poder verse y validarse visualmente, no solo quedar construidos y vacíos.
+**Depends on**: Phase 10.6
+**Requirements**: UI-20, UI-21
+**Success Criteria** (what must be TRUE):
+
+  1. El bloque `AboutSection` (eyebrow + título + array de párrafos + foto opcional) existe como `config.ts` + `Component.tsx`, está registrado en `RenderBlocks.tsx` y disponible en el blocks array de Pages
+  2. El bloque `TestimonialSection` (cita + authorName + authorRole, distinto del `TestimonialsCarousel` general) existe como `config.ts` + `Component.tsx`, registrado en `RenderBlocks.tsx` y disponible en el blocks array de CaseStudies
+  3. `AboutSection` está poblado con contenido real o de muestra representativo y es visible navegando una página real del sitio (ej. home)
+  4. `TestimonialSection` está poblado con una cita real o de muestra y es visible embebido en un case study real, entre las secciones "Solución" y "Resultados"
+  5. Ningún campo de ninguno de los dos bloques queda hardcodeado en el `Component.tsx` — todo el contenido visible proviene de Payload, verificado con el mismo grep de contenido hardcodeado que usan las fases previas
+
+**Plans**: TBD
+
+**UI hint**: yes
+
+### Phase 10.8 [INSERTED]: Hero Enrichment (CTA + Breadcrumbs)
+
+**Goal**: El bloque `Hero` existente cierra los dos gaps de campo identificados en `COMPONENT-GAP-ANALYSIS.md` (CTA/links y breadcrumbs), agregándolos al schema, renderizándolos, y poblándolos con datos reales para que puedan verse y validarse, no solo quedar como campos opcionales vacíos.
+**Depends on**: Phase 10.7
+**Requirements**: UI-22, UI-23
+**Success Criteria** (what must be TRUE):
+
+  1. El `Hero` block expone un array opcional de `links` (label + url + estilo) en su schema, renderizado como botones de acción cuando está presente
+  2. El hero de home tiene al menos un CTA real poblado (ej. "Ver case studies" / "Agendar llamada") y visible en la página
+  3. La variante `listing` del `Hero` expone un array opcional de `breadcrumbs`, renderizado como navegación de breadcrumbs cuando está presente
+  4. Al menos una página listing real (blog o case studies) tiene breadcrumbs poblados y visibles
+  5. Ambos campos se verifican mobile-first (~375px) antes que desktop, sin overflow ni ruptura de layout, consistente con la disciplina mobile-first del resto del scope expandido
+
+**Plans**: TBD
+
+**UI hint**: yes
 
 ### Phase 11: Verificación Cruzada Final
 
-**Goal**: El diff acumulado de todo el milestone se verifica de punta a punta contra los riesgos identificados en research — contraste, layout en español, contenido hardcodeado y performance — antes de dar por cerrado el pulido visual y retomar Phase 6.
-**Depends on**: Phase 7, Phase 8, Phase 9, Phase 10, Phase 10.5
-**Requirements**: UI-11, UI-12, UI-13, UI-14
+**Goal**: El diff acumulado de todo el milestone (incluidas las fases 10.6-10.8 del scope expandido) se verifica de punta a punta contra los riesgos identificados en research — contraste, layout en español, contenido hardcodeado, performance y disciplina mobile-first — antes de dar por cerrado el pulido visual y retomar Phase 6.
+**Depends on**: Phase 7, Phase 8, Phase 9, Phase 10, Phase 10.5, Phase 10.6, Phase 10.7, Phase 10.8
+**Requirements**: UI-11, UI-12, UI-13, UI-14, UI-24
 **Success Criteria** (what must be TRUE):
 
   1. El contraste WCAG se re-verifica en ambos temas (light/dark) sobre el estado final de todos los cambios de esta fase, no solo sobre los checks parciales de cada fase individual
   2. El layout de todas las páginas tocadas se verifica en `/es` contra los títulos/textos más largos reales de los 72 posts/case studies migrados
   3. Un grep de contenido hardcodeado (strings de prueba, badges/stats sin campo Payload backing) en todos los bloques tocados por este milestone devuelve cero diffs en `src/blocks/*/config.ts` y `payload-types.ts`
   4. Un Lighthouse móvil corrido tras todos los cambios visuales no muestra regresión respecto al baseline de producción capturado antes de esta fase
+  5. Se confirma que el trabajo de Phases 10.6-10.8 fue diseñado y verificado mobile-first (375px → 768px → 1280px, con evidencia Playwright de Phase 10.6) y no como un check desktop-first de último momento
 
-**Plans**: 3 plans (2 waves)
+**Plans**: 3 plans (2 waves) — se re-planea al cierre de Phase 10.8 para incorporar los diffs de las fases 10.6-10.8
 
 Plans:
 
@@ -308,7 +356,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 (Phase 6 en pausa, retoma tras el cierre de 7-11)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 (Phase 6 en pausa, retoma tras el cierre de 7-11)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -322,5 +370,9 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 8. shadcn Primitives + Global Chrome | 2/2 | Complete   | 2026-07-10 |
 | 9. Hero + Resultados/KPI + Tipografía | 3/3 | Complete   | 2026-07-10 |
 | 10. Cards/Listados + Autoría E-E-A-T | 2/2 | Complete   | 2026-07-10 |
+| 10.5. Typography + Footer Schema | 2/2 | Complete   | 2026-07-10 |
+| 10.6. Header/Footer Completion + Mobile Verification | 0/TBD | Not started | - |
+| 10.7. Component Gap-Fill (AboutSection + TestimonialSection) | 0/TBD | Not started | - |
+| 10.8. Hero Enrichment (CTA + Breadcrumbs) | 0/TBD | Not started | - |
 | 11. Verificación Cruzada Final | 0/3 | Not started | - |
 </content>

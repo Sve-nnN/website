@@ -95,10 +95,10 @@
 **Defined:** 2026-07-10
 **Milestone goal (expandido):** Tras feedback directo de Juan sobre el estado acumulado de Phases 7-10 (tipografía, header y footer insuficientes), el milestone se amplía: nueva dirección tipográfica (Array/Khand/Geist, la misma de `auditor`), header/footer ricos y editables, dos bloques nuevos identificados por research de gaps contra el sitio Payload viejo (`JuanPortfolio`), enriquecimiento de campos del Hero, y disciplina mobile-first estricta de ahora en adelante.
 
-### UI-CHROME (Tipografía + Header/Footer — ya iniciado en Phase 10.5, continúa aquí)
+### UI-CHROME (Tipografía + Header/Footer — ya iniciado en Phase 10.5, continúa en Phase 10.6)
 
-- [x] **UI-15**: Cuatro familias tipográficas (Array display, Khand headings/UI, Geist Sans body, Geist Mono código) self-hosted y wireadas, reemplazando Inter/Fraunces (completado en Phase 10.5 Wave 1)
-- [x] **UI-16**: Campo `dynamicColumns` en el global Footer (fuente: últimos posts / últimos case studies) con migración commiteada (completado en Phase 10.5 Wave 1)
+- [x] **UI-15**: Cuatro familias tipográficas (Array display, Khand headings/UI, Geist Sans body, Geist Mono código) self-hosted y wireadas, reemplazando Inter/Fraunces (completado en Phase 10.5)
+- [x] **UI-16**: Campo `dynamicColumns` en el global Footer (fuente: últimos posts / últimos case studies) con migración commiteada (completado en Phase 10.5)
 - [ ] **UI-17**: `SiteHeader` con navegación visible completa, verificada mobile-first (menú hamburguesa/Sheet primero, nav horizontal desktop después)
 - [ ] **UI-18**: `SiteFooter` con columnas manuales editables MÁS sección de contenido dinámico (últimos posts/case studies) funcionando en render real, sensación de footer "completo" no vacío
 - [ ] **UI-19**: Verificación mobile real (~375px) con herramienta headless (Playwright u equivalente), no solo "riesgo bajo asumido" como en fases previas
@@ -138,6 +138,7 @@ Explicitly excluded. Documented to prevent scope creep.
 | Plugin de comentarios en blog | No aporta a la credibilidad E-E-A-T buscada; mantenimiento extra sin valor claro para v1 |
 | Colección Works | Se retira — Juan prefiere case studies enriquecidos como vitrina principal en vez de un concepto separado y más liviano; el contenido de Works no tiene réplica 1:1 obligatoria, se absorbe conceptualmente en CaseStudies durante el content audit de Fase 1 |
 | Paquetes de comunidad de Cloudinary como primera opción | Se prueba primero el adapter custom sobre `@payloadcms/plugin-cloud-storage` (referencia validada `github.com/Sahitya1707/payload-cloudinary`); los paquetes de comunidad quedan como fallback, no como plan A — decisión actualizada tras research adicional |
+| `CalendlyEmbed` (booking widget, identificado como Genuine Gap en COMPONENT-GAP-ANALYSIS.md) | Confianza MEDIA sobre si Juan sigue usando Calendly como herramienta de scheduling — no se agrega al roadmap de v1.1 sin confirmación explícita; queda como candidato v2/futuro insert si Juan lo confirma |
 
 ## Traceability
 
@@ -188,10 +189,20 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UI-08 | Phase 9 | Complete |
 | UI-09 | Phase 10 | Complete |
 | UI-10 | Phase 10 | Complete |
+| UI-15 | Phase 10.5 | Complete |
+| UI-16 | Phase 10.5 | Complete |
+| UI-17 | Phase 10.6 | Pending |
+| UI-18 | Phase 10.6 | Pending |
+| UI-19 | Phase 10.6 | Pending |
+| UI-20 | Phase 10.7 | Pending |
+| UI-21 | Phase 10.7 | Pending |
+| UI-22 | Phase 10.8 | Pending |
+| UI-23 | Phase 10.8 | Pending |
 | UI-11 | Phase 11 | Pending |
 | UI-12 | Phase 11 | Pending |
 | UI-13 | Phase 11 | Pending |
 | UI-14 | Phase 11 | Pending |
+| UI-24 | Phase 11 | Pending |
 
 **Coverage:**
 
@@ -199,10 +210,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 - Mapped to phases: 33
 - Unmapped: 0 ✓
 
-- v1.1 requirements: 14 total
+- v1.1 requirements (original 14): 14 total
 - Mapped to phases: 14
+- Unmapped: 0 ✓
+
+- v1.1 requirements — Expansión (UI-15..UI-24): 10 total
+- Mapped to phases: 10
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-07-09*
-*Last updated: 2026-07-10 — v1.1 roadmap created (Phases 7-11)*
+*Last updated: 2026-07-10 — v1.1 roadmap expanded (Phases 10.6, 10.7, 10.8 inserted; Phase 10.5 scope reduced to UI-15/UI-16; Phase 11 depends-on and requirements updated)*
+</content>
