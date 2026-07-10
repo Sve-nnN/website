@@ -25,6 +25,10 @@ scripts/migrate/data/
 # content (ids/updatedAt), not source code
 .planning/phases/06-deploy-cutover/freeze-snapshots/
 
+# Phase 10 fixture-cleanup cross-script state scratch file — regenerable,
+# always deleted by scripts/cleanup-phase10-eeat-fixtures.ts, not source code
+scripts/.phase10-fixture-state.json
+
 # misc
 .DS_Store
 *.pem
