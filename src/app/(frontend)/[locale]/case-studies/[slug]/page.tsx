@@ -10,6 +10,7 @@ import { AuthorByline } from '@/components/AuthorByline'
 import { AuthorCard } from '@/components/AuthorCard'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
+import { RenderBlocks } from '@/blocks/RenderBlocks'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://juancarlosangulo.com'
 
@@ -173,6 +174,10 @@ export default async function CaseStudyPage({
               ))}
             </ol>
           </section>
+        )}
+
+        {doc.testimonialSection && doc.testimonialSection.length > 0 && (
+          <RenderBlocks blocks={doc.testimonialSection as never} />
         )}
 
         {doc.results?.metrics && doc.results.metrics.length > 0 && (

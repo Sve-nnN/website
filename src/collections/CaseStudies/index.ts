@@ -4,6 +4,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
+import { TestimonialSection } from '@/blocks/TestimonialSection/config'
 
 export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
@@ -59,6 +60,21 @@ export const CaseStudies: CollectionConfig = {
         { name: 'title', type: 'text', required: true, localized: true },
         { name: 'description', type: 'textarea', required: true, localized: true },
       ],
+    },
+    // Gap-fill (10.7, UI-21): CaseStudies has no general-purpose `blocks`
+    // layout field (it's a fixed KPI/challenge/solution/results model, per
+    // 01-04-PLAN.md) — this field is scoped to allow ONLY TestimonialSection,
+    // slotted between "solution" and "results" so an editor can embed one
+    // hand-picked quote inline without opening up free-form block layout.
+    {
+      name: 'testimonialSection',
+      label: 'Testimonio (opcional)',
+      type: 'blocks',
+      maxRows: 1,
+      admin: {
+        description: 'Testimonio embebido entre "La solución" y "Resultados"',
+      },
+      blocks: [TestimonialSection],
     },
     {
       name: 'results',
