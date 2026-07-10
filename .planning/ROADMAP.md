@@ -252,7 +252,11 @@ Plans:
   3. `AuthorByline`/`AuthorCard` muestran de forma visualmente prominente bio, años de experiencia y redes sociales ya modelados en Phase 5
   4. El layout de cards y byline se verifica en `/es` contra títulos/nombres largos reales (no placeholder), sin overflow ni truncamiento roto
 
-**Plans**: TBD
+**Plans**: 2 plans (2 waves)
+
+Plans:
+- [ ] 10-01-PLAN.md — PostCard/CaseStudyCard/AuthorByline/AuthorCard restyled to consume the Card primitive consistently, E-E-A-T fields made prominent
+- [ ] 10-02-PLAN.md — Boundary-condition + ES-locale + E-E-A-T verification against real Postgres data and guarded seeded fixtures, closes with explicit non-blocking flag for Juan's pending author content
 
 **UI hint**: yes
 
