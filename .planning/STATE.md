@@ -4,14 +4,14 @@ milestone: v1.1
 milestone_name: milestone
 status: planning
 stopped_at: Completed 10.5-01-PLAN.md
-last_updated: "2026-07-10T15:30:00.000Z"
-last_activity: 2026-07-10 — Phase 10.5 Plan 01 executed and closed (typography overhaul: Array/Khand/Geist replace Inter/Fraunces; see 10.5-01-SUMMARY.md)
+last_updated: "2026-07-10T16:00:00.000Z"
+last_activity: 2026-07-10 — Roadmap expanded: Phases 10.6 (header/footer completion + mobile verification), 10.7 (AboutSection + TestimonialSection gap-fill), 10.8 (Hero CTA + breadcrumbs) inserted between 10.5 and 11; Phase 10.5 scope reduced to just UI-15/UI-16 (both complete); Phase 11 depends-on and requirements updated to include the new phases and UI-24
 progress:
-  total_phases: 11
-  completed_phases: 9
-  total_plans: 55
+  total_phases: 14
+  completed_phases: 10
+  total_plans: 52
   completed_plans: 49
-  percent: 89
+  percent: 94
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Milestone v1.1 (UI/UX Polish Pass) roadmap created — Phases 7-11 cover UI-01..UI-14 (design tokens, shadcn primitives + chrome, hero/KPI/typography, cards + author E-E-A-T, cross-cutting verification). Phase 6 (Deploy + Cutover) remains paused, resumes after Phase 11 closes. Two pre-deploy action items from Phase 5 still carry forward (author E-E-A-T content population, real Resend API key).
+**Current focus:** Milestone v1.1 (UI/UX Polish Pass) — scope expandido 2026-07-10. Roadmap ahora cubre Phases 7-11 más tres fases insertadas (10.6, 10.7, 10.8) entre Phase 10.5 y Phase 11: header/footer completion + verificación mobile real (UI-17..19), component gap-fill AboutSection/TestimonialSection poblados (UI-20/21), y enriquecimiento de Hero con CTA/breadcrumbs poblados (UI-22/23). UI-24 (disciplina mobile-first) se verifica de forma cruzada en Phase 11, no como fase separada. Phase 10.5 cierra con alcance reducido (solo tipografía + schema de Footer, ya completo); el restyle de header/footer que tenía pendiente pasa a Phase 10.6. Phase 6 (Deploy + Cutover) sigue en pausa, retoma después de que Phase 11 cierre. Dos pre-deploy action items de Phase 5 siguen pendientes (contenido E-E-A-T de autor, Resend API key real).
 
 ## Current Position
 
-Phase: 10.5 (Typography + Header/Footer Overhaul) — plan 01 complete
-Plan: 10.5-01 done (replaced Inter+Fraunces with a self-hosted 4-font stack — Array display, Khand headings/UI, Geist Sans body, Geist Mono — via src/fonts.ts + geist package; mapped 4 Tailwind fontFamily tokens; split font-display/font-heading across ~20 files so Array is reserved for h1/hero and Khand covers secondary headings)
-Status: Phase 10.5 Plan 01 executed; remaining 10.5 plans (header/footer) pending
-Last activity: 2026-07-10 — Phase 10.5 Plan 01 executed and closed (see 10.5-01-SUMMARY.md)
+Phase: 10.5 (Typography + Footer Schema) — completa (2/2 plans); próxima fase a planear es 10.6 (Header/Footer Completion + Mobile Verification)
+Plan: 10.5-02 completado y cierra la fase; 10.6/10.7/10.8 aún no tienen plans generados (pendiente `/gsd:plan-phase 10.6`)
+Status: Roadmap actualizado con scope expandido; listo para planear Phase 10.6
+Last activity: 2026-07-10 — Roadmap expandido con Phases 10.6/10.7/10.8, REQUIREMENTS.md traceability actualizada (UI-15..UI-24 mapeadas, cobertura 100%)
 
 ## Performance Metrics
 
@@ -109,6 +109,8 @@ Recent decisions affecting current work:
 - [Phase ?]: Phase 9: Prose.tsx h2/h3 differentiated via opacity-90 recession on h3 rather than a new size token, since both share the locked text-heading size
 - [Phase 10]: 10-01: PostCard/CaseStudyCard/AuthorCard restyled to compose Phase 8's Card/CardContent primitive; AuthorCard's yearsExperience given a headline-stat treatment reusing Phase 9's KPI metric-dominance pattern; AuthorByline left untouched (chromeless by design)
 - [Phase 10]: 10-02: guarded seed/verify/cleanup script triad proved repeater min/max boundaries (real data + seeded fixtures where 0 real CaseStudies exist), E-E-A-T prominence in en+es, and ES longest-title rendering; discovered and corrected ArchiveBlock's real limit=12 instance lives on the blog page not the home page; all 7 seeded fixtures cleanly removed; real author (id=1) still needs credentials/yearsExperience/socialLinks populated via /admin — non-blocking content task, flagged in 10-VERIFICATION.md
+- [Milestone v1.1 — scope expandido]: Juan rechazó la dirección visual acumulada de Phases 7-10 como insuficiente y pidió: auditoría de componentes vs JuanPortfolio, cierre de gaps genuinos, y contenido real poblado en cualquier bloque nuevo. Roadmap actualizado: Phase 10.5 cierra con alcance reducido a solo UI-15/UI-16 (tipografía + schema Footer, ya completos); se insertan Phase 10.6 (header/footer completion + Playwright mobile verification, UI-17..19), Phase 10.7 (AboutSection + TestimonialSection poblados, UI-20/21) y Phase 10.8 (Hero CTA + breadcrumbs poblados, UI-22/23); Phase 11 pasa a depender también de 10.6/10.7/10.8 y suma UI-24 (disciplina mobile-first) como requirement de verificación cruzada final, en vez de una fase separada
+- [Milestone v1.1 — scope expandido]: `CalendlyEmbed` (tercer gap genuino identificado en COMPONENT-GAP-ANALYSIS.md) NO se agrega al roadmap — confianza MEDIA sobre si Juan sigue usando Calendly; queda documentado en REQUIREMENTS.md Out of Scope como candidato v2/insert futuro si se confirma
 
 ### Pending Todos
 
@@ -123,6 +125,7 @@ None yet.
 - Phase 6 (Hostinger): tier real contratado y `max_connections` de Postgres deben confirmarse contra el plan provisto antes de finalizar dimensionamiento de pool
 - ~~Phase 1: decisión Works vs Clientes~~ — RESUELTO 2026-07-09: Works se retira (absorbido conceptualmente en CaseStudies enriquecido), Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link)
 - ~~Plan 02-05 Task 1 (seed script): permission classifier blocked execution of 'npx tsx scripts/seed-phase2.ts' against the production Neon DB~~ — RESUELTO 2026-07-09: authorization step cleared; per the orchestrator's report the seed ran successfully (idempotency confirmed on re-run) and all 8 end-to-end curl checks passed. Phase 2 closed 5/5.
+- [Phase 10.7 pending confirmation] `CalendlyEmbed` no entró al roadmap por confianza MEDIA sobre si Juan sigue usando Calendly — si Juan confirma que sí, se puede insertar como fase adicional (ej. 10.75) más adelante
 
 ## Deferred Items
 
@@ -134,7 +137,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T15:30:00.000Z
-Stopped at: Completed 10.5-01-PLAN.md
+Last session: 2026-07-10T16:00:00.000Z
+Stopped at: Roadmap expanded with Phases 10.6/10.7/10.8; next action is `/gsd:plan-phase 10.6`
 Resume file: None
 </content>
