@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: milestone
-status: planning
-stopped_at: Completed 10.5-01-PLAN.md
-last_updated: "2026-07-10T16:00:00.000Z"
-last_activity: 2026-07-10 — Roadmap expanded: Phases 10.6 (header/footer completion + mobile verification), 10.7 (AboutSection + TestimonialSection gap-fill), 10.8 (Hero CTA + breadcrumbs) inserted between 10.5 and 11; Phase 10.5 scope reduced to just UI-15/UI-16 (both complete); Phase 11 depends-on and requirements updated to include the new phases and UI-24
+status: Phase 10.6 en progreso — plans 01/02 (SiteHeader, SiteFooter) completados; plan 03 (Playwright mobile verification, checkpoint humano) pendiente
+stopped_at: "10.6-01 y 10.6-02 ejecutados y commiteados; 10.6-03 (mobile verification, requiere checkpoints humanos) no ejecutado en esta corrida"
+last_updated: "2026-07-10T16:20:00.000Z"
+last_activity: 2026-07-10 — Ejecutados 10.6-01-PLAN.md (SiteHeader, UI-17) y 10.6-02-PLAN.md (SiteFooter dynamicColumns + restyle mobile-first, UI-18); 3 commits atomicos (5681087, 1ae02eb, 7ed4742)
 progress:
-  total_phases: 14
-  completed_phases: 10
-  total_plans: 52
-  completed_plans: 49
-  percent: 94
+  total_phases: 11
+  completed_phases: 9
+  total_plans: 55
+  completed_plans: 50
+  percent: 91
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 10.5 (Typography + Footer Schema) — completa (2/2 plans); próxima fase a planear es 10.6 (Header/Footer Completion + Mobile Verification)
-Plan: 10.5-02 completado y cierra la fase; 10.6/10.7/10.8 aún no tienen plans generados (pendiente `/gsd:plan-phase 10.6`)
-Status: Roadmap actualizado con scope expandido; listo para planear Phase 10.6
-Last activity: 2026-07-10 — Roadmap expandido con Phases 10.6/10.7/10.8, REQUIREMENTS.md traceability actualizada (UI-15..UI-24 mapeadas, cobertura 100%)
+Phase: 10.6 (Header/Footer Completion + Mobile Verification) — 2/3 plans completos
+Plan: 10.6-01 (SiteHeader, UI-17) y 10.6-02 (SiteFooter, UI-18) completados y commiteados; 10.6-03 (Playwright mobile verification 375/768/1280px, UI-19) pendiente — no autonomo, requiere 2 checkpoints humanos (legitimidad de paquete playwright + confirmacion visual final)
+Status: Phase 10.6 en progreso, esperando ejecucion de 10.6-03
+Last activity: 2026-07-10 — Ejecutados 10.6-01-PLAN.md (SiteHeader completado: audit cerro un gap de accesibilidad real — SheetTitle faltante en el Sheet movil) y 10.6-02-PLAN.md (SiteFooter dynamicColumns conectado a datos reales via Local API con filtro _status published, mas restyle mobile-first del grid)
 
 ## Performance Metrics
 
@@ -72,6 +72,8 @@ Last activity: 2026-07-10 — Roadmap expandido con Phases 10.6/10.7/10.8, REQUI
 | Phase 09 P02 | 12min | 2 tasks | 2 files |
 | Phase 09 P03 | 10min | 2 tasks | 2 files |
 | Phase 10.5 P01 | 15min | 3 tasks | 26 files |
+| Phase 10.6 P01 | 15min | 2 tasks | 1 files |
+| Phase 10.6 P02 | 20min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -111,6 +113,8 @@ Recent decisions affecting current work:
 - [Phase 10]: 10-02: guarded seed/verify/cleanup script triad proved repeater min/max boundaries (real data + seeded fixtures where 0 real CaseStudies exist), E-E-A-T prominence in en+es, and ES longest-title rendering; discovered and corrected ArchiveBlock's real limit=12 instance lives on the blog page not the home page; all 7 seeded fixtures cleanly removed; real author (id=1) still needs credentials/yearsExperience/socialLinks populated via /admin — non-blocking content task, flagged in 10-VERIFICATION.md
 - [Milestone v1.1 — scope expandido]: Juan rechazó la dirección visual acumulada de Phases 7-10 como insuficiente y pidió: auditoría de componentes vs JuanPortfolio, cierre de gaps genuinos, y contenido real poblado en cualquier bloque nuevo. Roadmap actualizado: Phase 10.5 cierra con alcance reducido a solo UI-15/UI-16 (tipografía + schema Footer, ya completos); se insertan Phase 10.6 (header/footer completion + Playwright mobile verification, UI-17..19), Phase 10.7 (AboutSection + TestimonialSection poblados, UI-20/21) y Phase 10.8 (Hero CTA + breadcrumbs poblados, UI-22/23); Phase 11 pasa a depender también de 10.6/10.7/10.8 y suma UI-24 (disciplina mobile-first) como requirement de verificación cruzada final, en vez de una fase separada
 - [Milestone v1.1 — scope expandido]: `CalendlyEmbed` (tercer gap genuino identificado en COMPONENT-GAP-ANALYSIS.md) NO se agrega al roadmap — confianza MEDIA sobre si Juan sigue usando Calendly; queda documentado en REQUIREMENTS.md Out of Scope como candidato v2/insert futuro si se confirma
+- [Phase 10.6]: 10.6-01: audit del edit sin commitear de SiteHeader.tsx confirmó que ya cumplía los must_haves de UI-17 (tap targets 44px, Separator, hover states, breakpoints no invertidos); único gap real cerrado fue un `SheetTitle` faltante en el Sheet móvil (Radix Dialog requiere nombre accesible) — sin indicador de página activa (fuera de alcance) ni auto-close del Sheet (aceptado el comportamiento default)
+- [Phase 10.6]: 10.6-02: dynamicColumns del footer resuelto vía Local API con filtro `_status: published` explícito (obligatorio porque Local API usa `overrideAccess: true` y no respeta el access control de las colecciones); case-studies ordenado por `-createdAt` (no tiene `publishedAt`); grid mobile-first (`grid-cols-1` en 375px) y jerarquía tipográfica (`font-heading` en títulos de columna)
 
 ### Pending Todos
 
@@ -126,6 +130,7 @@ None yet.
 - ~~Phase 1: decisión Works vs Clientes~~ — RESUELTO 2026-07-09: Works se retira (absorbido conceptualmente en CaseStudies enriquecido), Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link)
 - ~~Plan 02-05 Task 1 (seed script): permission classifier blocked execution of 'npx tsx scripts/seed-phase2.ts' against the production Neon DB~~ — RESUELTO 2026-07-09: authorization step cleared; per the orchestrator's report the seed ran successfully (idempotency confirmed on re-run) and all 8 end-to-end curl checks passed. Phase 2 closed 5/5.
 - [Phase 10.7 pending confirmation] `CalendlyEmbed` no entró al roadmap por confianza MEDIA sobre si Juan sigue usando Calendly — si Juan confirma que sí, se puede insertar como fase adicional (ej. 10.75) más adelante
+- [Phase 10.6] 10.6-03 (Playwright viewport verification 375/768/1280px, UI-19) no se ejecutó en esta corrida por instrucción explícita del orquestador — requiere 2 checkpoints humanos no automatizables (confirmar legitimidad del paquete npm `playwright` antes de instalar, y confirmación visual final de Juan sobre header+footer). Pendiente de ejecución en una corrida separada.
 
 ## Deferred Items
 
@@ -137,7 +142,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T16:00:00.000Z
-Stopped at: Roadmap expanded with Phases 10.6/10.7/10.8; next action is `/gsd:plan-phase 10.6`
-Resume file: None
+Last session: 2026-07-10T16:20:00.000Z
+Stopped at: 10.6-01 y 10.6-02 completados y commiteados; 10.6-03 (mobile verification, checkpoints humanos) pendiente de ejecución
+Resume file: .planning/phases/10.6-header-footer-completion-mobile-verification/10.6-03-PLAN.md
 </content>

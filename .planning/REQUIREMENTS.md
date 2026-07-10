@@ -99,8 +99,8 @@
 
 - [x] **UI-15**: Cuatro familias tipográficas (Array display, Khand headings/UI, Geist Sans body, Geist Mono código) self-hosted y wireadas, reemplazando Inter/Fraunces (completado en Phase 10.5)
 - [x] **UI-16**: Campo `dynamicColumns` en el global Footer (fuente: últimos posts / últimos case studies) con migración commiteada (completado en Phase 10.5)
-- [ ] **UI-17**: `SiteHeader` con navegación visible completa, verificada mobile-first (menú hamburguesa/Sheet primero, nav horizontal desktop después)
-- [ ] **UI-18**: `SiteFooter` con columnas manuales editables MÁS sección de contenido dinámico (últimos posts/case studies) funcionando en render real, sensación de footer "completo" no vacío
+- [x] **UI-17**: `SiteHeader` con navegación visible completa, verificada mobile-first (menú hamburguesa/Sheet primero, nav horizontal desktop después)
+- [x] **UI-18**: `SiteFooter` con columnas manuales editables MÁS sección de contenido dinámico (últimos posts/case studies) funcionando en render real, sensación de footer "completo" no vacío
 - [ ] **UI-19**: Verificación mobile real (~375px) con herramienta headless (Playwright u equivalente), no solo "riesgo bajo asumido" como en fases previas
 
 ### UI-GAPS (Bloques nuevos + campos de Hero — de COMPONENT-GAP-ANALYSIS.md)
@@ -191,8 +191,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UI-10 | Phase 10 | Complete |
 | UI-15 | Phase 10.5 | Complete |
 | UI-16 | Phase 10.5 | Complete |
-| UI-17 | Phase 10.6 | Pending |
-| UI-18 | Phase 10.6 | Pending |
+| UI-17 | Phase 10.6 | Complete |
+| UI-18 | Phase 10.6 | Complete |
 | UI-19 | Phase 10.6 | Pending |
 | UI-20 | Phase 10.7 | Pending |
 | UI-21 | Phase 10.7 | Pending |

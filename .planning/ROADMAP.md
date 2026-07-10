@@ -300,8 +300,8 @@ Plans:
 
 Plans:
 
-- [ ] 10.6-01-PLAN.md — SiteHeader mobile-first nav completion (UI-17)
-- [ ] 10.6-02-PLAN.md — SiteFooter dynamicColumns wiring + mobile-first restyle (UI-18)
+- [x] 10.6-01-PLAN.md — SiteHeader mobile-first nav completion (UI-17)
+- [x] 10.6-02-PLAN.md — SiteFooter dynamicColumns wiring + mobile-first restyle (UI-18)
 - [ ] 10.6-03-PLAN.md — Playwright mobile viewport verification 375/768/1280px (UI-19)
 
 ### Phase 10.7 [INSERTED]: Component Gap-Fill (AboutSection + TestimonialSection)
@@ -377,7 +377,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 9. Hero + Resultados/KPI + Tipografía | 3/3 | Complete   | 2026-07-10 |
 | 10. Cards/Listados + Autoría E-E-A-T | 2/2 | Complete   | 2026-07-10 |
 | 10.5. Typography + Footer Schema | 2/2 | Complete   | 2026-07-10 |
-| 10.6. Header/Footer Completion + Mobile Verification | 0/3 | Not started | - |
+| 10.6. Header/Footer Completion + Mobile Verification | 2/3 | In Progress|  |
 | 10.7. Component Gap-Fill (AboutSection + TestimonialSection) | 0/TBD | Not started | - |
 | 10.8. Hero Enrichment (CTA + Breadcrumbs) | 0/TBD | Not started | - |
 | 11. Verificación Cruzada Final | 0/3 | Not started | - |
