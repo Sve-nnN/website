@@ -1,0 +1,1043 @@
+{
+  "frozenAt": "2026-07-10T01:52:03.980Z",
+  "totalUrls": 152,
+  "note": "juan-tech.com (Vercel) returned DEPLOYMENT_DISABLED (HTTP 402) for all routes including /sitemap.xml at freeze time (2026-07-10) -- entries below were derived directly from the real Mongo dump (posts.json/categories.json/authors.json/case-studies.json) plus the exact URL-building logic read verbatim from JuanPortfolio/src/utilities/sitemap.ts and the posts-sitemap.xml/categories-sitemap.xml/authors-sitemap.xml route handlers, not from a live HTTP fetch. Case-studies and works both confirmed empty (0 docs) via direct Local API query against the real production Mongo Atlas database, not merely an empty export file.",
+  "entries": [
+    {
+      "path": "/",
+      "locale": "es",
+      "source": "sitemap"
+    },
+    {
+      "path": "/en",
+      "locale": "en",
+      "source": "sitemap"
+    },
+    {
+      "path": "/blog",
+      "locale": "es",
+      "source": "sitemap"
+    },
+    {
+      "path": "/en/blog",
+      "locale": "en",
+      "source": "sitemap"
+    },
+    {
+      "path": "/authors",
+      "locale": "es",
+      "source": "sitemap"
+    },
+    {
+      "path": "/en/authors",
+      "locale": "en",
+      "source": "sitemap"
+    },
+    {
+      "path": "/case-studies",
+      "locale": "es",
+      "source": "sitemap"
+    },
+    {
+      "path": "/en/case-studies",
+      "locale": "en",
+      "source": "sitemap"
+    },
+    {
+      "path": "/contact",
+      "locale": "es",
+      "source": "sitemap"
+    },
+    {
+      "path": "/en/contact",
+      "locale": "en",
+      "source": "sitemap"
+    },
+    {
+      "path": "/privacy",
+      "locale": "es",
+      "source": "sitemap"
+    },
+    {
+      "path": "/en/privacy",
+      "locale": "en",
+      "source": "sitemap"
+    },
+    {
+      "path": "/terms",
+      "locale": "es",
+      "source": "sitemap"
+    },
+    {
+      "path": "/en/terms",
+      "locale": "en",
+      "source": "sitemap"
+    },
+    {
+      "path": "/blog/tech-seo/javascript-seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "javascript-seo"
+    },
+    {
+      "path": "/en/blog/tech-seo/javascript-seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "javascript-seo"
+    },
+    {
+      "path": "/blog/seo/guia-google-search-console",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "guia-google-search-console"
+    },
+    {
+      "path": "/en/blog/seo/guia-google-search-console",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "guia-google-search-console"
+    },
+    {
+      "path": "/blog/seo/canibalizacion-seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "canibalizacion-seo"
+    },
+    {
+      "path": "/en/blog/seo/canibalizacion-seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "canibalizacion-seo"
+    },
+    {
+      "path": "/blog/development/react-19",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "react-19"
+    },
+    {
+      "path": "/en/blog/development/react-19",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "react-19"
+    },
+    {
+      "path": "/blog/development/hidratacion-web",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "hidratacion-web"
+    },
+    {
+      "path": "/en/blog/development/hidratacion-web",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "hidratacion-web"
+    },
+    {
+      "path": "/blog/cs-fundamentals/recursividad",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "recursividad"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/recursividad",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "recursividad"
+    },
+    {
+      "path": "/blog/cs-fundamentals/pilas-y-colas",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "pilas-y-colas"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/pilas-y-colas",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "pilas-y-colas"
+    },
+    {
+      "path": "/blog/tech-seo/technical-seo-guide",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "technical-seo-guide"
+    },
+    {
+      "path": "/en/blog/tech-seo/technical-seo-guide",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "technical-seo-guide"
+    },
+    {
+      "path": "/blog/tech-seo/technical-seo-checklist",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "technical-seo-checklist"
+    },
+    {
+      "path": "/en/blog/tech-seo/technical-seo-checklist",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "technical-seo-checklist"
+    },
+    {
+      "path": "/blog/tech-seo/structured-data-seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "structured-data-seo"
+    },
+    {
+      "path": "/en/blog/tech-seo/structured-data-seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "structured-data-seo"
+    },
+    {
+      "path": "/blog/tech-seo/seo-on-page-guia",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "seo-on-page-guia"
+    },
+    {
+      "path": "/en/blog/tech-seo/seo-on-page-guia",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "seo-on-page-guia"
+    },
+    {
+      "path": "/blog/tech-seo/nextjs-seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "nextjs-seo"
+    },
+    {
+      "path": "/en/blog/tech-seo/nextjs-seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "nextjs-seo"
+    },
+    {
+      "path": "/blog/tech-seo/auditoria-seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "auditoria-seo"
+    },
+    {
+      "path": "/en/blog/tech-seo/auditoria-seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "auditoria-seo"
+    },
+    {
+      "path": "/blog/seo/seo-content-strategy",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "seo-content-strategy"
+    },
+    {
+      "path": "/en/blog/seo/seo-content-strategy",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "seo-content-strategy"
+    },
+    {
+      "path": "/blog/seo/keyword-research-guide",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "keyword-research-guide"
+    },
+    {
+      "path": "/en/blog/seo/keyword-research-guide",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "keyword-research-guide"
+    },
+    {
+      "path": "/blog/development/payload-cms-guide",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "payload-cms-guide"
+    },
+    {
+      "path": "/en/blog/development/payload-cms-guide",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "payload-cms-guide"
+    },
+    {
+      "path": "/blog/development/nextjs-cms",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "nextjs-cms"
+    },
+    {
+      "path": "/en/blog/development/nextjs-cms",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "nextjs-cms"
+    },
+    {
+      "path": "/blog/development/headless-cms-comparison",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "headless-cms-comparison"
+    },
+    {
+      "path": "/en/blog/development/headless-cms-comparison",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "headless-cms-comparison"
+    },
+    {
+      "path": "/blog/development/astro-vs-nextjs",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "astro-vs-nextjs"
+    },
+    {
+      "path": "/en/blog/development/astro-vs-nextjs",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "astro-vs-nextjs"
+    },
+    {
+      "path": "/blog/cs-fundamentals/tree-traversal",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "tree-traversal"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/tree-traversal",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "tree-traversal"
+    },
+    {
+      "path": "/blog/cs-fundamentals/time-complexity",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "time-complexity"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/time-complexity",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "time-complexity"
+    },
+    {
+      "path": "/blog/cs-fundamentals/space-complexity",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "space-complexity"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/space-complexity",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "space-complexity"
+    },
+    {
+      "path": "/blog/cs-fundamentals/quicksort-python",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "quicksort-python"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/quicksort-python",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "quicksort-python"
+    },
+    {
+      "path": "/blog/cs-fundamentals/queue-data-structure",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "queue-data-structure"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/queue-data-structure",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "queue-data-structure"
+    },
+    {
+      "path": "/blog/cs-fundamentals/merge-sort-python",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "merge-sort-python"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/merge-sort-python",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "merge-sort-python"
+    },
+    {
+      "path": "/blog/cs-fundamentals/heap-data-structure",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "heap-data-structure"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/heap-data-structure",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "heap-data-structure"
+    },
+    {
+      "path": "/blog/cs-fundamentals/graph-algorithms",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "graph-algorithms"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/graph-algorithms",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "graph-algorithms"
+    },
+    {
+      "path": "/blog/cs-fundamentals/dynamic-programming",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "dynamic-programming"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/dynamic-programming",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "dynamic-programming"
+    },
+    {
+      "path": "/blog/cs-fundamentals/binary-search-tree",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "binary-search-tree"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/binary-search-tree",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "binary-search-tree"
+    },
+    {
+      "path": "/blog/cs-fundamentals/data-structures",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "data-structures"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/data-structures",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "data-structures"
+    },
+    {
+      "path": "/blog/seo/seo-copywriting-guide",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "seo-copywriting-guide"
+    },
+    {
+      "path": "/en/blog/seo/seo-copywriting-guide",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "seo-copywriting-guide"
+    },
+    {
+      "path": "/blog/seo/pillar-page-seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "pillar-page-seo"
+    },
+    {
+      "path": "/en/blog/seo/pillar-page-seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "pillar-page-seo"
+    },
+    {
+      "path": "/blog/seo/content-pillar",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "content-pillar"
+    },
+    {
+      "path": "/en/blog/seo/content-pillar",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "content-pillar"
+    },
+    {
+      "path": "/blog/seo/seo-copywriting",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "seo-copywriting"
+    },
+    {
+      "path": "/en/blog/seo/seo-copywriting",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "seo-copywriting"
+    },
+    {
+      "path": "/blog/seo/seo-off-page-guia",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "seo-off-page-guia"
+    },
+    {
+      "path": "/en/blog/seo/seo-off-page-guia",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "seo-off-page-guia"
+    },
+    {
+      "path": "/blog/seo/estrategia-seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "estrategia-seo"
+    },
+    {
+      "path": "/en/blog/seo/estrategia-seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "estrategia-seo"
+    },
+    {
+      "path": "/blog/seo/estrategia-de-contenidos",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "estrategia-de-contenidos"
+    },
+    {
+      "path": "/en/blog/seo/estrategia-de-contenidos",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "estrategia-de-contenidos"
+    },
+    {
+      "path": "/blog/seo/topic-clusters-seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "topic-clusters-seo"
+    },
+    {
+      "path": "/en/blog/seo/topic-clusters-seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "topic-clusters-seo"
+    },
+    {
+      "path": "/blog/tech-seo/headless-cms-seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "headless-cms-seo"
+    },
+    {
+      "path": "/en/blog/tech-seo/headless-cms-seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "headless-cms-seo"
+    },
+    {
+      "path": "/blog/tech-seo/xml-sitemap-automation",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "xml-sitemap-automation"
+    },
+    {
+      "path": "/en/blog/tech-seo/xml-sitemap-automation",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "xml-sitemap-automation"
+    },
+    {
+      "path": "/blog/tech-seo/ssr-vs-csr-seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "ssr-vs-csr-seo"
+    },
+    {
+      "path": "/en/blog/tech-seo/ssr-vs-csr-seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "ssr-vs-csr-seo"
+    },
+    {
+      "path": "/blog/tech-seo/schema-markup-guide",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "schema-markup-guide"
+    },
+    {
+      "path": "/en/blog/tech-seo/schema-markup-guide",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "schema-markup-guide"
+    },
+    {
+      "path": "/blog/tech-seo/robots-txt-best-practices",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "robots-txt-best-practices"
+    },
+    {
+      "path": "/en/blog/tech-seo/robots-txt-best-practices",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "robots-txt-best-practices"
+    },
+    {
+      "path": "/blog/tech-seo/core-web-vitals-guide",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "core-web-vitals-guide"
+    },
+    {
+      "path": "/en/blog/tech-seo/core-web-vitals-guide",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "core-web-vitals-guide"
+    },
+    {
+      "path": "/blog/tech-seo/web-performance-guide",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "web-performance-guide"
+    },
+    {
+      "path": "/en/blog/tech-seo/web-performance-guide",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "web-performance-guide"
+    },
+    {
+      "path": "/blog/tech-seo/tech-seo-guide",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "tech-seo-guide"
+    },
+    {
+      "path": "/en/blog/tech-seo/tech-seo-guide",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "tech-seo-guide"
+    },
+    {
+      "path": "/blog/tech-seo/non-developers-guide",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "non-developers-guide"
+    },
+    {
+      "path": "/en/blog/tech-seo/non-developers-guide",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "non-developers-guide"
+    },
+    {
+      "path": "/blog/tech-seo/nextjs-seo-optimization",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "nextjs-seo-optimization"
+    },
+    {
+      "path": "/en/blog/tech-seo/nextjs-seo-optimization",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "nextjs-seo-optimization"
+    },
+    {
+      "path": "/blog/general/tablas-hash",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "tablas-hash"
+    },
+    {
+      "path": "/en/blog/general/tablas-hash",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "tablas-hash"
+    },
+    {
+      "path": "/blog/cs-fundamentals/que-es-css",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "que-es-css"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/que-es-css",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "que-es-css"
+    },
+    {
+      "path": "/blog/seo/mejores-cursos-seo-espanol",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "mejores-cursos-seo-espanol"
+    },
+    {
+      "path": "/en/blog/seo/mejores-cursos-seo-espanol",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "mejores-cursos-seo-espanol"
+    },
+    {
+      "path": "/blog/seo/redaccion-seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "redaccion-seo"
+    },
+    {
+      "path": "/en/blog/seo/redaccion-seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "redaccion-seo"
+    },
+    {
+      "path": "/blog/seo/guia-keyword-research",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "guia-keyword-research"
+    },
+    {
+      "path": "/en/blog/seo/guia-keyword-research",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "guia-keyword-research"
+    },
+    {
+      "path": "/blog/seo/estrategia-topic-clusters",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "estrategia-topic-clusters"
+    },
+    {
+      "path": "/en/blog/seo/estrategia-topic-clusters",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "estrategia-topic-clusters"
+    },
+    {
+      "path": "/blog/seo/enlaces-internos-guia",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "enlaces-internos-guia"
+    },
+    {
+      "path": "/en/blog/seo/enlaces-internos-guia",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "enlaces-internos-guia"
+    },
+    {
+      "path": "/blog/cs-fundamentals/programacion-dinamica",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "programacion-dinamica"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/programacion-dinamica",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "programacion-dinamica"
+    },
+    {
+      "path": "/blog/cs-fundamentals/normalizacion-bases-datos",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "normalizacion-bases-datos"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/normalizacion-bases-datos",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "normalizacion-bases-datos"
+    },
+    {
+      "path": "/blog/cs-fundamentals/diseno-bases-datos",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "diseno-bases-datos"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/diseno-bases-datos",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "diseno-bases-datos"
+    },
+    {
+      "path": "/blog/cs-fundamentals/arboles-binarios",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "arboles-binarios"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/arboles-binarios",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "arboles-binarios"
+    },
+    {
+      "path": "/blog/cs-fundamentals/algoritmos-ordenamiento",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "algoritmos-ordenamiento"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/algoritmos-ordenamiento",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "algoritmos-ordenamiento"
+    },
+    {
+      "path": "/blog/cs-fundamentals/complejidad-algoritmica",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "complejidad-algoritmica"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/complejidad-algoritmica",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "complejidad-algoritmica"
+    },
+    {
+      "path": "/blog/cs-fundamentals/big-o-notation",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "big-o-notation"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/big-o-notation",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "big-o-notation"
+    },
+    {
+      "path": "/blog/cs-fundamentals/algoritmos-estructuras-datos",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "algoritmos-estructuras-datos"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/algoritmos-estructuras-datos",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "posts",
+      "slug": "algoritmos-estructuras-datos"
+    },
+    {
+      "path": "/blog/development",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "categories",
+      "slug": "development"
+    },
+    {
+      "path": "/en/blog/development",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "categories",
+      "slug": "development"
+    },
+    {
+      "path": "/blog/general",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "categories",
+      "slug": "general"
+    },
+    {
+      "path": "/en/blog/general",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "categories",
+      "slug": "general"
+    },
+    {
+      "path": "/blog/seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "categories",
+      "slug": "seo"
+    },
+    {
+      "path": "/en/blog/seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "categories",
+      "slug": "seo"
+    },
+    {
+      "path": "/blog/cs-fundamentals",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "categories",
+      "slug": "cs-fundamentals"
+    },
+    {
+      "path": "/en/blog/cs-fundamentals",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "categories",
+      "slug": "cs-fundamentals"
+    },
+    {
+      "path": "/blog/tech-seo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "categories",
+      "slug": "tech-seo"
+    },
+    {
+      "path": "/en/blog/tech-seo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "categories",
+      "slug": "tech-seo"
+    },
+    {
+      "path": "/authors/juan-carlos-angulo",
+      "locale": "es",
+      "source": "direct-query",
+      "collection": "authors",
+      "slug": "juan-carlos-angulo"
+    },
+    {
+      "path": "/en/authors/juan-carlos-angulo",
+      "locale": "en",
+      "source": "direct-query",
+      "collection": "authors",
+      "slug": "juan-carlos-angulo"
+    }
+  ]
+}
