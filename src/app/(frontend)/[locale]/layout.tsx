@@ -2,24 +2,12 @@ import type React from 'react'
 import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
-import { Fraunces, Inter } from 'next/font/google'
 
+import { array, khand, geistSans, geistMono } from '@/fonts'
 import { routing } from '@/i18n/routing'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import '../../globals.css'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-})
-
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  variable: '--font-display',
-  display: 'swap',
-})
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -41,7 +29,10 @@ export default async function RootLayout({
   setRequestLocale(locale)
 
   return (
-    <html lang={locale} className={`${inter.variable} ${fraunces.variable}`}>
+    <html
+      lang={locale}
+      className={`${array.variable} ${khand.variable} ${geistSans.variable} ${geistMono.variable}`}
+    >
       <body className="font-sans">
         <NextIntlClientProvider>
           <SiteHeader locale={locale} />
