@@ -84,7 +84,20 @@ async function main() {
     console.log(`Created contact Pages doc (id=${docId})`)
   }
 
+  // Reuse the same block ids across every locale's update — see 05-12's
+  // fix in seed-home-page.ts for the full explanation (otherwise each
+  // locale's write orphans the previous locale's localized fields).
+  let savedIds: { id?: string }[] | undefined
+
   for (const locale of LOCALES) {
+    const layout = layoutByLocale[locale] as Record<string, unknown>[]
+
+    if (savedIds) {
+      layout.forEach((block, i) => {
+        if (savedIds![i]?.id) block.id = savedIds![i].id
+      })
+    }
+
     await payload.update({
       collection: 'pages',
       id: docId,
@@ -93,10 +106,16 @@ async function main() {
         title: locale === 'es' ? 'Contacto' : 'Contact',
         content: {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          layout: layoutByLocale[locale] as any,
+          layout: layout as any,
         },
       },
     })
+
+    if (!savedIds) {
+      const refetched = await payload.findByID({ collection: 'pages', id: docId, depth: 0 })
+      savedIds = refetched.content?.layout as { id?: string }[] | undefined
+    }
+
     console.log(`Updated contact Pages doc (locale=${locale})`)
   }
 

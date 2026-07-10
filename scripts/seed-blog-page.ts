@@ -85,7 +85,22 @@ async function main() {
     console.log(`Created blog Pages doc (id=${blogDocId})`)
   }
 
+  // Reuse the same block ids across every locale's update — otherwise each
+  // locale's `content.layout` write is treated as a brand-new array (fresh
+  // random ids), orphaning the previous locale's localized fields (Hero
+  // title/subtitle, ArchiveBlock emptyState copy) — see 05-12's fix in
+  // seed-home-page.ts / seed-legal-pages.ts for the full explanation.
+  let savedIds: { id?: string }[] | undefined
+
   for (const locale of LOCALES) {
+    const layout = layoutByLocale[locale] as Record<string, unknown>[]
+
+    if (savedIds) {
+      layout.forEach((block, i) => {
+        if (savedIds![i]?.id) block.id = savedIds![i].id
+      })
+    }
+
     await payload.update({
       collection: 'pages',
       id: blogDocId,
@@ -94,10 +109,16 @@ async function main() {
         title: 'Blog',
         content: {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          layout: layoutByLocale[locale] as any,
+          layout: layout as any,
         },
       },
     })
+
+    if (!savedIds) {
+      const refetched = await payload.findByID({ collection: 'pages', id: blogDocId, depth: 0 })
+      savedIds = refetched.content?.layout as { id?: string }[] | undefined
+    }
+
     console.log(`Updated blog Pages doc (locale=${locale})`)
   }
 

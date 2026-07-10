@@ -208,7 +208,31 @@ async function main() {
     ],
   }
 
+  // IMPORTANT: content.layout (and Content block's nested columns) are NOT
+  // localized themselves — only specific nested fields (e.g. richText) are.
+  // Without reusing the SAME block/column ids across every locale's update,
+  // Payload treats each update as a brand-new array (fresh random ids),
+  // orphaning the previous locale's localized child rows — the earlier
+  // locale's content silently disappears (last update wins). Fetch the ids
+  // once after the first (es) update, then splice them into every
+  // subsequent locale's payload before updating.
+  let savedIds: { id?: string; columns?: { id?: string }[] }[] | undefined
+
   for (const locale of LOCALES) {
+    const layout = layoutByLocale[locale] as Record<string, unknown>[]
+
+    if (savedIds) {
+      layout.forEach((block, i) => {
+        if (savedIds![i]?.id) block.id = savedIds![i].id
+        if (Array.isArray(block.columns) && savedIds![i]?.columns) {
+          ;(block.columns as Record<string, unknown>[]).forEach((col, j) => {
+            const savedCol = savedIds![i].columns?.[j]
+            if (savedCol?.id) col.id = savedCol.id
+          })
+        }
+      })
+    }
+
     await payload.update({
       collection: 'pages',
       id: homeDoc.id,
@@ -216,10 +240,16 @@ async function main() {
       data: {
         content: {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          layout: layoutByLocale[locale] as any,
+          layout: layout as any,
         },
       },
     })
+
+    if (!savedIds) {
+      const refetched = await payload.findByID({ collection: 'pages', id: homeDoc.id, depth: 0 })
+      savedIds = refetched.content?.layout as { id?: string; columns?: { id?: string }[] }[] | undefined
+    }
+
     console.log(`Updated home Pages doc (locale=${locale})`)
   }
 

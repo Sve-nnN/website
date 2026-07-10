@@ -37,6 +37,11 @@ const columnFields: Field[] = [
   {
     name: 'richText',
     type: 'richText',
+    // Rule 1 bug fix (05-12): was missing localized:true, causing ES/EN
+    // seeded content to collapse into a single value (last write wins) --
+    // discovered when Privacy/Terms pages showed English copy on the
+    // unprefixed (Spanish) route.
+    localized: true,
     editor: lexicalEditor({
       features: ({ rootFeatures }) => {
         return [
