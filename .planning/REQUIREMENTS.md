@@ -80,8 +80,8 @@
 
 ### UI-CARD (Cards/listados + autoría E-E-A-T)
 
-- [ ] **UI-09**: Tratamiento visual consistente de elevación/spacing en todos los bloques de listado tipo card (`ArchiveBlock`, `FeaturedPostsBlock`, `FeaturedCaseStudiesBlock`, related posts)
-- [ ] **UI-10**: `AuthorByline`/`AuthorCard` restyled para hacer visualmente prominentes las credenciales E-E-A-T (bio, años de experiencia, redes) ya modeladas en Phase 5
+- [x] **UI-09**: Tratamiento visual consistente de elevación/spacing en todos los bloques de listado tipo card (`ArchiveBlock`, `FeaturedPostsBlock`, `FeaturedCaseStudiesBlock`, related posts)
+- [x] **UI-10**: `AuthorByline`/`AuthorCard` restyled para hacer visualmente prominentes las credenciales E-E-A-T (bio, años de experiencia, redes) ya modeladas en Phase 5
 
 ### UI-QA (Verificación cruzada final)
 
@@ -162,8 +162,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UI-06 | Phase 9 | Complete |
 | UI-07 | Phase 9 | Complete |
 | UI-08 | Phase 9 | Complete |
-| UI-09 | Phase 10 | Pending |
-| UI-10 | Phase 10 | Pending |
+| UI-09 | Phase 10 | Complete |
+| UI-10 | Phase 10 | Complete |
 | UI-11 | Phase 11 | Pending |
 | UI-12 | Phase 11 | Pending |
 | UI-13 | Phase 11 | Pending |

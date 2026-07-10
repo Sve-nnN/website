@@ -255,7 +255,8 @@ Plans:
 **Plans**: 2 plans (2 waves)
 
 Plans:
-- [ ] 10-01-PLAN.md — PostCard/CaseStudyCard/AuthorByline/AuthorCard restyled to consume the Card primitive consistently, E-E-A-T fields made prominent
+
+- [x] 10-01-PLAN.md — PostCard/CaseStudyCard/AuthorByline/AuthorCard restyled to consume the Card primitive consistently, E-E-A-T fields made prominent
 - [ ] 10-02-PLAN.md — Boundary-condition + ES-locale + E-E-A-T verification against real Postgres data and guarded seeded fixtures, closes with explicit non-blocking flag for Juan's pending author content
 
 **UI hint**: yes
@@ -290,6 +291,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 7. Design-Token Foundation | 1/1 | Complete   | 2026-07-10 |
 | 8. shadcn Primitives + Global Chrome | 2/2 | Complete   | 2026-07-10 |
 | 9. Hero + Resultados/KPI + Tipografía | 3/3 | Complete   | 2026-07-10 |
-| 10. Cards/Listados + Autoría E-E-A-T | 0/TBD | Not started | - |
+| 10. Cards/Listados + Autoría E-E-A-T | 1/2 | In Progress|  |
 | 11. Verificación Cruzada Final | 0/TBD | Not started | - |
 </content>
