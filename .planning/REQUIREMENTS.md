@@ -154,6 +154,20 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DEPLOY-03 | Phase 6 | Pending |
 | DEPLOY-04 | Phase 6 | Pending |
 | DEPLOY-05 | Phase 6 | Pending |
+| UI-01 | Phase 7 | Pending |
+| UI-02 | Phase 7 | Pending |
+| UI-03 | Phase 7 | Pending |
+| UI-04 | Phase 8 | Pending |
+| UI-05 | Phase 8 | Pending |
+| UI-06 | Phase 9 | Pending |
+| UI-07 | Phase 9 | Pending |
+| UI-08 | Phase 9 | Pending |
+| UI-09 | Phase 10 | Pending |
+| UI-10 | Phase 10 | Pending |
+| UI-11 | Phase 11 | Pending |
+| UI-12 | Phase 11 | Pending |
+| UI-13 | Phase 11 | Pending |
+| UI-14 | Phase 11 | Pending |
 
 **Coverage:**
 
@@ -161,6 +175,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 - Mapped to phases: 33
 - Unmapped: 0 ✓
 
+- v1.1 requirements: 14 total
+- Mapped to phases: 14
+- Unmapped: 0 ✓
+
 ---
 *Requirements defined: 2026-07-09*
-*Last updated: 2026-07-09 after initial definition*
+*Last updated: 2026-07-10 — v1.1 roadmap created (Phases 7-11)*

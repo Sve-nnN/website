@@ -3,10 +3,10 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: UI/UX Polish Pass
 status: planning
-last_updated: "2026-07-10T06:05:51.160Z"
+last_updated: "2026-07-10T00:00:00.000Z"
 last_activity: 2026-07-10
 progress:
-  total_phases: 0
+  total_phases: 5
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 5 — Frontend Pages COMPLETE (13/13 plans, all 6 CONT-* requirements satisfied end-to-end, confirmed by Juan's direct bilingual walkthrough against real production data). Ready to begin Phase 6 — Deploy + Cutover, carrying forward two explicit pre-deploy action items (author E-E-A-T content population, real Resend API key).
+**Current focus:** Milestone v1.1 (UI/UX Polish Pass) roadmap created — Phases 7-11 cover UI-01..UI-14 (design tokens, shadcn primitives + chrome, hero/KPI/typography, cards + author E-E-A-T, cross-cutting verification). Phase 6 (Deploy + Cutover) remains paused, resumes after Phase 11 closes. Two pre-deploy action items from Phase 5 still carry forward (author E-E-A-T content population, real Resend API key).
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 7 (Design-Token Foundation) — not started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-10 — Milestone v1.1 started
+Status: Roadmap created, ready for /gsd:plan-phase 7
+Last activity: 2026-07-10 — v1.1 ROADMAP.md created (Phases 7-11, 14/14 requirements mapped)
 
 ## Performance Metrics
 
@@ -92,6 +92,7 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-09: CaseStudies had no `author` relationship (a real data-model gap) — added directly rather than a checkpoint:decision, since the plan itself recommended this and exactly 1 real Author exists to backfill against
 - [Phase 05]: 05-12: found and fixed a real, sitewide bilingual-content bug — Content block's `richText` field was missing `localized: true`, and 4 seed scripts (home/blog/contact/legal-pages) regenerated block/array ids on every locale's update, silently orphaning the previous locale's localized data (Hero title/subtitle, ArchiveBlock emptyState copy, Content richText). Both root causes fixed; all 5 affected pages re-verified correct in both locales against the real running server.
 - [Phase ?]: [Phase 05] 05-13: bilingual QA walkthrough completed directly by Juan against real dev server + real Neon Postgres data; all 10 checklist items verified (2 with explicitly logged, non-blocking caveats: category-tab click-filtering and FeaturedContent admin edit-reload confirmed via code/database-level evidence due to Arc browser click-interaction limitation)
+- [Milestone v1.1]: Roadmap: 5 fases (7-11) derivadas directamente de research/SUMMARY.md sin modificaciones estructurales, salvo el explicit deferral de Juan de motion/animación (carruseles, scroll-reveal) y del toggle visible de dark mode — UI-03 queda como corrección de tokens únicamente, sin UI de cambio de tema. Phase 6 (Deploy + Cutover) queda en pausa y no se renumera; retoma después de que Phase 11 cierre.
 
 ### Pending Todos
 
@@ -117,7 +118,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T05:28:41.367Z
-Stopped at: Completed 05-13-PLAN.md (bilingual QA walkthrough); Phase 5 (13/13 plans) complete
+Last session: 2026-07-10T00:00:00.000Z
+Stopped at: v1.1 ROADMAP.md + STATE.md written, REQUIREMENTS.md traceability updated (UI-01..UI-14 mapped to Phases 7-11)
 Resume file: None
 </content>

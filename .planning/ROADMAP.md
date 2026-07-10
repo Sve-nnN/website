@@ -4,6 +4,8 @@
 
 Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero sobre Payload 3.85 + Next.js 15 con PostgreSQL (en vez de MongoDB), Cloudinary (en vez de Vercel Blob), y self-hosted en Hostinger (en vez de Vercel). El camino va de fundación disciplinada (schema Postgres + colecciones limpias) a capa bilingüe/SEO, resolución del único riesgo arquitectónico abierto (adapter de Cloudinary), migración de contenido 1:1 desde Mongo, construcción de las páginas públicas con los diferenciadores competitivos, y cierre con deploy + cutover operacional en Hostinger. Cada fase se apoya en la anterior: sin `push:false` y colecciones limpias no hay superficie estable para migrar; sin i18n y storage resueltos, la migración escribiría contra un target movedizo; sin contenido migrado no hay páginas que renderizar; sin páginas no hay qué desplegar.
 
+**Milestone v1.1 — UI/UX Polish Pass:** Antes de retomar Phase 6 (Deploy + Cutover, en pausa), el sitio recibe una pasada de pulido visual profesional sobre los 16 bloques Payload-editables y componentes shadcn ya construidos en Phase 5. El camino va de fundación de tokens (elevación/motion CSS-puro, dark-mode branded, sin toggle) a primitivas shadcn + chrome global (máximo apalancamiento, se propaga a los 16 bloques), a hero/resultados/tipografía de contenido largo, a cards/listados + autoría E-E-A-T, y cierra con una verificación cruzada final (contraste, layout ES, grep de contenido hardcodeado, Lighthouse móvil). Motion/animación (carruseles, scroll-reveal) y un toggle visible de dark mode quedan explícitamente diferidos por decisión de Juan — UI-03 es solo corrección de tokens, sin UI de cambio de tema.
+
 ## Phases
 
 **Phase Numbering:**
@@ -18,7 +20,12 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Cloudinary Media Spike** - Adapter de storage Cloudinary validado y wireado (completed 2026-07-09)
 - [x] **Phase 4: Migración Mongo → Postgres** - Contenido actual migrado 1:1 con URLs y medios preservados (completed 2026-07-10)
 - [x] **Phase 5: Frontend Pages** - Todas las páginas públicas renderizando contenido migrado con diferenciadores competitivos (completed 2026-07-10)
-- [ ] **Phase 6: Deploy + Cutover** - Sitio en producción en Hostinger con checklist de go-live verificado
+- [ ] **Phase 6: Deploy + Cutover** - Sitio en producción en Hostinger con checklist de go-live verificado (en pausa — retoma después de v1.1)
+- [ ] **Phase 7: Design-Token Foundation** - Tokens de sombra/motion CSS-puro, prefers-reduced-motion global, paleta dark branded (sin toggle)
+- [ ] **Phase 8: shadcn Primitives + Global Chrome** - Primitivas shadcn refinadas con los nuevos tokens + header/footer restyled
+- [ ] **Phase 9: Hero + Resultados/KPI + Tipografía** - Hero de mayor impacto, KPIs de case studies reforzados, jerarquía tipográfica en contenido largo
+- [ ] **Phase 10: Cards/Listados + Autoría E-E-A-T** - Tratamiento visual consistente en bloques tipo card + credenciales de autor prominentes
+- [ ] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil sin regresión
 
 ## Phase Details
 
@@ -165,7 +172,7 @@ Plans:
   4. El checklist de go-live pasa en producción: los 301 redirects funcionan en vivo, robots.txt/noindex se fetchean (no solo se leen en código) desde la URL de producción, ambos locales fueron muestreados manualmente, y el sitemap de producción no diverge del inventario de URLs congelado en Phase 4
   5. El contenido del sitio actual quedó congelado inmediatamente antes de la corrida final de migración, sin contenido publicado después del freeze que se haya perdido en el corte
 
-**Plans**: 5 plans (3 waves)
+**Plans**: 5 plans (3 waves) — EN PAUSA, retoma después de milestone v1.1
 
 Plans:
 
@@ -175,10 +182,84 @@ Plans:
 - [ ] 06-04-PLAN.md — Checklist de go-live verificado en vivo contra producción (robots.txt, sitemap vs inventario congelado, redirect 301, ambos locales)
 - [ ] 06-05-PLAN.md — Procedimiento de content-freeze verificable (snapshot + diff) del backend Payload/Postgres antes del corte
 
+### Phase 7: Design-Token Foundation
+
+**Goal**: El sitio tiene una capa de tokens de elevación y timing CSS-puro que hoy no existe, más una paleta dark-mode branded (ember/navy), disponibles para que toda restauración visual posterior componga sobre ellos sin reinventar valores por bloque.
+**Depends on**: Phase 5
+**Requirements**: UI-01, UI-02, UI-03
+**Success Criteria** (what must be TRUE):
+
+  1. `globals.css`/`tailwind.config.ts` exponen tokens `--shadow-sm/md/lg/focus` y `--motion-fast/base/slow`/`--ease-*` (sin ninguna librería JS de animación), mapeados a utilidades Tailwind (`boxShadow`, `transitionDuration`, `transitionTimingFunction`) usables desde cualquier componente
+  2. Una regla `@media (prefers-reduced-motion: reduce)` global neutraliza cualquier transición CSS existente o futura para usuarios que la solicitan
+  3. El bloque `.dark` en `globals.css` usa una paleta ember/navy derivada de `05-UI-SPEC.md` (no los grises genéricos de shadcn), sin exponer ningún control de UI para cambiar de tema
+  4. El contraste WCAG del nuevo set de tokens dark se verifica antes de cerrar la fase (no se difiere a la verificación final)
+
+**Plans**: TBD
+
+### Phase 8: shadcn Primitives + Global Chrome
+
+**Goal**: Las primitivas shadcn de más alto apalancamiento (consumidas por los 16 bloques) y el chrome global del sitio (header/footer) reflejan los tokens de sombra/motion/dark de Phase 7, estableciendo la base visual sobre la que compone el resto del milestone.
+**Depends on**: Phase 7
+**Requirements**: UI-04, UI-05
+**Success Criteria** (what must be TRUE):
+
+  1. Las variantes `cva()` de button, card, badge, input, select, tabs, sheet, navigation-menu, separator, skeleton, textarea y avatar usan los tokens de sombra/spacing/tipografía vigentes, sin agregar nuevas dependencias de paquete
+  2. `SiteHeader` y `SiteFooter` muestran una jerarquía visual clara y consistente con la dirección editorial-tech ya fijada en `05-UI-SPEC.md`
+  3. Ningún archivo `config.ts` de bloque ni `payload-types.ts` cambia como resultado de esta fase (los cambios son visuales, no de schema)
+  4. Los 16 bloques que consumen estas primitivas siguen renderizando sin errores tras el refinamiento (verificación visual de humo en al menos una página por tipo de bloque)
+
+**Plans**: TBD
+
+### Phase 9: Hero + Resultados/KPI + Tipografía
+
+**Goal**: El hero del sitio, la sección de resultados/KPIs de case studies y la jerarquía tipográfica de contenido largo (posts, case studies) transmiten mayor impacto visual y refuerzan el patrón "métrica en el titular" ya decidido en PROJECT.md, manteniendo el copy 100% editable desde Payload.
+**Depends on**: Phase 8
+**Requirements**: UI-06, UI-07, UI-08
+**Success Criteria** (what must be TRUE):
+
+  1. El Hero muestra un tratamiento de mayor impacto (tipografía, spacing, jerarquía) sin que ningún texto quede hardcodeado — todo el copy sigue viniendo de campos Payload
+  2. `ResultsSection`/los KPIs de case studies tienen un tratamiento visual que refuerza visualmente la métrica principal como elemento dominante de la sección
+  3. Los posts y case studies aplican la jerarquía tipográfica Inter/Fraunces de forma consistente en contenido largo (encabezados, cuerpo, citas), sin degradar la semántica de encabezados existente
+  4. El contraste sobre fondos compuestos (overlays del hero) se re-verifica tras el cambio, no se asume heredado de Phase 7
+
+**Plans**: TBD
+
+**UI hint**: yes
+
+### Phase 10: Cards/Listados + Autoría E-E-A-T
+
+**Goal**: Todos los bloques de listado tipo card comparten un tratamiento visual consistente de elevación/spacing, y las credenciales de autoría (E-E-A-T) ya modeladas en Phase 5 se vuelven visualmente prominentes en byline/perfil.
+**Depends on**: Phase 8
+**Requirements**: UI-09, UI-10
+**Success Criteria** (what must be TRUE):
+
+  1. `ArchiveBlock`, `FeaturedPostsBlock`, `FeaturedCaseStudiesBlock` y related posts muestran el mismo lenguaje visual de elevación/spacing entre sí
+  2. Los listados de cards se verifican con conteos límite del repeater (1 ítem y el máximo real) sin romper el layout
+  3. `AuthorByline`/`AuthorCard` muestran de forma visualmente prominente bio, años de experiencia y redes sociales ya modelados en Phase 5
+  4. El layout de cards y byline se verifica en `/es` contra títulos/nombres largos reales (no placeholder), sin overflow ni truncamiento roto
+
+**Plans**: TBD
+
+**UI hint**: yes
+
+### Phase 11: Verificación Cruzada Final
+
+**Goal**: El diff acumulado de todo el milestone se verifica de punta a punta contra los riesgos identificados en research — contraste, layout en español, contenido hardcodeado y performance — antes de dar por cerrado el pulido visual y retomar Phase 6.
+**Depends on**: Phase 7, Phase 8, Phase 9, Phase 10
+**Requirements**: UI-11, UI-12, UI-13, UI-14
+**Success Criteria** (what must be TRUE):
+
+  1. El contraste WCAG se re-verifica en ambos temas (light/dark) sobre el estado final de todos los cambios de esta fase, no solo sobre los checks parciales de cada fase individual
+  2. El layout de todas las páginas tocadas se verifica en `/es` contra los títulos/textos más largos reales de los 72 posts/case studies migrados
+  3. Un grep de contenido hardcodeado (strings de prueba, badges/stats sin campo Payload backing) en todos los bloques tocados por este milestone devuelve cero diffs en `src/blocks/*/config.ts` y `payload-types.ts`
+  4. Un Lighthouse móvil corrido tras todos los cambios visuales no muestra regresión respecto al baseline de producción capturado antes de esta fase
+
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11 (Phase 6 en pausa, retoma tras el cierre de 7-11)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -187,5 +268,10 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 3. Cloudinary Media Spike | 3/3 | Complete   | 2026-07-09 |
 | 4. Migración Mongo → Postgres | 8/8 | Complete   | 2026-07-10 |
 | 5. Frontend Pages | 13/13 | Complete   | 2026-07-10 |
-| 6. Deploy + Cutover | 0/TBD | Not started | - |
+| 6. Deploy + Cutover | 0/TBD | Paused (resumes after v1.1) | - |
+| 7. Design-Token Foundation | 0/TBD | Not started | - |
+| 8. shadcn Primitives + Global Chrome | 0/TBD | Not started | - |
+| 9. Hero + Resultados/KPI + Tipografía | 0/TBD | Not started | - |
+| 10. Cards/Listados + Autoría E-E-A-T | 0/TBD | Not started | - |
+| 11. Verificación Cruzada Final | 0/TBD | Not started | - |
 </content>
