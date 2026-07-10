@@ -1,7 +1,9 @@
 import { getPayload } from 'payload'
+import { notFound } from 'next/navigation'
 
 import config from '@payload-config'
 import { JsonLd } from '@/components/JsonLd'
+import { RenderBlocks } from '@/blocks/RenderBlocks'
 
 async function getHomePage(locale: string) {
   const payload = await getPayload({ config })
@@ -29,6 +31,10 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const { locale } = await params
   const doc = await getHomePage(locale)
 
+  if (!doc) {
+    notFound()
+  }
+
   const personData = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -39,12 +45,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <main>
-      <h1>
-        {doc?.title ??
-          (locale === 'es'
-            ? 'Bienvenido — contenido de prueba Fase 2'
-            : 'Welcome — Phase 2 test content')}
-      </h1>
+      <RenderBlocks blocks={doc.content?.layout ?? []} />
       <JsonLd data={personData} />
     </main>
   )
