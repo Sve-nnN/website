@@ -1,0 +1,38 @@
+{
+  "/en": {
+    "performance": 95,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100
+  },
+  "/es": {
+    "performance": 95,
+    "accessibility": 92,
+    "best-practices": 96,
+    "seo": 100
+  },
+  "/en/blog": {
+    "performance": 87,
+    "accessibility": 92,
+    "best-practices": 96,
+    "seo": 92
+  },
+  "/en/blog/tech-seo-guide": {
+    "performance": 87,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100
+  },
+  "/en/case-studies": {
+    "performance": 96,
+    "accessibility": 94,
+    "best-practices": 96,
+    "seo": 91
+  },
+  "/en/case-studies/migracion-ecommerce-nextjs-seo-tecnico": {
+    "performance": 95,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100
+  }
+}
