@@ -28,7 +28,6 @@ import { getPayload } from 'payload'
 // Relative import of the REAL JuanPortfolio config — Node resolves relative
 // imports by file location, not cwd, so this always works regardless of
 // which tsconfig-resolution technique is active.
-// @ts-expect-error - sibling project, no shared TS project references
 import sourceConfig from '../../../../JuanPortfolio/src/payload.config'
 
 const filename = fileURLToPath(import.meta.url)
