@@ -5,22 +5,27 @@
 @layer base {
   :root {
     /* UI-SPEC Color table: dominant/background, secondary/dark-surface, accent/primary, destructive */
+    /* Phase 11 / UI-11: --primary, --primary-foreground, --muted-foreground,
+       --border darkened from their original shadcn-default/spec values to
+       pass WCAG AA in the light theme (full-theme audit found these had
+       never been contrast-checked). --primary-foreground now mirrors the
+       .dark theme's already-verified dark-text-on-primary pattern. */
     --background: #FAFAF7;
     --foreground: #12141C;
     --card: #FAFAF7;
     --card-foreground: #12141C;
     --popover: #FAFAF7;
     --popover-foreground: #12141C;
-    --primary: #FF5B1F;
-    --primary-foreground: #FAFAF7;
+    --primary: #F7581E;
+    --primary-foreground: #12141C;
     --secondary: #12141C;
     --secondary-foreground: #FAFAF7;
     --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
+    --muted-foreground: oklch(0.54 0 0);
     --accent: oklch(0.97 0 0);
     --accent-foreground: oklch(0.205 0 0);
     --destructive: #DC2626;
-    --border: oklch(0.922 0 0);
+    --border: oklch(0.63 0 0);
     --input: oklch(0.922 0 0);
     --ring: oklch(0.708 0 0);
     --chart-1: oklch(0.87 0 0);
