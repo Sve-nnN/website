@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 01-10-PLAN.md (initial migration generated and applied to live Neon Postgres — Phase 1 complete)
-last_updated: "2026-07-09T21:58:24.453Z"
-last_activity: 2026-07-09
+status: executing
+stopped_at: Completed 04-01-PLAN.md (migration ETL foundation — dump, URL inventory, remap-table/richtext-remap libs)
+last_updated: "2026-07-10T01:54:04.322Z"
+last_activity: 2026-07-10
 progress:
   total_phases: 6
-  completed_phases: 2
-  total_plans: 18
-  completed_plans: 16
-  percent: 33
+  completed_phases: 3
+  total_plans: 26
+  completed_plans: 19
+  percent: 73
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 2 — Bilingüe + SEO (complete); next up Phase 3 — Cloudinary Media Spike
+**Current focus:** Phase 4 — Migración Mongo → Postgres (in progress, plan 01/8 complete)
 
 ## Current Position
 
-Phase: 3 of 6 (cloudinary media spike)
-Plan: Not started
-Status: Phase 2 complete (5/5 plans) — i18n/SEO pipeline verified end to end; ready for Phase 3
-Last activity: 2026-07-09
+Phase: 4 of 6 (migración mongo → postgres)
+Plan: 01 of 8 complete, executing 02-08 in sequence
+Status: Phase 3 (Cloudinary spike) complete and verified; Phase 4 plan 01 (dump + URL inventory + shared libs) complete, moving to plan 02 (media migration)
+Last activity: 2026-07-10
 
-Progress: [███░░░░░░░] 33%
+Progress: [███████░░░] 73%
 
 ## Performance Metrics
 
@@ -59,6 +59,7 @@ Progress: [███░░░░░░░] 33%
 | Phase 01-schema-foundation P09 | 6min | 2 tasks | 9 files |
 | Phase 01-schema-foundation P10 | 5min | 2 tasks | 3 files |
 | Phase 02-biling-e-seo P05 | 25min | 2 tasks | 3 files |
+| Phase 04-migraci-n-mongo-postgres P01 | 45min | 3 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -76,6 +77,9 @@ Recent decisions affecting current work:
 - [Phase ?]: resendAdapter wired en payload.config.ts desde el día uno, aunque el uso del formulario de contacto es scope de Fase 5
 - [Phase ?]: [Phase 01-schema-foundation]: 01-09: .env already existed (provisioned by orchestrator with real Neon/Cloudinary/PAYLOAD_SECRET) — left untouched per revised plan; proceeded directly to payload generate:importmap / generate:types CLI commands
 - [Phase ?]: [Phase 01-schema-foundation]: 01-10: .env already had a valid Neon UNPOOLED DATABASE_URI provisioned pre-planning — Task 1 checkpoint resolved automatically via grep verification, no human interruption needed; initial migration generated and applied cleanly against live Neon Postgres
+- [Phase 04]: 04-01: dump-source.ts patches an in-memory kv adapter onto the imported JuanPortfolio config to bridge a cross-version payload gap (their config sanitized by payload 3.61.1, our runtime is 3.85, which requires `config.kv`)
+- [Phase 04]: 04-01: URL-INVENTORY.json derived from the real dump + source-code sitemap logic instead of a live HTTP fetch, because juan-tech.com (Vercel) returned DEPLOYMENT_DISABLED (402) for every route at freeze time
+- [Phase 04]: 04-01: real source DB confirmed empty for case-studies (0) and works (0) via direct Local API query — waves 6/7 will have nothing to migrate/audit; 4 of 15 media docs lack cloudinaryUrl and their only fallback source (juan-tech.com) is currently unreachable
 
 ### Pending Todos
 
@@ -98,7 +102,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-09T20:56:35.078Z
-Stopped at: Completed 01-10-PLAN.md (initial migration generated and applied to live Neon Postgres — Phase 1 complete)
+Last session: 2026-07-10T01:54:04.319Z
+Stopped at: Completed 04-01-PLAN.md (migration ETL foundation — dump, URL inventory, remap-table/richtext-remap libs)
 Resume file: None
 </content>

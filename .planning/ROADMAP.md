@@ -110,7 +110,7 @@ Plans:
 
 Plans:
 
-- [ ] 04-01-PLAN.md — Foundation: dump real (Local API, Mongo) de las 8 colecciones fuente + inventario congelado de URLs (MIGR-01) + módulos remap-table/richtext-remap
+- [x] 04-01-PLAN.md — Foundation: dump real (Local API, Mongo) de las 8 colecciones fuente + inventario congelado de URLs (MIGR-01) + módulos remap-table/richtext-remap
 - [ ] 04-02-PLAN.md — Media: re-subida real a Cloudinary vía el adapter de Fase 3
 - [ ] 04-03-PLAN.md — Authors + Categories (slugs verbatim, avatar remapeado)
 - [ ] 04-04-PLAN.md — Testimonials + Clientes (maneja campos ahora-requeridos que el esquema viejo no exigía)
@@ -169,7 +169,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. Schema Foundation | 10/10 | Complete    | 2026-07-09 |
 | 2. Bilingüe + SEO | 5/5 | Complete    | 2026-07-09 |
 | 3. Cloudinary Media Spike | 3/3 | Complete   | 2026-07-09 |
-| 4. Migración Mongo → Postgres | 0/8 | Not started | - |
+| 4. Migración Mongo → Postgres | 1/8 | In Progress|  |
 | 5. Frontend Pages | 0/TBD | Not started | - |
 | 6. Deploy + Cutover | 0/TBD | Not started | - |
 </content>
