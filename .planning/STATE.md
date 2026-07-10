@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 Phase: 4 of 6 (migración mongo → postgres)
 Plan: 8 of 8 complete
-Status: Phase 4 complete and verified against real production data (see 04-VERIFICATION.md). One known gap carried to Phase 5: 4/15 media assets unrecoverable due to the old juan-tech.com deployment being disabled (DEPLOYMENT_DISABLED) — requires Juan's manual decision on affected posts before publishing.
+Status: Phase 4 complete and verified against real production data (independent verifier: 5/5 truths, score passed — see 04-VERIFICATION.md). Media gap (4/15 unrecoverable due to juan-tech.com DEPLOYMENT_DISABLED) resolved by Juan: accepted as permanent loss, not referenced by any migrated content. Two items still open for Phase 5: (1) replicate the old site's per-slug deterministic heroImage fallback (pool of 53 pre-existing Cloudinary images `portfolio/fallback-image-1..53`) since 0/73 posts ever had heroImage by original design; (2) decide whether to clean up 4 test fixtures left in the real DB by Phases 1-2 (Test Author X, test-post, test-case-study, /legacy-test-url) before they appear on public pages.
 Last activity: 2026-07-10
 
 Progress: [███████░░░] 67%
@@ -88,7 +88,9 @@ Recent decisions affecting current work:
 - [Phase 04]: 04-01: URL-INVENTORY.json derived from the real dump + source-code sitemap logic instead of a live HTTP fetch, because juan-tech.com (Vercel) returned DEPLOYMENT_DISABLED (402) for every route at freeze time
 - [Phase 04]: 04-01: real source DB confirmed empty for case-studies (0) and works (0) via direct Local API query — waves 6/7 will have nothing to migrate/audit; 4 of 15 media docs lack cloudinaryUrl and their only fallback source (juan-tech.com) is currently unreachable
 - [Phase ?]: Juan confirmed explicitly to close the works-audit checkpoint with 0 Works processed / 0 CaseStudies created from fold-in -- real production Works collection has 0 documents
-- [Phase ?]: Phase 4 verification (04-VERIFICATION.md): 0 URL deltas, 0 redirects needed -- verbatim-slug pipeline held across all 7 migrated collections; only unresolved gap is 4/15 media assets lost to external juan-tech.com DEPLOYMENT_DISABLED
+- [Phase ?]: Phase 4 verification (04-VERIFICATION.md): 0 URL deltas, 0 redirects needed -- verbatim-slug pipeline held across all 7 migrated collections; independent verifier confirmed 4/15 media assets lost to external juan-tech.com DEPLOYMENT_DISABLED are NOT referenced by any migrated document (orphaned assets, zero content impact)
+- [Phase 04]: Juan confirmed accepting the 4/15 media loss permanently ("no veo problema con eso, esas imágenes creo que igual no las vamos a usar") -- no backup sourcing needed
+- [Phase 04]: 0/73 real posts had heroImage in the source by original design, not a migration gap -- JuanPortfolio's PostHero computes a deterministic per-slug fallback at render time against 53 pre-existing Cloudinary images (portfolio/fallback-image-1..53, verified reachable); Phase 5 must replicate this fallback pattern client-side, not backfill heroImage in the DB
 
 ### Pending Todos
 
