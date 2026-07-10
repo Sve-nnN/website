@@ -4,6 +4,7 @@ import { Link2, Code2, AtSign, Globe } from 'lucide-react'
 
 import config from '@/payload.config'
 import { Container } from '@/components/Container'
+import { Separator } from '@/components/ui/separator'
 
 // lucide-react ships no brand icons (Linkedin/Github/X removed) — same
 // generic substitutes used in ContactFormBlock's icon map (05-04).
@@ -29,7 +30,11 @@ export async function SiteFooter({ locale }: { locale: string }) {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {footer.columns?.map((column, i) => (
             <div key={column.id ?? i}>
-              {column.title && <h3 className="text-label mb-3">{column.title}</h3>}
+              {column.title && (
+                <h3 className="text-label mb-3 uppercase tracking-wide text-secondary-foreground/70">
+                  {column.title}
+                </h3>
+              )}
               <ul className="space-y-2">
                 {column.links?.map((item, j) => (
                   <li key={item.id ?? j}>
@@ -43,7 +48,8 @@ export async function SiteFooter({ locale }: { locale: string }) {
           ))}
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
+        <Separator className="opacity-30 mt-12" />
+        <div className="flex flex-wrap items-center justify-between gap-4 pt-8">
           <div className="flex gap-4">
             {footer.socialLinks?.map((social, i) => {
               const Icon = socialIconMap[social.platform] ?? Globe

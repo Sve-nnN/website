@@ -28,7 +28,7 @@ export async function SiteHeader({ locale }: { locale: string }) {
   const logo = typeof header.logo === 'object' ? header.logo : null
 
   return (
-    <header className="sticky top-0 z-50 bg-secondary text-secondary-foreground">
+    <header className="sticky top-0 z-50 bg-secondary text-secondary-foreground shadow-md transition-shadow duration-base ease-standard">
       <Container className="flex items-center justify-between py-4">
         <Link href="/" className="flex items-center gap-2">
           {logo?.url ? (
@@ -44,7 +44,10 @@ export async function SiteHeader({ locale }: { locale: string }) {
               {header.navItems?.map((item, i) => (
                 <NavigationMenuItem key={item.id ?? i}>
                   <NavigationMenuLink asChild>
-                    <CMSLink {...item.link} className="text-body" />
+                    <CMSLink
+                      {...item.link}
+                      className="relative pb-1 border-b-2 border-transparent hover:border-primary focus-visible:border-primary transition-colors duration-fast ease-out text-body"
+                    />
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               ))}
@@ -69,7 +72,11 @@ export async function SiteHeader({ locale }: { locale: string }) {
           <SheetContent>
             <nav className="flex flex-col gap-4 mt-8">
               {header.navItems?.map((item, i) => (
-                <CMSLink key={item.id ?? i} {...item.link} className="text-body" />
+                <CMSLink
+                  key={item.id ?? i}
+                  {...item.link}
+                  className="relative pb-1 w-fit border-b-2 border-transparent hover:border-primary focus-visible:border-primary transition-colors duration-fast ease-out text-body"
+                />
               ))}
               <LocaleSwitcher currentLocale={locale} />
               {header.ctaButton?.label && (
