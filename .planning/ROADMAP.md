@@ -212,7 +212,12 @@ Plans:
   3. Ningún archivo `config.ts` de bloque ni `payload-types.ts` cambia como resultado de esta fase (los cambios son visuales, no de schema)
   4. Los 16 bloques que consumen estas primitivas siguen renderizando sin errores tras el refinamiento (verificación visual de humo en al menos una página por tipo de bloque)
 
-**Plans**: TBD
+**Plans**: 2 plans (2 waves)
+
+Plans:
+
+- [ ] 08-01-PLAN.md — Refine cva() variants of 12 shadcn primitives (interactive controls + structural/overlay) to consume Phase 7 shadow/motion tokens
+- [ ] 08-02-PLAN.md — Restyle SiteHeader/SiteFooter + phase-close verification (16-block smoke test, config.ts/payload-types.ts zero-diff gate)
 
 ### Phase 9: Hero + Resultados/KPI + Tipografía
 
