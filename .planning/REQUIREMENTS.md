@@ -56,6 +56,40 @@
 - [ ] **DEPLOY-04**: Checklist de go-live: redirects 301 verificados en vivo, robots.txt/noindex fetcheados de producción (no solo leídos en código), ambos locales muestreados, sitemap diffeado contra el inventario congelado
 - [ ] **DEPLOY-05**: Congelamiento de contenido en el sitio actual inmediatamente antes de la corrida final de migración, para evitar pérdida de contenido en el corte
 
+## v1.1 Requirements (UI/UX Polish Pass)
+
+**Defined:** 2026-07-10
+**Milestone goal:** Pasada de pulido visual profesional sobre los 16 bloques Payload-editables y componentes shadcn ya construidos en Phase 5, antes de deployar a Hostinger. Sin animación/motion (diferido), sin toggle de dark mode visible (solo corrección de tokens).
+
+### UI (Fundamentos de tokens)
+
+- [ ] **UI-01**: Tokens de elevación (`--shadow-sm/md/lg/focus`) y de timing CSS-puro (`--motion-fast/base/slow`, `--ease-*`, sin librería JS) agregados a `globals.css`/`tailwind.config.ts`, mapeados a utilidades Tailwind (`boxShadow`, `transitionDuration`, `transitionTimingFunction`)
+- [ ] **UI-02**: Regla global `prefers-reduced-motion` agregada, aplicable a cualquier transición CSS existente o futura
+- [ ] **UI-03**: Paleta `.dark` reemplazada de gris genérico shadcn por tokens branded ember/navy derivados de la paleta light de `05-UI-SPEC.md`, sin toggle visible (solo corrección del token set para uso futuro)
+
+### UI-PRIM (Primitivas shadcn + chrome global)
+
+- [ ] **UI-04**: Variantes `cva()` de primitivas shadcn (button, card, badge, input, select, tabs, sheet, navigation-menu, separator, skeleton, textarea, avatar) refinadas usando los tokens de sombra/spacing/tipografía ya vigentes — sin agregar nuevas dependencias
+- [ ] **UI-05**: `SiteHeader`/`SiteFooter` restyled con jerarquía visual clara y consistente con la dirección editorial-tech ya fijada
+
+### UI-HERO (Hero + resultados/KPI)
+
+- [ ] **UI-06**: Hero restyled con tratamiento de mayor impacto visual (tipografía, spacing, jerarquía) manteniendo el copy 100% editable desde Payload
+- [ ] **UI-07**: `ResultsSection`/KPIs de case studies restyled para reforzar el patrón "métrica en el titular" ya decidido en PROJECT.md
+- [ ] **UI-08**: Jerarquía tipográfica (Inter/Fraunces) aplicada consistentemente en contenido largo (posts, case studies)
+
+### UI-CARD (Cards/listados + autoría E-E-A-T)
+
+- [ ] **UI-09**: Tratamiento visual consistente de elevación/spacing en todos los bloques de listado tipo card (`ArchiveBlock`, `FeaturedPostsBlock`, `FeaturedCaseStudiesBlock`, related posts)
+- [ ] **UI-10**: `AuthorByline`/`AuthorCard` restyled para hacer visualmente prominentes las credenciales E-E-A-T (bio, años de experiencia, redes) ya modeladas en Phase 5
+
+### UI-QA (Verificación cruzada final)
+
+- [ ] **UI-11**: Contraste WCAG re-verificado en ambos temas (light/dark) tras los cambios de tokens de esta fase, no solo al final
+- [ ] **UI-12**: Layout verificado en `/es` contra los títulos/textos más largos reales de los 72 posts/case studies migrados (español corre ~15-25% más largo que inglés)
+- [ ] **UI-13**: Grep final de contenido hardcodeado (strings de prueba, badges/stats sin campo Payload backing) en todos los bloques tocados — cero diffs en `src/blocks/*/config.ts` y `payload-types.ts`
+- [ ] **UI-14**: Lighthouse móvil corrido tras los cambios visuales, sin regresión respecto al baseline de producción capturado antes de esta fase
+
 ## v2 Requirements
 
 Deferred to future release. Tracked but not in current roadmap.
