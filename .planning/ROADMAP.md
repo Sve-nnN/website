@@ -30,7 +30,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 10.5 [INSERTED]: Typography + Footer Schema** - Tipografía Array/Khand/Geist wireada + campo dynamicColumns del Footer con migración commiteada (completed 2026-07-10; alcance reducido — restyle de header/footer pasa a Phase 10.6)
 - [x] **Phase 10.6 [INSERTED]: Header/Footer Completion + Mobile Verification** - Nav mobile-first completa, footer con contenido dinámico realmente renderizado, verificación real con Playwright en 375/768/1280px (completed 2026-07-10)
 - [x] **Phase 10.7 [INSERTED]: Component Gap-Fill (AboutSection + TestimonialSection)** - Dos bloques nuevos identificados por el gap-analysis contra JuanPortfolio, construidos y poblados con contenido real/de muestra (completed 2026-07-10)
-- [ ] **Phase 10.8 [INSERTED]: Hero Enrichment (CTA + Breadcrumbs)** - Campos de CTA/links y breadcrumbs agregados al Hero existente y poblados con datos reales
+- [x] **Phase 10.8 [INSERTED]: Hero Enrichment (CTA + Breadcrumbs)** - Campos de CTA/links y breadcrumbs agregados al Hero existente y poblados con datos reales (completed 2026-07-10)
 - [ ] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil, disciplina mobile-first confirmada de punta a punta
 
 ## Phase Details

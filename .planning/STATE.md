@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: milestone
-status: Phase 10.7 completa — iniciando Phase 10.8 (Hero Enrichment)
-stopped_at: "10.7 ejecutada: AboutSection + TestimonialSection construidos, wireados, migrados y poblados con contenido real (UI-20, UI-21)"
-last_updated: "2026-07-10T18:00:00.000Z"
-last_activity: 2026-07-10 — Ejecutada Phase 10.7 (AboutSection en Pages, TestimonialSection en CaseStudies entre solution/results, migracion Postgres commiteada, contenido real seedeado); 7 commits atomicos, ultimo 5bdaf48
+status: Phase 10.8 completa — falta solo Phase 11 (Verificacion Cruzada Final)
+stopped_at: "10.8 ejecutada: Hero CTA links + breadcrumbs listing construidos, migrados y poblados (UI-22, UI-23); bug real de Tailwind content glob encontrado y arreglado"
+last_updated: "2026-07-10T19:30:00.000Z"
+last_activity: 2026-07-10 — Ejecutada Phase 10.8 (Hero links array + breadcrumbs en variante listing, CTA real en home, breadcrumbs reales en blog index); fix de tailwind.config.ts content glob (src/blocks/** faltaba, causaba overflow horizontal silencioso); 8 commits atomicos, ultimo a446623
 progress:
   total_phases: 11
   completed_phases: 11
   total_plans: 55
-  completed_plans: 52
-  percent: 95
+  completed_plans: 53
+  percent: 97
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 10.7 (Component Gap-Fill) — COMPLETA
-Plan: AboutSection (Pages, UI-20) y TestimonialSection (CaseStudies, entre solution/results, UI-21) construidos, registrados en RenderBlocks, migracion Postgres commiteada, contenido real poblado (home page bio + case study nuevo con testimonial)
-Status: Phase 10.7 cerrada. Avanzando a Phase 10.8 (Hero Enrichment: CTA + Breadcrumbs)
-Last activity: 2026-07-10 — Ejecutada Phase 10.7 completa via agente delegado: 2 bloques nuevos (config+Component+registro), migracion generada/aplicada contra Neon real, seed idempotente de contenido real (scripts/seed-phase10-7-gap-fill.ts), verificado con curl que TestimonialSection renderiza entre "La solucion" y "Resultados" en ambos locales; payload generate:types y tsc --noEmit limpios
+Phase: 10.8 (Hero Enrichment) — COMPLETA
+Plan: Hero.links array (CTA botones, reutiliza linkGroup/CMSLink) y Hero.breadcrumbs (solo variant listing) agregados al schema, migracion Postgres commiteada, home con CTA real poblado, blog index con breadcrumbs reales poblados
+Status: Phase 10.8 cerrada. Solo falta Phase 11 (Verificacion Cruzada Final) para cerrar el milestone v1.1 completo
+Last activity: 2026-07-10 — Ejecutada Phase 10.8 via agente delegado: bug real encontrado y arreglado (tailwind.config.ts content glob no incluia src/blocks/**, causaba overflow horizontal silencioso en clases usadas solo dentro de blocks — ej. tabs de categoria en ArchiveBlock); tambien arreglados 2 bugs de corrupcion de datos heredados del seed de 10.7 (parrafo ES de AboutSection y titulo/subtitulo EN del Hero de home pisados por el seed anterior); verificacion mobile real con Playwright (scripts/verify-hero-mobile.mjs) PASS en 375px sin overflow, ademas de re-confirmar PASS en el script de header/footer de 10.6
 
 ## Performance Metrics
 
