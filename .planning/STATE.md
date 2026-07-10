@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 Phase: 4 of 6 (migración mongo → postgres)
 Plan: 01 of 8 complete, executing 02-08 in sequence
-Status: Phase 3 (Cloudinary spike) complete and verified; Phase 4 plan 01 (dump + URL inventory + shared libs) complete, moving to plan 02 (media migration)
+Status: Phase 4 plans 01-02 complete (dump/URL-inventory/libs; Media 11/15 migrated to Cloudinary, 4 failed due to disabled old site — documented), moving to plan 03 (authors/categories)
 Last activity: 2026-07-10
 
 Progress: [███████░░░] 73%
