@@ -36,3 +36,22 @@ See plan checkpoint outcome — Juan confirmed (or described issues, subsequentl
 4. `/es/case-studies` — case-studies empty state
 
 Outcome documented in `.planning/phases/11-verificacion-cruzada-final/11-02-SUMMARY.md`.
+
+## Re-verification at Phase 11 close-out (real content now exists)
+
+Phase 10.7 seeded a real case study (`migracion-ecommerce-nextjs-seo-tecnico`, ES title 47 chars) with an embedded `TestimonialSection`, and Phase 10.8 added Hero CTA links + breadcrumbs. The scope above (originally "0 real case studies, structural empty-state only") is now stale for the case-studies pages. Re-ran `scripts/verify-es-layout-final.mjs` (extended with 3 new checks) against a live `npm run dev` server:
+
+| Check | Result | Detail |
+|-------|--------|--------|
+| home-es | PASS | Hero title (55 chars) + subtitle (71 chars) found verbatim |
+| authors-list-es | PASS | totalDocs=1, real author name found |
+| author-detail-es | PASS | 720-char real ES bio found verbatim |
+| case-studies-list-es | PASS | totalDocs=1, real case-study title found verbatim in list markup (no longer an empty state) |
+| case-study-detail-es | PASS | Real title + embedded TestimonialSection quote (174 chars) + author name ("Marcela Ibáñez") found verbatim |
+| blog-listing-breadcrumbs-es | PASS | `aria-label="Breadcrumb"` nav present on `/es/blog` (Phase 10.8 Hero enrichment) |
+
+**Fresh Playwright evidence (real Chromium headless, not CSS simulation)** via new `scripts/verify-phase11-real-content-mobile.mjs` (reuses the `verify-mobile-viewport.mjs`/`verify-hero-mobile.mjs` pattern) at 375/768/1280px for: home (`/es`, `/en` — AboutSection), case-studies list (`/es/case-studies`), case-study detail (`/es` and `/en/case-studies/migracion-ecommerce-nextjs-seo-tecnico` — TestimonialSection). Result: **PASS, zero horizontal overflow at any breakpoint** (one transient HTTP 500 on a single run, confirmed by 5x manual `curl -L` retest and a clean re-run of the full script — not a reproducible defect, matches known Neon/Postgres pooler cold-start pattern documented elsewhere in this project, not a Phase 11 layout finding).
+
+Screenshots inspected directly (not just measured): case-study detail renders cleanly on mobile — headline wraps to 3 lines without clipping, the 3 KPI cards stack full-width, the TestimonialSection blockquote sits correctly between "La solución" and "Resultados", author card and bio render without overflow. Home page's AboutSection ("Sobre mí" / "Ingeniería de software con mentalidad SEO") wraps cleanly under the Hero CTA button with no clipping.
+
+**Content observation (not a layout defect, not fixed in this phase):** one of the seeded case study's 3 KPI cards shows value `"0"` with no icon (renders as a bare fallback glyph). This is a data/content-population issue in the Phase 10.7 seed data, same category as the already-accepted author E-E-A-T gap — flagged for Juan's awareness, not fixed here (fixing seed *content* is out of this verification-only phase's scope; the component itself renders the field correctly whatever its value is).

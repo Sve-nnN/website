@@ -3,7 +3,12 @@
  * Phase 11 Plan 02 — final ES layout route-level check for the page types
  * Phase 10 did NOT already cover (Phase 10 covered blog post cards/detail
  * specifically). Covers: home, authors list, author detail (real author),
- * case-studies list.
+ * case-studies list + detail, blog listing (breadcrumbs, Phase 10.8).
+ *
+ * Re-run at Phase 11 close-out (post 10.6-10.8): Phase 10.7 seeded a real
+ * case study (`migracion-ecommerce-nextjs-seo-tecnico`) with an embedded
+ * TestimonialSection, so checks [4]/[5] below now verify real content
+ * instead of only the empty-state path this script originally targeted.
  *
  * Pattern-matched after scripts/verify-phase10-cards-eeat.mjs: zero-dependency,
  * fetch()-based, requires `npm run dev` (or a production server) already
@@ -11,7 +16,7 @@
  * Uses Payload's Local API to read the real longest ES content per page type
  * before asserting it renders verbatim server-side.
  *
- * Run: node --env-file=.env scripts/verify-es-layout-final.mjs
+ * Run: node --env-file=.env --import tsx scripts/verify-es-layout-final.mjs
  * Requires: `npm run dev` (or equivalent) already running
  */
 import { getPayload } from 'payload'
@@ -107,16 +112,58 @@ async function main() {
     )
   }
 
-  // --- Case-studies list (/es/case-studies) — expected empty state ---
-  console.log('[4] Case-studies list (/es/case-studies) — expected empty state (0 real docs)')
-  const caseStudies = await payload.find({ collection: 'case-studies', locale: 'es', limit: 0 })
+  // --- Case-studies list (/es/case-studies) — real content since Phase 10.7 ---
+  console.log('[4] Case-studies list (/es/case-studies)')
+  const caseStudies = await payload.find({ collection: 'case-studies', locale: 'es', limit: 10 })
   {
     const { status, body } = await fetchRoute('/es/case-studies')
     const hasEmptyStateWrapper = body.includes('text-center py-16') || body.includes('py-16 text-center')
+    const titlesFound =
+      caseStudies.totalDocs > 0 ? caseStudies.docs.every((d) => body.includes(d.title)) : true
     record(
       'case-studies-list-es',
-      status === 200 && !hasErrorMarker(body) && (caseStudies.totalDocs > 0 || hasEmptyStateWrapper),
-      `HTTP ${status}, totalDocs=${caseStudies.totalDocs}, empty-state wrapper found: ${hasEmptyStateWrapper}`,
+      status === 200 &&
+        !hasErrorMarker(body) &&
+        (caseStudies.totalDocs > 0 ? titlesFound : hasEmptyStateWrapper),
+      `HTTP ${status}, totalDocs=${caseStudies.totalDocs}, ${
+        caseStudies.totalDocs > 0
+          ? `real case-study titles found verbatim: ${titlesFound}`
+          : `empty-state wrapper found: ${hasEmptyStateWrapper}`
+      }`,
+    )
+  }
+
+  // --- Case-study detail (/es/case-studies/{real-slug}) — real content, incl. TestimonialSection ---
+  console.log('[5] Case-study detail (/es/case-studies/{real-slug}) — KPIs + embedded testimonial')
+  const realCaseStudy = caseStudies.docs[0]
+  if (!realCaseStudy) {
+    record('case-study-detail-es', 'skip', 'no real case study found — cannot verify')
+  } else {
+    const { status, body } = await fetchRoute(`/es/case-studies/${realCaseStudy.slug}`)
+    const titleFound = body.includes(realCaseStudy.title)
+    const testimonial = (realCaseStudy.testimonialSection ?? [])[0]
+    const quoteFound = testimonial ? body.includes(testimonial.quote) : true
+    const authorFound = testimonial ? body.includes(testimonial.authorName) : true
+    record(
+      'case-study-detail-es',
+      status === 200 && !hasErrorMarker(body) && titleFound && quoteFound && authorFound,
+      `HTTP ${status}, title found: ${titleFound}${
+        testimonial
+          ? `, testimonial quote (${testimonial.quote.length} chars) found: ${quoteFound}, author "${testimonial.authorName}" found: ${authorFound}`
+          : ' (no testimonialSection on this doc)'
+      }`,
+    )
+  }
+
+  // --- Blog listing (/es/blog) — Hero breadcrumbs (Phase 10.8) ---
+  console.log('[6] Blog listing (/es/blog) — Hero breadcrumb nav renders in ES')
+  {
+    const { status, body } = await fetchRoute('/es/blog')
+    const hasBreadcrumbNav = body.includes('aria-label="Breadcrumb"')
+    record(
+      'blog-listing-breadcrumbs-es',
+      status === 200 && !hasErrorMarker(body) && hasBreadcrumbNav,
+      `HTTP ${status}, breadcrumb nav present: ${hasBreadcrumbNav}`,
     )
   }
 
