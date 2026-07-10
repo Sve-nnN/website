@@ -24,7 +24,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 7: Design-Token Foundation** - Tokens de sombra/motion CSS-puro, prefers-reduced-motion global, paleta dark branded (sin toggle) (completed 2026-07-10)
 - [x] **Phase 8: shadcn Primitives + Global Chrome** - Primitivas shadcn refinadas con los nuevos tokens + header/footer restyled (completed 2026-07-10)
 - [x] **Phase 9: Hero + Resultados/KPI + Tipografía** - Hero de mayor impacto, KPIs de case studies reforzados, jerarquía tipográfica en contenido largo (completed 2026-07-10)
-- [ ] **Phase 10: Cards/Listados + Autoría E-E-A-T** - Tratamiento visual consistente en bloques tipo card + credenciales de autor prominentes
+- [x] **Phase 10: Cards/Listados + Autoría E-E-A-T** - Tratamiento visual consistente en bloques tipo card + credenciales de autor prominentes (completed 2026-07-10)
 - [ ] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil sin regresión
 
 ## Phase Details
@@ -257,7 +257,7 @@ Plans:
 Plans:
 
 - [x] 10-01-PLAN.md — PostCard/CaseStudyCard/AuthorByline/AuthorCard restyled to consume the Card primitive consistently, E-E-A-T fields made prominent
-- [ ] 10-02-PLAN.md — Boundary-condition + ES-locale + E-E-A-T verification against real Postgres data and guarded seeded fixtures, closes with explicit non-blocking flag for Juan's pending author content
+- [x] 10-02-PLAN.md — Boundary-condition + ES-locale + E-E-A-T verification against real Postgres data and guarded seeded fixtures, closes with explicit non-blocking flag for Juan's pending author content
 
 **UI hint**: yes
 
@@ -291,6 +291,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 7. Design-Token Foundation | 1/1 | Complete   | 2026-07-10 |
 | 8. shadcn Primitives + Global Chrome | 2/2 | Complete   | 2026-07-10 |
 | 9. Hero + Resultados/KPI + Tipografía | 3/3 | Complete   | 2026-07-10 |
-| 10. Cards/Listados + Autoría E-E-A-T | 1/2 | In Progress|  |
+| 10. Cards/Listados + Autoría E-E-A-T | 2/2 | Complete   | 2026-07-10 |
 | 11. Verificación Cruzada Final | 0/TBD | Not started | - |
 </content>

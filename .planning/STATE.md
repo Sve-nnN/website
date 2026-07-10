@@ -4,14 +4,14 @@ milestone: v1.1
 milestone_name: milestone
 status: planning
 stopped_at: Completed 09-03-PLAN.md
-last_updated: "2026-07-10T07:40:52.799Z"
-last_activity: 2026-07-10 — Phase 9 Plans 01, 02 and 03 executed and closed (see 09-01-SUMMARY.md, 09-02-SUMMARY.md, 09-03-SUMMARY.md)
+last_updated: "2026-07-10T08:11:05.085Z"
+last_activity: 2026-07-10 — Phase 10 Plans 01 and 02 executed and closed (see 10-01-SUMMARY.md, 10-02-SUMMARY.md, 10-VERIFICATION.md)
 progress:
   total_phases: 11
-  completed_phases: 8
+  completed_phases: 9
   total_plans: 52
-  completed_plans: 46
-  percent: 73
+  completed_plans: 47
+  percent: 82
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 10 (Cards/Listados + Autoría E-E-A-T) — plan 01 of 2 complete
-Plan: 10-01 done (PostCard/CaseStudyCard restyled to compose the Phase 8 Card/CardContent primitive; AuthorCard restyled with Card composition + E-E-A-T prominence styling for yearsExperience/socialLinks); 10-02 pending (boundary-condition verification with temporary seeded fixtures)
-Status: Phase 10 Plan 01 executed and closed (see 10-01-SUMMARY.md); Plan 02 in progress — no milestone transition run (--no-transition)
-Last activity: 2026-07-10 — Phase 10 Plan 01 executed and closed (see 10-01-SUMMARY.md)
+Phase: 10 (Cards/Listados + Autoría E-E-A-T) — plans 01-02 of 2 complete
+Plan: 10-01 done (PostCard/CaseStudyCard restyled to compose the Phase 8 Card/CardContent primitive; AuthorCard restyled with Card composition + E-E-A-T prominence styling for yearsExperience/socialLinks); 10-02 done (guarded fixture seed/verify/cleanup triad proved repeater min/max boundaries, E-E-A-T prominence in en+es, and ES longest-title rendering — all fixtures cleanly removed, zero residual production data)
+Status: Phase 10 executed 2/2, ready for next phase planning (Phase 11: cross-cutting verification) — no milestone transition run (--no-transition)
+Last activity: 2026-07-10 — Phase 10 Plans 01 and 02 executed and closed (see 10-01-SUMMARY.md, 10-02-SUMMARY.md, 10-VERIFICATION.md)
 
 ## Performance Metrics
 
@@ -106,6 +106,8 @@ Recent decisions affecting current work:
 - [Phase ?]: Phase 9: Hero overlay contrast verified against all 53 real Cloudinary fallback images plus synthetic white worst case; no opacity adjustment needed
 - [Phase ?]: Phase 9: KPI/results metric dominance pattern (tracking-tight tabular-nums value + uppercase tracking-wide opacity-70 label) unified across ResultsSection and case-study detail page
 - [Phase ?]: Phase 9: Prose.tsx h2/h3 differentiated via opacity-90 recession on h3 rather than a new size token, since both share the locked text-heading size
+- [Phase 10]: 10-01: PostCard/CaseStudyCard/AuthorCard restyled to compose Phase 8's Card/CardContent primitive; AuthorCard's yearsExperience given a headline-stat treatment reusing Phase 9's KPI metric-dominance pattern; AuthorByline left untouched (chromeless by design)
+- [Phase 10]: 10-02: guarded seed/verify/cleanup script triad proved repeater min/max boundaries (real data + seeded fixtures where 0 real CaseStudies exist), E-E-A-T prominence in en+es, and ES longest-title rendering; discovered and corrected ArchiveBlock's real limit=12 instance lives on the blog page not the home page; all 7 seeded fixtures cleanly removed; real author (id=1) still needs credentials/yearsExperience/socialLinks populated via /admin — non-blocking content task, flagged in 10-VERIFICATION.md
 
 ### Pending Todos
 
@@ -131,7 +133,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T07:40:52.796Z
+Last session: 2026-07-10T08:11:05.082Z
 Stopped at: Completed 09-03-PLAN.md
 Resume file: None
 </content>
