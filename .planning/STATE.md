@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: milestone
-status: Phase 10.6 en progreso — plans 01/02 (SiteHeader, SiteFooter) completados; plan 03 (Playwright mobile verification, checkpoint humano) pendiente
-stopped_at: "10.6-01 y 10.6-02 ejecutados y commiteados; 10.6-03 (mobile verification, requiere checkpoints humanos) no ejecutado en esta corrida"
-last_updated: "2026-07-10T16:20:00.000Z"
-last_activity: 2026-07-10 — Ejecutados 10.6-01-PLAN.md (SiteHeader, UI-17) y 10.6-02-PLAN.md (SiteFooter dynamicColumns + restyle mobile-first, UI-18); 3 commits atomicos (5681087, 1ae02eb, 7ed4742)
+status: Phase 10.6 completa (3/3 plans) — iniciando Phase 10.7 (Component Gap-Fill)
+stopped_at: "10.6-03 ejecutado: Playwright instalado, script verify-mobile-viewport.mjs PASS en 375/768/1280px, Juan confirmo visualmente header/footer/tipografia resueltos"
+last_updated: "2026-07-10T17:00:00.000Z"
+last_activity: 2026-07-10 — Ejecutado 10.6-03-PLAN.md (Playwright mobile verification, UI-19); Phase 10.6 cerrada 3/3; commit c3039d3
 progress:
   total_phases: 11
-  completed_phases: 9
+  completed_phases: 10
   total_plans: 55
-  completed_plans: 50
-  percent: 91
+  completed_plans: 51
+  percent: 93
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 10.6 (Header/Footer Completion + Mobile Verification) — 2/3 plans completos
-Plan: 10.6-01 (SiteHeader, UI-17) y 10.6-02 (SiteFooter, UI-18) completados y commiteados; 10.6-03 (Playwright mobile verification 375/768/1280px, UI-19) pendiente — no autonomo, requiere 2 checkpoints humanos (legitimidad de paquete playwright + confirmacion visual final)
-Status: Phase 10.6 en progreso, esperando ejecucion de 10.6-03
-Last activity: 2026-07-10 — Ejecutados 10.6-01-PLAN.md (SiteHeader completado: audit cerro un gap de accesibilidad real — SheetTitle faltante en el Sheet movil) y 10.6-02-PLAN.md (SiteFooter dynamicColumns conectado a datos reales via Local API con filtro _status published, mas restyle mobile-first del grid)
+Phase: 10.6 (Header/Footer Completion + Mobile Verification) — COMPLETA 3/3 plans
+Plan: 10.6-01 (SiteHeader, UI-17), 10.6-02 (SiteFooter, UI-18), 10.6-03 (Playwright mobile verification, UI-19) todos completados y commiteados
+Status: Phase 10.6 cerrada. Avanzando a Phase 10.7 (Component Gap-Fill: AboutSection + TestimonialSection)
+Last activity: 2026-07-10 — Ejecutado 10.6-03-PLAN.md: Playwright confirmado legitimo e instalado, script verify-mobile-viewport.mjs PASS en 375/768/1280px (cero overflow, exclusividad nav mobile/desktop correcta, footer con dynamicColumns visible), Juan confirmo visualmente que header/footer/tipografia resuelven su feedback original
 
 ## Performance Metrics
 
@@ -115,6 +115,7 @@ Recent decisions affecting current work:
 - [Milestone v1.1 — scope expandido]: `CalendlyEmbed` (tercer gap genuino identificado en COMPONENT-GAP-ANALYSIS.md) NO se agrega al roadmap — confianza MEDIA sobre si Juan sigue usando Calendly; queda documentado en REQUIREMENTS.md Out of Scope como candidato v2/insert futuro si se confirma
 - [Phase 10.6]: 10.6-01: audit del edit sin commitear de SiteHeader.tsx confirmó que ya cumplía los must_haves de UI-17 (tap targets 44px, Separator, hover states, breakpoints no invertidos); único gap real cerrado fue un `SheetTitle` faltante en el Sheet móvil (Radix Dialog requiere nombre accesible) — sin indicador de página activa (fuera de alcance) ni auto-close del Sheet (aceptado el comportamiento default)
 - [Phase 10.6]: 10.6-02: dynamicColumns del footer resuelto vía Local API con filtro `_status: published` explícito (obligatorio porque Local API usa `overrideAccess: true` y no respeta el access control de las colecciones); case-studies ordenado por `-createdAt` (no tiene `publishedAt`); grid mobile-first (`grid-cols-1` en 375px) y jerarquía tipográfica (`font-heading` en títulos de columna)
+- [Phase 10.6]: 10.6-03: Playwright confirmado por Juan como paquete oficial Microsoft antes de instalar; `scripts/verify-mobile-viewport.mjs` PASS en los 3 breakpoints contra el dev server real (cero overflow horizontal, SheetTrigger/NavigationMenu mutuamente exclusivos por breakpoint, footer con 3 column headings visibles incluyendo dynamicColumns); Juan dio la confirmación visual final directamente sin requerir walkthrough guiado — Phase 10.6 cerrada 3/3 (UI-17, UI-18, UI-19)
 
 ### Pending Todos
 
@@ -130,7 +131,6 @@ None yet.
 - ~~Phase 1: decisión Works vs Clientes~~ — RESUELTO 2026-07-09: Works se retira (absorbido conceptualmente en CaseStudies enriquecido), Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link)
 - ~~Plan 02-05 Task 1 (seed script): permission classifier blocked execution of 'npx tsx scripts/seed-phase2.ts' against the production Neon DB~~ — RESUELTO 2026-07-09: authorization step cleared; per the orchestrator's report the seed ran successfully (idempotency confirmed on re-run) and all 8 end-to-end curl checks passed. Phase 2 closed 5/5.
 - [Phase 10.7 pending confirmation] `CalendlyEmbed` no entró al roadmap por confianza MEDIA sobre si Juan sigue usando Calendly — si Juan confirma que sí, se puede insertar como fase adicional (ej. 10.75) más adelante
-- [Phase 10.6] 10.6-03 (Playwright viewport verification 375/768/1280px, UI-19) no se ejecutó en esta corrida por instrucción explícita del orquestador — requiere 2 checkpoints humanos no automatizables (confirmar legitimidad del paquete npm `playwright` antes de instalar, y confirmación visual final de Juan sobre header+footer). Pendiente de ejecución en una corrida separada.
 
 ## Deferred Items
 
@@ -142,7 +142,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T16:20:00.000Z
-Stopped at: 10.6-01 y 10.6-02 completados y commiteados; 10.6-03 (mobile verification, checkpoints humanos) pendiente de ejecución
-Resume file: .planning/phases/10.6-header-footer-completion-mobile-verification/10.6-03-PLAN.md
+Last session: 2026-07-10T17:00:00.000Z
+Stopped at: Phase 10.6 completa (3/3). Iniciando Phase 10.7 (Component Gap-Fill: AboutSection + TestimonialSection)
+Resume file: .planning/ROADMAP.md (Phase 10.7)
 </content>
