@@ -9,6 +9,7 @@ import * as migration_20260710_044516_phase5_search_plugin from './20260710_0445
 import * as migration_20260710_050300_phase5_content_block_localized_richtext from './20260710_050300_phase5_content_block_localized_richtext';
 import * as migration_20260710_150154_phase10_5_footer_dynamic_columns from './20260710_150154_phase10_5_footer_dynamic_columns';
 import * as migration_20260710_164937_phase10_7_about_testimonial_sections from './20260710_164937_phase10_7_about_testimonial_sections';
+import * as migration_20260710_165940_phase10_8_hero_cta_breadcrumbs from './20260710_165940_phase10_8_hero_cta_breadcrumbs';
 
 export const migrations = [
   {
@@ -64,6 +65,11 @@ export const migrations = [
   {
     up: migration_20260710_164937_phase10_7_about_testimonial_sections.up,
     down: migration_20260710_164937_phase10_7_about_testimonial_sections.down,
-    name: '20260710_164937_phase10_7_about_testimonial_sections'
+    name: '20260710_164937_phase10_7_about_testimonial_sections',
+  },
+  {
+    up: migration_20260710_165940_phase10_8_hero_cta_breadcrumbs.up,
+    down: migration_20260710_165940_phase10_8_hero_cta_breadcrumbs.down,
+    name: '20260710_165940_phase10_8_hero_cta_breadcrumbs'
   },
 ];
