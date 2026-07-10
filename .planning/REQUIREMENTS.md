@@ -90,6 +90,30 @@
 - [ ] **UI-13**: Grep final de contenido hardcodeado (strings de prueba, badges/stats sin campo Payload backing) en todos los bloques tocados — cero diffs en `src/blocks/*/config.ts` y `payload-types.ts`
 - [ ] **UI-14**: Lighthouse móvil corrido tras los cambios visuales, sin regresión respecto al baseline de producción capturado antes de esta fase
 
+## v1.1 Requirements — Expansión (Component Gap-Fill + Chrome + Mobile-First)
+
+**Defined:** 2026-07-10
+**Milestone goal (expandido):** Tras feedback directo de Juan sobre el estado acumulado de Phases 7-10 (tipografía, header y footer insuficientes), el milestone se amplía: nueva dirección tipográfica (Array/Khand/Geist, la misma de `auditor`), header/footer ricos y editables, dos bloques nuevos identificados por research de gaps contra el sitio Payload viejo (`JuanPortfolio`), enriquecimiento de campos del Hero, y disciplina mobile-first estricta de ahora en adelante.
+
+### UI-CHROME (Tipografía + Header/Footer — ya iniciado en Phase 10.5, continúa aquí)
+
+- [x] **UI-15**: Cuatro familias tipográficas (Array display, Khand headings/UI, Geist Sans body, Geist Mono código) self-hosted y wireadas, reemplazando Inter/Fraunces (completado en Phase 10.5 Wave 1)
+- [x] **UI-16**: Campo `dynamicColumns` en el global Footer (fuente: últimos posts / últimos case studies) con migración commiteada (completado en Phase 10.5 Wave 1)
+- [ ] **UI-17**: `SiteHeader` con navegación visible completa, verificada mobile-first (menú hamburguesa/Sheet primero, nav horizontal desktop después)
+- [ ] **UI-18**: `SiteFooter` con columnas manuales editables MÁS sección de contenido dinámico (últimos posts/case studies) funcionando en render real, sensación de footer "completo" no vacío
+- [ ] **UI-19**: Verificación mobile real (~375px) con herramienta headless (Playwright u equivalente), no solo "riesgo bajo asumido" como en fases previas
+
+### UI-GAPS (Bloques nuevos + campos de Hero — de COMPONENT-GAP-ANALYSIS.md)
+
+- [ ] **UI-20**: Bloque `AboutSection` nuevo — bio narrativa consolidada (eyebrow + título + párrafos + foto) para credibilidad E-E-A-T, ausente hoy como sección independiente
+- [ ] **UI-21**: Bloque `TestimonialSection` nuevo — spotlight de una sola cita de cliente, embebible dentro de un case study (entre "Solución" y "Resultados"), distinto del `TestimonialsCarousel` general existente
+- [ ] **UI-22**: Campo de CTA/link array agregado al bloque `Hero` existente (el hero de home hoy no tiene botón de acción)
+- [ ] **UI-23**: Breadcrumbs agregados a la variante `listing` del `Hero` existente
+
+### UI-MOBILE (Disciplina mobile-first, aplica de ahora en adelante)
+
+- [ ] **UI-24**: Todo el trabajo visual restante de este milestone (incluida la re-verificación final) se diseña y verifica mobile-first (~375px primero, luego ~768px, luego ~1280px) — no desktop-first con mobile como check final
+
 ## v2 Requirements
 
 Deferred to future release. Tracked but not in current roadmap.
