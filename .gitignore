@@ -21,6 +21,10 @@ dist/
 # production content, not source code
 scripts/migrate/data/
 
+# content-freeze snapshots (Phase 6) — regenerable dumps of real production
+# content (ids/updatedAt), not source code
+.planning/phases/06-deploy-cutover/freeze-snapshots/
+
 # misc
 .DS_Store
 *.pem
