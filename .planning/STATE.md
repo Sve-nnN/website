@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 Phase: 4 of 6 (migración mongo → postgres)
 Plan: 01 of 8 complete, executing 02-08 in sequence
-Status: Phase 4 plans 01-03 complete (dump/URL-inventory/libs; Media 11/15; Authors 1/1 + Categories 5/5, resolved Phase-2 seed-slug collisions via upsert), moving to plan 04 (testimonials/clientes)
+Status: Phase 4 plans 01-04 complete (dump/URL-inventory/libs; Media 11/15; Authors 1/1 + Categories 5/5; Testimonials 1/1 + Clientes 6/6, no needsReview), moving to plan 05 (posts)
 Last activity: 2026-07-10
 
 Progress: [███████░░░] 73%
