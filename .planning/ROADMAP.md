@@ -266,7 +266,7 @@ Plans:
 
 **Goal**: El sitio adopta la dirección tipográfica de `auditor` (Array/Khand/Geist Sans/Geist Mono) reemplazando Inter+Fraunces, y el header/footer pasan de "simples/vacíos" a navegación completa + columnas ricas con contenido dinámico (últimos 5 posts, últimos 5 case studies) editable desde Payload — todo verificado mobile-first. Insertada tras feedback visual directo de Juan sobre el estado acumulado de Phases 7-10.
 **Depends on**: Phase 10
-**Requirements**: (ad-hoc, fuera de UI-01..UI-14 — feedback directo de Juan post-Phase-10)
+**Requirements**: (ad-hoc, fuera de UI-01..UI-14 — feedback directo de Juan post-Phase-10: 10.5-SC1, 10.5-SC2, 10.5-SC3, 10.5-SC4, 10.5-SC5)
 **Success Criteria** (what must be TRUE):
 
   1. Las cuatro familias tipográficas (Array display, Khand headings/UI, Geist Sans body, Geist Mono código) están self-hosted y wireadas, reemplazando toda referencia a Inter/Fraunces en el codebase
@@ -275,11 +275,15 @@ Plans:
   4. El layout mobile (~375px) de header y footer se verifica de forma real (no solo "riesgo bajo asumido"), antes que desktop
   5. `payload-types.ts` refleja el nuevo campo de Footer vía migración commiteada (`push:false` respetado)
 
-**Plans**: TBD
+**Plans**: 5 plans (3 waves)
 
 Plans:
 
-- [ ] 10.5-01: TBD
+- [ ] 10.5-01-PLAN.md — Typography swap: Array/Khand/Geist Sans/Geist Mono, tailwind tokens, codebase-wide font-heading migration
+- [ ] 10.5-02-PLAN.md — Footer schema: dynamicColumns field + migrate:create + payload-types.ts
+- [ ] 10.5-03-PLAN.md — Header restyle: mobile Sheet first, then desktop nav
+- [ ] 10.5-04-PLAN.md — Footer restyle + dynamic content wiring (latest posts/case studies via Local API)
+- [ ] 10.5-05-PLAN.md — Real mobile-viewport verification (Playwright, 375/768/1280px) + Juan's visual sign-off
 
 ### Phase 11: Verificación Cruzada Final
 
