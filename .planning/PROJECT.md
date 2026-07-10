@@ -65,6 +65,16 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | Idiomas: EN + ES | Mismo alcance SEO internacional que el sitio actual | ✓ Good |
 | Works vs Clientes: se elimina Works, Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link a web); CaseStudies se enriquece con el modelo estructurado de ariannalupi.com/casos/ | Juan no quiere "Works" como concepto separado — prefiere case studies ricos como vitrina principal, y Clientes como pieza aparte solo para credibilidad visual (logos) | ✓ Good |
 
+## Current Milestone: v1.1 UI/UX Polish Pass
+
+**Goal:** Todos los componentes del sitio (home, blog, case studies, authors, contact, header/footer, formularios, cards) reciben una pasada de diseño profesional — estética moderna, agradable, alineada a la marca de Juan — antes del deploy a producción en Hostinger.
+
+**Target features:**
+- Auditoría visual completa de todos los componentes/bloques Payload-editables construidos en Phase 5 (RenderBlocks registry: 16 bloques, heros, cards, byline, footer/header)
+- Refinamiento de sistema de diseño (tipografía, color, espaciado, densidad) informado por research de competidores + referencia del proyecto hermano `auditor` (`/Users/juan/Documents/Codigo/Personal/juantech/auditor/apps/web` — dark-first, acento lime, tokens.css con rampas de color/espaciado/tipografía consistentes)
+- Mantener el hard rule de Phase 5: todo contenido sigue siendo editable desde Payload, este milestone es visual/CSS/componentes, no reintroduce contenido hardcodeado
+- Fase 6 (Deploy + Cutover) queda en pausa — retoma después de que este milestone cierre
+
 ## Evolution
 
 This document evolves at phase transitions and milestone boundaries.
@@ -83,4 +93,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-09 after initialization*
+*Last updated: 2026-07-10 — milestone v1.1 started*
