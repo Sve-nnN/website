@@ -17,6 +17,10 @@ dist/
 # payload (root-level upload directory only — do not match src/collections/Media)
 /media/
 
+# migration ETL artifacts (Phase 4) — regenerable dumps/remap-table of real
+# production content, not source code
+scripts/migrate/data/
+
 # misc
 .DS_Store
 *.pem
