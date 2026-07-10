@@ -223,6 +223,7 @@ export interface Page {
       | FeaturedPostsBlock
       | FeaturedCaseStudiesBlock
       | ClientLogosBlock
+      | AboutSectionBlock
     )[];
   };
   slug?: string | null;
@@ -470,6 +471,10 @@ export interface CaseStudy {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Testimonio embebido entre "La solución" y "Resultados"
+   */
+  testimonialSection?: TestimonialSectionBlock[] | null;
   results?: {
     periodBefore?: string | null;
     periodAfter?: string | null;
@@ -523,6 +528,18 @@ export interface Cliente {
   websiteUrl?: string | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialSectionBlock".
+ */
+export interface TestimonialSectionBlock {
+  quote: string;
+  authorName: string;
+  authorRole: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'testimonialSection';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -834,6 +851,25 @@ export interface ClientLogosBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'clientLogosBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutSectionBlock".
+ */
+export interface AboutSectionBlock {
+  /**
+   * Texto corto sobre el título (ej: "Sobre mí")
+   */
+  eyebrow?: string | null;
+  title: string;
+  paragraphs: {
+    text: string;
+    id?: string | null;
+  }[];
+  photo?: (number | null) | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'aboutSection';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1194,6 +1230,7 @@ export interface PagesSelect<T extends boolean = true> {
               featuredPostsBlock?: T | FeaturedPostsBlockSelect<T>;
               featuredCaseStudiesBlock?: T | FeaturedCaseStudiesBlockSelect<T>;
               clientLogosBlock?: T | ClientLogosBlockSelect<T>;
+              aboutSection?: T | AboutSectionBlockSelect<T>;
             };
       };
   slug?: T;
@@ -1452,6 +1489,23 @@ export interface ClientLogosBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AboutSectionBlock_select".
+ */
+export interface AboutSectionBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  title?: T;
+  paragraphs?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  photo?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -1550,6 +1604,11 @@ export interface CaseStudiesSelect<T extends boolean = true> {
         description?: T;
         id?: T;
       };
+  testimonialSection?:
+    | T
+    | {
+        testimonialSection?: T | TestimonialSectionBlockSelect<T>;
+      };
   results?:
     | T
     | {
@@ -1578,6 +1637,17 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TestimonialSectionBlock_select".
+ */
+export interface TestimonialSectionBlockSelect<T extends boolean = true> {
+  quote?: T;
+  authorName?: T;
+  authorRole?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
