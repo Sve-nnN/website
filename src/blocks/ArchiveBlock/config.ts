@@ -49,5 +49,22 @@ export const ArchiveBlock: Block = {
         description: 'Show category filter tabs above the grid (posts only).',
       },
     },
+    // Empty-state copy per 05-UI-SPEC.md Copywriting Contract — editable
+    // defaults, not hardcoded in the renderer (05-07 addition).
+    {
+      name: 'emptyStateHeading',
+      type: 'text',
+      localized: true,
+      defaultValue: 'Nothing here yet',
+      admin: {
+        description: 'Shown when a category filter (or manual selection) yields 0 results.',
+      },
+    },
+    {
+      name: 'emptyStateBody',
+      type: 'textarea',
+      localized: true,
+      defaultValue: 'This category doesn\'t have any posts yet. Browse all posts instead.',
+    },
   ],
 }

@@ -406,6 +406,11 @@ export interface ArchiveBlock {
    * Show category filter tabs above the grid (posts only).
    */
   enableCategoryFilter?: boolean | null;
+  /**
+   * Shown when a category filter (or manual selection) yields 0 results.
+   */
+  emptyStateHeading?: string | null;
+  emptyStateBody?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'archiveBlock';
@@ -1205,6 +1210,8 @@ export interface ArchiveBlockSelect<T extends boolean = true> {
   limit?: T;
   selectedDocs?: T;
   enableCategoryFilter?: T;
+  emptyStateHeading?: T;
+  emptyStateBody?: T;
   id?: T;
   blockName?: T;
 }

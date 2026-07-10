@@ -45,7 +45,16 @@ const blockComponents: Record<string, (props: any) => ReactNode> = {
   contactFormBlock: ContactFormBlockComponent,
 }
 
-export function RenderBlocks({ blocks }: { blocks: LayoutBlocks | undefined | null }) {
+interface RenderBlocksProps {
+  blocks: LayoutBlocks | undefined | null
+  // Merged into every block's props — used to forward page-level request
+  // context (e.g. blog listing's ?category= searchParam, or a post detail
+  // page's current post id/categories for RelatedPosts) without forcing
+  // RenderBlocks itself to know about any single block's needs.
+  sharedProps?: Record<string, unknown>
+}
+
+export function RenderBlocks({ blocks, sharedProps }: RenderBlocksProps) {
   if (!blocks || blocks.length === 0) return null
 
   return (
@@ -60,7 +69,13 @@ export function RenderBlocks({ blocks }: { blocks: LayoutBlocks | undefined | nu
           return null
         }
 
-        return <Comp key={block.id ?? i} {...(block as unknown as Record<string, unknown>)} />
+        return (
+          <Comp
+            key={block.id ?? i}
+            {...(block as unknown as Record<string, unknown>)}
+            {...sharedProps}
+          />
+        )
       })}
     </>
   )
