@@ -29,6 +29,10 @@ scripts/migrate/data/
 # always deleted by scripts/cleanup-phase10-eeat-fixtures.ts, not source code
 scripts/.phase10-fixture-state.json
 
+# Phase 10.6-03 mobile viewport verification screenshots — regenerable
+# evidence produced by scripts/verify-mobile-viewport.mjs, not source code
+scripts/.mobile-verify-screenshots/
+
 # misc
 .DS_Store
 *.pem
