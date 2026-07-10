@@ -107,9 +107,15 @@ export interface Config {
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('es' | 'en') | ('es' | 'en')[];
   globals: {
     llms: Llm;
+    header: Header;
+    footer: Footer;
+    'featured-content': FeaturedContent;
   };
   globalsSelect: {
     llms: LlmsSelect<false> | LlmsSelect<true>;
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
+    'featured-content': FeaturedContentSelect<false> | FeaturedContentSelect<true>;
   };
   locale: 'es' | 'en';
   widgets: {
@@ -340,6 +346,23 @@ export interface Author {
   jobTitle?: string | null;
   bio?: string | null;
   avatar?: (number | null) | Media;
+  /**
+   * E-E-A-T credentials, e.g. "10+ años en SEO técnico", "Google Analytics Certification"
+   */
+  credentials?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  yearsExperience?: number | null;
+  socialLinks?:
+    | {
+        platform: 'linkedin' | 'github' | 'x' | 'website';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   slug?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -1324,6 +1347,20 @@ export interface AuthorsSelect<T extends boolean = true> {
   jobTitle?: T;
   bio?: T;
   avatar?: T;
+  credentials?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  yearsExperience?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
   slug?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1530,12 +1567,204 @@ export interface Llm {
   createdAt?: string | null;
 }
 /**
+ * Site-wide navigation, logo, and CTA button — editable without touching code.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  logo?: (number | null) | Media;
+  navItems?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  ctaButton?: {
+    label?: string | null;
+    href?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Footer columns, social links, legal links, and copyright text.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  columns?:
+    | {
+        title?: string | null;
+        links?:
+          | {
+              link: {
+                type?: ('reference' | 'custom') | null;
+                newTab?: boolean | null;
+                reference?:
+                  | ({
+                      relationTo: 'pages';
+                      value: number | Page;
+                    } | null)
+                  | ({
+                      relationTo: 'posts';
+                      value: number | Post;
+                    } | null);
+                url?: string | null;
+                label: string;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  socialLinks?:
+    | {
+        platform: 'linkedin' | 'github' | 'x' | 'website';
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  legalLinks?:
+    | {
+        label: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  copyrightText?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Manual curation of which posts/case studies appear in "featured" sections site-wide (Home, Blog listing) — not derived from recency alone.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "featured-content".
+ */
+export interface FeaturedContent {
+  id: number;
+  /**
+   * Drives the Home page and Blog listing "Featured Posts" sections.
+   */
+  featuredPosts?: (number | Post)[] | null;
+  /**
+   * Drives the Home page "Featured Case Studies" section.
+   */
+  featuredCaseStudies?: (number | CaseStudy)[] | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "llms_select".
  */
 export interface LlmsSelect<T extends boolean = true> {
   llmsTxt?: T;
   llmsFull?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  navItems?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+            };
+        id?: T;
+      };
+  ctaButton?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  columns?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              link?:
+                | T
+                | {
+                    type?: T;
+                    newTab?: T;
+                    reference?: T;
+                    url?: T;
+                    label?: T;
+                  };
+              id?: T;
+            };
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  legalLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  copyrightText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "featured-content_select".
+ */
+export interface FeaturedContentSelect<T extends boolean = true> {
+  featuredPosts?: T;
+  featuredCaseStudies?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

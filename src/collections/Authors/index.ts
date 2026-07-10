@@ -48,6 +48,45 @@ export const Authors: CollectionConfig = {
       type: 'upload',
       relationTo: 'media',
     },
+    {
+      name: 'credentials',
+      type: 'array',
+      label: { en: 'Credentials', es: 'Credenciales' },
+      admin: {
+        description: 'E-E-A-T credentials, e.g. "10+ años en SEO técnico", "Google Analytics Certification"',
+      },
+      fields: [
+        {
+          name: 'label',
+          type: 'text',
+          localized: true,
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'yearsExperience',
+      type: 'number',
+      label: { en: 'Years of experience', es: 'Años de experiencia' },
+    },
+    {
+      name: 'socialLinks',
+      type: 'array',
+      label: { en: 'Social links', es: 'Redes sociales' },
+      fields: [
+        {
+          name: 'platform',
+          type: 'select',
+          options: ['linkedin', 'github', 'x', 'website'],
+          required: true,
+        },
+        {
+          name: 'url',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
     slugField('name'),
   ],
 }
