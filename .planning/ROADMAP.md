@@ -231,7 +231,11 @@ Plans:
   3. Los posts y case studies aplican la jerarquía tipográfica Inter/Fraunces de forma consistente en contenido largo (encabezados, cuerpo, citas), sin degradar la semántica de encabezados existente
   4. El contraste sobre fondos compuestos (overlays del hero) se re-verifica tras el cambio, no se asume heredado de Phase 7
 
-**Plans**: TBD
+**Plans**: 3 plans
+Plans:
+- [ ] 09-01-PLAN.md — Hero: jerarquía tipográfica reforzada + verificación WCAG del overlay contra las 53 imágenes reales de fallback
+- [ ] 09-02-PLAN.md — ResultsSection + KPIs de case study: métrica principal visualmente dominante
+- [ ] 09-03-PLAN.md — Tipografía de contenido largo: blockquotes editoriales en Prose + ritmo del header de posts
 
 **UI hint**: yes
 
