@@ -114,7 +114,9 @@ export default async function CaseStudyPage({
           <h1 className="font-display text-display mt-2">{doc.title}</h1>
           {doc.heroSubtitle && <p className="mt-2 text-body max-w-2xl">{doc.heroSubtitle}</p>}
           {doc.heroMetric && (
-            <p className="mt-4 text-display font-display font-semibold text-primary">{doc.heroMetric}</p>
+            <p className="mt-4 text-display font-display font-semibold text-primary tracking-tight tabular-nums">
+              {doc.heroMetric}
+            </p>
           )}
         </Container>
       </section>
@@ -124,8 +126,10 @@ export default async function CaseStudyPage({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {doc.kpis.map((kpi, i) => (
               <div key={i} className="rounded-lg bg-secondary text-secondary-foreground p-6 text-center">
-                <p className="text-display font-display font-semibold text-primary">{kpi.value}</p>
-                <p className="mt-1 text-label">{kpi.label}</p>
+                <p className="text-display font-display font-semibold text-primary tracking-tight tabular-nums">
+                  {kpi.value}
+                </p>
+                <p className="mt-1 text-label uppercase tracking-wide opacity-70">{kpi.label}</p>
               </div>
             ))}
           </div>
@@ -136,13 +140,16 @@ export default async function CaseStudyPage({
         {doc.clientContext && (
           <section>
             <h2 className="font-display text-heading mb-4">{t.client}</h2>
+            {/* First section heading in the page — no mt-10 here since space-y-12
+                on the parent Container already provides top spacing; adding mt-10
+                would double the gap after the KPI container's py-12. */}
             <RichTextRenderer data={doc.clientContext} />
           </section>
         )}
 
         {doc.challenge && doc.challenge.length > 0 && (
           <section>
-            <h2 className="font-display text-heading mb-4">{t.challenge}</h2>
+            <h2 className="font-display text-heading mt-10 mb-4">{t.challenge}</h2>
             <ul className="list-disc pl-6 space-y-2 text-body">
               {doc.challenge.map((item, i) => (
                 <li key={i}>{item.text}</li>
@@ -153,7 +160,7 @@ export default async function CaseStudyPage({
 
         {doc.solution && doc.solution.length > 0 && (
           <section>
-            <h2 className="font-display text-heading mb-4">{t.solution}</h2>
+            <h2 className="font-display text-heading mt-10 mb-4">{t.solution}</h2>
             <ol className="space-y-4">
               {doc.solution.map((step, i) => (
                 <li key={i} className="flex gap-4">
@@ -170,7 +177,7 @@ export default async function CaseStudyPage({
 
         {doc.results?.metrics && doc.results.metrics.length > 0 && (
           <section>
-            <h2 className="font-display text-heading mb-4">{t.results}</h2>
+            <h2 className="font-display text-heading mt-10 mb-4">{t.results}</h2>
             {(doc.results.periodBefore || doc.results.periodAfter) && (
               <p className="text-label text-muted-foreground mb-4">
                 {doc.results.periodBefore} → {doc.results.periodAfter}
@@ -179,10 +186,14 @@ export default async function CaseStudyPage({
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {doc.results.metrics.map((metric, i) => (
                 <div key={i} className="rounded-lg border border-border p-4">
-                  <p className="text-label text-muted-foreground">{metric.label}</p>
+                  <p className="text-label text-muted-foreground uppercase tracking-wide">
+                    {metric.label}
+                  </p>
                   <div className="mt-2 flex items-baseline gap-2">
                     <span className="text-body line-through opacity-60">{metric.before}</span>
-                    <span className="font-display text-heading font-semibold text-primary">{metric.after}</span>
+                    <span className="font-display text-heading font-semibold text-primary tracking-tight tabular-nums">
+                      {metric.after}
+                    </span>
                   </div>
                 </div>
               ))}
