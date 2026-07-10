@@ -6,6 +6,13 @@ const config: Config = {
     './src/pages/**/*.{ts,tsx}',
     './src/components/**/*.{ts,tsx}',
     './src/app/**/*.{ts,tsx}',
+    // Pre-existing gap found in 10.8 while verifying the Hero block's new
+    // breadcrumb nav didn't cause mobile overflow: `src/blocks/**` was never
+    // in this content glob, so any Tailwind utility used ONLY inside a block
+    // (and nowhere under src/components|app) was silently purged — e.g.
+    // ArchiveBlock's `overflow-x-auto` on its category-filter tabs never
+    // actually compiled, letting the tabs overflow the viewport at 375px.
+    './src/blocks/**/*.{ts,tsx}',
   ],
   theme: {
   	extend: {

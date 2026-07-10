@@ -82,16 +82,18 @@ export async function ArchiveBlockComponent(props: ArchiveBlockComponentProps) {
     <Container className="py-12">
       {relationTo === 'posts' && enableCategoryFilter && categories.length > 0 && (
         <Tabs value={activeCategory ?? 'all'} className="mb-8">
-          <TabsList>
-            <TabsTrigger value="all" asChild>
-              <a href="?">All</a>
-            </TabsTrigger>
-            {categories.map((cat) => (
-              <TabsTrigger key={cat.id} value={cat.slug ?? String(cat.id)} asChild>
-                <a href={`?category=${cat.slug}`}>{cat.title}</a>
+          <div className="overflow-x-auto">
+            <TabsList className="w-max">
+              <TabsTrigger value="all" asChild>
+                <a href="?">All</a>
               </TabsTrigger>
-            ))}
-          </TabsList>
+              {categories.map((cat) => (
+                <TabsTrigger key={cat.id} value={cat.slug ?? String(cat.id)} asChild>
+                  <a href={`?category=${cat.slug}`}>{cat.title}</a>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
         </Tabs>
       )}
       {docs.length === 0 ? (
