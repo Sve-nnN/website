@@ -17,6 +17,9 @@ import { RelatedPosts } from '@/blocks/RelatedPosts/config'
 import { TableOfContentsBlock } from '@/blocks/TableOfContentsBlock/config'
 import { ResultsSection } from '@/blocks/ResultsSection/config'
 import { Section } from '@/blocks/Section/config'
+import { FeaturedPostsBlock } from '@/blocks/FeaturedPostsBlock/config'
+import { FeaturedCaseStudiesBlock } from '@/blocks/FeaturedCaseStudiesBlock/config'
+import { ClientLogosBlock } from '@/blocks/ClientLogosBlock/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -72,6 +75,9 @@ export const Pages: CollectionConfig = {
             TableOfContentsBlock,
             ResultsSection,
             Section,
+            FeaturedPostsBlock,
+            FeaturedCaseStudiesBlock,
+            ClientLogosBlock,
           ],
         },
       ],

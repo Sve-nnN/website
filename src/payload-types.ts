@@ -218,6 +218,9 @@ export interface Page {
       | TableOfContentsBlockType
       | ResultsSectionBlock
       | SectionBlock
+      | FeaturedPostsBlock
+      | FeaturedCaseStudiesBlock
+      | ClientLogosBlock
     )[];
   };
   slug?: string | null;
@@ -399,6 +402,10 @@ export interface ArchiveBlock {
           }
       )[]
     | null;
+  /**
+   * Show category filter tabs above the grid (posts only).
+   */
+  enableCategoryFilter?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'archiveBlock';
@@ -780,6 +787,48 @@ export interface SectionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedPostsBlock".
+ */
+export interface FeaturedPostsBlock {
+  /**
+   * Section heading — editable per page instance.
+   */
+  title?: string | null;
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuredPostsBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedCaseStudiesBlock".
+ */
+export interface FeaturedCaseStudiesBlock {
+  /**
+   * Section heading — editable per page instance.
+   */
+  title?: string | null;
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuredCaseStudiesBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ClientLogosBlock".
+ */
+export interface ClientLogosBlock {
+  title?: string | null;
+  /**
+   * Leave empty to show all clients.
+   */
+  clients?: (number | Cliente)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'clientLogosBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -1091,6 +1140,9 @@ export interface PagesSelect<T extends boolean = true> {
               tableOfContentsBlock?: T | TableOfContentsBlockTypeSelect<T>;
               resultsSection?: T | ResultsSectionBlockSelect<T>;
               section?: T | SectionBlockSelect<T>;
+              featuredPostsBlock?: T | FeaturedPostsBlockSelect<T>;
+              featuredCaseStudiesBlock?: T | FeaturedCaseStudiesBlockSelect<T>;
+              clientLogosBlock?: T | ClientLogosBlockSelect<T>;
             };
       };
   slug?: T;
@@ -1152,6 +1204,7 @@ export interface ArchiveBlockSelect<T extends boolean = true> {
   mode?: T;
   limit?: T;
   selectedDocs?: T;
+  enableCategoryFilter?: T;
   id?: T;
   blockName?: T;
 }
@@ -1311,6 +1364,36 @@ export interface SectionBlockSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archiveBlock?: T | ArchiveBlockSelect<T>;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedPostsBlock_select".
+ */
+export interface FeaturedPostsBlockSelect<T extends boolean = true> {
+  title?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedCaseStudiesBlock_select".
+ */
+export interface FeaturedCaseStudiesBlockSelect<T extends boolean = true> {
+  title?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ClientLogosBlock_select".
+ */
+export interface ClientLogosBlockSelect<T extends boolean = true> {
+  title?: T;
+  clients?: T;
   id?: T;
   blockName?: T;
 }
