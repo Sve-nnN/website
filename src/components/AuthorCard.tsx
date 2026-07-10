@@ -6,6 +6,7 @@ import type { Author } from '@/payload-types'
 
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
+import { Card } from '@/components/ui/card'
 import { Prose } from '@/components/Prose'
 
 // Same generic icon substitutes as SiteFooter/ContactFormBlock — lucide-react
@@ -34,7 +35,7 @@ export async function AuthorCard({ author }: { author: Author }) {
       : null
 
   return (
-    <div className="rounded-lg border border-border bg-card p-8">
+    <Card className="p-8">
       <div className="flex items-center gap-4">
         <Avatar className="size-16">
           {avatar?.url && <AvatarImage src={avatar.url} alt={avatar.alt ?? author.name} />}
@@ -66,7 +67,9 @@ export async function AuthorCard({ author }: { author: Author }) {
         </div>
       )}
 
-      {yearsLabel && <p className="mt-4 text-label text-primary">{yearsLabel}</p>}
+      {yearsLabel && (
+        <p className="mt-4 font-display text-heading font-semibold tracking-tight text-primary">{yearsLabel}</p>
+      )}
 
       {author.socialLinks && author.socialLinks.length > 0 && (
         <div className="mt-4 flex gap-3">
@@ -79,7 +82,7 @@ export async function AuthorCard({ author }: { author: Author }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.platform}
-                className="text-muted-foreground hover:text-primary"
+                className="text-muted-foreground transition-colors duration-fast hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus"
               >
                 <Icon className="size-5" />
               </a>
@@ -87,6 +90,6 @@ export async function AuthorCard({ author }: { author: Author }) {
           })}
         </div>
       )}
-    </div>
+    </Card>
   )
 }
