@@ -279,8 +279,8 @@ Plans:
 
 Plans:
 
-- [ ] 10.5-01-PLAN.md — Typography swap: Array/Khand/Geist Sans/Geist Mono, tailwind tokens, codebase-wide font-heading migration
-- [ ] 10.5-02-PLAN.md — Footer schema: dynamicColumns field + migrate:create + payload-types.ts
+- [x] 10.5-01-PLAN.md — Typography swap: Array/Khand/Geist Sans/Geist Mono, tailwind tokens, codebase-wide font-heading migration
+- [x] 10.5-02-PLAN.md — Footer schema: dynamicColumns field + migrate:create + payload-types.ts
 - [ ] 10.5-03-PLAN.md — Header restyle: mobile Sheet first, then desktop nav
 - [ ] 10.5-04-PLAN.md — Footer restyle + dynamic content wiring (latest posts/case studies via Local API)
 - [ ] 10.5-05-PLAN.md — Real mobile-viewport verification (Playwright, 375/768/1280px) + Juan's visual sign-off

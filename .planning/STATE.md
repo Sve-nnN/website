@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: milestone
 status: planning
-stopped_at: Completed 09-03-PLAN.md
-last_updated: "2026-07-10T08:11:05.085Z"
-last_activity: 2026-07-10 — Phase 10 Plans 01 and 02 executed and closed (see 10-01-SUMMARY.md, 10-02-SUMMARY.md, 10-VERIFICATION.md)
+stopped_at: Completed 10.5-01-PLAN.md
+last_updated: "2026-07-10T15:30:00.000Z"
+last_activity: 2026-07-10 — Phase 10.5 Plan 01 executed and closed (typography overhaul: Array/Khand/Geist replace Inter/Fraunces; see 10.5-01-SUMMARY.md)
 progress:
   total_phases: 11
   completed_phases: 9
-  total_plans: 52
-  completed_plans: 47
-  percent: 82
+  total_plans: 55
+  completed_plans: 49
+  percent: 89
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 10 (Cards/Listados + Autoría E-E-A-T) — plans 01-02 of 2 complete
-Plan: 10-01 done (PostCard/CaseStudyCard restyled to compose the Phase 8 Card/CardContent primitive; AuthorCard restyled with Card composition + E-E-A-T prominence styling for yearsExperience/socialLinks); 10-02 done (guarded fixture seed/verify/cleanup triad proved repeater min/max boundaries, E-E-A-T prominence in en+es, and ES longest-title rendering — all fixtures cleanly removed, zero residual production data)
-Status: Phase 10 executed 2/2, ready for next phase planning (Phase 11: cross-cutting verification) — no milestone transition run (--no-transition)
-Last activity: 2026-07-10 — Phase 10 Plans 01 and 02 executed and closed (see 10-01-SUMMARY.md, 10-02-SUMMARY.md, 10-VERIFICATION.md)
+Phase: 10.5 (Typography + Header/Footer Overhaul) — plan 01 complete
+Plan: 10.5-01 done (replaced Inter+Fraunces with a self-hosted 4-font stack — Array display, Khand headings/UI, Geist Sans body, Geist Mono — via src/fonts.ts + geist package; mapped 4 Tailwind fontFamily tokens; split font-display/font-heading across ~20 files so Array is reserved for h1/hero and Khand covers secondary headings)
+Status: Phase 10.5 Plan 01 executed; remaining 10.5 plans (header/footer) pending
+Last activity: 2026-07-10 — Phase 10.5 Plan 01 executed and closed (see 10.5-01-SUMMARY.md)
 
 ## Performance Metrics
 
@@ -71,6 +71,7 @@ Last activity: 2026-07-10 — Phase 10 Plans 01 and 02 executed and closed (see 
 | Phase 09 P01 | 15min | 2 tasks | 2 files |
 | Phase 09 P02 | 12min | 2 tasks | 2 files |
 | Phase 09 P03 | 10min | 2 tasks | 2 files |
+| Phase 10.5 P01 | 15min | 3 tasks | 26 files |
 
 ## Accumulated Context
 
@@ -133,7 +134,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T08:11:05.082Z
-Stopped at: Completed 09-03-PLAN.md
+Last session: 2026-07-10T15:30:00.000Z
+Stopped at: Completed 10.5-01-PLAN.md
 Resume file: None
 </content>
