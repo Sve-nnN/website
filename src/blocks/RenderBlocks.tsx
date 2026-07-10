@@ -18,6 +18,8 @@ import { FeaturedPostsBlockComponent } from '@/blocks/FeaturedPostsBlock/Compone
 import { FeaturedCaseStudiesBlockComponent } from '@/blocks/FeaturedCaseStudiesBlock/Component'
 import { ClientLogosBlockComponent } from '@/blocks/ClientLogosBlock/Component'
 import { ContactFormBlockComponent } from '@/blocks/ContactFormBlock/Component'
+import { AboutSectionComponent } from '@/blocks/AboutSection/Component'
+import { TestimonialSectionComponent } from '@/blocks/TestimonialSection/Component'
 
 type LayoutBlocks = Page['content']['layout']
 type LayoutBlock = LayoutBlocks[number]
@@ -43,6 +45,8 @@ const blockComponents: Record<string, (props: any) => ReactNode> = {
   featuredCaseStudiesBlock: FeaturedCaseStudiesBlockComponent,
   clientLogosBlock: ClientLogosBlockComponent,
   contactFormBlock: ContactFormBlockComponent,
+  aboutSection: AboutSectionComponent,
+  testimonialSection: TestimonialSectionComponent,
 }
 
 interface RenderBlocksProps {
