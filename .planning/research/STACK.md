@@ -131,3 +131,138 @@ npm install -D typescript tsx @types/node @types/react @types/react-dom
 ---
 *Stack research for: Payload CMS 3.x + Next.js 15 self-hosted bilingual portfolio (PostgreSQL / Cloudinary / Resend on Hostinger)*
 *Researched: 2026-07-09*
+
+---
+---
+
+# Milestone v1.1 Addendum — UI/UX Visual Polish Pass Stack
+
+**Domain:** UI/UX visual polish pass (animation, micro-interactions, refined typography/spacing) on the already-shipped Payload CMS 3.85 + Next.js 15 App Router + shadcn/Tailwind v3 site
+**Researched:** 2026-07-10
+**Confidence:** HIGH
+
+This section is additive to the core-project stack above. It answers a narrower question for milestone v1.1: what to add for visual polish without touching the content/data layer, without replacing shadcn or Tailwind, and without breaking the Payload block-editability hard rule established in Phase 5.
+
+## Context: What Already Exists (do not re-add)
+
+Confirmed by direct repo scan (`package.json`, `components.json`, `tailwind.config.ts`, `src/components/ui/`):
+
+- **Tailwind CSS 3.4.19** (NOT v4 — `tailwind.config.ts` + PostCSS, not the new CSS-first `@import "tailwindcss"` engine)
+- **shadcn/ui** already initialized: `new-york` style, `neutral` base color, CSS variables on, `lucide-react` icons, components present: `avatar`, `badge`, `button`, `card`, `input`, `navigation-menu`, `select`, `separator`, `sheet`, `skeleton`, `tabs`, `textarea`
+- **`tailwindcss-animate@1.0.7`** already installed — this is the correct animate plugin for Tailwind v3 (its CSS-first successor, `tw-animate-css`, only applies to Tailwind v4 projects and would require a Tailwind major-version migration to adopt — out of scope for a polish pass)
+- **`class-variance-authority@0.7.1`**, **`clsx@2.1.1`**, **`tailwind-merge@3.6.0`** — the `cva()` + `cn()` variant pattern is already the project's styling primitive
+- **Radix primitives** already pulled in individually per shadcn component (`react-avatar`, `react-dialog`, `react-navigation-menu`, `react-select`, `react-separator`, `react-slot`, `react-tabs`)
+- **Fonts:** Inter (body/UI) + Fraunces (display/headings) via `next/font/google`, already wired per `05-UI-SPEC.md`
+- **16 Payload blocks** rendering as **async Server Components** that call `getPayload({config})` directly (confirmed in `TestimonialsCarousel/Component.tsx`, `ClientLogosBlock/Component.tsx`) — this is the architectural fact that shapes every recommendation below: block components are RSC data-fetchers, not client interaction surfaces, today
+
+None of the above needs replacing. This addendum is additive only.
+
+## Recommended Additions
+
+### Core Additions
+
+| Technology | Version | Purpose | Why Recommended |
+|------------|---------|---------|-----------------|
+| `motion` | `^12.42.2` | Declarative animation + gesture library for React (scroll-triggered reveals, hover/tap micro-interactions, layout transitions, `AnimatePresence` for enter/exit) | This is Framer Motion, renamed and now independently maintained under `motion.dev`; the npm package `framer-motion` still works but `motion` is the current name and import path (`motion/react`). It is the de facto standard for React animation in 2026, has first-class React 19 support, and — critically — composes cleanly with the RSC-first block architecture: wrap only the interactive *leaf* (e.g. a `<Reveal>` client component) in `'use client'` and keep the Payload `getPayload()` data-fetching in the parent Server Component untouched. No data-fetching pattern changes. |
+| `embla-carousel-react` | `^8.6.0` | Lightweight, unstyled carousel engine for `TestimonialsCarousel` and `ClientLogosBlock` | These two blocks currently render as a plain CSS `overflow-x-auto` scroll-snap div (confirmed in code) with no drag, autoplay, or infinite-loop behavior — a common "polish pass" gap for logo/testimonial rows. Embla is what shadcn's own `Carousel` component wraps, has zero visual opinions (fully Tailwind-styleable, matches the existing design tokens), and is ~5KB. Only the carousel's client-side controller needs `'use client'` — the Payload `find()` query supplying testimonials/clients stays server-side in the parent block. |
+
+### Supporting Additions
+
+| Library | Version | Purpose | When to Use |
+|---------|---------|---------|-------------|
+| `@radix-ui/react-tooltip` | `^1.2.12` | Accessible tooltips (e.g. credential badges, KPI number explanations in case studies) | Add only if the polish audit surfaces a concrete need (e.g. author credential chips, abbreviated KPI labels). Matches the existing per-component Radix install pattern already used for `avatar`/`dialog`/`select`/etc — install via `npx shadcn@latest add tooltip`, don't hand-roll. |
+| `@radix-ui/react-accordion` | `^1.2.16` | Collapsible sections (FAQ block already exists — verify it isn't hand-rolled; if it is, swap to this for correct ARIA + smooth height animation) | Use if `FAQ` block's current expand/collapse isn't using Radix accordion primitives already — check during the component audit before adding. |
+| `@radix-ui/react-scroll-area` | `^1.2.14` | Styled scrollbars for horizontally-scrolling regions (mobile category filter tabs, KPI card rows) | Optional — only if native `overflow-x-auto` scrollbars look inconsistent across browsers during the visual audit. Skip if native scroll already looks acceptable; don't add for its own sake. |
+| `sonner` | `^2.0.7` | Toast notifications for contact-form submit success/error states | The `ContactFormBlock` (per `05-UI-SPEC.md`'s Copywriting Contract) needs success/error feedback. `sonner` is the shadcn-recommended toast (replaces the deprecated shadcn `Toast`/`useToast`), themeable via CSS variables to match the navy/off-white/ember palette already defined. Install via `npx shadcn@latest add sonner`. |
+| `react-intersection-observer` | `^9.16.0` | Trigger scroll-into-view animations (fade/slide-up on section entry) without hand-rolling `IntersectionObserver` | Alternative to Motion's built-in `whileInView` prop — **prefer Motion's native `whileInView`** (no extra dependency) unless a non-animation use case for intersection detection appears (e.g. lazy-loading below-the-fold blocks). Listed here only as a fallback; do not install if Motion's `whileInView` covers the need, which it will for this milestone's scope. |
+
+### Development Tools
+
+| Tool | Purpose | Notes |
+|------|---------|-------|
+| `npx shadcn@latest add [component]` | Pull additional shadcn primitives (tooltip, accordion, sonner, carousel) as needed during the audit | Keep using the CLI rather than hand-authoring Radix wrappers — preserves the existing `new-york`/`neutral`/CSS-variable preset already locked in `components.json`. Each `add` only touches `src/components/ui/`, it does not re-run `init` or touch Tailwind config. |
+| Tailwind CSS variables in `src/app/globals.css` | Extend, don't replace, the design-token layer | The spacing scale (4/8/16/24/32/48/64px) and 4-size typography scale from `05-UI-SPEC.md` should be expressed as Tailwind theme extensions (`theme.extend.spacing`, `theme.extend.fontSize`) or CSS custom properties in `globals.css`, consistent with how shadcn already defines color tokens there. Do not introduce a separate design-token tool (Style Dictionary, Theo, etc.) — that's rebuild-scope, not polish-scope, for a single-brand site with an already-declared token set. |
+
+## Installation
+
+```bash
+# Core — animation + carousel
+npm install motion embla-carousel-react
+
+# Supporting — add via shadcn CLI (pulls matching Radix primitive + styles the shadcn way)
+npx shadcn@latest add tooltip sonner carousel
+
+# Only if FAQ block audit shows it needs it:
+npx shadcn@latest add accordion
+
+# Only if scrollbar styling audit shows it needs it:
+npx shadcn@latest add scroll-area
+```
+
+No new dev dependencies are required — TypeScript, ESLint, and the existing build pipeline (`next build`, `payload generate:types`) are unaffected by these additions.
+
+## Alternatives Considered
+
+| Recommended | Alternative | When to Use Alternative |
+|-------------|-------------|-------------------------|
+| `motion` (Motion / ex-Framer Motion) | `@react-spring/web` | If the team strongly prefers a physics-first API over Motion's declarative `animate`/`variants` API. Motion has broader adoption, better docs, and native `whileInView`/gesture support that maps directly to "hover card lifts", "section fades in on scroll" — the exact micro-interactions this polish pass targets. React Spring is a reasonable choice but adds no benefit here and the team has zero existing familiarity signal in this repo. |
+| `motion` | Pure CSS transitions/animations (`@keyframes`, `transition-*` Tailwind utilities) | For simple, non-orchestrated effects (button hover scale, color transition, focus ring) — **use plain Tailwind/CSS, not Motion**, to avoid shipping a JS animation library for things CSS already does for free. Reserve Motion for orchestrated sequences, scroll-triggered reveals, `AnimatePresence` enter/exit, and gesture-driven interactions where CSS alone is awkward. |
+| `embla-carousel-react` | `keen-slider` | If a heavier feature set (e.g. built-in autoplay-with-pause-on-hover with less boilerplate) is wanted out of the box. Embla wins here because it's what shadcn's own `Carousel` primitive already wraps — using shadcn's carousel keeps the styling/token integration path identical to every other shadcn component already in the project. |
+| `sonner` | shadcn's legacy `Toast` + `useToast` | Never — `Toast`/`useToast` is the deprecated shadcn pattern; shadcn's own docs point new installs to `sonner`. Only relevant if the codebase already had the old toast wired (it does not). |
+| Tailwind CSS variable token extension | Tailwind v4 migration + `tw-animate-css` + native CSS `@theme` | Only as a *separate, later* milestone if there's an independent reason to move off Tailwind v3 (e.g. needing v4's performance/Oxide engine). Do not bundle a major Tailwind version upgrade into a visual polish pass — it's a build-tooling migration with its own risk surface (PostCSS config changes, plugin compatibility), not a design change. |
+
+## What NOT to Use (for this milestone)
+
+| Avoid | Why | Use Instead |
+|-------|-----|--------------|
+| Replacing shadcn/ui with another component system (Mantine, Chakra, Ant Design, etc.) | shadcn is already initialized, themed to the navy/off-white/ember palette, and every existing block renders shadcn primitives. Swapping systems mid-project is a rebuild, not a polish pass, and would force re-touching all 16 Payload blocks. | Keep shadcn; add/extend individual primitives via `npx shadcn add`. |
+| CSS-in-JS (styled-components, Emotion, vanilla-extract, Panda CSS) | The project is committed to Tailwind utility classes + CSS variables. Introducing a CSS-in-JS runtime alongside Tailwind creates two competing styling systems, adds client-side runtime cost, and works against RSC (styled-components in particular has known friction with the App Router's server-first rendering model). | Tailwind utilities + `cva()` variants (already the pattern in this codebase). |
+| `tw-animate-css` | It's the Tailwind v4-only successor to `tailwindcss-animate` and requires the v4 CSS-first config (`@import "tailwindcss"`, `@theme`). This project is on Tailwind v3.4.19 — installing `tw-animate-css` without the v4 migration will not work correctly. | Keep `tailwindcss-animate@1.0.7`, already installed and correct for v3. |
+| Large "animated component kit" registries (Aceternity UI, Animate UI, Magic UI, Smooth UI) wholesale | These ship pre-built, opinionated components (often already animated) meant to be copy-pasted wholesale, frequently bypassing the Payload-block hard rule by hardcoding copy/structure inside the component, and they typically bundle their own animation dependency choices (sometimes GSAP, sometimes their own Motion setup) that may not match `motion@12`. | Cherry-pick *techniques/patterns* from these registries for inspiration during the visual audit, but implement the actual micro-interactions as thin, Payload-field-driven wrappers using `motion` directly — never paste in a full pre-built component that owns its own content. |
+| GSAP (GreenSock) | Powerful but overkill for a component-level polish pass — heavier API surface and no React-idiomatic integration compared to Motion. Reasonable for complex scroll-driven storytelling (e.g. an agency showcase reel) but this site's needs (hover states, reveal-on-scroll, carousel, toasts) don't require it. | `motion` covers this scope with a smaller footprint and native React ergonomics. |
+| Hardcoding animation variants, copy, or "what animates" logic directly as literal JSX/props inside a block's React component in a way that can't vary per Payload field | Violates the Phase 5 hard rule reaffirmed in this milestone: "every visual section must remain Payload-block-driven, not hardcoded." An animation *timing/easing* choice (e.g. "fade up 300ms") is a *style* decision and fine to hardcode in the component (it's layout/style, not content) — but never let an animation library tempt you into inlining copy, image choices, or "which N items to show" logic that should stay a Payload field. | Keep animation code purely presentational: it wraps already-fetched Payload data, it never decides *what* content appears. |
+
+## Stack Patterns by Variant
+
+**If a Payload block needs a scroll-triggered reveal (e.g. fade-up on section entry):**
+- Keep the block itself (e.g. `Section/Component.tsx`) as an async Server Component doing `getPayload()` data-fetching, unchanged.
+- Extract a small client component (e.g. `src/components/Reveal.tsx`, `'use client'`) that wraps `children` in `<motion.div whileInView={...} viewport={{ once: true }}>` and accepts only presentational props.
+- The Server Component block renders `<Reveal><h2>{data.title}</h2></Reveal>` — content still flows from Payload, only the wrapping animation is client-side.
+- Because this preserves the RSC data-fetching boundary already established by all 16 blocks; it avoids turning entire blocks into client components (which would lose server-side data fetching and increase client JS for no reason).
+
+**If a Payload block needs a carousel (TestimonialsCarousel, ClientLogosBlock):**
+- Use shadcn's `Carousel` component (wraps `embla-carousel-react`) as a client sub-component.
+- The parent block's `getPayload().find()` call stays server-side and passes the resulting array as a prop into the client `Carousel`.
+- Because splitting "fetch" (server) from "scroll/drag mechanics" (client) is the same pattern as the Reveal wrapper above — one consistent seam for all interactive additions in this milestone.
+
+**If a micro-interaction is a simple hover/focus/active state (button lift, card shadow on hover, link underline):**
+- Use Tailwind's built-in `hover:`, `focus-visible:`, `active:`, `transition-*`, and `tailwindcss-animate`'s `animate-in`/`animate-out` utilities.
+- Because these don't need JS orchestration; adding `motion` for a CSS-achievable hover state increases client JS bundle for zero visual benefit.
+
+**If the design-token audit (spacing/typography from `05-UI-SPEC.md`) finds gaps between declared tokens and actual Tailwind config:**
+- Extend `tailwind.config.ts`'s `theme.extend` (spacing, fontSize, colors) to codify the 7-step spacing scale and 4-size typography scale as named utilities/classes.
+- Because this keeps the token system in the same file shadcn already uses for its CSS-variable colors — one source of truth, no new tooling.
+
+## Version Compatibility (additions)
+
+| Package A | Compatible With | Notes |
+|-----------|-----------------|-------|
+| `motion@^12.42.2` | `react@19.2.7`, `react-dom@19.2.7` | Motion 11+ requires React 18+; version 12 is tested against React 19 and is the current major as of this research (2026-07-10). Import from `motion/react`, not the old `framer-motion` package name, in new code. |
+| `motion@^12.42.2` | Next.js 15 App Router / RSC | Any component using `motion.*` JSX or hooks (`useAnimate`, `useScroll`, etc.) must be marked `'use client'`. Motion has no built-in RSC-server component; it is a client-only animation runtime — plan the Reveal/Carousel wrapper pattern above accordingly. |
+| `embla-carousel-react@^8.6.0` | shadcn `Carousel` component (installed via `npx shadcn add carousel`) | shadcn's carousel component is a thin wrapper generating source you own in `src/components/ui/carousel.tsx` — the `embla-carousel-react` version shadcn's CLI pulls will match this line; no manual pinning needed beyond what the CLI installs. |
+| `tailwindcss-animate@1.0.7` | `tailwindcss@^3.4.19` | Correct pairing for this project's Tailwind major version. Do NOT install `tw-animate-css` alongside it — that package targets Tailwind v4's `@theme`/CSS-first config and is a different animation utility set, not a drop-in addition. |
+| `sonner@^2.0.7` | `react@19.2.7`, shadcn `new-york` preset | shadcn's `add sonner` generates a small `src/components/ui/sonner.tsx` wrapper reading the app's CSS-variable theme (`--background`, `--foreground`, etc.) already defined for the navy/off-white/ember palette — no extra theming work needed beyond what's already in `globals.css`. |
+| `@radix-ui/react-tooltip@^1.2.12` / `@radix-ui/react-accordion@^1.2.16` / `@radix-ui/react-scroll-area@^1.2.14` | Existing `@radix-ui/*@1.2.x`/`1.1.x` primitives already in `package.json` | All current-generation Radix primitives share the same major-version cadence as what's already installed (`react-avatar@1.2.2`, `react-select@2.3.3`, etc.) — no version-skew risk introduced. |
+
+## Sources (addendum)
+
+- npm registry (live, queried 2026-07-10): `motion@12.42.2`, `embla-carousel-react@8.6.0`, `class-variance-authority@0.7.1`, `tailwindcss-animate@1.0.7`, `@radix-ui/react-accordion@1.2.16`, `@radix-ui/react-tooltip@1.2.12`, `@radix-ui/react-hover-card@1.1.19`, `@radix-ui/react-progress@1.1.12`, `@radix-ui/react-scroll-area@1.2.14`, `vaul@1.1.2`, `sonner@2.0.7`, `tailwind-merge@3.6.0`, `lucide-react@1.24.0`, `clsx@2.1.1` — HIGH
+- Direct repo scan: `package.json`, `components.json`, `tailwind.config.ts`, `src/components/ui/*`, `src/blocks/TestimonialsCarousel/Component.tsx`, `src/blocks/ClientLogosBlock/Component.tsx` (confirms Tailwind v3, shadcn new-york preset, RSC-based block architecture, no existing carousel/animation library) — HIGH
+- [motion.dev](https://motion.dev/) and [Motion for React: Get started](https://motion.dev/docs/react) — package rename from `framer-motion` to `motion`, import path `motion/react`, React 19 support — MEDIUM (WebSearch-sourced, cross-checked against npm registry version/publish recency)
+- [Motion & Framer Motion upgrade guide](https://motion.dev/docs/react-upgrade-guide) — confirms API continuity between `framer-motion` and `motion` packages — MEDIUM
+- WebSearch: shadcn/ui `tailwindcss-animate` → `tw-animate-css` migration is scoped to Tailwind v4 projects; new shadcn `init` on Tailwind v4 defaults to `tw-animate-css`, but Tailwind v3 projects (this repo) correctly keep `tailwindcss-animate` — MEDIUM (WebSearch findings cross-checked against this repo's confirmed Tailwind v3.4.19 + already-installed `tailwindcss-animate@1.0.7`, and against shadcn's own [Tailwind v4 docs](https://ui.shadcn.com/docs/tailwind-v4) framing this as a v4-specific change)
+- `.planning/phases/05-frontend-pages/05-UI-SPEC.md` (this project) — existing design tokens (spacing scale, 4-size typography scale, navy/off-white/ember palette), shadcn preset lock (new-york/neutral/CSS variables), Payload block-editability hard rule — HIGH
+
+---
+*Stack research for: UI/UX visual polish pass on existing Payload + Next.js + shadcn site (milestone v1.1)*
+*Researched: 2026-07-10*

@@ -1,170 +1,162 @@
 # Project Research Summary
 
-**Project:** Juan Carlos Angulo — Portfolio (Payload rebuild)
-**Domain:** Payload CMS 3.x + Next.js 15 bilingual portfolio/personal-brand site — greenfield platform migration (MongoDB → self-hosted PostgreSQL, Vercel Blob → Cloudinary), self-hosted on Hostinger Node.js
-**Researched:** 2026-07-09
+**Project:** Juan Carlos Angulo — Portfolio (Payload rebuild) — Milestone v1.1: UI/UX Polish Pass
+**Domain:** Visual/UX refinement of an already-shipped, content-populated, bilingual (EN/ES) Payload CMS 3.85 + Next.js 15 + Tailwind v3 + shadcn/ui portfolio site
+**Researched:** 2026-07-10
 **Confidence:** HIGH
 
 ## Executive Summary
 
-This is a platform migration disguised as a rebuild: same content, same pages, same bilingual (EN/ES) scope as the live `JuanPortfolio` site, but on a clean Payload 3.85 + Next.js 15 stack with PostgreSQL instead of MongoDB, Cloudinary instead of Vercel Blob, and self-hosted on Hostinger instead of Vercel. Experts building this kind of site (verified against two real production codebases, apturio and aprendoclub, plus six competitor portfolio sites) converge on a consistent pattern: a single Node process running Payload in-process inside Next.js's App Router, content rendered via Payload's Local API (no HTTP round-trip), Postgres schema owned exclusively by committed migrations (`push: false`), and a page-builder of ~12-14 consolidated blocks instead of the ~35 near-duplicate blocks the current site has accumulated. Feature research reinforces the PROJECT.md instinct: the highest-leverage credibility feature for an engineer/SEO-expert portfolio is structured case studies with a headline metric (problem → approach → metric → stack), not testimonials or funnels — and the site should actively resist re-adding the internal SEO-tooling clutter (GSC dashboards, keyword trackers, broken-link checkers) that this rebuild exists to eliminate.
+This milestone is not a rebuild or a redesign — it is a scoped restyling pass on a working, QA-passed site. Phase 5 already delivered 16 Payload-editable blocks, a locked design contract (`05-UI-SPEC.md`: Inter/Fraunces, navy/off-white/ember palette, 4-size type scale, 4px spacing rhythm), and a shadcn "new-york" component library on Tailwind v3.4.19. The research across all four files converges on the same shape of work: fix execution gaps in the already-decided system (inconsistent spacing, weak typographic hierarchy, an unbranded dark-mode token set, understated trust/KPI signals) rather than reopening any decided token (color, font pairing, spacing scale). Two genuinely new architectural surfaces are needed — elevation (box-shadow) and motion (duration/easing) tokens — because neither exists in the codebase today; everything else is refinement, not addition.
 
-The recommended stack is unambiguous on its core (Payload 3.85.x, Next 15.5.x, React 19.2.x, `@payloadcms/db-postgres`, `@payloadcms/richtext-lexical`, all in HIGH confidence, verified live against npm) but carries one real open question: Cloudinary has no official Payload storage adapter. Dedicated plugin research resolved this from "investigate" to "two credible, correctly-versioned community candidates" — `payload-storage-cloudinary` (nlvcodes) and `@jhb.software/payload-cloudinary-plugin` — both targeting Payload 3.x correctly, neither battle-tested at scale, with a documented custom-adapter fallback (~100-150 lines, following the official S3/R2 adapter shape) if both fail a spike. This is the single item that must be resolved with a time-boxed spike before committing to the Media phase, not assumed.
+The recommended approach layers cleanly: extend the existing CSS-var-backed Tailwind theme (`globals.css` → `tailwind.config.ts theme.extend` → utility classes) with shadow and motion primitives, then work block-by-block starting with shadcn primitives (highest leverage, cascades to every block) through to low-traffic utility blocks last. For interactivity, add two small, well-chosen dependencies — `motion` (ex-Framer Motion, for orchestrated scroll-reveals/gestures) and `embla-carousel-react` (via shadcn's own `Carousel` wrapper, for the two currently-unstyled carousel blocks) — while defaulting to plain CSS transitions for anything CSS can already express. Both integrate without breaking the RSC data-fetching boundary: Payload blocks stay async Server Components calling `getPayload()`, and only thin client-component wrappers (`Reveal`, `Carousel`) take `'use client'`.
 
-The dominant risk category, per pitfalls research, is not technical build risk but **migration/cutover risk**: because this is a live, ranking site, URL/slug drift, missing 301 redirects, `push: true` corrupting the production schema, Mongo→Postgres shape mismatches (arrays/blocks/localized fields decompose relationally and must go through the target Payload Local API, never raw SQL), and staging `noindex` leaking to production are all HIGH-severity, well-documented failure modes with real recovery cost (weeks of lost rankings in the worst case). These are prevention-cheap, recovery-expensive — the roadmap should treat "URL parity + redirect map + cutover checklist" as first-class deliverables, not afterthoughts, and should sequence a Postgres-schema-discipline foundation (`push:false`, migrations-at-deploy) before any content migration work begins.
+The dominant risk is not technical unfamiliarity — it's regression of things that already pass: WCAG contrast, Core Web Vitals (the site's entire value proposition is "impeccable performance and SEO"), Spanish-locale layout robustness (ES runs 15-25% longer than EN), the Payload-editability hard rule, and SEO-relevant markup semantics. Every pitfall identified is a "looks fine, silently breaks something already validated" pattern, not a "how do I build this" unknown. Mitigation is procedural: verify every touched block against boundary-condition Payload content (not just today's real content), re-run contrast/Lighthouse checks per-change rather than once at the end, test every layout change in `/es` with real long-form content, and grep diffs for hardcoded strings or changed HTML tags before merging.
 
 ## Key Findings
 
 ### Recommended Stack
 
-Core stack: `payload` 3.85.x, `next` 15.5.x (hold off Next 16 until Payload publishes explicit support), `react`/`react-dom` 19.2.x, `@payloadcms/db-postgres` (Drizzle-based, `push:false` in prod), `@payloadcms/richtext-lexical` (not the legacy Slate editor). Supporting: `next-intl` for `[locale]` routing layered on top of Payload's own field-level `localized: true` (the two are complementary, not competing — confirmed across both reference codebases). `@payloadcms/email-resend` + `resend` SDK for the contact form. `@payloadcms/plugin-seo`, `@payloadcms/plugin-redirects` official plugins. Media storage: no official Cloudinary adapter exists — use `payload-storage-cloudinary` or `@jhb.software/payload-cloudinary-plugin` (spike both, pick one; custom-adapter fallback documented). One hard version pin: `graphql@^16` (Payload's peer dependency; npm `latest` is 17.x and will silently break the GraphQL layer if auto-installed).
+The core Payload/Next/Postgres/Cloudinary/Resend stack from the original build is untouched by this milestone. The v1.1 addendum is additive only, layered on top of what's already installed and confirmed by direct repo scan (Tailwind 3.4.19, shadcn "new-york," `tailwindcss-animate@1.0.7`, `cva`/`clsx`/`tailwind-merge`, per-component Radix installs, Inter+Fraunces via `next/font/google`, 16 async-Server-Component blocks).
 
-**Core technologies:**
-- `payload` 3.85.x + `@payloadcms/next` — CMS running in-process inside Next.js App Router, single deploy/process fit for self-hosted Hostinger Node
-- `@payloadcms/db-postgres` — Drizzle-based Postgres adapter; migrations committed, never live-pushed in prod
-- `next-intl` + Payload `localization` — dual-layer bilingual EN/ES (routing/UI strings vs. content fields)
-- `payload-storage-cloudinary` / `@jhb.software/payload-cloudinary-plugin` — community Cloudinary storage adapters (MEDIUM confidence, spike before committing)
-- `@payloadcms/email-resend` — direct port from existing site, no changes needed
+**Core additions:**
+- `motion` (`^12.42.2`, ex-Framer Motion, import from `motion/react`) — declarative scroll-reveal/gesture animation with native React 19 and RSC-boundary support; wrap only thin client leaves, never entire blocks.
+- `embla-carousel-react` (`^8.6.0`, via `npx shadcn add carousel`) — powers `TestimonialsCarousel` and `ClientLogosBlock`, which currently render as plain unstyled `overflow-x-auto` divs.
+
+**Supporting additions (conditional on audit findings):** `@radix-ui/react-tooltip`, `@radix-ui/react-accordion` (only if FAQ isn't already using Radix), `@radix-ui/react-scroll-area` (only if native scrollbars look inconsistent), `sonner` (contact-form toast feedback, the shadcn-recommended replacement for the deprecated `Toast`/`useToast`).
+
+**Explicitly avoid:** replacing shadcn/Tailwind wholesale, CSS-in-JS, `tw-animate-css` (Tailwind v4-only, would break on this v3 project), GSAP, pre-built "animated component kit" registries (Aceternity/Magic UI/etc. — these bypass the Payload-editability rule by hardcoding content), and any Tailwind v4 migration (a separate, later, build-tooling decision, not part of a polish pass).
 
 ### Expected Features
 
-Competitor analysis (6 sites: Luca Tagliaferro, Aleyda Solis, Kevin Indig, Lee Robinson, Josh Comeau, swyx.io) converges on a clear pattern for engineer/SEO-expert portfolios: metric-first case studies beat testimonials, structured attribution beats anonymous quotes, and minimalism (Lee Robinson benchmark) reads as competence, not laziness — directly validating Juan's "no clutter" backend goal as a feature, not just an implementation preference.
+**Must have (v1.1 launch bar), ordered by leverage/cost:**
+- Spacing/rhythm audit and fix across all 16 blocks — cheapest, highest-leverage, do first since everything else sits on top of layout
+- Typographic hierarchy utilities (size+weight-driven, Inter/Fraunces roles clarified), applied site-wide
+- Brand-correct dark-mode token set in `globals.css` — the single biggest table-stakes gap identified directly in the codebase (`.dark` block still carries generic shadcn gray tokens, never received the ember/navy palette)
+- KPI/metric hero restyle in `ResultsSection` (largest-element treatment, reinforcing the case-study trust-signal pattern already decided in PROJECT.md)
+- Author credibility restyle (`AuthorByline`/`AuthorCard`) — direct E-E-A-T payoff, low cost
+- Micro-interactions (hover/focus/press) on button/card/input/nav — CSS-only, no new dependency
+- Mobile responsive pass at 375px for every restyled block
 
-**Must have (table stakes):**
-- Author bio + credentials rendered on every post/case-study byline (E-E-A-T)
-- Case studies with quantified headline metrics, not just freeform rich text
-- Blog with category taxonomy + featured/popular surfacing (not flat reverse-chronological)
-- Clean meta/OG/canonical (plugin-seo), sitemap.xml, robots.txt — already scoped
-- Structured testimonials (name/role/company), not anonymous quotes
-- Bilingual EN/ES parity across every content type
+**Should have (if time allows within milestone):** scroll-reveal on case-study sections, KPI count-up animation, a signature accent motif reused across Hero/CTA/ResultsSection, client-logo carousel restyled as a trust strip (grayscale-to-color hover).
 
-**Should have (competitive differentiators):**
-- Case study structure: problem → approach → metric → stack (structured fields, not rich text blob)
-- JSON-LD schema markup (Person/Article/BreadcrumbList) — hand-written, no plugin exists for this
-- `llms.txt`/`llms-full.txt` for GEO/AI discoverability — genuine differentiator, none of the 6 competitor sites do this yet
-- Credentials/press-mention strip near hero (only if real mentions exist — don't fabricate)
-
-**Defer (v2+):**
-- Dedicated Speaking/media page (needs 5+ real engagements to justify)
-- Newsletter (needs sustained content cadence first)
-- Multiple concurrent lead-gen funnels (anti-pattern — one CTA: contact form)
+**Explicitly defer/avoid:** full parallax/3D/WebGL hero treatments, autoplaying video backgrounds, gamified interactions, site-wide GSAP/heavy motion orchestration — all wrong-register for a technical/SEO-consultant audience and in direct tension with the site's Core Web Vitals mandate.
 
 ### Architecture Approach
 
-Single Next.js 15 standalone Node process hosting Payload in-process (admin + public frontend + API share one deploy). Public RSC pages call Payload's Local API directly — no HTTP round-trip. Postgres schema is owned exclusively by committed migrations (`push:false` always in prod). Media storage is env-var-gated (Cloudinary plugin only registers when credentials are present, falling back to local disk in dev). The one-time Mongo→Postgres migration runs as a standalone offline script (never an app route), using Payload's Local API on both the old Mongo config (read-only, unmodified) and the new Postgres config, so Payload itself handles the relational decomposition of arrays/blocks/localized fields.
+No data-model or schema changes in this milestone. The token architecture extends the existing two-tier pattern (CSS custom properties in `globals.css` → `theme.extend` mapping in `tailwind.config.ts` → Tailwind utility classes in `className`) with two genuinely new categories — elevation (`--shadow-sm/md/lg/focus`) and motion (`--motion-fast/base/slow`, `--ease-out/standard`) — plus a global `prefers-reduced-motion` safety rule that doesn't exist today. Color/typography/spacing values stay as locked by `05-UI-SPEC.md`; this is refinement of application, not new token categories in those three areas.
 
-**Major components:**
-1. Next.js App Router (`[locale]/...` public routes + `(payload)/admin`) — single process, single deploy
-2. Payload Core Config — collections (Pages, Posts, Authors, CaseStudies, Categories, Media, Testimonials, Works, Users), consolidated block library (~12-14 blocks replacing ~35 near-duplicates), official plugins only (seo, redirects, search-deferred)
-3. Postgres Adapter (Drizzle, `push:false`) — schema owned by generated migrations, applied at deploy time
-4. Migration Script (offline, outside `app/`) — dual Payload Local API instances (Mongo source, Postgres target), dependency-ordered writes, ID remapping, media re-upload to Cloudinary
+**Major components (all pre-existing, restyled not rebuilt):**
+1. `src/app/globals.css` + `tailwind.config.ts` — single source of truth for the token layer; extended, never replaced
+2. `src/components/ui/*.tsx` (shadcn primitives) — lowest-level consumers, restyled first since fixes cascade to every block
+3. `src/blocks/*/Component.tsx` (16 files) — visual-only edits; `config.ts` (Payload field schema) in each block folder stays untouched, enforcing the editability hard rule
+4. `SiteHeader.tsx`/`SiteFooter.tsx` — global chrome, high visual impact, restyled early
+5. `RenderBlocks.tsx` registry and all Payload globals/collections — explicitly out of scope, zero diffs expected
 
 ### Critical Pitfalls
 
-1. **URL/slug drift breaks existing rankings** — migration scripts regenerating slugs from titles instead of copying verbatim; treat the live URL inventory as a frozen contract, diff the new sitemap against it before cutover.
-2. **`push: true` leaking into production Postgres** — single most destructive footgun; set `push:false` from day one, all schema changes via committed migrations applied at deploy (`payload migrate` in the build command).
-3. **Mongo→Postgres shape mismatch** — arrays/blocks/localized fields must migrate through the target Payload Local API (never raw SQL), in dependency order (Media → Authors/Categories → Posts/CaseStudies), with an old-ObjectId → new-ID remap table.
-4. **Media is a re-upload, not a URL copy** — Vercel Blob URLs must be re-uploaded to Cloudinary and rewritten everywhere, including inside rich-text/blocks, not just the Media collection's URL field; verify the Cloudinary adapter choice in a dedicated spike before this phase.
-5. **Staging `noindex`/robots leaking to production** — gate all indexing-blockers on an explicit env var, verify with a live fetch of the production URL post-deploy, not a code read.
+1. **Token/block refactor silently breaks layout for boundary-condition content** — restyling against today's real content only (not the full schema range: empty optional fields, min/max repeater counts, longest ES titles) ships blocks that look great but break the first time an editor enters an edge case. Avoid by rendering every touched block against boundary-condition Payload data, not just production content.
+2. **Color-token changes reintroduce WCAG contrast failures** the site already passed QA on — especially secondary/muted text, borders, and composited backgrounds (hero overlays). Avoid by re-running contrast checks per token change, in both locales, not batched at milestone end.
+3. **Spanish content breaks layouts tightened/tested against English copy** — ES runs 15-25% longer; tighter "editorial" spacing and single-line truncation are the most likely casualties. Avoid by designing for the longer-language case and verifying every typography/spacing change in `/es` with real longest-title content, not placeholder text.
+4. **Animation additions regress Core Web Vitals** on a site whose entire value proposition is technical performance — INP from main-thread JS, CLS from layout-affecting animation, LCP delay if hero elements are animated. Avoid by defaulting to CSS transitions, animating only `transform`/`opacity`, never animating the LCP candidate, and running mobile Lighthouse after each animated component, not once at the end.
+5. **"Just visual" edits quietly reintroduce hardcoded content**, violating the Phase 5 hard rule that everything stays Payload-editable — a dev's placeholder string during layout iteration ships unreverted, or a new visual element (badge, stat, icon) gets added without a backing Payload field. Avoid with an explicit grep-for-literal-strings check on every touched-block PR.
+
+(A sixth pitfall — SEO/structured-data markup silently degrading via heading-tag downgrades, lost `alt` propagation, or `<a>`→`<div onClick>` swaps during restyling — is also flagged as needing a markup/semantic diff check, not just a visual look, on any phase touching headers, blog body, or card/link components.)
 
 ## Implications for Roadmap
 
-Based on combined research, suggested phase structure:
+Based on combined research, suggested phase structure for v1.1:
 
-### Phase 1: Postgres/Schema Foundation + Clean Collection Scaffold
-**Rationale:** Everything downstream (migration, content, media) depends on a stable, disciplined Postgres schema. Setting `push:false` and the migration workflow from day one prevents Pitfall 2 (the single most destructive footgun) before any real data exists.
-**Delivers:** `payload.config.ts` with the lean KEEP-list collections (Pages, Posts, Authors, CaseStudies, Categories, Media, Testimonials, Works/Clientes, Users) wired to `@payloadcms/db-postgres`, `push:false`, migration tooling (`payload migrate:create`/`migrate`), consolidated ~12-14 block library replacing the current ~35 blocks.
-**Addresses:** Sets up structured case-study fields and testimonial attribution fields per FEATURES.md table stakes.
-**Avoids:** Pitfall 3 (`push:true` leak), Anti-Pattern 1 (porting SEO-tooling collections "just in case"), Anti-Pattern 2 (one block per grid variation).
+### Phase 1: Design-Token Foundation (elevation + motion + audit)
+**Rationale:** Every subsequent visual change composes on top of the token layer; both FEATURES.md and ARCHITECTURE.md independently identify this as the correct starting point (cheapest, unblocks everything else). Also the only phase that introduces genuinely new architecture (shadow/motion tokens don't exist yet).
+**Delivers:** Extended `globals.css`/`tailwind.config.ts` with `--shadow-*`/`--motion-*`/`--ease-*` tokens mapped to `boxShadow`/`transitionDuration`/`transitionTimingFunction` Tailwind utilities; a global `prefers-reduced-motion` rule; a sanity-check of existing color/typography/spacing mappings against `05-UI-SPEC.md` (fix drift only, no redesign); the ember/navy `.dark` token set built out (currently generic shadcn gray).
+**Addresses:** Table-stakes dark-mode gap, spacing/rhythm audit precondition (FEATURES.md).
+**Avoids:** Pitfall 2 (WCAG contrast) — bake a contrast re-check into this phase's own verification since it's the phase most likely to touch color tokens.
 
-### Phase 2: Bilingual Content Layer + SEO Plugin
-**Rationale:** next-intl routing and Payload localization must be decided and wired before content migration, since the migration script preserves the live site's exact locale-prefix behavior — retrofitting i18n after migration risks re-mapping every migrated document.
-**Delivers:** `[locale]` routing, Payload field localization (`es` default locale matching current site), `@payloadcms/plugin-seo` tabbed on Pages/Posts/CaseStudies, `app/sitemap.ts`/`app/robots.ts` (no official plugin exists — hand-built per Payload's documented pattern), `llms.txt`/`llms-full.txt` global + route.
-**Uses:** `next-intl`, `@payloadcms/plugin-seo`, `@payloadcms/plugin-redirects` (with a middleware/route handler that actually executes redirects — the plugin only manages the collection).
-**Implements:** Frontend RSC ↔ Payload Local API pattern (in-process, no HTTP round-trip).
+### Phase 2: shadcn Primitives + Global Chrome Restyle
+**Rationale:** ARCHITECTURE.md's suggested build order — primitives cascade to every block, so fixing shadow/motion/spacing here first has the widest leverage before touching individual blocks. `SiteHeader`/`SiteFooter` are high-visibility, low-risk (no dynamic per-page content), good second target.
+**Delivers:** Refined `cva()` variants in `button.tsx`, `card.tsx`, `badge.tsx`, `input.tsx`, `select.tsx`, `tabs.tsx`, `sheet.tsx`, `navigation-menu.tsx`, `separator.tsx`, `skeleton.tsx`, `textarea.tsx`, `avatar.tsx`; restyled header/footer.
+**Uses:** New shadow/motion tokens from Phase 1; existing Tailwind spacing/typography utilities.
+**Implements:** "Component.tsx as sole styling touchpoint, config.ts untouched" architectural pattern.
 
-### Phase 3: Cloudinary Media Spike + Storage Wiring
-**Rationale:** The one open architectural question (no official Cloudinary adapter) must be resolved with a hands-on spike before it blocks migration — this is explicitly flagged across STACK.md, ARCHITECTURE.md, PITFALLS.md, and PLUGINS.md as a dedicated risk item, not a drop-in dependency.
-**Delivers:** Chosen and validated Cloudinary storage adapter (`payload-storage-cloudinary` or `@jhb.software/payload-cloudinary-plugin`, spiked against a real Cloudinary account for `handleUpload`/`handleDelete`/`generateURL` + `next/image` compatibility), env-var-gated plugin registration, custom-adapter fallback documented if both community packages fail.
-**Addresses:** Table-stakes fast page loads / Core Web Vitals requirement (Cloudinary `f_auto,q_auto` transformations).
-**Avoids:** Pitfall 5 (media re-upload vs. URL copy) — must be resolved architecturally before the migration script can be written correctly.
+### Phase 3: High-Visibility Content Blocks (Hero, Section, Content, ResultsSection)
+**Rationale:** Hero is every page's first impression (highest visibility); Section/Content are generic layout primitives many pages compose with (broad reach); ResultsSection is the project's core differentiator per PROJECT.md's case-study model.
+**Delivers:** KPI/metric hero restyle (largest-element treatment), section rhythm fixes, editorial typography for long-form content leveraging Fraunces.
+**Addresses:** Table-stakes KPI hero, typographic hierarchy; differentiator KPI count-up animation (P2, if budget allows).
+**Avoids:** Pitfall 6 (SEO/markup regression) — this phase touches the pages most likely to have heading-hierarchy or hero-overlay-contrast issues; needs explicit markup diff + contrast check on composited backgrounds.
 
-### Phase 4: Mongo → Postgres Migration Script (URL Inventory, ETL, Media Re-upload)
-**Rationale:** Depends on Phases 1-3 being stable (schema, i18n, storage all decided) since the migration writes through the target Payload Local API and must produce data that already conforms to the final schema shape.
-**Delivers:** Frozen live-URL inventory (crawled from current sitemap/GSC), standalone offline ETL script (dependency-ordered: Media → Authors/Categories → Posts/CaseStudies/Testimonials/Works), old-ObjectId → new-ID remap table, media binaries re-uploaded to Cloudinary with rewritten URLs (including inside rich text/blocks), redirect map for any intentionally-changed URLs.
-**Addresses:** Content parity requirement (réplica 1:1) from PROJECT.md.
-**Avoids:** Pitfall 1 (URL/slug drift), Pitfall 4 (shape mismatch), Pitfall 5 (media re-upload).
+### Phase 4: Card-Grid/Listing Blocks (ArchiveBlock, FeaturedPostsBlock, FeaturedCaseStudiesBlock, RelatedPosts) + Author Credibility
+**Rationale:** These share the same card-grid pattern and should be restyled as a batch for visual consistency; `AuthorByline`/`AuthorCard` restyle is low-cost, high E-E-A-T payoff and thematically adjacent (both are "trust/credibility surface" work).
+**Delivers:** Consistent card elevation/spacing treatment across all listing blocks; visibly prominent author credentials/years/social links.
+**Avoids:** Pitfall 3 (Spanish layout breakage) — card grids with title truncation are exactly where ES text-length overflow shows up; mandatory `/es` pass with longest real migrated titles before sign-off. Pitfall 1 (boundary-condition content) — repeater-count edge cases (1 vs 6 items) most relevant here.
 
-### Phase 5: Frontend Pages + Feature Differentiators
-**Rationale:** Once content exists in Postgres and renders through the block library, layer in the competitive differentiators identified in FEATURES.md — these are additive to already-migrated content, not blocking dependencies for it.
-**Delivers:** All public pages (home, blog, case studies, authors, contact, privacy, terms, search — via `@payloadcms/plugin-search`), structured case-study display (problem/approach/metric/stack), JSON-LD schema (Person/Article/BreadcrumbList, hand-written), featured/popular content surfacing, GA4 + Search Console (external, zero Payload footprint).
-**Addresses:** FEATURES.md differentiators (P2 priority items).
-**Implements:** Consolidated `ArchiveBlock`/`FeaturedGrid` pattern, `ContactFormBlock` + Resend server action.
+### Phase 5: Interactive/Motion Additions (Carousels, Scroll-Reveal, Micro-interactions)
+**Rationale:** Sequenced last because it's the only phase introducing new dependencies (`motion`, `embla-carousel-react`) and carries the CWV regression risk (Pitfall 4) — safest to add once the static visual foundation is already solid, so any Lighthouse regression is attributable to a small, isolated diff.
+**Delivers:** `TestimonialsCarousel`/`ClientLogosBlock` restyled with shadcn's `Carousel` (Embla-backed); scroll-triggered reveals via a thin `Reveal` client wrapper (`motion`, `whileInView`); hover/focus/press micro-interactions on remaining interactive elements; contact-form `sonner` toast feedback.
+**Uses:** `motion`, `embla-carousel-react`, shadcn `add tooltip/sonner/carousel` CLI additions.
+**Avoids:** Pitfall 4 (CWV regression) — mandatory mobile Lighthouse run after each animated component ships, never batched; never animate the LCP hero element; `prefers-reduced-motion` fallback from the first animation added.
 
-### Phase 6: Deployment + Cutover
-**Rationale:** Deployment mechanics (standalone asset copying, PM2/Nginx, connection pooling) and the cutover runbook (content freeze, redirect verification, robots/noindex check) are operationally distinct from build work and carry their own HIGH-severity pitfalls that must be checklist-gated, not assumed.
-**Delivers:** Hostinger Node deploy (`payload migrate && next build` + `postbuild` static-asset copy), PM2 process management, Postgres pool sizing verified against Hostinger's plan limits, go-live checklist (301s live-verified, robots.txt/noindex fetched from production, both locales sampled, sitemap diffed against frozen inventory).
-**Avoids:** Pitfall 6 (noindex leak), Pitfall 7 (connection-pool exhaustion), Pitfall 8 (standalone missing assets), Pitfall 9 (cutover content loss — requires a content freeze on the live site immediately before final migration run).
+### Phase 6: Cross-Cutting Verification Pass
+**Rationale:** PITFALLS.md and ARCHITECTURE.md both call for a final sweep distinct from per-phase verification, since some regressions (hardcoded strings, arbitrary-value Tailwind, config.ts drift) are only reliably caught by grepping the full diff at the end.
+**Delivers:** Grep for `shadow-[`, `duration-[`, inline `style={{`; confirm zero diffs in `src/blocks/*/config.ts` and `payload-types.ts`; full bilingual (`/en`, `/es`) visual QA across all touched pages; a final mobile Lighthouse pass site-wide.
+**Addresses:** Pitfall 5 (hardcoded content) as a cross-cutting final check, on top of the per-PR checks already required in every earlier phase.
 
 ### Phase Ordering Rationale
 
-- Schema/foundation must precede content migration because Postgres enforces real schema (unlike Mongo) — get the discipline (`push:false`, migrations) right before there's data to lose.
-- i18n/localization decisions must precede migration because the migration script needs to know the exact locale shape to write into.
-- The Cloudinary spike is deliberately isolated as its own phase (not folded into general Media collection setup) because it is the one MEDIUM-confidence, unresolved architectural item flagged consistently across all four other research docs.
-- Migration is sequenced after storage/schema/i18n are settled because it's the highest-risk, hardest-to-reverse phase (Pitfall 4) — it should touch a stable target, not a moving one.
-- Frontend differentiators come after core content exists because they're additive polish, not blocking dependencies.
-- Deployment/cutover is last and treated as an operational runbook with its own checklist, not "ship whenever the code compiles" — several pitfalls (noindex leak, cutover content loss) are pure process failures, not code bugs.
+- Token foundation must precede component work — every later phase consumes the shadow/motion utilities Phase 1 creates (dependency, not preference).
+- Primitives-then-blocks ordering (Phase 2 before 3/4) matches ARCHITECTURE.md's explicit "Suggested Build Order," maximizing leverage: fixing `button.tsx`/`card.tsx` once benefits all 16 blocks that compose from them.
+- Motion/animation work is sequenced last (Phase 5) specifically to isolate CWV risk — the pitfall research is unanimous that incremental Lighthouse checks per component are the only reliable way to attribute a regression, which is easiest when the animation work is a clean final layer on an already-stable visual base.
+- A dedicated cross-cutting verification phase exists because several pitfalls (hardcoded strings, semantic markup, ES layout) are diff-level concerns that both per-phase spot checks and a final full-diff review are needed to catch reliably.
 
 ### Research Flags
 
-Needs research during planning:
-- **Phase 3 (Cloudinary spike)** — MEDIUM confidence on both community adapter candidates; needs hands-on validation against Payload 3.85 and a real Cloudinary account before the phase can be considered planned, not just researched.
-- **Phase 4 (migration ETL)** — Mongo→Postgres shape mismatch is the highest technical risk in the whole project; needs a detailed field-by-field mapping spec (old block types → consolidated new blocks, relationship remapping) during phase planning, not just high-level ETL logic.
-- **Phase 6 (Hostinger deployment specifics)** — process-management pattern (PM2 vs. Hostinger's own Node panel supervisor) and actual Postgres `max_connections` are MEDIUM confidence, verified via community guides, not official docs — confirm against the actually-provisioned Hostinger product tier before finalizing.
+Phases likely needing deeper research during planning:
+- **Phase 5 (Interactive/Motion Additions):** `motion`'s RSC-boundary integration pattern (Reveal wrapper) and Embla/shadcn Carousel wiring are new to this codebase — worth a focused implementation-pattern check even though the library choice itself is HIGH confidence.
+- **Phase 1 (Dark-mode token set):** Designing a genuinely brand-correct `.dark` palette (desaturated ember, correct surface-elevation grays) is a design decision requiring its own scoped exploration, not just a mechanical token-mapping task.
 
-Phases with standard, well-documented patterns (skip deep research-phase):
-- **Phase 1 (schema foundation)** — verified against two real production codebases (apturio, aprendoclub); `push:false` + migration workflow is Payload's own documented standard practice.
-- **Phase 2 (i18n + SEO plugin)** — `next-intl` + Payload localization combination is a confirmed, working pattern in the apturio reference codebase; `plugin-seo` is official and stable.
-- **Phase 5 (frontend pages)** — standard Next.js App Router + Local API rendering, no novel integration risk.
+Phases with standard patterns (skip research-phase):
+- **Phase 2 (shadcn primitives):** Well-documented `cva()` variant pattern already established in this exact codebase; extending it is mechanical.
+- **Phase 3/4 (block restyling):** Component.tsx-only edits following an already-verified architectural boundary (config.ts untouched); no new patterns to research.
+- **Phase 6 (verification):** Procedural checklist execution, not a research question.
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
 |------|------------|-------|
-| Stack | HIGH | Core Payload/Next/Postgres versions verified live against npm registry 2026-07-09; only the Cloudinary adapter carries MEDIUM confidence (stale peer-dependency metadata on the strongest-download-count package) |
-| Features | MEDIUM | WebFetch on 6 live competitor sites (MEDIUM-HIGH per-site), one competitor (Eli Schwartz) via WebSearch only (LOW-MEDIUM); no official/Context7 docs applicable to this domain by nature |
-| Architecture | HIGH | Patterns verified against two real production codebases (apturio, aprendoclub) plus the actual source-of-truth JuanPortfolio codebase; Hostinger process-management specifics are MEDIUM (community guides, not official) |
-| Pitfalls | HIGH | Migration/schema pitfalls verified against official Payload docs + GitHub migration discussions + both reference codebases; Cloudinary-adapter and Hostinger-runtime specifics are MEDIUM, explicitly flagged for re-verification at build time |
+| Stack | HIGH | Verified against live npm registry (2026-07-10) and direct repo scan of `package.json`/`components.json`/`tailwind.config.ts`; every "already installed" claim is a file read, not inference |
+| Features | MEDIUM | WebSearch-verified across 6+ queries with 2+ sources per claim, but design-trend research inherently softer than API/library facts; codebase-baseline facts (existing blocks, missing dark-mode tokens) are HIGH within the overall MEDIUM |
+| Architecture | HIGH | Grounded directly in this repo's Phase-5-complete files (`globals.css`, `tailwind.config.ts`, all 16 block components), not generic best practice; cross-checked against a real sibling project (`auditor`) for pattern comparison |
+| Pitfalls | MEDIUM-HIGH | Synthesized from established WCAG/CWV/i18n sources (several HIGH-confidence official docs: web.dev, MDN, W3C, shadcn docs) plus MEDIUM-confidence community/blog sources on refactor post-mortems and animation performance; project-specific risk framing (PROJECT.md constraints) is HIGH |
 
 **Overall confidence:** HIGH
 
 ### Gaps to Address
 
-- **Cloudinary adapter final choice**: not resolved by research alone — requires a time-boxed hands-on spike (Phase 3) comparing `payload-storage-cloudinary` and `@jhb.software/payload-cloudinary-plugin` against a real Cloudinary account before committing.
-- **Hostinger process-management/provisioned-tier confirmation**: whether the actual Hostinger product (VPS/Cloud "Node.js Web App" panel vs. manual PM2+Nginx) is confirmed needs to happen before the deployment phase is planned in detail — flagged MEDIUM in both ARCHITECTURE.md and PITFALLS.md.
-- **Postgres `max_connections` on the actual provisioned Hostinger plan**: must be verified directly (not assumed from apturio's Neon-pooler numbers) before finalizing connection pool `max` sizing.
-- **Works vs. Clientes collection split**: PROJECT.md refers to "Works/Clientes" as one concept but the current site has both as separate collections; ARCHITECTURE.md recommends keeping them distinct (mirroring aprendoclub's `ClientesTrabajados`/`TeamMembers` split) but flags this needs a Phase 1 content-audit decision, not a purely architectural one.
-- **`@payloadcms/plugin-search` timing**: PLUGINS.md recommends it as the correct low-maintenance way to build the required search page, but defers wiring it until the search-page implementation phase rather than the initial schema phase — roadmap should reflect this explicit deferral, not treat it as a Phase 1 install.
+- **Exact dark-mode token values** (specific OKLCH/HSL numbers for the ember/navy `.dark` palette) are not yet designed — Phase 1 needs a concrete design pass, not just the architectural slot for it. Flag for validation once drafted, before it cascades to every restyled block.
+- **Whether `FAQ` block already uses Radix accordion primitives** is unverified (FEATURES.md/STACK.md both flag this as "check during audit" rather than confirmed fact) — resolve early in Phase 1/2 since it determines whether `@radix-ui/react-accordion` is actually needed.
+- **Hostinger/production Lighthouse baseline** isn't captured in this research — the CWV regression-prevention strategy (Pitfall 4) assumes a known-good baseline to diff against; capture one before Phase 5 starts animating anything.
+- **Longest real Spanish content strings** (titles, nav labels) for use as the boundary-condition test set in Phases 3/4 aren't enumerated here — pull the actual longest ES titles from the 72 migrated posts/case studies before those phases' verification steps, per PITFALLS.md's explicit recommendation.
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- npm registry (`registry.npmjs.org`, live query 2026-07-09) — all core `@payloadcms/*`, `next`, `react`, `next-intl`, `resend` versions
-- Payload official docs — [Migrations](https://payloadcms.com/docs/database/migrations), [Postgres adapter](https://payloadcms.com/docs/database/postgres), [Storage Adapters](https://payloadcms.com/docs/upload/storage-adapters), [Redirects Plugin](https://payloadcms.com/docs/plugins/redirects), [Search Plugin](https://payloadcms.com/docs/plugins/search), [Email adapters guide](https://payloadcms.com/posts/guides/how-to-set-up-email-adapters-in-payload), [Sitemap guide](https://payloadcms.com/posts/guides/how-to-build-an-seo-friendly-sitemap-in-payload--nextjs)
-- Reference production codebases: `/Users/juan/Documents/Codigo/Arianna/apturio/website`, `/Users/juan/Documents/Codigo/Arianna/aprendoclub/aprendoclub`
-- Source-of-truth codebase: `/Users/juan/Documents/Codigo/Personal/juantech/JuanPortfolio`
-- `.planning/PROJECT.md` — scope, constraints, requirements
+- Direct repository inspection: `package.json`, `components.json`, `tailwind.config.ts`, `src/app/globals.css`, `src/blocks/*/Component.tsx` (16 files), `src/blocks/RenderBlocks.tsx`, `src/components/ui/*.tsx`, `src/components/SiteHeader.tsx`/`SiteFooter.tsx`, `src/globals/Header`/`Footer` — read directly, not inferred
+- npm registry (live, queried 2026-07-10): `motion@12.42.2`, `embla-carousel-react@8.6.0`, `tailwindcss-animate@1.0.7`, `@radix-ui/react-*` current versions, `sonner@2.0.7`
+- `.planning/phases/05-frontend-pages/05-UI-SPEC.md` — locked design contract this milestone refines
+- `.planning/PROJECT.md` — milestone scope, Core Value (performance/SEO), editability hard rule, bilingual scope
+- web.dev: prefers-reduced-motion, MDN: prefers-reduced-motion, W3C WCAG 2.3.3, shadcn/ui Theming docs
 
 ### Secondary (MEDIUM confidence)
-- [Payload Discussion #9711 — Migrating from MongoDB to Postgresql](https://github.com/payloadcms/payload/discussions/9711) and [#625](https://github.com/payloadcms/payload/discussions/625)
-- Community Cloudinary adapter packages: [payload-storage-cloudinary](https://www.npmjs.com/package/payload-storage-cloudinary), [@jhb.software/payload-cloudinary-plugin](https://www.npmjs.com/package/@jhb.software/payload-cloudinary-plugin) — npm registry + GitHub star/activity verification
-- Hostinger deployment community guides — [Deploy Next.js on Hostinger VPS](https://medium.com/@muhammadrokon/how-to-deploy-your-next-js-app-on-hostinger-vps-quick-tips-f109d39680ba), [official Hostinger Node.js support doc](https://www.hostinger.com/support/how-to-deploy-a-nodejs-website-in-hostinger/)
-- Competitor site WebFetch analysis: lucatagliaferro.com, aleydasolis.com, kevin-indig.com, leerob.com, joshwcomeau.com, swyx.io
+- motion.dev docs — package rename/import path, React 19 support
+- Portfolio/design-trend research (Colorlib, Envato, Sitebuilder Report, Figma resource library) — feature landscape and competitor analysis
+- E-E-A-T/author-bio SEO sources (Sangfroid, Fractl, HYF Web) — author credibility feature rationale
+- CWV/animation-performance sources (Framer Community, reactlibraries.com comparison)
+- Text-expansion/i18n sources (SimpleLocalize, Argo Translation, i18nagent.ai)
+- /Users/juan/Documents/Codigo/Personal/juantech/auditor/apps/web/app/tokens.css — sibling-project comparison for token architecture pattern
 
 ### Tertiary (LOW confidence)
-- Eli Schwartz (elischwartz.co / productledseo.com) — WebSearch only, not independently WebFetched
-- General SEO-portfolio pattern round-ups (jaysearch.com, sitebuilderreport.com, shipixen.com) — secondary WebSearch sources, used only for corroboration
+- None flagged at LOW for this milestone's research — all findings cross-referenced at MEDIUM or better.
 
 ---
-*Research completed: 2026-07-09*
+*Research completed: 2026-07-10*
 *Ready for roadmap: yes*

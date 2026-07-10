@@ -1,175 +1,174 @@
 # Feature Research
 
-**Domain:** Software engineer + SEO expert personal portfolio/brand site
-**Researched:** 2026-07-09
-**Confidence:** MEDIUM (WebSearch + WebFetch on live sites; no Context7/official docs applicable to this domain — competitor findings are MEDIUM confidence unless cross-verified across multiple sites, in which case HIGH)
+**Domain:** Visual/UX polish pass — solo technical consultant portfolio (engineering + SEO expertise), competing with agencies and senior independent consultants for client trust
+**Researched:** 2026-07-10 (v1.1 milestone — supersedes the 2026-07-09 initial-project feature research below in scope, kept as historical baseline where still relevant)
+**Confidence:** MEDIUM (WebSearch-verified across 6 queries, cross-referenced across 2+ sources per claim; no Context7-equivalent for design trends; codebase facts verified directly at HIGH confidence)
 
-## Competitor Analysis
+## Codebase Baseline (verified directly, not researched)
 
-Six sites analyzed in depth via WebFetch (live page content), one via WebSearch corroboration only. Selected to cover both ends of Juan's positioning: pure SEO consultants (credibility/conversion patterns) and engineer-focused personal sites (performance/UX patterns).
-
-| Site | Who | Why relevant | Method |
-|------|-----|---------------|--------|
-| [lucatagliaferro.com](https://www.lucatagliaferro.com/seo-results/) | Luca Tagliaferro, technical SEO consultant | Results-first case study format, zero fluff | WebFetch |
-| [aleydasolis.com](https://www.aleydasolis.com/en/) | Aleyda Solis, international SEO consultant (Orainti) | Top-tier E-E-A-T signals, bilingual site (EN/ES — directly relevant), newsletter funnel | WebFetch |
-| [kevin-indig.com](https://www.kevin-indig.com/) | Kevin Indig, SEO/growth advisor (ex-Shopify, G2, Atlassian) | Clean advisory-site structure, strong testimonials+logos pattern | WebFetch |
-| [leerob.com](https://leerob.com/) | Lee Robinson, engineer (Cursor, ex-Vercel) | Minimalist engineer-site benchmark, technically pristine | WebFetch |
-| [joshwcomeau.com](https://www.joshwcomeau.com/) | Josh Comeau, engineer/educator | Content depth + interactivity as differentiation, strong internal linking/taxonomy | WebFetch |
-| [swyx.io](https://www.swyx.io/) | Shawn "swyx" Wang, engineer/DevRel | Hub-and-spoke content architecture (essays/talks/podcasts unified), multi-format E-E-A-T | WebFetch |
-| elischwartz.co / productledseo.com | Eli Schwartz, SEO consultant, published author | Author-as-authority via book + press mentions (verified via WebSearch only — treat as MEDIUM confidence, not independently WebFetched) | WebSearch |
-
-### What to steal from each
-
-- **Luca Tagliaferro** — Case studies as the primary conversion object, not an afterthought. Each case study leads with a quantified metric ("7× SEO ROI", "4,455% organic growth") in the headline, not buried in a paragraph. No traditional testimonials needed when the numbers do the work — Juan should apply this exact pattern to his case studies collection: headline metric + filterable by category/industry.
-- **Aleyda Solis** — Bilingual site done right (EN/ES toggle, WPML-style but Juan will do it via next-intl/Payload localization). Award/press-mention strip ("European Search Personality of the Year", Forbes, USA Today) as a compact trust block. Client logo row (6 recognizable brands) placed high on the page, not buried. Steal the newsletter/resource-hub pattern only partially — Juan's site should NOT try to run 3 concurrent funnels (SEOFOMO + LearningSEO.io + podcast); pick one CTA.
-- **Kevin Indig** — Testimonials paired with role/company ("SEO & Growth PM @ Nextdoor") rather than anonymous quotes — this is the credibility format to replicate on Juan's testimonials section. Single clear H1 value proposition ("I unlock Organic Growth" equivalent). Client logo wall is large (20+) but curated — Juan should use his real client/work logos from the existing `Works`/testimonials collections, not pad with recognizable-but-irrelevant names.
-- **Lee Robinson** — The benchmark for "clean, no-clutter" that matches Juan's own explicit backend/frontend goal. No newsletter, no funnel — just Bio, Writing, Code, Videos, direct email CTA. Proves that minimalism is credible when backed by real output (current role, years of experience, concrete artifacts). This is the closest structural analog to what Juan's `PROJECT.md` describes wanting to avoid clutter.
-- **Josh Comeau** — Content depth and topical clustering (posts tagged into CSS/React/Animation/Career) with a visible "Popular Content" ranking — a pattern Juan can replicate on the blog listing to surface case-study-adjacent, high-value posts instead of a flat reverse-chronological list. Course/product pages demonstrate authority beyond blog posts (Juan doesn't need courses, but case studies serve the same authority-proof role).
-- **swyx.io** — Hub-and-spoke architecture unifying multiple content formats (essays, talks, podcasts) under one `/ideas`-style index with type icons — useful if Juan's blog/case-studies/speaking content grows past a simple two-collection split. Portfolio + About + Subscribe kept to 3 core destinations; resist over-fragmenting nav.
-- **Eli Schwartz** — Authority-by-publication: a well-known book title and press mentions (TechCrunch, Y Combinator) compress trust into a single sentence in the bio. Juan doesn't have a book, but the pattern — "credentials as a one-line trust signal near the H1" — applies directly to his About/author bio.
+- Design tokens live in `src/app/globals.css` — shadcn default `:root`/`.dark` OKLCH tokens plus a UI-SPEC override (`--background: #FAFAF7`, `--foreground: #12141C`, `--primary: #FF5B1F` ember-orange, `--secondary: #12141C` navy). **The `.dark` block still has generic shadcn gray tokens — the ember/navy palette was never carried into dark mode.** This is the single biggest gap between "light mode looks branded" and "dark mode looks like an unstyled template."
+- No animation library installed (`framer-motion`, `gsap`, `lenis` all absent from `package.json`). Only `tailwindcss-animate` (Tailwind's own keyframe utility plugin, used by shadcn for primitives like accordion/dialog) is present. Any scroll-triggered or orchestrated motion work is a **new dependency decision**, not a config tweak.
+- 16 Payload-editable blocks already exist (`Hero`, `ResultsSection`, `FeaturedCaseStudiesBlock`, `TestimonialsCarousel`, `ClientLogosBlock`, `FeaturedPostsBlock`, `ContactFormBlock`, `Content`, `CallToAction`, `FAQ`, `MediaBlock`, `Code`, `TableOfContentsBlock`, `RelatedPosts`, `ArchiveBlock`, `Section`), plus standalone components `AuthorByline`, `AuthorCard`, `CaseStudyCard`, `PostCard`, `SiteHeader`, `SiteFooter`. Polish work is scoped to restyling these, not building new ones.
+- shadcn/ui "new-york" primitives in place: `avatar`, `badge`, `button`, `card`, `input`, `navigation-menu`, `select`, `separator`, `sheet`, `skeleton`, `tabs`, `textarea`. No `tooltip`, `progress`, `hover-card`, or `accordion` yet — relevant if any differentiator below needs one.
+- Fonts already shipped per PROJECT.md: Inter (body/UI) + Fraunces (display/editorial serif) — this pairing already signals "editorial-tech," not generic SaaS. Polish work should lean into it, not fight it with a third typeface.
+- Hard rule carried into this milestone (PROJECT.md): everything stays Payload-editable. This is a visual/CSS/component-styling pass, not a content or component-library rebuild.
 
 ## Feature Landscape
 
 ### Table Stakes (Users Expect These)
 
-Features every credible engineer/SEO-expert portfolio has. Missing these = the site reads as unfinished or the "SEO expert" claim looks unearned.
+Patterns a professional solo-consultant portfolio is *penalized* for missing in 2026 — their absence reads as "unfinished" or "template," even before a visitor reads any copy.
 
 | Feature | Why Expected | Complexity | Notes |
 |---------|--------------|------------|-------|
-| Author bio with credentials near every piece of content | E-E-A-T signal Google (and humans) look for; every site studied has an About/bio surfaced prominently, several right at the H1 | LOW | Juan's project already has an `Authors` collection — ensure bio + credentials render on every post/case study byline, not just an About page |
-| Case studies with quantified metrics in the headline | Luca Tagliaferro, Aleyda Solis, Kevin Indig all lead with numbers, not narrative | MEDIUM | Requires the `CaseStudies` collection to have a structured "headline metric" field, not just freeform body copy |
-| Blog with topical organization/taxonomy | Josh Comeau, swyx, Aleyda Solis all group content, not just reverse-chronological | LOW-MEDIUM | Categories collection already in scope; ensure blog listing surfaces "popular"/featured posts, not only latest |
-| Clean meta titles/descriptions, canonical URLs, OG tags per page | Universal across every site studied; baseline technical SEO | LOW | Already covered by `@payloadcms/plugin-seo` requirement in PROJECT.md |
-| XML sitemap + robots.txt | Universal baseline, already required by PROJECT.md | LOW | Already in scope |
-| Fast page loads / good Core Web Vitals impression | Lee Robinson and Josh Comeau sites are visibly fast and minimal; this is the credibility test for an engineer's own site — a slow site actively undermines the "I do performance/SEO right" claim | MEDIUM | Ties directly to PROJECT.md's Core Web Vitals requirement — Cloudinary image optimization + standalone Next.js output must actually deliver this |
-| Mobile-responsive, accessible navigation | Universal | LOW | Standard Next.js/Tailwind implementation |
-| Contact CTA that is not buried | Every site studied has a clear, singular contact path (email link, contact form, or "Book a call") | LOW | Already in scope via contact page + Resend |
-| Testimonials/social proof tied to named roles or companies | Kevin Indig and Aleyda Solis format testimonials with attribution (name, role, company) — anonymous quotes read as weak | LOW | Testimonials collection already in scope — enforce structured fields (name, role, company) rather than a freeform quote blob |
-| Bilingual content parity (EN/ES) | Directly required by PROJECT.md; Aleyda Solis is the proof this is standard practice at the top of the SEO-consultant space | MEDIUM-HIGH | Already in scope via next-intl/Payload localization |
+| Consistent 4/8px spacing scale across all 16 blocks | Reviewers (recruiters/clients) unconsciously read inconsistent gaps as sloppiness; shadcn's own aesthetic depends on rhythm being exact (8px between related items, 16px between groups, 24-32px between sections) | LOW | Audit each block's padding/gap classes against one scale; likely the fastest highest-leverage fix since blocks were built independently in Phase 5 |
+| Typographic hierarchy via size+weight, not just color | Table-stakes for a text/case-study-heavy site; using color alone to differentiate headings looks amateurish and fails dark mode | LOW-MEDIUM | Define a small set of heading/body/caption utility classes (or Tailwind `@layer` presets) once, reuse everywhere instead of ad hoc `text-xl font-bold` per block |
+| Working dark mode with brand-correct tokens (not shadcn defaults) | Dark mode crossed into baseline expectation for developer/technical-audience sites in 2026; a "dark mode toggle that looks like default Radix gray" is worse than no toggle because it exposes the gap | MEDIUM | Must define ember/navy-tuned `.dark` OKLCH values (desaturate `--primary` ember for dark backgrounds, use true dark grays not pure black per surface-elevation best practice), not just flip `bg-background` |
+| KPI/metric block in case-study hero (large number + short context) | Established convention in case-study and consulting-agency pages — PwC-style pattern of headline metric + short subhead is the fastest trust signal for a technical-results audience | LOW | `ResultsSection` block already exists — this is a restyle/verify task, not new build; ensure the metric is visually the largest element on the page, not just another card |
+| Author byline with visible credentials (years experience, certifications, LinkedIn) on every post/case study | E-E-A-T signals now read by both humans and AI-answer engines; Juan's core value is proving expertise — a plain "by Juan" line undercuts that on every content page | LOW | `AuthorByline`/`AuthorCard` already exist; verify years-experience/certifications/social links are rendered prominently, not buried below the fold |
+| Mobile-first responsive polish (not just "doesn't break") | Table stakes for any 2026 site — breakpoints must preserve the spacing/typography rhythm above, not just reflow | LOW-MEDIUM | Check each of the 16 blocks at 375px, not just desktop; a common Phase-5-speed-build gap |
+| Fast, jank-free page loads (perceived performance) | Project's Core Value explicitly states "if performance fails, the site fails" — a polish pass that adds heavy client JS (parallax libraries, video hero) without budget-checking undermines the site's core positioning | LOW-MEDIUM | Any new animation dependency must be evaluated against bundle-size/CWV budget before adoption; prefer CSS-only or IntersectionObserver-based micro-interactions over a full animation library where possible |
 
 ### Differentiators (Competitive Advantage)
 
-Features that set the best sites apart from generic portfolios. These align with Juan's Core Value: demonstrably proving technical + SEO skill through both content and execution.
+Not required, but these are what separate "professionally finished" from "genuinely memorable" for this specific niche (solo technical consultant vs. agencies).
 
 | Feature | Value Proposition | Complexity | Notes |
-|---------|-------------------|------------|-------|
-| Case study format with structured proof (problem → approach → metric → stack) | Recruiters/clients and search engines both need to understand *why* the work mattered, not just that it happened — this is the single biggest lever competitor sites use to build credibility | MEDIUM | Model the `CaseStudies` collection fields around this structure explicitly (problem statement, role, stack, outcome metric) rather than a single rich-text body |
-| Author/E-E-A-T schema markup (Person, Article, or equivalent) on posts and case studies | None of the fetched sites showed this in visible markup, but it's the documented best practice for author authority — Juan's SEO-expert positioning means this should be visibly correct, not just present | LOW-MEDIUM | `@payloadcms/plugin-seo` handles meta but Juan should verify/add JSON-LD (Person, Article, BreadcrumbList) manually — a place where Juan can outperform every site studied, none of which showed exemplary schema depth |
-| Credentials/press-mention strip near the hero | Aleyda Solis (awards, Forbes/USA Today) and Eli Schwartz (book, TechCrunch) both compress authority into a single visible line | LOW | If Juan has press mentions, speaking engagements, or notable client logos, surface them as a compact strip on the homepage — skip entirely if none exist yet (don't fabricate) |
-| `llms.txt` / `llms-full.txt` for AI/GEO discoverability | Already required by PROJECT.md; none of the competitor sites studied appear to do this yet — this is a genuine differentiator, not table stakes, in mid-2026 | LOW | Already in scope — worth calling out in case studies/blog as evidence of staying current with SEO practice (GEO) |
-| Visibly fast, minimal, "dogfooded" site as proof-of-skill | Lee Robinson's site is the standard-bearer: no bloat, but every technical choice (View Transitions, clean typography) is a quiet demonstration of engineering judgment | MEDIUM | This is where Juan's "clean, no-clutter backend/frontend" goal doubles as a feature, not just an implementation preference — the absence of SEO-tooling clutter (dashboards, internal metrics UI) should read as intentional restraint to anyone who inspects the site or admin |
-| Popular/featured content surfacing on blog and case study listings | Josh Comeau's "Popular Content" ranking gives new visitors a fast path to best work instead of forcing them through chronological scroll | LOW | Add a `featured` boolean or manual ordering field to Posts/CaseStudies |
+|---------|--------------------|------------|-------|
+| Subtle scroll-reveal on case-study sections (fade/slide-up per section, not per element) | Signals production polish without becoming gimmicky; scrollytelling patterns are expected on case-study-driven sites but must stay restrained for a technical-credibility audience (over-animation reads as "marketing agency," undercutting an engineer's credibility) | MEDIUM | Achievable with `IntersectionObserver` + CSS transitions (no new dependency) OR a lightweight lib (e.g. Motion for React) if richer orchestration is wanted — needs an explicit dependency decision, not silent adoption |
+| Micro-interactions on interactive elements only (buttons, cards, nav, form fields) | 2026 best-practice framing: microinteractions should give feedback on *actions*, not decorate static content — hover states, button press feedback, focus rings, form-field validation transitions | LOW-MEDIUM | Mostly CSS `transition`/`:hover`/`:focus-visible` on existing shadcn primitives (`button.tsx`, `card.tsx`, `input.tsx`) — cheap to add, disproportionate perceived-quality payoff |
+| Numeric KPI count-up animation in `ResultsSection` on scroll into view | Reinforces the "metric-in-the-headline" case-study pattern already decided in PROJECT.md (the ariannalupi.com reference model); makes the site's strongest trust signal (hard numbers) the most memorable moment on the page | LOW-MEDIUM | Small, scoped enhancement to one existing block; achievable with a simple `requestAnimationFrame` counter or CSS `@property` animation — no new dependency required |
+| Editorial "chapter" rhythm in long-form content (case studies, blog posts) using Fraunces for section breaks/pull-quotes | Leverages the fonts already shipped instead of adding new visual language; text-heavy layouts with strong typographic hierarchy are called out repeatedly as effective for consultants who compete on authority, not flashy visuals | LOW | Style existing `Prose`/`Content` block: use Fraunces at larger size for H2 section breaks and any pull-quote pattern, keep Inter for body — no new component needed |
+| One consistent "signature" accent motif reused across hero, CTA, and case-study KPI blocks (e.g. a thin ember-orange rule, bracket, or underline treatment) | Gives the site a memorable visual fingerprint (like Linear's purple glow or Vercel's grid pattern) without requiring heavy illustration/3D work that a solo consultant site shouldn't invest in | LOW-MEDIUM | Design decision + reusable CSS class/SVG, applied across `Hero`, `CallToAction`, `ResultsSection` — cohesion payoff is disproportionate to effort |
+| Dark mode as a genuinely designed second theme (not a token flip) | 2026 pattern for developer-facing sites: a large majority of top design-led sites in this space are dark-default or dark-parity, with one saturated accent carried through; for an engineer's portfolio, a well-executed dark mode is itself a credibility signal ("this person's site works") | MEDIUM-HIGH | Requires designing the full `.dark` token set (surface elevation layers, desaturated ember accent, adjusted `--muted`/`--border` for readability) — the largest single differentiator-tier item, directly blocked by the Table Stakes dark-mode gap above |
+| Client-logo carousel treated as a trust strip, not a filler section (grayscale-to-color on hover, tight consistent sizing) | `ClientLogosBlock` already exists — small styling investment (desaturate logos, consistent bounding box, subtle hover-to-color) reads as far more polished than raw logo images at inconsistent sizes | LOW | Restyle-only, no new component |
 
 ### Anti-Features (Commonly Requested, Often Problematic)
 
-Things that seem good but create bloat or undermine the "clean" positioning — directly relevant given PROJECT.md's explicit exclusion of internal SEO tooling.
+Patterns that look tempting for "making it feel modern" but actively work against this project's Core Value (proving technical/SEO expertise through impeccable execution) or its Hostinger/standalone-Node constraints.
 
 | Feature | Why Requested | Why Problematic | Alternative |
-|---------|---------------|------------------|-------------|
-| Internal SEO/analytics dashboards visible in admin (GSC metrics, keyword tracking, broken-link checkers) | The current JuanPortfolio site has these; feels natural to carry over since Juan is an SEO expert | This is exactly the clutter PROJECT.md explicitly excludes — it bloats the Payload admin, adds maintenance surface, and has nothing to do with the public-facing site's job of demonstrating skill | Use external tools (Google Search Console, Ahrefs, etc.) directly; keep Payload admin scoped to content only |
-| Multiple concurrent newsletter/lead-gen funnels (newsletter + podcast + resource hub + course waitlist) | Aleyda Solis runs 3+ funnels simultaneously and it "works" for her at her scale/team size | For a solo personal portfolio, multiple competing CTAs dilute conversion and add pages/collections with no content behind them at launch | One CTA: contact form (already in scope). Add a newsletter only if/when there's a real cadence of content to justify it |
-| Generic testimonial carousel with anonymous or vague quotes | Feels like standard "trust signal" boilerplate | Anonymous or unattributed testimonials read as filler, not proof — actively weaker than no testimonials at all (per Luca Tagliaferro's numbers-only approach) | Structured testimonials with name + role + company (already the plan); if attribution isn't available, prefer case study metrics over vague quotes |
-| Heavy client-side interactivity/animation libraries "to look impressive" | Josh Comeau's site uses animation, tempting to copy | Animation-heavy sites risk hurting Core Web Vitals (the opposite of Juan's stated goal) unless implemented with real performance discipline that Josh Comeau demonstrably has; a rushed copy is a liability, not an asset | Keep interactivity minimal and purposeful (subtle transitions only); prioritize CWV over visual flourish, consistent with the Lee Robinson benchmark |
-| Speaking/podcast/media page with no real content | swyx.io and Aleyda Solis both have rich speaking histories that justify a dedicated page | An empty or sparse "Speaking" section with 1-2 items looks worse than not having the section at all | Fold any speaking/press mentions into the About/bio page as a short list instead of a dedicated collection, unless there's enough material (5+) to justify one |
-| Overly granular content-type fragmentation (separate collections for talks, podcasts, videos, notes, essays) | swyx.io's hub-and-spoke model looks appealing to emulate exactly | PROJECT.md already scopes content to Pages/Posts/CaseStudies/Authors — adding more collections up front is exactly the "internal tooling bloat" this rebuild is meant to eliminate | Stick to the existing collection scope; if content volume later justifies it, extend post-launch, not at MVP |
+|---------|----------------|------------------|-------------|
+| Full parallax/3D WebGL hero or cursor-follow effects | Shows up constantly in "creative portfolio" trend roundups and looks impressive in isolation | Wrong register for a *technical SEO expert's* site — over-animation on a consultant/engineer portfolio reads as "agency trying too hard" rather than "engineer with taste"; also directly conflicts with the Core Value's performance mandate (heavy JS/WebGL tanks Core Web Vitals) | Restrained scroll-reveal + one signature accent motif (see Differentiators); save any "wow" motion budget for the case-study KPI count-up, which reinforces the actual message |
+| Large animation library (GSAP/full Framer suite) for site-wide motion orchestration | Common "let's make it feel premium" ask once one nice animation ships | Not currently a dependency; adding it pulls in real bundle weight for a portfolio that must stay CWV-green per PROJECT.md, and creates an ongoing maintenance surface for a single-person Payload/Next codebase | CSS transitions + `IntersectionObserver` cover the great majority of the differentiators above; only escalate to a small motion lib (e.g. the lighter `motion` package) if a specific orchestrated sequence genuinely can't be done in CSS, and treat that as an explicit scoped decision, not a blanket install |
+| Auto-playing hero video/animated background loop | "Modern agency sites do this" | Same CWV conflict, plus accessibility/`prefers-reduced-motion` concerns, plus content team (Juan alone) now owns video asset production/maintenance for marginal benefit | Static, well-art-directed hero image or the KPI-metric-first hero pattern already planned; use `prefers-reduced-motion` media query as a hard rule for any motion adopted elsewhere |
+| Rebuilding a new component library or dropping shadcn primitives for a custom system | Temptation during a "polish pass" to reach for something flashier | Contradicts the milestone's explicit scope: this is a token/CSS/component-styling pass on the existing shadcn "new-york" system, not a framework swap; also reopens the "everything must stay Payload-editable" hard rule to no benefit | Extend existing tokens (`globals.css`) and restyle existing `components/ui/*` primitives; add new shadcn primitives (`tooltip`, `hover-card`, `accordion`) only if a differentiator genuinely needs one, via the standard shadcn CLI, not a custom build |
+| Gamified/game-like portfolio interactions (draggable cards, easter eggs, playful cursor) | Shows up in "memorable portfolio" trend content aimed at creative/design audiences | Wrong audience signal for a technical-SEO/engineering consultant whose buyers are evaluating rigor and reliability, not creative flair; risks undercutting the "impeccable execution" positioning from Core Value | Let the metric-driven case studies and clean typographic system carry the "memorable" job instead — restraint is the differentiator for this niche |
 
 ## Feature Dependencies
 
 ```
-Case study structured fields (problem/approach/metric/stack)
-    └──requires──> CaseStudies collection schema update (structured, not just rich text)
-                       └──requires──> Content migration mapping from JuanPortfolio's current case study data
+[Brand-correct dark-mode tokens in globals.css]
+    └──requires──> [Table Stakes: consistent light-mode tokens already in place] (done)
+    └──blocks──> [Differentiator: Dark mode as designed second theme]
+    └──blocks──> [Any component-level dark-mode-specific styling in Hero/ResultsSection/etc.]
 
-Author bio + credentials on every post/case study
-    └──requires──> Authors collection populated with real bio/credential data (already in scope)
+[Typography hierarchy utility classes]
+    └──enhances──> [Editorial "chapter" rhythm in Prose/Content block]
+    └──enhances──> [KPI/metric hero treatment in ResultsSection]
 
-JSON-LD schema markup (Person, Article, BreadcrumbList)
-    └──requires──> plugin-seo base setup (meta/OG/canonical) — already in PROJECT.md scope
-    └──enhances──> Author bio + credentials feature (schema surfaces the same E-E-A-T signal machine-readably)
+[Spacing scale audit across 16 blocks]
+    └──requires──> [nothing — do first, it's the cheapest highest-leverage fix]
+    └──enhances──> [every other visual item — inconsistent spacing undermines any animation/color work layered on top]
 
-Featured/popular content surfacing on blog & case studies
-    └──requires──> Posts/CaseStudies collections having an ordering or "featured" field
+[Scroll-reveal / KPI count-up micro-interactions]
+    └──requires──> [Decision: CSS/IntersectionObserver only, vs. adopting a motion library]
+    └──conflicts──> [CWV/performance mandate in Core Value, if a heavy library is chosen]
 
-Bilingual EN/ES parity ──enhances──> every content feature above (each must exist in both locales)
-
-Internal SEO/analytics dashboards ──conflicts──> "clean, no-clutter backend" goal (explicitly excluded in PROJECT.md)
-Multiple concurrent lead-gen funnels ──conflicts──> single clear CTA anti-feature guidance above
+[Signature accent motif]
+    └──requires──> [Design decision made once]
+    └──enhances──> [Hero, CallToAction, ResultsSection cohesion]
 ```
 
 ### Dependency Notes
 
-- **Case study structured fields require a schema update, not just content migration:** the current JuanPortfolio case studies likely exist as freeform rich text; replicating the Luca Tagliaferro/Aleyda Solis pattern (headline metric, problem/approach/outcome) means the `CaseStudies` collection needs explicit structured fields, which affects the migration/seed script referenced in PROJECT.md.
-- **JSON-LD schema markup enhances but does not require author bios** — it can be added independently, but is most valuable once bios/credentials exist to reference.
-- **Bilingual parity is a multiplier, not a separate feature** — every table-stakes and differentiator item above must be verified in both EN and ES, which increases QA surface for the roadmap.
-- **Internal SEO tooling directly conflicts with the stated Core Value** — any temptation to "port over" GSC metrics/keyword dashboards from JuanPortfolio should be resisted; this is already resolved as Out of Scope in PROJECT.md and this research reinforces that decision with competitor evidence (none of the sites studied expose SEO tooling publicly or in a way visitors interact with).
+- **Dark-mode differentiator requires dark-mode table stakes:** you cannot ship "dark mode as a genuinely designed second theme" without first fixing the fact that `.dark` in `globals.css` still carries unbranded shadcn defaults. This is a single, scoped, sequenceable phase item.
+- **Spacing audit should be first, not parallel:** every other visual change (typography, KPI hero, accent motif) sits on top of block layout. Fixing spacing after other polish work means redoing measurements twice.
+- **Micro-interactions conflict with the performance mandate if scoped wrong:** any animation work must be explicitly budgeted (CSS-only preferred) rather than defaulting to "add framer-motion," because PROJECT.md's Core Value makes Core Web Vitals a hard requirement, not a nice-to-have.
+- **Typography utilities enhance two different differentiators** (editorial rhythm in long-form content, and KPI hero legibility) — define once, reuse, rather than styling each block bespoke.
 
 ## MVP Definition
 
-### Launch With (v1)
+### Launch With (v1.1 — this milestone)
 
-- [ ] Case studies with structured headline metrics (problem → approach → metric → stack) — this is the single highest-leverage credibility feature per competitor analysis
-- [ ] Author bios with credentials rendered on every post/case study byline
-- [ ] Testimonials with structured name/role/company attribution
-- [ ] Blog with category taxonomy + featured/popular post surfacing
-- [ ] Bilingual EN/ES parity across all content types
-- [ ] Clean meta/OG/canonical via plugin-seo, sitemap, robots.txt (already scoped)
-- [ ] Fast, minimal homepage: clear H1 value proposition + credentials line, no funnel clutter
+Minimum for "professional, polished, memorable" per the milestone goal, ordered by leverage/cost ratio.
 
-### Add After Validation (v1.x)
+- [ ] Spacing/rhythm audit + fix across all 16 blocks — cheapest, highest-leverage, unblocks everything else
+- [ ] Typographic hierarchy utilities (size+weight-driven, Inter/Fraunces roles clarified) applied site-wide
+- [ ] Brand-correct dark-mode token set in `globals.css` (`.dark` block redesigned, not shadcn defaults) — table-stakes gap identified directly in codebase
+- [ ] KPI/metric hero restyle in `ResultsSection` (largest-element treatment) — reinforces the already-decided case-study model from PROJECT.md
+- [ ] Author credibility restyle in `AuthorByline`/`AuthorCard` (credentials/years/social visibly prominent) — direct E-E-A-T payoff, low cost
+- [ ] Micro-interactions (hover/focus/press states) on `button`, `card`, `input`, nav — CSS-only, no new dependency
+- [ ] Mobile responsive pass at 375px for all restyled blocks
 
-- [ ] JSON-LD structured data (Person, Article, BreadcrumbList) beyond what plugin-seo provides out of the box — trigger: once base SEO plugin is live and stable, layer this in as a genuine differentiator
-- [ ] Press-mention/award strip on homepage — trigger: only if/when Juan has real press mentions or notable client logos to show; do not fabricate placeholders
+### Add After Validation (v1.x — if budget allows within this milestone)
 
-### Future Consideration (v2+)
+- [ ] Scroll-reveal on case-study section entry (IntersectionObserver + CSS, no new dependency)
+- [ ] KPI count-up animation on scroll-into-view in `ResultsSection`
+- [ ] Signature accent motif applied across Hero/CTA/ResultsSection
+- [ ] Client-logo carousel trust-strip restyle (grayscale-to-color hover)
 
-- [ ] Dedicated Speaking/media page — defer until there's enough real speaking history (5+ engagements) to justify a standalone section
-- [ ] Newsletter — defer until there's a sustainable content cadence to support it; avoid launching an empty funnel
+### Future Consideration (v2+ — explicitly defer)
+
+- [ ] Any motion-library-driven orchestrated animation sequence (only if a specific need can't be met in CSS)
+- [ ] Full dark-mode-aware chart/data-viz theming (not needed — no dashboards in scope per PROJECT.md's "no internal SEO tooling" exclusion)
+- [ ] Video/WebGL hero treatments — explicitly anti-feature for this niche, revisit only if positioning changes
 
 ## Feature Prioritization Matrix
 
 | Feature | User Value | Implementation Cost | Priority |
-|---------|------------|---------------------|----------|
-| Structured case studies with headline metrics | HIGH | MEDIUM | P1 |
-| Author bio/credentials on content | HIGH | LOW | P1 |
-| Structured testimonials (name/role/company) | MEDIUM | LOW | P1 |
-| Blog taxonomy + featured posts | MEDIUM | LOW | P1 |
-| Bilingual parity | HIGH | MEDIUM-HIGH | P1 |
-| plugin-seo meta/OG/canonical, sitemap, robots.txt | HIGH | LOW | P1 |
-| JSON-LD schema markup (Person/Article) | MEDIUM | LOW-MEDIUM | P2 |
-| Press-mention/credentials strip on homepage | MEDIUM | LOW | P2 |
-| Dedicated Speaking page | LOW | LOW | P3 |
-| Newsletter funnel | LOW | MEDIUM | P3 |
+|---------|------------|----------------------|----------|
+| Spacing/rhythm audit (16 blocks) | HIGH | LOW | P1 |
+| Typography hierarchy utilities | HIGH | LOW | P1 |
+| Dark-mode brand-correct tokens | HIGH | MEDIUM | P1 |
+| KPI hero restyle (ResultsSection) | HIGH | LOW | P1 |
+| Author credibility restyle | MEDIUM-HIGH | LOW | P1 |
+| Micro-interactions (hover/focus/press) | MEDIUM | LOW | P1 |
+| Mobile responsive pass | HIGH | LOW-MEDIUM | P1 |
+| Scroll-reveal on case studies | MEDIUM | MEDIUM | P2 |
+| KPI count-up animation | MEDIUM | LOW-MEDIUM | P2 |
+| Signature accent motif | MEDIUM | LOW-MEDIUM | P2 |
+| Client-logo trust strip | LOW-MEDIUM | LOW | P2 |
+| Motion-library orchestration | LOW | HIGH | P3 |
+| Video/WebGL hero | LOW (wrong register) | HIGH | P3 (avoid) |
 
 **Priority key:**
-- P1: Must have for launch
-- P2: Should have, add when possible
-- P3: Nice to have, future consideration
+- P1: Must have for this milestone's "professional, polished, memorable" bar
+- P2: Should have if time allows within the milestone
+- P3: Nice to have or explicitly deferred/avoided
 
 ## Competitor Feature Analysis
 
-| Feature | Luca Tagliaferro | Aleyda Solis | Kevin Indig | Lee Robinson / Josh Comeau / swyx | Our Approach |
-|---------|-------------------|--------------|--------------|-------------------------------------|--------------|
-| Case studies | Filterable, metric-first headline, no testimonials needed | N/A (services-led) | N/A (testimonial-led) | N/A | Adopt Tagliaferro's metric-first headline pattern for Juan's `CaseStudies` collection |
-| Testimonials | Absent by design | Video testimonials w/ exec titles | Attributed quotes w/ role+company | Absent | Structured text testimonials with name/role/company (lighter than video, more credible than anonymous) |
-| Bilingual | No | Yes (EN/ES) | No | No | Required — matches Aleyda Solis as the proof point this is standard at the top of the space |
-| Site minimalism / clutter avoidance | Moderate (services menu is dense) | Moderate (3+ funnels) | Moderate | High (Lee Robinson is the benchmark) | Follow Lee Robinson's minimalism, informed by PROJECT.md's explicit "no clutter" goal |
-| Content taxonomy | Service + case-study categories | Blog + resource hub | Minimal (advisory-focused) | Josh Comeau: category tags + popular ranking; swyx: format-based hub | Adopt Josh Comeau's category tags + featured/popular surfacing for the blog |
-| Authority signals | Quantified results only | Awards, press, client logos | Testimonials + logos | Role/experience stated plainly | Combine metric-first case studies (Tagliaferro) with a compact credentials line near hero (Eli Schwartz pattern) |
+| Feature | Agency sites (e.g. design studios) | Senior solo consultants (e.g. ariannalupi.com reference model) | Our Approach |
+|---------|-------------------------------------|-------------------------------------------------------------------|--------------|
+| Hero | Often video/motion-heavy, brand-identity-forward | Metric-first headline ("$41K → $76K"), restrained visuals | Already decided in PROJECT.md — KPI-first hero, no video |
+| Case study depth | Portfolio-grid style, light on methodology | Structured: metadata, KPI cards, challenge/solution/results, numbered process, strategic conclusion, double CTA | Already modeled in PROJECT.md (`ResultsSection` etc.) — this research confirms it matches 2026 consulting-page conventions |
+| Motion | Heavy scrollytelling, cursor effects, 3D | Minimal, purposeful (reveal-on-scroll, KPI count-up) | Adopt the restrained tier only — matches technical-credibility register |
+| Dark mode | Inconsistent, often absent | Increasingly expected for developer-facing personal sites | Table-stakes item for this milestone — currently the biggest gap |
+| Trust signals | Client logo walls, testimonial carousels | Same, plus visible author credentials/years/certifications (E-E-A-T) | `ClientLogosBlock`, `TestimonialsCarousel`, `AuthorByline` already exist — restyle for prominence |
 
 ## Sources
 
-- [lucatagliaferro.com/seo-results](https://www.lucatagliaferro.com/seo-results/) — WebFetch, MEDIUM-HIGH confidence (direct page content)
-- [aleydasolis.com/en](https://www.aleydasolis.com/en/) — WebFetch, MEDIUM-HIGH confidence
-- [kevin-indig.com](https://www.kevin-indig.com/) — WebFetch, MEDIUM-HIGH confidence
-- [leerob.com](https://leerob.com/) — WebFetch, MEDIUM-HIGH confidence
-- [joshwcomeau.com](https://www.joshwcomeau.com/) — WebFetch, MEDIUM-HIGH confidence
-- [swyx.io](https://www.swyx.io/) — WebFetch, MEDIUM-HIGH confidence
-- Eli Schwartz (elischwartz.co / productledseo.com) — WebSearch only, LOW-MEDIUM confidence, not independently verified via WebFetch
-- [jaysearch.com/blog/seo-portfolio-examples](https://jaysearch.com/blog/seo-portfolio-examples) — WebSearch, general SEO portfolio patterns, LOW confidence (secondary source)
-- [sitebuilderreport.com/inspiration/seo-portfolios](https://www.sitebuilderreport.com/inspiration/seo-portfolios) — WebSearch, general SEO portfolio patterns, LOW confidence
-- [shipixen.com/blog/seo-checklist-for-developer-portfolios-and-landing-pages](https://shipixen.com/blog/seo-checklist-for-developer-portfolios-and-landing-pages) — WebSearch, developer-portfolio SEO checklist reference, LOW-MEDIUM confidence
-- /Users/juan/Documents/Codigo/Personal/juantech/juan-payload/.planning/PROJECT.md — project context, HIGH confidence (source of truth for scope)
+- [19 Best Portfolio Design Trends (In 2026) - Colorlib](https://colorlib.com/wp/portfolio-design-trends/)
+- [Portfolio design trends for 2026: From AI builds to gamified portfolios - Envato](https://elements.envato.com/learn/portfolio-trends)
+- [Engineer Portfolios: 20+ Well-Designed Examples (2026) - Sitebuilder Report](https://www.sitebuilderreport.com/inspiration/engineer-portfolios)
+- [Software Engineer Portfolios: 15+ Well-Designed Examples (2026) - Sitebuilder Report](https://www.sitebuilderreport.com/inspiration/software-engineer-portfolios)
+- [Top Web Design Trends for 2026 - Figma](https://www.figma.com/resource-library/web-design-trends/)
+- [18 Interactive Portfolio Examples That Engage On Another Level - Really Good Designs](https://reallygooddesigns.com/interactive-portfolio-examples/)
+- [Scrolling Designs: 8 Patterns and When to Use Each (2026) - Lovable](https://lovable.dev/guides/scrolling-designs-patterns-when-to-use)
+- [15 best microinteraction examples for web design inspiration - Webflow Blog](https://webflow.com/blog/microinteractions)
+- [Dark Mode Design Systems: A Complete Guide to Patterns, Tokens, and Hierarchy - Muzli Blog](https://muz.li/blog/dark-mode-design-systems-a-complete-guide-to-patterns-tokens-and-hierarchy/)
+- [Dark mode dashboard design patterns SaaS founders are using in 2026 - AYDesign](https://www.aydesign.ai/blog/dark-mode-dashboard-design-patterns-2026)
+- [Dark Mode First: Why Your SaaS Dashboard Should Default to Dark - Brent Haskins](https://brenthaskins.com/blog/dark-mode-first-saas-dashboard)
+- [15 Best Case Study Design Examples that STAND OUT! - Content Beta](https://www.contentbeta.com/blog/case-study-design-examples/)
+- [The True ROI of UX: B2B Redesign Case Studies - Toptal](https://www.toptal.com/designers/ux/roi-of-ux-redesign-case-studies)
+- [How to Write an SEO-Friendly Author Bio for E-E-A-T (2026) - Sangfroid Web Design](https://www.sangfroidwebdesign.com/website-quality/seo-friendly-professional-author-bio-eat/)
+- [5 Examples of Author Bios That Drive E-E-A-T - Fractl](https://www.frac.tl/author-bios-eeat/)
+- [E-E-A-T SEO in 2026: Build Trust Signals That Rank - HYF Web](https://hyfweb.com/e-e-a-t-seo-in-2026-to-build-trust-signals-that-rank/)
+- [The Ultimate shadcn/ui Handbook (2026 Edition) - shadcnspace](https://shadcnspace.com/blog/shadcn-ui-handbook)
+- [Design Guidelines for shadcn/ui with Tailwind v4 - ctxs.ai](https://ctxs.ai/weekly/shadcn-ui-tailwind-v4-7z8p3v)
+- Codebase inspection (direct, HIGH confidence): `src/app/globals.css`, `src/blocks/*`, `src/components/*`, `src/components/ui/*`, `package.json` — verified 2026-07-10
 
 ---
-*Feature research for: software engineer + SEO expert personal portfolio*
-*Researched: 2026-07-09*
+*Feature research for: Solo technical consultant portfolio visual/UX polish (v1.1 milestone)*
+*Researched: 2026-07-10*

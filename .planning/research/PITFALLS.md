@@ -1,275 +1,243 @@
 # Pitfalls Research
 
-**Domain:** Payload CMS 3.x platform migration — MongoDB → self-hosted PostgreSQL (Hostinger Node.js), Vercel Blob → Cloudinary media, with SEO/rankings preservation for a live portfolio site
-**Researched:** 2026-07-09
-**Confidence:** HIGH on migration + SEO pitfalls (verified against Payload docs, official migration discussions, and two production reference codebases — apturio, aprendoclub); MEDIUM on Cloudinary-adapter specifics and Hostinger runtime behavior (verified via current community sources, but exact package/panel state must be re-checked at build time)
+**Domain:** Visual/UX polish pass on an existing, content-populated Payload CMS + Next.js 15 + Tailwind + shadcn/ui bilingual site
+**Researched:** 2026-07-10
+**Confidence:** MEDIUM-HIGH (synthesized from CSS/design-system refactor post-mortems, WCAG/shadcn theming docs, i18n text-expansion research, animation/CWV performance data, and headless-CMS block-model literature; project-specific risk framing is HIGH confidence given direct read of PROJECT.md constraints)
 
 ## Critical Pitfalls
 
-### Pitfall 1: URL/slug drift breaks existing rankings and inbound links
+### Pitfall 1: Token refactor silently collapses block-driven layout flexibility
 
 **What goes wrong:**
-The new Postgres site serves the same content at even slightly different URLs than the live Mongo site — a changed locale prefix (`/es/blog/...` vs `/blog/...`), a trailing-slash policy flip, a renamed collection route (`/case-studies/` vs `/casos/`), or a slug that got regenerated during migration instead of copied verbatim. Google has those old URLs indexed; every drifted URL is a 404 or a soft-404 on cutover, and the accumulated ranking equity for that URL evaporates.
+A "refine the design system" pass touches shared tokens (spacing scale, typography scale, color CSS variables) or shared block components (RenderBlocks registry, hero/card primitives) and, in the process of making things "look consistent," someone hardcodes a spacing value, removes a variant a Payload editor relies on, or collapses conditional rendering branches that existed to support optional/empty fields. Since all 16 blocks are Payload-editable, any content editor could enter a state (long title, no image, 2 vs 6 items in a repeater) that the "polished" version never accounted for because the polish pass was visually validated only against the current real content, not against the field's full input range.
 
 **Why it happens:**
-Migration scripts often regenerate slugs from titles ("clean rebuild" mentality) rather than carrying the exact stored slug across. Locale routing is re-decided in the rebuild (next-intl `localePrefix` mode, default-locale handling) without auditing what the live site actually emits. Nobody diffs the old sitemap against the new one before cutover.
+Visual polish is naturally done by eyeballing the rendered site with today's real data. Today's 72 posts and existing case studies represent one slice of the possible content space, not the full one Payload's schema allows (optional fields, empty repeaters, very long/short strings, missing media). A refactor that "looks great" against current content can implicitly assume invariants (image always present, exactly N items, title under X chars) that aren't schema-enforced.
 
 **How to avoid:**
-Treat the current live site's URL set as a frozen contract. Before migration, crawl/export the full live URL inventory (from the current `sitemap.xml` and Ahrefs/GSC top-pages). Copy slugs **verbatim** in the migration script — never regenerate. Reproduce the exact locale-prefix strategy the live site uses (audit `JuanPortfolio`'s next-intl config, don't assume). After building the new site, diff its generated sitemap against the frozen inventory; every delta is either a bug to fix or a redirect to author.
+- Before restyling a block, list its Payload field schema (required vs optional, min/max items, character limits if any) and deliberately render each block at least once with a boundary-condition payload (missing optional image, empty repeater, max-length title) — not just against real content.
+- Treat every visual change to a shared block/token as a diff against the "field contract," not just against a screenshot.
+- Never remove a conditional-render branch (`{image && ...}`) as part of a "simplify for aesthetics" edit unless you've confirmed the field is actually required in the Payload schema.
 
 **Warning signs:**
-Migration script calls a `generateSlug()`/`slugify()` on write. New sitemap has a different count or different paths than the old one. `/es/` appears (or disappears) relative to the live site. GSC "Coverage" shows a spike in 404s after cutover.
+- Component code changes from `{field && <X/>}` to unconditional rendering during a "just styling" PR.
+- A block that previously handled 1-6 repeater items now assumes a fixed count in its grid classes (e.g., `grid-cols-3` hardcoded instead of computed/responsive).
+- Visual QA checklist only lists "home, blog, case study" pages instead of also checking blocks with sparse/edge-case content.
 
-**Phase to address:** Migration phase (slug fidelity) + a dedicated SEO/cutover phase (URL diff + redirects). Flag the URL-inventory export as a prerequisite before migration coding starts.
+**Phase to address:**
+Block/component audit and design-token refactor phases — add an explicit "boundary content" pass (empty/minimal fields, max-length fields) to the verification step for every touched block, not just a visual smoke test against production content.
 
 ---
 
-### Pitfall 2: No 301 redirect map for URLs that legitimately change
+### Pitfall 2: Color-token or contrast changes quietly break WCAG compliance that previously passed QA
 
 **What goes wrong:**
-Some URL changes are unavoidable or intentional (a collection is renamed, a taxonomy path changes, `.html` suffixes dropped). Without 301 redirects from old → new, those pages lose all ranking equity and return 404, and Google slowly drops them from the index.
+The site already passed a full bilingual QA verification, which presumably included contrast checks on the existing palette. A polish pass that "refines" the color system (introducing a new accent, adjusting a neutral ramp, shifting from named colors like `gray-400` to semantic tokens, or adopting the `auditor` project's dark-first lime-accent palette as inspiration) can reintroduce contrast failures — especially in dark mode, where borders/muted text are the most common casualty, and especially on states that aren't visually obvious in a quick glance (placeholder text, disabled buttons, focus rings, muted captions on cards).
 
 **Why it happens:**
-Redirects are treated as an afterthought ("we'll add them if we notice 404s") rather than a migration deliverable. The `@payloadcms/plugin-redirects` exists but isn't wired, or redirects are authored in the CMS but the Next.js layer never actually reads and serves them.
+Token refactors are usually validated against the primary text/background pair (body copy on white) because that's what's visually salient. Secondary/tertiary text colors, borders, and hover/focus states get updated "to match" without a contrast re-check, and a semantic-token rename (visual-name → role-name) can accidentally repoint a component to a token with different contrast than before.
 
 **How to avoid:**
-Build the old→new redirect map as a first-class artifact of the migration, derived from the URL diff in Pitfall 1. Wire `@payloadcms/plugin-redirects` (both reference codebases use it) AND confirm the frontend actually resolves them (a `next.config` redirects export or a catch-all that queries the redirects collection). Keep `createRedirectOnSlugChange`-style hooks so future editor slug edits auto-generate 301s. Use 301 (permanent), not 302, for equity transfer.
+- Any commit that touches `tokens.css` / CSS custom properties feeding `background`, `foreground`, `muted`, `muted-foreground`, `border`, or accent colors must be re-checked against WCAG AA (4.5:1 normal text, 3:1 large text/UI) for every token pairing actually used in components — not just the primary body-text pair.
+- Automated contrast checks catch computed colors but miss compositing effects (opacity, blend modes, overlapping gradient/image backgrounds behind text) common in "editorial-tech" hero treatments — verify those combinations manually in both light and dark mode.
+- Re-run whatever accessibility check the original bilingual QA used (axe, Lighthouse a11y, or manual) scoped specifically to color-contrast, on both locales, after any token change — not just once at the end of the whole milestone.
 
 **Warning signs:**
-Redirects collection exists in admin but hitting an old URL returns 404 instead of a 301. `next.config` has no redirects and no catch-all redirect resolver. Chains of redirects (A→B→C) instead of direct A→C.
+- New accent color introduced without checking it against both light and dark backgrounds it will sit on.
+- `muted-foreground` or `border` tokens changed "just for vibe" without re-running contrast tooling.
+- Text-over-image/gradient hero treatments added without a contrast check on the actual rendered composite.
 
-**Phase to address:** SEO/cutover phase, blocked by the URL-diff output of the migration phase.
+**Phase to address:**
+Design-token/color-system refinement phase — bake a WCAG contrast check (automated + manual for composite backgrounds) into the phase's own verification step, run per-locale, before marking the phase done.
 
 ---
 
-### Pitfall 3: `push: true` (schema auto-push) leaks into production Postgres
+### Pitfall 3: Spanish content breaks layouts sized/tested against English copy
 
 **What goes wrong:**
-Payload's Postgres adapter can auto-introspect and push schema changes (`push: true`, the dev default). Left on in production, a config change silently ALTERs the live database — dropping columns, renaming tables, losing data — with no migration file, no review, and no rollback path. This is the single most destructive Postgres-specific footgun in Payload.
+Spanish text runs roughly 15-25% longer than English for equivalent content (headings, buttons, nav labels, card metadata). A polish pass that tightens spacing, introduces fixed-height cards, single-line truncation, or tighter line-length constraints (for a more "editorial" typographic feel) frequently gets designed/eyeballed in one locale first (commonly English, since that's often the default in dev) and then assumed to transfer. Titles wrap unexpectedly, buttons overflow their container, nav items collide, and card grids that looked aligned in EN show ragged/uneven heights in ES.
 
 **Why it happens:**
-`push: true` is convenient in dev and is the default behavior; developers forget it's environment-sensitive. Postgres (unlike Mongo's schemaless model) enforces a real schema, so schema drift becomes destructive rather than lenient.
+Designers and devs naturally iterate in whichever locale is fastest to eyeball, and tighter/more polished spacing (a hallmark of "professional-feeling" redesigns) reduces the slack that used to absorb text-length variance. The most layout-sensitive strings — nav labels, button copy, card titles, breadcrumbs — are exactly the ones that expand the most in Spanish.
 
 **How to avoid:**
-Set `push: false` in the Postgres adapter for production (both reference codebases do). All schema changes go through committed migration files (`payload migrate:create`), applied via `payload migrate` at deploy time — never via live introspection. Make `payload migrate && ... && next build` the deploy build command (verified apturio pattern).
+- Every visual change to typography, spacing, or fixed-dimension containers (fixed-height cards, single-line truncated headings, nav bars) must be checked in both `/en` and `/es` before being called done — not just the locale it was designed in.
+- Prefer flexible/min-height containers and `line-clamp` with enough lines of slack over fixed single-line truncation for card titles, given Spanish's expansion tendency.
+- For real regression coverage, spot-check the longest actual ES titles/labels in the 72 migrated posts (not just short lorem-length test content) against tightened layouts.
 
 **Warning signs:**
-Adapter config has no explicit `push` setting, or `push: true` unguarded by `NODE_ENV`. Deploy pipeline has no `payload migrate` step. Schema changes appear in prod without a corresponding file in `migrations/`.
+- Component built and screenshot-reviewed only in one locale during the PR.
+- New `truncate` or fixed `h-*` classes added to title/label elements without checking ES equivalents.
+- Nav/header polish done against English label lengths ("Blog", "Contact") without checking Spanish equivalents ("Publicaciones/Blog", "Contacto") which may differ enough to reflow.
 
-**Phase to address:** Postgres/schema foundation phase (set `push: false` from day one) + deployment phase (migrate-at-deploy command).
+**Phase to address:**
+Any phase touching header/footer/nav, card components, or typography scale — verification step must explicitly include an ES-locale pass with real (not placeholder) longest-case content, not just EN.
 
 ---
 
-### Pitfall 4: Mongo→Postgres shape mismatch corrupts arrays, blocks, groups, and localized fields
+### Pitfall 4: Animation/motion additions regress Core Web Vitals (INP/LCP) on a site whose entire value prop is technical performance
 
 **What goes wrong:**
-Mongo stores nested arrays/blocks/groups as embedded JSON; Postgres explodes them into separate relational tables (arrays → child tables, blocks → per-block tables, localized fields → `_locales` tables). A naive field-by-field copy that ignores this either fails on write or produces malformed rows — rich text blocks that don't render, empty localized fields, dropped array items, broken relationship IDs (Mongo ObjectId strings vs Postgres integer/UUID keys).
+"Polish" commonly means adding scroll-triggered reveals, hover micro-interactions, page transitions, or a JS animation library (Framer Motion / Motion) to make the site feel "modern." On a portfolio whose Core Value is explicitly "el rendimiento y el SEO deben ser impecables," this is the highest-stakes category of regression: JS-driven animations that touch non-composited properties, run on the main thread during interaction, or ship a non-trivial bundle can push INP over the 200ms threshold, add CLS from layout-affecting animations, or delay LCP if animation libraries block critical rendering paths on hero content (the same hero elements likely to be the LCP element on case-study/home pages).
 
 **Why it happens:**
-Developers assume the two adapters store data the same way. They copy documents raw instead of writing through the target Payload Local API (which handles the relational decomposition). Relationship fields hold Mongo ObjectIds that have no meaning in the new Postgres keyspace.
+Animation libraries are added incrementally, component by component, and each individual addition seems cheap in isolation. The cumulative JS bundle growth and main-thread cost only becomes visible under Lighthouse/CrUX field data, which teams often only check once at the end of a milestone rather than after each animated component is added — by then it's a large diff to unpick.
 
 **How to avoid:**
-Migrate **through the target Payload Local API** (`target.create()`), never by writing raw rows to Postgres — let Payload handle the relational decomposition and validation (this is the ARCHITECTURE.md Pattern 1 decision). Migrate in dependency order (Media → Authors/Categories → Posts/CaseStudies that reference them) so relationships resolve to new IDs. Maintain an old-ObjectId → new-ID lookup map and remap every relationship field. Use `locale: 'all'` on read and write locale-aware on create to preserve bilingual content. Validate rich text/blocks render on a sample before bulk-running.
+- Prefer CSS-only transitions/animations (`transform`, `opacity`, driven by CSS transitions or the View Transitions API) over a JS animation library wherever the effect is simple (fade-in, hover states, simple reveals). Reserve JS animation libraries only for interactions CSS genuinely can't express.
+- If a JS animation library is added, animate only hardware-accelerated properties (`transform`, `opacity`), never layout-affecting properties (`width`, `height`, `top/left` without `transform`), to avoid CLS and main-thread jank.
+- Never animate the actual LCP candidate element (hero image/heading) in a way that delays its paint — entrance animations on above-the-fold hero content are a common self-inflicted LCP regression.
+- Run Lighthouse/PageSpeed (mobile, throttled) after each block/page gets its animation pass, not only once at the end — catch INP/CLS/LCP regressions attributable to a specific component while the diff is still small.
 
 **Warning signs:**
-Migration writes directly to Postgres tables or via SQL. Relationship fields in migrated docs still contain 24-char hex ObjectIds. Localized fields only populate one language. Blocks array is empty or throws on render. Migration "succeeds" but pages render blank sections.
+- `framer-motion` or similar added as a new dependency for effects that CSS transitions could achieve.
+- Animations applied to elements above the fold / to the hero image itself.
+- Lighthouse only run once, at the very end of the milestone, instead of incrementally.
 
-**Phase to address:** Migration phase — this is the core technical risk of the whole project.
+**Phase to address:**
+Any phase introducing motion/animation — require a CWV check (mobile Lighthouse or field data proxy) as an explicit verification gate before/after, scoped to the specific pages touched, and prefer CSS-first implementation as the default choice in the phase's technical approach.
 
 ---
 
-### Pitfall 5: Media migration is a re-upload, not a URL copy — and old Blob URLs rot
+### Pitfall 5: "Just visual" component edits quietly reintroduce hardcoded content, violating the Phase 5 hard rule
 
 **What goes wrong:**
-Media docs in Mongo point at Vercel Blob URLs. Copying those URL strings into Postgres leaves the new site serving images from the old Blob store (which will be decommissioned), and no assets actually live in Cloudinary. When Blob is torn down, every image 404s. Additionally, image URLs embedded inside rich-text/blocks (not just the Media collection) are missed entirely.
+PROJECT.md explicitly states the milestone must keep "todo contenido sigue siendo editable desde Payload." In practice, visual polish work tempts small hardcoded fixes: a dev hand-tunes a card's copy to test a layout and forgets to revert it to the CMS-driven prop, adds a "polish-only" badge/label/CTA string directly in JSX because it's "just a UI label, not real content," or introduces a new visual element (e.g., a decorative eyebrow text, a stat, an icon-per-category mapping) that has no corresponding Payload field, silently becoming unmaintainable/unlocalizable content baked into the component tree.
 
 **Why it happens:**
-Media is treated as a simple field copy. The distinction between "the Media collection's URL field" and "the binary asset itself" is missed. Cloudinary has no official Payload adapter, so the storage wiring is unfamiliar and under-tested.
+Block-based/headless CMS component work has a well-documented anti-pattern risk: it's very easy for presentation concerns to leak into what should stay data-driven, especially when a component is being restyled and the dev is iterating quickly with a literal string in place "to see how it looks," and that stopgap never gets converted into a real field before merge. The boundary between "UI chrome that's legitimately hardcoded" (e.g., "Read more →" if truly a UI-only, non-localized affordance) and "content that must be a field" (any string a non-technical editor would expect to change per post/case-study/locale) gets blurred during fast iteration.
 
 **How to avoid:**
-The migration must re-upload each binary to Cloudinary (via the chosen storage adapter or Cloudinary's upload API) and rewrite Media doc URLs to the new Cloudinary URLs. Also scan rich-text/block fields for embedded old asset URLs and rewrite them. Verify the community Cloudinary adapter choice in a spike **before** the media phase — multiple community packages exist (`payload-storage-cloudinary`, `@pemol/payload-cloudinary`, `payload-cloudinary`, `@jhb.software/payload-cloudinary-plugin`); none is official, maintenance/quality varies, and a beta official adapter may or may not be ready — pick and pin one deliberately, or write a minimal custom `StorageAdapter`.
+- Before merging any visually-touched block, explicitly re-verify: every string visible in the rendered output either comes from a Payload field/richtext, from `next-intl` message catalogs (as genuine UI chrome, translated in both locales), or is a truly static, non-content, non-localized visual element (e.g., a decorative rule/icon with no semantic meaning) — nothing should be an inline literal that a content editor would reasonably expect to edit.
+- If a new visual element needs new data (a badge, an icon-per-category, a stat callout) add the Payload field/config for it as part of the same phase, not as a "we'll wire it up later" placeholder.
+- Treat "delete this hardcoded test copy before merge" as a checklist item on every visually-driven PR, since it's the most likely place for it to slip through.
 
 **Warning signs:**
-Migrated Media docs still have `*.public.blob.vercel-storage.com` URLs. Cloudinary dashboard is empty after migration. Images render now (from Blob) but the plan is to shut Blob down. Chosen Cloudinary package hasn't been updated for current Payload 3.x.
+- Grep for literal English/Spanish sentences inside component `.tsx` files that aren't in `next-intl` message catalogs.
+- A new visual feature (badge, icon, stat) ships without a corresponding new/edited Payload field.
+- PR diff shows a component prop being removed in favor of a literal string "to make the demo look right."
 
-**Phase to address:** Dedicated Cloudinary spike phase (adapter selection) → media migration phase. Do not fold media into the generic content migration.
+**Phase to address:**
+Every phase in this milestone (it's a cross-cutting constraint, not phase-specific) — the verification step for each phase should include an explicit grep/audit for hardcoded strings introduced in touched components, and confirm any new visual data point has a Payload field backing it.
 
 ---
 
-### Pitfall 6: `noindex`/staging robots settings leak to production
+### Pitfall 6: SEO/structured-data surface area silently degrades during "just visual" markup changes
 
 **What goes wrong:**
-During the rebuild the new site runs on a staging URL with `noindex`, a `Disallow: /` robots.txt, or basic-auth. On cutover those blockers ship to production, Google recrawls, sees `noindex`/blocked, and de-indexes the entire site — catastrophic ranking loss that can take weeks to recover.
+Visual refinement of heading hierarchy (e.g., changing an `<h2>` to a styled `<div>` because "it needs a different visual treatment than other h2s"), image handling (swapping `next/image` usage patterns, dropping `alt` text propagation while restyling card image treatment), or link/button semantics (replacing an anchor with a `<div onClick>` for easier styling) quietly damages the SEO and accessibility foundation that plugin-seo, sitemaps, and structured data depend on — even though nothing about the CMS content or SEO plugin config changed. Since this project's whole value proposition rests on "SEO impecable," these are exactly the regressions least visible in a quick visual QA pass (they don't look wrong) but most damaging to the stated Core Value.
 
 **Why it happens:**
-The staging-protection mechanism is env-driven but the env flip is forgotten, or `noindex` is hardcoded rather than gated. The SEO plugin's meta or a global robots setting carries the staging value.
+Restyling is done by looking at rendered output, not by auditing the DOM/semantic structure. It is easy to swap a semantic element for a `div`/`span` purely to get more predictable CSS control, without registering that this changes heading outline, link crawlability, or landmark structure.
 
 **How to avoid:**
-Gate all indexing-blockers on an explicit env var (e.g., `NEXT_PUBLIC_IS_PRODUCTION`/`ROBOTS_ALLOW`). Add a cutover checklist item: verify production `robots.txt` allows crawling and no page emits `<meta name="robots" content="noindex">`. Verify with a live fetch of the production URL post-deploy, not just a code read.
+- Any time an element's HTML tag changes during restyling (heading level, `<a>` → `<button>`/`<div>`, list markup removed for a flex/grid layout), explicitly confirm the semantic/structural equivalent is preserved — style can change without changing the underlying tag.
+- Re-run whatever Lighthouse SEO/accessibility audit and structured-data validation (rich results test) was used in the original QA, scoped to pages whose markup changed, not just a visual look.
+- Keep `alt` text, `next/image` usage, and heading hierarchy on an explicit checklist for any card/hero/blog-post-body component that gets restyled.
 
 **Warning signs:**
-`robots.txt` returns `Disallow: /` on the production domain. View-source shows `noindex` on the homepage. GSC "Coverage" reports "Excluded by noindex tag" climbing after launch.
+- Heading tag downgraded/upgraded (h2→h3 or h2→div) purely to fix visual sizing, instead of using CSS to restyle a semantically-correct tag.
+- `next/image` `alt` prop no longer sourced from the Payload media field after a card-image treatment change.
+- Clickable cards/links converted to `<div onClick>` patterns for easier hover-state styling.
 
-**Phase to address:** Deployment/cutover phase — explicit go-live checklist gate.
-
----
-
-### Pitfall 7: Postgres connection-pool exhaustion on Hostinger managed DB
-
-**What goes wrong:**
-Hostinger's managed Postgres (or a low-tier plan) caps max connections low. Payload/Drizzle opens a pool per Node process; a default pool size plus PM2 cluster mode (multiple instances) plus the migration script's own connections exceeds the cap. The app throws "too many connections" / "remaining connection slots reserved" and pages fail intermittently.
-
-**Why it happens:**
-The pool `max` is left at a library default sized for a beefy managed provider, not a shared-hosting Postgres. Connection limits aren't checked before deploy (flagged as an open constraint in PROJECT.md).
-
-**How to avoid:**
-Verify Hostinger's actual `max_connections` for the provisioned plan before deploy. Set the adapter pool `max` conservatively (apturio uses `max: 3-5`). Account for PM2 instance count × pool size ≤ DB limit, and don't run the migration against prod while the app is also connected at full pool.
-
-**Warning signs:**
-Intermittent `too many clients already` / `remaining connection slots` errors under mild load. Errors appear only in prod, never in single-process dev. PM2 cluster mode multiplies the problem.
-
-**Phase to address:** Postgres foundation phase (pool config) + deployment phase (verify plan limits).
-
----
-
-### Pitfall 8: `output: 'standalone'` deploy ships without static assets or migrations
-
-**What goes wrong:**
-Next.js `output: 'standalone'` only traces JS dependencies — it does NOT copy `public/` or `.next/static` into the standalone bundle. Deploy the bundle as-is and the site loads with no CSS, no fonts, no favicons, broken images (all the app's own assets 404). Separately, if `payload migrate` isn't part of deploy, the new server boots against a schema that doesn't match the config.
-
-**Why it happens:**
-Standalone output's asset-tracing limitation is non-obvious. Teams coming from Vercel (which handles all this) don't realize self-hosting requires manual asset copying and a migrate step.
-
-**How to avoid:**
-Add the `postbuild` copy step (verified apturio pattern): `cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/`. Make `payload migrate` run before `next build` in the deploy command. Serve `.next/static` and `public/` from the Node process (standalone `server.js` handles it) — Cloudinary only serves user Media, never the app bundle.
-
-**Warning signs:**
-Production site renders unstyled (no CSS/fonts). `public/` assets 404. Server boots but schema errors on first query. Working on Vercel-style assumptions about asset handling.
-
-**Phase to address:** Deployment phase — build/postbuild command definition.
-
----
-
-### Pitfall 9: Cutover timing loses content authored on the live site mid-migration
-
-**What goes wrong:**
-Migration is run, tested for days, then cutover happens — but editors kept publishing on the live Mongo site during that window. Those new/edited posts never made it into Postgres and are silently lost at cutover.
-
-**Why it happens:**
-Migration is treated as a one-shot copy with no content freeze and no delta re-sync. The gap between "migration run" and "DNS/cutover" isn't accounted for.
-
-**How to avoid:**
-Declare a content freeze on the live site immediately before the final migration run, or run migration as close to cutover as possible and re-run a delta for anything changed after the last run. Since migration is idempotent-through-Local-API and run once per environment, schedule the production run tightly against go-live.
-
-**Warning signs:**
-Days elapse between the prod migration run and DNS cutover with no freeze. Editors report "where did my post go" after launch. `updatedAt` timestamps on the live site are newer than the migration run.
-
-**Phase to address:** Cutover phase — operational runbook, not code.
+**Phase to address:**
+Any phase restyling headers, blog-post body rendering, or card/link components — include a markup/semantic diff check (not just visual) and a Lighthouse SEO/a11y re-run on affected page types as part of verification.
 
 ---
 
 ## Technical Debt Patterns
 
 | Shortcut | Immediate Benefit | Long-term Cost | When Acceptable |
-|----------|-------------------|----------------|-----------------|
-| Copy Media URL strings instead of re-uploading binaries to Cloudinary | Migration "works" instantly, images show | Site breaks entirely when Vercel Blob is decommissioned; silent time-bomb | Never for prod cutover; OK only for a throwaway visual smoke-test |
-| `push: true` in prod to skip writing migrations | No migration files to author | Destructive silent schema drift, no rollback, potential data loss | Never in production; dev only |
-| Regenerate slugs from titles during migration | Cleaner-looking URLs | Breaks every indexed URL + inbound link; ranking loss | Never — slugs are a frozen SEO contract |
-| Skip the redirect map ("add 404s later") | Ships faster | Lost equity on every changed URL, slow de-indexing | Only if URL set is provably 1:1 identical (verify, don't assume) |
-| Default Drizzle pool size on Hostinger | Nothing to configure | Connection exhaustion under load in prod | Never on constrained managed Postgres; verify limits first |
-| Migrate raw docs (skip Local API) to go faster | Simpler script | Broken relational shape, malformed blocks/localized fields | Never — decomposition must go through Payload |
+|----------|--------------------|-----------------|------------------|
+| Restyle against only current production content, skip boundary-condition content | Faster visual iteration | Block breaks the first time an editor enters an edge-case value in Payload | Never for shared/reusable blocks; acceptable only for genuinely one-off, non-reusable page sections |
+| Hardcode a string "temporarily" while iterating on a component's look | Faster to see the visual result | Ships as permanent hardcoded content, violating the editable-content rule | Never past the PR that introduces the component — must be wired to a field/message catalog before merge |
+| Design/QA visual changes in one locale only (EN) | Half the review time per component | ES layout breaks in production for the longer-text locale | Never for shared components (nav, cards, headings); acceptable only for locale-specific one-off copy tweaks |
+| Add a JS animation library site-wide "for consistency" instead of per-need CSS transitions | Convenient shared API for animation | Bundle-size and INP/main-thread cost creeps across every page, hard to isolate later | Only acceptable for genuinely complex interactions CSS can't express (e.g., orchestrated multi-step transitions), never as the default for simple fades/hovers |
+| Defer WCAG contrast re-check until the end of the whole token refactor | Faster to "just get the new palette in" | Accumulates many contrast regressions that are expensive to triage together at the end | Never — check per-token-change, not batched |
 
 ## Integration Gotchas
 
 | Integration | Common Mistake | Correct Approach |
-|-------------|----------------|------------------|
-| Cloudinary storage | Assuming an official drop-in adapter exists | No official adapter — pick/pin a community package or write a minimal custom `StorageAdapter`; verify current npm state in a spike before the media phase |
-| Cloudinary | Only rewriting the Media collection URLs | Also rewrite asset URLs embedded in rich-text/blocks; re-upload the binaries, don't copy URLs |
-| Postgres (Hostinger) | Leaving `push: true` / default pool size | `push: false`, migrations at deploy, conservative pool `max` sized to plan's `max_connections` |
-| Mongo source | Hand-writing a parallel Mongo schema for the read side | Import JuanPortfolio's actual unmodified `payload.config` read-only as the source to guarantee field-shape fidelity |
-| next-intl + Payload localization | Confusing the two, or changing locale routing during rebuild | They are complementary (next-intl = routing/UI copy, Payload `localization` = content fields); replicate the live site's exact locale-prefix behavior |
-| Resend email | Rebuilding contact logic from scratch | Direct config port of `@payloadcms/email-resend` (already used in both JuanPortfolio and apturio) |
-| `@payloadcms/plugin-redirects` | Wiring it in admin but not serving redirects in the frontend | Confirm the Next.js layer actually resolves and serves 301s (next.config export or catch-all resolver) |
+|-------------|-----------------|-------------------|
+| Payload block registry (RenderBlocks) | Restyling a block by assuming today's content shape (image always present, N items) rather than the field schema's full range | Read the block's Payload field config before restyling; test with sparse/edge-case content, not just production data |
+| next-intl message catalogs | Adding new UI copy (labels introduced by new visual elements) directly in EN only, or as a literal string, forgetting the ES catalog entry | Any new UI string introduced during polish must get both `en.json` and `es.json` entries in the same PR |
+| shadcn/ui theme tokens (`tokens.css` / CSS variables) | Renaming or repointing tokens without checking every component that consumes them for contrast/visual regressions | Grep for all consumers of a token before changing its value; re-run contrast checks on the actual consuming component pairs |
+| `@payloadcms/plugin-seo` + sitemap | Assuming markup/heading changes are purely cosmetic and don't need SEO re-validation since the plugin config didn't change | Structured data and heading hierarchy live in the frontend markup, not the plugin config — re-audit markup after any tag-level restyle |
+| Cloudinary-served images (`next/image`) | Restyling image containers (aspect ratio, object-fit, crop treatment) without re-checking `alt` propagation and without re-checking actual Cloudinary transform params match the new visual crop | Verify `alt` still flows from the Payload media field end-to-end; confirm any new aspect-ratio/crop visual choice has a matching Cloudinary transform, not just CSS `object-fit` masking a mismatched image |
 
 ## Performance Traps
 
 | Trap | Symptoms | Prevention | When It Breaks |
-|------|----------|------------|----------------|
-| Postgres connection-pool exhaustion | Intermittent `too many clients` errors in prod only | Conservative pool `max`, verify plan limit, account for PM2 instance count | At modest concurrency on a low-tier managed Postgres |
-| Missing image optimization after Blob→Cloudinary swap | LCP regresses, oversized images, CWV drop | Use Cloudinary transformations (`f_auto,q_auto`, responsive sizes) via the adapter; verify Next.js `<Image>` still optimizes | Immediately visible in Core Web Vitals — a stated core-value requirement |
-| Serving app bundle assets through a proxy/CDN meant for media | Broken/stale JS/CSS, cache mismatches | Keep `.next/static`+`public/` on the Node process; Cloudinary serves only user Media | On any misconfigured reverse-proxy/CDN layering |
-| No response caching on a persistent Node server | Every request hits Postgres via SSR | Use `revalidate` intervals + `afterChange` revalidation hooks (already in JuanPortfolio) | Under traffic spikes on a single Node process |
+|------|----------|------------|-----------------|
+| Per-component JS animation library additions | INP creeps up incrementally, invisible until Lighthouse run at milestone end | Run Lighthouse mobile after each animated component ships, not just at the end | Becomes visible once several components are animated — hard to attribute to one cause after the fact |
+| Entrance/reveal animations on hero (LCP) elements | LCP timing regresses on home/case-study pages | Never delay-paint or animate the actual LCP candidate; animate secondary elements only | Immediately measurable on the first hero touched, but often not checked until later |
+| New web fonts or font-weight variants added for "typographic polish" | FOUT/FOIT, CLS from font-swap, larger font payload | Reuse existing font subsets/weights already loaded; if a new weight is truly needed, subset it and use `font-display: swap` with matched fallback metrics | Breaks CWV the moment the new font asset ships to a page with real traffic |
+| Denser/tighter grids relying on JS-measured layout (e.g., masonry libraries) for a "more editorial" card grid | CLS from layout shifting after JS measurement runs | Prefer CSS Grid/`auto-rows`/`grid-template-areas` solutions over JS-measured masonry | Breaks as soon as content length varies (which, per Pitfall 3, it reliably will across EN/ES) |
 
 ## Security Mistakes
 
 | Mistake | Risk | Prevention |
 |---------|------|------------|
-| Committing `.env` (DB URI, `PAYLOAD_SECRET`, Cloudinary/Resend keys) to the repo | Full DB + media + email compromise | `.env` gitignored, `.env.example` committed only; secrets live on the server |
-| Reusing the same `PAYLOAD_SECRET` across environments or regenerating it | Invalidates sessions / weakens auth | Distinct, stable, high-entropy secret per environment |
-| Exposing dropped SEO-tooling collections via `plugin-mcp` | Leaks internal data/endpoints publicly | Drop `plugin-mcp` (Out of Scope) — it exposes collections over an MCP server |
-| Unrestricted Cloudinary upload preset / exposed API secret client-side | Media store abuse, unsigned uploads | Signed server-side uploads only; Cloudinary secret stays server-side env |
-| Migration script left runnable as an app route (`/api/migrate`) | Accidental re-run wipes/duplicates prod data | Keep migration as a standalone offline script, never an app endpoint |
+| Introducing `dangerouslySetInnerHTML` or raw HTML injection points to achieve a specific visual/typographic effect on rich text | XSS surface if content source ever includes untrusted input (contact form, future guest content) | Keep the existing Lexical richtext serializer/sanitization path; don't bypass it for one-off visual effects |
+| Adding third-party animation/analytics scripts for polish effects without reviewing their network/data footprint | Unvetted third-party script on a site with real user data (contact form) | Prefer dependency-free CSS solutions; if a script is added, self-host or vet its data practices before inclusion |
 
 ## UX Pitfalls
 
 | Pitfall | User Impact | Better Approach |
-|---------|-------------|-----------------|
-| Bilingual content half-migrated (one locale empty) | Visitors hit blank ES or EN pages; looks broken/unprofessional | Migrate with `locale: 'all'`, verify both locales render on sampled pages before cutover |
-| Broken images post-cutover (Blob torn down) | Portfolio looks unfinished — directly undermines the site's purpose | Re-upload to Cloudinary and verify every image resolves before decommissioning Blob |
-| Consolidated blocks render differently than the old site | Visual regressions vs the "1:1 replica" requirement | Diff rendered pages against localhost:3001; block consolidation must preserve visual output, not just data |
-| Admin editors confused by remapped/consolidated blocks | Content edits break layout post-launch | Document the new block set; verify migrated pages use valid new block shapes |
+|---------|-------------|-------------------|
+| Motion-heavy polish without respecting `prefers-reduced-motion` | Vestibular-sensitive users get nausea/disorientation from scroll-triggered or parallax effects | Wrap all non-essential motion in a `prefers-reduced-motion: reduce` fallback (reduced duration/opacity-only) from the first animation added, not retrofitted later |
+| Increasing visual density/whitespace tightness for an "editorial" feel without locale testing | Spanish labels/titles wrap awkwardly or collide, looking broken specifically to ES-locale users (a large share of Juan's actual audience) | Design spacing with the longer-language (Spanish) case as the binding constraint, not English |
+| Single-line truncated card titles for visual tidiness | Truncated titles lose meaning/SEO value and look worse in Spanish (longer titles truncate more aggressively) | Use 2-3 line `line-clamp` with adequate min-height instead of hard single-line truncation |
+| New hover-only interactions/reveals (e.g., info only visible on `:hover`) | Breaks entirely on touch devices (majority of traffic), hides content that Payload editors expect to be visible | Ensure any hover-revealed content has a touch/tap equivalent, or don't gate content visibility behind hover at all |
 
 ## "Looks Done But Isn't" Checklist
 
-- [ ] **Slugs/URLs:** Often silently regenerated — verify new sitemap is byte-for-byte path-identical to the frozen live inventory (or every delta has a 301)
-- [ ] **Redirects:** Often authored but not served — verify hitting an old URL returns a real 301 in production, not a 404
-- [ ] **Media:** Often still pointing at Vercel Blob — verify Cloudinary actually hosts every asset and no `blob.vercel-storage.com` URLs remain (incl. inside rich text)
-- [ ] **robots/noindex:** Often carries staging value — verify production `robots.txt` allows crawl and no page emits `noindex` (fetch the live prod URL)
-- [ ] **Both locales:** Often one-sided — verify EN and ES both fully populate on sampled pages
-- [ ] **Static assets:** Often missing from standalone bundle — verify prod site is styled, fonts/favicons/`public` load
-- [ ] **Migrations at deploy:** Verify `payload migrate` runs in the deploy command and `push: false` in prod
-- [ ] **Sitemap/canonical/llms.txt:** Verify `sitemap.xml`, canonicals, and `llms.txt`/`llms-full.txt` are present and correct on the new domain (existing site has them — parity required)
-- [ ] **Connection pool:** Verify pool `max` fits Hostinger's `max_connections` under PM2 instance count
-- [ ] **Content freeze/delta:** Verify no live-site edits happened between the prod migration run and cutover
+- [ ] **Restyled block**: Often missing a check against boundary-condition Payload content (empty optional fields, min/max repeater counts, longest real ES title) — verify by rendering the block with edge-case data, not just today's production content.
+- [ ] **New color token/accent**: Often missing a WCAG contrast re-check against all backgrounds it's actually composited on (including image/gradient hero overlays) in both light and dark mode — verify with an automated contrast tool plus a manual check on composite backgrounds.
+- [ ] **New animation/transition**: Often missing a `prefers-reduced-motion` fallback and a fresh mobile Lighthouse (INP/CLS/LCP) run scoped to the touched page — verify both explicitly, not just "it feels smooth on my machine."
+- [ ] **Any visually-touched string/label**: Often missing the Spanish counterpart check and/or accidentally hardcoded instead of CMS/`next-intl`-driven — verify by grepping the diff for literal strings and by loading `/es` for the same component.
+- [ ] **Any changed HTML tag during restyle (heading, link, list)**: Often missing a semantic/SEO equivalence check — verify heading hierarchy and link/landmark semantics are unchanged even though the visual style changed.
+- [ ] **Card/media image treatment changes**: Often missing `alt` text propagation and Cloudinary transform alignment with the new crop/aspect ratio — verify both, not just that the image "looks right" in the browser.
 
 ## Recovery Strategies
 
 | Pitfall | Recovery Cost | Recovery Steps |
-|---------|---------------|----------------|
-| Broken URLs / lost rankings after cutover | HIGH | Author 301s from old→new fast, resubmit sitemap in GSC, request re-index of top pages; recovery takes weeks — prevention is far cheaper |
-| `noindex`/robots leaked to prod | HIGH | Remove blocker immediately, fetch-and-request-indexing in GSC for key pages; de-indexing can take weeks to reverse |
-| `push: true` destroyed prod schema/data | HIGH | Restore Postgres from backup (ensure backups exist first!), set `push: false`, re-migrate delta — data since last backup may be unrecoverable |
-| Media still on Blob, Blob decommissioned | HIGH | Re-run media re-upload to Cloudinary from source binaries if still available; if Blob is gone and no source copy exists, assets are lost |
-| Connection-pool exhaustion in prod | LOW | Lower pool `max`, reduce PM2 instances, restart — reversible config change |
-| Half-migrated locale / broken blocks | MEDIUM | Fix transform mapping, re-run migration for affected collections (idempotent through Local API) into a fresh DB |
-| Content authored during migration window lost | MEDIUM | Re-run delta migration for docs with `updatedAt` after the migration timestamp, if the live Mongo source is still intact |
+|---------|-----------------|------------------|
+| Hardcoded content shipped instead of Payload field | LOW-MEDIUM | Add the missing field to the collection/block config, backfill the value into Payload for existing docs, swap the component back to reading from the field, re-run migration/type-gen |
+| WCAG contrast regression discovered post-merge | LOW | Adjust the specific token value(s) failing contrast; re-run contrast check; usually isolated to a CSS variable change, not a structural fix |
+| CWV regression from an animation library | MEDIUM-HIGH | Identify the offending component via Lighthouse/bundle analysis; replace JS animation with CSS transition where possible; if the library must stay, code-split it to only the routes that need it |
+| Layout breakage in ES from tightened spacing | LOW-MEDIUM | Increase min-height/line-clamp allowance or reintroduce flexible spacing at the specific breakpoint/component; re-verify against longest real ES strings |
+| Semantic markup regression (heading/link tag changed) | LOW | Revert the tag to the correct semantic element and restyle via CSS instead; re-run SEO/a11y audit on the affected page type |
 
 ## Pitfall-to-Phase Mapping
 
 | Pitfall | Prevention Phase | Verification |
-|---------|------------------|--------------|
-| URL/slug drift | Migration (verbatim slugs) + prerequisite URL-inventory export | New sitemap diff == frozen live inventory |
-| Missing 301 redirect map | SEO/cutover (blocked by URL diff) | Old URL → 301 in prod, no chains |
-| `push: true` in prod | Postgres foundation | Adapter has `push:false`; deploy runs `payload migrate` |
-| Mongo→Postgres shape mismatch | Migration (Local API, dependency order, ID remap) | Sampled pages render blocks + relationships; both locales populate |
-| Media re-upload vs URL copy | Cloudinary spike → media migration | No Blob URLs remain; Cloudinary hosts all assets |
-| noindex/robots leak | Deployment/cutover checklist | Live prod `robots.txt` + meta verified by fetch |
-| Connection-pool exhaustion | Postgres foundation + deployment | Pool `max` ≤ plan limit under PM2 count; load test |
-| Standalone missing assets | Deployment (postbuild copy) | Prod site fully styled; `public`/`static` load |
-| Cutover content loss | Cutover runbook | No live edits between migration run and DNS switch |
+|---------|--------------------|----------------|
+| Token/block refactor breaks layout flexibility | Block/component visual audit + design-token refinement phases | Render each touched block against boundary-condition Payload content (empty optional fields, min/max repeater counts), not just production data |
+| Color-token change breaks WCAG contrast | Design-token/color-system refinement phase | Automated contrast check + manual check on composite/image backgrounds, both light and dark mode, both locales, run per-change not batched |
+| Spanish layout breakage from tightened spacing | Any phase touching typography/spacing/nav/cards | Explicit `/es` pass with longest real migrated content, not just `/en`, before marking the phase's components done |
+| Animation-driven CWV/INP regression | Any phase introducing motion/animation | Mobile Lighthouse run scoped to touched pages after each animated component ships; prefer CSS-first as default approach |
+| Hardcoded content reintroduced during polish | Every phase (cross-cutting) | Grep diff for literal strings not sourced from Payload/`next-intl`; confirm new visual data points have backing Payload fields |
+| SEO/structured-data markup regression | Any phase restyling headers, blog body, or card/link components | Markup/semantic diff review + Lighthouse SEO/a11y re-run on affected page types |
 
 ## Sources
 
-- [Payload — Migrations](https://payloadcms.com/docs/database/migrations) (official; `push:false` + migrate-at-deploy discipline) — HIGH
-- [Payload — Postgres adapter](https://payloadcms.com/docs/database/postgres) (relational decomposition of arrays/blocks/localized fields) — HIGH
-- [Payload Discussion #9711 — Migrating from MongoDB to Postgresql](https://github.com/payloadcms/payload/discussions/9711) (community migration approach: dual instances, batch through Local API) — MEDIUM
-- [Payload Discussion #625 — Data migrations](https://github.com/payloadcms/payload/discussions/625) — MEDIUM
-- Cloudinary community adapters (no official adapter; verify at build time): [payload-storage-cloudinary](https://www.npmjs.com/package/payload-storage-cloudinary), [@pemol/payload-cloudinary](https://www.npmjs.com/package/@pemol/payload-cloudinary), [payload-cloudinary (SyedMuzamilM)](https://github.com/SyedMuzamilM/payload-cloudinary), [@jhb.software/payload-cloudinary-plugin](https://www.npmjs.com/package/@jhb.software/payload-cloudinary-plugin), [official cloud-storage plugin blog](https://payloadcms.com/posts/blog/plugin-cloud-storage) — MEDIUM (state changes; re-verify)
-- Reference production codebases: `/Users/juan/Documents/Codigo/Arianna/apturio/website` (standalone deploy, postbuild asset copy, pool `max`, migrate-at-deploy, `push:false`) and `/Users/juan/Documents/Codigo/Arianna/aprendoclub/aprendoclub` (lean Postgres config, redirects plugin) — HIGH
-- Source-of-truth codebase `/Users/juan/Documents/Codigo/Personal/juantech/JuanPortfolio` (existing slugs/locale routing/media URLs/llms.txt to preserve) — HIGH
-- Sibling research: `.planning/research/ARCHITECTURE.md` (migration Pattern 1 via Local API, Cloudinary adapter flag, Hostinger deploy specifics, connection-limit constraint) — HIGH
-- General SEO-migration best practice (URL parity, 301 equity transfer, avoid noindex leak, sitemap resubmit) — HIGH (well-established, not version-sensitive)
+- [Visual Regression Testing mistakes — DEV Community](https://dev.to/maria_bueno/the-most-common-visual-regression-testing-mistakes-and-how-to-avoid-them-4id8) — MEDIUM
+- [From semantic CSS to Tailwind — Netlify engineering blog](https://www.netlify.com/blog/2021/03/23/from-semantic-css-to-tailwind-refactoring-the-netlify-ui-codebase/) — MEDIUM (real-world large CSS refactor account)
+- [Motion (Framer Motion) performance / INP discussion — Framer Community & docs](https://www.framer.community/c/support/core-web-vitals) — MEDIUM
+- [Framer Motion vs Motion One mobile performance comparison](https://www.reactlibraries.com/blog/framer-motion-vs-motion-one-mobile-animation-performance-in-2025) — MEDIUM
+- [prefers-reduced-motion — web.dev](https://web.dev/articles/prefers-reduced-motion) — HIGH (official Google web.dev guidance)
+- [prefers-reduced-motion — MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion) — HIGH (official docs)
+- [Design accessible animation — Pope Tech](https://blog.pope.tech/2025/12/08/design-accessible-animation-and-movement/) — MEDIUM
+- [WCAG 2.3.3 Animation from Interactions — W3C](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html) — HIGH (official WCAG spec)
+- [shadcn/ui Theming docs](https://ui.shadcn.com/docs/theming) — HIGH (official docs)
+- [Accessible Color Systems in Block Themes — WCAG guide](https://brndle.com/accessible-color-system-block-themes-wcag/) — MEDIUM
+- [Text expansion in translation — SimpleLocalize](https://simplelocalize.io/blog/posts/text-expansion-ui-localization/) — MEDIUM
+- [Text expansion during translation — Argo Translation](https://www.argotranslation.com/blog/text-expansion-during-translation) — MEDIUM
+- [Text Expansion in i18n testing guide](https://i18nagent.ai/zh-Hant-TW/guides/text-expansion-testing) — MEDIUM
+- [Structuring content in a headless CMS — Flotiq](https://flotiq.com/blog/structuring-content-in-a-headless-cms-a-practical-guide/) — MEDIUM (block-model anti-pattern discussion)
+- Project-specific constraints and hard rules — `.planning/PROJECT.md` (this repo) — HIGH (primary source for the editable-content rule, Core Value on performance/SEO, bilingual scope, and current milestone description)
 
 ---
-*Pitfalls research for: Payload CMS Mongo→Postgres + Cloudinary migration with SEO preservation, self-hosted on Hostinger*
-*Researched: 2026-07-09*
+*Pitfalls research for: Visual polish pass on existing Payload CMS + Next.js bilingual portfolio*
+*Researched: 2026-07-10*
