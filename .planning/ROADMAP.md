@@ -22,7 +22,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 5: Frontend Pages** - Todas las páginas públicas renderizando contenido migrado con diferenciadores competitivos (completed 2026-07-10)
 - [ ] **Phase 6: Deploy + Cutover** - Sitio en producción en Hostinger con checklist de go-live verificado (en pausa — retoma después de v1.1)
 - [x] **Phase 7: Design-Token Foundation** - Tokens de sombra/motion CSS-puro, prefers-reduced-motion global, paleta dark branded (sin toggle) (completed 2026-07-10)
-- [ ] **Phase 8: shadcn Primitives + Global Chrome** - Primitivas shadcn refinadas con los nuevos tokens + header/footer restyled
+- [x] **Phase 8: shadcn Primitives + Global Chrome** - Primitivas shadcn refinadas con los nuevos tokens + header/footer restyled (completed 2026-07-10)
 - [ ] **Phase 9: Hero + Resultados/KPI + Tipografía** - Hero de mayor impacto, KPIs de case studies reforzados, jerarquía tipográfica en contenido largo
 - [ ] **Phase 10: Cards/Listados + Autoría E-E-A-T** - Tratamiento visual consistente en bloques tipo card + credenciales de autor prominentes
 - [ ] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil sin regresión
@@ -216,8 +216,8 @@ Plans:
 
 Plans:
 
-- [ ] 08-01-PLAN.md — Refine cva() variants of 12 shadcn primitives (interactive controls + structural/overlay) to consume Phase 7 shadow/motion tokens
-- [ ] 08-02-PLAN.md — Restyle SiteHeader/SiteFooter + phase-close verification (16-block smoke test, config.ts/payload-types.ts zero-diff gate)
+- [x] 08-01-PLAN.md — Refine cva() variants of 12 shadcn primitives (interactive controls + structural/overlay) to consume Phase 7 shadow/motion tokens
+- [x] 08-02-PLAN.md — Restyle SiteHeader/SiteFooter + phase-close verification (16-block smoke test, config.ts/payload-types.ts zero-diff gate)
 
 ### Phase 9: Hero + Resultados/KPI + Tipografía
 
@@ -279,7 +279,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 5. Frontend Pages | 13/13 | Complete   | 2026-07-10 |
 | 6. Deploy + Cutover | 0/TBD | Paused (resumes after v1.1) | - |
 | 7. Design-Token Foundation | 1/1 | Complete   | 2026-07-10 |
-| 8. shadcn Primitives + Global Chrome | 0/TBD | Not started | - |
+| 8. shadcn Primitives + Global Chrome | 2/2 | Complete   | 2026-07-10 |
 | 9. Hero + Resultados/KPI + Tipografía | 0/TBD | Not started | - |
 | 10. Cards/Listados + Autoría E-E-A-T | 0/TBD | Not started | - |
 | 11. Verificación Cruzada Final | 0/TBD | Not started | - |

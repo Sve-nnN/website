@@ -69,8 +69,8 @@
 
 ### UI-PRIM (Primitivas shadcn + chrome global)
 
-- [ ] **UI-04**: Variantes `cva()` de primitivas shadcn (button, card, badge, input, select, tabs, sheet, navigation-menu, separator, skeleton, textarea, avatar) refinadas usando los tokens de sombra/spacing/tipografía ya vigentes — sin agregar nuevas dependencias
-- [ ] **UI-05**: `SiteHeader`/`SiteFooter` restyled con jerarquía visual clara y consistente con la dirección editorial-tech ya fijada
+- [x] **UI-04**: Variantes `cva()` de primitivas shadcn (button, card, badge, input, select, tabs, sheet, navigation-menu, separator, skeleton, textarea, avatar) refinadas usando los tokens de sombra/spacing/tipografía ya vigentes — sin agregar nuevas dependencias
+- [x] **UI-05**: `SiteHeader`/`SiteFooter` restyled con jerarquía visual clara y consistente con la dirección editorial-tech ya fijada
 
 ### UI-HERO (Hero + resultados/KPI)
 
@@ -157,8 +157,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UI-01 | Phase 7 | Complete |
 | UI-02 | Phase 7 | Complete |
 | UI-03 | Phase 7 | Complete |
-| UI-04 | Phase 8 | Pending |
-| UI-05 | Phase 8 | Pending |
+| UI-04 | Phase 8 | Complete |
+| UI-05 | Phase 8 | Complete |
 | UI-06 | Phase 9 | Pending |
 | UI-07 | Phase 9 | Pending |
 | UI-08 | Phase 9 | Pending |

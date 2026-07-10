@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: milestone
-status: "Phase 7 (Design-Token Foundation) executed — 07-01 complete, 1/1 plans"
-stopped_at: Completed 07-01-PLAN.md
-last_updated: "2026-07-10T06:34:35.960Z"
-last_activity: 2026-07-10 — Phase 7 Plan 01 (design tokens: shadow/motion + .dark rebrand + WCAG AA contrast script) executed and closed
+status: "Phase 8 (shadcn Primitives + Global Chrome) executed — 08-01 and 08-02 complete, 2/2 plans"
+stopped_at: Completed 08-02-PLAN.md
+last_updated: "2026-07-10T07:15:00.000Z"
+last_activity: 2026-07-10 — Phase 8 Plans 01 and 02 executed and closed (see 08-01-SUMMARY.md, 08-02-SUMMARY.md)
 progress:
   total_phases: 11
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 45
-  completed_plans: 41
-  percent: 91
+  completed_plans: 42
+  percent: 93
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 7 (Design-Token Foundation) — plan 01 of 1 complete
-Plan: 07-01 done (shadow/motion tokens, prefers-reduced-motion, .dark ember/navy rebrand, WCAG AA contrast script)
-Status: Phase 7 executed, ready for verification (07-VERIFICATION.md) or next phase planning
-Last activity: 2026-07-10 — Phase 7 Plan 01 executed and closed (see 07-01-SUMMARY.md)
+Phase: 8 (shadcn Primitives + Global Chrome) — plans 01-02 of 2 complete
+Plan: 08-01 done (12 shadcn primitives refined to consume Phase 7 shadow/motion tokens); 08-02 done (SiteHeader/SiteFooter restyle + phase-close smoke check/schema-diff gate)
+Status: Phase 8 executed 2/2, ready for next phase planning (Phase 9: Hero + Resultados/KPI + Tipografía) — no milestone transition run (--no-transition)
+Last activity: 2026-07-10 — Phase 8 Plans 01 and 02 executed and closed (see 08-01-SUMMARY.md, 08-02-SUMMARY.md)
 
 ## Performance Metrics
 
@@ -66,6 +66,8 @@ Last activity: 2026-07-10 — Phase 7 Plan 01 executed and closed (see 07-01-SUM
 | Phase 04-migraci-n-mongo-postgres P07 | 10min | 2 tasks | 2 files |
 | Phase 04-migraci-n-mongo-postgres P08 | 10min | 2 tasks | 2 files |
 | Phase 07 P01 | 12min | 3 tasks | 3 files |
+| Phase 08 P01 | 15min | 2 tasks | 12 files |
+| Phase 08 P02 | 20min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -96,6 +98,8 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 05] 05-13: bilingual QA walkthrough completed directly by Juan against real dev server + real Neon Postgres data; all 10 checklist items verified (2 with explicitly logged, non-blocking caveats: category-tab click-filtering and FeaturedContent admin edit-reload confirmed via code/database-level evidence due to Arc browser click-interaction limitation)
 - [Milestone v1.1]: Roadmap: 5 fases (7-11) derivadas directamente de research/SUMMARY.md sin modificaciones estructurales, salvo el explicit deferral de Juan de motion/animación (carruseles, scroll-reveal) y del toggle visible de dark mode — UI-03 queda como corrección de tokens únicamente, sin UI de cambio de tema. Phase 6 (Deploy + Cutover) queda en pausa y no se renumera; retoma después de que Phase 11 cierre.
 - [Phase ?]: Fase 7: tokens de sombra/motion + rebrand ember/navy de .dark, WCAG AA verificado (10/10 pares pasan via scripts/check-dark-contrast.ts)
+- [Phase 08]: 08-01: los 12 primitivos shadcn migrados de `shadow`/`transition-colors` sin nombre a los tokens con nombre de Fase 7 (shadow-sm/md/lg/focus, duration-fast/base/slow, ease-out/standard); cero nuevas dependencias, cero cambios de API/props
+- [Phase 08]: 08-02: SiteHeader/SiteFooter restyled consumiendo los primitivos refinados; smoke check automatizado (scripts/smoke-check-phase8.mjs) confirma 15/16 bloques renderizando sin error, 1 SKIP documentado (ResultsSection, sin CaseStudies reales en la DB — gap de contenido ya confirmado por Juan en Fase 4, no un defecto de código); gate de cero-diff en src/blocks/*/config.ts y payload-types.ts confirmado vacío en toda la fase
 
 ### Pending Todos
 
@@ -121,7 +125,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T06:34:20.124Z
-Stopped at: Completed 07-01-PLAN.md
+Last session: 2026-07-10T07:15:00.000Z
+Stopped at: Completed 08-02-PLAN.md
 Resume file: None
 </content>
