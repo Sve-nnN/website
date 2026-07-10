@@ -111,8 +111,8 @@ export default async function PostPage({
               </Badge>
             ))}
           </div>
-          <h1 className="font-display text-display">{doc.title}</h1>
-          <div className="mt-4 flex flex-wrap items-center gap-6">
+          <h1 className="font-display text-display tracking-tight">{doc.title}</h1>
+          <div className="mt-6 flex flex-wrap items-center gap-6">
             {author && <AuthorByline author={author} />}
             <div className="text-label text-muted-foreground">
               {doc.publishedAt && (
