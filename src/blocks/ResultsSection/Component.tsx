@@ -17,12 +17,14 @@ export function ResultsSectionComponent(props: ResultsSectionBlockProps) {
       <Container>
         <h2 className="font-display text-heading">{title}</h2>
         {description && <p className="mt-2 text-body max-w-2xl">{description}</p>}
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-8">
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-12">
           {stats?.map((stat, i) => (
             <div key={i}>
               {/* KPI numbers reuse Display size at Heading weight, in the accent color, per UI-SPEC */}
-              <p className="text-display font-display font-semibold text-primary">{stat.value}</p>
-              <p className="mt-1 text-label">{stat.label}</p>
+              <p className="text-display font-display font-semibold text-primary tracking-tight tabular-nums">
+                {stat.value}
+              </p>
+              <p className="mt-1 text-label uppercase tracking-wide opacity-70">{stat.label}</p>
             </div>
           ))}
         </div>
