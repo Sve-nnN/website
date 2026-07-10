@@ -23,7 +23,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 6: Deploy + Cutover** - Sitio en producción en Hostinger con checklist de go-live verificado (en pausa — retoma después de v1.1)
 - [x] **Phase 7: Design-Token Foundation** - Tokens de sombra/motion CSS-puro, prefers-reduced-motion global, paleta dark branded (sin toggle) (completed 2026-07-10)
 - [x] **Phase 8: shadcn Primitives + Global Chrome** - Primitivas shadcn refinadas con los nuevos tokens + header/footer restyled (completed 2026-07-10)
-- [ ] **Phase 9: Hero + Resultados/KPI + Tipografía** - Hero de mayor impacto, KPIs de case studies reforzados, jerarquía tipográfica en contenido largo
+- [x] **Phase 9: Hero + Resultados/KPI + Tipografía** - Hero de mayor impacto, KPIs de case studies reforzados, jerarquía tipográfica en contenido largo (completed 2026-07-10)
 - [ ] **Phase 10: Cards/Listados + Autoría E-E-A-T** - Tratamiento visual consistente en bloques tipo card + credenciales de autor prominentes
 - [ ] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil sin regresión
 
@@ -233,9 +233,10 @@ Plans:
 
 **Plans**: 3 plans
 Plans:
-- [ ] 09-01-PLAN.md — Hero: jerarquía tipográfica reforzada + verificación WCAG del overlay contra las 53 imágenes reales de fallback
-- [ ] 09-02-PLAN.md — ResultsSection + KPIs de case study: métrica principal visualmente dominante
-- [ ] 09-03-PLAN.md — Tipografía de contenido largo: blockquotes editoriales en Prose + ritmo del header de posts
+
+- [x] 09-01-PLAN.md — Hero: jerarquía tipográfica reforzada + verificación WCAG del overlay contra las 53 imágenes reales de fallback
+- [x] 09-02-PLAN.md — ResultsSection + KPIs de case study: métrica principal visualmente dominante
+- [x] 09-03-PLAN.md — Tipografía de contenido largo: blockquotes editoriales en Prose + ritmo del header de posts
 
 **UI hint**: yes
 
@@ -284,7 +285,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 6. Deploy + Cutover | 0/TBD | Paused (resumes after v1.1) | - |
 | 7. Design-Token Foundation | 1/1 | Complete   | 2026-07-10 |
 | 8. shadcn Primitives + Global Chrome | 2/2 | Complete   | 2026-07-10 |
-| 9. Hero + Resultados/KPI + Tipografía | 0/TBD | Not started | - |
+| 9. Hero + Resultados/KPI + Tipografía | 3/3 | Complete   | 2026-07-10 |
 | 10. Cards/Listados + Autoría E-E-A-T | 0/TBD | Not started | - |
 | 11. Verificación Cruzada Final | 0/TBD | Not started | - |
 </content>

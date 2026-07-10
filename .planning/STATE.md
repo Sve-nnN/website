@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: milestone
-status: "Phase 8 (shadcn Primitives + Global Chrome) executed — 08-01 and 08-02 complete, 2/2 plans"
-stopped_at: Completed 08-02-PLAN.md
-last_updated: "2026-07-10T07:15:00.000Z"
-last_activity: 2026-07-10 — Phase 8 Plans 01 and 02 executed and closed (see 08-01-SUMMARY.md, 08-02-SUMMARY.md)
+status: planning
+stopped_at: Completed 09-03-PLAN.md
+last_updated: "2026-07-10T07:30:00.000Z"
+last_activity: 2026-07-10 — Phase 9 Plans 01, 02 and 03 executed and closed (see 09-01-SUMMARY.md, 09-02-SUMMARY.md, 09-03-SUMMARY.md)
 progress:
   total_phases: 11
-  completed_phases: 7
-  total_plans: 45
-  completed_plans: 42
-  percent: 93
+  completed_phases: 9
+  total_plans: 53
+  completed_plans: 48
+  percent: 91
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 8 (shadcn Primitives + Global Chrome) — plans 01-02 of 2 complete
-Plan: 08-01 done (12 shadcn primitives refined to consume Phase 7 shadow/motion tokens); 08-02 done (SiteHeader/SiteFooter restyle + phase-close smoke check/schema-diff gate)
-Status: Phase 8 executed 2/2, ready for next phase planning (Phase 9: Hero + Resultados/KPI + Tipografía) — no milestone transition run (--no-transition)
-Last activity: 2026-07-10 — Phase 8 Plans 01 and 02 executed and closed (see 08-01-SUMMARY.md, 08-02-SUMMARY.md)
+Phase: 9 (Hero + Resultados/KPI + Tipografía) — plans 01-03 of 3 complete
+Plan: 09-01 done (Hero typography hierarchy + automated WCAG overlay-contrast script against the 53-image Cloudinary fallback pool); 09-02 done (ResultsSection + case-study KPI metric-dominance treatment, heading rhythm alignment); 09-03 done (Prose.tsx editorial blockquote treatment + heading rhythm, blog article header alignment)
+Status: Phase 9 executed 3/3, ready for next phase planning (Phase 10: Cards + Author E-E-A-T) — no milestone transition run (--no-transition)
+Last activity: 2026-07-10 — Phase 9 Plans 01, 02 and 03 executed and closed (see 09-01-SUMMARY.md, 09-02-SUMMARY.md, 09-03-SUMMARY.md)
 
 ## Performance Metrics
 
@@ -68,6 +68,9 @@ Last activity: 2026-07-10 — Phase 8 Plans 01 and 02 executed and closed (see 0
 | Phase 07 P01 | 12min | 3 tasks | 3 files |
 | Phase 08 P01 | 15min | 2 tasks | 12 files |
 | Phase 08 P02 | 20min | 2 tasks | 3 files |
+| Phase 09 P01 | 15min | 2 tasks | 2 files |
+| Phase 09 P02 | 12min | 2 tasks | 2 files |
+| Phase 09 P03 | 10min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -100,6 +103,9 @@ Recent decisions affecting current work:
 - [Phase ?]: Fase 7: tokens de sombra/motion + rebrand ember/navy de .dark, WCAG AA verificado (10/10 pares pasan via scripts/check-dark-contrast.ts)
 - [Phase 08]: 08-01: los 12 primitivos shadcn migrados de `shadow`/`transition-colors` sin nombre a los tokens con nombre de Fase 7 (shadow-sm/md/lg/focus, duration-fast/base/slow, ease-out/standard); cero nuevas dependencias, cero cambios de API/props
 - [Phase 08]: 08-02: SiteHeader/SiteFooter restyled consumiendo los primitivos refinados; smoke check automatizado (scripts/smoke-check-phase8.mjs) confirma 15/16 bloques renderizando sin error, 1 SKIP documentado (ResultsSection, sin CaseStudies reales en la DB — gap de contenido ya confirmado por Juan en Fase 4, no un defecto de código); gate de cero-diff en src/blocks/*/config.ts y payload-types.ts confirmado vacío en toda la fase
+- [Phase ?]: Phase 9: Hero overlay contrast verified against all 53 real Cloudinary fallback images plus synthetic white worst case; no opacity adjustment needed
+- [Phase ?]: Phase 9: KPI/results metric dominance pattern (tracking-tight tabular-nums value + uppercase tracking-wide opacity-70 label) unified across ResultsSection and case-study detail page
+- [Phase ?]: Phase 9: Prose.tsx h2/h3 differentiated via opacity-90 recession on h3 rather than a new size token, since both share the locked text-heading size
 
 ### Pending Todos
 
@@ -125,7 +131,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T07:15:00.000Z
-Stopped at: Completed 08-02-PLAN.md
+Last session: 2026-07-10T07:30:00.000Z
+Stopped at: Completed 09-03-PLAN.md
 Resume file: None
 </content>

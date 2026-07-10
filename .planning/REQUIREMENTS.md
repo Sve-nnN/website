@@ -74,9 +74,9 @@
 
 ### UI-HERO (Hero + resultados/KPI)
 
-- [ ] **UI-06**: Hero restyled con tratamiento de mayor impacto visual (tipografía, spacing, jerarquía) manteniendo el copy 100% editable desde Payload
-- [ ] **UI-07**: `ResultsSection`/KPIs de case studies restyled para reforzar el patrón "métrica en el titular" ya decidido en PROJECT.md
-- [ ] **UI-08**: Jerarquía tipográfica (Inter/Fraunces) aplicada consistentemente en contenido largo (posts, case studies)
+- [x] **UI-06**: Hero restyled con tratamiento de mayor impacto visual (tipografía, spacing, jerarquía) manteniendo el copy 100% editable desde Payload
+- [x] **UI-07**: `ResultsSection`/KPIs de case studies restyled para reforzar el patrón "métrica en el titular" ya decidido en PROJECT.md
+- [x] **UI-08**: Jerarquía tipográfica (Inter/Fraunces) aplicada consistentemente en contenido largo (posts, case studies)
 
 ### UI-CARD (Cards/listados + autoría E-E-A-T)
 
@@ -159,9 +159,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | UI-03 | Phase 7 | Complete |
 | UI-04 | Phase 8 | Complete |
 | UI-05 | Phase 8 | Complete |
-| UI-06 | Phase 9 | Pending |
-| UI-07 | Phase 9 | Pending |
-| UI-08 | Phase 9 | Pending |
+| UI-06 | Phase 9 | Complete |
+| UI-07 | Phase 9 | Complete |
+| UI-08 | Phase 9 | Complete |
 | UI-09 | Phase 10 | Pending |
 | UI-10 | Phase 10 | Pending |
 | UI-11 | Phase 11 | Pending |
