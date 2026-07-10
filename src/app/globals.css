@@ -36,7 +36,21 @@
     --sidebar-accent: oklch(0.97 0 0);
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0)
+    --sidebar-ring: oklch(0.708 0 0);
+
+    /* Elevation primitives (Phase 7 / D-01 / UI-01) */
+    --shadow-color: 220 20% 10%;
+    --shadow-sm: 0 1px 2px 0 hsl(var(--shadow-color) / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(var(--shadow-color) / 0.1), 0 2px 4px -2px hsl(var(--shadow-color) / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(var(--shadow-color) / 0.1), 0 4px 6px -4px hsl(var(--shadow-color) / 0.1);
+    --shadow-focus: 0 0 0 3px rgba(255, 91, 31, 0.45);
+
+    /* Motion primitives (Phase 7 / D-02 / UI-02) */
+    --motion-fast: 150ms;
+    --motion-base: 250ms;
+    --motion-slow: 400ms;
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   }
   .dark {
     --background: oklch(0.145 0 0);
@@ -79,5 +93,18 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* Phase 7 / D-02 / UI-02: global reduced-motion safety net — unscoped, applies
+   to any existing or future element, not gated behind a class. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -76,6 +76,21 @@ const config: Config = {
   				border: 'var(--sidebar-border)',
   				ring: 'var(--sidebar-ring)'
   			}
+  		},
+  		boxShadow: {
+  			sm: 'var(--shadow-sm)',
+  			md: 'var(--shadow-md)',
+  			lg: 'var(--shadow-lg)',
+  			focus: 'var(--shadow-focus)'
+  		},
+  		transitionDuration: {
+  			fast: 'var(--motion-fast)',
+  			base: 'var(--motion-base)',
+  			slow: 'var(--motion-slow)'
+  		},
+  		transitionTimingFunction: {
+  			out: 'var(--ease-out)',
+  			standard: 'var(--ease-standard)'
   		}
   	}
   },
