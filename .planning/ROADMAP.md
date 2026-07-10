@@ -165,11 +165,15 @@ Plans:
   4. El checklist de go-live pasa en producción: los 301 redirects funcionan en vivo, robots.txt/noindex se fetchean (no solo se leen en código) desde la URL de producción, ambos locales fueron muestreados manualmente, y el sitemap de producción no diverge del inventario de URLs congelado en Phase 4
   5. El contenido del sitio actual quedó congelado inmediatamente antes de la corrida final de migración, sin contenido publicado después del freeze que se haya perdido en el corte
 
-**Plans**: TBD
+**Plans**: 5 plans (3 waves)
 
 Plans:
 
-- [ ] 06-01: TBD
+- [ ] 06-01-PLAN.md — Build standalone verificado + PM2 (ecosystem.config.cjs, scripts/deploy.sh) + runbook manual de deploy/arranque en Hostinger
+- [ ] 06-02-PLAN.md — Pool de conexiones Postgres dimensionado y verificado contra el límite real de Neon (checkpoint:decision sobre pooled vs unpooled)
+- [ ] 06-03-PLAN.md — [ALTO RIESGO] Cutover de DNS a Hostinger con rollback documentado + verificación pública real por Claude
+- [ ] 06-04-PLAN.md — Checklist de go-live verificado en vivo contra producción (robots.txt, sitemap vs inventario congelado, redirect 301, ambos locales)
+- [ ] 06-05-PLAN.md — Procedimiento de content-freeze verificable (snapshot + diff) del backend Payload/Postgres antes del corte
 
 ## Progress
 
