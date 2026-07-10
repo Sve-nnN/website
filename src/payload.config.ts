@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
+import { searchPlugin } from '@payloadcms/plugin-search'
 import { cloudStoragePlugin } from '@payloadcms/plugin-cloud-storage'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
@@ -25,6 +26,8 @@ import { Llms } from './globals/Llms'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
 import { FeaturedContent } from './globals/FeaturedContent'
+import { beforeSyncWithSearch } from './search/beforeSync'
+import { searchFields } from './search/fieldOverrides'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -83,6 +86,13 @@ export default buildConfig({
     }),
     redirectsPlugin({
       collections: ['pages', 'posts', 'case-studies', 'categories', 'authors'],
+    }),
+    searchPlugin({
+      collections: ['posts', 'case-studies', 'authors'],
+      beforeSync: beforeSyncWithSearch,
+      searchOverrides: {
+        fields: ({ defaultFields }) => [...defaultFields, ...searchFields],
+      },
     }),
     ...(hasCloudinaryCreds
       ? [

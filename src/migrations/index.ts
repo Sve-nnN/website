@@ -5,6 +5,7 @@ import * as migration_20260710_040235_phase5_header_footer_featured_authors from
 import * as migration_20260710_040718_phase5_new_blocks_and_category_filter from './20260710_040718_phase5_new_blocks_and_category_filter';
 import * as migration_20260710_042812_phase5_archive_block_empty_state from './20260710_042812_phase5_archive_block_empty_state';
 import * as migration_20260710_043753_phase5_case_studies_author from './20260710_043753_phase5_case_studies_author';
+import * as migration_20260710_044516_phase5_search_plugin from './20260710_044516_phase5_search_plugin';
 
 export const migrations = [
   {
@@ -40,6 +41,11 @@ export const migrations = [
   {
     up: migration_20260710_043753_phase5_case_studies_author.up,
     down: migration_20260710_043753_phase5_case_studies_author.down,
-    name: '20260710_043753_phase5_case_studies_author'
+    name: '20260710_043753_phase5_case_studies_author',
+  },
+  {
+    up: migration_20260710_044516_phase5_search_plugin.up,
+    down: migration_20260710_044516_phase5_search_plugin.down,
+    name: '20260710_044516_phase5_search_plugin'
   },
 ];
