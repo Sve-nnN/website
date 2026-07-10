@@ -1799,6 +1799,17 @@ export interface Footer {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Columnas computadas en render time desde Posts/CaseStudies (ultimos N por fecha), no curadas manualmente.
+   */
+  dynamicColumns?:
+    | {
+        title?: string | null;
+        source: 'latestPosts' | 'latestCaseStudies';
+        limit?: number | null;
+        id?: string | null;
+      }[]
+    | null;
   socialLinks?:
     | {
         platform: 'linkedin' | 'github' | 'x' | 'website';
@@ -1900,6 +1911,14 @@ export interface FooterSelect<T extends boolean = true> {
                   };
               id?: T;
             };
+        id?: T;
+      };
+  dynamicColumns?:
+    | T
+    | {
+        title?: T;
+        source?: T;
+        limit?: T;
         id?: T;
       };
   socialLinks?:
