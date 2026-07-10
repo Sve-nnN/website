@@ -34,7 +34,7 @@
 
 - [x] **MIGR-01**: Inventario congelado de URLs vivas del sitio actual (crawleado desde sitemap/GSC) como contrato antes de migrar
 - [x] **MIGR-02**: Script ETL standalone (fuera de `app/`) que usa Payload Local API en ambos configs (Mongo origen read-only, Postgres destino), en orden de dependencia: Media → Authors/Categories → Posts/CaseStudies/Testimonials/Clientes
-- [ ] **MIGR-03**: Slugs/URLs copiados verbatim del sitio actual (nunca regenerados desde el título)
+- [x] **MIGR-03**: Slugs/URLs copiados verbatim del sitio actual (nunca regenerados desde el título)
 - [x] **MIGR-04**: Tabla de remapeo ObjectId (Mongo) → ID nuevo (Postgres) para preservar relaciones
 - [x] **MIGR-05**: Medios re-subidos a Cloudinary (no solo copia de URL), con URLs reescritas en todos los campos incluyendo rich text/blocks
 - [ ] **MIGR-06**: Mapa de redirects 301 para cualquier URL que cambie intencionalmente durante la migración
@@ -105,7 +105,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MEDIA-03 | Phase 3 | Complete |
 | MIGR-01 | Phase 4 | Complete |
 | MIGR-02 | Phase 4 | Complete |
-| MIGR-03 | Phase 4 | Pending |
+| MIGR-03 | Phase 4 | Complete |
 | MIGR-04 | Phase 4 | Complete |
 | MIGR-05 | Phase 4 | Complete |
 | MIGR-06 | Phase 4 | Pending |
