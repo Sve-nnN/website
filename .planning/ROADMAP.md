@@ -21,7 +21,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 4: Migración Mongo → Postgres** - Contenido actual migrado 1:1 con URLs y medios preservados (completed 2026-07-10)
 - [x] **Phase 5: Frontend Pages** - Todas las páginas públicas renderizando contenido migrado con diferenciadores competitivos (completed 2026-07-10)
 - [ ] **Phase 6: Deploy + Cutover** - Sitio en producción en Hostinger con checklist de go-live verificado (en pausa — retoma después de v1.1)
-- [ ] **Phase 7: Design-Token Foundation** - Tokens de sombra/motion CSS-puro, prefers-reduced-motion global, paleta dark branded (sin toggle)
+- [x] **Phase 7: Design-Token Foundation** - Tokens de sombra/motion CSS-puro, prefers-reduced-motion global, paleta dark branded (sin toggle) (completed 2026-07-10)
 - [ ] **Phase 8: shadcn Primitives + Global Chrome** - Primitivas shadcn refinadas con los nuevos tokens + header/footer restyled
 - [ ] **Phase 9: Hero + Resultados/KPI + Tipografía** - Hero de mayor impacto, KPIs de case studies reforzados, jerarquía tipográfica en contenido largo
 - [ ] **Phase 10: Cards/Listados + Autoría E-E-A-T** - Tratamiento visual consistente en bloques tipo card + credenciales de autor prominentes
@@ -198,7 +198,7 @@ Plans:
 
 Plans:
 
-- [ ] 07-01-PLAN.md — Shadow/motion tokens + Tailwind mapping + prefers-reduced-motion rule + ember/navy .dark rebrand + WCAG contrast verification script
+- [x] 07-01-PLAN.md — Shadow/motion tokens + Tailwind mapping + prefers-reduced-motion rule + ember/navy .dark rebrand + WCAG contrast verification script
 
 ### Phase 8: shadcn Primitives + Global Chrome
 
@@ -273,7 +273,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 4. Migración Mongo → Postgres | 8/8 | Complete   | 2026-07-10 |
 | 5. Frontend Pages | 13/13 | Complete   | 2026-07-10 |
 | 6. Deploy + Cutover | 0/TBD | Paused (resumes after v1.1) | - |
-| 7. Design-Token Foundation | 0/TBD | Not started | - |
+| 7. Design-Token Foundation | 1/1 | Complete   | 2026-07-10 |
 | 8. shadcn Primitives + Global Chrome | 0/TBD | Not started | - |
 | 9. Hero + Resultados/KPI + Tipografía | 0/TBD | Not started | - |
 | 10. Cards/Listados + Autoría E-E-A-T | 0/TBD | Not started | - |

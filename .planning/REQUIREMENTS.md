@@ -63,9 +63,9 @@
 
 ### UI (Fundamentos de tokens)
 
-- [ ] **UI-01**: Tokens de elevación (`--shadow-sm/md/lg/focus`) y de timing CSS-puro (`--motion-fast/base/slow`, `--ease-*`, sin librería JS) agregados a `globals.css`/`tailwind.config.ts`, mapeados a utilidades Tailwind (`boxShadow`, `transitionDuration`, `transitionTimingFunction`)
-- [ ] **UI-02**: Regla global `prefers-reduced-motion` agregada, aplicable a cualquier transición CSS existente o futura
-- [ ] **UI-03**: Paleta `.dark` reemplazada de gris genérico shadcn por tokens branded ember/navy derivados de la paleta light de `05-UI-SPEC.md`, sin toggle visible (solo corrección del token set para uso futuro)
+- [x] **UI-01**: Tokens de elevación (`--shadow-sm/md/lg/focus`) y de timing CSS-puro (`--motion-fast/base/slow`, `--ease-*`, sin librería JS) agregados a `globals.css`/`tailwind.config.ts`, mapeados a utilidades Tailwind (`boxShadow`, `transitionDuration`, `transitionTimingFunction`)
+- [x] **UI-02**: Regla global `prefers-reduced-motion` agregada, aplicable a cualquier transición CSS existente o futura
+- [x] **UI-03**: Paleta `.dark` reemplazada de gris genérico shadcn por tokens branded ember/navy derivados de la paleta light de `05-UI-SPEC.md`, sin toggle visible (solo corrección del token set para uso futuro)
 
 ### UI-PRIM (Primitivas shadcn + chrome global)
 
@@ -154,9 +154,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DEPLOY-03 | Phase 6 | Pending |
 | DEPLOY-04 | Phase 6 | Pending |
 | DEPLOY-05 | Phase 6 | Pending |
-| UI-01 | Phase 7 | Pending |
-| UI-02 | Phase 7 | Pending |
-| UI-03 | Phase 7 | Pending |
+| UI-01 | Phase 7 | Complete |
+| UI-02 | Phase 7 | Complete |
+| UI-03 | Phase 7 | Complete |
 | UI-04 | Phase 8 | Pending |
 | UI-05 | Phase 8 | Pending |
 | UI-06 | Phase 9 | Pending |
