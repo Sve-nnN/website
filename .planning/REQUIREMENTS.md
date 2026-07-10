@@ -37,7 +37,7 @@
 - [x] **MIGR-03**: Slugs/URLs copiados verbatim del sitio actual (nunca regenerados desde el título)
 - [x] **MIGR-04**: Tabla de remapeo ObjectId (Mongo) → ID nuevo (Postgres) para preservar relaciones
 - [x] **MIGR-05**: Medios re-subidos a Cloudinary (no solo copia de URL), con URLs reescritas en todos los campos incluyendo rich text/blocks
-- [ ] **MIGR-06**: Mapa de redirects 301 para cualquier URL que cambie intencionalmente durante la migración
+- [x] **MIGR-06**: Mapa de redirects 301 para cualquier URL que cambie intencionalmente durante la migración
 
 ### CONTENT (Páginas públicas)
 
@@ -108,7 +108,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | MIGR-03 | Phase 4 | Complete |
 | MIGR-04 | Phase 4 | Complete |
 | MIGR-05 | Phase 4 | Complete |
-| MIGR-06 | Phase 4 | Pending |
+| MIGR-06 | Phase 4 | Complete |
 | CONT-01 | Phase 5 | Pending |
 | CONT-02 | Phase 5 | Pending |
 | CONT-03 | Phase 5 | Pending |

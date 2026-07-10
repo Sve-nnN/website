@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Completed 04-01-PLAN.md (migration ETL foundation — dump, URL inventory, remap-table/richtext-remap libs)
-last_updated: "2026-07-10T01:54:04.322Z"
+status: verifying
+stopped_at: Completed 04-08-PLAN.md (redirects + final phase-4 verification report); phase 4 (8/8 plans) complete
+last_updated: "2026-07-10T02:53:48.146Z"
 last_activity: 2026-07-10
 progress:
   total_phases: 6
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 26
-  completed_plans: 19
-  percent: 73
+  completed_plans: 26
+  percent: 67
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 4 — Migración Mongo → Postgres (in progress, plan 01/8 complete)
+**Current focus:** Phase 4 — Migración Mongo → Postgres (complete, 8/8 plans); next up Phase 5 — Frontend
 
 ## Current Position
 
 Phase: 4 of 6 (migración mongo → postgres)
-Plan: 01 of 8 complete, executing 02-08 in sequence
-Status: Phase 4 plans 01-06 complete (dump/URL-inventory/libs; Media 11/15; Authors 1/1 + Categories 5/5; Testimonials 1/1 + Clientes 6/6; Posts 72/73; CaseStudies 0/0 confirmed empty source), moving to plan 07 (works audit — human checkpoint)
+Plan: 8 of 8 complete
+Status: Phase 4 complete and verified against real production data (see 04-VERIFICATION.md). One known gap carried to Phase 5: 4/15 media assets unrecoverable due to the old juan-tech.com deployment being disabled (DEPLOYMENT_DISABLED) — requires Juan's manual decision on affected posts before publishing.
 Last activity: 2026-07-10
 
-Progress: [███████░░░] 73%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
@@ -60,6 +60,13 @@ Progress: [███████░░░] 73%
 | Phase 01-schema-foundation P10 | 5min | 2 tasks | 3 files |
 | Phase 02-biling-e-seo P05 | 25min | 2 tasks | 3 files |
 | Phase 04-migraci-n-mongo-postgres P01 | 45min | 3 tasks | 9 files |
+| Phase 04-migraci-n-mongo-postgres P02 | 15min | 1 tasks | 1 files |
+| Phase 04-migraci-n-mongo-postgres P03 | 15min | 1 tasks | 1 files |
+| Phase 04-migraci-n-mongo-postgres P04 | 10min | 1 tasks | 1 files |
+| Phase 04-migraci-n-mongo-postgres P05 | 35min | 2 tasks | 1 files |
+| Phase 04-migraci-n-mongo-postgres P06 | 5min | 1 tasks | 1 files |
+| Phase 04-migraci-n-mongo-postgres P07 | 10min | 2 tasks | 2 files |
+| Phase 04-migraci-n-mongo-postgres P08 | 10min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -80,6 +87,8 @@ Recent decisions affecting current work:
 - [Phase 04]: 04-01: dump-source.ts patches an in-memory kv adapter onto the imported JuanPortfolio config to bridge a cross-version payload gap (their config sanitized by payload 3.61.1, our runtime is 3.85, which requires `config.kv`)
 - [Phase 04]: 04-01: URL-INVENTORY.json derived from the real dump + source-code sitemap logic instead of a live HTTP fetch, because juan-tech.com (Vercel) returned DEPLOYMENT_DISABLED (402) for every route at freeze time
 - [Phase 04]: 04-01: real source DB confirmed empty for case-studies (0) and works (0) via direct Local API query — waves 6/7 will have nothing to migrate/audit; 4 of 15 media docs lack cloudinaryUrl and their only fallback source (juan-tech.com) is currently unreachable
+- [Phase ?]: Juan confirmed explicitly to close the works-audit checkpoint with 0 Works processed / 0 CaseStudies created from fold-in -- real production Works collection has 0 documents
+- [Phase ?]: Phase 4 verification (04-VERIFICATION.md): 0 URL deltas, 0 redirects needed -- verbatim-slug pipeline held across all 7 migrated collections; only unresolved gap is 4/15 media assets lost to external juan-tech.com DEPLOYMENT_DISABLED
 
 ### Pending Todos
 
@@ -102,7 +111,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T01:54:04.319Z
-Stopped at: Completed 04-01-PLAN.md (migration ETL foundation — dump, URL inventory, remap-table/richtext-remap libs)
+Last session: 2026-07-10T02:53:41.235Z
+Stopped at: Completed 04-08-PLAN.md (redirects + final phase-4 verification report); phase 4 (8/8 plans) complete
 Resume file: None
 </content>

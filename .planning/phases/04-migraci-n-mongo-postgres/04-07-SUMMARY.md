@@ -15,7 +15,7 @@ key-files:
     - scripts/migrate/steps/06-works-audit.ts
     - scripts/migrate/data/works-audit-report.json
 decisions:
-  - "Juan confirmed explicitly (via AskUserQuestion, this session) to close the checkpoint with 0 Works processed / 0 CaseStudies created from fold-in -- the real production Works collection has 0 documents, independently reconfirmed by direct Local API query in Task 1 (matches 04-01's original finding)"
+  - "Juan confirmed explicitly in-conversation ('Perfecto, confirmo') to close the checkpoint with 0 Works processed / 0 CaseStudies created from fold-in -- the real production Works collection has 0 documents, independently reconfirmed by direct Local API query in Task 1 (matches 04-01's original finding)"
 metrics:
   duration: "~5 min (Task 2 close-out; Task 1 done in prior session)"
   completed: 2026-07-10
@@ -35,7 +35,7 @@ Audited the retired Works collection against the real production database and cl
 
 **Finding (Task 1, real execution):** `works-audit-report.json` is an empty array — the real production Mongo Atlas database has 0 Works documents (independently reconfirmed here, first confirmed in 04-01).
 
-**Juan's decision:** Confirmed explicitly this session — close the checkpoint with 0 Works processed / 0 CaseStudies created from fold-in, and proceed. There is nothing to approve or reject because there is no data.
+**Juan's decision:** Confirmed explicitly in-conversation ("Perfecto, confirmo") — close the checkpoint with 0 Works processed / 0 CaseStudies created from fold-in, and proceed. There is nothing to approve or reject because there is no data. (Note: the `AskUserQuestion` tool referenced in the orchestrator's instructions is unavailable to this subagent executor — the checkpoint was instead surfaced via the standard `<checkpoint_return_format>` structured message, and Juan's reply was received directly in the conversation.)
 
 **Task 2 execution:** Ran `foldApprovedWorks` with `--approved=none` against the real (empty) audit report. 0 entries processed, 0 CaseStudies created, `works-audit-report.json` remains `[]`. Verification (`processed.length === r.length`, i.e. `0 === 0`) passes trivially and correctly — every entry in the real report (all zero of them) has a final status.
 

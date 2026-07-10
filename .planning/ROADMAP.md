@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: Schema Foundation** - Postgres + colecciones limpias con disciplina de migraciones desde el día uno (completed 2026-07-09)
 - [x] **Phase 2: Bilingüe + SEO** - Routing EN/ES, plugin SEO, sitemaps, llms.txt, redirects funcionando (completed 2026-07-09)
 - [x] **Phase 3: Cloudinary Media Spike** - Adapter de storage Cloudinary validado y wireado (completed 2026-07-09)
-- [ ] **Phase 4: Migración Mongo → Postgres** - Contenido actual migrado 1:1 con URLs y medios preservados
+- [x] **Phase 4: Migración Mongo → Postgres** - Contenido actual migrado 1:1 con URLs y medios preservados (completed 2026-07-10)
 - [ ] **Phase 5: Frontend Pages** - Todas las páginas públicas renderizando contenido migrado con diferenciadores competitivos
 - [ ] **Phase 6: Deploy + Cutover** - Sitio en producción en Hostinger con checklist de go-live verificado
 
@@ -111,13 +111,13 @@ Plans:
 Plans:
 
 - [x] 04-01-PLAN.md — Foundation: dump real (Local API, Mongo) de las 8 colecciones fuente + inventario congelado de URLs (MIGR-01) + módulos remap-table/richtext-remap
-- [ ] 04-02-PLAN.md — Media: re-subida real a Cloudinary vía el adapter de Fase 3
-- [ ] 04-03-PLAN.md — Authors + Categories (slugs verbatim, avatar remapeado)
-- [ ] 04-04-PLAN.md — Testimonials + Clientes (maneja campos ahora-requeridos que el esquema viejo no exigía)
-- [ ] 04-05-PLAN.md — Posts (dos pasadas: relaciones/media, luego links internos post-a-post)
-- [ ] 04-06-PLAN.md — CaseStudies (preserva richText viejo en clientContext; documenta el vacío de KPIs estructurados)
-- [ ] 04-07-PLAN.md — Auditoría de Works + fold-in a CaseStudies (checkpoint:decision)
-- [ ] 04-08-PLAN.md — Redirects 301 para deltas de URL (MIGR-06) + reporte final de verificación
+- [x] 04-02-PLAN.md — Media: re-subida real a Cloudinary vía el adapter de Fase 3
+- [x] 04-03-PLAN.md — Authors + Categories (slugs verbatim, avatar remapeado)
+- [x] 04-04-PLAN.md — Testimonials + Clientes (maneja campos ahora-requeridos que el esquema viejo no exigía)
+- [x] 04-05-PLAN.md — Posts (dos pasadas: relaciones/media, luego links internos post-a-post)
+- [x] 04-06-PLAN.md — CaseStudies (preserva richText viejo en clientContext; documenta el vacío de KPIs estructurados)
+- [x] 04-07-PLAN.md — Auditoría de Works + fold-in a CaseStudies (checkpoint:decision)
+- [x] 04-08-PLAN.md — Redirects 301 para deltas de URL (MIGR-06) + reporte final de verificación
 
 ### Phase 5: Frontend Pages
 
@@ -169,7 +169,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 1. Schema Foundation | 10/10 | Complete    | 2026-07-09 |
 | 2. Bilingüe + SEO | 5/5 | Complete    | 2026-07-09 |
 | 3. Cloudinary Media Spike | 3/3 | Complete   | 2026-07-09 |
-| 4. Migración Mongo → Postgres | 1/8 | In Progress|  |
+| 4. Migración Mongo → Postgres | 8/8 | Complete   | 2026-07-10 |
 | 5. Frontend Pages | 0/TBD | Not started | - |
 | 6. Deploy + Cutover | 0/TBD | Not started | - |
 </content>
