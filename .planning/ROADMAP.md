@@ -25,7 +25,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 8: shadcn Primitives + Global Chrome** - Primitivas shadcn refinadas con los nuevos tokens + header/footer restyled (completed 2026-07-10)
 - [x] **Phase 9: Hero + Resultados/KPI + Tipografía** - Hero de mayor impacto, KPIs de case studies reforzados, jerarquía tipográfica en contenido largo (completed 2026-07-10)
 - [x] **Phase 10: Cards/Listados + Autoría E-E-A-T** - Tratamiento visual consistente en bloques tipo card + credenciales de autor prominentes (completed 2026-07-10)
-- [ ] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil sin regresión
+- [ ] **Phase 10.5 [INSERTED]: Typography + Header/Footer Overhaul** - Nueva tipografía (Array/Khand/Geist, misma que `auditor`), header con navegación completa, footer rico con columnas dinámicas (últimos posts/case studies), mobile-first estricto (pausa Phase 11 hasta cerrar esta)
+- [ ] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil sin regresión (re-planea/re-corre tras Phase 10.5, dado que tipografía/header/footer cambian sustancialmente el estado a verificar)
 
 ## Phase Details
 
@@ -261,10 +262,29 @@ Plans:
 
 **UI hint**: yes
 
+### Phase 10.5 [INSERTED]: Typography + Header/Footer Overhaul
+
+**Goal**: El sitio adopta la dirección tipográfica de `auditor` (Array/Khand/Geist Sans/Geist Mono) reemplazando Inter+Fraunces, y el header/footer pasan de "simples/vacíos" a navegación completa + columnas ricas con contenido dinámico (últimos 5 posts, últimos 5 case studies) editable desde Payload — todo verificado mobile-first. Insertada tras feedback visual directo de Juan sobre el estado acumulado de Phases 7-10.
+**Depends on**: Phase 10
+**Requirements**: (ad-hoc, fuera de UI-01..UI-14 — feedback directo de Juan post-Phase-10)
+**Success Criteria** (what must be TRUE):
+
+  1. Las cuatro familias tipográficas (Array display, Khand headings/UI, Geist Sans body, Geist Mono código) están self-hosted y wireadas, reemplazando toda referencia a Inter/Fraunces en el codebase
+  2. `SiteHeader` muestra navegación visible (no solo logo+CTA) verificada mobile-first (menú hamburguesa/Sheet en mobile primero, luego nav horizontal en desktop)
+  3. `SiteFooter` tiene columnas manuales editables (ya existente) MÁS al menos una sección de contenido dinámico (últimos posts, últimos case studies) computada en render desde Payload, no hardcodeada — requiere nueva migración de schema
+  4. El layout mobile (~375px) de header y footer se verifica de forma real (no solo "riesgo bajo asumido"), antes que desktop
+  5. `payload-types.ts` refleja el nuevo campo de Footer vía migración commiteada (`push:false` respetado)
+
+**Plans**: TBD
+
+Plans:
+
+- [ ] 10.5-01: TBD
+
 ### Phase 11: Verificación Cruzada Final
 
 **Goal**: El diff acumulado de todo el milestone se verifica de punta a punta contra los riesgos identificados en research — contraste, layout en español, contenido hardcodeado y performance — antes de dar por cerrado el pulido visual y retomar Phase 6.
-**Depends on**: Phase 7, Phase 8, Phase 9, Phase 10
+**Depends on**: Phase 7, Phase 8, Phase 9, Phase 10, Phase 10.5
 **Requirements**: UI-11, UI-12, UI-13, UI-14
 **Success Criteria** (what must be TRUE):
 
