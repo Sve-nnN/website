@@ -496,6 +496,7 @@ export interface CaseStudy {
     [k: string]: unknown;
   } | null;
   heroImage?: (number | null) | Media;
+  author?: (number | null) | Author;
   slug?: string | null;
   meta?: {
     title?: string | null;
@@ -1520,6 +1521,7 @@ export interface CaseStudiesSelect<T extends boolean = true> {
       };
   conclusion?: T;
   heroImage?: T;
+  author?: T;
   slug?: T;
   meta?:
     | T

@@ -79,6 +79,11 @@ export const CaseStudies: CollectionConfig = {
     },
     { name: 'conclusion', type: 'richText', editor: lexicalEditor(), localized: true },
     { name: 'heroImage', type: 'upload', relationTo: 'media' },
+    // Added in 05-09: CaseStudies had no author relationship, which would
+    // have silently omitted the CONT-02 E-E-A-T byline for this content
+    // type. Backfilled to the single real Author doc via
+    // scripts/backfill-case-study-author.ts.
+    { name: 'author', type: 'relationship', relationTo: 'authors', required: false },
     slugField(),
   ],
 }
