@@ -96,7 +96,7 @@ export async function ArchiveBlockComponent(props: ArchiveBlockComponentProps) {
       )}
       {docs.length === 0 ? (
         <div className="text-center py-16">
-          <p className="font-display text-heading">{emptyStateHeading}</p>
+          <p className="font-heading text-heading">{emptyStateHeading}</p>
           {emptyStateBody && <p className="mt-2 text-body text-muted-foreground">{emptyStateBody}</p>}
         </div>
       ) : (

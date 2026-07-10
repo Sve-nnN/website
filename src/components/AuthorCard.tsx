@@ -42,7 +42,7 @@ export async function AuthorCard({ author }: { author: Author }) {
           <AvatarFallback>{author.name.slice(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
         <div>
-          <Link href={`/authors/${author.slug}`} className="font-display text-heading hover:text-primary">
+          <Link href={`/authors/${author.slug}`} className="font-heading text-heading hover:text-primary">
             {author.name}
           </Link>
           {author.jobTitle && <p className="text-body text-muted-foreground">{author.jobTitle}</p>}
@@ -68,7 +68,7 @@ export async function AuthorCard({ author }: { author: Author }) {
       )}
 
       {yearsLabel && (
-        <p className="mt-4 font-display text-heading font-semibold tracking-tight text-primary">{yearsLabel}</p>
+        <p className="mt-4 font-heading text-heading font-semibold tracking-tight text-primary">{yearsLabel}</p>
       )}
 
       {author.socialLinks && author.socialLinks.length > 0 && (

@@ -43,7 +43,7 @@ export async function RelatedPostsComponent(props: RelatedPostsComponentProps) {
 
   return (
     <Container className="py-12">
-      {title && <h2 className="font-display text-heading mb-6">{title}</h2>}
+      {title && <h2 className="font-heading text-heading mb-6">{title}</h2>}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {docs.map((post) => (
           <PostCard key={post.id} post={post} />

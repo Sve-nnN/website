@@ -87,7 +87,7 @@ export default async function SearchPage({
 
         {!searchFailed && query && results.length === 0 && (
           <div className="mt-12 text-center py-16">
-            <p className="font-display text-heading">{t.noResultsHeading(query)}</p>
+            <p className="font-heading text-heading">{t.noResultsHeading(query)}</p>
             <p className="mt-2 text-body text-muted-foreground">{t.noResultsBody}</p>
           </div>
         )}
@@ -102,7 +102,7 @@ export default async function SearchPage({
               >
                 <div className="flex items-center gap-2">
                   <Badge variant="secondary">{t.typeLabels[result.doc.relationTo]}</Badge>
-                  <p className="font-display text-heading">{result.meta?.title ?? result.title}</p>
+                  <p className="font-heading text-heading">{result.meta?.title ?? result.title}</p>
                 </div>
                 {result.meta?.description && (
                   <p className="mt-1 text-body text-muted-foreground">{result.meta.description}</p>

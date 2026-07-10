@@ -52,7 +52,7 @@ export default async function AuthorsListPage({ params }: { params: Promise<{ lo
                     className="mx-auto rounded-full object-cover"
                   />
                 )}
-                <p className="mt-4 font-display text-heading">{author.name}</p>
+                <p className="mt-4 font-heading text-heading">{author.name}</p>
                 {author.jobTitle && <p className="text-body text-muted-foreground">{author.jobTitle}</p>}
                 {firstCredential && (
                   <Badge variant="secondary" className="mt-3">

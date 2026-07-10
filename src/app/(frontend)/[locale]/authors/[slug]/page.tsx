@@ -97,7 +97,7 @@ export default async function AuthorProfilePage({
 
         {posts.length > 0 && (
           <section className="mt-12">
-            <h2 className="font-display text-heading mb-6">{t.posts}</h2>
+            <h2 className="font-heading text-heading mb-6">{t.posts}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {posts.map((post) => (
                 <PostCard key={post.id} post={post} />
@@ -108,7 +108,7 @@ export default async function AuthorProfilePage({
 
         {caseStudies.length > 0 && (
           <section className="mt-12">
-            <h2 className="font-display text-heading mb-6">{t.caseStudies}</h2>
+            <h2 className="font-heading text-heading mb-6">{t.caseStudies}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {caseStudies.map((cs) => (
                 <CaseStudyCard key={cs.id} caseStudy={cs} />

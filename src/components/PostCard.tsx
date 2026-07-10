@@ -22,7 +22,7 @@ export function PostCard({ post }: { post: Post }) {
           />
         </div>
         <CardContent className="p-6">
-          <h3 className="font-display text-heading">{post.title}</h3>
+          <h3 className="font-heading text-heading">{post.title}</h3>
           {post.excerpt && <p className="mt-2 text-body text-muted-foreground line-clamp-2">{post.excerpt}</p>}
         </CardContent>
       </Card>

@@ -37,7 +37,7 @@ export function HeroComponent(props: HeroBlockProps) {
             className={
               isHome
                 ? 'font-display text-display tracking-tight'
-                : 'font-display text-heading tracking-tight'
+                : 'font-heading text-heading tracking-tight'
             }
           >
             {title}

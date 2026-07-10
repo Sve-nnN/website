@@ -15,7 +15,7 @@ export function ResultsSectionComponent(props: ResultsSectionBlockProps) {
   return (
     <section className={cn('py-16', backgroundMap[backgroundColor ?? 'gray'])}>
       <Container>
-        <h2 className="font-display text-heading">{title}</h2>
+        <h2 className="font-heading text-heading">{title}</h2>
         {description && <p className="mt-2 text-body max-w-2xl">{description}</p>}
         <div className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-12">
           {stats?.map((stat, i) => (

@@ -23,7 +23,7 @@ export async function ClientLogosBlockComponent(props: ClientLogosBlockProps) {
 
   return (
     <Container className="py-12">
-      {title && <h2 className="font-display text-heading mb-6 text-center">{title}</h2>}
+      {title && <h2 className="font-heading text-heading mb-6 text-center">{title}</h2>}
       <div className="flex flex-wrap items-center justify-center gap-8">
         {logos.map((client) => {
           const logo = typeof client.logo === 'object' ? client.logo : null

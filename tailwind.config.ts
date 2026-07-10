@@ -10,8 +10,10 @@ const config: Config = {
   theme: {
   	extend: {
   		fontFamily: {
-  			sans: ['var(--font-sans)'],
-  			display: ['var(--font-display)']
+  			sans: ['var(--font-geist-sans)'],
+  			display: ['var(--font-array)'],
+  			heading: ['var(--font-khand)'],
+  			mono: ['var(--font-geist-mono)']
   		},
   		fontSize: {
   			// UI-SPEC Typography table — 4 sizes only, each pinned to its line-height.

@@ -20,7 +20,7 @@ export async function TestimonialsCarouselComponent(props: TestimonialsCarouselB
 
   return (
     <Container className="py-12">
-      {title && <h2 className="font-display text-heading mb-6">{title}</h2>}
+      {title && <h2 className="font-heading text-heading mb-6">{title}</h2>}
       <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
         {testimonials.map((testimonial) => {
           const avatar = typeof testimonial.avatar === 'object' ? testimonial.avatar : null

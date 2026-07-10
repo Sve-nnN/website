@@ -34,7 +34,7 @@ export async function SiteHeader({ locale }: { locale: string }) {
           {logo?.url ? (
             <Image src={logo.url} alt={logo.alt ?? 'Logo'} width={40} height={40} />
           ) : (
-            <span className="font-display text-heading">Juan Carlos Angulo</span>
+            <span className="font-heading text-heading">Juan Carlos Angulo</span>
           )}
         </Link>
 

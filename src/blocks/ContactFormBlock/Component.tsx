@@ -59,7 +59,7 @@ export function ContactFormBlockComponent(props: ContactFormComponentProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
           {eyebrow && <p className="text-label text-primary">{eyebrow}</p>}
-          <h2 className="font-display text-heading mt-1">{title}</h2>
+          <h2 className="font-heading text-heading mt-1">{title}</h2>
           {description && <p className="mt-3 text-body text-muted-foreground">{description}</p>}
 
           {sent === 'true' && <p className="mt-4 text-body text-primary">{successMessage}</p>}
@@ -81,7 +81,7 @@ export function ContactFormBlockComponent(props: ContactFormComponentProps) {
         </div>
 
         <div className="bg-secondary text-secondary-foreground rounded-lg p-8">
-          {sidebarTitle && <h3 className="font-display text-heading">{sidebarTitle}</h3>}
+          {sidebarTitle && <h3 className="font-heading text-heading">{sidebarTitle}</h3>}
           {sidebarDescription && <p className="mt-3 text-body opacity-90">{sidebarDescription}</p>}
 
           <ul className="mt-6 space-y-4">

@@ -38,7 +38,7 @@ export default async function CaseStudiesListPage({
 
         {caseStudies.length === 0 ? (
           <div className="mt-12 text-center py-16">
-            <p className="font-display text-heading">
+            <p className="font-heading text-heading">
               {locale === 'es' ? 'Próximamente' : 'Coming soon'}
             </p>
             <p className="mt-2 text-body text-muted-foreground">

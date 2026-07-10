@@ -139,7 +139,7 @@ export default async function CaseStudyPage({
       <Container className="py-8 space-y-12">
         {doc.clientContext && (
           <section>
-            <h2 className="font-display text-heading mb-4">{t.client}</h2>
+            <h2 className="font-heading text-heading mb-4">{t.client}</h2>
             {/* First section heading in the page — no mt-10 here since space-y-12
                 on the parent Container already provides top spacing; adding mt-10
                 would double the gap after the KPI container's py-12. */}
@@ -149,7 +149,7 @@ export default async function CaseStudyPage({
 
         {doc.challenge && doc.challenge.length > 0 && (
           <section>
-            <h2 className="font-display text-heading mt-10 mb-4">{t.challenge}</h2>
+            <h2 className="font-heading text-heading mt-10 mb-4">{t.challenge}</h2>
             <ul className="list-disc pl-6 space-y-2 text-body">
               {doc.challenge.map((item, i) => (
                 <li key={i}>{item.text}</li>
@@ -160,11 +160,11 @@ export default async function CaseStudyPage({
 
         {doc.solution && doc.solution.length > 0 && (
           <section>
-            <h2 className="font-display text-heading mt-10 mb-4">{t.solution}</h2>
+            <h2 className="font-heading text-heading mt-10 mb-4">{t.solution}</h2>
             <ol className="space-y-4">
               {doc.solution.map((step, i) => (
                 <li key={i} className="flex gap-4">
-                  <span className="font-display text-heading text-primary">{i + 1}</span>
+                  <span className="font-heading text-heading text-primary">{i + 1}</span>
                   <div>
                     <p className="font-semibold text-body">{step.title}</p>
                     <p className="text-body text-muted-foreground">{step.description}</p>
@@ -177,7 +177,7 @@ export default async function CaseStudyPage({
 
         {doc.results?.metrics && doc.results.metrics.length > 0 && (
           <section>
-            <h2 className="font-display text-heading mt-10 mb-4">{t.results}</h2>
+            <h2 className="font-heading text-heading mt-10 mb-4">{t.results}</h2>
             {(doc.results.periodBefore || doc.results.periodAfter) && (
               <p className="text-label text-muted-foreground mb-4">
                 {doc.results.periodBefore} → {doc.results.periodAfter}
@@ -191,7 +191,7 @@ export default async function CaseStudyPage({
                   </p>
                   <div className="mt-2 flex items-baseline gap-2">
                     <span className="text-body line-through opacity-60">{metric.before}</span>
-                    <span className="font-display text-heading font-semibold text-primary tracking-tight tabular-nums">
+                    <span className="font-heading text-heading font-semibold text-primary tracking-tight tabular-nums">
                       {metric.after}
                     </span>
                   </div>
