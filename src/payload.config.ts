@@ -22,6 +22,9 @@ import { CaseStudies } from './collections/CaseStudies'
 import { Testimonials } from './collections/Testimonials'
 import { Clientes } from './collections/Clientes'
 import { Llms } from './globals/Llms'
+import { Header } from './globals/Header'
+import { Footer } from './globals/Footer'
+import { FeaturedContent } from './globals/FeaturedContent'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -67,7 +70,7 @@ export default buildConfig({
     fallback: true,
   },
   collections: [Users, Media, Pages, Posts, Authors, Categories, CaseStudies, Testimonials, Clientes],
-  globals: [Llms],
+  globals: [Llms, Header, Footer, FeaturedContent],
   plugins: [
     seoPlugin({
       collections: ['pages', 'posts', 'case-studies'],
