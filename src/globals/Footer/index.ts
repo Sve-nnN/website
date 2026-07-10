@@ -24,6 +24,35 @@ export const Footer: GlobalConfig = {
       ],
     },
     {
+      name: 'dynamicColumns',
+      type: 'array',
+      admin: {
+        initCollapsed: true,
+        description:
+          'Columnas computadas en render time desde Posts/CaseStudies (ultimos N por fecha), no curadas manualmente.',
+      },
+      fields: [
+        {
+          name: 'title',
+          type: 'text',
+          localized: true,
+        },
+        {
+          name: 'source',
+          type: 'select',
+          required: true,
+          options: ['latestPosts', 'latestCaseStudies'],
+        },
+        {
+          name: 'limit',
+          type: 'number',
+          defaultValue: 5,
+          min: 1,
+          max: 10,
+        },
+      ],
+    },
+    {
       name: 'socialLinks',
       type: 'array',
       admin: { initCollapsed: true },
