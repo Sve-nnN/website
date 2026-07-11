@@ -120,6 +120,18 @@ export default async function AuthorProfilePage({
     name: doc.name,
     jobTitle: doc.jobTitle,
     url: `${SITE_URL}/authors/${doc.slug}`,
+    ...(doc.socialLinks?.length ? { sameAs: doc.socialLinks.map((s) => s.url) } : {}),
+    ...(doc.expertise?.length ? { knowsAbout: doc.expertise.map((e) => e.topic) } : {}),
+    ...(doc.education?.length
+      ? {
+          hasCredential: doc.education.map((ed) => ({
+            '@type': 'EducationalOccupationalCredential',
+            name: ed.degree,
+            organization: ed.institution,
+            datePublished: ed.endDate,
+          })),
+        }
+      : {}),
   }
 
   const breadcrumbData = {
