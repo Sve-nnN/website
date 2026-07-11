@@ -153,8 +153,8 @@ export default async function AuthorProfilePage({
           hasCredential: doc.education.map((ed) => ({
             '@type': 'EducationalOccupationalCredential',
             name: ed.degree,
-            organization: ed.institution,
-            datePublished: ed.endDate,
+            recognizedBy: { '@type': 'Organization', name: ed.institution },
+            ...(ed.endDate ? { datePublished: ed.endDate } : {}),
           })),
         }
       : {}),
