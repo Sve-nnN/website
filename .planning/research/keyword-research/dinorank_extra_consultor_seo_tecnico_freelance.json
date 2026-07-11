@@ -1,0 +1,26 @@
+{
+    "ok": true,
+    "data": {
+        "source": "visibility",
+        "country": "ES",
+        "language": "es",
+        "keyword": "consultor seo tecnico freelance",
+        "data": {
+            "keywords": {
+                "72332777": {
+                    "id": "72332777",
+                    "keyword": "trabajos freelance online sin experiencia",
+                    "vol": "10",
+                    "cpc": "0.00",
+                    "competencia": "0.81",
+                    "tendencia": "10;10;10;10;10;10;10;10;10;10;10;10",
+                    "serp": null,
+                    "informativas": null,
+                    "transaccionales": null,
+                    "tipo": "concordancia_amplia",
+                    "score": 0.6773169040679932
+                }
+            }
+        }
+    }
+}
