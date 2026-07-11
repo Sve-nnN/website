@@ -19,10 +19,10 @@ export const SpeakingEvents: CollectionConfig = {
   access: {
     read: () => true,
   },
+  defaultSort: '-date',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'role', 'date', 'location'],
-    defaultSort: '-date',
   },
   fields: [
     {
