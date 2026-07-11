@@ -219,6 +219,56 @@ Which phases cover which requirements. Updated during roadmap creation.
 - Unmapped: 0 ✓
 
 ---
+
+## v1.2 Requirements — Content Parity (Home + Author Page)
+
+**Contexto:** comparación directa contra el sitio de referencia real (`JuanPortfolio`, `localhost:3000`) reveló 3 brechas concretas de contenido/componentes no cerradas por v1.1, más un pedido nuevo de asignación de keyword objetivo (EN/ES) informada por research real.
+
+### AUTHOR (Author page — secciones E-E-A-T recortadas en Phase 1)
+
+- [ ] **AUTHOR-01**: Colección `Authors` recupera los campos `expertise[]` (array de temas), `education[]` (array: título/institución/logo/fecha inicio/fecha fin/certificado/descripción) y `experience[]` (array: empresa/rol/fecha inicio/fecha fin/descripción), recortados intencionalmente en Phase 1
+- [ ] **AUTHOR-02**: Author page renderiza sección "Expertise" (tags) cuando `expertise[]` tiene datos — diseñada con la skill `ui-ux-pro-max`
+- [ ] **AUTHOR-03**: Author page renderiza sección "Educación y Certificaciones" (grid con logo/institución/fechas) cuando `education[]` tiene datos — diseñada con `ui-ux-pro-max`
+- [ ] **AUTHOR-04**: Author page renderiza sección "Experiencia" (timeline laboral) cuando `experience[]` tiene datos — diseñada con `ui-ux-pro-max`
+- [ ] **AUTHOR-05**: Person JSON-LD schema del author page enriquecido con `sameAs` (todas las redes sociales), `knowsAbout` (desde `expertise[]`) y `hasCredential` (desde `education[]`)
+- [ ] **AUTHOR-06**: Las 3 secciones nuevas se pueblan con contenido real de Juan donde exista (extraído/adaptado del sitio de referencia), o quedan como placeholder claramente editable desde `/admin` si el dato real no está disponible
+
+### ABOUT (Home — "Mi enfoque en Consultoría Técnica")
+
+- [ ] **ABOUT-01**: Bloque `AboutSection` extendido con campo opcional `features[]` (mínimo/máximo 4 items: icon + título + descripción) y campos opcionales `ctaText`/`ctaLink` — replica el shape de `AboutWithFeatures` del sitio de referencia sin crear un bloque nuevo (ya fue evaluado y descartado en el gap-analysis de Phase 10.7; el fix es extender `AboutSection`)
+- [ ] **ABOUT-02**: Home poblado con la sección "Mi enfoque en Consultoría Técnica" (eyebrow "Estrategia y datos. Más allá del código", 4 features: SEO Técnico / Rendimiento web / Arquitectura escalable / Ingeniería de UX) usando el `AboutSection` extendido
+
+### FAQ (Home — bloque existente sin poblar)
+
+- [ ] **FAQ-01**: Bloque `FAQ` (ya existe en el registry, nunca se pobló) agregado al layout del Home y poblado con contenido real (5 preguntas: diferencia SEO tradicional vs técnico, auditoría vs implementación, stack/plataformas, medición de éxito, proceso para empezar)
+
+### SEO-KW (Keyword objetivo por página)
+
+- [ ] **SEO-KW-01**: Campo `targetKeyword` (grupo `en`/`es`, texto simple) agregado a las colecciones `pages` y `authors` — campo editorial informativo, no dispara llamadas en vivo a ninguna API externa
+- [ ] **SEO-KW-02**: Home y Author page (Juan) poblados con los picks de `.planning/research/keyword-research/KEYWORD-RESEARCH.md`: Home ES = "seo técnico", Home EN = "technical seo consultant", Author ES = "auditoría seo técnico", Author EN = "technical seo specialist"
+
+### SITEMAP (Sitemap navegable/estilado)
+
+- [ ] **SITEMAP-01**: `sitemap.xml` actual recibe una hoja de estilos XSL — al abrir la URL directamente en el navegador se ve una tabla legible (no el XML crudo)
+- [ ] **SITEMAP-02**: `sitemap.html` nuevo — versión HTML navegable del sitemap (listado de URLs agrupado por sección), enlazado desde el footer existente (el footer ya tiene un link "Sitemap")
+
+### Out of Scope (v1.2)
+
+- CalendlyEmbed — Juan confirmó que ya no usa Calendly, el gap queda cerrado definitivamente (no solo diferido)
+- Cualquier dashboard/integración en vivo de DinoRank dentro de la app — el research vía API es un insumo estático de este milestone, no reabre la exclusión de "dinorank tooling" de PROJECT.md Out of Scope
+- Blog/posts — el pedido de Juan fue explícito en excluir blog, solo Home + Author page
+
+### Traceability (v1.2)
+
+| Req ID | Phase | Status |
+|--------|-------|--------|
+| AUTHOR-01..06 | TBD (roadmap) | Pending |
+| ABOUT-01..02 | TBD (roadmap) | Pending |
+| FAQ-01 | TBD (roadmap) | Pending |
+| SEO-KW-01..02 | TBD (roadmap) | Pending |
+| SITEMAP-01..02 | TBD (roadmap) | Pending |
+
+---
 *Requirements defined: 2026-07-09*
-*Last updated: 2026-07-10 — v1.1 roadmap expanded (Phases 10.6, 10.7, 10.8 inserted; Phase 10.5 scope reduced to UI-15/UI-16; Phase 11 depends-on and requirements updated)*
+*Last updated: 2026-07-11 — v1.2 requirements added (Content Parity — Home + Author Page: AUTHOR-01..06, ABOUT-01..02, FAQ-01, SEO-KW-01..02, SITEMAP-01..02)*
 </content>
