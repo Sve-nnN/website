@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: milestone
-status: "Phase 12 in progress — 12-01/12-02/12-03 executed, 12-04 awaiting human checkpoint"
-stopped_at: Phase 12 (Author Page E-E-A-T Expansion) — 12-01/12-02/12-03 executed and committed (schema recovery, UI sections + JSON-LD, real content seed). 12-04 Task 1 (headless verification) PASS; Task 2 (human visual sign-off) is a blocking checkpoint awaiting Juan's confirmation.
-last_updated: "2026-07-11T20:20:00.000Z"
-last_activity: "2026-07-11 — Phase 12 executed: Authors collection expertise/education/experience fields + migration (12-01), author page 3 new E-E-A-T sections + enriched Person JSON-LD (12-02), real bilingual content seeded (12-03), headless verification PASS (12-04 Task 1) — awaiting human checkpoint (12-04 Task 2)"
+status: "Phase 12 in progress — 12-01/12-02/12-03 + mid-phase speaking-events addition (12-05) executed, 12-04 awaiting human checkpoint"
+stopped_at: Phase 12 (Author Page E-E-A-T Expansion) — 12-01/12-02/12-03 executed and committed (schema recovery, UI sections + JSON-LD, real content seed), plus a mid-phase addition (12-05, ad-hoc per Juan's direct request) adding a standalone SpeakingEvents collection + 4th author-page section + a 3rd experience[] item (aprendoclub). 12-04 Task 1 (headless verification, now covering all 4 sections) PASS; Task 2 (human visual sign-off) is a blocking checkpoint awaiting Juan's confirmation — single consolidated review per Juan's instruction, not re-blocked separately for the addition.
+last_updated: "2026-07-11T20:45:00.000Z"
+last_activity: "2026-07-11 — Phase 12 executed + mid-phase addition: Authors collection expertise/education/experience fields + migration (12-01), author page 3 E-E-A-T sections + enriched Person JSON-LD (12-02), real bilingual content seeded (12-03), standalone SpeakingEvents collection + migration + 4th author-page section + aprendoclub experience item + extended seed/verification (12-05, ad-hoc), headless verification PASS across all 4 sections (12-04 Task 1) — awaiting single consolidated human checkpoint (12-04 Task 2)"
 progress:
   total_phases: 15
   completed_phases: 10
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: Phase 12 — Author Page E-E-A-T Expansion (in progress, 3/4 plans executed)
-Plan: 12-04 (Task 1 done, Task 2 blocking human checkpoint pending)
-Status: Awaiting Juan's visual confirmation of the 3 new author-page sections + JSON-LD before closing Phase 12
-Last activity: 2026-07-11 — Phase 12 executed: Authors collection expertise/education/experience fields + migration (12-01), author page 3 new E-E-A-T sections + enriched Person JSON-LD (12-02), real bilingual content seeded (12-03), headless verification PASS (12-04 Task 1) — awaiting human checkpoint (12-04 Task 2)
+Phase: Phase 12 — Author Page E-E-A-T Expansion (in progress, 3/4 formal plans executed + 1 mid-phase ad-hoc addition)
+Plan: 12-04 (Task 1 done, Task 2 blocking human checkpoint pending) — plus 12-05 (ad-hoc, complete)
+Status: Awaiting Juan's single consolidated visual confirmation of all 4 author-page sections (Expertise/Educación/Experiencia/Eventos) + JSON-LD before closing Phase 12
+Last activity: 2026-07-11 — Phase 12 executed + mid-phase addition: Authors collection expertise/education/experience fields + migration (12-01), author page 3 E-E-A-T sections + enriched Person JSON-LD (12-02), real bilingual content seeded (12-03), standalone SpeakingEvents collection + migration + 4th author-page section + aprendoclub experience item + extended seed/verification (12-05, ad-hoc), headless verification PASS across all 4 sections (12-04 Task 1) — awaiting single consolidated human checkpoint (12-04 Task 2)
 
 ## Performance Metrics
 
@@ -121,6 +121,7 @@ Recent decisions affecting current work:
 - [Phase 12]: 12-02: 3 new author-page sections (Expertise tag cloud, Education card grid, Experience timeline) inserted between AuthorCard and posts/case-studies grids, each conditionally rendered only when its array has data; Person JSON-LD enriched with sameAs/knowsAbout/hasCredential, each conditionally omitted (not empty array) when source is empty
 - [Phase 12]: 12-03: real bilingual content seeded via scripts/seed-author-eeat.ts (idempotent, sub-array id reuse across locale writes) — 4 expertise/2 education/2 experience items in ES+EN, 3 socialLinks; avatar verified untouched; re-run confirmed idempotency (no duplicate rows)
 - [Phase 12]: 12-04 Task 1: dev server cache found stale (x-nextjs-cache HIT serving pre-seed content) mid-verification — cleared .next and restarted, unrelated to Phase 12 code; scripts/verify-phase12-author-eeat.mjs then reported RESULT: PASS across both locale routes and all 3 breakpoints (375/768/1280), confirming real content + JSON-LD
+- [Phase 12]: 12-05 (mid-phase, ad-hoc, Juan's direct request via orchestrator): SpeakingEvents modeled as a NEW standalone Payload collection (`speaking-events`), not an Authors array field, so Juan can keep adding events post-launch without reopening Authors schema; 4th author-page section added after Experiencia, same conditional-render contract; 2 real events seeded (Caracas SEO Fest, Taller SEO+IA en Lima/DinoRANK) with NO invented dates (date field left null per Juan's explicit instruction); added a 3rd `experience[]` item (aprendoclub, "Senior Tech SEO Analyst", ongoing role, startDate/endDate both null, reference URL kept in description text rather than reopening Authors.experience schema for a new link field, per Juan's explicit instruction); a `defaultSort` type error (misplaced under `admin` instead of top-level CollectionConfig) was caught by `tsc` and fixed inline (Rule 1); extended verification script re-confirmed PASS across all 4 sections
 
 ### Pending Todos
 

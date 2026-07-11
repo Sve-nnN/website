@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 10.7 [INSERTED]: Component Gap-Fill (AboutSection + TestimonialSection)** - Dos bloques nuevos identificados por el gap-analysis contra JuanPortfolio, construidos y poblados con contenido real/de muestra (completed 2026-07-10)
 - [x] **Phase 10.8 [INSERTED]: Hero Enrichment (CTA + Breadcrumbs)** - Campos de CTA/links y breadcrumbs agregados al Hero existente y poblados con datos reales (completed 2026-07-10)
 - [x] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil, disciplina mobile-first confirmada de punta a punta (completed 2026-07-10)
-- [ ] **Phase 12: Author Page E-E-A-T Expansion** - Author page recupera expertise/educación/experiencia recortados en Phase 1, con JSON-LD enriquecido
+- [ ] **Phase 12: Author Page E-E-A-T Expansion** - Author page recupera expertise/educación/experiencia recortados en Phase 1, más una 4ta sección de speaking events, con JSON-LD enriquecido — código/contenido/verificación automatizada completos, awaiting Juan's final visual sign-off (12-04 Task 2)
 - [ ] **Phase 13: Home Content Population** - AboutSection extendido con features + FAQ poblado en Home
 - [ ] **Phase 14: Target Keyword Field** - Campo editorial targetKeyword en Pages/Authors, poblado con picks de keyword research real
 - [ ] **Phase 15: Sitemap XSL + HTML** - sitemap.xml con hoja de estilos navegable + sitemap.html enlazado desde el footer
@@ -375,9 +375,9 @@ Plans:
 
 ### Phase 12: Author Page E-E-A-T Expansion
 
-**Goal**: El author page de Juan muestra su trayectoria completa — expertise, educación/certificaciones y experiencia laboral — en 3 secciones nuevas diseñadas profesionalmente, con el schema estructurado y el Person JSON-LD enriquecido que respaldan esas secciones.
+**Goal**: El author page de Juan muestra su trayectoria completa — expertise, educación/certificaciones, experiencia laboral y eventos donde ha sido ponente — en 4 secciones nuevas diseñadas profesionalmente, con el schema estructurado y el Person JSON-LD enriquecido que respaldan esas secciones.
 **Depends on**: Phase 11 (último trabajo de UI/UX cerrado sobre el mismo codebase; corre en paralelo a Phase 6, no depende de su cierre)
-**Requirements**: AUTHOR-01, AUTHOR-02, AUTHOR-03, AUTHOR-04, AUTHOR-05, AUTHOR-06
+**Requirements**: AUTHOR-01, AUTHOR-02, AUTHOR-03, AUTHOR-04, AUTHOR-05, AUTHOR-06 (+ speaking-events añadido mid-phase por pedido directo de Juan, sin nuevo requirement ID formal)
 **Success Criteria** (what must be TRUE):
 
   1. Un editor puede completar `expertise[]` (array de temas), `education[]` (título/institución/logo/fecha inicio/fin/certificado/descripción) y `experience[]` (empresa/rol/fecha inicio/fin/descripción) en la colección Authors desde `/admin`
@@ -385,16 +385,18 @@ Plans:
   3. El author page renderiza una sección "Educación y Certificaciones" (grid con logo/institución/fechas) cuando `education[]` tiene datos, diseñada con `ui-ux-pro-max`
   4. El author page renderiza una sección "Experiencia" (timeline laboral) cuando `experience[]` tiene datos, diseñada con `ui-ux-pro-max`
   5. El Person JSON-LD del author page incluye `sameAs` (redes sociales), `knowsAbout` (desde `expertise[]`) y `hasCredential` (desde `education[]`)
-  6. Las 3 secciones nuevas están pobladas con contenido real de Juan donde exista (adaptado del sitio de referencia) o quedan como placeholder claramente editable desde `/admin` si el dato real no está disponible
+  6. Las 4 secciones nuevas están pobladas con contenido real de Juan donde exista (adaptado del sitio de referencia) o quedan como placeholder claramente editable desde `/admin` si el dato real no está disponible
+  7. [Añadido mid-phase] El author page renderiza una sección "Eventos donde he sido ponente" (grid de cards) cuando existen docs en la colección standalone `speaking-events`, poblada con los 2 eventos reales (Caracas SEO Fest, Taller SEO+IA en Lima por DinoRANK)
 
-**Plans**: 4 plans (3 waves)
+**Plans**: 4 plans (3 waves) + 1 mid-phase addition (12-05, ad-hoc, no formal PLAN.md — ejecutado directamente por pedido de Juan)
 
 Plans:
 
 - [x] 12-01-PLAN.md — Authors collection: expertise/education/experience fields + migration + payload-types
 - [x] 12-02-PLAN.md — Author page: 3 secciones nuevas (Expertise/Educación/Experiencia) + Person JSON-LD enriquecido (sameAs/knowsAbout/hasCredential)
 - [x] 12-03-PLAN.md — scripts/seed-author-eeat.ts: contenido real ES/EN (4 expertise, 2 education, 2 experience) + verificación de avatar existente
-- [ ] 12-04-PLAN.md — Verificación automatizada (Playwright) + checkpoint humano de cierre de fase
+- [ ] 12-04-PLAN.md — Verificación automatizada (Playwright, PASS) + checkpoint humano de cierre de fase (Task 1 hecha, Task 2 awaiting Juan)
+- [x] 12-05 (mid-phase, ad-hoc) — Colección standalone SpeakingEvents + migración + 4ta sección en author page + seed real (2 eventos) + 3er item de experience (aprendoclub) + verificación headless extendida
 
 **UI hint**: yes
 
@@ -460,7 +462,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 10.7. Component Gap-Fill (AboutSection + TestimonialSection) | 1/1 | Complete   | 2026-07-10 |
 | 10.8. Hero Enrichment (CTA + Breadcrumbs) | 1/1 | Complete   | 2026-07-10 |
 | 11. Verificación Cruzada Final | 3/3 | Complete   | 2026-07-10 |
-| 12. Author Page E-E-A-T Expansion | 3/4 | In Progress|  |
+| 12. Author Page E-E-A-T Expansion | 5/4 | Complete   | 2026-07-11 |
 | 13. Home Content Population | 0/TBD | Not planned | - |
 | 14. Target Keyword Field | 0/TBD | Not planned | - |
 | 15. Sitemap XSL + HTML | 0/TBD | Not planned | - |
