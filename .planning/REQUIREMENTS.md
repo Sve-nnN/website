@@ -245,7 +245,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 ### SEO-KW (Keyword objetivo por página)
 
 - [ ] **SEO-KW-01**: Campo `targetKeyword` (grupo `en`/`es`, texto simple) agregado a las colecciones `pages` y `authors` — campo editorial informativo, no dispara llamadas en vivo a ninguna API externa
-- [ ] **SEO-KW-02**: Home y Author page (Juan) poblados con los picks de `.planning/research/keyword-research/KEYWORD-RESEARCH.md`: Home ES = "seo técnico", Home EN = "technical seo consultant", Author ES = "auditoría seo técnico", Author EN = "technical seo specialist"
+- [ ] **SEO-KW-02**: Home y Author page (Juan) poblados con los picks de `research/keyword-research/KEYWORD-RESEARCH.md`: Home ES = "seo técnico", Home EN = "technical seo consultant", Author ES = "auditoría seo técnico", Author EN = "technical seo specialist"
 
 ### SITEMAP (Sitemap navegable/estilado)
 

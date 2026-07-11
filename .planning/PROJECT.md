@@ -75,7 +75,7 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 - Person schema (JSON-LD) del author page enriquecido: `sameAs` (todas las redes), `knowsAbout` (expertise), `hasCredential` (educación) — igual que el sitio de referencia
 - Bloque `AboutSection` extendido con `features[4]` (icon+título+descripción) + CTA — el gap real de "Mi enfoque en Consultoría Técnica" que la investigación previa (Phase 10.7) marcó como "fold into AboutSection" pero nunca se implementó
 - Bloque `FAQ` (ya existe, nunca se pobló) poblado en Home con contenido real
-- Campo `targetKeyword` (grupo `en`/`es`) en colecciones `pages` y `authors`, poblado con los picks de `.planning/research/keyword-research/KEYWORD-RESEARCH.md` (seo técnico / technical seo consultant / auditoría seo técnico / technical seo specialist) — campo editorial, no dispara llamadas en vivo a DinoRank
+- Campo `targetKeyword` (grupo `en`/`es`) en colecciones `pages` y `authors`, poblado con los picks de `research/keyword-research/KEYWORD-RESEARCH.md` (seo técnico / technical seo consultant / auditoría seo técnico / technical seo specialist) — campo editorial, no dispara llamadas en vivo a DinoRank
 - `sitemap.xml` con hoja de estilos XSL (visualización humana al abrir la URL) + `sitemap.html` navegable nuevo
 - CalendlyEmbed queda explícitamente fuera de scope (Juan confirmó que ya no usa Calendly)
 
