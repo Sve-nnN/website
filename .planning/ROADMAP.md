@@ -35,7 +35,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 10.8 [INSERTED]: Hero Enrichment (CTA + Breadcrumbs)** - Campos de CTA/links y breadcrumbs agregados al Hero existente y poblados con datos reales (completed 2026-07-10)
 - [x] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil, disciplina mobile-first confirmada de punta a punta (completed 2026-07-10)
 - [x] **Phase 12: Author Page E-E-A-T Expansion** - Author page recupera expertise/educación/experiencia recortados en Phase 1, más una 4ta sección de speaking events, con JSON-LD enriquecido — verificado 7/7, code review limpio (4 warnings corregidos), Juan confirmó visualmente (completed 2026-07-11)
-- [ ] **Phase 13: Home Content Population** - AboutSection extendido con features + FAQ poblado en Home
+- [x] **Phase 13: Home Content Population** - AboutSection extendido con features + FAQ poblado en Home (completed 2026-07-11)
 - [ ] **Phase 14: Target Keyword Field** - Campo editorial targetKeyword en Pages/Authors, poblado con picks de keyword research real
 - [ ] **Phase 15: Sitemap XSL + HTML** - sitemap.xml con hoja de estilos navegable + sitemap.html enlazado desde el footer
 
@@ -415,8 +415,8 @@ Plans:
 
 Plans:
 
-- [ ] 13-01-PLAN.md — AboutSection features[]/ctaText/ctaLink schema + admin icon-picker (Modal-based) + Postgres migration
-- [ ] 13-02-PLAN.md — AboutSection features/CTA render + Home FAQ/ContactFormBlock population (seed)
+- [x] 13-01-PLAN.md — AboutSection features[]/ctaText/ctaLink schema + admin icon-picker (Modal-based) + Postgres migration
+- [x] 13-02-PLAN.md — AboutSection features/CTA render + Home FAQ/ContactFormBlock population (seed)
 
 **UI hint**: yes
 
@@ -468,7 +468,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 10.8. Hero Enrichment (CTA + Breadcrumbs) | 1/1 | Complete   | 2026-07-10 |
 | 11. Verificación Cruzada Final | 3/3 | Complete   | 2026-07-10 |
 | 12. Author Page E-E-A-T Expansion | 5/4 | Complete   | 2026-07-11 |
-| 13. Home Content Population | 0/TBD | Not planned | - |
+| 13. Home Content Population | 2/2 | Complete   | 2026-07-11 |
 | 14. Target Keyword Field | 0/TBD | Not planned | - |
 | 15. Sitemap XSL + HTML | 0/TBD | Not planned | - |
 </content>

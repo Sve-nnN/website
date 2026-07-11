@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: milestone
-status: "Phase 12 in progress — 12-01/12-02/12-03 + mid-phase speaking-events addition (12-05) executed, 12-04 awaiting human checkpoint"
-stopped_at: Phase 12 (Author Page E-E-A-T Expansion) — 12-01/12-02/12-03 executed and committed (schema recovery, UI sections + JSON-LD, real content seed), plus a mid-phase addition (12-05, ad-hoc per Juan's direct request) adding a standalone SpeakingEvents collection + 4th author-page section + a 3rd experience[] item (aprendoclub). 12-04 Task 1 (headless verification, now covering all 4 sections) PASS; Task 2 (human visual sign-off) is a blocking checkpoint awaiting Juan's confirmation — single consolidated review per Juan's instruction, not re-blocked separately for the addition.
-last_updated: "2026-07-11T20:45:00.000Z"
-last_activity: "2026-07-11 — Phase 12 executed + mid-phase addition: Authors collection expertise/education/experience fields + migration (12-01), author page 3 E-E-A-T sections + enriched Person JSON-LD (12-02), real bilingual content seeded (12-03), standalone SpeakingEvents collection + migration + 4th author-page section + aprendoclub experience item + extended seed/verification (12-05, ad-hoc), headless verification PASS across all 4 sections (12-04 Task 1) — awaiting single consolidated human checkpoint (12-04 Task 2)"
+status: "Phase 13 (Home Content Population) complete, 2/2 plans. Phase 12 still awaiting Juan's single consolidated visual confirmation of all 4 author-page sections + JSON-LD (unrelated blocker, run in parallel with Phase 13)."
+stopped_at: "Phase 13 executed end-to-end (13-01 schema/admin icon-picker, 13-02 frontend render + seed content) — AboutSection features/CTA + FAQ live on Home in both locales, #contact anchor real. Phase 12 (Author Page E-E-A-T) still paused on Juan's checkpoint."
+last_updated: "2026-07-11T23:10:00.000Z"
+last_activity: "2026-07-11 — Phase 13 executed: AboutSection.features[]/ctaText/ctaLink schema + IconPickerField admin Modal-based icon picker + migration applied (13-01); AboutSection features grid + CTA rendered, FAQ block + ContactFormBlock added to Home layout, real bilingual content seeded, headless Playwright verification PASS across ES/EN and 375/768/1280 breakpoints (13-02). Deviations: fixed a features[]/faqs[] sub-array id-reuse bug in the seed script, and fixed a pre-existing Phase 10.7 bug (leftover Spanish AboutSection paragraph on the EN Home page). Phase 12 remains blocked on Juan's checkpoint (12-04 Task 2), unaffected by Phase 13's work."
 progress:
   total_phases: 15
-  completed_phases: 10
-  total_plans: 59
-  completed_plans: 54
-  percent: 68
+  completed_phases: 12
+  total_plans: 61
+  completed_plans: 57
+  percent: 80
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: Phase 12 — Author Page E-E-A-T Expansion (in progress, 3/4 formal plans executed + 1 mid-phase ad-hoc addition)
-Plan: 12-04 (Task 1 done, Task 2 blocking human checkpoint pending) — plus 12-05 (ad-hoc, complete)
-Status: Awaiting Juan's single consolidated visual confirmation of all 4 author-page sections (Expertise/Educación/Experiencia/Eventos) + JSON-LD before closing Phase 12
-Last activity: 2026-07-11 — Phase 12 executed + mid-phase addition: Authors collection expertise/education/experience fields + migration (12-01), author page 3 E-E-A-T sections + enriched Person JSON-LD (12-02), real bilingual content seeded (12-03), standalone SpeakingEvents collection + migration + 4th author-page section + aprendoclub experience item + extended seed/verification (12-05, ad-hoc), headless verification PASS across all 4 sections (12-04 Task 1) — awaiting single consolidated human checkpoint (12-04 Task 2)
+Phase: Phase 13 — Home Content Population (AboutSection Features + FAQ) — COMPLETE, 2/2 plans. Phase 12 — Author Page E-E-A-T Expansion still in progress (3/4 formal plans executed + 1 mid-phase ad-hoc addition), unaffected by Phase 13.
+Plan: Phase 13 closed (13-01, 13-02). Phase 12: 12-04 (Task 1 done, Task 2 blocking human checkpoint pending) — plus 12-05 (ad-hoc, complete)
+Status: Phase 13 done — AboutSection features/CTA + FAQ live on Home (ES+EN), #contact anchor functional. Phase 12 still awaiting Juan's single consolidated visual confirmation of all 4 author-page sections (Expertise/Educación/Experiencia/Eventos) + JSON-LD before closing.
+Last activity: 2026-07-11 — Phase 13 executed end-to-end: 13-01 (AboutSection features[]/ctaText/ctaLink schema, IconPickerField admin Modal-based icon picker, migration applied), 13-02 (features grid + CTA rendered on Home, FAQ + ContactFormBlock added to layout, real bilingual seed content, headless Playwright verification PASS). Fixed 2 real bugs found during self-verification: features[]/faqs[] sub-array id-reuse in the new seed script, and a pre-existing Phase 10.7 bug (leftover Spanish paragraph on the EN AboutSection). Admin icon-picker interactive modal not yet visually confirmed by Juan (no admin credentials available to the executor) — flagged in 13-02-SUMMARY.md. Phase 12 unchanged: still paused on Juan's checkpoint (12-04 Task 2).
 
 ## Performance Metrics
 
@@ -74,6 +74,8 @@ Last activity: 2026-07-11 — Phase 12 executed + mid-phase addition: Authors co
 | Phase 10.5 P01 | 15min | 3 tasks | 26 files |
 | Phase 10.6 P01 | 15min | 2 tasks | 1 files |
 | Phase 10.6 P02 | 20min | 2 tasks | 1 files |
+| Phase 13 P01 | 15min | 3 tasks | 8 files |
+| Phase 13 P02 | 35min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -122,6 +124,9 @@ Recent decisions affecting current work:
 - [Phase 12]: 12-03: real bilingual content seeded via scripts/seed-author-eeat.ts (idempotent, sub-array id reuse across locale writes) — 4 expertise/2 education/2 experience items in ES+EN, 3 socialLinks; avatar verified untouched; re-run confirmed idempotency (no duplicate rows)
 - [Phase 12]: 12-04 Task 1: dev server cache found stale (x-nextjs-cache HIT serving pre-seed content) mid-verification — cleared .next and restarted, unrelated to Phase 12 code; scripts/verify-phase12-author-eeat.mjs then reported RESULT: PASS across both locale routes and all 3 breakpoints (375/768/1280), confirming real content + JSON-LD
 - [Phase 12]: 12-05 (mid-phase, ad-hoc, Juan's direct request via orchestrator): SpeakingEvents modeled as a NEW standalone Payload collection (`speaking-events`), not an Authors array field, so Juan can keep adding events post-launch without reopening Authors schema; 4th author-page section added after Experiencia, same conditional-render contract; 2 real events seeded (Caracas SEO Fest, Taller SEO+IA en Lima/DinoRANK) with NO invented dates (date field left null per Juan's explicit instruction); added a 3rd `experience[]` item (aprendoclub, "Senior Tech SEO Analyst", ongoing role, startDate/endDate both null, reference URL kept in description text rather than reopening Authors.experience schema for a new link field, per Juan's explicit instruction); a `defaultSort` type error (misplaced under `admin` instead of top-level CollectionConfig) was caught by `tsc` and fixed inline (Rule 1); extended verification script re-confirmed PASS across all 4 sections
+- [Phase 13]: 13-01: `IconPickerField` built on `@payloadcms/ui`'s Modal/useField/useModal/FieldLabel instead of shadcn's Dialog — the Payload admin route only imports `@payloadcms/next/css`, not the site's globals.css, so Tailwind/shadcn classes have no effect there; icon values kept camelCase (trendingUp, zap, code, monitor, ...) matching the existing iconMap/socialIconMap convention already used in AuthorCard.tsx; features[]/ctaText/ctaLink added additively to AboutSection (no new block type, per ABOUT-01); migration generated via payload migrate:create and applied, push:false untouched
+- [Phase 13]: 13-02: added a `contactFormBlock` to Home's layout (not previously present) reusing scripts/seed-contact-page.ts's exact copy verbatim, closing a gap CONTEXT.md's CTA decision assumed away (`#contact` anchor had nothing to scroll to); each locale's full layout fetched fresh via `findByID({ locale })` inside the seed script to avoid cross-locale content bleed on sibling blocks; discovered during verification that nested sub-arrays (features[]/faqs[]) need the same id-reuse-across-locale-writes discipline as top-level blocks (Payload full-replaces arrays on update) — fixed in the seed script; also fixed a pre-existing Phase 10.7 bug (leftover Spanish AboutSection paragraph on the EN Home page, root cause: `author.bio ?? fallback` evaluated identically regardless of locale in seed-phase10-7-gap-fill.ts) as part of this phase's own bilingual sanity pass
+- [Phase 13]: Admin icon-picker (`IconPickerField`) interactive modal not yet visually confirmed by Juan — no admin credentials available to the executor to log in and test the popup grid live. TypeScript compiles clean, importMap.js registers the component, /admin/login loads without a build/runtime crash. Flagged for Juan's quick manual pass.
 
 ### Pending Todos
 
@@ -149,7 +154,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-11T00:00:00.000Z
-Stopped at: v1.2 ROADMAP.md creado (Phase 12-15, 18/18 requirements mapeados). Milestone v1.1 sigue con Phase 6 (Deploy + Cutover) en pausa por decisión de Juan; v1.2 corre en paralelo.
-Resume file: .planning/ROADMAP.md (Phase 12: Author Page E-E-A-T Expansion)
+Last session: 2026-07-11T23:10:00.000Z
+Stopped at: Phase 13 (Home Content Population) closed 2/2 plans. Phase 12 still paused on Juan's checkpoint (12-04 Task 2). Phase 14 (targetKeyword) and Phase 15 (sitemap XSL/HTML) remain in the v1.2 ROADMAP, not yet started.
+Resume file: .planning/ROADMAP.md (Phase 12 checkpoint pending; Phase 14 next in v1.2 sequence once Phase 12 closes)
 </content>

@@ -235,12 +235,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ### ABOUT (Home — "Mi enfoque en Consultoría Técnica")
 
-- [ ] **ABOUT-01**: Bloque `AboutSection` extendido con campo opcional `features[]` (mínimo/máximo 4 items: icon + título + descripción) y campos opcionales `ctaText`/`ctaLink` — replica el shape de `AboutWithFeatures` del sitio de referencia sin crear un bloque nuevo (ya fue evaluado y descartado en el gap-analysis de Phase 10.7; el fix es extender `AboutSection`)
-- [ ] **ABOUT-02**: Home poblado con la sección "Mi enfoque en Consultoría Técnica" (eyebrow "Estrategia y datos. Más allá del código", 4 features: SEO Técnico / Rendimiento web / Arquitectura escalable / Ingeniería de UX) usando el `AboutSection` extendido
+- [x] **ABOUT-01**: Bloque `AboutSection` extendido con campo opcional `features[]` (mínimo/máximo 4 items: icon + título + descripción) y campos opcionales `ctaText`/`ctaLink` — replica el shape de `AboutWithFeatures` del sitio de referencia sin crear un bloque nuevo (ya fue evaluado y descartado en el gap-analysis de Phase 10.7; el fix es extender `AboutSection`)
+- [x] **ABOUT-02**: Home poblado con la sección "Mi enfoque en Consultoría Técnica" (eyebrow "Estrategia y datos. Más allá del código", 4 features: SEO Técnico / Rendimiento web / Arquitectura escalable / Ingeniería de UX) usando el `AboutSection` extendido
 
 ### FAQ (Home — bloque existente sin poblar)
 
-- [ ] **FAQ-01**: Bloque `FAQ` (ya existe en el registry, nunca se pobló) agregado al layout del Home y poblado con contenido real (5 preguntas: diferencia SEO tradicional vs técnico, auditoría vs implementación, stack/plataformas, medición de éxito, proceso para empezar)
+- [x] **FAQ-01**: Bloque `FAQ` (ya existe en el registry, nunca se pobló) agregado al layout del Home y poblado con contenido real (5 preguntas: diferencia SEO tradicional vs técnico, auditoría vs implementación, stack/plataformas, medición de éxito, proceso para empezar)
 
 ### SEO-KW (Keyword objetivo por página)
 
@@ -268,9 +268,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | AUTHOR-04 | Phase 12 | Complete |
 | AUTHOR-05 | Phase 12 | Complete |
 | AUTHOR-06 | Phase 12 | Complete |
-| ABOUT-01 | Phase 13 | Pending |
-| ABOUT-02 | Phase 13 | Pending |
-| FAQ-01 | Phase 13 | Pending |
+| ABOUT-01 | Phase 13 | Complete |
+| ABOUT-02 | Phase 13 | Complete |
+| FAQ-01 | Phase 13 | Complete |
 | SEO-KW-01 | Phase 14 | Pending |
 | SEO-KW-02 | Phase 14 | Pending |
 | SITEMAP-01 | Phase 15 | Pending |
