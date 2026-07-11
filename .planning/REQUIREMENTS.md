@@ -262,13 +262,27 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Req ID | Phase | Status |
 |--------|-------|--------|
-| AUTHOR-01..06 | TBD (roadmap) | Pending |
-| ABOUT-01..02 | TBD (roadmap) | Pending |
-| FAQ-01 | TBD (roadmap) | Pending |
-| SEO-KW-01..02 | TBD (roadmap) | Pending |
-| SITEMAP-01..02 | TBD (roadmap) | Pending |
+| AUTHOR-01 | Phase 12 | Pending |
+| AUTHOR-02 | Phase 12 | Pending |
+| AUTHOR-03 | Phase 12 | Pending |
+| AUTHOR-04 | Phase 12 | Pending |
+| AUTHOR-05 | Phase 12 | Pending |
+| AUTHOR-06 | Phase 12 | Pending |
+| ABOUT-01 | Phase 13 | Pending |
+| ABOUT-02 | Phase 13 | Pending |
+| FAQ-01 | Phase 13 | Pending |
+| SEO-KW-01 | Phase 14 | Pending |
+| SEO-KW-02 | Phase 14 | Pending |
+| SITEMAP-01 | Phase 15 | Pending |
+| SITEMAP-02 | Phase 15 | Pending |
+
+**Coverage:**
+
+- v1.2 requirements: 18 total
+- Mapped to phases: 18
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-07-09*
-*Last updated: 2026-07-11 — v1.2 requirements added (Content Parity — Home + Author Page: AUTHOR-01..06, ABOUT-01..02, FAQ-01, SEO-KW-01..02, SITEMAP-01..02)*
+*Last updated: 2026-07-11 — v1.2 roadmap created: Phase 12 (Author Page E-E-A-T Expansion), Phase 13 (Home Content Population), Phase 14 (Target Keyword Field), Phase 15 (Sitemap XSL + HTML) — 18/18 v1.2 requirements mapped*
 </content>

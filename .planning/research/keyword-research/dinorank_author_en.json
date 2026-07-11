@@ -1,0 +1,1097 @@
+{
+    "ok": true,
+    "data": {
+        "source": "dataforseo",
+        "country": "US",
+        "language": "en",
+        "keyword": "technical seo specialist",
+        "data": {
+            "keyword": "technical seo specialist",
+            "pais": "US",
+            "idioma": "en",
+            "datos": {
+                "key": "technical seo specialist",
+                "search_volume": 1300,
+                "cpc": 40.04,
+                "competition": 0.14,
+                "position": 0,
+                "etv": 0,
+                "url": "",
+                "relative_url": "",
+                "history": [
+                    {
+                        "month": "202606",
+                        "search_volume": 90
+                    },
+                    {
+                        "month": "202605",
+                        "search_volume": 170
+                    },
+                    {
+                        "month": "202604",
+                        "search_volume": 210
+                    },
+                    {
+                        "month": "202603",
+                        "search_volume": 260
+                    },
+                    {
+                        "month": "202602",
+                        "search_volume": 320
+                    },
+                    {
+                        "month": "202601",
+                        "search_volume": 140
+                    },
+                    {
+                        "month": "202512",
+                        "search_volume": 12100
+                    },
+                    {
+                        "month": "202511",
+                        "search_volume": 260
+                    },
+                    {
+                        "month": "202510",
+                        "search_volume": 590
+                    },
+                    {
+                        "month": "202509",
+                        "search_volume": 720
+                    },
+                    {
+                        "month": "202508",
+                        "search_volume": 170
+                    },
+                    {
+                        "month": "202507",
+                        "search_volume": 210
+                    }
+                ]
+            },
+            "keywords": [
+                {
+                    "key": "seo technical specialist",
+                    "search_volume": 1300,
+                    "cpc": 14.26,
+                    "competition": 0.05,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 170
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 210
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 260
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 320
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 140
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 12100
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 260
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 590
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 720
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 170
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 210
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 320
+                        }
+                    ]
+                },
+                {
+                    "key": "technical seo specialist job",
+                    "search_volume": 10,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202606",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202605",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "seo technical specialist salary",
+                    "search_volume": 10,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 10
+                        }
+                    ]
+                },
+                {
+                    "key": "seo specialist technical skills",
+                    "search_volume": 10,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202606",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 10
+                        }
+                    ]
+                },
+                {
+                    "key": "technical seo specialist salary",
+                    "search_volume": 10,
+                    "cpc": 0,
+                    "competition": 0.01,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 20
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 20
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 10
+                        }
+                    ]
+                },
+                {
+                    "key": "technical seo specialist jobs",
+                    "search_volume": 10,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202606",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202605",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 20
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 30
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 40
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 10
+                        }
+                    ]
+                },
+                {
+                    "key": "seo technical specialist job description",
+                    "search_volume": 10,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "senior technical seo specialist",
+                    "search_volume": 10,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 10
+                        }
+                    ]
+                },
+                {
+                    "key": "technical seo specialist job description",
+                    "search_volume": 10,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 10
+                        }
+                    ]
+                },
+                {
+                    "key": "what is a technical seo specialist",
+                    "search_volume": 10,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202606",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202605",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 10
+                        }
+                    ]
+                },
+                {
+                    "key": "to technical seo specialist salary",
+                    "search_volume": 0,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "where technical seo specialist",
+                    "search_volume": 0,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "where technical seo specialist job description",
+                    "search_volume": 0,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "who technical seo specialist job description",
+                    "search_volume": 0,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "where technical seo specialist salary",
+                    "search_volume": 0,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "to technical seo specialist",
+                    "search_volume": 0,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "who technical seo specialist",
+                    "search_volume": 0,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 0
+                        }
+                    ]
+                }
+            ],
+            "id": 3962391
+        }
+    }
+}

@@ -1,0 +1,169 @@
+{
+    "ok": true,
+    "data": {
+        "source": "visibility",
+        "country": "ES",
+        "language": "es",
+        "keyword": "seo técnico freelance",
+        "data": {
+            "keywords": {
+                "13019247": {
+                    "id": "13019247",
+                    "keyword": "seo tecnico",
+                    "vol": "260",
+                    "cpc": "3.22",
+                    "competencia": "0.21",
+                    "tendencia": "320;260;390;320;260;210;170;140;320;390;260;210",
+                    "serp": "{\"urls\":[],\"1\":\"https://es.semrush.com/blog/seo-tecnico/\",\"2\":\"https://carlos.sanchezdonate.com/\",\"3\":\"https://www.seo.com/es/basics/technical/\",\"4\":\"https://es.wix.com/blog/seo-tecnico\",\"5\":\"https://cei.es/que-es-seo-tecnico/\",\"6\":\"https://blog.hubspot.es/marketing/guia-seo-tecnico\",\"7\":\"https://www.thepowermba.com/es/blog/tecnicas-de-seo-tecnico-que-es-y-cuales-son-los-principales-elementos\",\"8\":\"https://anayamultimedia.es/libro/social-media/seo-tecnico-aprende-a-optimizar-tu-web-como-un-profesional-human-level-communications-9788441548862/\",\"9\":\"https://ahrefs.com/blog/es/seo-tecnico/\",\"10\":\"https://luismvillanueva.com/curso-seo-tecnico/\",\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":{\"vistaia\":[1],\"imagenes\":[false],\"preguntas\":[106587]}}",
+                    "informativas": "10",
+                    "transaccionales": "0",
+                    "tipo": "relacionada"
+                },
+                "124444898": {
+                    "id": "124444898",
+                    "keyword": "seo técnico",
+                    "vol": "170",
+                    "cpc": "3.44",
+                    "competencia": "0.04",
+                    "tendencia": "140;90;170;210;170;140;90;70;320;210;210;110",
+                    "serp": null,
+                    "informativas": null,
+                    "transaccionales": null,
+                    "tipo": "relacionada"
+                },
+                "52081579": {
+                    "id": "52081579",
+                    "keyword": "tecnico seo",
+                    "vol": "20",
+                    "cpc": "0.07",
+                    "competencia": "0.43",
+                    "tendencia": "20;20;20;20;10;20;10;10;40;40;30;40",
+                    "serp": "{\"urls\":[],\"1\":\"https://es.semrush.com/blog/seo-tecnico/\",\"2\":\"https://www.seo.com/es/basics/technical/\",\"3\":\"https://carlos.sanchezdonate.com/\",\"4\":\"https://seranking.com/es/blog/que-es-seo-tecnico/\",\"5\":\"https://anayamultimedia.es/libro/social-media/seo-tecnico-aprende-a-optimizar-tu-web-como-un-profesional-human-level-communications-9788441548862/\",\"6\":\"https://blog.hubspot.es/marketing/guia-seo-tecnico\",\"7\":\"https://cei.es/que-es-seo-tecnico/\",\"8\":\"https://ahrefs.com/blog/es/seo-tecnico/\",\"9\":\"https://es.wix.com/blog/seo-tecnico\",\"10\":\"https://www.thepowermba.com/es/blog/tecnicas-de-seo-tecnico-que-es-y-cuales-son-los-principales-elementos\",\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":{\"vistaia\":[9507],\"noticias\":[9507],\"preguntas\":[38316]}}",
+                    "informativas": "10",
+                    "transaccionales": "0",
+                    "tipo": "relacionada"
+                },
+                "57159697": {
+                    "id": "57159697",
+                    "keyword": "auditoria seo tecnico",
+                    "vol": "90",
+                    "cpc": "0.00",
+                    "competencia": "0.02",
+                    "tendencia": "90;90;110;140;140;110;90;50;40;70;110;90",
+                    "serp": "{\"urls\":[],\"1\":\"https://oorganika.com/auditoria-seo/\",\"2\":\"https://es.semrush.com/blog/guia-basica-auditoria-seo/\",\"3\":\"https://www.eskimoz.es/auditoria-tecnica/\",\"4\":\"https://seranking.com/es/blog/que-es-seo-tecnico/\",\"5\":\"https://dossetenta.com/auditoria-seo-tecnico/\",\"6\":\"https://commatica.es/tipos-de-auditoria-seo/\",\"7\":\"https://ikaue.com/optimizacion/seo/auditoria-seo/auditoria-seo-tecnico\",\"8\":\"https://digitaltactics360.com/auditoria-seo/\",\"9\":\"https://www.seobility.net/es/auditoria-web/\",\"10\":\"https://www.dobuss.es/que-es-una-auditoria-seo/\",\"11\":\"https://roiupgroup.com/es-es/agencia-digital/agencia-seo/auditorias-tecnicas-seo\",\"12\":\"https://www.sedigital.es/blog/que-es-seo-tecnico/\",\"13\":\"https://www.digitalmenta.com/blog/como-hacer-auditoria-seo/\",\"14\":\"https://www.estudio34.com/auditoria-seo/\",\"15\":\"https://es.semrush.com/blog/tecnico-seo-auditoria/\",\"16\":\"https://soymanugomez.com/como-hacer-una-auditoria-seo/\",\"17\":\"https://linguaserve.com/en-que-consiste-una-auditoria-seo/\",\"18\":\"https://wiredandlinked.com/blog/que-elementos-analizar-en-una-auditoria-de-seo-tecnico/\",\"19\":\"https://www.seoinnova.es/auditoria-seo-alicante/\",\"20\":\"https://es.linkedin.com/posts/digital-menta_c%C3%B3mo-hacer-una-auditor%C3%ADa-seo-20-pasos-activity-7327592784930951168-j-Zw\",\"realSearch\":{\"vistaia\":[1],\"videos\":[340021],\"imagenes\":[false],\"preguntas\":[12765]}}",
+                    "informativas": "6",
+                    "transaccionales": "4",
+                    "tipo": "relacionada"
+                },
+                "54824112": {
+                    "id": "54824112",
+                    "keyword": "master seo tecnico",
+                    "vol": "70",
+                    "cpc": "0.39",
+                    "competencia": "0.27",
+                    "tendencia": "70;90;140;110;70;90;40;70;110;90;50;40",
+                    "serp": "{\"urls\":[],\"1\":\"https://carlos.sanchezdonate.com/master-seo-tecnico/\",\"2\":\"https://rociosantamaria.com/mejores-master-seo/\",\"3\":\"https://neoattack.com/blog/los-mejores-masteres-de-seo/\",\"4\":\"https://www.emagister.com/master-seo-tecnico-profesional-cursos-3672621.htm\",\"5\":\"https://dinorank.com/master-seo/\",\"6\":\"https://www.webpositeracademy.com/master-seo/\",\"7\":\"https://kschool.com/master/master-seo-sem/\",\"8\":\"https://carlos.sanchezdonate.com/\",\"9\":\"https://thebigschool.com/master-seo/?srsltid=AfmBOoq5bvM0RmEZbo90j2KNnXi2hhUSzgyea-Ne9dvFr2b9cDJ69_Pd\",\"10\":\"https://www.iebschool.com/programas/curso-seo-tecnico/\",\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":[]}",
+                    "informativas": "8",
+                    "transaccionales": "2",
+                    "tipo": "relacionada"
+                },
+                "52000648": {
+                    "id": "52000648",
+                    "keyword": "curso seo tecnico",
+                    "vol": "50",
+                    "cpc": "0.03",
+                    "competencia": "0.58",
+                    "tendencia": "50;20;90;90;70;30;30;30;40;50;40;30",
+                    "serp": null,
+                    "informativas": null,
+                    "transaccionales": null,
+                    "tipo": "relacionada"
+                },
+                "53362875": {
+                    "id": "53362875",
+                    "keyword": "que es el seo tecnico",
+                    "vol": "30",
+                    "cpc": "0.54",
+                    "competencia": "0.08",
+                    "tendencia": "20;20;70;50;30;20;20;10;20;20;20;10",
+                    "serp": "{\"urls\":[],\"1\":\"https://es.semrush.com/blog/seo-tecnico/\",\"2\":\"https://carlos.sanchezdonate.com/\",\"3\":\"https://www.seo.com/es/basics/technical/\",\"4\":\"https://es.wix.com/blog/seo-tecnico\",\"5\":\"https://cei.es/que-es-seo-tecnico/\",\"6\":\"https://www.thepowermba.com/es/blog/tecnicas-de-seo-tecnico-que-es-y-cuales-son-los-principales-elementos\",\"7\":\"https://ahrefs.com/blog/es/seo-tecnico/\",\"8\":\"https://rodanet.com/que-es-seo-tecnico/\",\"9\":\"https://seranking.com/es/blog/que-es-seo-tecnico/\",\"10\":\"https://blog.hubspot.es/marketing/guia-seo-tecnico\",\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":{\"vistaia\":[16794],\"noticias\":[16794],\"imagenes\":[false],\"preguntas\":[113082]}}",
+                    "informativas": "9",
+                    "transaccionales": "1",
+                    "tipo": "relacionada"
+                },
+                "59057124": {
+                    "id": "59057124",
+                    "keyword": "agencia seo tecnico",
+                    "vol": "20",
+                    "cpc": "0.00",
+                    "competencia": "0.04",
+                    "tendencia": "10;50;40;50;20;20;10;10;40;10;10;10",
+                    "serp": "{\"urls\":[],\"1\":\"https://seotecnico.es/\",\"2\":\"https://www.digitalmenta.com/seo-tecnico/\",\"3\":\"https://www.sdi.es/servicios/posicionamiento-seo/\",\"4\":\"https://ga.agency/es/consultoria-de-seo/seo-tecnico/\",\"5\":\"https://carlos.sanchezdonate.com/\",\"6\":\"https://sayonara.es/mejores-agencias-seo-en-espana/\",\"7\":\"https://www.netbrain.es/seo-sem/\",\"8\":\"https://www.arimetrics.com/agencia-seo-especialistas-posicionamiento\",\"9\":\"https://www.sortlist.es/s/technical-seo/espana-es\",\"10\":\"https://www.optimoclick.com/agencia-seo/\",\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":{\"mapa\":[67409],\"preguntas\":[28316]}}",
+                    "informativas": "4",
+                    "transaccionales": "6",
+                    "tipo": "relacionada"
+                },
+                "53601403": {
+                    "id": "53601403",
+                    "keyword": "que es seo tecnico",
+                    "vol": "20",
+                    "cpc": "0.00",
+                    "competencia": "0.05",
+                    "tendencia": "10;10;20;20;10;40;20;10;20;40;20;30",
+                    "serp": "{\"urls\":[],\"1\":\"https://es.semrush.com/blog/seo-tecnico/\",\"2\":\"https://www.seo.com/es/basics/technical/\",\"3\":\"https://carlos.sanchezdonate.com/\",\"4\":\"https://es.wix.com/blog/seo-tecnico\",\"5\":\"https://cei.es/que-es-seo-tecnico/\",\"6\":\"https://ahrefs.com/blog/es/seo-tecnico/\",\"7\":\"https://www.thepowermba.com/es/blog/tecnicas-de-seo-tecnico-que-es-y-cuales-son-los-principales-elementos\",\"8\":\"https://seranking.com/es/blog/que-es-seo-tecnico/\",\"9\":\"https://blog.hubspot.es/marketing/guia-seo-tecnico\",\"10\":\"https://www.elsamoreno.com/seo-tecnico-y-seo-contenidos/\",\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":{\"vistaia\":[16810],\"noticias\":[16810],\"preguntas\":[74312]}}",
+                    "informativas": "9",
+                    "transaccionales": "1",
+                    "tipo": "relacionada"
+                },
+                "53482315": {
+                    "id": "53482315",
+                    "keyword": "consultoria seo tecnico",
+                    "vol": "20",
+                    "cpc": "0.00",
+                    "competencia": "0.00",
+                    "tendencia": "10;10;50;70;20;10;0;10;20;10;10;10",
+                    "serp": "{\"urls\":[],\"1\":\"https://ga.agency/es/consultoria-de-seo/seo-tecnico/\",\"2\":\"https://www.sdi.es/servicios/posicionamiento-seo/\",\"3\":\"https://www.sortlist.es/s/technical-seo/espana-es\",\"4\":\"https://www.digitalmenta.com/seo-tecnico/\",\"5\":\"https://chesusrodrigo.es/\",\"6\":\"https://digitaltactics360.com/seo-tecnico/\",\"7\":\"https://internetrepublica.com/consultoria-seo/\",\"8\":\"https://seolives.io/\",\"9\":\"https://carlos.sanchezdonate.com/servicios/consultoria/\",\"10\":\"https://www.geotelecom.es/consultoria-seo/?srsltid=AfmBOoodrvHJHXbjgUB5Icbf8qlygAemsjGZPsoMvIU8zDzW_dI_1ox0\",\"11\":\"https://natzir.com/\",\"12\":\"https://www.novicell.es/es/marketing-digital/seo/seo-tecnico\",\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":{\"preguntas\":[53775]}}",
+                    "informativas": "3",
+                    "transaccionales": "7",
+                    "tipo": "relacionada"
+                },
+                "1315329052": {
+                    "id": "1315329052",
+                    "keyword": "curso de seo técnico",
+                    "vol": "10",
+                    "cpc": "0.00",
+                    "competencia": "0.00",
+                    "tendencia": "10;10;10;10;0;10;0;10;0;10;10;10",
+                    "serp": null,
+                    "informativas": null,
+                    "transaccionales": null,
+                    "tipo": "relacionada"
+                },
+                "147869058": {
+                    "id": "147869058",
+                    "keyword": "curso seo técnico",
+                    "vol": "10",
+                    "cpc": "0.00",
+                    "competencia": "1.00",
+                    "tendencia": "30;10;20;20;20;10;10;10;10;10;10;10",
+                    "serp": null,
+                    "informativas": null,
+                    "transaccionales": null,
+                    "tipo": "relacionada"
+                },
+                "53601404": {
+                    "id": "53601404",
+                    "keyword": "tecnico en seo",
+                    "vol": "20",
+                    "cpc": "0.07",
+                    "competencia": "0.43",
+                    "tendencia": "20;20;20;20;10;20;10;10;40;40;30;40",
+                    "serp": "{\"urls\":[],\"1\":\"https://es.semrush.com/blog/seo-tecnico/\",\"2\":\"https://www.seo.com/es/basics/technical/\",\"3\":\"https://carlos.sanchezdonate.com/\",\"4\":\"https://digitaltactics360.com/seo-tecnico/\",\"5\":\"https://trabajastur.asturias.es/-/t%C3%A9cnico-en-seo\",\"6\":\"https://seranking.com/es/blog/que-es-seo-tecnico/\",\"7\":\"https://unirfp.unir.net/revista/comercio-marketing/trabajar-como-seo/\",\"8\":\"https://www.sumate.eu/servicios/seo/seo-tecnico/\",\"9\":\"https://www.digitalmenta.com/seo-tecnico/\",\"10\":\"https://www.sdi.es/servicios/posicionamiento-seo/\",\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":{\"vistaia\":[9408],\"noticias\":[9408],\"preguntas\":[37936]}}",
+                    "informativas": "7",
+                    "transaccionales": "3",
+                    "tipo": "relacionada"
+                }
+            }
+        }
+    }
+}

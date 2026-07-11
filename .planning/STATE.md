@@ -6,7 +6,7 @@ status: planning
 last_updated: "2026-07-11T19:24:55.367Z"
 last_activity: 2026-07-11
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: Phase 12 — Author Page E-E-A-T Expansion (not started)
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-11 — Milestone v1.2 started
+Status: Roadmap created, ready for /gsd:plan-phase 12
+Last activity: 2026-07-11 — v1.2 roadmap created (Phase 12: Author Page E-E-A-T Expansion, Phase 13: Home Content Population, Phase 14: Target Keyword Field, Phase 15: Sitemap XSL + HTML) — 18/18 requirements mapped
 
 ## Performance Metrics
 
@@ -81,6 +81,7 @@ Last activity: 2026-07-11 — Milestone v1.2 started
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- [Milestone v1.2]: Roadmap: 4 fases (12-15) derivadas de los 18 requirements v1.2, continuando la numeración desde Phase 11 (Phase 6 sigue en pausa, sin re-numerar). Phase 12 (Author E-E-A-T) primero por ser el trabajo de mayor superficie (schema + 3 secciones UI + JSON-LD); Phase 13 agrupa las dos poblaciones de contenido de Home (AboutSection features+CTA y FAQ) por ser del mismo tipo de trabajo; Phase 14 (targetKeyword) y Phase 15 (sitemap XSL/HTML) quedan como fases técnicas compactas independientes, sin dependencia real entre sí más allá del orden secuencial de ejecución. v1.2 corre en paralelo a Phase 6 (Deploy + Cutover, en pausa), sin bloquearlo ni depender de su cierre.
 - Roadmap: Estructura de 6 fases en capas horizontales (Schema → Bilingüe/SEO → Cloudinary spike → Migración → Frontend → Deploy), siguiendo la propuesta de research/SUMMARY.md sin modificaciones
 - Roadmap: Phase 4 (Migración) depende de Phase 2 y Phase 3 juntas — la migración no puede empezar hasta que i18n y storage estén resueltos, para no reescribir contenido migrado después
 - [Phase ?]: next pinned to 15.4.11 (not 15.5.20) because @payloadcms/next@3.85.2 peerDependencies exclude the entire 15.5.x line — Discovered during 01-01 npm install; 15.4.11 is the highest version satisfying the actual peer range while staying on Next 15
@@ -142,6 +143,6 @@ Items acknowledged and carried forward from previous milestone close:
 ## Session Continuity
 
 Last session: 2026-07-11T00:00:00.000Z
-Stopped at: Phase 11 completa (3/3). Milestone v1.1 solo pendiente de Phase 6 (Deploy + Cutover) — pausado por decisión de Juan.
-Resume file: .planning/ROADMAP.md (Phase 6)
+Stopped at: v1.2 ROADMAP.md creado (Phase 12-15, 18/18 requirements mapeados). Milestone v1.1 sigue con Phase 6 (Deploy + Cutover) en pausa por decisión de Juan; v1.2 corre en paralelo.
+Resume file: .planning/ROADMAP.md (Phase 12: Author Page E-E-A-T Expansion)
 </content>

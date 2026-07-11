@@ -1,0 +1,437 @@
+{
+    "ok": true,
+    "data": {
+        "source": "dataforseo",
+        "country": "US",
+        "language": "en",
+        "keyword": "technical seo consultant",
+        "data": {
+            "keyword": "technical seo consultant",
+            "pais": "US",
+            "idioma": "en",
+            "datos": {
+                "key": "technical seo consultant",
+                "search_volume": 320,
+                "cpc": 15.16,
+                "competition": 0.01,
+                "position": 0,
+                "etv": 0,
+                "url": "",
+                "relative_url": "",
+                "history": [
+                    {
+                        "month": "202606",
+                        "search_volume": 260
+                    },
+                    {
+                        "month": "202605",
+                        "search_volume": 590
+                    },
+                    {
+                        "month": "202604",
+                        "search_volume": 480
+                    },
+                    {
+                        "month": "202603",
+                        "search_volume": 590
+                    },
+                    {
+                        "month": "202602",
+                        "search_volume": 880
+                    },
+                    {
+                        "month": "202601",
+                        "search_volume": 140
+                    },
+                    {
+                        "month": "202512",
+                        "search_volume": 70
+                    },
+                    {
+                        "month": "202511",
+                        "search_volume": 40
+                    },
+                    {
+                        "month": "202510",
+                        "search_volume": 170
+                    },
+                    {
+                        "month": "202509",
+                        "search_volume": 320
+                    },
+                    {
+                        "month": "202508",
+                        "search_volume": 390
+                    },
+                    {
+                        "month": "202507",
+                        "search_volume": 320
+                    }
+                ]
+            },
+            "keywords": [
+                {
+                    "key": "technical seo consultant near me",
+                    "search_volume": 50,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 40
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 390
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 20
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 50
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 20
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 40
+                        }
+                    ]
+                },
+                {
+                    "key": "freelance technical seo consultant",
+                    "search_volume": 10,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202606",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202605",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 30
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 50
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 20
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 20
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 10
+                        }
+                    ]
+                },
+                {
+                    "key": "technical seo consultant austin",
+                    "search_volume": 10,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 30
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 50
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 10
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 10
+                        }
+                    ]
+                },
+                {
+                    "key": "technical seo consultant uk",
+                    "search_volume": 0,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "technical seo consultant manchester",
+                    "search_volume": 0,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 0
+                        }
+                    ]
+                },
+                {
+                    "key": "technical seo for bloggers consultant",
+                    "search_volume": 0,
+                    "cpc": 0,
+                    "competition": 0,
+                    "position": 0,
+                    "etv": 0,
+                    "url": "",
+                    "relative_url": "",
+                    "history": [
+                        {
+                            "month": "202605",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202604",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202603",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202602",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202601",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202512",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202511",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202510",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202509",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202508",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202507",
+                            "search_volume": 0
+                        },
+                        {
+                            "month": "202506",
+                            "search_volume": 0
+                        }
+                    ]
+                }
+            ],
+            "id": 3962389
+        }
+    }
+}

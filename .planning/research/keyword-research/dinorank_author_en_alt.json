@@ -1,0 +1,23 @@
+{
+    "ok": true,
+    "data": {
+        "source": "dataforseo",
+        "country": "US",
+        "language": "en",
+        "keyword": "software engineer seo expert",
+        "data": {
+            "keyword": "software engineer seo expert",
+            "pais": "US",
+            "idioma": "en",
+            "datos": {
+                "key": "software engineer seo expert",
+                "search_volume": 0,
+                "cpc": 0,
+                "competition": 0,
+                "history": []
+            },
+            "keywords": [],
+            "id": 3962392
+        }
+    }
+}

@@ -1,0 +1,156 @@
+{
+    "ok": true,
+    "data": {
+        "source": "visibility",
+        "country": "ES",
+        "language": "es",
+        "keyword": "consultor seo técnico",
+        "data": {
+            "keywords": {
+                "72346663": {
+                    "id": "72346663",
+                    "keyword": "calle seo de urgel 7 fuenlabrada",
+                    "vol": "10",
+                    "cpc": "0.00",
+                    "competencia": "0.24",
+                    "tendencia": "10;10;10;30;10;20;10;10;10;10;10;10",
+                    "serp": null,
+                    "informativas": null,
+                    "transaccionales": null,
+                    "tipo": "concordancia_amplia",
+                    "score": 0.7161086797714233
+                },
+                "71974776": {
+                    "id": "71974776",
+                    "keyword": "seor significado",
+                    "vol": "10",
+                    "cpc": "0.00",
+                    "competencia": "0.00",
+                    "tendencia": "10;10;10;10;20;10;10;10;10;10;10;10",
+                    "serp": "{\"0\":\"dle.rae.es\",\"1\":\"seor.es\",\"2\":\"www.rae.es\",\"3\":\"iedra.es\",\"4\":\"sefarad-asturias.org\",\"5\":\"www.instagram.com\",\"6\":\"spanish.stackexchange.com\",\"realSearch\":{\"preguntas\":[46614]}}",
+                    "informativas": "0",
+                    "transaccionales": "0",
+                    "tipo": "concordancia_amplia",
+                    "score": 0.7107441425323486
+                },
+                "71974774": {
+                    "id": "71974774",
+                    "keyword": "congreso seor 2026",
+                    "vol": "10",
+                    "cpc": "0.00",
+                    "competencia": "0.00",
+                    "tendencia": "",
+                    "serp": null,
+                    "informativas": null,
+                    "transaccionales": null,
+                    "tipo": "concordancia_amplia",
+                    "score": 0.6998461484909058
+                },
+                "72388301": {
+                    "id": "72388301",
+                    "keyword": "kouji seo",
+                    "vol": "40",
+                    "cpc": "0.00",
+                    "competencia": "0.00",
+                    "tendencia": "50;50;40;50;30;20;40;40;50;50;40;30",
+                    "serp": "{\"urls\":[],\"1\":\"https://es.wikipedia.org/wiki/K%C5%8Dji_Seo\",\"2\":\"https://www.reddit.com/r/manga/comments/3lf6q9/help_seo_kouji_manga_chronological_order/?tl=es-es\",\"3\":\"https://ramenparados.com/koji-seo-comenzara-nueva-serie-en-enero/\",\"4\":\"https://fuuka.fandom.com/es/wiki/Kouji_Seo\",\"5\":\"https://en.wikipedia.org/wiki/K%C5%8Dji_Seo\",\"6\":\"https://www.amazon.es/Libros-Koji-Seo/s?rh=n%3A599364031%2Cp_27%3AKoji%2BSeo\",\"7\":\"https://www.akibastation.es/2025/11/kouji-seo-autor-de-cafe-terrace-and-its.html\",\"8\":\"https://www.reddit.com/r/manga/comments/skwpqt/how_do_people_feel_about_seo_kouji_and_his_works/?tl=es-419\",\"9\":\"https://www.imdb.com/es-es/name/nm2933214/\",\"10\":\"https://www.casadellibro.com/libros-ebooks/kouji-seo/136283?srsltid=AfmBOorSNeR-YWt4inIvyY9hW87fYPYOLd6pYTeuzCqm4D6OxdxvnEIK\",\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":{\"preguntas\":[247237]}}",
+                    "informativas": "8",
+                    "transaccionales": "2",
+                    "tipo": "concordancia_amplia",
+                    "score": 0.6995854377746582
+                },
+                "71974772": {
+                    "id": "71974772",
+                    "keyword": "congreso seor 2025",
+                    "vol": "30",
+                    "cpc": "0.00",
+                    "competencia": "0.00",
+                    "tendencia": "70;50;50;40;40;40;20;10;0;10;20;20",
+                    "serp": "{\"urls\":[],\"1\":\"https://seor.es/2025/\",\"2\":\"https://seor.es/\",\"3\":\"https://www.ieinstituto.es/agenda/317-xxii-congreso-nacional-de-la-sociedad-espanola-de-oncologia-radioterapica-seor\",\"4\":\"https://www.nferias.com/congreso-seor/\",\"5\":\"https://www.ieinstituto.es/areas-de-desarrollo/apoyo-a-la-investigacion-e-innovacion/jornadas-eventos-premios-conferencias-y-monograficos/317-xxii-congreso-nacional-de-la-sociedad-espanola-de-oncologia-radioterapica-seor\",\"6\":\"https://congresoseor.com/\",\"7\":\"https://x.com/seor_esp?lang=es\",\"8\":\"https://sefm.es/eventos/xx-congreso-seor-ii-congreso-seoc/\",\"9\":\"https://seom.org/otros-servicios/agenda/fecha/2025\",\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":{\"noticias\":[false],\"imagenes\":[false]}}",
+                    "informativas": "9",
+                    "transaccionales": "0",
+                    "tipo": "concordancia_amplia",
+                    "score": 0.6979597806930542
+                },
+                "71784342": {
+                    "id": "71784342",
+                    "keyword": "seo writers",
+                    "vol": "10",
+                    "cpc": "0.00",
+                    "competencia": "0.29",
+                    "tendencia": "10;10;10;10;10;10;10;10;10;10;10;10",
+                    "serp": null,
+                    "informativas": null,
+                    "transaccionales": null,
+                    "tipo": "concordancia_amplia",
+                    "score": 0.6953269839286804
+                },
+                "71732973": {
+                    "id": "71732973",
+                    "keyword": "seovet",
+                    "vol": "170",
+                    "cpc": "0.00",
+                    "competencia": "0.00",
+                    "tendencia": "320;320;260;110;70;70;140;110;110;210;140;140",
+                    "serp": "{\"urls\":[],\"1\":\"https:\\/\\/www.seovet.es\\/\",\"2\":\"https:\\/\\/www.instagram.com\\/seovet_es\\/\",\"3\":\"https:\\/\\/ivoft.com\\/blog\\/ivo-en-seovet-2025\\/\",\"4\":\"https:\\/\\/www.animalshealth.es\\/empresas\\/dr-vet-apoya-xiii-congreso-oftalmologia-veterinaria-seovet-2024\",\"5\":\"https:\\/\\/es.linkedin.com\\/company\\/seovet-es\",\"6\":\"https:\\/\\/x.com\\/seovet_es\",\"7\":\"https:\\/\\/www.instagram.com\\/seovet_es\\/reels\\/\",\"8\":null,\"9\":null,\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":{\"preguntas\":[21938]}}",
+                    "informativas": "7",
+                    "transaccionales": "0",
+                    "tipo": "concordancia_amplia",
+                    "score": 0.6888418197631836
+                },
+                "71740043": {
+                    "id": "71740043",
+                    "keyword": "seoagency",
+                    "vol": "880",
+                    "cpc": "0.03",
+                    "competencia": "0.06",
+                    "tendencia": "720;1000;1300;1600;1300;1300;1300;1000;390;320;720;720",
+                    "serp": "{\"urls\":[],\"1\":\"http:\\/\\/www.seoagency.com\\/\",\"2\":\"https:\\/\\/www.semseoagency.com\\/\",\"3\":\"https:\\/\\/marseoagency.com\\/\",\"4\":\"https:\\/\\/seranking.com\\/es\\/agencies\\/location\\/spain\\/\",\"5\":\"https:\\/\\/www.linkedin.com\\/company\\/bestseoagency\",\"6\":\"https:\\/\\/agenciaseo.eu\\/en\\/\",\"7\":\"https:\\/\\/www.instagram.com\\/the_seo_agency\\/\",\"8\":\"https:\\/\\/seoagency.it.com\\/\",\"9\":\"https:\\/\\/clutch.co\\/es\\/seo-firms\",\"10\":\"http:\\/\\/www.seoagency.com\\/contact\\/\",\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":{\"preguntas\":[39683]}}",
+                    "informativas": "2",
+                    "transaccionales": "8",
+                    "tipo": "concordancia_amplia",
+                    "score": 0.6797037720680237
+                },
+                "71719471": {
+                    "id": "71719471",
+                    "keyword": "que ver en seomyeon busan",
+                    "vol": "10",
+                    "cpc": "0.00",
+                    "competencia": "0.00",
+                    "tendencia": "0;0;0;0;0;0;0;0;10;0;0;0",
+                    "serp": "{\"0\":\"creatrip.com\",\"1\":\"www.viajeroscallejeros.com\",\"2\":\"www.expedia.es\",\"3\":\"www.tripadvisor.es\",\"4\":\"www.reddit.com\",\"5\":\"misindromeviajero.com\",\"6\":\"www.klook.com\",\"7\":\"spanish.visitkorea.or.kr\",\"8\":\"coreanismo.com\",\"9\":\"losviajesderiel.com\",\"realSearch\":{\"vistaia\":[23021],\"imagenes\":[365475],\"preguntas\":[363164]}}",
+                    "informativas": "0",
+                    "transaccionales": "0",
+                    "tipo": "concordancia_amplia",
+                    "score": 0.6682577133178711
+                },
+                "71409365": {
+                    "id": "71409365",
+                    "keyword": "seo checker ai",
+                    "vol": "10",
+                    "cpc": "0.00",
+                    "competencia": "0.00",
+                    "tendencia": "0;0;10;0;0;10;10;0;10;10;0;0",
+                    "serp": null,
+                    "informativas": null,
+                    "transaccionales": null,
+                    "tipo": "concordancia_amplia",
+                    "score": 0.6548451781272888
+                },
+                "72316672": {
+                    "id": "72316672",
+                    "keyword": "seo website design",
+                    "vol": "50",
+                    "cpc": "4.17",
+                    "competencia": "0.19",
+                    "tendencia": "30;260;50;70;50;20;20;20;50;20;40;70",
+                    "serp": "{\"urls\":[],\"1\":\"https://developers.google.com/search/docs/fundamentals/seo-starter-guide\",\"2\":\"https://www.seo.com/services/web-design/\",\"3\":\"https://www.wix.com/blog/web-design-affects-seo\",\"4\":\"https://dribbble.com/tags/seo-website\",\"5\":\"https://www.shopify.com/blog/seo-website-design\",\"6\":\"https://bigsea.co/ideas/seo-and-website-design-what-you-need-to-know/\",\"7\":\"https://www.reddit.com/r/smallbusiness/comments/1fgsfuu/website_designseo_suggestions/\",\"8\":\"https://backlinko.com/hub/seo/seo-friendly-design\",\"9\":\"https://www.uxpin.com/studio/blog/web-design-seo-key-principles/\",\"10\":null,\"11\":null,\"12\":null,\"13\":null,\"14\":null,\"15\":null,\"16\":null,\"17\":null,\"18\":null,\"19\":null,\"20\":null,\"realSearch\":{\"vistaia\":[1],\"videos\":[332726],\"preguntas\":[309936]}}",
+                    "informativas": "8",
+                    "transaccionales": "2",
+                    "tipo": "concordancia_amplia",
+                    "score": 0.6526528596878052
+                }
+            }
+        }
+    }
+}

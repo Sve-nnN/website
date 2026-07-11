@@ -1,0 +1,76 @@
+{
+    "ok": true,
+    "data": {
+        "source": "dataforseo",
+        "country": "US",
+        "language": "en",
+        "keyword": "technical seo engineer",
+        "data": {
+            "keyword": "technical seo engineer",
+            "pais": "US",
+            "idioma": "en",
+            "datos": {
+                "key": "technical seo engineer",
+                "search_volume": 10,
+                "cpc": 18.5,
+                "competition": 0.14,
+                "position": 0,
+                "etv": 0,
+                "url": "",
+                "relative_url": "",
+                "history": [
+                    {
+                        "month": "202605",
+                        "search_volume": 20
+                    },
+                    {
+                        "month": "202604",
+                        "search_volume": 10
+                    },
+                    {
+                        "month": "202603",
+                        "search_volume": 10
+                    },
+                    {
+                        "month": "202602",
+                        "search_volume": 0
+                    },
+                    {
+                        "month": "202601",
+                        "search_volume": 10
+                    },
+                    {
+                        "month": "202512",
+                        "search_volume": 10
+                    },
+                    {
+                        "month": "202511",
+                        "search_volume": 10
+                    },
+                    {
+                        "month": "202510",
+                        "search_volume": 10
+                    },
+                    {
+                        "month": "202509",
+                        "search_volume": 10
+                    },
+                    {
+                        "month": "202508",
+                        "search_volume": 10
+                    },
+                    {
+                        "month": "202507",
+                        "search_volume": 10
+                    },
+                    {
+                        "month": "202506",
+                        "search_volume": 20
+                    }
+                ]
+            },
+            "keywords": [],
+            "id": 3962390
+        }
+    }
+}
