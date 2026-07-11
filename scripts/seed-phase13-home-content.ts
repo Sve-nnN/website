@@ -117,6 +117,21 @@ const ctaCopy: Record<Locale, string> = {
   en: "Let's talk about your project",
 }
 
+// Rule 1 fix (found during this phase's own sanity pass, unrelated to
+// ABOUT-02/FAQ-01 scope but on the exact same block/page): Phase 10.7's
+// seed script (seed-phase10-7-gap-fill.ts) built its `es`/`en` paragraph
+// copy from `author.bio ?? fallback` for BOTH locales identically, so when
+// `author.bio` was populated (in Spanish) it silently became the EN
+// locale's first paragraph too — a real leftover-Spanish-on-EN-page bug,
+// live on Home today. Patched here (idempotent: only replaces the known
+// broken ES string, a no-op once already fixed) since this script already
+// touches the same aboutSection block in place.
+const ABOUT_PARAGRAPH_1_BROKEN_EN_TEXT =
+  'Soy Juan Carlos Angulo, Ingeniero de Software y Consultor SEO Técnico freelance con sede en Lima, Perú. A lo largo de más de cuatro años de experiencia profesional me he especializado en la intersección entre el desarrollo de software y la optimización para motores de búsqueda.\n\nMi trabajo combina la auditoría técnica SEO —rastreo, indexabilidad, Core Web Vitals, Schema.org y datos estructurados— con el desarrollo full-stack utilizando Next.js y Payload CMS. Ayudo a empresas a mejorar su visibilidad orgánica mediante correcciones a nivel de código, sin intermediarios. Construyo y mantengo juan-tech.com, un blog técnico bilingüe orientado a desarrolladores y profesionales de tecnología en Latinoamérica y España.'
+
+const ABOUT_PARAGRAPH_1_FIXED_EN_TEXT =
+  "I'm Juan Carlos Angulo, a freelance Software Engineer and Technical SEO Consultant based in Lima, Peru. Over more than four years of professional experience, I've specialized in the intersection between software development and search engine optimization.\n\nMy work combines technical SEO audits — crawling, indexability, Core Web Vitals, Schema.org, and structured data — with full-stack development using Next.js and Payload CMS. I help companies improve their organic visibility through code-level fixes, with no middlemen involved. I build and maintain juan-tech.com, a bilingual technical blog for developers and tech professionals across Latin America and Spain."
+
 const faqCopy: Record<Locale, { title: string; faqs: { question: string; answer: string }[] }> = {
   es: {
     title: 'Preguntas frecuentes',
@@ -268,8 +283,17 @@ async function main() {
         const withId = featureIds?.[i] ? { ...f, id: featureIds[i] } : f
         return withId
       })
+
+      let paragraphs = (layout[aboutIndex] as { paragraphs?: { id?: string; text?: string }[] })
+        .paragraphs
+      if (locale === 'en' && paragraphs?.[0]?.text === ABOUT_PARAGRAPH_1_BROKEN_EN_TEXT) {
+        paragraphs = paragraphs.map((p, i) => (i === 0 ? { ...p, text: ABOUT_PARAGRAPH_1_FIXED_EN_TEXT } : p))
+        console.log('Fixed leftover-Spanish AboutSection paragraph on the EN locale (Rule 1).')
+      }
+
       layout[aboutIndex] = {
         ...layout[aboutIndex],
+        paragraphs,
         features,
         ctaText: ctaCopy[locale],
         ctaLink: '#contact',
