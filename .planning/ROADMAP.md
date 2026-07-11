@@ -411,7 +411,12 @@ Plans:
   2. Home muestra la sección "Mi enfoque en Consultoría Técnica" (eyebrow "Estrategia y datos. Más allá del código", 4 features: SEO Técnico / Rendimiento web / Arquitectura escalable / Ingeniería de UX) usando el `AboutSection` extendido
   3. El bloque `FAQ` (ya existente en el registry, nunca poblado) está agregado al layout de Home y muestra 5 preguntas reales (diferencia SEO tradicional vs técnico, auditoría vs implementación, stack/plataformas, medición de éxito, proceso para empezar)
 
-**Plans**: TBD
+**Plans**: 2 plans (2 waves)
+
+Plans:
+
+- [ ] 13-01-PLAN.md — AboutSection features[]/ctaText/ctaLink schema + admin icon-picker (Modal-based) + Postgres migration
+- [ ] 13-02-PLAN.md — AboutSection features/CTA render + Home FAQ/ContactFormBlock population (seed)
 
 **UI hint**: yes
 
