@@ -19,6 +19,13 @@ export const SpeakingEvents: CollectionConfig = {
   access: {
     read: () => true,
   },
+  // `date` is optional (see field below) and Postgres's default NULLS
+  // ordering for `ORDER BY date DESC` is NULLS FIRST — undated events sort
+  // ABOVE dated ones, not below. This is intentional here today (both
+  // currently-seeded events are undated), but is worth knowing before
+  // adding a real-dated event: it will still sort below any undated event.
+  // If "undated events should sink instead of float" becomes the desired
+  // behavior, switch to an explicit `sql` order clause with `NULLS LAST`.
   defaultSort: '-date',
   admin: {
     useAsTitle: 'title',

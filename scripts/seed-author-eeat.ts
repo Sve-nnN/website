@@ -20,8 +20,9 @@
  * Idempotent: upserts by slug, reuses sub-array `id`s across locale writes
  * (same pattern as scripts/seed-phase10-7-gap-fill.ts) to avoid duplicating
  * array rows in Postgres when updating a localized array field per locale.
- * speaking-events docs are upserted by `title` (ES) since the collection has
- * no natural slug.
+ * speaking-events docs are upserted by `link` (stable, non-localized, unique
+ * per event) since the collection has no natural slug and the localized ES
+ * `title` is admin-editable content that could legitimately change.
  *
  * Run with: node --env-file=.env node_modules/.bin/tsx scripts/seed-author-eeat.ts
  */
@@ -415,10 +416,14 @@ async function seedSocialLinks(
 }
 
 /**
- * Standalone collection — upserts by ES title (no natural slug field on
- * speaking-events). For each of the 2 real events: finds an existing doc by
- * its ES title (queried via the `es` locale, the collection's defaultLocale),
- * then creates it if missing or updates it per locale if it already exists.
+ * Standalone collection — upserts by `link` (no natural slug field on
+ * speaking-events). `link` is used as the stable match key instead of the
+ * localized ES `title` because titles are normal admin-editable content —
+ * matching on title would silently create a duplicate event if an editor
+ * renamed one in /admin and this script were re-run afterward. `link` is
+ * unique per event and not localized, so it survives content edits. For
+ * each of the 2 real events: finds an existing doc by its `link`, then
+ * creates it if missing or updates it per locale if it already exists.
  */
 async function seedSpeakingEvents(payload: Awaited<ReturnType<typeof getPayload>>) {
   for (let i = 0; i < speakingEventsCopy.es.length; i++) {
@@ -427,7 +432,7 @@ async function seedSpeakingEvents(payload: Awaited<ReturnType<typeof getPayload>
     const { docs: existing } = await payload.find({
       collection: 'speaking-events',
       locale: 'es',
-      where: { title: { equals: esItem.title } },
+      where: { link: { equals: esItem.link } },
       limit: 1,
     })
 
