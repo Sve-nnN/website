@@ -28,7 +28,7 @@ function formatDateRange(
 ) {
   if (!startDate) return ''
 
-  const formatter = new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric' })
+  const formatter = new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric', timeZone: 'UTC' })
   const start = formatter.format(new Date(startDate))
   const end = endDate ? formatter.format(new Date(endDate)) : presentLabel
 
@@ -38,9 +38,12 @@ function formatDateRange(
 /** Formats a single date (day/month/year), e.g. "12 nov 2025". Empty string if missing. */
 function formatEventDate(date: string | null | undefined, locale: string) {
   if (!date) return ''
-  return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short', year: 'numeric' }).format(
-    new Date(date),
-  )
+  return new Intl.DateTimeFormat(locale, {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(date))
 }
 
 async function getAuthor(locale: string, slug: string) {
