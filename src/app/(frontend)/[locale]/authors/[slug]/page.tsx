@@ -1,7 +1,8 @@
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import Image from 'next/image'
-import { GraduationCap } from 'lucide-react'
+import Link from 'next/link'
+import { GraduationCap, Mic, ExternalLink } from 'lucide-react'
 
 import config from '@payload-config'
 import { JsonLd } from '@/components/JsonLd'
@@ -32,6 +33,14 @@ function formatDateRange(
   const end = endDate ? formatter.format(new Date(endDate)) : presentLabel
 
   return `${start} – ${end}`
+}
+
+/** Formats a single date (day/month/year), e.g. "12 nov 2025". Empty string if missing. */
+function formatEventDate(date: string | null | undefined, locale: string) {
+  if (!date) return ''
+  return new Intl.DateTimeFormat(locale, { day: 'numeric', month: 'short', year: 'numeric' }).format(
+    new Date(date),
+  )
 }
 
 async function getAuthor(locale: string, slug: string) {
@@ -71,6 +80,10 @@ const copy = {
     education: 'Educación y Certificaciones',
     experience: 'Experiencia',
     present: 'Presente',
+    speakingEvents: 'Eventos donde he sido ponente',
+    coSpeakersLabel: 'Con',
+    attendeesLabel: 'asistentes',
+    watchLink: 'Ver más',
   },
   en: {
     posts: 'Posts',
@@ -81,6 +94,10 @@ const copy = {
     education: 'Education & Certifications',
     experience: 'Experience',
     present: 'Present',
+    speakingEvents: 'Speaking Events',
+    coSpeakersLabel: 'With',
+    attendeesLabel: 'attendees',
+    watchLink: 'Learn more',
   },
 }
 
@@ -99,7 +116,7 @@ export default async function AuthorProfilePage({
   const t = copy[locale as 'es' | 'en'] ?? copy.es
   const payload = await getPayload({ config })
 
-  const [{ docs: posts }, { docs: caseStudies }] = await Promise.all([
+  const [{ docs: posts }, { docs: caseStudies }, { docs: speakingEvents }] = await Promise.all([
     payload.find({
       collection: 'posts',
       where: { author: { equals: doc.id } },
@@ -110,6 +127,12 @@ export default async function AuthorProfilePage({
       collection: 'case-studies',
       where: { author: { equals: doc.id } },
       locale: locale as 'es' | 'en',
+      limit: 50,
+    }),
+    payload.find({
+      collection: 'speaking-events',
+      locale: locale as 'es' | 'en',
+      sort: '-date',
       limit: 50,
     }),
   ])
@@ -222,6 +245,69 @@ export default async function AuthorProfilePage({
                   )
                 })}
               </ol>
+            </div>
+          </section>
+        )}
+
+        {speakingEvents.length > 0 && (
+          <section className="mt-12">
+            <h2 className="font-heading text-heading mb-6">{t.speakingEvents}</h2>
+            <div className="grid grid-cols-1 gap-6">
+              {speakingEvents.map((event) => {
+                const flyer = typeof event.flyer === 'object' ? event.flyer : null
+                const eventDate = formatEventDate(event.date, locale)
+                const metaParts = [
+                  eventDate,
+                  event.location ?? undefined,
+                  event.attendeeCount ? `${event.attendeeCount} ${t.attendeesLabel}` : undefined,
+                ].filter(Boolean)
+
+                return (
+                  <Card key={event.id} className="flex gap-4 p-6">
+                    <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-muted">
+                      {flyer?.url ? (
+                        <Image
+                          src={flyer.url}
+                          alt={flyer.alt ?? event.title}
+                          width={48}
+                          height={48}
+                          className="rounded-md object-contain"
+                        />
+                      ) : (
+                        <Mic className="size-6 text-muted-foreground" />
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="font-heading text-body font-semibold">{event.title}</p>
+                        {event.role && <Badge variant="secondary">{event.role}</Badge>}
+                      </div>
+                      {metaParts.length > 0 && (
+                        <p className="mt-1 text-label text-muted-foreground">{metaParts.join(' · ')}</p>
+                      )}
+                      {event.description && (
+                        <p className="mt-2 text-body text-muted-foreground">{event.description}</p>
+                      )}
+                      {event.coSpeakers && event.coSpeakers.length > 0 && (
+                        <p className="mt-2 text-label text-muted-foreground">
+                          {t.coSpeakersLabel} {event.coSpeakers.map((cs) => cs.name).join(', ')}
+                        </p>
+                      )}
+                      {event.link && (
+                        <Link
+                          href={event.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center gap-1 text-label text-primary hover:underline"
+                        >
+                          {t.watchLink}
+                          <ExternalLink className="size-3.5" />
+                        </Link>
+                      )}
+                    </div>
+                  </Card>
+                )
+              })}
             </div>
           </section>
         )}
