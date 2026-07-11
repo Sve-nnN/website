@@ -22,6 +22,7 @@ import { Categories } from './collections/Categories'
 import { CaseStudies } from './collections/CaseStudies'
 import { Testimonials } from './collections/Testimonials'
 import { Clientes } from './collections/Clientes'
+import { SpeakingEvents } from './collections/SpeakingEvents'
 import { Llms } from './globals/Llms'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
@@ -72,7 +73,18 @@ export default buildConfig({
     defaultLocale: 'es',
     fallback: true,
   },
-  collections: [Users, Media, Pages, Posts, Authors, Categories, CaseStudies, Testimonials, Clientes],
+  collections: [
+    Users,
+    Media,
+    Pages,
+    Posts,
+    Authors,
+    Categories,
+    CaseStudies,
+    Testimonials,
+    Clientes,
+    SpeakingEvents,
+  ],
   globals: [Llms, Header, Footer, FeaturedContent],
   plugins: [
     seoPlugin({
