@@ -10,6 +10,7 @@ import * as migration_20260710_050300_phase5_content_block_localized_richtext fr
 import * as migration_20260710_150154_phase10_5_footer_dynamic_columns from './20260710_150154_phase10_5_footer_dynamic_columns';
 import * as migration_20260710_164937_phase10_7_about_testimonial_sections from './20260710_164937_phase10_7_about_testimonial_sections';
 import * as migration_20260710_165940_phase10_8_hero_cta_breadcrumbs from './20260710_165940_phase10_8_hero_cta_breadcrumbs';
+import * as migration_20260711_201023_phase12_author_eeat_fields from './20260711_201023_phase12_author_eeat_fields';
 
 export const migrations = [
   {
@@ -70,6 +71,11 @@ export const migrations = [
   {
     up: migration_20260710_165940_phase10_8_hero_cta_breadcrumbs.up,
     down: migration_20260710_165940_phase10_8_hero_cta_breadcrumbs.down,
-    name: '20260710_165940_phase10_8_hero_cta_breadcrumbs'
+    name: '20260710_165940_phase10_8_hero_cta_breadcrumbs',
+  },
+  {
+    up: migration_20260711_201023_phase12_author_eeat_fields.up,
+    down: migration_20260711_201023_phase12_author_eeat_fields.down,
+    name: '20260711_201023_phase12_author_eeat_fields'
   },
 ];

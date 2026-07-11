@@ -348,6 +348,36 @@ export interface Author {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Temas de especialización técnica, renderizados como tags en el author page
+   */
+  expertise?:
+    | {
+        topic: string;
+        id?: string | null;
+      }[]
+    | null;
+  education?:
+    | {
+        degree: string;
+        institution: string;
+        logo?: (number | null) | Media;
+        startDate?: string | null;
+        endDate?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  experience?:
+    | {
+        company: string;
+        role: string;
+        startDate?: string | null;
+        endDate?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   yearsExperience?: number | null;
   socialLinks?:
     | {
@@ -1600,6 +1630,33 @@ export interface AuthorsSelect<T extends boolean = true> {
     | T
     | {
         label?: T;
+        id?: T;
+      };
+  expertise?:
+    | T
+    | {
+        topic?: T;
+        id?: T;
+      };
+  education?:
+    | T
+    | {
+        degree?: T;
+        institution?: T;
+        logo?: T;
+        startDate?: T;
+        endDate?: T;
+        description?: T;
+        id?: T;
+      };
+  experience?:
+    | T
+    | {
+        company?: T;
+        role?: T;
+        startDate?: T;
+        endDate?: T;
+        description?: T;
         id?: T;
       };
   yearsExperience?: T;
