@@ -34,6 +34,7 @@
 import { getPayload } from 'payload'
 
 import config from '../src/payload.config'
+import type { ContactFormBlock } from '../src/payload-types'
 
 const LOCALES = ['es', 'en'] as const
 type Locale = (typeof LOCALES)[number]
@@ -205,7 +206,7 @@ const faqCopy: Record<Locale, { title: string; faqs: { question: string; answer:
   },
 }
 
-const contactCopy: Record<Locale, Record<string, unknown>> = {
+const contactCopy: Record<Locale, Omit<ContactFormBlock, 'id' | 'blockName'>> = {
   es: {
     blockType: 'contactFormBlock',
     eyebrow: 'Contacto',
