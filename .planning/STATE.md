@@ -2,8 +2,8 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: milestone
-status: "Phase 13 (Home Content Population) complete, 2/2 plans. Phase 12 still awaiting Juan's single consolidated visual confirmation of all 4 author-page sections + JSON-LD (unrelated blocker, run in parallel with Phase 13)."
-stopped_at: "Phase 13 executed end-to-end (13-01 schema/admin icon-picker, 13-02 frontend render + seed content) — AboutSection features/CTA + FAQ live on Home in both locales, #contact anchor real. Phase 12 (Author Page E-E-A-T) still paused on Juan's checkpoint."
+status: "Phase 12 (Author Page E-E-A-T) closed 2026-07-11 — Juan reviewed visually, 2 bugs found+fixed, verified 7/7, code review clean. Phase 13 (Home Content Population) code/content complete, 2/2 plans, awaiting Juan's visual sign-off (incl. admin icon-picker click-through, not yet confirmed) and verify+review before closing."
+stopped_at: "Phase 13 executed end-to-end (13-01 schema/admin icon-picker, 13-02 frontend render + seed content) — AboutSection features/CTA + FAQ live on Home in both locales, #contact anchor real. Phase 12 fully closed."
 last_updated: "2026-07-11T23:10:00.000Z"
 last_activity: "2026-07-11 — Phase 13 executed: AboutSection.features[]/ctaText/ctaLink schema + IconPickerField admin Modal-based icon picker + migration applied (13-01); AboutSection features grid + CTA rendered, FAQ block + ContactFormBlock added to Home layout, real bilingual content seeded, headless Playwright verification PASS across ES/EN and 375/768/1280 breakpoints (13-02). Deviations: fixed a features[]/faqs[] sub-array id-reuse bug in the seed script, and fixed a pre-existing Phase 10.7 bug (leftover Spanish AboutSection paragraph on the EN Home page). Phase 12 remains blocked on Juan's checkpoint (12-04 Task 2), unaffected by Phase 13's work."
 progress:
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: Phase 13 — Home Content Population (AboutSection Features + FAQ) — COMPLETE, 2/2 plans. Phase 12 — Author Page E-E-A-T Expansion still in progress (3/4 formal plans executed + 1 mid-phase ad-hoc addition), unaffected by Phase 13.
-Plan: Phase 13 closed (13-01, 13-02). Phase 12: 12-04 (Task 1 done, Task 2 blocking human checkpoint pending) — plus 12-05 (ad-hoc, complete)
-Status: Phase 13 done — AboutSection features/CTA + FAQ live on Home (ES+EN), #contact anchor functional. Phase 12 still awaiting Juan's single consolidated visual confirmation of all 4 author-page sections (Expertise/Educación/Experiencia/Eventos) + JSON-LD before closing.
-Last activity: 2026-07-11 — Phase 13 executed end-to-end: 13-01 (AboutSection features[]/ctaText/ctaLink schema, IconPickerField admin Modal-based icon picker, migration applied), 13-02 (features grid + CTA rendered on Home, FAQ + ContactFormBlock added to layout, real bilingual seed content, headless Playwright verification PASS). Fixed 2 real bugs found during self-verification: features[]/faqs[] sub-array id-reuse in the new seed script, and a pre-existing Phase 10.7 bug (leftover Spanish paragraph on the EN AboutSection). Admin icon-picker interactive modal not yet visually confirmed by Juan (no admin credentials available to the executor) — flagged in 13-02-SUMMARY.md. Phase 12 unchanged: still paused on Juan's checkpoint (12-04 Task 2).
+Phase: Phase 12 — CLOSED (7/7 verified, code review clean, Juan confirmed visually). Phase 13 — Home Content Population (AboutSection Features + FAQ) — code/content complete 2/2 plans, pending Juan's visual sign-off + formal verify/review.
+Plan: Phase 13 executed (13-01, 13-02). Next: verify-phase 13, code-review 13, then Phase 14.
+Status: Phase 13 built — AboutSection features/CTA + FAQ live on Home (ES+EN), #contact anchor functional via new ContactFormBlock. Needs Juan's visual check (incl. clicking through the new admin icon-picker modal, which the executor couldn't do without admin credentials) before final close.
+Last activity: 2026-07-11 — Phase 13 executed end-to-end: 13-01 (AboutSection features[]/ctaText/ctaLink schema, IconPickerField admin Modal-based icon picker, migration applied), 13-02 (features grid + CTA rendered on Home, FAQ + ContactFormBlock added to layout, real bilingual seed content, headless Playwright verification PASS). Fixed 2 real bugs found during self-verification: features[]/faqs[] sub-array id-reuse in the new seed script, and a pre-existing Phase 10.7 bug (leftover Spanish paragraph on the EN AboutSection).
 
 ## Performance Metrics
 
