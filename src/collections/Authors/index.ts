@@ -9,10 +9,13 @@ import { slugField } from '@/fields/slug'
  * (no email/password, no `auth: true`) — it's a public content collection,
  * not a login collection.
  *
- * Trimmed to a lean field set per CONTEXT.md's discretion — does NOT port the
- * heavy `education`/`experience`/`socialMedia`/`expertise` arrays from the
- * JuanPortfolio analog; those are a later content-audit-phase elaboration not
- * called for by CONTEXT.md.
+ * Originally trimmed to a lean field set per Phase 1 CONTEXT.md's discretion
+ * (name/jobTitle/bio/avatar/credentials/yearsExperience/socialLinks only).
+ * Phase 12 (AUTHOR-01) recovers the `expertise`/`education`/`experience`
+ * arrays for full E-E-A-T coverage on the author page — see
+ * .planning/phases/12-author-page-e-e-a-t-expansion/12-CONTEXT.md. The
+ * `certificate` upload field from the JuanPortfolio analog's `education[]`
+ * is intentionally NOT ported — no real certificate files are available.
  *
  * No SEO tab: `@payloadcms/plugin-seo` targets `pages`/`posts`/`case-studies`
  * only per CONTEXT.md — Authors does not get a SEO tab in Phase 1.
@@ -61,6 +64,117 @@ export const Authors: CollectionConfig = {
           type: 'text',
           localized: true,
           required: true,
+        },
+      ],
+    },
+    {
+      name: 'expertise',
+      type: 'array',
+      label: { en: 'Expertise', es: 'Expertise' },
+      admin: {
+        description: 'Temas de especialización técnica, renderizados como tags en el author page',
+      },
+      fields: [
+        {
+          name: 'topic',
+          type: 'text',
+          localized: true,
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'education',
+      type: 'array',
+      label: { en: 'Education & Certifications', es: 'Educación y Certificaciones' },
+      admin: {
+        initCollapsed: true,
+      },
+      fields: [
+        {
+          name: 'degree',
+          type: 'text',
+          localized: true,
+          required: true,
+        },
+        {
+          name: 'institution',
+          type: 'text',
+          localized: true,
+          required: true,
+        },
+        {
+          name: 'logo',
+          type: 'upload',
+          relationTo: 'media',
+        },
+        {
+          name: 'startDate',
+          type: 'date',
+          admin: {
+            date: {
+              pickerAppearance: 'monthOnly',
+            },
+          },
+        },
+        {
+          name: 'endDate',
+          type: 'date',
+          admin: {
+            date: {
+              pickerAppearance: 'monthOnly',
+            },
+          },
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          localized: true,
+        },
+      ],
+    },
+    {
+      name: 'experience',
+      type: 'array',
+      label: { en: 'Experience', es: 'Experiencia' },
+      admin: {
+        initCollapsed: true,
+      },
+      fields: [
+        {
+          name: 'company',
+          type: 'text',
+          localized: true,
+          required: true,
+        },
+        {
+          name: 'role',
+          type: 'text',
+          localized: true,
+          required: true,
+        },
+        {
+          name: 'startDate',
+          type: 'date',
+          admin: {
+            date: {
+              pickerAppearance: 'monthOnly',
+            },
+          },
+        },
+        {
+          name: 'endDate',
+          type: 'date',
+          admin: {
+            date: {
+              pickerAppearance: 'monthOnly',
+            },
+          },
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          localized: true,
         },
       ],
     },
