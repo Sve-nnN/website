@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import config from '@payload-config'
 import { JsonLd } from '@/components/JsonLd'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { sendContactMessage } from '@/app/actions/contact'
 
 async function getHomePage(locale: string) {
   const payload = await getPayload({ config })
@@ -45,7 +46,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <main>
-      <RenderBlocks blocks={doc.content?.layout ?? []} />
+      <RenderBlocks
+        blocks={doc.content?.layout ?? []}
+        sharedProps={{
+          onSubmit: sendContactMessage,
+          locale,
+          contactEmail: process.env.CONTACT_TO_EMAIL,
+        }}
+      />
       <JsonLd data={personData} />
     </main>
   )

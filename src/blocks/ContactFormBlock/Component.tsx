@@ -55,7 +55,7 @@ export function ContactFormBlockComponent(props: ContactFormComponentProps) {
     : `Something went wrong sending your message. Please try again${contactEmail ? `, or email ${contactEmail} directly` : ''}.`
 
   return (
-    <Container className="py-12 md:py-16">
+    <Container id="contact" className="py-12 md:py-16">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
           {eyebrow && <p className="text-label text-primary">{eyebrow}</p>}

@@ -1,11 +1,18 @@
 import Image from 'next/image'
+import { TrendingUp, Zap, Code, Monitor } from 'lucide-react'
 
 import type { AboutSectionBlock as AboutSectionBlockProps } from '@/payload-types'
 
 import { Container } from '@/components/Container'
+import { Button } from '@/components/ui/button'
+
+// Feature icons — subset of src/fields/IconPicker/icons.ts's ICON_OPTIONS,
+// matching the 4 real icons used by the seeded "Mi enfoque en Consultoría
+// Técnica" features (13-UI-SPEC.md Section 1). Code is the safe fallback.
+const iconMap = { trendingUp: TrendingUp, zap: Zap, code: Code, monitor: Monitor } as const
 
 export function AboutSectionComponent(props: AboutSectionBlockProps) {
-  const { eyebrow, title, paragraphs, photo } = props
+  const { eyebrow, title, paragraphs, photo, features, ctaText, ctaLink } = props
 
   const photoDoc = typeof photo === 'object' ? photo : null
 
@@ -38,6 +45,31 @@ export function AboutSectionComponent(props: AboutSectionBlockProps) {
           </div>
         )}
       </div>
+      {features && features.length > 0 && (
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {features.map((item, i) => {
+            const Icon = iconMap[item.icon as keyof typeof iconMap] ?? Code
+            return (
+              <div key={i} className="flex gap-4">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/10">
+                  <Icon className="size-5 text-primary" />
+                </div>
+                <div>
+                  <p className="font-heading text-body font-semibold">{item.title}</p>
+                  <p className="mt-1 text-body text-muted-foreground">{item.description}</p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+      {ctaText && ctaLink && (
+        <div className="mt-8">
+          <Button asChild>
+            <a href={ctaLink}>{ctaText}</a>
+          </Button>
+        </div>
+      )}
     </Container>
   )
 }
