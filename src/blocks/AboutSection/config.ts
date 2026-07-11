@@ -1,6 +1,16 @@
-import type { Block } from 'payload'
+import type { Block, Validate } from 'payload'
 
 import { iconSelectOptions } from '@/fields/IconPicker/icons'
+
+// Guards against unsafe/malformed schemes (e.g. `javascript:`) being saved
+// into `ctaLink`, which is rendered directly into an `<a href>` on the
+// frontend with no further sanitization. Empty values are allowed since the
+// field is optional (CTA only renders when both ctaText and ctaLink are set).
+const validateCtaLink: Validate<string | null | undefined> = (value) => {
+  if (!value) return true
+  const isSafe = /^(#|\/|https?:\/\/|mailto:)/.test(value)
+  return isSafe || 'Debe empezar con #, /, http://, https:// o mailto:'
+}
 
 // Gap-fill block (10.7, UI-20): JuanPortfolio's "About" section (eyebrow +
 // title + narrative paragraphs + optional photo) had no direct analog among
@@ -101,6 +111,7 @@ export const AboutSection: Block = {
     {
       name: 'ctaLink',
       type: 'text',
+      validate: validateCtaLink,
       admin: {
         description: 'URL o ancla del CTA, ej: #contact (opcional)',
       },
