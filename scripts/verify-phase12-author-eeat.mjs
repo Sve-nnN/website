@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 /**
  * Phase 12 close-out — real Chromium-headless verification of the author
- * page's 3 new E-E-A-T sections (Expertise/Educación y Certificaciones/
- * Experiencia) and the enriched Person JSON-LD, against the real content
- * seeded by scripts/seed-author-eeat.ts (12-03). Reuses the same Playwright
- * pattern as scripts/verify-phase11-real-content-mobile.mjs (real browser,
- * not CSS simulation) — no new dependency.
+ * page's 4 new E-E-A-T sections (Expertise/Educación y Certificaciones/
+ * Experiencia/Eventos donde he sido ponente) and the enriched Person
+ * JSON-LD, against the real content seeded by scripts/seed-author-eeat.ts
+ * (12-03, extended mid-phase for speaking-events + aprendoclub experience).
+ * Reuses the same Playwright pattern as
+ * scripts/verify-phase11-real-content-mobile.mjs (real browser, not CSS
+ * simulation) — no new dependency.
  *
  * Requires a dev server already running. Override with BASE_URL
  * (defaults to http://localhost:3000).
@@ -32,17 +34,23 @@ const VIEWPORTS = [
 const ROUTES = [
   {
     path: '/es/authors/juan-carlos-angulo',
-    label: 'Author page ES — Expertise/Educación/Experiencia',
+    label: 'Author page ES — Expertise/Educación/Experiencia/Eventos',
     expertiseText: 'SEO Técnico Avanzado',
     institutionText: 'Universidad Peruana de Ciencias Aplicadas',
     experienceText: 'AprendoSEO',
+    aprendoclubText: 'aprendoclub',
+    speakingEventText: 'Caracas SEO Fest',
+    speakingEvent2Text: 'Taller SEO + IA en Lima',
   },
   {
     path: '/en/authors/juan-carlos-angulo',
-    label: 'Author page EN — Expertise/Education/Experience',
+    label: 'Author page EN — Expertise/Education/Experience/Speaking Events',
     expertiseText: 'Advanced Technical SEO',
     institutionText: 'Universidad Peruana de Ciencias Aplicadas',
     experienceText: 'AprendoSEO',
+    aprendoclubText: 'aprendoclub',
+    speakingEventText: 'Caracas SEO Fest',
+    speakingEvent2Text: 'SEO + AI Workshop in Lima',
   },
 ]
 
@@ -81,6 +89,24 @@ async function checkRoute(browser, route, viewport) {
     failures.push(`Experience timeline text not found: "${route.experienceText}"`)
   } else {
     notes.push(`Experience timeline text found: "${route.experienceText}"`)
+  }
+
+  if (!bodyText.includes(route.aprendoclubText)) {
+    failures.push(`Experience timeline aprendoclub item not found: "${route.aprendoclubText}"`)
+  } else {
+    notes.push(`Experience timeline aprendoclub item found: "${route.aprendoclubText}"`)
+  }
+
+  if (!bodyText.includes(route.speakingEventText)) {
+    failures.push(`Speaking Events section — event 1 not found: "${route.speakingEventText}"`)
+  } else {
+    notes.push(`Speaking Events section — event 1 found: "${route.speakingEventText}"`)
+  }
+
+  if (!bodyText.includes(route.speakingEvent2Text)) {
+    failures.push(`Speaking Events section — event 2 not found: "${route.speakingEvent2Text}"`)
+  } else {
+    notes.push(`Speaking Events section — event 2 found: "${route.speakingEvent2Text}"`)
   }
 
   const ldJsonBlocks = await page.locator('script[type="application/ld+json"]').allTextContents()
@@ -122,7 +148,9 @@ async function main() {
   }
 
   let anyFailed = false
-  console.log('\n=== Phase 12 Author E-E-A-T Verification (Expertise/Education/Experience + JSON-LD) ===\n')
+  console.log(
+    '\n=== Phase 12 Author E-E-A-T Verification (Expertise/Education/Experience/Speaking Events + JSON-LD) ===\n',
+  )
   for (const r of results) {
     const status = r.failures.length === 0 ? 'OK' : 'FAIL'
     if (r.failures.length > 0) anyFailed = true
