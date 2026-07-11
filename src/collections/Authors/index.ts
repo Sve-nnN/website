@@ -70,7 +70,7 @@ export const Authors: CollectionConfig = {
     {
       name: 'expertise',
       type: 'array',
-      label: { en: 'Expertise', es: 'Expertise' },
+      label: { en: 'Expertise', es: 'Áreas de especialización' },
       admin: {
         description: 'Temas de especialización técnica, renderizados como tags en el author page',
       },

@@ -79,7 +79,7 @@ const copy = {
     caseStudies: 'Casos de éxito',
     home: 'Inicio',
     authors: 'Autores',
-    expertise: 'Expertise',
+    expertise: 'Áreas de especialización',
     education: 'Educación y Certificaciones',
     experience: 'Experiencia',
     present: 'Presente',
