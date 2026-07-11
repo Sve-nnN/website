@@ -1,30 +1,28 @@
 ---
 phase: 13-home-content-population
-verified: 2026-07-11T23:10:04Z
-status: gaps_found
-score: 2/3 must-haves verified
+verified: 2026-07-11T23:45:00Z
+status: human_needed
+score: 3/3 must-haves verified
 overrides_applied: 0
-gaps:
-  - truth: "Home shows the 'Mi enfoque en Consultoría Técnica' section (eyebrow 'Estrategia y datos. Más allá del código', 4 features) using the extended AboutSection"
-    status: failed
-    reason: "The features grid + CTA were appended in-place to Home's PRE-EXISTING AboutSection block (seeded in Phase 10.7 with eyebrow 'Sobre mí' / title 'Ingeniería de software con mentalidad SEO'), and the seed script explicitly preserved that old eyebrow/title 'without touching' them. The live Home page (ES and EN) never renders the copy locked in 13-CONTEXT.md and required by ROADMAP.md Phase 13 Success Criterion #2: eyebrow 'Estrategia y datos. Más allá del código' / title 'Mi enfoque en Consultoría Técnica' do not appear anywhere in the rendered HTML of / or /en."
-    artifacts:
-      - path: scripts/seed-phase13-home-content.ts
-        issue: "Comment at top of file (lines 4-7) explicitly documents the decision to update the existing aboutSection block's features[]/ctaText/ctaLink 'without touching the block's existing eyebrow/title/paragraphs/photo' — this preserves Phase 10.7's unrelated 'Sobre mí' bio copy instead of the Phase-13-mandated 'Estrategia y datos...' / 'Mi enfoque en Consultoría Técnica' copy."
-    missing:
-      - "Update Home's aboutSection block's eyebrow to 'Estrategia y datos. Más allá del código' / 'Data and strategy. Beyond the code' (ES/EN) and title to 'Mi enfoque en Consultoría Técnica' / its EN translation, OR confirm with Juan that the existing 'Sobre mí' bio copy should stay and adjust CONTEXT.md/ROADMAP's success criterion wording to match reality (explicit scope decision, not a silent gap)."
+re_verification:
+  previous_status: gaps_found
+  previous_score: 2/3
+  gaps_closed:
+    - "Home shows the 'Mi enfoque en Consultoría Técnica' section (eyebrow 'Estrategia y datos. Más allá del código', 4 features) using the extended AboutSection"
+  gaps_remaining: []
+  regressions: []
 human_verification:
   - test: "Open /admin, log in, navigate to the Home page document's aboutSection block, expand any features[] row, click the icon field to open the IconPickerField modal, type a search term, and click an icon to select it."
     expected: "A modal opens showing a search input and a scrollable grid of icon buttons; typing filters the grid by icon label; clicking an icon sets the field's value (shown on the trigger button) and closes the modal; the selected value persists after saving the document."
-    why_human: "The 13-02-SUMMARY.md explicitly states this interactive flow (open modal, search, select) was never exercised by the executor — no admin credentials were available. Code inspection (Modal/useField/useModal wiring, ICON_OPTIONS filter logic) is consistent with the intended behavior, but real click-through in a logged-in admin session has not been observed."
+    why_human: "No admin credentials are available to any agent in this environment. Code inspection (Modal/useField/useModal wiring in src/fields/IconPicker/Component.tsx, ICON_OPTIONS filter logic, importMap.js registration) is consistent with the intended behavior, and this item was carried unchanged from the initial verification since 13-03 did not touch the icon picker. Real click-through in a logged-in admin session has still not been observed and cannot be automated here. This item does not block a passed verdict for the rest of the phase."
 ---
 
 # Phase 13: Home Content Population Verification Report
 
 **Phase Goal:** Home cierra los dos gaps de contenido restantes identificados contra el sitio de referencia — la sección "Mi enfoque en Consultoría Técnica" (features del `AboutSection` extendido) y el bloque FAQ, que ya existe en el registry pero nunca se pobló — ambos con contenido real de Juan.
-**Verified:** 2026-07-11T23:10:04Z
-**Status:** gaps_found
-**Re-verification:** No — initial verification
+**Verified:** 2026-07-11T23:45:00Z
+**Status:** human_needed
+**Re-verification:** Yes — after gap closure (13-03)
 
 ## Goal Achievement
 
@@ -32,46 +30,53 @@ human_verification:
 
 | # | Truth (ROADMAP Success Criteria) | Status | Evidence |
 |---|---|---|---|
-| 1 | `AboutSection` exposes an optional `features[]` (min/max 4: icon+title+description) and optional `ctaText`/`ctaLink`, extending the existing block (no new block type) | ✓ VERIFIED | `src/blocks/AboutSection/config.ts` adds `features` (array, `minRows:4`/`maxRows:4`, `icon`/`title`/`description` sub-fields, `icon` wired to `IconPickerField`) and `ctaText`/`ctaLink` (plain text fields) inside the *existing* `aboutSection` block slug — no new block registered. |
-| 2 | Home shows the "Mi enfoque en Consultoría Técnica" section (eyebrow "Estrategia y datos. Más allá del código", 4 features: SEO Técnico / Rendimiento web / Arquitectura escalable / Ingeniería de UX) via the extended `AboutSection` | ✗ FAILED | Live `curl http://localhost:3000/` and `/en` confirm the 4 features render with correct copy (SEO Técnico, Rendimiento web, Arquitectura escalable, Ingeniería de UX / EN translations) and the CTA ("Hablemos de tu proyecto" → `#contact`) works. **But** the section's own eyebrow/title are "Sobre mí" / "Ingeniería de software con mentalidad SEO" (Phase 10.7's original bio copy) — `grep -c "Estrategia y datos\|Mi enfoque en Consultoría" /tmp/home_es.html` = 0. The mandated eyebrow/title never render on either locale. |
-| 3 | `FAQ` block (existing, never populated) is added to Home's layout and shows 5 real questions | ✓ VERIFIED | Live HTML on `/` and `/en` contains all 5 `<summary>` questions verbatim (ES) and translated (EN), each with a real Lexical-rendered answer paragraph. Block positioned after `AboutSection`, before `ContactFormBlock` (`about idx 5893 < faq idx 10738 < contact idx 33229` in raw HTML byte offsets). |
+| 1 | `AboutSection` exposes an optional `features[]` (min/max 4: icon+title+description) and optional `ctaText`/`ctaLink`, extending the existing block (no new block type) | ✓ VERIFIED | `src/blocks/AboutSection/config.ts` still defines `features` (array, `minRows:4`/`maxRows:4`, icon/title/description sub-fields, icon wired to `IconPickerField`) and `ctaText`/`ctaLink` inside the existing `aboutSection` block slug. No regression since initial verification. |
+| 2 | Home shows the "Mi enfoque en Consultoría Técnica" section (eyebrow "Estrategia y datos. Más allá del código", 4 features: SEO Técnico / Rendimiento web / Arquitectura escalable / Ingeniería de UX) via the extended `AboutSection`, in both ES and EN | ✓ VERIFIED (gap closed) | Fresh `curl http://localhost:3000/` and `/en` against the running dev server (2026-07-11, post-13-03). ES: `Estrategia y datos. Más allá del código` and `Mi enfoque en Consultoría Técnica` both present (1 occurrence in the rendered DOM text, plus RSC payload echo); old placeholder `Sobre mí` / `Ingeniería de software con mentalidad SEO` — **0 occurrences**, confirmed absent. EN: `Data and strategy. Beyond the code` and `My Approach to Technical Consulting` present; old `About Me` / `Software engineering with an SEO mindset` — **0 occurrences**. All 4 features (SEO Técnico/Technical SEO, Rendimiento web/Web Performance, Arquitectura escalable/Scalable Architecture, Ingeniería de UX/UX Engineering) render with correct copy in both locales, unaffected by the header-copy change. CTA ("Hablemos de tu proyecto" / "Let's talk about your project") → `href="#contact"` confirmed present. |
+| 3 | `FAQ` block (existing, never populated) is added to Home's layout and shows 5 real questions | ✓ VERIFIED | Live HTML on `/` contains all 5 ES `<summary>` questions verbatim (1 occurrence each, confirmed via grep count), Lexical-rendered answers present. Block positioned after `AboutSection`, before `ContactFormBlock` (byte offsets in fresh fetch: about=5974 < faq=10438 < contact anchor present later in document). No regression from re-running the seed script in 13-03. |
 
-**Score:** 2/3 truths verified
+**Score:** 3/3 truths verified
+
+### Regression Check (idempotency + no side effects from 13-03)
+
+Re-ran `scripts/seed-phase13-home-content.ts` live against the dev DB during this verification pass:
+- Console output showed only `"Phase 13 home content: updated home Pages doc (locale=es)"` / `(locale=en)` / `"Done."` — no new-block-creation or duplicate-row log lines.
+- Re-fetched `/` after the re-run: `Mi enfoque en Consultoría Técnica` and `Estrategia y datos` each still occur exactly **1** time in the page (no duplication from a second run).
+- Confirms the idempotency claim in 13-03-SUMMARY.md holds under an independent, non-scripted re-run.
 
 ### Required Artifacts
 
 | Artifact | Expected | Status | Details |
 |---|---|---|---|
-| `src/blocks/AboutSection/config.ts` | `features[]` (icon/title/description, min/max 4) + `ctaText`/`ctaLink` | ✓ VERIFIED | Present, matches spec shape; `icon` field uses `admin.components.Field: '@/fields/IconPicker/Component#IconPickerField'`. |
-| `src/fields/IconPicker/icons.ts` | Shared icon list (≥8 required icons + margin) | ✓ VERIFIED | 24 lucide-react icons exported as `ICON_OPTIONS` (with `Icon` refs) and `iconSelectOptions` (plain value/label for Payload `select.options`). Includes all 8 CONTEXT.md-mandated icons (Zap, Monitor, Code, TrendingUp, Shield, Rocket, Palette, Lightbulb) plus 16 more. |
-| `src/fields/IconPicker/Component.tsx` | Modal-based visual icon-grid picker (search + click-to-select) | ✓ VERIFIED (code-level) | Client component using `@payloadcms/ui`'s `Modal`/`useField`/`useModal`/`FieldLabel`; search input filters `ICON_OPTIONS` by label; grid of 44px icon buttons; click calls `setValue` + `closeModal`. Interactive behavior not exercised live — see Human Verification. |
-| `src/app/(payload)/admin/importMap.js` | `IconPickerField` registered | ✓ VERIFIED | Line 26 imports it, line 63 registers it under the exact key referenced by `config.ts`'s `admin.components.Field` path. |
-| `src/blocks/AboutSection/Component.tsx` | Renders features grid + CTA conditionally | ✓ VERIFIED | `features && features.length > 0` renders `grid-cols-1 sm:grid-cols-2 gap-6` icon+title+description items; `ctaText && ctaLink` renders `Button asChild` wrapping `<a href={ctaLink}>`. Matches 13-UI-SPEC.md Section 1 markup/class contract exactly. |
-| `src/migrations/20260711_224308_phase13_about_features_faq.ts`/`.json` | Postgres migration for new columns/tables | ✓ VERIFIED | Present, committed (`1fc39c8`), registered in `src/migrations/index.ts`. |
-| Home layout: `faq` block with 5 real Q&A | Populated via seed | ✓ VERIFIED | Confirmed live, both locales (see truth #3 evidence). |
-| Home layout: `contactFormBlock` with `id="contact"` | CTA anchor target | ✓ VERIFIED | `src/blocks/ContactFormBlock/Component.tsx` root `Container` carries `id="contact"`; live HTML confirms `id="contact"` present and the CTA's `href="#contact"` resolves to it on the same page. |
-| Home `AboutSection` eyebrow/title = CONTEXT.md's locked copy | "Estrategia y datos. Más allá del código" / "Mi enfoque en Consultoría Técnica" | ✗ MISSING | Not present in rendered output on either locale — see truth #2 above. |
+| `src/blocks/AboutSection/config.ts` | `features[]` (icon/title/description, min/max 4) + `ctaText`/`ctaLink` | ✓ VERIFIED | Unchanged since initial verification, still correct. |
+| `src/fields/IconPicker/icons.ts` | Shared icon list (≥8 required icons + margin) | ✓ VERIFIED | Unchanged, 24 icons present. |
+| `src/fields/IconPicker/Component.tsx` | Modal-based visual icon-grid picker (search + click-to-select) | ✓ VERIFIED (code-level) | Unchanged since initial verification. Interactive behavior still not exercised live — see Human Verification. |
+| `src/app/(payload)/admin/importMap.js` | `IconPickerField` registered | ✓ VERIFIED | Confirmed present at lines 26/63, matches `config.ts`'s `admin.components.Field` path. |
+| `src/blocks/AboutSection/Component.tsx` | Renders features grid + CTA conditionally | ✓ VERIFIED | Unchanged, matches 13-UI-SPEC.md Section 1 contract. |
+| `scripts/seed-phase13-home-content.ts` | Sets `aboutSection` eyebrow/title/paragraphs to locked copy (ES+EN), alongside features/CTA | ✓ VERIFIED | Contains `aboutHeaderCopy` const (ES+EN eyebrow/title/description); obsolete `ABOUT_PARAGRAPH_1_BROKEN_EN_TEXT`/`FIXED_EN_TEXT` consts removed (only a comment referencing the old name remains, no dead code executed); `paragraphIds` capture/reuse extended alongside `featureIds`/`faqItemIds`. Live-verified this replaces the Phase 10.7 bio end-to-end. |
+| Home layout: `faq` block with 5 real Q&A | Populated via seed | ✓ VERIFIED | Confirmed live, both locales, no regression. |
+| Home layout: `contactFormBlock` with `id="contact"` | CTA anchor target | ✓ VERIFIED | `id="contact"` and `href="#contact"` both confirmed present in fresh HTML fetch. |
+| Home `AboutSection` eyebrow/title = CONTEXT.md's locked copy | "Estrategia y datos. Más allá del código" / "Mi enfoque en Consultoría Técnica" (ES) + EN translation | ✓ VERIFIED (gap closed) | Present in both locales; old Phase 10.7 copy fully absent (0 occurrences each). |
 
 ### Key Link Verification
 
 | From | To | Via | Status | Details |
 |---|---|---|---|---|
-| `AboutSection.config.ts` `features[].icon` field | `IconPickerField` component | `admin.components.Field` string path | ✓ WIRED | Path in `config.ts` (`@/fields/IconPicker/Component#IconPickerField`) matches the key registered in `importMap.js`. |
-| `AboutSectionComponent` | Home page render | Payload `RenderBlocks` via `blockType: 'aboutSection'` | ✓ WIRED | Live page renders the block with features/CTA. |
-| CTA `<a href="#contact">` | `ContactFormBlock` `id="contact"` | Native anchor navigation | ✓ WIRED | Both the anchor href and the target `id` are confirmed present in the same page's DOM, in the correct order (CTA appears before the target, which is standard anchor behavior). |
-| `page.tsx` | `RenderBlocks` | `sharedProps` (`sendContactMessage`/`locale`/`contactEmail`) | ✓ WIRED | Confirmed by inspecting `src/app/(frontend)/[locale]/page.tsx` per 13-02-SUMMARY and live form markup (`action=""` React Server Action wiring present in rendered HTML: `<form ... encType="multipart/form-data" method="POST"><input type="hidden" name="$ACTION_ID...`). |
+| `AboutSection.config.ts` `features[].icon` field | `IconPickerField` component | `admin.components.Field` string path | ✓ WIRED | Unchanged, re-confirmed. |
+| `AboutSectionComponent` | Home page render | Payload `RenderBlocks` via `blockType: 'aboutSection'` | ✓ WIRED | Live page renders eyebrow/title/description/features/CTA all from this path. |
+| `scripts/seed-phase13-home-content.ts` `aboutHeaderCopy[locale]` | Home Pages doc `content.layout[aboutIndex].eyebrow/title/paragraphs` | `payload.update({ collection: 'pages', ..., locale, data: { content: { layout } } })` | ✓ WIRED | Confirmed by live re-run: script writes the copy, both locales reflect it correctly, idempotent on re-run. |
+| CTA `<a href="#contact">` | `ContactFormBlock` `id="contact"` | Native anchor navigation | ✓ WIRED | Both confirmed present in the same fresh HTML fetch. |
 
 ### Requirements Coverage
 
 | Requirement | Source Plan | Description | Status | Evidence |
 |---|---|---|---|---|
-| ABOUT-01 | 13-01-PLAN.md | `AboutSection` extended with `features[]`/`ctaText`/`ctaLink`, no new block type | ✓ SATISFIED | Schema verified in `config.ts`, migration applied. |
-| ABOUT-02 | 13-02-PLAN.md | Home populated with "Mi enfoque en Consultoría Técnica" section, correct eyebrow, 4 features | ✗ BLOCKED | Features content and CTA are correct and live, but the section's eyebrow/title never changed from Phase 10.7's original "Sobre mí" / "Ingeniería de software con mentalidad SEO" — the specific copy mandated by this requirement's own description is absent from the live site. |
-| FAQ-01 | 13-02-PLAN.md | FAQ block added to Home layout, 5 real questions | ✓ SATISFIED | Verified live, both locales, correct position in layout. |
+| ABOUT-01 | 13-01-PLAN.md | `AboutSection` extended with `features[]`/`ctaText`/`ctaLink`, no new block type | ✓ SATISFIED | Unchanged, re-confirmed. |
+| ABOUT-02 | 13-02-PLAN.md, closed by 13-03-PLAN.md | Home populated with "Mi enfoque en Consultoría Técnica" section, correct eyebrow, 4 features | ✓ SATISFIED | Gap closed by 13-03: eyebrow/title/description now match the locked copy in both locales, features/CTA unaffected. |
+| FAQ-01 | 13-02-PLAN.md | FAQ block added to Home layout, 5 real questions | ✓ SATISFIED | Unchanged, re-confirmed live. |
 
 ### Anti-Patterns Found
 
-None. Scanned all key files modified in this phase (`icons.ts`, `IconPicker/Component.tsx`, `AboutSection/config.ts`, `AboutSection/Component.tsx`, `ContactFormBlock/Component.tsx`, `seed-phase13-home-content.ts`) for `TBD`/`FIXME`/`XXX`/`TODO`/`HACK`/stub patterns — no debt markers found. The only `placeholder` matches are legitimate HTML `placeholder=` input attributes, not code-quality stubs.
+None. Re-scanned `scripts/seed-phase13-home-content.ts` (the only file modified in 13-03) plus the previously-scanned Phase 13 files for `TBD`/`FIXME`/`XXX`/`TODO`/`HACK`/stub patterns — no debt markers found. One comment references the removed `ABOUT_PARAGRAPH_1_BROKEN_EN_TEXT` name for context, but the dead code itself was deleted per 13-03-SUMMARY.md's claim (confirmed: no such const/branch exists in the current file).
 
 ### Human Verification Required
 
@@ -79,27 +84,15 @@ None. Scanned all key files modified in this phase (`icons.ts`, `IconPicker/Comp
 
 **Test:** Open `/admin`, log in, navigate to the Home page document's `aboutSection` block, expand any `features[]` row, click the `icon` field's button to open the modal, type a search term into the search input, and click an icon to select it.
 **Expected:** A modal opens with a search input + scrollable icon grid; typing filters icons by label; clicking an icon sets the field value (visible on the trigger button, e.g. icon + label) and closes the modal; the selected value persists after saving.
-**Why human:** 13-02-SUMMARY.md explicitly documents that this interactive flow was never exercised (no admin credentials available to the executor) — only static checks were done (TypeScript compilation, `importMap.js` registration, a clean `/admin/login` page load with no crash). Code-level inspection of `IconPickerField` (Modal/useField/useModal wiring, `ICON_OPTIONS` filter-by-label logic, `setValue`+`closeModal` on click) is internally consistent and matches 13-UI-SPEC.md's admin picker contract, but has not been observed running against a real logged-in session.
+**Why human:** No admin credentials are available to any agent in this environment (confirmed across both the initial verification and this re-verification). Code-level inspection of `IconPickerField` (Modal/useField/useModal wiring, `ICON_OPTIONS` filter-by-label logic, `setValue`+`closeModal` on click, correct `importMap.js` registration) remains internally consistent and unchanged since the initial pass — 13-03 did not touch this component. This item does not block the phase from being otherwise considered complete; it is carried forward as a standing, non-blocking human-verification item.
 
 ### Gaps Summary
 
-Two of three ROADMAP Success Criteria for Phase 13 are solidly met: the `AboutSection` schema extension (features/CTA/icon-picker) exists and is fully wired end-to-end, and the FAQ block is live on Home with all 5 real Q&A pairs in both locales, correctly positioned before the (also newly-added) `ContactFormBlock`, whose `#contact` anchor genuinely works.
+No blocking gaps remain. The one gap from the initial verification — Home's `AboutSection` eyebrow/title showing Phase 10.7's unrelated "Sobre mí" bio instead of this phase's locked "Mi enfoque en Consultoría Técnica" copy — was closed by 13-03 and independently re-confirmed here against the live running dev server (fresh `curl` fetch, not a re-read of SUMMARY claims): both locales now show the correct eyebrow/title/description, the old placeholder text is fully absent, the features grid/CTA/FAQ/`#contact` anchor are all unaffected, and the seed script's idempotency was re-verified with an independent re-run during this session.
 
-The one blocking gap is narrow but real: Success Criterion #2 requires Home to show the "Mi enfoque en Consultoría Técnica" section with the eyebrow "Estrategia y datos. Más allá del código" — this exact copy is locked in 13-CONTEXT.md's `<specifics>` and repeated in 13-UI-SPEC.md's Copywriting Contract table (labeled "existing, unchanged", which turned out to be an incorrect assumption carried from planning). In execution, `scripts/seed-phase13-home-content.ts` deliberately preserved Home's pre-existing `aboutSection` eyebrow/title from Phase 10.7 ("Sobre mí" / "Ingeniería de software con mentalidad SEO" — a generic bio intro, not the "approach to technical consulting" framing this phase's copy contract specifies) and only appended the new `features[]`/CTA fields onto it. The 4 features and CTA themselves are correct and live; the section header framing them is not the one this phase's own planning artifacts mandated.
-
-This looks like a planning-assumption error surfaced at execution time (13-UI-SPEC.md incorrectly assumed the eyebrow/title were already correct) rather than a deliberate scope cut, and neither SUMMARY documents it as a conscious decision requiring Juan's sign-off — it is presented as "no touch needed," without flagging the copy mismatch against CONTEXT.md's own specifics. Recommend either (a) a small follow-up plan to update the `aboutSection` eyebrow/title to the locked copy in both locales, or (b) an explicit override from Juan accepting the existing "Sobre mí" framing if he prefers it over the originally-specified copy.
-
-**This looks intentional-adjacent but undocumented.** If Juan prefers to keep the existing "Sobre mí" eyebrow/title as-is, add to this file's frontmatter:
-
-```yaml
-overrides:
-  - must_have: "Home shows the 'Mi enfoque en Consultoría Técnica' section (eyebrow 'Estrategia y datos. Más allá del código')"
-    reason: "Juan approved keeping the existing 'Sobre mí' bio eyebrow/title; only the features/CTA needed to be added, not a copy change."
-    accepted_by: "Juan"
-    accepted_at: "<ISO timestamp>"
-```
+The only open item is the admin icon-picker's interactive click-through, which cannot be exercised without admin credentials (unavailable to any agent). Per the task instructions, this is kept as an explicit, non-blocking human-verification item — it does not prevent the phase from passing on the rest of its Success Criteria, but the overall status is `human_needed` (not `passed`) because a human item remains open, per the standard status decision tree.
 
 ---
 
-_Verified: 2026-07-11T23:10:04Z_
+_Verified: 2026-07-11T23:45:00Z_
 _Verifier: Claude (gsd-verifier)_
