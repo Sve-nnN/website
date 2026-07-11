@@ -2,11 +2,17 @@
  * Populates the real Author (slug: juan-carlos-angulo) with the E-E-A-T
  * fields recovered in Phase 12-01: expertise[], education[], experience[],
  * plus socialLinks[] (recovered earlier but never populated with real data).
+ * Also seeds the standalone `speaking-events` collection (added mid-Phase 12
+ * per Juan's request) with the 2 real speaking engagements, and adds a 3rd
+ * `experience[]` item for Juan's ongoing aprendoclub coach role.
  *
  * Content source: 12-CONTEXT.md `<specifics>` (ES, verbatim from
  * localhost:3000/api/authors) with professional EN translations authored
  * directly in this script, per CONTEXT.md ("Traducciones EN se escriben
- * directamente en el seed script, no vía admin").
+ * directamente en el seed script, no vía admin"). The speaking-events and
+ * aprendoclub-experience content was provided directly by Juan mid-phase
+ * (Caracas SEO Fest, DinoRANK/Lm Marketing workshop in Lima, aprendoclub
+ * Senior Tech SEO Analyst coach role) — used verbatim, no invented dates.
  *
  * Does NOT touch the existing avatar (Cloudinary asset migrated in Phase 4) —
  * verifyAvatar only reads and logs, never writes.
@@ -14,6 +20,8 @@
  * Idempotent: upserts by slug, reuses sub-array `id`s across locale writes
  * (same pattern as scripts/seed-phase10-7-gap-fill.ts) to avoid duplicating
  * array rows in Postgres when updating a localized array field per locale.
+ * speaking-events docs are upserted by `title` (ES) since the collection has
+ * no natural slug.
  *
  * Run with: node --env-file=.env node_modules/.bin/tsx scripts/seed-author-eeat.ts
  */
@@ -36,8 +44,9 @@ type Education = {
 type Experience = {
   role: string
   company: string
-  startDate: string
-  endDate: string
+  startDate?: string | null
+  endDate?: string | null
+  description?: string
   id?: string
 }
 
@@ -90,6 +99,14 @@ const educationCopy: Record<(typeof LOCALES)[number], Omit<Education, 'id'>[]> =
 const experienceCopy: Record<(typeof LOCALES)[number], Omit<Experience, 'id'>[]> = {
   es: [
     {
+      role: 'Senior Tech SEO Analyst',
+      company: 'aprendoclub',
+      startDate: null,
+      endDate: null,
+      description:
+        'Coach del Diplomado de SEO + AIO en aprendoclub, la academia de marketing con IA fundada por Arianna Lupi. Acompaña a estudiantes hispanohablantes en su formación como especialistas SEO. Más info: https://www.aprendoclub.com/diplomado',
+    },
+    {
       role: 'Especialista en Tech SEO',
       company: 'AprendoSEO',
       startDate: '2022-11-01',
@@ -103,6 +120,14 @@ const experienceCopy: Record<(typeof LOCALES)[number], Omit<Experience, 'id'>[]>
     },
   ],
   en: [
+    {
+      role: 'Senior Tech SEO Analyst',
+      company: 'aprendoclub',
+      startDate: null,
+      endDate: null,
+      description:
+        'Coach for the SEO + AIO Diploma program at aprendoclub, the AI-marketing academy founded by Arianna Lupi. Mentors Spanish-speaking students becoming SEO specialists. More info: https://www.aprendoclub.com/diplomado',
+    },
     {
       role: 'Technical SEO Specialist',
       company: 'AprendoSEO',
@@ -123,6 +148,65 @@ const socialLinksData = [
   { platform: 'github' as const, url: 'https://github.com/sve-nnn' },
   { platform: 'website' as const, url: 'https://juan-tech.com' },
 ]
+
+type SpeakingEventSeed = {
+  title: string
+  description: string
+  role: string
+  coSpeakers?: { name: string }[]
+  date?: string | null
+  location?: string
+  attendeeCount?: number
+  link: string
+}
+
+// Real content provided directly by Juan mid-Phase 12 — used verbatim, no
+// invented dates/details. No exact date confirmed for either event, so
+// `date` is left unset per Juan's explicit instruction (do not invent).
+const speakingEventsCopy: Record<(typeof LOCALES)[number], SpeakingEventSeed[]> = {
+  es: [
+    {
+      title: 'Caracas SEO Fest',
+      description:
+        'La primera conferencia de SEO de Venezuela · 100 asistentes. La primera conferencia de posicionamiento en Google realizada en Caracas, dedicada a compartir conocimientos, estrategias y herramientas con expertos y emprendedores de toda la región.',
+      role: 'Ponente — SEO Técnico',
+      location: 'Caracas, Venezuela',
+      attendeeCount: 100,
+      link: 'https://www.youtube.com/watch?v=rT5qjas_qBY',
+    },
+    {
+      title: 'Taller SEO + IA en Lima (por DinoRANK)',
+      description:
+        'Taller de 4 horas co-dictado con Arianna Lupi (Consultora SEO / Instructora SEO / Fundadora), con 18 asistentes entre profesionales, marketers, emprendedores y SEOs. Se enseñó keyword research con IA, creación de outlines y briefs con IA, y auditorías SEO con IA, usando DinoRANK (suite oficial de aprendoclub). Organizado en Lima, Perú, junto con Lm Marketing (Agencia SEO).',
+      role: 'Co-instructor — Tech SEO',
+      coSpeakers: [{ name: 'Arianna Lupi' }],
+      location: 'Lima, Perú',
+      attendeeCount: 18,
+      link: 'https://www.linkedin.com/posts/arianna-lupi_mi-primer-taller-seo-ia-en-lima-por-activity-7381742452396941312-Mcvm',
+    },
+  ],
+  en: [
+    {
+      title: 'Caracas SEO Fest',
+      description:
+        "Venezuela's first SEO conference · 100 attendees. The first Google-ranking conference held in Caracas, dedicated to sharing knowledge, strategies, and tools with experts and entrepreneurs from across the region.",
+      role: 'Speaker — Technical SEO',
+      location: 'Caracas, Venezuela',
+      attendeeCount: 100,
+      link: 'https://www.youtube.com/watch?v=rT5qjas_qBY',
+    },
+    {
+      title: 'SEO + AI Workshop in Lima (by DinoRANK)',
+      description:
+        'A 4-hour workshop co-taught with Arianna Lupi (SEO Consultant / SEO Instructor / Founder), with 18 attendees including professionals, marketers, entrepreneurs, and SEOs. Covered AI-assisted keyword research, AI-assisted outlines and briefs, and AI-assisted SEO audits, using DinoRANK (aprendoclub’s official suite). Organized in Lima, Peru, together with Lm Marketing (SEO Agency).',
+      role: 'Co-instructor — Tech SEO',
+      coSpeakers: [{ name: 'Arianna Lupi' }],
+      location: 'Lima, Peru',
+      attendeeCount: 18,
+      link: 'https://www.linkedin.com/posts/arianna-lupi_mi-primer-taller-seo-ia-en-lima-por-activity-7381742452396941312-Mcvm',
+    },
+  ],
+}
 
 async function verifyAvatar(payload: Awaited<ReturnType<typeof getPayload>>) {
   const { docs } = await payload.find({
@@ -263,6 +347,71 @@ async function seedSocialLinks(
   console.log(`SocialLinks: escritos ${socialLinksData.length} items (campo no localizado).`)
 }
 
+/**
+ * Standalone collection — upserts by ES title (no natural slug field on
+ * speaking-events). For each of the 2 real events: finds an existing doc by
+ * its ES title (queried via the `es` locale, the collection's defaultLocale),
+ * then creates it if missing or updates it per locale if it already exists.
+ */
+async function seedSpeakingEvents(payload: Awaited<ReturnType<typeof getPayload>>) {
+  for (let i = 0; i < speakingEventsCopy.es.length; i++) {
+    const esItem = speakingEventsCopy.es[i]
+
+    const { docs: existing } = await payload.find({
+      collection: 'speaking-events',
+      locale: 'es',
+      where: { title: { equals: esItem.title } },
+      limit: 1,
+    })
+
+    let eventId: number | string
+
+    if (existing[0]) {
+      eventId = existing[0].id
+      console.log(`SpeakingEvent already exists (title="${esItem.title}", id=${eventId}) — updating.`)
+    } else {
+      const created = await payload.create({
+        collection: 'speaking-events',
+        locale: 'es',
+        data: {
+          title: esItem.title,
+          description: esItem.description,
+          role: esItem.role,
+          coSpeakers: esItem.coSpeakers,
+          date: esItem.date ?? null,
+          location: esItem.location,
+          attendeeCount: esItem.attendeeCount,
+          link: esItem.link,
+        },
+      })
+      eventId = created.id
+      console.log(`Created SpeakingEvent (title="${esItem.title}", id=${eventId})`)
+    }
+
+    for (const locale of LOCALES) {
+      const item = speakingEventsCopy[locale][i]
+
+      await payload.update({
+        collection: 'speaking-events',
+        id: eventId,
+        locale,
+        data: {
+          title: item.title,
+          description: item.description,
+          role: item.role,
+          coSpeakers: item.coSpeakers,
+          date: item.date ?? null,
+          location: item.location,
+          attendeeCount: item.attendeeCount,
+          link: item.link,
+        },
+      })
+
+      console.log(`SpeakingEvent "${item.title}": updated locale=${locale}`)
+    }
+  }
+}
+
 async function main() {
   const payload = await getPayload({ config })
 
@@ -272,23 +421,26 @@ async function main() {
   await seedEducation(payload, author.id)
   await seedExperience(payload, author.id)
   await seedSocialLinks(payload, author.id, author.socialLinks)
+  await seedSpeakingEvents(payload)
 
   const es = await payload.findByID({ collection: 'authors', id: author.id, locale: 'es' })
   const en = await payload.findByID({ collection: 'authors', id: author.id, locale: 'en' })
+  const { docs: speakingEventsEs } = await payload.find({ collection: 'speaking-events', locale: 'es' })
 
   console.log('\n--- Verification ---')
   console.log('ES expertise[0].topic:', es.expertise?.[0]?.topic)
   console.log('EN expertise[0].topic:', en.expertise?.[0]?.topic)
   console.log('ES education[0].degree:', es.education?.[0]?.degree)
   console.log('EN education[0].degree:', en.education?.[0]?.degree)
-  console.log('ES experience[0].role:', es.experience?.[0]?.role)
-  console.log('EN experience[0].role:', en.experience?.[0]?.role)
+  console.log('ES experience[0].role:', es.experience?.[0]?.role, '@', es.experience?.[0]?.company)
+  console.log('EN experience[0].role:', en.experience?.[0]?.role, '@', en.experience?.[0]?.company)
   console.log(
     'expertise/education/experience counts:',
     es.expertise?.length,
     es.education?.length,
     es.experience?.length,
   )
+  console.log('speaking-events count:', speakingEventsEs.length)
 
   console.log('\nDone.')
   process.exit(0)
