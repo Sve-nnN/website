@@ -12,6 +12,7 @@ import * as migration_20260710_164937_phase10_7_about_testimonial_sections from 
 import * as migration_20260710_165940_phase10_8_hero_cta_breadcrumbs from './20260710_165940_phase10_8_hero_cta_breadcrumbs';
 import * as migration_20260711_201023_phase12_author_eeat_fields from './20260711_201023_phase12_author_eeat_fields';
 import * as migration_20260711_204216_phase12_speaking_events from './20260711_204216_phase12_speaking_events';
+import * as migration_20260711_224308_phase13_about_features_faq from './20260711_224308_phase13_about_features_faq';
 
 export const migrations = [
   {
@@ -82,6 +83,11 @@ export const migrations = [
   {
     up: migration_20260711_204216_phase12_speaking_events.up,
     down: migration_20260711_204216_phase12_speaking_events.down,
-    name: '20260711_204216_phase12_speaking_events'
+    name: '20260711_204216_phase12_speaking_events',
+  },
+  {
+    up: migration_20260711_224308_phase13_about_features_faq.up,
+    down: migration_20260711_224308_phase13_about_features_faq.down,
+    name: '20260711_224308_phase13_about_features_faq'
   },
 ];
