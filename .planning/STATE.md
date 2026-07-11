@@ -137,6 +137,7 @@ None yet.
 - ~~Phase 1: decisión Works vs Clientes~~ — RESUELTO 2026-07-09: Works se retira (absorbido conceptualmente en CaseStudies enriquecido), Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link)
 - ~~Plan 02-05 Task 1 (seed script): permission classifier blocked execution of 'npx tsx scripts/seed-phase2.ts' against the production Neon DB~~ — RESUELTO 2026-07-09: authorization step cleared; per the orchestrator's report the seed ran successfully (idempotency confirmed on re-run) and all 8 end-to-end curl checks passed. Phase 2 closed 5/5.
 - [Phase 10.7 pending confirmation] `CalendlyEmbed` no entró al roadmap por confianza MEDIA sobre si Juan sigue usando Calendly — si Juan confirma que sí, se puede insertar como fase adicional (ej. 10.75) más adelante
+- [v1.2 → v1.3 backlog, 2026-07-11] Juan pidió reestructurar URLs de blog (`/blog/categoria/slug` para posts, `/blog/categoria-slug` para listados de categoría) + agregar paginación al blog. Explícitamente diferido — cierra v1.2 (Home+Author, blog fuera de scope) primero. Cambio SEO-sensible: requiere estrategia de redirects 301 para no perder el resultado "0 URL deltas" ya verificado en Phase 4 (04-VERIFICATION.md). Candidato a nueva fase (v1.2 extendida o v1.3), no ejecutar ad-hoc.
 
 ## Deferred Items
 
