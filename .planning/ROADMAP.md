@@ -8,6 +8,8 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 
 **Scope expandido 2026-07-10 (post Phase 10.5 Wave 1):** Tras feedback directo de Juan rechazando la dirección visual acumulada de Phases 7-10 como insuficiente, el milestone se amplía con tres fases nuevas (10.6, 10.7, 10.8) insertadas entre Phase 10.5 y Phase 11: completar header/footer con verificación mobile real, cerrar los gaps de componentes identificados contra el sitio Payload viejo (`JuanPortfolio`, `COMPONENT-GAP-ANALYSIS.md`) agregando y **poblando** dos bloques nuevos, y enriquecer el bloque Hero con CTA/breadcrumbs también poblados. Disciplina mobile-first (~375px primero) se vuelve la práctica estándar de verificación desde aquí en adelante, reforzada explícitamente en Phase 11. Phase 10.5 queda cerrada con alcance reducido a solo lo que ya completó (tipografía + schema de Footer); el trabajo de restyle de header/footer que tenía pendiente se absorbe en Phase 10.6.
 
+**Milestone v1.2 — Content Parity (Home + Author Page), creado 2026-07-11:** Con v1.1 cerrado (Phases 7-11 completas, Phase 6 aún en pausa), una comparación directa contra el sitio de referencia real (`JuanPortfolio`, `localhost:3000`) reveló 3 brechas concretas de contenido/componentes no cerradas por v1.1, más un pedido nuevo de asignación de keyword objetivo (EN/ES) informada por research real. El milestone agrega 4 fases nuevas (12-15): recuperar las secciones E-E-A-T recortadas del author page (Phase 12), poblar Home con la sección "Mi enfoque en Consultoría Técnica" (`AboutSection` extendido) y el bloque FAQ ya existente pero nunca poblado (Phase 13), agregar el campo editorial `targetKeyword` a Pages/Authors (Phase 14), y dar al sitemap una hoja de estilos XSL navegable más una versión HTML (Phase 15). Blog/posts queda explícitamente fuera de alcance (pedido de Juan), y CalendlyEmbed queda cerrado definitivamente (Juan ya no usa Calendly). Ver `.planning/REQUIREMENTS.md` sección "v1.2 Requirements — Content Parity" para el detalle completo.
+
 ## Phases
 
 **Phase Numbering:**
@@ -22,7 +24,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 3: Cloudinary Media Spike** - Adapter de storage Cloudinary validado y wireado (completed 2026-07-09)
 - [x] **Phase 4: Migración Mongo → Postgres** - Contenido actual migrado 1:1 con URLs y medios preservados (completed 2026-07-10)
 - [x] **Phase 5: Frontend Pages** - Todas las páginas públicas renderizando contenido migrado con diferenciadores competitivos (completed 2026-07-10)
-- [ ] **Phase 6: Deploy + Cutover** - Sitio en producción en Hostinger con checklist de go-live verificado (en pausa — retoma después de v1.1)
+- [ ] **Phase 6: Deploy + Cutover** - Sitio en producción en Hostinger con checklist de go-live verificado (en pausa — retoma después de v1.1/v1.2)
 - [x] **Phase 7: Design-Token Foundation** - Tokens de sombra/motion CSS-puro, prefers-reduced-motion global, paleta dark branded (sin toggle) (completed 2026-07-10)
 - [x] **Phase 8: shadcn Primitives + Global Chrome** - Primitivas shadcn refinadas con los nuevos tokens + header/footer restyled (completed 2026-07-10)
 - [x] **Phase 9: Hero + Resultados/KPI + Tipografía** - Hero de mayor impacto, KPIs de case studies reforzados, jerarquía tipográfica en contenido largo (completed 2026-07-10)
@@ -32,6 +34,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 10.7 [INSERTED]: Component Gap-Fill (AboutSection + TestimonialSection)** - Dos bloques nuevos identificados por el gap-analysis contra JuanPortfolio, construidos y poblados con contenido real/de muestra (completed 2026-07-10)
 - [x] **Phase 10.8 [INSERTED]: Hero Enrichment (CTA + Breadcrumbs)** - Campos de CTA/links y breadcrumbs agregados al Hero existente y poblados con datos reales (completed 2026-07-10)
 - [x] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil, disciplina mobile-first confirmada de punta a punta (completed 2026-07-10)
+- [ ] **Phase 12: Author Page E-E-A-T Expansion** - Author page recupera expertise/educación/experiencia recortados en Phase 1, con JSON-LD enriquecido
+- [ ] **Phase 13: Home Content Population** - AboutSection extendido con features + FAQ poblado en Home
+- [ ] **Phase 14: Target Keyword Field** - Campo editorial targetKeyword en Pages/Authors, poblado con picks de keyword research real
+- [ ] **Phase 15: Sitemap XSL + HTML** - sitemap.xml con hoja de estilos navegable + sitemap.html enlazado desde el footer
 
 ## Phase Details
 
@@ -178,7 +184,7 @@ Plans:
   4. El checklist de go-live pasa en producción: los 301 redirects funcionan en vivo, robots.txt/noindex se fetchean (no solo se leen en código) desde la URL de producción, ambos locales fueron muestreados manualmente, y el sitemap de producción no diverge del inventario de URLs congelado en Phase 4
   5. El contenido del sitio actual quedó congelado inmediatamente antes de la corrida final de migración, sin contenido publicado después del freeze que se haya perdido en el corte
 
-**Plans**: 5 plans (3 waves) — EN PAUSA, retoma después de milestone v1.1
+**Plans**: 5 plans (3 waves) — EN PAUSA, retoma después de milestone v1.1/v1.2
 
 Plans:
 
@@ -317,7 +323,11 @@ Plans:
   4. `TestimonialSection` está poblado con una cita real o de muestra y es visible embebido en un case study real, entre las secciones "Solución" y "Resultados"
   5. Ningún campo de ninguno de los dos bloques queda hardcodeado en el `Component.tsx` — todo el contenido visible proviene de Payload, verificado con el mismo grep de contenido hardcodeado que usan las fases previas
 
-**Plans**: TBD
+**Plans**: 1 plan (1 wave)
+
+Plans:
+
+- [x] 10.7-01-PLAN.md — AboutSection + TestimonialSection: config.ts + Component.tsx + RenderBlocks registration + poblado real/de muestra
 
 **UI hint**: yes
 
@@ -334,7 +344,11 @@ Plans:
   4. Al menos una página listing real (blog o case studies) tiene breadcrumbs poblados y visibles
   5. Ambos campos se verifican mobile-first (~375px) antes que desktop, sin overflow ni ruptura de layout, consistente con la disciplina mobile-first del resto del scope expandido
 
-**Plans**: TBD
+**Plans**: 1 plan (1 wave)
+
+Plans:
+
+- [x] 10.8-01-PLAN.md — Hero CTA links + breadcrumbs: schema, render, poblado real, verificación mobile-first
 
 **UI hint**: yes
 
@@ -359,10 +373,75 @@ Plans:
 - [x] 11-02-PLAN.md — Layout `/es` contra contenido real más largo en home/authors/case-studies (páginas no cubiertas por Phase 10), cerrado con verificación contra el case study real y el testimonio embebido de Phase 10.7
 - [x] 11-03-PLAN.md — Lighthouse móvil sobre build de producción local, baseline pre-milestone vs HEAD actual (sustituto documentado del baseline de producción, ya que Phase 6 sigue en pausa)
 
+### Phase 12: Author Page E-E-A-T Expansion
+
+**Goal**: El author page de Juan muestra su trayectoria completa — expertise, educación/certificaciones y experiencia laboral — en 3 secciones nuevas diseñadas profesionalmente, con el schema estructurado y el Person JSON-LD enriquecido que respaldan esas secciones.
+**Depends on**: Phase 11 (último trabajo de UI/UX cerrado sobre el mismo codebase; corre en paralelo a Phase 6, no depende de su cierre)
+**Requirements**: AUTHOR-01, AUTHOR-02, AUTHOR-03, AUTHOR-04, AUTHOR-05, AUTHOR-06
+**Success Criteria** (what must be TRUE):
+
+  1. Un editor puede completar `expertise[]` (array de temas), `education[]` (título/institución/logo/fecha inicio/fin/certificado/descripción) y `experience[]` (empresa/rol/fecha inicio/fin/descripción) en la colección Authors desde `/admin`
+  2. El author page renderiza una sección "Expertise" (tags) cuando `expertise[]` tiene datos, diseñada con la skill `ui-ux-pro-max`
+  3. El author page renderiza una sección "Educación y Certificaciones" (grid con logo/institución/fechas) cuando `education[]` tiene datos, diseñada con `ui-ux-pro-max`
+  4. El author page renderiza una sección "Experiencia" (timeline laboral) cuando `experience[]` tiene datos, diseñada con `ui-ux-pro-max`
+  5. El Person JSON-LD del author page incluye `sameAs` (redes sociales), `knowsAbout` (desde `expertise[]`) y `hasCredential` (desde `education[]`)
+  6. Las 3 secciones nuevas están pobladas con contenido real de Juan donde exista (adaptado del sitio de referencia) o quedan como placeholder claramente editable desde `/admin` si el dato real no está disponible
+
+**Plans**: 4 plans (3 waves)
+
+Plans:
+
+- [ ] 12-01-PLAN.md — Authors collection: expertise/education/experience fields + migration + payload-types
+- [ ] 12-02-PLAN.md — Author page: 3 secciones nuevas (Expertise/Educación/Experiencia) + Person JSON-LD enriquecido (sameAs/knowsAbout/hasCredential)
+- [ ] 12-03-PLAN.md — scripts/seed-author-eeat.ts: contenido real ES/EN (4 expertise, 2 education, 2 experience) + verificación de avatar existente
+- [ ] 12-04-PLAN.md — Verificación automatizada (Playwright) + checkpoint humano de cierre de fase
+
+**UI hint**: yes
+
+### Phase 13: Home Content Population
+
+**Goal**: Home cierra los dos gaps de contenido restantes identificados contra el sitio de referencia — la sección "Mi enfoque en Consultoría Técnica" (features del `AboutSection` extendido) y el bloque FAQ, que ya existe en el registry pero nunca se pobló — ambos con contenido real de Juan.
+**Depends on**: Phase 12
+**Requirements**: ABOUT-01, ABOUT-02, FAQ-01
+**Success Criteria** (what must be TRUE):
+
+  1. El bloque `AboutSection` expone un campo opcional `features[]` (mínimo/máximo 4 items: icon + título + descripción) y campos opcionales `ctaText`/`ctaLink`, extendiendo el bloque existente (no un bloque nuevo)
+  2. Home muestra la sección "Mi enfoque en Consultoría Técnica" (eyebrow "Estrategia y datos. Más allá del código", 4 features: SEO Técnico / Rendimiento web / Arquitectura escalable / Ingeniería de UX) usando el `AboutSection` extendido
+  3. El bloque `FAQ` (ya existente en el registry, nunca poblado) está agregado al layout de Home y muestra 5 preguntas reales (diferencia SEO tradicional vs técnico, auditoría vs implementación, stack/plataformas, medición de éxito, proceso para empezar)
+
+**Plans**: TBD
+
+**UI hint**: yes
+
+### Phase 14: Target Keyword Field
+
+**Goal**: Pages y Authors ganan un campo editorial `targetKeyword` (EN/ES) informativo — sin llamadas en vivo a ninguna API externa — y Home + el author page de Juan quedan poblados con los picks reales del keyword research ya hecho.
+**Depends on**: Phase 13
+**Requirements**: SEO-KW-01, SEO-KW-02
+**Success Criteria** (what must be TRUE):
+
+  1. Las colecciones `pages` y `authors` exponen un campo `targetKeyword` con sub-campos `en`/`es` (texto simple), puramente editorial — no dispara ninguna llamada en vivo a Ahrefs/DinoRank/ninguna API externa
+  2. Home tiene `targetKeyword` poblado con los picks de `.planning/research/keyword-research/KEYWORD-RESEARCH.md` (ES: "seo técnico", EN: "technical seo consultant")
+  3. El author page de Juan tiene `targetKeyword` poblado con los picks de `.planning/research/keyword-research/KEYWORD-RESEARCH.md` (ES: "auditoría seo técnica", EN: "technical seo specialist")
+
+**Plans**: TBD
+
+### Phase 15: Sitemap XSL + HTML
+
+**Goal**: El sitemap del sitio deja de ser XML crudo ilegible para cualquiera que lo abra directamente en el navegador, y gana una versión HTML navegable enlazada desde el footer (que ya tiene el link "Sitemap" apuntando a esta página).
+**Depends on**: Phase 14
+**Requirements**: SITEMAP-01, SITEMAP-02
+**Success Criteria** (what must be TRUE):
+
+  1. `sitemap.xml` recibe una hoja de estilos XSL — al abrir la URL directamente en el navegador se ve una tabla legible, no el XML crudo
+  2. Existe una página `sitemap.html` navegable (listado de URLs agrupado por sección), enlazada desde el link "Sitemap" que el footer ya tiene
+
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 (Phase 6 en pausa, retoma tras el cierre de 7-11)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 (Phase 6 en pausa, retoma tras el cierre de v1.1/v1.2)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -371,7 +450,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 3. Cloudinary Media Spike | 3/3 | Complete   | 2026-07-09 |
 | 4. Migración Mongo → Postgres | 8/8 | Complete   | 2026-07-10 |
 | 5. Frontend Pages | 13/13 | Complete   | 2026-07-10 |
-| 6. Deploy + Cutover | 0/TBD | Paused (resumes after v1.1) | - |
+| 6. Deploy + Cutover | 0/TBD | Paused (resumes after v1.1/v1.2) | - |
 | 7. Design-Token Foundation | 1/1 | Complete   | 2026-07-10 |
 | 8. shadcn Primitives + Global Chrome | 2/2 | Complete   | 2026-07-10 |
 | 9. Hero + Resultados/KPI + Tipografía | 3/3 | Complete   | 2026-07-10 |
@@ -381,4 +460,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 10.7. Component Gap-Fill (AboutSection + TestimonialSection) | 1/1 | Complete   | 2026-07-10 |
 | 10.8. Hero Enrichment (CTA + Breadcrumbs) | 1/1 | Complete   | 2026-07-10 |
 | 11. Verificación Cruzada Final | 3/3 | Complete   | 2026-07-10 |
+| 12. Author Page E-E-A-T Expansion | 0/4 | Planned | - |
+| 13. Home Content Population | 0/TBD | Not planned | - |
+| 14. Target Keyword Field | 0/TBD | Not planned | - |
+| 15. Sitemap XSL + HTML | 0/TBD | Not planned | - |
 </content>
