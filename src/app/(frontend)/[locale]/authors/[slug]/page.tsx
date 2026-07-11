@@ -214,7 +214,9 @@ export default async function AuthorProfilePage({
                     <div>
                       <p className="font-heading text-body font-semibold">{item.degree}</p>
                       <p className="text-body text-muted-foreground">{item.institution}</p>
-                      <p className="mt-1 text-label text-muted-foreground">{dateRange}</p>
+                      {dateRange && (
+                        <p className="mt-1 text-label text-muted-foreground">{dateRange}</p>
+                      )}
                     </div>
                   </Card>
                 )
@@ -238,7 +240,9 @@ export default async function AuthorProfilePage({
                         aria-hidden
                         className="absolute -left-8 top-1 size-3.5 rounded-full border-2 border-background bg-primary"
                       />
-                      <p className="text-label text-muted-foreground">{dateRange}</p>
+                      {dateRange && (
+                        <p className="text-label text-muted-foreground">{dateRange}</p>
+                      )}
                       <h3 className="font-heading text-body font-semibold">{item.role}</h3>
                       <p className="text-body text-muted-foreground">{item.company}</p>
                       {item.description && (
