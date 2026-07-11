@@ -32,7 +32,7 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 
 ### Out of Scope
 
-- Dashboard interno de analytics/SEO tooling (AdBanners, BrokenLinks, GSCMetrics, KeywordMetrics, PageMetrics, dinorank, internal-links apply, keyword-score/coverage) — es el "clutter" que se descarta explícitamente en esta reconstrucción
+- Dashboard interno de analytics/SEO tooling (AdBanners, BrokenLinks, GSCMetrics, KeywordMetrics, PageMetrics, dinorank, internal-links apply, keyword-score/coverage) — es el "clutter" que se descarta explícitamente en esta reconstrucción. **Aclaración v1.2:** esta exclusión es sobre el dashboard/live-integration de dinorank dentro de la app; el campo editorial `targetKeyword` (v1.2) y el research puntual vía DinoRank API para elegir esos valores son un insumo estático de investigación, no una integración en vivo — no reabre esta exclusión.
 - MongoDB — se reemplaza por Postgres para alinear con el backend de referencia (aprendoclub) y la oferta de DB gestionada de Hostinger
 - Vercel Blob storage — se reemplaza por Cloudinary
 - Plugins de Payload no esenciales para el sitio público: admin-bar, plugin-mcp, dashboard-analytics, plugin-form-builder (se resuelve contacto con lógica simple + Resend, no formbuilder genérico) — salvo que la investigación de research determine que alguno es necesario
@@ -65,18 +65,23 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | Idiomas: EN + ES | Mismo alcance SEO internacional que el sitio actual | ✓ Good |
 | Works vs Clientes: se elimina Works, Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link a web); CaseStudies se enriquece con el modelo estructurado de ariannalupi.com/casos/ | Juan no quiere "Works" como concepto separado — prefiere case studies ricos como vitrina principal, y Clientes como pieza aparte solo para credibilidad visual (logos) | ✓ Good |
 
-## Current Milestone: v1.1 UI/UX Polish Pass
+## Current Milestone: v1.2 Content Parity — Home + Author Page
 
-**Goal:** Todos los componentes del sitio (home, blog, case studies, authors, contact, header/footer, formularios, cards) reciben una pasada de diseño profesional — estética moderna, agradable, alineada a la marca de Juan — antes del deploy a producción en Hostinger. **Scope expandido 2026-07-10** tras feedback directo de Juan sobre el estado acumulado de Phases 7-10.5: no alcanza con pulir lo que ya existe — el milestone ahora incluye auditar los 16 bloques actuales contra los ~39 bloques que tenía el sitio Payload viejo (`JuanPortfolio`), agregar los bloques/componentes que falten (informado por research de qué patrones son tabla-stakes vs diferenciadores), y poblarlos con contenido real/de muestra para poder verlos y validarlos visualmente — no solo dejarlos construidos sin contenido.
+**Goal:** Cerrar las brechas reales de contenido/componentes detectadas al comparar Home y Author page del rebuild contra el sitio de referencia real (`JuanPortfolio`, corriendo en `localhost:3000`), diseñando cualquier sección nueva con la skill `ui-ux-pro-max`, y asignar keyword objetivo (EN/ES, con research real vía DinoRank) a Home y Author page.
 
 **Target features:**
-- Auditoría visual completa de todos los componentes/bloques Payload-editables construidos en Phase 5 (RenderBlocks registry: 16 bloques, heros, cards, byline, footer/header)
-- Refinamiento de sistema de diseño (tipografía, color, espaciado, densidad) informado por research de competidores + referencia del proyecto hermano `auditor` (`/Users/juan/Documents/Codigo/Personal/juantech/auditor/apps/web` — fuentes Array/Khand/Geist, tokens.css con rampas de color/espaciado/tipografía consistentes)
-- Comparación de gaps de componentes contra el sitio Payload viejo (`/Users/juan/Documents/Codigo/Personal/juantech/JuanPortfolio`, ~39 bloques vs los 16 actuales) — decidir cuáles son gaps reales a cerrar vs decisiones intencionales de simplificación ya tomadas en Phase 1 (ej. Works fue retirado a propósito)
-- Componentes nuevos que se agreguen deben poblarse con contenido real o de muestra representativo para poder verlos/validarlos, no quedar construidos-pero-vacíos
-- Mantener el hard rule de Phase 5: todo contenido sigue siendo editable desde Payload, ningún componente nuevo hardcodea contenido
-- Header/footer con navegación completa y footer rico con columnas dinámicas (últimos posts/case studies) — trabajo ya iniciado en Phase 10.5, continúa dentro del scope expandido
-- Fase 6 (Deploy + Cutover) queda en pausa — retoma después de que este milestone cierre
+- Colección `Authors`: recuperar los campos `education[]`, `experience[]`, `expertise[]` que fueron recortados a propósito en Phase 1 ("later content-audit-phase elaboration") — ahora sí hacen falta
+- Author page: 3 secciones nuevas — Expertise (tags), Educación/Certificaciones (logo/institución/fechas/certificado), Experiencia (timeline laboral) — diseñadas con `ui-ux-pro-max`, pobladas con contenido real de Juan donde exista o placeholder editable desde `/admin`
+- Person schema (JSON-LD) del author page enriquecido: `sameAs` (todas las redes), `knowsAbout` (expertise), `hasCredential` (educación) — igual que el sitio de referencia
+- Bloque `AboutSection` extendido con `features[4]` (icon+título+descripción) + CTA — el gap real de "Mi enfoque en Consultoría Técnica" que la investigación previa (Phase 10.7) marcó como "fold into AboutSection" pero nunca se implementó
+- Bloque `FAQ` (ya existe, nunca se pobló) poblado en Home con contenido real
+- Campo `targetKeyword` (grupo `en`/`es`) en colecciones `pages` y `authors`, poblado con los picks de `.planning/research/keyword-research/KEYWORD-RESEARCH.md` (seo técnico / technical seo consultant / auditoría seo técnico / technical seo specialist) — campo editorial, no dispara llamadas en vivo a DinoRank
+- `sitemap.xml` con hoja de estilos XSL (visualización humana al abrir la URL) + `sitemap.html` navegable nuevo
+- CalendlyEmbed queda explícitamente fuera de scope (Juan confirmó que ya no usa Calendly)
+
+## Milestone Anterior: v1.1 UI/UX Polish Pass (cerrado parcialmente 2026-07-11)
+
+Todos los componentes del sitio recibieron una pasada de diseño profesional (Phases 7-11, 10/11 completas). Incluyó auditoría de los 16 bloques actuales contra los ~39 bloques del sitio Payload viejo, cierre de gaps genuinos (AboutSection, TestimonialSection), enriquecimiento del Hero (CTA/breadcrumbs), y verificación cruzada final (contraste WCAG, layout `/es`, Lighthouse móvil). **Phase 6 (Deploy + Cutover) sigue abierta y en pausa** — no se re-numera, retoma cuando Juan dé el visto bueno con credenciales reales de Hostinger/DNS/Resend. v1.2 corre en paralelo sobre contenido/componentes, sin bloquear ni depender del cierre de Phase 6.
 
 ## Evolution
 
@@ -96,4 +101,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-10 — milestone v1.1 started*
+*Last updated: 2026-07-11 — milestone v1.2 started*

@@ -1,17 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: milestone
-status: Phase 11 completa (3/3) — milestone v1.1 solo pendiente de Phase 6 (Deploy + Cutover)
-stopped_at: "11 ejecutada: contraste WCAG AA + grep hardcoded final (11-01), layout /es contra contenido real (11-02), Lighthouse movil baseline vs HEAD (11-03). Fases 7-11 del milestone v1.1 cerradas. Phase 6 sigue en pausa, requiere decision explicita de Juan para arrancar deploy real (creds Hostinger/DNS/Resend)."
-last_updated: "2026-07-11T00:00:00.000Z"
-last_activity: 2026-07-11 — Confirmado on-disk que Phase 11 (Verificacion Cruzada Final) esta completa 3/3 con SUMMARYs reales; ROADMAP.md actualizado y commiteado para reflejarlo. Autonomous run se detiene aqui por decision de Juan: Phase 6 (Deploy + Cutover) requiere creds reales y confirmacion explicita paso a paso antes de ejecutarse, no se dispara headless.
+milestone: v1.2
+milestone_name: Content Parity — Home + Author Page
+status: planning
+last_updated: "2026-07-11T19:24:55.367Z"
+last_activity: 2026-07-11
 progress:
-  total_phases: 11
-  completed_phases: 10
-  total_plans: 55
-  completed_plans: 50
-  percent: 91
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -21,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Milestone v1.1 (UI/UX Polish Pass) — scope expandido 2026-07-10. Roadmap ahora cubre Phases 7-11 más tres fases insertadas (10.6, 10.7, 10.8) entre Phase 10.5 y Phase 11: header/footer completion + verificación mobile real (UI-17..19), component gap-fill AboutSection/TestimonialSection poblados (UI-20/21), y enriquecimiento de Hero con CTA/breadcrumbs poblados (UI-22/23). UI-24 (disciplina mobile-first) se verifica de forma cruzada en Phase 11, no como fase separada. Phase 10.5 cierra con alcance reducido (solo tipografía + schema de Footer, ya completo); el restyle de header/footer que tenía pendiente pasa a Phase 10.6. Phase 6 (Deploy + Cutover) sigue en pausa, retoma después de que Phase 11 cierre. Dos pre-deploy action items de Phase 5 siguen pendientes (contenido E-E-A-T de autor, Resend API key real).
+**Current focus:** Milestone v1.2 (Content Parity — Home + Author Page) — iniciado 2026-07-11. Cierra brechas reales de contenido/componentes en Home y Author page detectadas contra el sitio de referencia real (`JuanPortfolio`, `localhost:3000`): Authors collection recupera education/experience/expertise, Author page gana 3 secciones nuevas diseñadas con `ui-ux-pro-max`, AboutSection se extiende con features+CTA, FAQ se puebla en Home, se agrega campo `targetKeyword` (EN/ES) en pages+authors informado por research real vía DinoRank, y se agrega sitemap.xml con estilos XSL + sitemap.html. Milestone v1.1 (UI/UX Polish Pass) quedó 10/11 fases completas — solo Phase 6 (Deploy + Cutover) sigue abierta y en pausa, retoma cuando Juan confirme con credenciales reales de Hostinger/DNS/Resend; v1.2 corre en paralelo sin depender de ese cierre. Dos pre-deploy action items de Phase 5 siguen pendientes (contenido E-E-A-T de autor — ahora en scope directo de v1.2 —, Resend API key real).
 
 ## Current Position
 
-Phase: 11 (Verificación Cruzada Final) — COMPLETA (3/3)
-Plan: 11-01 contraste WCAG AA (light/dark) + grep hardcoded final + diff config.ts/payload-types.ts; 11-02 layout /es contra contenido real (home/authors/case-studies); 11-03 Lighthouse móvil sobre build local, baseline pre-milestone vs HEAD
-Status: Fases 7-11 del milestone v1.1 cerradas. Único pendiente del milestone: Phase 6 (Deploy + Cutover), en pausa por decisión explícita de Juan — no se ejecuta headless, necesita creds reales (Hostinger/DNS/Resend) y confirmación paso a paso.
-Last activity: 2026-07-11 — Autonomous run confirmó Phase 11 completa en disco (SUMMARYs reales, 3/3), commiteó ROADMAP.md y STATE.md reflejando el cierre. Se preguntó a Juan cómo seguir con Phase 6 (deploy real); Juan eligió parar acá y decidir el arranque de Phase 6 más adelante.
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-11 — Milestone v1.2 started
 
 ## Performance Metrics
 
