@@ -2,9 +2,10 @@
  * Phase 13 (Home Content Population — ABOUT-02 / FAQ-01):
  *
  * 1. In-place update of Home's existing `aboutSection` block (populated by
- *    Phase 10.7) — adds `features[]` (4 real items) + `ctaText`/`ctaLink`
- *    ("Hablemos de tu proyecto" -> #contact), without touching the block's
- *    existing eyebrow/title/paragraphs/photo.
+ *    Phase 10.7) — sets `eyebrow`/`title`/`paragraphs` to this phase's
+ *    locked "Mi enfoque en Consultoría Técnica" copy (13-CONTEXT.md
+ *    <specifics>, gap closure 13-03) and adds `features[]` (4 real items) +
+ *    `ctaText`/`ctaLink` ("Hablemos de tu proyecto" -> #contact).
  * 2. Adds a `faq` block to Home's layout (5 real Q&A pairs, ES+EN) right
  *    after `aboutSection`, if not already present.
  * 3. Adds a `contactFormBlock` to the end of Home's layout (reusing the
@@ -24,7 +25,9 @@
  * writes (captured after the first locale's write) — otherwise the second
  * locale's write creates a duplicate block row and orphans the first
  * locale's localized fields (the exact bug already hit and fixed once in
- * seed-phase10-7-gap-fill.ts / seed-home-page.ts).
+ * seed-phase10-7-gap-fill.ts / seed-home-page.ts). The same id-reuse
+ * discipline applies to the nested `aboutSection.features[]` and
+ * `aboutSection.paragraphs[]` arrays, and to `faq.faqs[]`.
  *
  * Run with: node --env-file=.env node_modules/.bin/tsx scripts/seed-phase13-home-content.ts
  */
@@ -117,20 +120,27 @@ const ctaCopy: Record<Locale, string> = {
   en: "Let's talk about your project",
 }
 
-// Rule 1 fix (found during this phase's own sanity pass, unrelated to
-// ABOUT-02/FAQ-01 scope but on the exact same block/page): Phase 10.7's
-// seed script (seed-phase10-7-gap-fill.ts) built its `es`/`en` paragraph
-// copy from `author.bio ?? fallback` for BOTH locales identically, so when
-// `author.bio` was populated (in Spanish) it silently became the EN
-// locale's first paragraph too — a real leftover-Spanish-on-EN-page bug,
-// live on Home today. Patched here (idempotent: only replaces the known
-// broken ES string, a no-op once already fixed) since this script already
-// touches the same aboutSection block in place.
-const ABOUT_PARAGRAPH_1_BROKEN_EN_TEXT =
-  'Soy Juan Carlos Angulo, Ingeniero de Software y Consultor SEO Técnico freelance con sede en Lima, Perú. A lo largo de más de cuatro años de experiencia profesional me he especializado en la intersección entre el desarrollo de software y la optimización para motores de búsqueda.\n\nMi trabajo combina la auditoría técnica SEO —rastreo, indexabilidad, Core Web Vitals, Schema.org y datos estructurados— con el desarrollo full-stack utilizando Next.js y Payload CMS. Ayudo a empresas a mejorar su visibilidad orgánica mediante correcciones a nivel de código, sin intermediarios. Construyo y mantengo juan-tech.com, un blog técnico bilingüe orientado a desarrolladores y profesionales de tecnología en Latinoamérica y España.'
-
-const ABOUT_PARAGRAPH_1_FIXED_EN_TEXT =
-  "I'm Juan Carlos Angulo, a freelance Software Engineer and Technical SEO Consultant based in Lima, Peru. Over more than four years of professional experience, I've specialized in the intersection between software development and search engine optimization.\n\nMy work combines technical SEO audits — crawling, indexability, Core Web Vitals, Schema.org, and structured data — with full-stack development using Next.js and Payload CMS. I help companies improve their organic visibility through code-level fixes, with no middlemen involved. I build and maintain juan-tech.com, a bilingual technical blog for developers and tech professionals across Latin America and Spain."
+// Gap closure (13-03): Home's aboutSection eyebrow/title/description must
+// read as this phase's "Mi enfoque en Consultoría Técnica" section (locked
+// in 13-CONTEXT.md's <specifics>), not Phase 10.7's original "Sobre mí" bio
+// intro. This fully replaces the old two-paragraph bio copy with a single
+// description paragraph, so the Phase-10.7 leftover-Spanish-on-EN patch
+// that used to live here (ABOUT_PARAGRAPH_1_BROKEN_EN_TEXT/FIXED_EN_TEXT)
+// is now moot — the old bio text it targeted no longer exists at all.
+const aboutHeaderCopy: Record<Locale, { eyebrow: string; title: string; description: string }> = {
+  es: {
+    eyebrow: 'Estrategia y datos. Más allá del código',
+    title: 'Mi enfoque en Consultoría Técnica',
+    description:
+      'No veo el SEO y el desarrollo web como disciplinas aisladas. Los motores de búsqueda modernos evalúan la limpieza del código, la velocidad de carga y la arquitectura de la información. Mi metodología se basa en auditar y construir soluciones donde la infraestructura técnica se convierte en el motor principal para el crecimiento orgánico, asegurando que tu web no solo funcione perfectamente, sino que domine en los resultados de búsqueda.',
+  },
+  en: {
+    eyebrow: 'Data and strategy. Beyond the code',
+    title: 'My Approach to Technical Consulting',
+    description:
+      "I don't see SEO and web development as separate disciplines. Modern search engines evaluate code quality, load speed, and information architecture. My approach is built on auditing and building solutions where technical infrastructure becomes the primary driver of organic growth — making sure your site not only runs flawlessly, but dominates the search results too.",
+  },
+}
 
 const faqCopy: Record<Locale, { title: string; faqs: { question: string; answer: string }[] }> = {
   es: {
@@ -254,14 +264,15 @@ async function main() {
   // same block/sub-array rows instead of creating duplicates (id-reuse
   // pattern from seed-phase10-7-gap-fill.ts / seed-contact-page.ts). Applies
   // to top-level blocks (faq, contactFormBlock) AND to the nested
-  // aboutSection.features[] sub-array — Payload full-replaces array fields
-  // on update, so omitting ids on the second locale write orphans the first
-  // locale's already-written features[].title/description (Rule 1 fix,
-  // found during this script's first run: es features[].title/description
-  // came back undefined after the en write).
+  // aboutSection.features[]/paragraphs[] sub-arrays — Payload full-replaces
+  // array fields on update, so omitting ids on the second locale write
+  // orphans the first locale's already-written values (Rule 1 fix, found
+  // during this script's first run: es features[].title/description came
+  // back undefined after the en write).
   let faqBlockId: string | undefined
   let contactBlockId: string | undefined
   let featureIds: (string | undefined)[] | undefined
+  let paragraphIds: (string | undefined)[] | undefined
   let faqItemIds: (string | undefined)[] | undefined
 
   for (const locale of LOCALES) {
@@ -284,15 +295,17 @@ async function main() {
         return withId
       })
 
-      let paragraphs = (layout[aboutIndex] as { paragraphs?: { id?: string; text?: string }[] })
-        .paragraphs
-      if (locale === 'en' && paragraphs?.[0]?.text === ABOUT_PARAGRAPH_1_BROKEN_EN_TEXT) {
-        paragraphs = paragraphs.map((p, i) => (i === 0 ? { ...p, text: ABOUT_PARAGRAPH_1_FIXED_EN_TEXT } : p))
-        console.log('Fixed leftover-Spanish AboutSection paragraph on the EN locale (Rule 1).')
-      }
+      const paragraphs = [
+        {
+          text: aboutHeaderCopy[locale].description,
+          ...(paragraphIds?.[0] ? { id: paragraphIds[0] } : {}),
+        },
+      ]
 
       layout[aboutIndex] = {
         ...layout[aboutIndex],
+        eyebrow: aboutHeaderCopy[locale].eyebrow,
+        title: aboutHeaderCopy[locale].title,
         paragraphs,
         features,
         ctaText: ctaCopy[locale],
@@ -347,14 +360,15 @@ async function main() {
       },
     })
 
-    if (!faqBlockId || !contactBlockId || !featureIds || !faqItemIds) {
+    if (!faqBlockId || !contactBlockId || !featureIds || !paragraphIds || !faqItemIds) {
       const refetched = await payload.findByID({ collection: 'pages', id: homeDoc.id, locale, depth: 0 })
       const refetchedLayout = (refetched.content?.layout ?? []) as Array<Record<string, unknown>>
-      if (!featureIds) {
+      if (!featureIds || !paragraphIds) {
         const refetchedAbout = refetchedLayout.find((b) => b.blockType === 'aboutSection') as
-          | { features?: { id?: string }[] }
+          | { features?: { id?: string }[]; paragraphs?: { id?: string }[] }
           | undefined
-        featureIds = refetchedAbout?.features?.map((f) => f.id)
+        if (!featureIds) featureIds = refetchedAbout?.features?.map((f) => f.id)
+        if (!paragraphIds) paragraphIds = refetchedAbout?.paragraphs?.map((p) => p.id)
       }
       if (!faqItemIds) {
         const refetchedFaq = refetchedLayout.find((b) => b.blockType === 'faq') as
