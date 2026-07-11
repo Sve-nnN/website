@@ -34,7 +34,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 10.7 [INSERTED]: Component Gap-Fill (AboutSection + TestimonialSection)** - Dos bloques nuevos identificados por el gap-analysis contra JuanPortfolio, construidos y poblados con contenido real/de muestra (completed 2026-07-10)
 - [x] **Phase 10.8 [INSERTED]: Hero Enrichment (CTA + Breadcrumbs)** - Campos de CTA/links y breadcrumbs agregados al Hero existente y poblados con datos reales (completed 2026-07-10)
 - [x] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil, disciplina mobile-first confirmada de punta a punta (completed 2026-07-10)
-- [ ] **Phase 12: Author Page E-E-A-T Expansion** - Author page recupera expertise/educación/experiencia recortados en Phase 1, más una 4ta sección de speaking events, con JSON-LD enriquecido — código/contenido/verificación automatizada completos, awaiting Juan's final visual sign-off (12-04 Task 2)
+- [x] **Phase 12: Author Page E-E-A-T Expansion** - Author page recupera expertise/educación/experiencia recortados en Phase 1, más una 4ta sección de speaking events, con JSON-LD enriquecido — verificado 7/7, code review limpio (4 warnings corregidos), Juan confirmó visualmente (completed 2026-07-11)
 - [ ] **Phase 13: Home Content Population** - AboutSection extendido con features + FAQ poblado en Home
 - [ ] **Phase 14: Target Keyword Field** - Campo editorial targetKeyword en Pages/Authors, poblado con picks de keyword research real
 - [ ] **Phase 15: Sitemap XSL + HTML** - sitemap.xml con hoja de estilos navegable + sitemap.html enlazado desde el footer
