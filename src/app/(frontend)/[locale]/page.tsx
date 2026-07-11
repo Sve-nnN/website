@@ -48,10 +48,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <main>
       <RenderBlocks
         blocks={doc.content?.layout ?? []}
-        sharedProps={{
-          onSubmit: sendContactMessage,
-          locale,
-          contactEmail: process.env.CONTACT_TO_EMAIL,
+        blockProps={{
+          contactFormBlock: {
+            onSubmit: sendContactMessage,
+            locale,
+            contactEmail: process.env.CONTACT_TO_EMAIL,
+          },
         }}
       />
       <JsonLd data={personData} />

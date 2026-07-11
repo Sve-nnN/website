@@ -46,11 +46,13 @@ export default async function ContactPage({
     <main>
       <RenderBlocks
         blocks={doc.content?.layout ?? []}
-        sharedProps={{
-          onSubmit: sendContactMessage,
-          locale,
-          sent,
-          contactEmail: process.env.CONTACT_TO_EMAIL,
+        blockProps={{
+          contactFormBlock: {
+            onSubmit: sendContactMessage,
+            locale,
+            sent,
+            contactEmail: process.env.CONTACT_TO_EMAIL,
+          },
         }}
       />
     </main>
