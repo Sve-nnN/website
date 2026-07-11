@@ -76,6 +76,7 @@ export interface Config {
     'case-studies': CaseStudy;
     testimonials: Testimonial;
     clientes: Cliente;
+    'speaking-events': SpeakingEvent;
     redirects: Redirect;
     search: Search;
     'payload-kv': PayloadKv;
@@ -95,6 +96,7 @@ export interface Config {
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     clientes: ClientesSelect<false> | ClientesSelect<true>;
+    'speaking-events': SpeakingEventsSelect<false> | SpeakingEventsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -954,6 +956,35 @@ export interface Testimonial {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "speaking-events".
+ */
+export interface SpeakingEvent {
+  id: number;
+  title: string;
+  description?: string | null;
+  /**
+   * Qué hizo Juan en el evento, p.ej. "Ponente", "Co-instructor"
+   */
+  role?: string | null;
+  coSpeakers?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Opcional — dejar vacío si no hay fecha exacta confirmada, no inventar
+   */
+  date?: string | null;
+  location?: string | null;
+  attendeeCount?: number | null;
+  link?: string | null;
+  flyer?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1177,6 +1208,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'clientes';
         value: number | Cliente;
+      } | null)
+    | ({
+        relationTo: 'speaking-events';
+        value: number | SpeakingEvent;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1786,6 +1821,28 @@ export interface ClientesSelect<T extends boolean = true> {
   name?: T;
   logo?: T;
   websiteUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "speaking-events_select".
+ */
+export interface SpeakingEventsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  role?: T;
+  coSpeakers?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  date?: T;
+  location?: T;
+  attendeeCount?: T;
+  link?: T;
+  flyer?: T;
   updatedAt?: T;
   createdAt?: T;
 }

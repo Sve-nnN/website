@@ -11,6 +11,7 @@ import * as migration_20260710_150154_phase10_5_footer_dynamic_columns from './2
 import * as migration_20260710_164937_phase10_7_about_testimonial_sections from './20260710_164937_phase10_7_about_testimonial_sections';
 import * as migration_20260710_165940_phase10_8_hero_cta_breadcrumbs from './20260710_165940_phase10_8_hero_cta_breadcrumbs';
 import * as migration_20260711_201023_phase12_author_eeat_fields from './20260711_201023_phase12_author_eeat_fields';
+import * as migration_20260711_204216_phase12_speaking_events from './20260711_204216_phase12_speaking_events';
 
 export const migrations = [
   {
@@ -76,6 +77,11 @@ export const migrations = [
   {
     up: migration_20260711_201023_phase12_author_eeat_fields.up,
     down: migration_20260711_201023_phase12_author_eeat_fields.down,
-    name: '20260711_201023_phase12_author_eeat_fields'
+    name: '20260711_201023_phase12_author_eeat_fields',
+  },
+  {
+    up: migration_20260711_204216_phase12_speaking_events.up,
+    down: migration_20260711_204216_phase12_speaking_events.down,
+    name: '20260711_204216_phase12_speaking_events'
   },
 ];
