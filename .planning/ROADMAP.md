@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 10.6 [INSERTED]: Header/Footer Completion + Mobile Verification** - Nav mobile-first completa, footer con contenido dinámico realmente renderizado, verificación real con Playwright en 375/768/1280px (completed 2026-07-10)
 - [x] **Phase 10.7 [INSERTED]: Component Gap-Fill (AboutSection + TestimonialSection)** - Dos bloques nuevos identificados por el gap-analysis contra JuanPortfolio, construidos y poblados con contenido real/de muestra (completed 2026-07-10)
 - [x] **Phase 10.8 [INSERTED]: Hero Enrichment (CTA + Breadcrumbs)** - Campos de CTA/links y breadcrumbs agregados al Hero existente y poblados con datos reales (completed 2026-07-10)
-- [ ] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil, disciplina mobile-first confirmada de punta a punta
+- [x] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil, disciplina mobile-first confirmada de punta a punta (completed 2026-07-10)
 
 ## Phase Details
 
@@ -355,9 +355,9 @@ Plans:
 
 Plans:
 
-- [ ] 11-01-PLAN.md — Contraste WCAG AA en ambos temas (light/dark, tokens completos) + grep final de contenido hardcodeado + diff config.ts/payload-types.ts en el rango completo del milestone
-- [ ] 11-02-PLAN.md — Layout `/es` contra contenido real más largo en home/authors/case-studies (páginas no cubiertas por Phase 10)
-- [ ] 11-03-PLAN.md — Lighthouse móvil sobre build de producción local, baseline pre-milestone vs HEAD actual (sustituto documentado del baseline de producción, ya que Phase 6 sigue en pausa)
+- [x] 11-01-PLAN.md — Contraste WCAG AA en ambos temas (light/dark, tokens completos) + grep final de contenido hardcodeado + diff config.ts/payload-types.ts en el rango completo del milestone (re-verificado contra el diff final post 10.6-10.8)
+- [x] 11-02-PLAN.md — Layout `/es` contra contenido real más largo en home/authors/case-studies (páginas no cubiertas por Phase 10), cerrado con verificación contra el case study real y el testimonio embebido de Phase 10.7
+- [x] 11-03-PLAN.md — Lighthouse móvil sobre build de producción local, baseline pre-milestone vs HEAD actual (sustituto documentado del baseline de producción, ya que Phase 6 sigue en pausa)
 
 ## Progress
 
@@ -377,8 +377,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 9. Hero + Resultados/KPI + Tipografía | 3/3 | Complete   | 2026-07-10 |
 | 10. Cards/Listados + Autoría E-E-A-T | 2/2 | Complete   | 2026-07-10 |
 | 10.5. Typography + Footer Schema | 2/2 | Complete   | 2026-07-10 |
-| 10.6. Header/Footer Completion + Mobile Verification | 2/3 | In Progress|  |
-| 10.7. Component Gap-Fill (AboutSection + TestimonialSection) | 0/TBD | Not started | - |
-| 10.8. Hero Enrichment (CTA + Breadcrumbs) | 0/TBD | Not started | - |
-| 11. Verificación Cruzada Final | 0/3 | Not started | - |
+| 10.6. Header/Footer Completion + Mobile Verification | 3/3 | Complete   | 2026-07-10 |
+| 10.7. Component Gap-Fill (AboutSection + TestimonialSection) | 1/1 | Complete   | 2026-07-10 |
+| 10.8. Hero Enrichment (CTA + Breadcrumbs) | 1/1 | Complete   | 2026-07-10 |
+| 11. Verificación Cruzada Final | 3/3 | Complete   | 2026-07-10 |
 </content>

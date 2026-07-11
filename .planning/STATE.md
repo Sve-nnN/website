@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: milestone
-status: Phase 10.8 completa — falta solo Phase 11 (Verificacion Cruzada Final)
-stopped_at: "10.8 ejecutada: Hero CTA links + breadcrumbs listing construidos, migrados y poblados (UI-22, UI-23); bug real de Tailwind content glob encontrado y arreglado"
-last_updated: "2026-07-10T19:30:00.000Z"
-last_activity: 2026-07-10 — Ejecutada Phase 10.8 (Hero links array + breadcrumbs en variante listing, CTA real en home, breadcrumbs reales en blog index); fix de tailwind.config.ts content glob (src/blocks/** faltaba, causaba overflow horizontal silencioso); 8 commits atomicos, ultimo a446623
+status: Phase 11 completa (3/3) — milestone v1.1 solo pendiente de Phase 6 (Deploy + Cutover)
+stopped_at: "11 ejecutada: contraste WCAG AA + grep hardcoded final (11-01), layout /es contra contenido real (11-02), Lighthouse movil baseline vs HEAD (11-03). Fases 7-11 del milestone v1.1 cerradas. Phase 6 sigue en pausa, requiere decision explicita de Juan para arrancar deploy real (creds Hostinger/DNS/Resend)."
+last_updated: "2026-07-11T00:00:00.000Z"
+last_activity: 2026-07-11 — Confirmado on-disk que Phase 11 (Verificacion Cruzada Final) esta completa 3/3 con SUMMARYs reales; ROADMAP.md actualizado y commiteado para reflejarlo. Autonomous run se detiene aqui por decision de Juan: Phase 6 (Deploy + Cutover) requiere creds reales y confirmacion explicita paso a paso antes de ejecutarse, no se dispara headless.
 progress:
   total_phases: 11
-  completed_phases: 11
+  completed_phases: 10
   total_plans: 55
-  completed_plans: 53
-  percent: 97
+  completed_plans: 50
+  percent: 91
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 10.8 (Hero Enrichment) — COMPLETA
-Plan: Hero.links array (CTA botones, reutiliza linkGroup/CMSLink) y Hero.breadcrumbs (solo variant listing) agregados al schema, migracion Postgres commiteada, home con CTA real poblado, blog index con breadcrumbs reales poblados
-Status: Phase 10.8 cerrada. Solo falta Phase 11 (Verificacion Cruzada Final) para cerrar el milestone v1.1 completo
-Last activity: 2026-07-10 — Ejecutada Phase 10.8 via agente delegado: bug real encontrado y arreglado (tailwind.config.ts content glob no incluia src/blocks/**, causaba overflow horizontal silencioso en clases usadas solo dentro de blocks — ej. tabs de categoria en ArchiveBlock); tambien arreglados 2 bugs de corrupcion de datos heredados del seed de 10.7 (parrafo ES de AboutSection y titulo/subtitulo EN del Hero de home pisados por el seed anterior); verificacion mobile real con Playwright (scripts/verify-hero-mobile.mjs) PASS en 375px sin overflow, ademas de re-confirmar PASS en el script de header/footer de 10.6
+Phase: 11 (Verificación Cruzada Final) — COMPLETA (3/3)
+Plan: 11-01 contraste WCAG AA (light/dark) + grep hardcoded final + diff config.ts/payload-types.ts; 11-02 layout /es contra contenido real (home/authors/case-studies); 11-03 Lighthouse móvil sobre build local, baseline pre-milestone vs HEAD
+Status: Fases 7-11 del milestone v1.1 cerradas. Único pendiente del milestone: Phase 6 (Deploy + Cutover), en pausa por decisión explícita de Juan — no se ejecuta headless, necesita creds reales (Hostinger/DNS/Resend) y confirmación paso a paso.
+Last activity: 2026-07-11 — Autonomous run confirmó Phase 11 completa en disco (SUMMARYs reales, 3/3), commiteó ROADMAP.md y STATE.md reflejando el cierre. Se preguntó a Juan cómo seguir con Phase 6 (deploy real); Juan eligió parar acá y decidir el arranque de Phase 6 más adelante.
 
 ## Performance Metrics
 
@@ -142,7 +142,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-10T17:00:00.000Z
-Stopped at: Phase 10.6 completa (3/3). Iniciando Phase 10.7 (Component Gap-Fill: AboutSection + TestimonialSection)
-Resume file: .planning/ROADMAP.md (Phase 10.7)
+Last session: 2026-07-11T00:00:00.000Z
+Stopped at: Phase 11 completa (3/3). Milestone v1.1 solo pendiente de Phase 6 (Deploy + Cutover) — pausado por decisión de Juan.
+Resume file: .planning/ROADMAP.md (Phase 6)
 </content>
