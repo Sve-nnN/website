@@ -208,6 +208,22 @@ const speakingEventsCopy: Record<(typeof LOCALES)[number], SpeakingEventSeed[]> 
   ],
 }
 
+/**
+ * Compares an existing localized array (as read back from Payload, `id`
+ * included) against this script's expected seed content for the same
+ * locale, ignoring the `id` field. Used to guard seedExpertise/seedEducation/
+ * seedExperience against clobbering manual /admin edits, mirroring the
+ * diff-and-warn pattern already used by seedSocialLinks.
+ */
+function itemsMatchExpected<T extends Record<string, unknown>>(
+  existing: T[] | null | undefined,
+  expected: readonly Omit<T, 'id'>[],
+  keys: (keyof T)[],
+): boolean {
+  if (!existing || existing.length !== expected.length) return false
+  return existing.every((item, i) => keys.every((k) => item[k] === (expected[i] as T)[k]))
+}
+
 async function verifyAvatar(payload: Awaited<ReturnType<typeof getPayload>>) {
   const { docs } = await payload.find({
     collection: 'authors',
@@ -237,7 +253,22 @@ async function verifyAvatar(payload: Awaited<ReturnType<typeof getPayload>>) {
   return author
 }
 
-async function seedExpertise(payload: Awaited<ReturnType<typeof getPayload>>, authorId: number | string) {
+async function seedExpertise(
+  payload: Awaited<ReturnType<typeof getPayload>>,
+  authorId: number | string,
+  existingExpertise: Expertise[] | null | undefined,
+) {
+  if (
+    existingExpertise &&
+    existingExpertise.length > 0 &&
+    !itemsMatchExpected(existingExpertise, expertiseCopy.es, ['topic'])
+  ) {
+    console.warn(
+      'Expertise: el Author ya tiene valores DIFERENTES a los esperados (locale=es) — no se sobrescriben para no perder datos reales. Revisar manualmente si corresponde actualizar.',
+    )
+    return
+  }
+
   let savedIds: (string | undefined)[] = []
 
   for (const locale of LOCALES) {
@@ -262,7 +293,22 @@ async function seedExpertise(payload: Awaited<ReturnType<typeof getPayload>>, au
   }
 }
 
-async function seedEducation(payload: Awaited<ReturnType<typeof getPayload>>, authorId: number | string) {
+async function seedEducation(
+  payload: Awaited<ReturnType<typeof getPayload>>,
+  authorId: number | string,
+  existingEducation: Education[] | null | undefined,
+) {
+  if (
+    existingEducation &&
+    existingEducation.length > 0 &&
+    !itemsMatchExpected(existingEducation, educationCopy.es, ['degree', 'institution', 'startDate', 'endDate'])
+  ) {
+    console.warn(
+      'Education: el Author ya tiene valores DIFERENTES a los esperados (locale=es) — no se sobrescriben para no perder datos reales. Revisar manualmente si corresponde actualizar.',
+    )
+    return
+  }
+
   let savedIds: (string | undefined)[] = []
 
   for (const locale of LOCALES) {
@@ -287,7 +333,28 @@ async function seedEducation(payload: Awaited<ReturnType<typeof getPayload>>, au
   }
 }
 
-async function seedExperience(payload: Awaited<ReturnType<typeof getPayload>>, authorId: number | string) {
+async function seedExperience(
+  payload: Awaited<ReturnType<typeof getPayload>>,
+  authorId: number | string,
+  existingExperience: Experience[] | null | undefined,
+) {
+  if (
+    existingExperience &&
+    existingExperience.length > 0 &&
+    !itemsMatchExpected(existingExperience, experienceCopy.es, [
+      'role',
+      'company',
+      'startDate',
+      'endDate',
+      'description',
+    ])
+  ) {
+    console.warn(
+      'Experience: el Author ya tiene valores DIFERENTES a los esperados (locale=es) — no se sobrescriben para no perder datos reales. Revisar manualmente si corresponde actualizar.',
+    )
+    return
+  }
+
   let savedIds: (string | undefined)[] = []
 
   for (const locale of LOCALES) {
@@ -417,9 +484,9 @@ async function main() {
 
   const author = await verifyAvatar(payload)
 
-  await seedExpertise(payload, author.id)
-  await seedEducation(payload, author.id)
-  await seedExperience(payload, author.id)
+  await seedExpertise(payload, author.id, author.expertise)
+  await seedEducation(payload, author.id, author.education)
+  await seedExperience(payload, author.id, author.experience)
   await seedSocialLinks(payload, author.id, author.socialLinks)
   await seedSpeakingEvents(payload)
 
