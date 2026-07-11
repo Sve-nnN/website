@@ -22,9 +22,10 @@ export function IconPickerField(props: SelectFieldClientProps) {
   const selected = ICON_OPTIONS.find((opt) => opt.value === value)
   const SelectedIcon = selected?.Icon
 
-  const filtered = ICON_OPTIONS.filter((opt) =>
-    opt.label.toLowerCase().includes(search.trim().toLowerCase()),
-  )
+  const filtered = ICON_OPTIONS.filter((opt) => {
+    const query = search.trim().toLowerCase()
+    return opt.label.toLowerCase().includes(query) || opt.value.toLowerCase().includes(query)
+  })
 
   return (
     <div className="field-type icon-picker-field" style={{ marginBottom: 'var(--base, 20px)' }}>
