@@ -936,6 +936,49 @@ export interface AboutSectionBlock {
     id?: string | null;
   }[];
   photo?: (number | null) | Media;
+  /**
+   * Exactamente 4 items: icono + título + descripción (grid "Mi enfoque en Consultoría Técnica")
+   */
+  features?:
+    | {
+        icon:
+          | 'zap'
+          | 'monitor'
+          | 'code'
+          | 'trendingUp'
+          | 'shield'
+          | 'rocket'
+          | 'palette'
+          | 'lightbulb'
+          | 'target'
+          | 'layers'
+          | 'cpu'
+          | 'database'
+          | 'globe'
+          | 'search'
+          | 'settings'
+          | 'smartphone'
+          | 'server'
+          | 'lock'
+          | 'gauge'
+          | 'sparkles'
+          | 'wrench'
+          | 'lineChart'
+          | 'checkCircle'
+          | 'barChart';
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Texto del botón CTA (opcional)
+   */
+  ctaText?: string | null;
+  /**
+   * URL o ancla del CTA, ej: #contact (opcional)
+   */
+  ctaLink?: string | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'aboutSection';
@@ -1625,6 +1668,16 @@ export interface AboutSectionBlockSelect<T extends boolean = true> {
         id?: T;
       };
   photo?: T;
+  features?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  ctaText?: T;
+  ctaLink?: T;
   id?: T;
   blockName?: T;
 }

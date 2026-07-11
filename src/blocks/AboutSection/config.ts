@@ -1,5 +1,7 @@
 import type { Block } from 'payload'
 
+import { iconSelectOptions } from '@/fields/IconPicker/icons'
+
 // Gap-fill block (10.7, UI-20): JuanPortfolio's "About" section (eyebrow +
 // title + narrative paragraphs + optional photo) had no direct analog among
 // the 16 blocks registered in 05-04 — the closest was the generic `content`
@@ -51,6 +53,57 @@ export const AboutSection: Block = {
       relationTo: 'media',
       required: false,
       label: 'Foto (opcional)',
+    },
+    {
+      name: 'features',
+      type: 'array',
+      label: 'Features',
+      minRows: 4,
+      maxRows: 4,
+      admin: {
+        description:
+          'Exactamente 4 items: icono + título + descripción (grid "Mi enfoque en Consultoría Técnica")',
+      },
+      fields: [
+        {
+          name: 'icon',
+          type: 'select',
+          required: true,
+          options: iconSelectOptions,
+          admin: {
+            components: {
+              Field: '@/fields/IconPicker/Component#IconPickerField',
+            },
+          },
+        },
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+          localized: true,
+        },
+        {
+          name: 'description',
+          type: 'textarea',
+          required: true,
+          localized: true,
+        },
+      ],
+    },
+    {
+      name: 'ctaText',
+      type: 'text',
+      localized: true,
+      admin: {
+        description: 'Texto del botón CTA (opcional)',
+      },
+    },
+    {
+      name: 'ctaLink',
+      type: 'text',
+      admin: {
+        description: 'URL o ancla del CTA, ej: #contact (opcional)',
+      },
     },
   ],
 }
