@@ -1,15 +1,17 @@
 import Image from 'next/image'
-import { TrendingUp, Zap, Code, Monitor } from 'lucide-react'
+import { Code } from 'lucide-react'
 
 import type { AboutSectionBlock as AboutSectionBlockProps } from '@/payload-types'
 
 import { Container } from '@/components/Container'
 import { Button } from '@/components/ui/button'
+import { ICON_OPTIONS } from '@/fields/IconPicker/icons'
 
-// Feature icons — subset of src/fields/IconPicker/icons.ts's ICON_OPTIONS,
-// matching the 4 real icons used by the seeded "Mi enfoque en Consultoría
-// Técnica" features (13-UI-SPEC.md Section 1). Code is the safe fallback.
-const iconMap = { trendingUp: TrendingUp, zap: Zap, code: Code, monitor: Monitor } as const
+// Derived directly from ICON_OPTIONS (single source of truth shared with the
+// admin IconPickerField) so every icon offered in the admin picker actually
+// renders on the frontend — no hand-maintained subset to drift out of sync.
+// `Code` remains the safe fallback for any unrecognized/legacy value.
+const iconMap = Object.fromEntries(ICON_OPTIONS.map((o) => [o.value, o.Icon]))
 
 export function AboutSectionComponent(props: AboutSectionBlockProps) {
   const { eyebrow, title, paragraphs, photo, features, ctaText, ctaLink } = props
@@ -48,7 +50,7 @@ export function AboutSectionComponent(props: AboutSectionBlockProps) {
       {features && features.length > 0 && (
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6">
           {features.map((item, i) => {
-            const Icon = iconMap[item.icon as keyof typeof iconMap] ?? Code
+            const Icon = iconMap[item.icon] ?? Code
             return (
               <div key={i} className="flex gap-4">
                 <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/10">
