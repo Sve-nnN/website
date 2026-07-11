@@ -226,12 +226,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ### AUTHOR (Author page — secciones E-E-A-T recortadas en Phase 1)
 
-- [ ] **AUTHOR-01**: Colección `Authors` recupera los campos `expertise[]` (array de temas), `education[]` (array: título/institución/logo/fecha inicio/fecha fin/certificado/descripción) y `experience[]` (array: empresa/rol/fecha inicio/fecha fin/descripción), recortados intencionalmente en Phase 1
-- [ ] **AUTHOR-02**: Author page renderiza sección "Expertise" (tags) cuando `expertise[]` tiene datos — diseñada con la skill `ui-ux-pro-max`
-- [ ] **AUTHOR-03**: Author page renderiza sección "Educación y Certificaciones" (grid con logo/institución/fechas) cuando `education[]` tiene datos — diseñada con `ui-ux-pro-max`
-- [ ] **AUTHOR-04**: Author page renderiza sección "Experiencia" (timeline laboral) cuando `experience[]` tiene datos — diseñada con `ui-ux-pro-max`
-- [ ] **AUTHOR-05**: Person JSON-LD schema del author page enriquecido con `sameAs` (todas las redes sociales), `knowsAbout` (desde `expertise[]`) y `hasCredential` (desde `education[]`)
-- [ ] **AUTHOR-06**: Las 3 secciones nuevas se pueblan con contenido real de Juan donde exista (extraído/adaptado del sitio de referencia), o quedan como placeholder claramente editable desde `/admin` si el dato real no está disponible
+- [x] **AUTHOR-01**: Colección `Authors` recupera los campos `expertise[]` (array de temas), `education[]` (array: título/institución/logo/fecha inicio/fecha fin/certificado/descripción) y `experience[]` (array: empresa/rol/fecha inicio/fecha fin/descripción), recortados intencionalmente en Phase 1
+- [x] **AUTHOR-02**: Author page renderiza sección "Expertise" (tags) cuando `expertise[]` tiene datos — diseñada con la skill `ui-ux-pro-max`
+- [x] **AUTHOR-03**: Author page renderiza sección "Educación y Certificaciones" (grid con logo/institución/fechas) cuando `education[]` tiene datos — diseñada con `ui-ux-pro-max`
+- [x] **AUTHOR-04**: Author page renderiza sección "Experiencia" (timeline laboral) cuando `experience[]` tiene datos — diseñada con `ui-ux-pro-max`
+- [x] **AUTHOR-05**: Person JSON-LD schema del author page enriquecido con `sameAs` (todas las redes sociales), `knowsAbout` (desde `expertise[]`) y `hasCredential` (desde `education[]`)
+- [x] **AUTHOR-06**: Las 3 secciones nuevas se pueblan con contenido real de Juan donde exista (extraído/adaptado del sitio de referencia), o quedan como placeholder claramente editable desde `/admin` si el dato real no está disponible
 
 ### ABOUT (Home — "Mi enfoque en Consultoría Técnica")
 
@@ -262,12 +262,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Req ID | Phase | Status |
 |--------|-------|--------|
-| AUTHOR-01 | Phase 12 | Pending |
-| AUTHOR-02 | Phase 12 | Pending |
-| AUTHOR-03 | Phase 12 | Pending |
-| AUTHOR-04 | Phase 12 | Pending |
-| AUTHOR-05 | Phase 12 | Pending |
-| AUTHOR-06 | Phase 12 | Pending |
+| AUTHOR-01 | Phase 12 | Complete |
+| AUTHOR-02 | Phase 12 | Complete |
+| AUTHOR-03 | Phase 12 | Complete |
+| AUTHOR-04 | Phase 12 | Complete |
+| AUTHOR-05 | Phase 12 | Complete |
+| AUTHOR-06 | Phase 12 | Complete |
 | ABOUT-01 | Phase 13 | Pending |
 | ABOUT-02 | Phase 13 | Pending |
 | FAQ-01 | Phase 13 | Pending |

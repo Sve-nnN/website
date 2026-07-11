@@ -391,9 +391,9 @@ Plans:
 
 Plans:
 
-- [ ] 12-01-PLAN.md — Authors collection: expertise/education/experience fields + migration + payload-types
-- [ ] 12-02-PLAN.md — Author page: 3 secciones nuevas (Expertise/Educación/Experiencia) + Person JSON-LD enriquecido (sameAs/knowsAbout/hasCredential)
-- [ ] 12-03-PLAN.md — scripts/seed-author-eeat.ts: contenido real ES/EN (4 expertise, 2 education, 2 experience) + verificación de avatar existente
+- [x] 12-01-PLAN.md — Authors collection: expertise/education/experience fields + migration + payload-types
+- [x] 12-02-PLAN.md — Author page: 3 secciones nuevas (Expertise/Educación/Experiencia) + Person JSON-LD enriquecido (sameAs/knowsAbout/hasCredential)
+- [x] 12-03-PLAN.md — scripts/seed-author-eeat.ts: contenido real ES/EN (4 expertise, 2 education, 2 experience) + verificación de avatar existente
 - [ ] 12-04-PLAN.md — Verificación automatizada (Playwright) + checkpoint humano de cierre de fase
 
 **UI hint**: yes
@@ -460,7 +460,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 10.7. Component Gap-Fill (AboutSection + TestimonialSection) | 1/1 | Complete   | 2026-07-10 |
 | 10.8. Hero Enrichment (CTA + Breadcrumbs) | 1/1 | Complete   | 2026-07-10 |
 | 11. Verificación Cruzada Final | 3/3 | Complete   | 2026-07-10 |
-| 12. Author Page E-E-A-T Expansion | 0/4 | Planned | - |
+| 12. Author Page E-E-A-T Expansion | 3/4 | In Progress|  |
 | 13. Home Content Population | 0/TBD | Not planned | - |
 | 14. Target Keyword Field | 0/TBD | Not planned | - |
 | 15. Sitemap XSL + HTML | 0/TBD | Not planned | - |

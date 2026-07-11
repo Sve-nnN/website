@@ -1,16 +1,17 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.2
-milestone_name: Content Parity — Home + Author Page
-status: planning
-last_updated: "2026-07-11T19:24:55.367Z"
-last_activity: 2026-07-11
+milestone_name: milestone
+status: "Phase 12 in progress — 12-01/12-02/12-03 executed, 12-04 awaiting human checkpoint"
+stopped_at: Phase 12 (Author Page E-E-A-T Expansion) — 12-01/12-02/12-03 executed and committed (schema recovery, UI sections + JSON-LD, real content seed). 12-04 Task 1 (headless verification) PASS; Task 2 (human visual sign-off) is a blocking checkpoint awaiting Juan's confirmation.
+last_updated: "2026-07-11T20:20:00.000Z"
+last_activity: "2026-07-11 — Phase 12 executed: Authors collection expertise/education/experience fields + migration (12-01), author page 3 new E-E-A-T sections + enriched Person JSON-LD (12-02), real bilingual content seeded (12-03), headless verification PASS (12-04 Task 1) — awaiting human checkpoint (12-04 Task 2)"
 progress:
-  total_phases: 4
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_phases: 15
+  completed_phases: 10
+  total_plans: 59
+  completed_plans: 54
+  percent: 68
 ---
 
 # Project State
@@ -24,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: Phase 12 — Author Page E-E-A-T Expansion (not started)
-Plan: —
-Status: Roadmap created, ready for /gsd:plan-phase 12
-Last activity: 2026-07-11 — v1.2 roadmap created (Phase 12: Author Page E-E-A-T Expansion, Phase 13: Home Content Population, Phase 14: Target Keyword Field, Phase 15: Sitemap XSL + HTML) — 18/18 requirements mapped
+Phase: Phase 12 — Author Page E-E-A-T Expansion (in progress, 3/4 plans executed)
+Plan: 12-04 (Task 1 done, Task 2 blocking human checkpoint pending)
+Status: Awaiting Juan's visual confirmation of the 3 new author-page sections + JSON-LD before closing Phase 12
+Last activity: 2026-07-11 — Phase 12 executed: Authors collection expertise/education/experience fields + migration (12-01), author page 3 new E-E-A-T sections + enriched Person JSON-LD (12-02), real bilingual content seeded (12-03), headless verification PASS (12-04 Task 1) — awaiting human checkpoint (12-04 Task 2)
 
 ## Performance Metrics
 
@@ -116,6 +117,10 @@ Recent decisions affecting current work:
 - [Phase 10.6]: 10.6-01: audit del edit sin commitear de SiteHeader.tsx confirmó que ya cumplía los must_haves de UI-17 (tap targets 44px, Separator, hover states, breakpoints no invertidos); único gap real cerrado fue un `SheetTitle` faltante en el Sheet móvil (Radix Dialog requiere nombre accesible) — sin indicador de página activa (fuera de alcance) ni auto-close del Sheet (aceptado el comportamiento default)
 - [Phase 10.6]: 10.6-02: dynamicColumns del footer resuelto vía Local API con filtro `_status: published` explícito (obligatorio porque Local API usa `overrideAccess: true` y no respeta el access control de las colecciones); case-studies ordenado por `-createdAt` (no tiene `publishedAt`); grid mobile-first (`grid-cols-1` en 375px) y jerarquía tipográfica (`font-heading` en títulos de columna)
 - [Phase 10.6]: 10.6-03: Playwright confirmado por Juan como paquete oficial Microsoft antes de instalar; `scripts/verify-mobile-viewport.mjs` PASS en los 3 breakpoints contra el dev server real (cero overflow horizontal, SheetTrigger/NavigationMenu mutuamente exclusivos por breakpoint, footer con 3 column headings visibles incluyendo dynamicColumns); Juan dio la confirmación visual final directamente sin requerir walkthrough guiado — Phase 10.6 cerrada 3/3 (UI-17, UI-18, UI-19)
+- [Phase 12]: 12-01: expertise/education/experience recovered on Authors collection (certificate upload NOT ported, per CONTEXT.md — no real certificate files available); migration generated via payload migrate:create, applied with push:false respected, payload-types.ts regenerated
+- [Phase 12]: 12-02: 3 new author-page sections (Expertise tag cloud, Education card grid, Experience timeline) inserted between AuthorCard and posts/case-studies grids, each conditionally rendered only when its array has data; Person JSON-LD enriched with sameAs/knowsAbout/hasCredential, each conditionally omitted (not empty array) when source is empty
+- [Phase 12]: 12-03: real bilingual content seeded via scripts/seed-author-eeat.ts (idempotent, sub-array id reuse across locale writes) — 4 expertise/2 education/2 experience items in ES+EN, 3 socialLinks; avatar verified untouched; re-run confirmed idempotency (no duplicate rows)
+- [Phase 12]: 12-04 Task 1: dev server cache found stale (x-nextjs-cache HIT serving pre-seed content) mid-verification — cleared .next and restarted, unrelated to Phase 12 code; scripts/verify-phase12-author-eeat.mjs then reported RESULT: PASS across both locale routes and all 3 breakpoints (375/768/1280), confirming real content + JSON-LD
 
 ### Pending Todos
 
