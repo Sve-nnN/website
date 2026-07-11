@@ -14,10 +14,11 @@ import { ICON_OPTIONS } from './icons'
 export function IconPickerField(props: SelectFieldClientProps) {
   const { field, path, readOnly } = props
   const { value, setValue } = useField<string>({ path })
-  const { toggleModal, closeModal } = useModal()
+  const { toggleModal, closeModal, isModalOpen } = useModal()
   const [search, setSearch] = useState('')
 
   const modalSlug = `icon-picker-${path}`
+  const fieldId = `field-${path}`
   const selected = ICON_OPTIONS.find((opt) => opt.value === value)
   const SelectedIcon = selected?.Icon
 
@@ -27,10 +28,13 @@ export function IconPickerField(props: SelectFieldClientProps) {
 
   return (
     <div className="field-type icon-picker-field" style={{ marginBottom: 'var(--base, 20px)' }}>
-      <FieldLabel label={field.label} required={field.required} path={path} />
+      <FieldLabel label={field.label} required={field.required} path={path} htmlFor={fieldId} />
       <button
+        id={fieldId}
         type="button"
         disabled={readOnly}
+        aria-haspopup="dialog"
+        aria-expanded={isModalOpen(modalSlug)}
         onClick={() => toggleModal(modalSlug)}
         style={{
           display: 'flex',
