@@ -137,7 +137,14 @@ async function addServicesNavLink(payload: Awaited<ReturnType<typeof getPayload>
   }
 
   const headerEn = await payload.findGlobal({ slug: 'header', locale: 'en' })
-  const existingEn = (headerEn.navItems ?? []) as NavItem[]
+  // By the time we read this, the array already contains the row created by
+  // the `es` write above (navItems itself is a shared, non-localized array —
+  // only `link.label` is localized). Filter it out here before re-appending
+  // our own corrected version, otherwise the array ends up with two entries
+  // sharing the same id in one write, and Payload keeps whichever one it
+  // processes first (observed bug: the fallback-locale label "wins" instead
+  // of the explicit `en` label passed below).
+  const existingEn = ((headerEn.navItems ?? []) as NavItem[]).filter((item) => item.id !== newItemId)
 
   const navItemsEn: NavItem[] = [
     ...existingEn,
