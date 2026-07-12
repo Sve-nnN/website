@@ -431,7 +431,11 @@ Plans:
   2. Home tiene `targetKeyword` poblado con los picks de `research/keyword-research/KEYWORD-RESEARCH.md` (ES: "seo técnico", EN: "technical seo consultant")
   3. El author page de Juan tiene `targetKeyword` poblado con los picks de `research/keyword-research/KEYWORD-RESEARCH.md` (ES: "auditoría seo técnica", EN: "technical seo specialist")
 
-**Plans**: TBD
+**Plans**: 1 plan (1 wave)
+
+Plans:
+
+- [ ] 14-01-PLAN.md — targetKeyword group field (en/es) on Pages + Authors, migration, idempotent seed of Home + real Author picks
 
 ### Phase 15: Sitemap XSL + HTML
 
