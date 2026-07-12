@@ -62,6 +62,18 @@ async function getChromePath() {
   }
 }
 
+// Lighthouse audits can come back without a computed numericValue (e.g. on a
+// cold-started server that hasn't served a few warm requests yet, or when the
+// audit itself errors out). Guard against that instead of letting a raw
+// `Cannot read properties of undefined (reading 'toFixed')` propagate.
+function safeNumeric(audits, id, decimals = 0) {
+  const value = audits[id]?.numericValue
+  if (typeof value !== 'number' || Number.isNaN(value)) {
+    throw new Error(`Audit "${id}" did not return a numeric value (scoreDisplayMode: ${audits[id]?.scoreDisplayMode ?? 'missing'})`)
+  }
+  return decimals ? Number(value.toFixed(decimals)) : Math.round(value)
+}
+
 async function runLighthouse(url, chromePath) {
   const chrome = await launch({ chromePath, chromeFlags: ['--headless=new', '--no-sandbox'] })
   try {
@@ -77,12 +89,12 @@ async function runLighthouse(url, chromePath) {
       accessibility: Math.round(categories.accessibility.score * 100),
       'best-practices': Math.round(categories['best-practices'].score * 100),
       seo: Math.round(categories.seo.score * 100),
-      lcpMs: Math.round(audits['largest-contentful-paint'].numericValue),
-      cls: Number(audits['cumulative-layout-shift'].numericValue.toFixed(3)),
+      lcpMs: safeNumeric(audits, 'largest-contentful-paint'),
+      cls: safeNumeric(audits, 'cumulative-layout-shift', 3),
       // Total Blocking Time (ms) is Lighthouse's lab-metric proxy for INP —
       // true INP requires real-user field data (Chrome UX Report), which a
       // pre-production local build cannot produce.
-      tbtMs: Math.round(audits['total-blocking-time'].numericValue),
+      tbtMs: safeNumeric(audits, 'total-blocking-time'),
     }
   } finally {
     await chrome.kill()
