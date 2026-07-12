@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: milestone
-status: executing
+status: verifying
 stopped_at: "v1.3 milestone (Hero Grainy Gradient Animation) roadmap created — 2 phases (16-17), continuing numbering after v1.2's Phase 15 (Phase 6 Deploy+Cutover stays paused, out of this roadmap). Phase 16 covers HERO-ANIM-01..04 (shader implementation, token colors, copy parity, reduced-motion). Phase 17 covers HERO-ANIM-05..06 (Lighthouse/CWV verification + mobile-first spot-check). Awaiting roadmap approval, then `/gsd:plan-phase 16`."
-last_updated: "2026-07-12T03:29:37.380Z"
-last_activity: 2026-07-12 — 16-02 complete (HeroGrainGradient built + wired into isHome branch, hydration-mismatch bug found and fixed, visually confirmed via Playwright)
+last_updated: "2026-07-12T04:43:15.534Z"
+last_activity: "2026-07-12 — 16-03 complete (Playwright verification script + report, RESULT: PASS, 0 failures/0 warnings; HERO-ANIM-01..04 marked complete)"
 progress:
   total_phases: 17
   completed_phases: 15
@@ -139,6 +139,7 @@ Recent decisions affecting current work:
 - [Phase 16]: 16-01: Package-legitimacy checkpoint for @paper-design/shaders-react resolved directly by Juan via prior WebSearch research (real npm package, GrainGradient built for this use case, no squatting signal), not a mid-run interactive prompt
 - [Phase 16]: 16-02: reducedMotion state must init to false (SSR-matching) and read matchMedia inside useEffect, not a useState lazy initializer -- React does not patch attribute-level hydration mismatches after the initial commit
 - [Phase 16]: 16-03: verification script confirmed 0 failures/0 warnings — shader canvas renders on both locales, no overflow at any breakpoint, copy unchanged, reduced-motion correctly detected; HERO-ANIM-01..04 all closed with real headless-browser evidence
+- [Phase 16]: Post-implementation retune: Hero shader went wave -> ripple -> blob (final, per Juan's live preference 'me gusta mas blob que ripple'); mouse reactivity was built, verified working, then explicitly removed per Juan's rejection -- no pointer tracking anywhere in the component or planned elsewhere
 
 ### Pending Todos
 

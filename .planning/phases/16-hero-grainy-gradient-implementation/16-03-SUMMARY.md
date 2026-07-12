@@ -74,3 +74,9 @@ None — plan executed exactly as written. The script's structure, checks, and t
 - FOUND: scripts/verify-hero-grain-gradient.mjs
 - FOUND: .planning/phases/16-hero-grainy-gradient-implementation/16-03-verification-report.md
 - FOUND: commit d85d233 in git log
+
+## Addendum: Re-run After Post-Implementation Retune
+
+After Plan 16-02's `wave` shape went through the `ripple` → `blob` retune (see `16-02-SUMMARY.md`'s addendum and `16-CONTEXT.md`'s "Revisión post-implementación"), `scripts/verify-hero-grain-gradient.mjs` was re-run against the final `blob` implementation without any script changes needed — same script, same checks, same hard-assertion set.
+
+**Result: unchanged — RESULT: PASS, 0 failures, 0 warnings.** Only the coarse color-check numbers moved (now much darker: es R=24.9/G=23.6/B=28.0, en R=26.3/G=24.7/B=28.9, down from the original wave-shape's ~50-90 range), consistent with `blob`'s more minimal, near-black rendering. `16-03-verification-report.md` was rewritten in place to reflect the final implementation and document the full shape-decision history (wave → ripple → blob, plus the mouse-reactivity build-and-revert) for Juan's record. Commits: `8e9c1c1` (ripple retune), `b7b7eaa` (blob final).
