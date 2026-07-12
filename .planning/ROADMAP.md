@@ -475,7 +475,13 @@ Plans:
   3. Título, subtítulo, CTAs y breadcrumbs del Hero renderizan idénticos al estado pre-cambio — solo el fondo cambia
   4. Con `prefers-reduced-motion: reduce` activo, el shader queda pausado o se muestra un frame estático en vez de la animación en vivo
 
-**Plans**: TBD
+**Plans**: 3 plans (3 waves)
+
+Plans:
+
+- [ ] 16-01-PLAN.md — Install @paper-design/shaders-react + package legitimacy checkpoint
+- [ ] 16-02-PLAN.md — HeroGrainGradient Client Component + wire into Hero isHome branch
+- [ ] 16-03-PLAN.md — Playwright shader/overflow/reduced-motion verification + report
 
 **UI hint**: yes
 
