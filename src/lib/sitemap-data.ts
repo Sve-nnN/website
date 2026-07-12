@@ -1,7 +1,26 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://juancarlosangulo.com'
+function resolveSiteUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_SERVER_URL
+
+  if (envUrl) return envUrl
+
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      'NEXT_PUBLIC_SERVER_URL must be set in production — refusing to fall back to a hardcoded domain for the sitemap.',
+    )
+  }
+
+  console.warn(
+    '[sitemap-data] NEXT_PUBLIC_SERVER_URL is not set — falling back to https://juancarlosangulo.com. ' +
+      'This fallback is intended for local development only; set the env var before deploying.',
+  )
+
+  return 'https://juancarlosangulo.com'
+}
+
+export const SITE_URL = resolveSiteUrl()
 
 type SitemapCollection = {
   collection: 'pages' | 'posts' | 'case-studies' | 'authors' | 'categories'
