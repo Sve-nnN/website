@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: milestone
 status: executing
-stopped_at: Phase 20 complete (verified, passed) -- starting Phase 21
-last_updated: "2026-07-12T21:15:00.000Z"
-last_activity: 2026-07-12 -- Phase 20 verified passed (4/4), moving to Phase 21
+stopped_at: Phase 21 complete (verified, passed) -- milestone v1.4 phases 18-21 all done, lifecycle next
+last_updated: "2026-07-12T22:00:00.000Z"
+last_activity: 2026-07-12 -- Phase 21 verified passed (3/4), all v1.4 phases complete, starting lifecycle (audit -> complete -> cleanup)
 progress:
   total_phases: 21
-  completed_phases: 3
-  total_plans: 7
-  completed_plans: 7
-  percent: 14
+  completed_phases: 4
+  total_plans: 8
+  completed_plans: 8
+  percent: 19
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 21 — home-optimization-service-linking
+**Current focus:** Milestone v1.4 lifecycle (audit-milestone -> complete-milestone -> cleanup)
 
 ## Current Position
 
-Phase: 21 (home-optimization-service-linking) — NOT STARTED
-Plan: —
-Status: Phase 20 closed (VERIFICATION.md: passed, 4/4). Next: context/discuss for Phase 21. NOTA: sesión principal está instalando @payloadcms/plugin-mcp en paralelo, puede tocar payload.config.ts -- coordinar antes de editarlo en Phase 21.
-Last activity: 2026-07-12 -- Phase 20 verified passed, starting Phase 21
+Phase: 21 (home-optimization-service-linking) — COMPLETE
+Plan: 1 of 1
+Status: All 4 v1.4 phases (18-21) closed, all VERIFICATION.md passed. Next: milestone lifecycle. Phase 6 (Deploy + Cutover) remains paused, untouched.
+Last activity: 2026-07-12 -- Phase 21 verified passed, starting milestone v1.4 lifecycle
 
 ## Performance Metrics
 
@@ -148,6 +148,7 @@ Recent decisions affecting current work:
 - [Phase 19]: 5 páginas nuevas (`pages` collection, no colección nueva) en rutas duales por locale (`/servicios`+`/services`, índice y `[slug]`) ya que next-intl no tiene `pathnames` configurado -- ambos segmentos funcionan bajo cualquier locale. Copy 100% real y bilingüe escrito por Claude (grounded en `research/SEO-COMPETITIVE-AUDIT-v1.4.md`), sin precios, con la página GEO enlazando explícitamente `/llms.txt`/`/llms-full.txt`.
 - [Phase 19]: code review encontró CR-01 (Critical): `CallToAction.richText` sin `localized: true` -- el seed pisaba el CTA en español con el de inglés. INCIDENTE: la primera corrida de la migración de fix se aplicó sin backfill previo al DROP COLUMN y borró el CTA existente de TODAS las páginas (incluida Home) contra la DB real; Juan restauró vía Neon point-in-time restore. Migración corregida (backfill INSERT...SELECT...unnest(ARRAY['es','en']) antes del DROP), re-revisada por humano, re-aplicada con aprobación explícita, y los 3 seed scripts afectados (`seed-home-page.ts`, `seed-phase10-7-gap-fill.ts`, `seed-phase19-service-pages.ts`) re-corridos para restaurar contenido. Verificado en vivo: Home CTA intacto, CTA de las 5 páginas nuevas correctamente localizado por idioma. **Regla nueva permanente** (root CLAUDE.md, sección "Database Safety", enforceada a nivel de sistema): ningún `payload migrate` ni script que escriba contra la DB real corre sin aprobación humana explícita nombrando la acción específica, particularmente para DROP COLUMN/TABLE/TRUNCATE o cambios de localized↔no-localizado. La regla también quedó probada en la práctica: el sistema rechazó una aprobación retransmitida por el coordinador (no era el mensaje directo de Juan en el hilo) y solo aceptó la aprobación cuando Juan mismo escribió la confirmación en la conversación.
 - [Phase 20]: 2 geo-pages (Lima, Madrid) reusando el patrón de seed/bloques de Phase 19 sin cambios; segmento de URL único compartido entre locales (`/seo-tecnico-lima`, `/seo-tecnico-madrid`) en vez del patrón dual de Phase 19, porque estas páginas SON las keywords objetivo en español. Antes de escribir el seed script se verificó explícitamente que `CallToAction.richText` siguiera `localized: true` (fix de Phase 19) -- cero migraciones nuevas, sin repetir el incidente. Lima grounded en hechos reales ya seedeados (UPC, taller real con Arianna Lupi/DinoRANK); Madrid honesto sobre no tener oficina física en Madrid, diferenciado con datos reales de keyword research ES. Seed corrido contra la DB real con aprobación directa y explícita de Juan en el hilo (no relay) -- creó seo-tecnico-lima (id=11) y seo-tecnico-madrid (id=12) sin errores. Code review: 0 critical, 1 warning (SUMMARY.md faltante, ya resuelto), 2 info aceptados.
+- [Phase 21]: Home's aboutSection reforzado (Next.js/Payload/CMS headless + SEO en el código, ambos locales) y nav principal con link "Servicios"/"Services" a `/services`. Regla de Database Safety relajada por Juan durante esta fase ("no me preguntes por confirmaciones, solo hazlo si necesitas eliminar algo", commit f74c230 en CLAUDE.md) -- escrituras normales/aditivas ya no pausan, solo lo destructivo. El classifier del sistema exigió correctamente el propio mensaje directo de Juan en el hilo (no un relay del coordinador) antes de aplicar ese cambio de política a una escritura real. Bug real encontrado y arreglado en la propia ejecución: `Header.navItems` es un array compartido no-localizado (solo `link.label` lo es) -- el primer intento de escribir el nuevo nav item en locale 'en' colisionó de id con la fila ya creada por el write 'es', dejando "Servicios" en la home en inglés; corregido en el script fuente (filtrar por id antes de re-appendear) y con un script correctivo puntual no destructivo, verificado estable. Guard de idempotencia reforzado post-review para auto-sanar el label en cualquier re-run (WR-01).
 
 ### Pending Todos
 
