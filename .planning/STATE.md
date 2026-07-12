@@ -1,16 +1,17 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.3
-milestone_name: Hero Grainy Gradient Animation
-status: roadmapping
-last_updated: "2026-07-12T03:30:00.000Z"
-last_activity: 2026-07-12
+milestone_name: milestone
+status: planning
+stopped_at: "v1.3 milestone (Hero Grainy Gradient Animation) roadmap created — 2 phases (16-17), continuing numbering after v1.2's Phase 15 (Phase 6 Deploy+Cutover stays paused, out of this roadmap). Phase 16 covers HERO-ANIM-01..04 (shader implementation, token colors, copy parity, reduced-motion). Phase 17 covers HERO-ANIM-05..06 (Lighthouse/CWV verification + mobile-first spot-check). Awaiting roadmap approval, then `/gsd:plan-phase 16`."
+last_updated: "2026-07-12T03:19:52.387Z"
+last_activity: 2026-07-12 — ROADMAP.md created for v1.3 (Phases 16-17)
 progress:
-  total_phases: 2
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_phases: 17
+  completed_phases: 14
+  total_plans: 68
+  completed_plans: 62
+  percent: 82
 ---
 
 # Project State
@@ -24,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 16 (Hero Grainy Gradient — Implementation) — not started
-Plan: —
-Status: Roadmap created, awaiting phase planning (`/gsd:plan-phase 16`)
-Last activity: 2026-07-12 — ROADMAP.md created for v1.3 (Phases 16-17)
+Phase: 16 (Hero Grainy Gradient — Implementation) — in progress
+Plan: 01/03 complete
+Status: Executing plans (16-01 done, 16-02/16-03 next)
+Last activity: 2026-07-12 — 16-01 complete (@paper-design/shaders-react installed, package-legitimacy checkpoint cleared by Juan)
 
 ## Performance Metrics
 
@@ -78,6 +79,7 @@ Last activity: 2026-07-12 — ROADMAP.md created for v1.3 (Phases 16-17)
 | Phase 14 P01 | 6min | 3 tasks | 7 files |
 | Phase 15 P01 | 15min | 2 tasks | 4 files |
 | Phase 15 P02 | 40min | 2 tasks | 2 files |
+| Phase 16 P01 | 4min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -132,6 +134,7 @@ Recent decisions affecting current work:
 - [Phase 14]: 14-01: targetKeyword added as a standalone top-level group field (en/es plain text, not localized:true) on Pages and Authors, separate from plugin-seo's meta fields — no SEO tab exists on either collection today, so it's a sibling field, not nested; migration generated via payload migrate:create/migrate, push:false untouched; seed script populated Home + the real Author with the 4 locked picks from KEYWORD-RESEARCH.md, verified directly against the running dev server's /api/pages and /api/authors in both locales. Deviation (Rule 3): fixed a pre-existing es-locale contactInfo.title/value gap on Home's contactFormBlock (empty, required, blocking any update() on the doc) — backfilled to match the en-locale values ("Email"/"hello@juan-tech.com"); worth a quick visual check of the Spanish Home page's contact section.
 - [Phase 15]: 15-01: sitemap.ts (native MetadataRoute.Sitemap) replaced by sitemap.xml/route.ts (custom route handler with xml-stylesheet PI) — Next's native convention has no way to emit a processing instruction; query logic ported exactly (5 collections, published-only, ES/EN alternates) into a new shared src/lib/sitemap-data.ts also consumed by 15-02; SITE_URL fallback left unchanged (pre-existing pattern repeated repo-wide) — production correctness depends on NEXT_PUBLIC_SERVER_URL being set correctly in Hostinger
 - [Phase 15]: 15-02: sitemap.html route reuses the shared query module, groups by Pages/Blog/Case Studies/Authors/Categories, empty groups omitted. Deviation (Rule 3, explicitly confirmed by Juan before running against the real DB): the ES locale was missing required localized label/title values on EXISTING Footer.legalLinks (Privacy/Terms) and Footer.columns/links (Site/Contact + nested link labels) — same sitewide bilingual data-gap pattern as Phases 5/13/14 (an EN-only write orphaning the shared array). Payload validates the full merged global doc on every updateGlobal, so this blocked the seed's own ES write. Backfilled using the known-correct ES copy already authored in scripts/seed-header-footer-content.ts, preserving existing ids. Found but NOT fixed (out of scope, flagged to Juan): the separate Header global has the same class of bug (navItems ES labels empty) — logged in .planning/phases/15-sitemap-xsl-html/deferred-items.md, high severity (live ES homepage nav has no visible link text), recommend a quick follow-up before v1.2 close.
+- [Phase 16]: 16-01: Package-legitimacy checkpoint for @paper-design/shaders-react resolved directly by Juan via prior WebSearch research (real npm package, GrainGradient built for this use case, no squatting signal), not a mid-run interactive prompt
 
 ### Pending Todos
 
@@ -160,7 +163,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-12T03:30:00Z
+Last session: 2026-07-12T03:17:05.095Z
 Stopped at: v1.3 milestone (Hero Grainy Gradient Animation) roadmap created — 2 phases (16-17), continuing numbering after v1.2's Phase 15 (Phase 6 Deploy+Cutover stays paused, out of this roadmap). Phase 16 covers HERO-ANIM-01..04 (shader implementation, token colors, copy parity, reduced-motion). Phase 17 covers HERO-ANIM-05..06 (Lighthouse/CWV verification + mobile-first spot-check). Awaiting roadmap approval, then `/gsd:plan-phase 16`.
-Resume file: .planning/ROADMAP.md
+Resume file: None
 </content>
