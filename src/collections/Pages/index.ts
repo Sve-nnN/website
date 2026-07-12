@@ -89,6 +89,9 @@ export const Pages: CollectionConfig = {
       name: 'targetKeyword',
       type: 'group',
       label: { en: 'Target Keyword', es: 'Keyword objetivo' },
+      access: {
+        read: authenticated,
+      },
       admin: {
         description: {
           en: 'Editorial reference only — the primary keyword this page/profile is written toward. Does not affect SEO meta tags or trigger any external API call.',
