@@ -5,6 +5,10 @@ import config from '@payload-config'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { sendContactMessage } from '@/app/actions/contact'
 
+function contactFallbackTitle(locale: string) {
+  return locale === 'es' ? 'Contacto' : 'Contact'
+}
+
 async function getContactPage(locale: string) {
   const payload = await getPayload({ config })
   const { docs } = await payload.find({
@@ -22,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const meta = doc?.meta
 
   return {
-    title: meta?.title ?? doc?.title ?? (locale === 'es' ? 'Contacto' : 'Contact'),
+    title: meta?.title ?? doc?.title ?? contactFallbackTitle(locale),
     description: meta?.description ?? '',
   }
 }
@@ -50,7 +54,7 @@ export default async function ContactPage({
     <main>
       {!hasHeroTitle && (
         <h1 className="sr-only">
-          {doc.meta?.title ?? doc.title ?? (locale === 'es' ? 'Contacto' : 'Contact')}
+          {doc.meta?.title ?? doc.title ?? contactFallbackTitle(locale)}
         </h1>
       )}
       <RenderBlocks
