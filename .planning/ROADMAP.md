@@ -37,7 +37,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 12: Author Page E-E-A-T Expansion** - Author page recupera expertise/educación/experiencia recortados en Phase 1, más una 4ta sección de speaking events, con JSON-LD enriquecido — verificado 7/7, code review limpio (4 warnings corregidos), Juan confirmó visualmente (completed 2026-07-11)
 - [x] **Phase 13: Home Content Population** - AboutSection extendido con features + FAQ poblado en Home (completed 2026-07-11)
 - [x] **Phase 14: Target Keyword Field** - Campo editorial targetKeyword en Pages/Authors, poblado con picks de keyword research real (completed 2026-07-12)
-- [ ] **Phase 15: Sitemap XSL + HTML** - sitemap.xml con hoja de estilos navegable + sitemap.html enlazado desde el footer
+- [x] **Phase 15: Sitemap XSL + HTML** - sitemap.xml con hoja de estilos navegable (XSLT 1.0) + sitemap.html navegable agrupado por sección + link "Sitemap" agregado al footer (es+en), verificado en vivo contra el dev server sin regresión en robots.txt/Phase 2 (completed 2026-07-11)
 
 ## Phase Details
 
@@ -446,6 +446,11 @@ Plans:
 
   1. `sitemap.xml` recibe una hoja de estilos XSL — al abrir la URL directamente en el navegador se ve una tabla legible, no el XML crudo
   2. Existe una página `sitemap.html` navegable (listado de URLs agrupado por sección), enlazada desde un nuevo link "Sitemap" agregado al footer
+
+Plans:
+
+- [x] 15-01-PLAN.md — src/lib/sitemap-data.ts (shared query) + src/app/sitemap.xml/route.ts (replaces native sitemap.ts, adds xml-stylesheet PI) + public/sitemap.xsl (XSLT 1.0 table stylesheet)
+- [x] 15-02-PLAN.md — src/app/sitemap.html/route.ts (grouped navigable page) + scripts/seed-phase15-sitemap-footer-link.ts (idempotent footer link seed; also backfilled a pre-existing ES-locale label gap on Footer.legalLinks/columns that blocked the write, confirmed by Juan)
 
 **Plans**: 2 plans (2 waves)
 

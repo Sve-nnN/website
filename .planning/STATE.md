@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: milestone
-status: Phase 14 (Target Keyword Field) closed 1/1 plans. Phase 15 (sitemap XSL/HTML) next in v1.2.
-stopped_at: Phase 14 (Target Keyword Field) closed 1/1 plans (14-01). Phase 12 still paused on Juan's checkpoint (12-04 Task 2). Phase 15 (sitemap XSL/HTML) remains in the v1.2 ROADMAP, not yet started.
-last_updated: "2026-07-12T00:18:00.000Z"
-last_activity: "2026-07-12 — Phase 14 (Target Keyword Field) executed and closed: targetKeyword group field (en/es) added to Pages and Authors, migration applied, Home + real Author seeded with the 4 locked picks, verified via /api/pages and /api/authors in both locales. Fixed a pre-existing es-locale contactInfo data gap that blocked the seed script (Rule 3 deviation)."
+status: Phase 15 (Sitemap XSL/HTML) closed 2/2 plans. v1.2 milestone's last planned phase is complete.
+stopped_at: Phase 15 (Sitemap XSL/HTML) closed 2/2 plans (15-01, 15-02). Phase 12 still paused on Juan's checkpoint (12-04 Task 2). v1.2 milestone's 4 planned phases (12-15) are all executed; Phase 6 (Deploy + Cutover) remains paused pending real Hostinger/DNS/Resend credentials.
+last_updated: "2026-07-12T01:15:56Z"
+last_activity: "2026-07-12 — Phase 15 (Sitemap XSL/HTML) executed and closed: custom /sitemap.xml route handler with xml-stylesheet PI + public/sitemap.xsl table stylesheet (15-01); real navigable /sitemap.html grouped by section + idempotent footer 'Sitemap' link seed (15-02). Fixed a pre-existing ES-locale Footer.legalLinks/columns label gap that blocked the seed (Rule 3 deviation, confirmed by Juan before running against the real DB). Live sanity pass against dev server confirmed 74 real URLs in sitemap.xml, valid XSL, 5 grouped sections in sitemap.html, footer link present in both locales, and no regression in robots.txt/Phase 2 sitemap discovery. Found (not fixed, out of scope) a matching ES-locale label bug on the separate Header global — logged in 15-sitemap-xsl-html/deferred-items.md."
 progress:
   total_phases: 15
-  completed_phases: 14
-  total_plans: 64
-  completed_plans: 60
+  completed_phases: 15
+  total_plans: 66
+  completed_plans: 62
   percent: 94
 ---
 
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: Phase 14 (Target Keyword Field) — CLOSED (1/1 plan executed and verified). Phase 15 (sitemap XSL/HTML) — not started.
-Plan: Phase 14 fully closed (14-01). Next: smart discuss → plan → execute Phase 15.
-Status: Phase 14 (Target Keyword Field) closed 1/1 plans. Phase 15 (sitemap XSL/HTML) next in v1.2.
-Last activity: 2026-07-12 — Phase 14 (Target Keyword Field) executed and closed: targetKeyword group field (en/es) added to Pages and Authors, migration applied, Home + real Author seeded with the 4 locked picks, verified via /api/pages and /api/authors in both locales. Fixed a pre-existing es-locale contactInfo data gap that blocked the seed script (Rule 3 deviation).
+Phase: Phase 15 (Sitemap XSL/HTML) — CLOSED (2/2 plans executed and verified). v1.2 milestone's last planned phase is complete.
+Plan: Phase 15 fully closed (15-01, 15-02). v1.2's 4 planned phases (12-15) are all executed. Next: Juan decides on the deferred Header ES-locale nav-label bug (see 15-sitemap-xsl-html/deferred-items.md), then v1.2 milestone close.
+Status: Phase 15 (Sitemap XSL/HTML) closed 2/2 plans. v1.2 milestone's last planned phase is complete.
+Last activity: 2026-07-12 — Phase 15 (Sitemap XSL/HTML) executed and closed: custom /sitemap.xml route handler + public/sitemap.xsl stylesheet (15-01), real navigable /sitemap.html + footer "Sitemap" link seed (15-02). Fixed a pre-existing ES-locale Footer.legalLinks/columns label gap blocking the seed (Rule 3, confirmed by Juan). Live sanity pass passed, no Phase 2 regression. Found (not fixed) a matching bug on the Header global — flagged to Juan.
 
 ## Performance Metrics
 
@@ -77,6 +77,8 @@ Last activity: 2026-07-12 — Phase 14 (Target Keyword Field) executed and close
 | Phase 13 P01 | 15min | 3 tasks | 8 files |
 | Phase 13 P02 | 35min | 2 tasks | 5 files |
 | Phase 14 P01 | 6min | 3 tasks | 7 files |
+| Phase 15 P01 | 15min | 2 tasks | 4 files |
+| Phase 15 P02 | 40min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -129,6 +131,8 @@ Recent decisions affecting current work:
 - [Phase 13]: 13-02: added a `contactFormBlock` to Home's layout (not previously present) reusing scripts/seed-contact-page.ts's exact copy verbatim, closing a gap CONTEXT.md's CTA decision assumed away (`#contact` anchor had nothing to scroll to); each locale's full layout fetched fresh via `findByID({ locale })` inside the seed script to avoid cross-locale content bleed on sibling blocks; discovered during verification that nested sub-arrays (features[]/faqs[]) need the same id-reuse-across-locale-writes discipline as top-level blocks (Payload full-replaces arrays on update) — fixed in the seed script; also fixed a pre-existing Phase 10.7 bug (leftover Spanish AboutSection paragraph on the EN Home page, root cause: `author.bio ?? fallback` evaluated identically regardless of locale in seed-phase10-7-gap-fill.ts) as part of this phase's own bilingual sanity pass
 - [Phase 13]: Admin icon-picker (`IconPickerField`) interactive modal not yet visually confirmed by Juan — no admin credentials available to the executor to log in and test the popup grid live. TypeScript compiles clean, importMap.js registers the component, /admin/login loads without a build/runtime crash. Flagged for Juan's quick manual pass.
 - [Phase 14]: 14-01: targetKeyword added as a standalone top-level group field (en/es plain text, not localized:true) on Pages and Authors, separate from plugin-seo's meta fields — no SEO tab exists on either collection today, so it's a sibling field, not nested; migration generated via payload migrate:create/migrate, push:false untouched; seed script populated Home + the real Author with the 4 locked picks from KEYWORD-RESEARCH.md, verified directly against the running dev server's /api/pages and /api/authors in both locales. Deviation (Rule 3): fixed a pre-existing es-locale contactInfo.title/value gap on Home's contactFormBlock (empty, required, blocking any update() on the doc) — backfilled to match the en-locale values ("Email"/"hello@juan-tech.com"); worth a quick visual check of the Spanish Home page's contact section.
+- [Phase 15]: 15-01: sitemap.ts (native MetadataRoute.Sitemap) replaced by sitemap.xml/route.ts (custom route handler with xml-stylesheet PI) — Next's native convention has no way to emit a processing instruction; query logic ported exactly (5 collections, published-only, ES/EN alternates) into a new shared src/lib/sitemap-data.ts also consumed by 15-02; SITE_URL fallback left unchanged (pre-existing pattern repeated repo-wide) — production correctness depends on NEXT_PUBLIC_SERVER_URL being set correctly in Hostinger
+- [Phase 15]: 15-02: sitemap.html route reuses the shared query module, groups by Pages/Blog/Case Studies/Authors/Categories, empty groups omitted. Deviation (Rule 3, explicitly confirmed by Juan before running against the real DB): the ES locale was missing required localized label/title values on EXISTING Footer.legalLinks (Privacy/Terms) and Footer.columns/links (Site/Contact + nested link labels) — same sitewide bilingual data-gap pattern as Phases 5/13/14 (an EN-only write orphaning the shared array). Payload validates the full merged global doc on every updateGlobal, so this blocked the seed's own ES write. Backfilled using the known-correct ES copy already authored in scripts/seed-header-footer-content.ts, preserving existing ids. Found but NOT fixed (out of scope, flagged to Juan): the separate Header global has the same class of bug (navItems ES labels empty) — logged in .planning/phases/15-sitemap-xsl-html/deferred-items.md, high severity (live ES homepage nav has no visible link text), recommend a quick follow-up before v1.2 close.
 
 ### Pending Todos
 
@@ -145,6 +149,7 @@ None yet.
 - ~~Plan 02-05 Task 1 (seed script): permission classifier blocked execution of 'npx tsx scripts/seed-phase2.ts' against the production Neon DB~~ — RESUELTO 2026-07-09: authorization step cleared; per the orchestrator's report the seed ran successfully (idempotency confirmed on re-run) and all 8 end-to-end curl checks passed. Phase 2 closed 5/5.
 - [Phase 10.7 pending confirmation] `CalendlyEmbed` no entró al roadmap por confianza MEDIA sobre si Juan sigue usando Calendly — si Juan confirma que sí, se puede insertar como fase adicional (ej. 10.75) más adelante
 - [v1.2 → v1.3 backlog, 2026-07-11] Juan pidió reestructurar URLs de blog (`/blog/categoria/slug` para posts, `/blog/categoria-slug` para listados de categoría) + agregar paginación al blog. Explícitamente diferido — cierra v1.2 (Home+Author, blog fuera de scope) primero. Cambio SEO-sensible: requiere estrategia de redirects 301 para no perder el resultado "0 URL deltas" ya verificado en Phase 4 (04-VERIFICATION.md). Candidato a nueva fase (v1.2 extendida o v1.3), no ejecutar ad-hoc.
+- [Phase 15, 2026-07-11] Header global (main site nav) tiene el mismo bug de labels ES vacíos ya corregido en Footer durante 15-02 — `navItems[].link.label` vacío en ES, el nav principal no muestra texto de link en la home en español. Alta severidad (SEO/UX, en vivo). Fuera de alcance de Phase 15 (global distinto). Detalle en `.planning/phases/15-sitemap-xsl-html/deferred-items.md`. Fix recomendado: mismo backfill preservando ids, usando `navItemsEs` de `scripts/seed-header-footer-content.ts` (Blog/Casos de éxito/Autores/Contacto).
 
 ## Deferred Items
 
@@ -156,7 +161,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-11T23:10:00.000Z
-Stopped at: Phase 13 (Home Content Population) closed 2/2 plans. Phase 12 still paused on Juan's checkpoint (12-04 Task 2). Phase 14 (targetKeyword) and Phase 15 (sitemap XSL/HTML) remain in the v1.2 ROADMAP, not yet started.
-Resume file: .planning/ROADMAP.md (Phase 12 checkpoint pending; Phase 14 next in v1.2 sequence once Phase 12 closes)
+Last session: 2026-07-12T01:15:56Z
+Stopped at: Phase 15 (Sitemap XSL/HTML) closed 2/2 plans. Phase 12 still paused on Juan's checkpoint (12-04 Task 2). v1.2's 4 planned phases (12-15) are all executed. Header global ES-locale nav-label bug found and flagged (not fixed, out of scope) — see 15-sitemap-xsl-html/deferred-items.md.
+Resume file: None
 </content>

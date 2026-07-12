@@ -249,8 +249,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ### SITEMAP (Sitemap navegable/estilado)
 
-- [ ] **SITEMAP-01**: `sitemap.xml` actual recibe una hoja de estilos XSL — al abrir la URL directamente en el navegador se ve una tabla legible (no el XML crudo)
-- [ ] **SITEMAP-02**: `sitemap.html` nuevo — versión HTML navegable del sitemap (listado de URLs agrupado por sección), enlazado desde el footer existente (el footer ya tiene un link "Sitemap")
+- [x] **SITEMAP-01**: `sitemap.xml` actual recibe una hoja de estilos XSL — al abrir la URL directamente en el navegador se ve una tabla legible (no el XML crudo)
+- [x] **SITEMAP-02**: `sitemap.html` nuevo — versión HTML navegable del sitemap (listado de URLs agrupado por sección), enlazado desde el footer existente (el footer ya tiene un link "Sitemap")
 
 ### Out of Scope (v1.2)
 
@@ -273,8 +273,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FAQ-01 | Phase 13 | Complete |
 | SEO-KW-01 | Phase 14 | Complete |
 | SEO-KW-02 | Phase 14 | Complete |
-| SITEMAP-01 | Phase 15 | Pending |
-| SITEMAP-02 | Phase 15 | Pending |
+| SITEMAP-01 | Phase 15 | Complete |
+| SITEMAP-02 | Phase 15 | Complete |
 
 **Coverage:**
 
