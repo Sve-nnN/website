@@ -229,6 +229,13 @@ export interface Page {
     )[];
   };
   slug?: string | null;
+  /**
+   * Editorial reference only — the primary keyword this page/profile is written toward. Does not affect SEO meta tags or trigger any external API call.
+   */
+  targetKeyword?: {
+    en?: string | null;
+    es?: string | null;
+  };
   meta?: {
     title?: string | null;
     description?: string | null;
@@ -389,6 +396,13 @@ export interface Author {
       }[]
     | null;
   slug?: string | null;
+  /**
+   * Editorial reference only — the primary keyword this page/profile is written toward. Does not affect SEO meta tags or trigger any external API call.
+   */
+  targetKeyword?: {
+    en?: string | null;
+    es?: string | null;
+  };
   updatedAt: string;
   createdAt: string;
 }
@@ -1379,6 +1393,12 @@ export interface PagesSelect<T extends boolean = true> {
             };
       };
   slug?: T;
+  targetKeyword?:
+    | T
+    | {
+        en?: T;
+        es?: T;
+      };
   meta?:
     | T
     | {
@@ -1756,6 +1776,12 @@ export interface AuthorsSelect<T extends boolean = true> {
         id?: T;
       };
   slug?: T;
+  targetKeyword?:
+    | T
+    | {
+        en?: T;
+        es?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }
