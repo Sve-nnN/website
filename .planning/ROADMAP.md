@@ -439,15 +439,20 @@ Plans:
 
 ### Phase 15: Sitemap XSL + HTML
 
-**Goal**: El sitemap del sitio deja de ser XML crudo ilegible para cualquiera que lo abra directamente en el navegador, y gana una versión HTML navegable enlazada desde el footer (que ya tiene el link "Sitemap" apuntando a esta página).
+**Goal**: El sitemap del sitio deja de ser XML crudo ilegible para cualquiera que lo abra directamente en el navegador, y gana una versión HTML navegable enlazada desde un nuevo link "Sitemap" en el footer (que no existía — corrige la asunción original de REQUIREMENTS.md).
 **Depends on**: Phase 14
 **Requirements**: SITEMAP-01, SITEMAP-02
 **Success Criteria** (what must be TRUE):
 
   1. `sitemap.xml` recibe una hoja de estilos XSL — al abrir la URL directamente en el navegador se ve una tabla legible, no el XML crudo
-  2. Existe una página `sitemap.html` navegable (listado de URLs agrupado por sección), enlazada desde el link "Sitemap" que el footer ya tiene
+  2. Existe una página `sitemap.html` navegable (listado de URLs agrupado por sección), enlazada desde un nuevo link "Sitemap" agregado al footer
 
-**Plans**: TBD
+**Plans**: 2 plans (2 waves)
+
+Plans:
+
+- [ ] 15-01-PLAN.md — Shared sitemap query module + sitemap.xml route handler with XSL processing instruction + public/sitemap.xsl stylesheet
+- [ ] 15-02-PLAN.md — sitemap.html grouped navigable route + idempotent footer "Sitemap" link seed
 
 ## Progress
 
