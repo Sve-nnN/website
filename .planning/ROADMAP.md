@@ -520,7 +520,11 @@ Plans:
   3. `authors` aparece en la lista de colecciones configuradas de `@payloadcms/plugin-seo` en `payload.config.ts`
   4. El meta title/description de la Author page en `<head>` se lee del tab SEO editable desde `/admin` (campo `meta.title`/`meta.description` de la colección `authors`), no del fallback manual hardcodeado anterior
 
-**Plans**: TBD
+**Plans**: 1 plan (1 wave)
+
+Plans:
+
+- [ ] 18-01-PLAN.md — H1 fixes on /contact + Author page, Authors wired into plugin-seo, migration + generateMetadata update
 
 ### Phase 19: Service Pages
 
@@ -594,7 +598,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 15. Sitemap XSL + HTML | 2/2 | Complete   | 2026-07-12 |
 | 16. Hero Grainy Gradient — Implementation | 3/3 | Complete   | 2026-07-12 |
 | 17. Hero Grainy Gradient — Performance & Mobile Verification | 1/1 | Complete   | 2026-07-12 |
-| 18. SEO Technical Fixes + Metadata | 0/TBD | Not started | - |
+| 18. SEO Technical Fixes + Metadata | 0/1 | Not started | - |
 | 19. Service Pages | 0/TBD | Not started | - |
 | 20. SEO Local Geo-pages | 0/TBD | Not started | - |
 | 21. Home Optimization & Service Linking | 0/TBD | Not started | - |
