@@ -49,6 +49,20 @@ export type SitemapEntry = {
 
 export type SitemapGroup = SitemapEntry['group']
 
+// Shared escaping helper for both the XML (sitemap.xml) and HTML
+// (sitemap.html) route handlers — the five characters that need escaping
+// are identical in both formats, and `&#39;` (numeric entity) is valid in
+// both XML and HTML, avoiding drift between two copy-pasted implementations
+// (WR-09).
+export function escapeMarkupText(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
 export const SITEMAP_GROUP_LABELS: Record<SitemapGroup, string> = {
   pages: 'Pages',
   blog: 'Blog',

@@ -1,15 +1,8 @@
-import { getSitemapEntries } from '@/lib/sitemap-data'
+import { escapeMarkupText, getSitemapEntries } from '@/lib/sitemap-data'
 
 export const dynamic = 'force-dynamic'
 
-function escapeXml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
-}
+const escapeXml = escapeMarkupText
 
 export async function GET() {
   let entries

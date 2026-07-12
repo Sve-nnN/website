@@ -1,15 +1,13 @@
-import { getSitemapEntries, SITEMAP_GROUP_LABELS, type SitemapEntry } from '@/lib/sitemap-data'
+import {
+  escapeMarkupText,
+  getSitemapEntries,
+  SITEMAP_GROUP_LABELS,
+  type SitemapEntry,
+} from '@/lib/sitemap-data'
 
 export const dynamic = 'force-dynamic'
 
-function escapeHtml(value: string): string {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-}
+const escapeHtml = escapeMarkupText
 
 const OTHER_LOCALE: Record<SitemapEntry['locale'], SitemapEntry['locale']> = {
   es: 'en',
