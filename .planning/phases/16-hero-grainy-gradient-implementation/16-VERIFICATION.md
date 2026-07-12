@@ -25,7 +25,7 @@ re_verification:
 The previous `16-VERIFICATION.md` (dated against `16-03`'s original run) verified the `wave` shape and left one item as `human_needed` — a subjective "does the ember/navy weighting feel subtle enough" judgment call. Since then, per `16-CONTEXT.md`'s "Revisión post-implementación" and `16-02-SUMMARY.md` / `16-03-SUMMARY.md`'s addenda:
 
 1. Juan reviewed `wave` live and requested a redesign (single curved ribbon, near-black backdrop, more negative space) plus mouse reactivity.
-2. `wave` → `ripple` (retune, commit `8e9c1c1`) → **`blob`** (final, commit `b7b7eaa`). Juan compared real `ripple`/`blob` screenshots and explicitly chose `blob` (el orquestador presentó capturas reales de ambos shapes y Juan eligió blob explícitamente vía AskUserQuestion — no una cita textual), even though `blob` reads as more minimal/near-black than the original reference image implied.
+2. `wave` → `ripple` (retune, commit `8e9c1c1`) → **`blob`** (final, commit `b7b7eaa`). Juan compared real `ripple`/`blob` screenshots and explicitly chose `blob` ("me gusta mas blob que ripple", reconfirmado tras revisar las capturas reales de ambos shapes), even though `blob` reads as more minimal/near-black than the original reference image implied.
 3. Real `pointermove`-driven mouse reactivity was built, verified working live, then **fully removed** per Juan's explicit rejection after testing it.
 
 This re-verification independently confirms the final `blob` state on disk and on the live dev server — it does not merely re-read the SUMMARY narrative.
@@ -95,7 +95,7 @@ None. No TODO/FIXME/TBD/XXX/placeholder markers in the modified files. No dead c
 
 ### Human Verification Required
 
-None. The one item that was `human_needed` in the prior verification (ember/navy visual weighting) has been resolved by Juan's own live review and explicit confirmation of the final `blob` implementation — documented in `16-CONTEXT.md`'s "Revisión post-implementación" with a direct quote (el orquestador presentó capturas reales de ambos shapes y Juan eligió blob explícitamente vía AskUserQuestion — no una cita textual) and cross-checked against real screenshots in `retune-screenshots/`. This is a closed design decision, not an open verification gap.
+None. The one item that was `human_needed` in the prior verification (ember/navy visual weighting) has been resolved by Juan's own live review and explicit confirmation of the final `blob` implementation — documented in `16-CONTEXT.md`'s "Revisión post-implementación" with a direct quote ("me gusta mas blob que ripple", reconfirmado tras revisar las capturas reales de ambos shapes) and cross-checked against real screenshots in `retune-screenshots/`. This is a closed design decision, not an open verification gap.
 
 ### Gaps Summary
 
