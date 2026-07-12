@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: milestone
 status: executing
-stopped_at: Phase 18 complete (verified, passed) -- starting Phase 19
-last_updated: "2026-07-12T17:55:00.000Z"
-last_activity: 2026-07-12 -- Phase 18 verified passed (6/6), moving to Phase 19
+stopped_at: Phase 19 complete (verified, passed) -- starting Phase 20
+last_updated: "2026-07-12T20:45:00.000Z"
+last_activity: 2026-07-12 -- Phase 19 verified passed (4/4), moving to Phase 20
 progress:
   total_phases: 21
-  completed_phases: 1
-  total_plans: 1
-  completed_plans: 1
-  percent: 5
+  completed_phases: 2
+  total_plans: 6
+  completed_plans: 6
+  percent: 10
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 19 — service-pages
+**Current focus:** Phase 20 — seo-local-geo-pages
 
 ## Current Position
 
-Phase: 19 (service-pages) — NOT STARTED
+Phase: 20 (seo-local-geo-pages) — NOT STARTED
 Plan: —
-Status: Phase 18 closed (VERIFICATION.md: passed, 6/6). Next: /gsd:plan-phase 19 (discuss/context first)
-Last activity: 2026-07-12 -- Phase 18 verified passed, starting Phase 19
+Status: Phase 19 closed (VERIFICATION.md: passed, 4/4). Next: context/discuss for Phase 20
+Last activity: 2026-07-12 -- Phase 19 verified passed, starting Phase 20
 
 ## Performance Metrics
 
@@ -145,6 +145,8 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 17] 17-01: Baseline source is Phase 11-03's post-11-02 lh-current.json (pre-shader); regression threshold ~5 Performance points or CWV entering poor lab band per 17-CONTEXT.md -- both /en and /es measured Delta-3, PASS, no regression flagged
 - [Phase 18]: 18-01: code review found WR-01 (H1 duplicable si se agrega Hero block a /contact desde admin) y WR-02 (generateTitle/generateDescription tipados contra shape hand-fabricado); WR-01 fixeado (guard hasHeroTitle); WR-02 se intentó tipar contra los generics reales del plugin (GenerateTitle/GenerateDescription) pero generó fricción de tipos no resuelta en el tiempo disponible -- revertido, aceptado como deuda técnica documentada en 18-VERIFICATION.md (no bloquea ningún requirement de la fase). Decisión tomada de forma autónoma (modo no interactivo) por no haber humano disponible para decidir.
 - [Phase 18]: node_modules se corrompió a mitad de sesión (symlink circular `.node_modules-*` + `node_modules/node_modules` anidado, causado por una instalación interrumpida) -- resuelto con `rm -rf node_modules && npm install`, sin impacto en código fuente (node_modules está gitignored)
+- [Phase 19]: 5 páginas nuevas (`pages` collection, no colección nueva) en rutas duales por locale (`/servicios`+`/services`, índice y `[slug]`) ya que next-intl no tiene `pathnames` configurado -- ambos segmentos funcionan bajo cualquier locale. Copy 100% real y bilingüe escrito por Claude (grounded en `research/SEO-COMPETITIVE-AUDIT-v1.4.md`), sin precios, con la página GEO enlazando explícitamente `/llms.txt`/`/llms-full.txt`.
+- [Phase 19]: code review encontró CR-01 (Critical): `CallToAction.richText` sin `localized: true` -- el seed pisaba el CTA en español con el de inglés. INCIDENTE: la primera corrida de la migración de fix se aplicó sin backfill previo al DROP COLUMN y borró el CTA existente de TODAS las páginas (incluida Home) contra la DB real; Juan restauró vía Neon point-in-time restore. Migración corregida (backfill INSERT...SELECT...unnest(ARRAY['es','en']) antes del DROP), re-revisada por humano, re-aplicada con aprobación explícita, y los 3 seed scripts afectados (`seed-home-page.ts`, `seed-phase10-7-gap-fill.ts`, `seed-phase19-service-pages.ts`) re-corridos para restaurar contenido. Verificado en vivo: Home CTA intacto, CTA de las 5 páginas nuevas correctamente localizado por idioma. **Regla nueva permanente** (root CLAUDE.md, sección "Database Safety", enforceada a nivel de sistema): ningún `payload migrate` ni script que escriba contra la DB real corre sin aprobación humana explícita nombrando la acción específica, particularmente para DROP COLUMN/TABLE/TRUNCATE o cambios de localized↔no-localizado.
 
 ### Pending Todos
 
