@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: milestone
-status: executing
-stopped_at: Phase 21 complete (verified, passed) -- milestone v1.4 phases 18-21 all done, lifecycle next
-last_updated: "2026-07-12T22:00:00.000Z"
-last_activity: 2026-07-12 -- Phase 21 verified passed (3/4), all v1.4 phases complete, starting lifecycle (audit -> complete -> cleanup)
+status: Awaiting next milestone
+stopped_at: Milestone v1.4 audit passed (10/10), proceeding to complete-milestone
+last_updated: "2026-07-12T22:06:51.497Z"
+last_activity: 2026-07-12 — Milestone v1.4 completed and archived
 progress:
   total_phases: 21
   completed_phases: 4
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 21 (home-optimization-service-linking) — COMPLETE
-Plan: 1 of 1
-Status: All 4 v1.4 phases (18-21) closed, all VERIFICATION.md passed. Next: milestone lifecycle. Phase 6 (Deploy + Cutover) remains paused, untouched.
-Last activity: 2026-07-12 -- Phase 21 verified passed, starting milestone v1.4 lifecycle
+Phase: Milestone v1.4 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-07-12 — Milestone v1.4 completed and archived
 
 ## Performance Metrics
 
@@ -188,3 +188,7 @@ Last session: 2026-07-12T22:15:00.000Z
 Stopped at: Milestone v1.4 audit passed (10/10), proceeding to complete-milestone
 Resume file: .planning/v1.4-MILESTONE-AUDIT.md
 </content>
+
+## Operator Next Steps
+
+- Start the next milestone with /gsd:new-milestone

@@ -18,6 +18,10 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 - **SEO-KW-01, SEO-KW-02** (Phase 14): campo editorial `targetKeyword` (en/es) en `pages`/`authors`, poblado con picks reales de keyword research en Home y Author page — verificado en vivo, sin llamadas a APIs externas
 - **SITEMAP-01, SITEMAP-02** (Phase 15): `sitemap.xml` con hoja de estilos XSL navegable + `sitemap.html` nuevo enlazado desde el footer — verificado en vivo
 - **HERO-ANIM-01..06** (Phases 16-17): fondo del Hero home reemplazado por `GrainGradient` (`@paper-design/shaders-react`), colores de tokens, copy intacto, `prefers-reduced-motion` respetado, sin reactividad al mouse (implementada y quitada a pedido de Juan), Lighthouse/CWV verificado sin regresión significativa — verificado en vivo por `.planning/v1.3-MILESTONE-AUDIT.md`
+- **SEO-STRUCT-01/02, SEO-META-01** (Phase 18): H1 semántico real en `/contact` (sr-only) y en la Author page (vía `AuthorCard.asPageHeading`); Authors sumada a `@payloadcms/plugin-seo` — verificado en vivo por `.planning/v1.4-MILESTONE-AUDIT.md`
+- **SEO-SVC-01/02/03** (Phase 19): página "Servicios" + 4 landings individuales (Auditoría SEO Técnica, Consultoría SEO, Desarrollo Full-Stack con SEO integrado, SEO para IA/GEO), sin precios, dual URL segment (`/servicios`+`/services`), GEO page enlaza `/llms.txt`/`/llms-full.txt` — verificado en vivo, 10 combinaciones de URL curl-verificadas
+- **SEO-LOCAL-01/02** (Phase 20): landings "SEO técnico en Lima" (grounded en presencia física real + taller DinoRANK/Arianna Lupi) y "SEO técnico en Madrid/España" (framing remoto honesto + datos reales de keyword research ES) — contenido genuinamente diferenciado, no templated
+- **SEO-HOME-01/02** (Phase 21): copy de Home reforzado con el ángulo Next.js/Payload/SEO-en-el-código; nav principal enlaza a `/services` — verificado en vivo
 
 ### Active
 
@@ -42,7 +46,7 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 - Dashboard interno de analytics/SEO tooling (AdBanners, BrokenLinks, GSCMetrics, KeywordMetrics, PageMetrics, dinorank, internal-links apply, keyword-score/coverage) — es el "clutter" que se descarta explícitamente en esta reconstrucción. **Aclaración v1.2:** esta exclusión es sobre el dashboard/live-integration de dinorank dentro de la app; el campo editorial `targetKeyword` (v1.2) y el research puntual vía DinoRank API para elegir esos valores son un insumo estático de investigación, no una integración en vivo — no reabre esta exclusión.
 - MongoDB — se reemplaza por Postgres para alinear con el backend de referencia (aprendoclub) y la oferta de DB gestionada de Hostinger
 - Vercel Blob storage — se reemplaza por Cloudinary
-- Plugins de Payload no esenciales para el sitio público: admin-bar, plugin-mcp, dashboard-analytics, plugin-form-builder (se resuelve contacto con lógica simple + Resend, no formbuilder genérico) — salvo que la investigación de research determine que alguno es necesario
+- Plugins de Payload no esenciales para el sitio público: admin-bar, dashboard-analytics, plugin-form-builder (se resuelve contacto con lógica simple + Resend, no formbuilder genérico) — salvo que la investigación de research determine que alguno es necesario. **Actualización 2026-07-12:** `@payloadcms/plugin-mcp` fue instalado y activado fuera del scope de v1.4 (trabajo paralelo de la sesión principal, no de este milestone) — se retira de esta lista de exclusión ya que ya está en el proyecto; no formaba parte de los requirements de v1.4 y no fue tocado por las fases 18-21.
 
 ## Context
 
@@ -52,7 +56,8 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 - Referencia de backend limpio: `/Users/juan/Documents/Codigo/Arianna/aprendoclub/aprendoclub` — Payload 3.85 con Postgres, colecciones lean (Users, Media, Testimonios, ClientesTrabajados, Programas, TeamMembers, Faq, Pages, Category, Author, BlogPost), plugins mínimos (nested-docs, redirects, seo), sin tooling interno.
 - Se detectó y resolvió una carpeta `.planning` huérfana en `/Users/juan/Documents/Codigo/.planning` (movida a `.planning.orphan-backup-20260709`) que interfería con la detección de raíz de proyecto de gsd-sdk.
 - Modelo de case study a replicar (referencia de competencia de Juan, `ariannalupi.com/casos/ecommerce-vape/`): hero con métrica principal (ej. "$41K → $76K"), metadatos (cliente/sector/período/servicios), 4 KPIs en tarjetas, sección "El cliente" (contexto), "El reto" (lista de problemas), "La solución" (proceso en pasos numerados), "Resultados" (comparativa antes/después por período), conclusión estratégica, CTA doble. Coincide con el patrón "métrica en el titular" ya identificado en FEATURES.md.
-- Con v1.1 y v1.2 cerrados, el único trabajo abierto a nivel de proyecto es **Phase 6 (Deploy + Cutover)**, en pausa, retoma solo cuando Juan dé el visto bueno explícito con credenciales reales de Hostinger/DNS/Resend (`RESEND_API_KEY` sigue siendo placeholder/inválido).
+- Con v1.1, v1.2, v1.3 y v1.4 cerrados, el único trabajo abierto a nivel de proyecto es **Phase 6 (Deploy + Cutover)**, en pausa, retoma solo cuando Juan dé el visto bueno explícito con credenciales reales de Hostinger/DNS/Resend (`RESEND_API_KEY` sigue siendo placeholder/inválido).
+- `@payloadcms/plugin-mcp` fue instalado y activado en el repo (2026-07-12, trabajo paralelo fuera de v1.4) — API keys collection agregada vía migración, fuera del scope de este milestone.
 
 ## Constraints
 
@@ -74,19 +79,15 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | Works vs Clientes: se elimina Works, Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link a web); CaseStudies se enriquece con el modelo estructurado de ariannalupi.com/casos/ | Juan no quiere "Works" como concepto separado — prefiere case studies ricos como vitrina principal, y Clientes como pieza aparte solo para credibilidad visual (logos) | ✓ Good |
 | SpeakingEvents como colección standalone (no array field en Authors) | Juan pidió poder seguir agregando eventos post-launch sin reabrir el schema de Authors (pedido directo, mid-Phase 12) | ✓ Good |
 | `targetKeyword` (v1.2) como campo editorial informativo, sin llamadas en vivo a DinoRank/Ahrefs | Mantiene la exclusión de "dinorank tooling" de Out of Scope — el research vía API es insumo estático, no integración en vivo | ✓ Good |
+| Páginas de servicio (v1.4) reusan la colección `Pages` existente en vez de una colección `Services` nueva | Son landings de marketing con la misma forma que cualquier doc de `Pages` (bloques Hero/Content/FAQ/CallToAction) — una colección nueva hubiera significado migración + admin UI + plumbing duplicado sin beneficio funcional | ✓ Good |
+| Geo-pages (v1.4): Lima grounded en presencia física real, Madrid honesto sobre trabajo remoto sin oficina física | Evita el patrón templated/find-replace-por-ciudad que Juan rechazó explícitamente — cada página necesitaba un argumento genuinamente distinto, no solo el nombre de la ciudad cambiado | ✓ Good |
+| Database Safety rule (root CLAUDE.md, agregada durante v1.4, luego relajada por Juan) | Un incidente real de pérdida de datos (migración de fase 19 sin backfill, recuperada vía Neon PITR) forzó una regla dura de aprobación humana antes de cualquier escritura contra la DB real; Juan luego la relajó a solo operaciones destructivas (DROP/TRUNCATE/delete/reshape con pérdida) una vez que confió en el patrón | ✓ Good |
 
-## Current Milestone: v1.4 SEO Competitivo — Auditoría y Optimización
+## Current Milestone: Ninguno — v1.4 cerrado, esperando próximo milestone
 
-**Goal:** Extraer encabezados/metadata/keyword-target de todas las páginas de competidores (excepto blog), identificar gaps reales frente al sitio de Juan, y usar esos hallazgos para optimizar encabezados/copy/estructura del sitio (incluyendo decisión sobre author page vs about page vs atribución de blog, y análisis de servicios/precios/SEO local de la competencia).
+## Milestone Anterior: v1.4 SEO Competitivo — Auditoría y Optimización (cerrado 2026-07-12)
 
-**Target features:**
-- Extracción sistemática de h1-h3 + meta title/description + keyword-target inferida de todas las páginas no-blog de los competidores ya identificados en `research/COMPETITOR-ANALYSIS.md` (Carlos Sánchez Donate, Chesus Rodrigo, Manu Fuentes, Capitán SEO + long-tail), sumando más competidores si el research lo justifica
-- Gap analysis estructurado: qué tienen ellos (secciones, encabezados, ángulos de copy, servicios, pricing, SEO local) que el sitio de Juan no tiene
-- Optimización de encabezados/copy del sitio actual basada en esos hallazgos — nuevas secciones si hacen falta (ej. servicios/precios), sin romper el modelo de contenido ya validado (case studies, E-E-A-T)
-- Decisión de arquitectura de información: ¿hace falta author page separada de about/sobre-mí? ¿Es mejor que la atribución de autor en blog posts sea un link a una única página "sobre mí" con listado de posts al final, en vez de páginas author dedicadas?
-- Análisis de servicios ofrecidos, pricing, y SEO local de la competencia, para decidir qué aplica al sitio de Juan
-
-**Key context:** Todos los hallazgos de research (competidores, negocio, SEO) van a `/research` en la raíz del repo (no `.planning/research`) — carpeta ya existente con `COMPETITOR-ANALYSIS.md`, `JUAN-PROFILE.md`, `keyword-research/`. `.planning/REQUIREMENTS.md` y `.planning/ROADMAP.md` siguen en su ubicación estándar. Competidores base ya identificados vía SERP real (DinoRank); research de este milestone amplía si hace falta, y por primera vez cubre TODAS las páginas no-blog (no solo home/sobre-mí como en la pasada anterior).
+Investigación en profundidad de encabezados/metadata/servicios/precios/SEO local de 4 competidores directos (`research/SEO-COMPETITIVE-AUDIT-v1.4.md`) encontró 2 bugs técnicos reales (H1 faltante en `/contact` y en la Author page) y gaps de posicionamiento puro (sin páginas de servicio, sin "SEO para IA/GEO" nombrado pese a tener la infraestructura, sin SEO local). 4 fases (18-21): fixes técnicos de H1 + metadata de Author page vía `plugin-seo` (Phase 18); página "Servicios" + 4 landings individuales incluyendo SEO para IA/GEO, con rutas duales `/servicios`+`/services` (Phase 19); 2 geo-pages (Lima, Madrid) con contenido genuinamente diferenciado, no templated (Phase 20); Home reforzado con el ángulo Next.js/Payload/SEO-en-el-código + link a Servicios en el nav (Phase 21). Durante Phase 19 se encontró y corrigió un bug Crítico real (`CallToAction.richText` sin `localized: true`, colisionando el CTA bilingüe) — el primer intento de migración de fix causó pérdida de datos real contra la DB de producción (recuperada vía Neon point-in-time restore), lo que produjo la regla "Database Safety" en `CLAUDE.md` (luego relajada por Juan a solo operaciones destructivas). Durante Phase 21 se encontró y corrigió otro bug real (colisión de id en `Header.navItems`, array compartido no-localizado). Auditoría (`.planning/v1.4-MILESTONE-AUDIT.md`) verificó 10/10 requirements en vivo contra código real y servidor corriendo, 0 gaps bloqueantes, 3 items de deuda técnica no bloqueante documentados. Ver `.planning/MILESTONES.md` para el detalle completo.
 
 ## Milestone Anterior: v1.3 Hero Grainy Gradient Animation (cerrado 2026-07-12)
 
@@ -118,4 +119,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-12 — milestone v1.3 closed, 6/6 requirements validated; awaiting next milestone (Phase 6 Deploy + Cutover remains the sole open project-wide item, paused pending Juan's go-ahead with real Hostinger/DNS/Resend credentials)*
+*Last updated: 2026-07-12 — milestone v1.4 closed, 10/10 requirements validated; awaiting next milestone (Phase 6 Deploy + Cutover remains the sole open project-wide item, paused pending Juan's go-ahead with real Hostinger/DNS/Resend credentials)*

@@ -1,5 +1,22 @@
 # Milestones
 
+## v1.4 SEO Competitivo (Shipped: 2026-07-12)
+
+**Phases completed:** 4 phases, 8 plans, 18 tasks
+
+**Key accomplishments:**
+
+- Fixed the 2 missing-H1 semantic bugs on `/contact` and the Author page, and wired the Authors collection into `@payloadcms/plugin-seo` so its meta title/description are admin-editable — no visible layout changes.
+- Foundation for Phase 19: a single source of truth for the 5 new service-page slugs, Local API query helpers with a security allowlist guard, the content-authoring type contracts downstream copy plans write against, and a sitemap fix so the new pages are listed under their real /servicios(/slug) and /en/services(/slug) routes.
+- 4 thin route files make the services index and individual service landings reachable at /services, /servicios, /services/[slug], /servicios/[slug], all functional under either locale.
+- Real, bilingual marketing copy for the services index page and 2 of 4 individual service landings, following the H1->pain->includes->process->FAQ->CTA structure validated by the 4 audited competitors.
+- Real, bilingual copy for the remaining 2 service landings — Full-Stack Development with SEO built into the code, and AI SEO/GEO explicitly grounded in the already-live llms.txt/llms-full.txt infrastructure.
+- All 5 service pages exist in the real DB with real bilingual content, all 10 URL combinations (index + 4 services, x2 segment spellings) return 200 in both locales, the GEO page links live to /llms.txt and /llms-full.txt — reached only after finding and fixing a real Critical code-review bug (CallToAction bilingual CTA collision) and recovering from a real data-loss incident during that fix's first migration attempt.
+- 2 new SEO landing pages ("SEO técnico en Lima", "SEO técnico en Madrid/España") live in both locales, each grounded in real, distinct facts — Lima in Juan's physical presence and local community involvement, Madrid in an honest remote-specialist framing backed by real market data — closing the v1.4 geo-positioning gap without the templated find-replace-city pattern Juan explicitly rejected.
+- Home's "Mi enfoque en Consultoría Técnica" section now explicitly names Next.js/Payload/headless CMS with SEO built into the code (both locales), and the main nav has a working "Servicios"/"Services" link to the Phase 19 service pages.
+
+---
+
 Historial de milestones cerrados para Juan Carlos Angulo — Portfolio (Payload rebuild).
 
 ---
