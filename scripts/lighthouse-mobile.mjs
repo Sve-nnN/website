@@ -127,6 +127,12 @@ async function main() {
   } else {
     console.log(JSON.stringify(scores, null, 2))
   }
+
+  const failedRoutes = Object.entries(scores).filter(([, v]) => v.error).map(([r]) => r)
+  if (failedRoutes.length > 0) {
+    console.error(`\n${failedRoutes.length} route(s) failed: ${failedRoutes.join(', ')}`)
+    process.exitCode = 1
+  }
 }
 
 main().catch((err) => {
