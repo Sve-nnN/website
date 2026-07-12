@@ -31,26 +31,24 @@ const DARK_COLORS = ['#3A4159', '#4B5470', '#FF7A45']
 const NEAR_BLACK = '#0A0A0F'
 
 /**
- * `ripple` was chosen over `blob` after comparing both against the reference
- * image (see 16-03-shape-comparison screenshots): `ripple`'s concentric-ring
- * pattern radiates from a single fixed center, so `offsetX`/`offsetY` can
- * reliably park that center just outside the frame, leaving only one clean
- * curved arc crossing the visible section — a stable, art-directable single
- * ribbon. `blob` renders as several small, independently orbiting hotspots
- * (time-driven trajectories baked into the shader itself) that drift in and
- * out of frame unpredictably and, at these brand colors' tonal closeness,
- * were frequently invisible entirely — not usable for a single stable ribbon.
+ * Shape decision: `ripple` and `blob` were both built and compared live
+ * against the reference image (screenshots in
+ * `.planning/phases/16-hero-grainy-gradient-implementation/retune-screenshots/`).
+ * `ripple` produces a bolder, more graphic single curved arc (its
+ * concentric-ring center can be parked outside the frame via static
+ * offsetX/offsetY). `blob` — even at the library's own documented preset
+ * values — renders as a much more subtle, moody grain field: with this
+ * package version and our tonally-close brand palette, `blob`'s orbiting
+ * hotspots essentially never cross into full color visibility, leaving a
+ * near-black textured surface with only a faint living shimmer. Juan
+ * reviewed both live and explicitly preferred `blob`'s calmer, more
+ * minimal read — closer to "casi negro" than `ripple`'s bolder ribbon.
  */
-const RIBBON_SHAPE = 'ripple' as const
-const RIBBON_SOFTNESS = 0.85
-const RIBBON_INTENSITY = 0.1
-const RIBBON_NOISE = 0.12
-const RIBBON_SCALE = 2.3
-
-/** Fixed position: parks the ripple's center outside the frame so only one
- * curved arc shows, bottom-left. Static — no longer mouse-driven. */
-const OFFSET_X = 0.5
-const OFFSET_Y = -1.35
+const SHADER_SHAPE = 'blob' as const
+const SHADER_SOFTNESS = 0.15
+const SHADER_INTENSITY = 0.2
+const SHADER_NOISE = 0.35
+const SHADER_SCALE = 1.4
 
 interface ShaderErrorBoundaryProps {
   children: ReactNode
@@ -121,13 +119,11 @@ export function HeroGrainGradient() {
         <GrainGradient
           colors={colors}
           colorBack={NEAR_BLACK}
-          shape={RIBBON_SHAPE}
-          softness={RIBBON_SOFTNESS}
-          intensity={RIBBON_INTENSITY}
-          noise={RIBBON_NOISE}
-          scale={RIBBON_SCALE}
-          offsetX={OFFSET_X}
-          offsetY={OFFSET_Y}
+          shape={SHADER_SHAPE}
+          softness={SHADER_SOFTNESS}
+          intensity={SHADER_INTENSITY}
+          noise={SHADER_NOISE}
+          scale={SHADER_SCALE}
           width="100%"
           height="100%"
           {...motionProps}

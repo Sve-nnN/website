@@ -92,3 +92,16 @@ Plan 3 builds the reusable, permanent version of this verification as `scripts/v
 - FOUND: commit 5bbc405 in git log
 - FOUND: commit 29d48ab in git log
 - FOUND: commit 3f15c57 in git log
+
+## Addendum: Post-Implementation Retune (same day, after Juan saw the live result)
+
+After Juan reviewed the `wave`-shape version above live (with a reference image), he requested a different look: a single curved light ribbon (ember→navy) over a near-black backdrop, with much more negative space, plus mouse reactivity. This was implemented and then partially reverted in a follow-up commit — see `.planning/phases/16-hero-grainy-gradient-implementation/16-CONTEXT.md`'s "Revisión post-implementación" section for the full decision record, and commit `8e9c1c1` for the final code.
+
+Summary of what changed vs. this SUMMARY's original content:
+- `shape`: `wave` → `ripple` (compared against `blob` via real screenshots at `.planning/phases/16-hero-grainy-gradient-implementation/retune-screenshots/`; `ripple` chosen for a stable, art-directable single arc — `blob`'s orbiting hotspots drifted unpredictably and were often invisible against the brand palette)
+- `colorBack`: solid navy (`--secondary`) → near-black (`#0A0A0F`)
+- `offsetX`/`offsetY`: added (fixed values) to park the ripple's center outside the frame, leaving one curved ribbon with heavy negative space
+- Mouse reactivity: implemented for real (verified working via Playwright — the ribbon's position visibly changed as the cursor moved), then **removed entirely** per Juan's explicit rejection after live testing. No pointer/cursor tracking remains anywhere in this component.
+- `reducedMotion`/hydration-safety pattern from the original implementation (the Rule 1 fix documented above) is unchanged and still in effect.
+
+`HERO-ANIM-01..04` remain satisfied under the retuned implementation — same component boundary, same reduced-motion mechanism, same token-derived colors (just a different near-black `colorBack` and different `colors` array values, still sourced from `globals.css` navy/ember tones, no invented hues).
