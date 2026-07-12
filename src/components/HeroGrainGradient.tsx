@@ -51,10 +51,13 @@ class ShaderErrorBoundary extends Component<ShaderErrorBoundaryProps, ShaderErro
 }
 
 export function HeroGrainGradient() {
-  const [reducedMotion, setReducedMotion] = useState(() => {
-    if (typeof window === 'undefined') return false
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  })
+  // Initialized to `false` (matching what the server always renders, since
+  // `window` doesn't exist during SSR) to avoid a hydration mismatch — React
+  // does not patch mismatched attributes after hydration, so the real
+  // matchMedia read happens in the effect below (a genuine post-mount state
+  // update, not part of the hydration pass) instead of a useState lazy
+  // initializer.
+  const [reducedMotion, setReducedMotion] = useState(false)
   const [isDark] = useState(() => {
     if (typeof document === 'undefined') return false
     return document.documentElement.classList.contains('dark')
@@ -62,6 +65,7 @@ export function HeroGrainGradient() {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReducedMotion(mediaQuery.matches)
     const handleChange = (event: MediaQueryListEvent) => setReducedMotion(event.matches)
     mediaQuery.addEventListener('change', handleChange)
     return () => mediaQuery.removeEventListener('change', handleChange)
