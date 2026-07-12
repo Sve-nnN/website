@@ -23,7 +23,13 @@ const socialIconMap = {
  * (CONT-02). Renders every available Authors field conditionally per-field;
  * never omits the section entirely just because one field is sparse.
  */
-export async function AuthorCard({ author }: { author: Author }) {
+export async function AuthorCard({
+  author,
+  asPageHeading = false,
+}: {
+  author: Author
+  asPageHeading?: boolean
+}) {
   const avatar = typeof author.avatar === 'object' ? author.avatar : null
   const locale = await getLocale()
 
@@ -42,9 +48,17 @@ export async function AuthorCard({ author }: { author: Author }) {
           <AvatarFallback>{author.name.slice(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
         <div>
-          <Link href={`/authors/${author.slug}`} className="font-heading text-heading hover:text-primary">
-            {author.name}
-          </Link>
+          {asPageHeading ? (
+            <h1 className="font-heading text-heading">
+              <Link href={`/authors/${author.slug}`} className="hover:text-primary">
+                {author.name}
+              </Link>
+            </h1>
+          ) : (
+            <Link href={`/authors/${author.slug}`} className="font-heading text-heading hover:text-primary">
+              {author.name}
+            </Link>
+          )}
           {author.jobTitle && <p className="text-body text-muted-foreground">{author.jobTitle}</p>}
         </div>
       </div>

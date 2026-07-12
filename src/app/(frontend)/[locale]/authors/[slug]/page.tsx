@@ -173,7 +173,7 @@ export default async function AuthorProfilePage({
   return (
     <main>
       <Container className="py-16">
-        <AuthorCard author={doc} />
+        <AuthorCard author={doc} asPageHeading />
 
         {doc.expertise && doc.expertise.length > 0 && (
           <section className="mt-12">
