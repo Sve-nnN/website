@@ -496,7 +496,11 @@ Plans:
   2. Core Web Vitals (LCP/INP/CLS) dentro de rango aceptable comparado contra el baseline
   3. En 375/768/1280px el shader no causa overflow horizontal, layout roto, ni jank visual observable
 
-**Plans**: TBD
+**Plans**: 1 plan (1 wave)
+
+Plans:
+
+- [ ] 17-01-PLAN.md — Extend lighthouse-mobile.mjs with CWV extraction, run production-build Lighthouse against /en+/es vs Phase 11 baseline, production-build mobile spot-check + verification report
 
 ## Progress
 
