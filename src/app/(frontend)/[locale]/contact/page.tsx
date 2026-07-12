@@ -42,11 +42,17 @@ export default async function ContactPage({
     notFound()
   }
 
+  const hasHeroTitle = doc.content?.layout?.some(
+    (block) => block.blockType === 'hero' && 'title' in block && block.title,
+  )
+
   return (
     <main>
-      <h1 className="sr-only">
-        {doc?.meta?.title ?? doc?.title ?? (locale === 'es' ? 'Contacto' : 'Contact')}
-      </h1>
+      {!hasHeroTitle && (
+        <h1 className="sr-only">
+          {doc.meta?.title ?? doc.title ?? (locale === 'es' ? 'Contacto' : 'Contact')}
+        </h1>
+      )}
       <RenderBlocks
         blocks={doc.content?.layout ?? []}
         blockProps={{
