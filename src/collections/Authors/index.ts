@@ -17,9 +17,6 @@ import { targetKeywordField } from '@/fields/targetKeyword'
  * .planning/phases/12-author-page-e-e-a-t-expansion/12-CONTEXT.md. The
  * `certificate` upload field from the JuanPortfolio analog's `education[]`
  * is intentionally NOT ported — no real certificate files are available.
- *
- * No SEO tab: `@payloadcms/plugin-seo` targets `pages`/`posts`/`case-studies`
- * only per CONTEXT.md — Authors does not get a SEO tab in Phase 1.
  */
 export const Authors: CollectionConfig = {
   slug: 'authors',

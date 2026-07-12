@@ -88,13 +88,24 @@ export default buildConfig({
   globals: [Llms, Header, Footer, FeaturedContent],
   plugins: [
     seoPlugin({
-      collections: ['pages', 'posts', 'case-studies'],
+      collections: ['pages', 'posts', 'case-studies', 'authors'],
       uploadsCollection: 'media',
       tabbedUI: true,
-      generateTitle: ({ doc }: { doc: { title?: string } }) =>
-        doc?.title ? `${doc.title} | Juan Carlos Angulo` : 'Juan Carlos Angulo',
-      generateDescription: ({ doc }: { doc: { heroSubtitle?: string; excerpt?: string } }) =>
-        doc?.heroSubtitle ?? doc?.excerpt ?? '',
+      generateTitle: ({
+        doc,
+      }: {
+        doc: { title?: string; name?: string; heroSubtitle?: string; excerpt?: string; jobTitle?: string }
+      }) =>
+        doc?.name
+          ? `${doc.name} | Juan Carlos Angulo`
+          : doc?.title
+            ? `${doc.title} | Juan Carlos Angulo`
+            : 'Juan Carlos Angulo',
+      generateDescription: ({
+        doc,
+      }: {
+        doc: { title?: string; name?: string; heroSubtitle?: string; excerpt?: string; jobTitle?: string }
+      }) => (doc?.name ? (doc?.jobTitle ?? '') : (doc?.heroSubtitle ?? doc?.excerpt ?? '')),
     }),
     redirectsPlugin({
       collections: ['pages', 'posts', 'case-studies', 'categories', 'authors'],
