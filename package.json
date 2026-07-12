@@ -13,6 +13,7 @@
     "generate:importmap": "payload generate:importmap"
   },
   "dependencies": {
+    "@paper-design/shaders-react": "^0.0.77",
     "@payloadcms/db-postgres": "3.85.2",
     "@payloadcms/email-resend": "3.85.2",
     "@payloadcms/next": "3.85.2",
