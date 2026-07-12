@@ -538,7 +538,16 @@ Plans:
   3. "SEO para IA / GEO" tiene su propia página de servicio con copy que referencia explícitamente `llms.txt`/`llms-full.txt` como parte tangible de la oferta (no solo el nombre del servicio)
   4. Las páginas de servicio (índice + individuales) están disponibles y curl-eables en ambos locales (EN/ES), con contenido traducido, no solo URL espejada
 
-**Plans**: TBD
+**Plans**: 5 plans (3 waves)
+
+Plans:
+
+- [x] 19-01-PLAN.md — Service slug registry, content-authoring contracts, sitemap path fix
+- [x] 19-02-PLAN.md — Dual-locale service routes (/services + /servicios, index + [slug])
+- [ ] 19-03-PLAN.md — Bilingual copy: index page + Auditoría SEO Técnica + Consultoría SEO
+- [ ] 19-04-PLAN.md — Bilingual copy: Desarrollo Full-Stack + SEO para IA/GEO
+- [ ] 19-05-PLAN.md — Seed script assembly + idempotent run + end-to-end verification
+
 **UI hint**: yes
 
 ### Phase 20: SEO Local Geo-pages
