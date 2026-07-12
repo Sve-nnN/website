@@ -82,7 +82,7 @@ export function ContactFormBlockComponent(props: ContactFormComponentProps) {
         </div>
 
         <div className="relative overflow-hidden rounded-lg">
-          <HeroGrainGradient />
+          <HeroGrainGradient variant="cta" />
           <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
           <div className="relative z-10 text-secondary-foreground p-8">
             {sidebarTitle && <h3 className="font-heading text-heading">{sidebarTitle}</h3>}
