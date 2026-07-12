@@ -285,6 +285,32 @@ Which phases cover which requirements. Updated during roadmap creation.
 **v1.2 status: CLOSED (2026-07-12)** — all 18 requirements independently re-verified live against the running dev server and real Postgres data by `.planning/v1.2-MILESTONE-AUDIT.md` (0 blocking gaps, 2 non-blocking accepted by Juan). See `.planning/MILESTONES.md` for the full closure summary.
 
 ---
+
+## v1.3 Requirements — Hero Grainy Gradient Animation
+
+**Contexto:** pedido directo de Juan — reemplazar el fondo sólido del Hero home por un gradiente animado con grano vía WebGL, investigando alternativas antes de implementar (research hecho en conversación: `@paper-design/shaders-react` → `GrainGradient` elegido sobre anime.js/three.js/ShaderGradient por peso y ajuste al caso de uso). Revierte puntualmente la exclusión de motion/animación de v1.1 (UI-02/UI-03), solo para este fondo.
+
+### HERO-ANIM (Fondo animado del Hero home)
+
+- [ ] **HERO-ANIM-01**: `@paper-design/shaders-react` instalado, componente `GrainGradient` renderiza como fondo del `Hero` block cuando `variant === 'home'`, reemplazando el fondo sólido `bg-secondary` actual (y la imagen opcional al 30% opacity, sin uso real en el home hoy)
+- [ ] **HERO-ANIM-02**: Colores del `GrainGradient` derivados de los tokens ember/navy ya definidos en Phase 7 (no colores nuevos inventados)
+- [ ] **HERO-ANIM-03**: Título, subtítulo, CTAs y breadcrumbs del Hero permanecen visualmente idénticos (mismo componente, mismo copy) — el cambio es exclusivamente el fondo
+- [ ] **HERO-ANIM-04**: Regla `prefers-reduced-motion` (ya existente desde Phase 7) pausa el shader / muestra un frame estático en vez de la animación en vivo
+- [ ] **HERO-ANIM-05**: Verificación real de Lighthouse Performance/Core Web Vitals contra el baseline pre-milestone (mismo método que Phase 11-03: build de producción local) — sin degradación significativa, dado que el propio Hero anuncia "Performance 100" en su copy
+- [ ] **HERO-ANIM-06**: Verificación mobile-first (375/768/1280px) de que el shader no causa overflow, jank visual, ni consumo excesivo de batería observable (spot-check, no medición de batería instrumentada)
+
+### Out of Scope (v1.3)
+
+- Cualquier otra animación/motion del sitio (carruseles, scroll-reveal, toggle de dark mode) — siguen explícitamente diferidos por la decisión de v1.1, este milestone solo reabre el caso puntual del fondo del Hero home
+- Variantes del Hero que no sean `home` (listing/post-header/case-study-header) — quedan con su tratamiento actual, sin gradiente animado
+
+### Traceability (v1.3)
+
+| Req ID | Phase | Status |
+|--------|-------|--------|
+| HERO-ANIM-01..06 | TBD (roadmap) | Pending |
+
+---
 *Requirements defined: 2026-07-09*
-*Last updated: 2026-07-12 — v1.2 milestone closed: 18/18 requirements verified and validated, moved to PROJECT.md Validated section*
+*Last updated: 2026-07-12 — v1.3 requirements added (Hero Grainy Gradient Animation: HERO-ANIM-01..06)*
 </content>
