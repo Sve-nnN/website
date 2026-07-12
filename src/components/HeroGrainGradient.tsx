@@ -1,6 +1,6 @@
 'use client'
 
-import { Component, useEffect, useState, type ReactNode } from 'react'
+import { Component, useEffect, useMemo, useState, type ReactNode } from 'react'
 
 import { GrainGradient } from '@paper-design/shaders-react'
 
@@ -59,9 +59,17 @@ interface ShaderErrorBoundaryState {
 }
 
 /**
- * T-16-01: WebGL context creation can fail in unsupported/hostile browser
- * environments. React error boundaries must be classes. Falls back to the
- * plain `bg-secondary` treatment with no visible error to the visitor.
+ * T-16-01: kept as defense-in-depth for synchronous render-phase errors, but
+ * this boundary CANNOT catch the one failure mode it was originally written
+ * for: `@paper-design/shaders-react`'s `ShaderMount` creates the WebGL
+ * context inside an un-awaited async effect (`initShader` in
+ * `shader-mount.js`), so a "WebGL is not supported" throw becomes an
+ * unhandled promise rejection, not a render-phase error — React error
+ * boundaries only catch synchronous errors during render/commit. The real
+ * guard against that specific failure is the `supportsWebGL2` feature-detect
+ * below, which skips mounting `GrainGradient` entirely when the browser has
+ * no WebGL2 context. This class stays as a secondary safety net for any
+ * other synchronous error React does report from within its subtree.
  */
 class ShaderErrorBoundary extends Component<ShaderErrorBoundaryProps, ShaderErrorBoundaryState> {
   state: ShaderErrorBoundaryState = { hasError: false }
@@ -96,6 +104,23 @@ export function HeroGrainGradient() {
     return document.documentElement.classList.contains('dark')
   })
 
+  // Cheap synchronous feature-detect. Avoids depending on
+  // `ShaderErrorBoundary` to observe this library's async WebGL-init failure
+  // (see T-16-01 comment above) by skipping the shader mount altogether when
+  // the browser has no WebGL2 context, falling back straight to
+  // `bg-secondary`. SSR has no `document`, so it assumes support there (the
+  // client re-checks synchronously on its first render, same as the server
+  // would for any WebGL2-capable browser — the only mismatch window is the
+  // rare WebGL2-unsupported client, which self-corrects after hydration).
+  const supportsWebGL2 = useMemo(() => {
+    if (typeof document === 'undefined') return true
+    try {
+      return !!document.createElement('canvas').getContext('webgl2')
+    } catch {
+      return false
+    }
+  }, [])
+
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     setReducedMotion(mediaQuery.matches)
@@ -115,20 +140,24 @@ export function HeroGrainGradient() {
       data-testid="hero-grain-gradient"
       data-motion={reducedMotion ? 'reduced' : 'live'}
     >
-      <ShaderErrorBoundary>
-        <GrainGradient
-          colors={colors}
-          colorBack={NEAR_BLACK}
-          shape={SHADER_SHAPE}
-          softness={SHADER_SOFTNESS}
-          intensity={SHADER_INTENSITY}
-          noise={SHADER_NOISE}
-          scale={SHADER_SCALE}
-          width="100%"
-          height="100%"
-          {...motionProps}
-        />
-      </ShaderErrorBoundary>
+      {supportsWebGL2 ? (
+        <ShaderErrorBoundary>
+          <GrainGradient
+            colors={colors}
+            colorBack={NEAR_BLACK}
+            shape={SHADER_SHAPE}
+            softness={SHADER_SOFTNESS}
+            intensity={SHADER_INTENSITY}
+            noise={SHADER_NOISE}
+            scale={SHADER_SCALE}
+            width="100%"
+            height="100%"
+            {...motionProps}
+          />
+        </ShaderErrorBoundary>
+      ) : (
+        <div className="absolute inset-0 bg-secondary" aria-hidden="true" />
+      )}
     </div>
   )
 }
