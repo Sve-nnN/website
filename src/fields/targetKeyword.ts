@@ -1,6 +1,6 @@
-import type { Field } from 'payload'
+import type { Field, FieldAccess } from 'payload'
 
-import { authenticated } from '@/access/authenticated'
+const authenticatedFieldRead: FieldAccess = ({ req: { user } }) => Boolean(user)
 
 /**
  * Editorial-only "target keyword" reference field, shared between
@@ -13,7 +13,7 @@ export const targetKeywordField = (): Field => ({
   type: 'group',
   label: { en: 'Target Keyword', es: 'Keyword objetivo' },
   access: {
-    read: authenticated,
+    read: authenticatedFieldRead,
   },
   admin: {
     description: {
