@@ -308,9 +308,20 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Req ID | Phase | Status |
 |--------|-------|--------|
-| HERO-ANIM-01..06 | TBD (roadmap) | Pending |
+| HERO-ANIM-01 | Phase 16 | Pending |
+| HERO-ANIM-02 | Phase 16 | Pending |
+| HERO-ANIM-03 | Phase 16 | Pending |
+| HERO-ANIM-04 | Phase 16 | Pending |
+| HERO-ANIM-05 | Phase 17 | Pending |
+| HERO-ANIM-06 | Phase 17 | Pending |
+
+**Coverage:**
+
+- v1.3 requirements: 6 total
+- Mapped to phases: 6
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-07-09*
-*Last updated: 2026-07-12 — v1.3 requirements added (Hero Grainy Gradient Animation: HERO-ANIM-01..06)*
+*Last updated: 2026-07-12 — v1.3 ROADMAP.md created (Phase 16: HERO-ANIM-01..04, Phase 17: HERO-ANIM-05..06)*
 </content>

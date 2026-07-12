@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: Hero Grainy Gradient Animation
-status: planning
-last_updated: "2026-07-12T02:57:23.512Z"
+status: roadmapping
+last_updated: "2026-07-12T03:30:00.000Z"
 last_activity: 2026-07-12
 progress:
-  total_phases: 0
+  total_phases: 2
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 16 (Hero Grainy Gradient — Implementation) — not started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-12 — Milestone v1.3 started
+Status: Roadmap created, awaiting phase planning (`/gsd:plan-phase 16`)
+Last activity: 2026-07-12 — ROADMAP.md created for v1.3 (Phases 16-17)
 
 ## Performance Metrics
 
@@ -160,7 +160,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-12T00:00:00Z
-Stopped at: v1.2 milestone (Content Parity — Home + Author Page) formally closed via /gsd:complete-milestone. All 4 planned phases (12-15) executed and verified. Phase 12's 12-04 Task 2 checkpoint (Juan's visual confirmation) was superseded by the independent live re-verification in v1.2-MILESTONE-AUDIT.md. No active milestone — Phase 6 (Deploy + Cutover) is the sole open project-wide item, paused pending Juan's go-ahead. Awaiting Juan's definition of the next milestone.
-Resume file: None
+Last session: 2026-07-12T03:30:00Z
+Stopped at: v1.3 milestone (Hero Grainy Gradient Animation) roadmap created — 2 phases (16-17), continuing numbering after v1.2's Phase 15 (Phase 6 Deploy+Cutover stays paused, out of this roadmap). Phase 16 covers HERO-ANIM-01..04 (shader implementation, token colors, copy parity, reduced-motion). Phase 17 covers HERO-ANIM-05..06 (Lighthouse/CWV verification + mobile-first spot-check). Awaiting roadmap approval, then `/gsd:plan-phase 16`.
+Resume file: .planning/ROADMAP.md
 </content>

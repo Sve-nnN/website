@@ -10,6 +10,8 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 
 **Milestone v1.2 — Content Parity (Home + Author Page), creado 2026-07-11:** Con v1.1 cerrado (Phases 7-11 completas, Phase 6 aún en pausa), una comparación directa contra el sitio de referencia real (`JuanPortfolio`, `localhost:3000`) reveló 3 brechas concretas de contenido/componentes no cerradas por v1.1, más un pedido nuevo de asignación de keyword objetivo (EN/ES) informada por research real. El milestone agrega 4 fases nuevas (12-15): recuperar las secciones E-E-A-T recortadas del author page (Phase 12), poblar Home con la sección "Mi enfoque en Consultoría Técnica" (`AboutSection` extendido) y el bloque FAQ ya existente pero nunca poblado (Phase 13), agregar el campo editorial `targetKeyword` a Pages/Authors (Phase 14), y dar al sitemap una hoja de estilos XSL navegable más una versión HTML (Phase 15). Blog/posts queda explícitamente fuera de alcance (pedido de Juan), y CalendlyEmbed queda cerrado definitivamente (Juan ya no usa Calendly). Ver `.planning/REQUIREMENTS.md` sección "v1.2 Requirements — Content Parity" para el detalle completo. **v1.2 CERRADO 2026-07-12** — 18/18 requirements verificados en vivo, 0 gaps bloqueantes (ver `.planning/v1.2-MILESTONE-AUDIT.md` y `.planning/MILESTONES.md`).
 
+**Milestone v1.3 — Hero Grainy Gradient Animation, creado 2026-07-12:** Pedido directo de Juan — reemplazar el fondo sólido del Hero home por un gradiente animado con grano vía WebGL. Research previo en conversación descartó anime.js (tweening, no genera shaders/ruido) y three.js/ShaderGradient (~150KB+, contradice el presupuesto de performance del propio Hero, que anuncia "Performance 100"); se eligió `@paper-design/shaders-react` → componente `GrainGradient` (~5KB, zero-dependency, WebGL nativo). 2 fases nuevas (16-17): implementación del shader (Phase 16) y verificación de Lighthouse/CWV + mobile (Phase 17), separadas porque la verificación requiere build de producción y es un gate binario distinto de la codificación. Revierte puntualmente la exclusión de motion/animación de v1.1 (UI-02/UI-03) solo para este fondo — el resto de esas exclusiones (carruseles, toggle de dark mode) siguen vigentes. Ver `.planning/REQUIREMENTS.md` sección "v1.3 Requirements — Hero Grainy Gradient Animation" para el detalle completo.
+
 ## Phases
 
 **Phase Numbering:**
@@ -38,6 +40,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 13: Home Content Population** - AboutSection extendido con features + FAQ poblado en Home (completed 2026-07-11)
 - [x] **Phase 14: Target Keyword Field** - Campo editorial targetKeyword en Pages/Authors, poblado con picks de keyword research real (completed 2026-07-12)
 - [x] **Phase 15: Sitemap XSL + HTML** - sitemap.xml con hoja de estilos navegable (XSLT 1.0) + sitemap.html navegable agrupado por sección + link "Sitemap" agregado al footer (es+en), verificado en vivo contra el dev server sin regresión en robots.txt/Phase 2 (completed 2026-07-11)
+- [ ] **Phase 16: Hero Grainy Gradient — Implementation** - El fondo del Hero home pasa de sólido a shader animado (`GrainGradient` de `@paper-design/shaders-react`) con colores ember/navy, copy intacto, respeta `prefers-reduced-motion`
+- [ ] **Phase 17: Hero Grainy Gradient — Performance & Mobile Verification** - Verificación real de que el shader no degrada Lighthouse/CWV ni causa overflow/jank mobile-first
 
 ## Phase Details
 
@@ -459,10 +463,39 @@ Plans:
 - [ ] 15-01-PLAN.md — Shared sitemap query module + sitemap.xml route handler with XSL processing instruction + public/sitemap.xsl stylesheet
 - [ ] 15-02-PLAN.md — sitemap.html grouped navigable route + idempotent footer "Sitemap" link seed
 
+### Phase 16: Hero Grainy Gradient — Implementation
+
+**Goal**: El fondo del Hero home pasa de sólido a un shader animado de gradiente con grano (`GrainGradient` de `@paper-design/shaders-react`, WebGL, ~5KB zero-dependency), con colores derivados de los tokens ember/navy de Phase 7, sin tocar título/subtítulo/CTAs/breadcrumbs, y respetando `prefers-reduced-motion`.
+**Depends on**: Phase 11 (último trabajo de UI/UX cerrado sobre el mismo Hero; corre en paralelo a Phase 6, no depende de su cierre)
+**Requirements**: HERO-ANIM-01, HERO-ANIM-02, HERO-ANIM-03, HERO-ANIM-04
+**Success Criteria** (what must be TRUE):
+
+  1. Home muestra un gradiente animado WebGL (`GrainGradient`) reemplazando el fondo sólido `bg-secondary` del Hero (`variant: 'home'`)
+  2. Los colores del gradiente derivan visiblemente de los tokens ember/navy ya definidos en Phase 7 (no colores nuevos inventados)
+  3. Título, subtítulo, CTAs y breadcrumbs del Hero renderizan idénticos al estado pre-cambio — solo el fondo cambia
+  4. Con `prefers-reduced-motion: reduce` activo, el shader queda pausado o se muestra un frame estático en vez de la animación en vivo
+
+**Plans**: TBD
+
+**UI hint**: yes
+
+### Phase 17: Hero Grainy Gradient — Performance & Mobile Verification
+
+**Goal**: Confirmar con evidencia real (Lighthouse en build de producción local, spot-check mobile-first) que el shader animado del Hero no degrada el Core Web Vitals/Performance que el propio Hero anuncia en su copy, y que no rompe el layout en ningún breakpoint.
+**Depends on**: Phase 16
+**Requirements**: HERO-ANIM-05, HERO-ANIM-06
+**Success Criteria** (what must be TRUE):
+
+  1. Lighthouse Performance en build de producción local no muestra regresión significativa respecto al baseline pre-milestone (mismo método que 11-03: build local, no producción real — Phase 6 sigue en pausa)
+  2. Core Web Vitals (LCP/INP/CLS) dentro de rango aceptable comparado contra el baseline
+  3. En 375/768/1280px el shader no causa overflow horizontal, layout roto, ni jank visual observable
+
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 (v1.1 y v1.2 cerrados 2026-07-12; Phase 6 en pausa, único ítem abierto a nivel de proyecto, retoma con el visto bueno de Juan)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 (v1.1 y v1.2 cerrados 2026-07-12; v1.3 [Phase 16-17] en curso; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -485,4 +518,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 13. Home Content Population | 2/2 | Complete   | 2026-07-11 |
 | 14. Target Keyword Field | 1/1 | Complete   | 2026-07-12 |
 | 15. Sitemap XSL + HTML | 2/2 | Complete   | 2026-07-12 |
+| 16. Hero Grainy Gradient — Implementation | 0/TBD | Not started | - |
+| 17. Hero Grainy Gradient — Performance & Mobile Verification | 0/TBD | Not started | - |
 </content>
