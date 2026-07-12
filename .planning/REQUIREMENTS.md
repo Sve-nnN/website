@@ -63,7 +63,28 @@ Explícitamente excluido de v1.5. Documentado para prevenir scope creep.
 
 ## Traceability
 
-_Se completa por el roadmapper al generar ROADMAP.md._
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| BREAD-01 | Phase 22 | Pending |
+| BREAD-02 | Phase 22 | Pending |
+| BREAD-03 | Phase 22 | Pending |
+| SEOTECH-01 | Phase 23 | Pending |
+| SEOTECH-02 | Phase 23 | Pending |
+| SEOTECH-03 | Phase 23 | Pending |
+| SVCHOME-01 | Phase 24 | Pending |
+| SVCHOME-02 | Phase 24 | Pending |
+| SVCHOME-03 | Phase 24 | Pending |
+| SVCPOL-01 | Phase 25 | Pending |
+| SVCPOL-02 | Phase 25 | Pending |
+| SVCPOL-03 | Phase 25 | Pending |
+| SVCPOL-04 | Phase 25 | Pending |
+| SVCPOL-05 | Phase 25 | Pending |
+| SVCPOL-06 | Phase 25 | Pending |
+| SVCPOL-07 | Phase 25 | Pending |
+| SVCPOL-08 | Phase 25 | Pending |
+| SVCPOL-09 | Phase 25 | Pending |
+
+**Coverage:** 18/18 v1.5 requirements mapped, 0 orphaned.
 
 ---
 *Requirements defined: 2026-07-12*

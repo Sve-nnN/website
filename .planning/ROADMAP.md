@@ -14,6 +14,8 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 
 **Milestone v1.4 — SEO Competitivo: Auditoría y Optimización, creado 2026-07-12:** Investigación en profundidad de encabezados/metadata/servicios/precios/SEO local de 4 competidores directos (`research/SEO-COMPETITIVE-AUDIT-v1.4.md`) encontró 2 bugs técnicos reales (H1 faltante en `/contact` y en la Author page) y gaps de posicionamiento puro: sin páginas de servicio, sin "SEO para IA/GEO" nombrado pese a tener la infraestructura (`llms.txt`/`llms-full.txt`), sin SEO local. 4 fases nuevas (18-21), continuando la numeración desde Phase 17: fixes técnicos de jerarquía semántica y metadata de la Author page (Phase 18, independiente y de bajo riesgo), páginas de servicio incluyendo SEO para IA/GEO como línea propia (Phase 19), 2 geo-pages con contenido genuinamente diferenciado en vez del patrón templated que Juan rechazó explícitamente (Phase 20, independiente de Phase 19), y refuerzo de encabezados/copy de Home más el enlace hacia las páginas de servicio nuevas (Phase 21, depende de Phase 19 porque Home no puede enlazar páginas que no existen todavía). Decisiones de Juan: sin precios publicados en servicios (patrón dominante, 3/4 competidores); solo Lima + Madrid como geo-pages, sin expandir a más ciudades. La decisión de arquitectura de información (Author page vs About page vs atribución de blog) quedó confirmada sin cambios — el patrón actual ya sigue la práctica recomendada. Ver `.planning/REQUIREMENTS.md` sección "v1.4 Requirements — SEO Competitivo: Auditoría y Optimización" para el detalle completo. **v1.4 CERRADO 2026-07-12** — 10/10 requirements verificados en vivo, 0 gaps bloqueantes (ver `.planning/v1.4-MILESTONE-AUDIT.md` y `.planning/MILESTONES.md`).
 
+**Milestone v1.5 — UI/UX Pro Max: Polish y Competitividad, creado 2026-07-12:** Pasada de diseño profesional sobre Servicios y Home, priorizada por research de competencia directa (Arianna Lupi, Aleyda Solis — ambas sin URLs de servicio dedicadas ni breadcrumbs, confirmando que la arquitectura de landings individuales de Phase 19 ya es una ventaja estructural a pulir, no abandonar). 4 fases nuevas (22-25), continuando la numeración desde Phase 21, ordenadas por riesgo ascendente de regresión/DB per `research/SUMMARY.md`: breadcrumbs visual + JSON-LD en Servicios (Phase 22, sin riesgo de schema, sienta el helper `buildTrail()` compartido); canonical/hreflang en las 4 combinaciones de URL de servicio + `metadataBase` sitewide (Phase 23, cierra el gap de contenido duplicado dual-slug antes de que el rediseño lo vuelva más visible); bloque `ServicesShowcase` en Home leyendo `SERVICE_SLUGS` en vivo (Phase 24, aditivo, sin tocar columnas existentes); y polish visual + prueba social reforzada en las 4 landings de servicio (Phase 25, la fase de mayor superficie/riesgo de regresión, por eso va última, con gates explícitos de Lighthouse/CWV, paridad EN/ES y preservación de H1/JSON-LD contra baseline pre-pase). Sin dependencias nuevas de runtime (shadcn/Radix/Tailwind ya cubre todo lo necesario); sin tabla de precios (regla dura del proyecto); sin colección `Services` nueva (se reutiliza `pages`, Key Decision D-01). Ver `.planning/REQUIREMENTS.md` sección "v1.5 Requirements" para el detalle completo.
+
 ## Phases
 
 **Phase Numbering:**
@@ -48,6 +50,11 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 19: Service Pages** - Página Servicios + landings individuales, incluyendo SEO para IA/GEO como línea propia (completed 2026-07-12)
 - [x] **Phase 20: SEO Local Geo-pages** - Landings "SEO técnico en Lima" y "SEO técnico en Madrid" con contenido genuinamente diferenciado (completed 2026-07-12)
 - [x] **Phase 21: Home Optimization & Service Linking** - Home refuerza el ángulo desarrollo+SEO técnico y enlaza a las páginas de servicio nuevas (completed 2026-07-12)
+
+- [ ] **Phase 22: Breadcrumbs (visual + schema)** - Servicios index + 4 landings ganan trail visual y BreadcrumbList JSON-LD desde una sola fuente
+- [ ] **Phase 23: Canonical + hreflang hardening** - Las 4 combinaciones de URL de servicio emiten canonical/hreflang correctos, metadataBase sitewide
+- [ ] **Phase 24: ServicesShowcase en Home** - Home muestra las 4 tarjetas de servicio leyendo SERVICE_SLUGS en vivo, aditivo
+- [ ] **Phase 25: Service-page visual polish** - Las 4 landings de servicio ganan anatomía visual completa y prueba social competitiva
 
 ## Phase Details
 
@@ -579,10 +586,85 @@ Plans:
 **Plans**: TBD
 **UI hint**: yes
 
+### Phase 22: Breadcrumbs (visual + schema)
+
+**Goal**: Usuarios ven un trail de breadcrumbs claro en la jerarquía de Servicios, y los motores de búsqueda reciben el mismo trail como BreadcrumbList JSON-LD, derivados de una sola fuente de verdad sin riesgo de schema/DB.
+**Depends on**: Phase 21 (último trabajo del sitio sobre las mismas rutas de Servicios; corre en paralelo a Phase 6, no depende de su cierre)
+**Requirements**: BREAD-01, BREAD-02, BREAD-03
+**Success Criteria** (what must be TRUE):
+
+  1. Un usuario ve un trail de breadcrumbs visual en la página índice de Servicios y en las 4 landings individuales, en ambos locales (ES/EN)
+  2. Cada página con breadcrumbs emite `BreadcrumbList` JSON-LD derivado de la misma función `buildTrail()` que alimenta el trail visual, sin lógica de URL/locale duplicada
+  3. El `BreadcrumbList` JSON-LD valida sin errores en ambos locales usando el agente/MCP `seo-schema` disponible en el proyecto, antes de cerrar la fase
+
+**Plans**: TBD
+**UI hint**: yes
+
+Plans:
+
+- [ ] 22-01: TBD
+
+### Phase 23: Canonical + hreflang hardening
+
+**Goal**: Las 4 combinaciones de URL de servicio (ES/EN x `/servicios`/`/services`) dejan de ser contenido duplicado sin canonical — cada una emite `alternates.canonical`/`alternates.languages` correctos desde un helper compartido, y el layout raíz define `metadataBase` una sola vez para todo el sitio.
+**Depends on**: Phase 22 (re-toca los mismos templates de Servicios que breadcrumbs acaba de tocar; se resuelve antes de que el rediseño de Phase 25 haga más visible el gap)
+**Requirements**: SEOTECH-01, SEOTECH-02, SEOTECH-03
+**Success Criteria** (what must be TRUE):
+
+  1. Cada una de las 4 combinaciones de URL de servicio (`/servicios/[slug]`, `/en/services/[slug]`) emite `alternates.canonical` correcto en `generateMetadata`, construido con un helper compartido (no hardcodeado)
+  2. Cada página de servicio emite `alternates.languages` (hreflang) apuntando a su contraparte en el otro locale
+  3. El layout raíz define `metadataBase` una sola vez, desbloqueando canonicals correctos en todo el sitio (no solo Servicios)
+  4. Los tags canonical/hreflang se verifican en vivo (curl/view-source) contra las 4 combinaciones de URL antes de cerrar la fase
+
+**Plans**: TBD
+
+Plans:
+
+- [ ] 23-01: TBD
+
+### Phase 24: ServicesShowcase en Home
+
+**Goal**: Home muestra una vitrina de los 4 servicios que enlaza a sus landings, leída dinámicamente del set fijo `SERVICE_SLUGS` en vez de hardcodeada por instancia, registrada de forma puramente aditiva en Payload.
+**Depends on**: Phase 23 (la vitrina enlaza páginas de Servicios que ya deben estar SEO-correctas: canonical/hreflang resueltos antes de linkearlas desde Home)
+**Requirements**: SVCHOME-01, SVCHOME-02, SVCHOME-03
+**Success Criteria** (what must be TRUE):
+
+  1. Un usuario ve un componente "Servicios" en el Home (bloque `ServicesShowcase`) con las 4 tarjetas de servicio, en ambos locales
+  2. Cada tarjeta enlaza a su landing correspondiente en el locale activo, leída dinámicamente del set fijo `SERVICE_SLUGS` (no hardcodeada por instancia)
+  3. El bloque se registra como aditivo en Payload (config + `RenderBlocks` + `payload generate:types`) sin modificar columnas existentes; si llegara a requerir tocar una columna existente, se pide aprobación nombrada de Juan primero, y la migración generada se lee antes de aplicarse
+
+**Plans**: TBD
+**UI hint**: yes
+
+Plans:
+
+- [ ] 24-01: TBD
+
+### Phase 25: Service-page visual polish
+
+**Goal**: Cada una de las 4 landings de servicio compite de verdad con la competencia directa auditada — anatomía visual completa por bloques, prueba social reforzada, tarjeta de alcance sin precio, case study relacionado y CTA repetido — sin perder el H1/JSON-LD existente ni regresar Core Web Vitals.
+**Depends on**: Phase 24 (es la fase de mayor superficie y mayor riesgo de regresión — corre última, sobre una capa de routing/schema de Servicios ya estable y correcta)
+**Requirements**: SVCPOL-01, SVCPOL-02, SVCPOL-03, SVCPOL-04, SVCPOL-05, SVCPOL-06, SVCPOL-07, SVCPOL-08, SVCPOL-09
+**Success Criteria** (what must be TRUE):
+
+  1. Cada una de las 4 landings de servicio muestra una anatomía visual completa y distinguible por bloques (H1 → dolor/problema → qué incluye → proceso → prueba social → FAQ → CTA), sin muro único de rich text
+  2. Cada landing incluye prueba social reforzada (testimonios y/o logos de clientes y/o resultados cuantificados) y una tarjeta "alcance del servicio" (alcance/resultado/tiempo) sin precio
+  3. Cada landing muestra un case study relacionado (tarjeta con métrica en el titular) vinculado al servicio correspondiente, y repite el mismo CTA primario arriba (Hero) y abajo (CallToAction) con misma acción/label
+  4. Todo el copy nuevo o reescrito (ES y EN) pasa por la skill `humanizer` antes de publicarse — sin marcas de escritura de IA, sin em/en dash, voz natural variada
+  5. Ninguna landing pierde su H1 semántico único ni el `BreadcrumbList`/`Person`/JSON-LD existente frente a un baseline pre-pase, ninguna regresa Core Web Vitals/Lighthouse mobile respecto a ese baseline, y todo componente/string nuevo tiene paridad ES/EN verificada en vivo
+
+**Plans**: TBD
+**UI hint**: yes
+
+Plans:
+
+- [ ] 25-01: TBD
+
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 (v1.1, v1.2, v1.3 cerrados; v1.4 [Phase 18-21] planificado — Phase 21 depende de Phase 19; Phase 20 puede correr en paralelo a Phase 19; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 (v1.1, v1.2, v1.3, v1.4 cerrados; v1.5 [Phase 22-25] planificado, orden estrictamente secuencial por riesgo ascendente de regresión/DB per research/SUMMARY.md; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -611,4 +693,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 19. Service Pages | 0/TBD | Not started | - |
 | 20. SEO Local Geo-pages | 0/TBD | Not started | - |
 | 21. Home Optimization & Service Linking | 0/TBD | Not started | - |
+| 22. Breadcrumbs (visual + schema) | 0/TBD | Not started | - |
+| 23. Canonical + hreflang hardening | 0/TBD | Not started | - |
+| 24. ServicesShowcase en Home | 0/TBD | Not started | - |
+| 25. Service-page visual polish | 0/TBD | Not started | - |
 </content>

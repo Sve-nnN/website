@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: UI/UX Pro Max — Polish y Competitividad
-status: planning
-last_updated: "2026-07-12T23:09:05.517Z"
+status: roadmapped
+last_updated: "2026-07-12T23:30:00.000Z"
 last_activity: 2026-07-12
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -20,14 +20,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Milestone v1.4 lifecycle (audit-milestone -> complete-milestone -> cleanup)
+**Current focus:** Phase 22 (Breadcrumbs) — v1.5 roadmap created, ready to plan
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-07-12 — Milestone v1.5 started
+Phase: 22 of 25 (Breadcrumbs — visual + schema)
+Plan: TBD (not yet planned)
+Status: Ready to plan
+Last activity: 2026-07-12 — ROADMAP.md created for v1.5 (4 phases: 22-25), 18/18 requirements mapped
+
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
@@ -149,6 +151,8 @@ Recent decisions affecting current work:
 - [Phase 20]: 2 geo-pages (Lima, Madrid) reusando el patrón de seed/bloques de Phase 19 sin cambios; segmento de URL único compartido entre locales (`/seo-tecnico-lima`, `/seo-tecnico-madrid`) en vez del patrón dual de Phase 19, porque estas páginas SON las keywords objetivo en español. Antes de escribir el seed script se verificó explícitamente que `CallToAction.richText` siguiera `localized: true` (fix de Phase 19) -- cero migraciones nuevas, sin repetir el incidente. Lima grounded en hechos reales ya seedeados (UPC, taller real con Arianna Lupi/DinoRANK); Madrid honesto sobre no tener oficina física en Madrid, diferenciado con datos reales de keyword research ES. Seed corrido contra la DB real con aprobación directa y explícita de Juan en el hilo (no relay) -- creó seo-tecnico-lima (id=11) y seo-tecnico-madrid (id=12) sin errores. Code review: 0 critical, 1 warning (SUMMARY.md faltante, ya resuelto), 2 info aceptados.
 - [Phase 21]: Home's aboutSection reforzado (Next.js/Payload/CMS headless + SEO en el código, ambos locales) y nav principal con link "Servicios"/"Services" a `/services`. Regla de Database Safety relajada por Juan durante esta fase ("no me preguntes por confirmaciones, solo hazlo si necesitas eliminar algo", commit f74c230 en CLAUDE.md) -- escrituras normales/aditivas ya no pausan, solo lo destructivo. El classifier del sistema exigió correctamente el propio mensaje directo de Juan en el hilo (no un relay del coordinador) antes de aplicar ese cambio de política a una escritura real. Bug real encontrado y arreglado en la propia ejecución: `Header.navItems` es un array compartido no-localizado (solo `link.label` lo es) -- el primer intento de escribir el nuevo nav item en locale 'en' colisionó de id con la fila ya creada por el write 'es', dejando "Servicios" en la home en inglés; corregido en el script fuente (filtrar por id antes de re-appendear) y con un script correctivo puntual no destructivo, verificado estable. Guard de idempotencia reforzado post-review para auto-sanar el label en cualquier re-run (WR-01).
 
+- [Milestone v1.5]: Roadmap: 4 fases (22-25) derivadas de los 18 requirements v1.5, continuando la numeración desde Phase 21, siguiendo la estructura propuesta por research/SUMMARY.md sin modificaciones estructurales — orden estrictamente secuencial por riesgo ascendente de regresión/DB (breadcrumbs sin riesgo de schema -> canonical/hreflang frontend-only -> ServicesShowcase aditivo -> polish visual, la fase de mayor superficie/riesgo, va última). Cada fase depende de la inmediatamente anterior porque cada una re-toca los mismos templates de Servicios que la anterior tocó.
+
 ### Pending Todos
 
 None yet.
@@ -183,11 +187,10 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-12T22:15:00.000Z
-Stopped at: Milestone v1.4 audit passed (10/10), proceeding to complete-milestone
-Resume file: .planning/v1.4-MILESTONE-AUDIT.md
-</content>
+Last session: 2026-07-12T23:30:00.000Z
+Stopped at: v1.5 ROADMAP.md created (4 phases, 22-25), REQUIREMENTS.md traceability updated, 18/18 requirements mapped
+Resume file: None
 
 ## Operator Next Steps
 
-- Start the next milestone with /gsd:new-milestone
+- Review and approve the v1.5 roadmap, then run /gsd:plan-phase 22 to start planning Breadcrumbs
