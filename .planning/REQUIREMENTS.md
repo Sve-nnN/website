@@ -321,7 +321,46 @@ Which phases cover which requirements. Updated during roadmap creation.
 - Mapped to phases: 6
 - Unmapped: 0 ✓
 
+## v1.4 Requirements — SEO Competitivo: Auditoría y Optimización
+
+**Contexto:** research completo (`research/SEO-COMPETITIVE-AUDIT-v1.4.md`) de encabezados/metadata/servicios/precios/SEO local de 4 competidores directos auditados en profundidad (Carlos Sánchez Donate/Asdrubal SEO, Chesus Rodrigo, Manu Fuentes, Capitán SEO) + 2 competidores LatAm nuevos descubiertos, más mapeo exhaustivo del código actual del sitio. Encontró 2 bugs técnicos reales (H1 faltante en `/contact` y Author page) y gaps de posicionamiento (sin páginas de servicio, sin "SEO para IA/GEO" nombrado pese a tener la infraestructura, sin SEO local). Decisiones de Juan: páginas de servicio sin precios publicados (patrón dominante, 3/4 competidores); SEO local limitado a 2 geo-pages con contenido genuinamente diferenciado (Lima + Madrid), rechazando el patrón de páginas templated/find-replace por ciudad que usa Chesus Rodrigo (riesgo de contenido fino/duplicado).
+
+### SEO-STRUCT (Fixes técnicos de jerarquía semántica)
+
+- [ ] **SEO-STRUCT-01**: `/contact` tiene un H1 semántico real (hoy la página no tiene ningún `<h1>`, solo un H2 "Hablemos"/"Get in Touch")
+- [ ] **SEO-STRUCT-02**: Author page (`/authors/[slug]`) tiene un H1 semántico real con el nombre del autor (hoy se renderiza como `<Link>` con clases visuales de heading, no como elemento `<h1>`)
+
+### SEO-SVC (Páginas de servicio)
+
+- [ ] **SEO-SVC-01**: Página/sección "Servicios" lista las líneas de servicio de Juan (Auditoría SEO Técnica, Consultoría SEO, Desarrollo Full-Stack con SEO integrado, SEO para IA/GEO), sin precios publicados, con CTA a contacto — patrón de cotización a medida (mismo modelo que 3 de 4 competidores auditados)
+- [ ] **SEO-SVC-02**: Cada servicio individual sigue el patrón estructural validado por los 4 competidores auditados (H1 del servicio → problema/dolor → qué incluye → cómo trabajo → FAQ → CTA final)
+- [ ] **SEO-SVC-03**: "SEO para IA / GEO" nombrado explícitamente como línea de servicio propia con su propia página, aprovechando la infraestructura ya existente (`llms.txt`/`llms-full.txt`) — gap de posicionamiento puro, no de infraestructura (2 de 4 competidores ya lo nombran así)
+
+### SEO-LOCAL (Geo-pages con contenido real, no templated)
+
+- [ ] **SEO-LOCAL-01**: Landing "SEO técnico en Lima" con contenido genuinamente diferenciado (no find-replace de ciudad), reflejando la base real de Juan en Lima, Perú
+- [ ] **SEO-LOCAL-02**: Landing "SEO técnico en Madrid/España" con contenido genuinamente diferenciado, reflejando el mercado ES principal identificado en el keyword research existente (`research/keyword-research/`)
+
+### SEO-HOME (Encabezados y copy)
+
+- [ ] **SEO-HOME-01**: Encabezados/copy de Home reforzados con el ángulo "desarrollo real (Next.js/Payload/CMS headless) + SEO técnico" frente al "SEO + WordPress genérico" de 3 de los 4 competidores auditados
+- [ ] **SEO-HOME-02**: Home enlaza a las nuevas páginas de servicio (desde `AboutSection` y/o navegación) — hoy la oferta de Juan vive implícita sin desglose por servicio
+
+### SEO-META (Gap técnico de metadata)
+
+- [ ] **SEO-META-01**: Meta title/description de la Author page pasan por `@payloadcms/plugin-seo` (hoy `authors` no está en la lista de colecciones del plugin en `payload.config.ts`, así que usa un fallback manual sin editabilidad desde admin)
+
+### Out of Scope (v1.4)
+
+- Páginas de servicio con precios publicados — decisión explícita de Juan de seguir el patrón dominante (3 de 4 competidores) de cotización a medida
+- Geo-pages adicionales más allá de Lima + Madrid (Buenos Aires, Caracas, etc.) — rechazado explícitamente por riesgo de contenido fino/duplicado sin diferenciación real por ciudad
+- Cambio de arquitectura de información entre Author page / About page / atribución de blog — el research confirmó que el patrón actual (Author page única + atribución doble en posts + lista de artículos al final) ya sigue la práctica recomendada, no requiere cambios
+
+### Traceability (v1.4)
+
+_Pendiente — se completa cuando el roadmapper mapea cada requirement a una fase._
+
 ---
 *Requirements defined: 2026-07-09*
-*Last updated: 2026-07-12 — v1.3 ROADMAP.md created (Phase 16: HERO-ANIM-01..04, Phase 17: HERO-ANIM-05..06)*
+*Last updated: 2026-07-12 — v1.4 requirements defined (SEO-STRUCT, SEO-SVC, SEO-LOCAL, SEO-HOME, SEO-META), pendiente de roadmap*
 </content>
