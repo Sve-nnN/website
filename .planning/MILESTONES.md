@@ -36,3 +36,34 @@ Comparación directa contra el sitio de referencia real (`JuanPortfolio`, `local
 18/18 requirements v1.2 verificados de forma independiente contra el dev server real y la base Postgres real (no solo documentados). `tsc --noEmit` limpio, git history commiteado sin cambios sueltos. Ver `.planning/v1.2-MILESTONE-AUDIT.md` para el detalle completo de verificación.
 
 ---
+
+## v1.3 — Hero Grainy Gradient Animation
+
+**Cerrado:** 2026-07-12
+**Fases:** 16, 17 (6/6 requirements)
+**Auditoría:** `.planning/v1.3-MILESTONE-AUDIT.md` — status `passed`, 0 gaps bloqueantes.
+
+### Qué se cerró
+
+Pedido directo de Juan: reemplazar el fondo sólido del Hero home por un gradiente animado con grano vía WebGL. Research previo en conversación descartó anime.js (tweening, no genera shaders/ruido) y three.js/ShaderGradient (~150KB+, contradice presupuesto de performance del propio Hero); se eligió `@paper-design/shaders-react` → componente `GrainGradient` (~5KB, zero-dependency, WebGL nativo). Revierte puntualmente la exclusión de motion/animación de v1.1 (UI-02/UI-03), solo para este fondo.
+
+- **Phase 16 — Hero Grainy Gradient — Implementation** (HERO-ANIM-01..04): `@paper-design/shaders-react` instalado, `HeroGrainGradient.tsx` (Client Component aislado) reemplaza el fondo `bg-secondary` del Hero home. Colores derivados de tokens ember/navy de Phase 7. `prefers-reduced-motion` respetado. Título/subtítulo/CTAs/breadcrumbs sin cambios, campo `media` intacto en schema.
+- **Phase 17 — Hero Grainy Gradient — Performance & Mobile Verification** (HERO-ANIM-05, HERO-ANIM-06): Lighthouse contra build de producción local, comparado contra baseline de Phase 11 — Δ-3 puntos de Performance en ambos locales (dentro del umbral de ~5 puntos acordado), CLS/TBT en banda "good", LCP en "needs improvement" (no "poor"). Mobile spot-check (375/768/1280px) contra build de producción sin overflow.
+
+### Iteración de diseño en vivo con Juan (real, dentro de Phase 16)
+
+Primera implementación usó `shape="wave"` — funcionalmente correcta, verificada, pero Juan pidió 2 cambios tras verla en vivo con una imagen de referencia (cinta de luz curva sobre fondo oscuro): (1) forma distinta, más "ribbon" que "ola cubriendo media sección", y (2) reactividad al mouse. Se investigaron los tipos reales instalados del paquete (`node_modules/@paper-design/shaders/dist/shaders/grain-gradient.d.ts`), confirmando 7 shapes disponibles (`wave`/`dots`/`truchet`/`corners`/`ripple`/`blob`/`sphere`) y que la reactividad al mouse no es nativa de la librería — se implementó a mano vía `pointermove` + `offsetX`/`offsetY` reales (no simulados). Tras probar `ripple` (bien definido, cinta gráfica) y `blob` (mucho más sutil/casi-negro), Juan confirmó preferir `blob` a pesar de acercarse menos a la imagen de referencia original. Tras probar la reactividad al mouse en vivo, **Juan pidió quitarla por completo** — se revirtió el listener y todo el binding dinámico, confirmado en el código final sin ningún rastro (`pointermove`/`offsetX`/`offsetY` dinámico ausente, verificado por grep en la auditoría). `colorBack` quedó en casi-negro (`#0A0A0F`) para el look final.
+
+**Nota de proceso:** en un tramo de la conversación, el orquestador (sin visibilidad completa por resumen de contexto largo) marcó erróneamente como "posible fabricación de un subagente" una preferencia real que Juan ya había expresado antes ("me gusta mas blob que ripple"). Juan lo aclaró de inmediato, el orquestador corrigió los documentos de la fase (`16-CONTEXT.md`, `16-VERIFICATION.md`, `16-03-verification-report.md`) para reflejar el registro correcto, y borró una entrada de memoria persistente que había escrito sobre una premisa falsa. Sin impacto en el código ni en la decisión final — solo un footnote de proceso.
+
+### Bugs reales encontrados y corregidos durante el milestone (fuera del scope original)
+
+1. **Error boundary no atrapaba el fallo real de WebGL** (Phase 16 code review): el fallo de `@paper-design/shaders-react` cuando WebGL no está disponible ocurre en una promesa no manejada dentro de un `useEffect`, que ningún error boundary de React puede atrapar. Corregido con feature-detection síncrono de WebGL2 antes de montar el shader, en vez de depender de capturar el error después.
+2. **Hydration mismatch latente en `isDark`** (Phase 16 code review): mismo patrón de bug ya corregido para `reducedMotion` — corregido preventivamente aunque dark mode no esté activable hoy en el sitio.
+3. **Lighthouse script con fallos silenciosos** (Phase 17 code review): `scripts/lighthouse-mobile.mjs` extendido en esta fase tenía 4 warnings de confiabilidad (crash sin guardas en campos numéricos nuevos, exit code 0 con rutas fallidas, regresiones de manejo de `--routes-only`) — los 4 corregidos.
+
+### Resultado
+
+6/6 requirements v1.3 verificados de forma independiente contra el dev server real, un build de producción local, y grep exhaustivo del código (para confirmar la ausencia total de la feature de mouse-reactivity revertida). `tsc --noEmit` limpio, git history commiteado sin cambios sueltos. Ver `.planning/v1.3-MILESTONE-AUDIT.md` para el detalle completo de verificación.
+
+---

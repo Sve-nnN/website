@@ -17,6 +17,7 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 - **FAQ-01** (Phase 13): bloque `FAQ` poblado en Home con 5 preguntas reales — verificado en vivo
 - **SEO-KW-01, SEO-KW-02** (Phase 14): campo editorial `targetKeyword` (en/es) en `pages`/`authors`, poblado con picks reales de keyword research en Home y Author page — verificado en vivo, sin llamadas a APIs externas
 - **SITEMAP-01, SITEMAP-02** (Phase 15): `sitemap.xml` con hoja de estilos XSL navegable + `sitemap.html` nuevo enlazado desde el footer — verificado en vivo
+- **HERO-ANIM-01..06** (Phases 16-17): fondo del Hero home reemplazado por `GrainGradient` (`@paper-design/shaders-react`), colores de tokens, copy intacto, `prefers-reduced-motion` respetado, sin reactividad al mouse (implementada y quitada a pedido de Juan), Lighthouse/CWV verificado sin regresión significativa — verificado en vivo por `.planning/v1.3-MILESTONE-AUDIT.md`
 
 ### Active
 
@@ -74,18 +75,13 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | SpeakingEvents como colección standalone (no array field en Authors) | Juan pidió poder seguir agregando eventos post-launch sin reabrir el schema de Authors (pedido directo, mid-Phase 12) | ✓ Good |
 | `targetKeyword` (v1.2) como campo editorial informativo, sin llamadas en vivo a DinoRank/Ahrefs | Mantiene la exclusión de "dinorank tooling" de Out of Scope — el research vía API es insumo estático, no integración en vivo | ✓ Good |
 
-## Current Milestone: v1.3 Hero Grainy Gradient Animation
+## Current Milestone
 
-**Goal:** El Hero del home reemplaza su fondo sólido actual por un gradiente animado con grano (grainy gradient) vía WebGL, manteniendo intacto el título/subtítulo/CTAs actuales, sin degradar Core Web Vitals ni el Lighthouse 100 que el propio hero promociona.
+Ninguno activo. v1.1, v1.2 y v1.3 están cerrados — ver secciones "Milestone Anterior" más abajo y `.planning/MILESTONES.md` para el historial completo. **Phase 6 (Deploy + Cutover)** sigue siendo el único trabajo abierto a nivel de proyecto, en pausa, a la espera de que Juan confirme el arranque con credenciales reales de Hostinger/DNS/Resend. El próximo milestone todavía no ha sido definido.
 
-**Target features:**
-- Fondo del Hero (`variant: 'home'`) reemplazado por `GrainGradient` de `@paper-design/shaders-react` (WebGL, ~5KB, zero-dependency) — colores tomados de los tokens ember/navy ya definidos en Phase 7
-- `prefers-reduced-motion` respetado: pausa el shader / muestra frame estático (reusa la regla global ya existente de Phase 7)
-- Verificación de que Lighthouse Performance/CWV no se degradan respecto al baseline actual (el hero literalmente muestra "Performance 100" en su propio copy — no puede mentir)
-- Título/subtítulo/CTAs/breadcrumbs existentes del bloque Hero no cambian — solo el fondo
-- **Decisión revertida de v1.1:** UI-02/UI-03 habían diferido explícitamente motion/animación (carruseles, scroll-reveal, toggle de tema) — este milestone reabre esa exclusión puntualmente solo para el fondo animado del Hero, por pedido directo de Juan; el resto de las exclusiones de v1.1 (carruseles, toggle de dark mode) siguen vigentes
+## Milestone Anterior: v1.3 Hero Grainy Gradient Animation (cerrado 2026-07-12)
 
-**Research previo (en conversación, antes de abrir el milestone):** se evaluaron anime.js (descartado — librería de tweening, no genera shaders/ruido), three.js/ShaderGradient (descartado — arrastra three.js completo, ~150KB+, contradice el presupuesto de performance), CSS puro vía SVG `feTurbulence` (0 KB JS, alternativa más conservadora, considerada pero no elegida), y `@paper-design/shaders-react` → componente `GrainGradient` (elegido — 5KB, zero-dependency, WebGL nativo, ~2-5% uso de GPU en hardware moderno).
+Reemplazó el fondo sólido del Hero home por un gradiente animado con grano vía WebGL (`@paper-design/shaders-react`, componente `GrainGradient`, ~5KB zero-dependency), tras descartar anime.js (tweening, no genera shaders) y three.js/ShaderGradient (~150KB+, contradice presupuesto de performance). Iteración de diseño en vivo con Juan: `wave` → `ripple` → `blob` final, fondo casi-negro (`#0A0A0F`). Reactividad al mouse implementada de verdad y luego quitada por completo a pedido explícito de Juan. Lighthouse verificado contra build de producción: Δ-3 puntos de Performance en ambos locales, dentro del umbral acordado, CWV sin regresión real. Revierte puntualmente la exclusión de motion/animación de v1.1 (UI-02/UI-03) solo para este fondo. Auditoría (`.planning/v1.3-MILESTONE-AUDIT.md`) verificó 6/6 requirements en vivo, 0 gaps bloqueantes. Ver `.planning/MILESTONES.md` para el detalle completo, incluida una nota de proceso sobre una confusión corregida en la sesión respecto a una preferencia de diseño de Juan.
 
 ## Milestone Anterior: v1.2 Content Parity — Home + Author Page (cerrado 2026-07-12)
 
@@ -113,4 +109,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-12 — milestone v1.3 started (Hero Grainy Gradient Animation)*
+*Last updated: 2026-07-12 — milestone v1.3 closed, 6/6 requirements validated; awaiting next milestone (Phase 6 Deploy + Cutover remains the sole open project-wide item, paused pending Juan's go-ahead with real Hostinger/DNS/Resend credentials)*

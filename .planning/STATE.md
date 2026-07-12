@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.3
-milestone_name: milestone
-status: verifying
-stopped_at: "Phase 17 (Hero Grainy Gradient — Performance & Mobile Verification) complete, 1/1 plan. Milestone v1.3 (Hero Grainy Gradient Animation) fully complete — HERO-ANIM-01..06 all closed across Phases 16-17. Phase 6 (Deploy + Cutover) remains the only open work, paused, awaiting real Hostinger/DNS/Resend credentials."
-last_updated: "2026-07-12T05:30:02.099Z"
-last_activity: "2026-07-12 — 17-01 complete (production-build Lighthouse + mobile spot-check, RESULT: PASS, no significant Performance/CWV regression from the Hero shader; HERO-ANIM-05/06 marked complete)"
+milestone: none (awaiting next milestone)
+milestone_name: none
+status: v1.3 (Hero Grainy Gradient Animation) CLOSED 2026-07-12. 6/6 requirements verified live by v1.3-MILESTONE-AUDIT.md, 0 blocking gaps. Awaiting Juan's definition of the next milestone.
+stopped_at: v1.3 milestone completed (Phases 16-17, 6/6 requirements). No active milestone. Phase 6 (Deploy + Cutover) remains the sole open project-wide item, paused pending real Hostinger/DNS/Resend credentials. See .planning/MILESTONES.md for the closure record.
+last_updated: "2026-07-12T06:00:00.000Z"
+last_activity: "2026-07-12 — v1.3 milestone completed: MILESTONES.md updated with full closure summary (incl. live design iteration wave→ripple→blob, mouse-reactivity added then removed, a mid-session process note about a corrected mis-flagged user preference), PROJECT.md updated (v1.3 moved to Milestone Anterior, HERO-ANIM-01..06 moved to Validated, Phase 6 confirmed as sole open item), ROADMAP.md marked v1.3 CLOSED, STATE.md reset to awaiting-next-milestone position."
 progress:
   total_phases: 17
-  completed_phases: 16
-  total_plans: 69
-  completed_plans: 65
-  percent: 94
+  completed_phases: 17
+  total_plans: 73
+  completed_plans: 69
+  percent: 100
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Milestone v1.3 (Hero Grainy Gradient Animation) — iniciado 2026-07-12. Reemplaza el fondo sólido del Hero home por un gradiente animado con grano vía WebGL (`@paper-design/shaders-react`, componente `GrainGradient`, ~5KB zero-dependency), manteniendo título/subtítulo/CTAs actuales sin cambios. Revierte puntualmente la exclusión de motion/animación de v1.1 (UI-02/UI-03), solo para este fondo — el resto de esas exclusiones (carruseles, toggle de dark mode) siguen vigentes. Research previo descartó anime.js (tweening, no genera shaders/ruido) y three.js/ShaderGradient (~150KB+, contradice presupuesto de performance). v1.2 (Content Parity) y v1.1 (UI/UX Polish Pass) quedan cerrados — ver `.planning/MILESTONES.md`. **Phase 6 (Deploy + Cutover)** sigue siendo el único trabajo abierto aparte, en pausa, retoma cuando Juan confirme con credenciales reales de Hostinger/DNS/Resend.
+**Current focus:** Ningún milestone activo. v1.3 (Hero Grainy Gradient Animation) cerrado 2026-07-12 con 6/6 requirements verificados en vivo (`.planning/v1.3-MILESTONE-AUDIT.md`, 0 gaps bloqueantes) — ver `.planning/MILESTONES.md` para el resumen completo de cierre. v1.1 y v1.2 también cerrados. El único ítem abierto a nivel de proyecto es **Phase 6 (Deploy + Cutover)**, en pausa, retoma cuando Juan confirme con credenciales reales de Hostinger/DNS/Resend. Awaiting Juan's definition of the next milestone — not started.
 
 ## Current Position
 
-Phase: 17 (Hero Grainy Gradient — Performance & Mobile Verification) — complete (1/1 plan)
-Plan: 01/01 complete
-Status: Phase 17 closed. Milestone v1.3 (Hero Grainy Gradient Animation) fully complete (Phases 16-17, HERO-ANIM-01..06 all closed). Phase 6 (Deploy + Cutover) remains the only open work, paused.
-Last activity: 2026-07-12 — 17-01 complete (production-build Lighthouse + mobile spot-check, RESULT: PASS, no significant Performance/CWV regression from the Hero shader; HERO-ANIM-05/06 marked complete)
+Phase: Not started (no active milestone)
+Plan: —
+Status: v1.1, v1.2, v1.3 all closed. Awaiting Juan's definition of the next milestone. Phase 6 (Deploy + Cutover) remains the sole open project-wide item, paused.
+Last activity: 2026-07-12 — v1.3 milestone completed (Phases 16-17, 6/6 requirements verified live)
 
 ## Performance Metrics
 
