@@ -44,7 +44,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 15: Sitemap XSL + HTML** - sitemap.xml con hoja de estilos navegable (XSLT 1.0) + sitemap.html navegable agrupado por sección + link "Sitemap" agregado al footer (es+en), verificado en vivo contra el dev server sin regresión en robots.txt/Phase 2 (completed 2026-07-11)
 - [x] **Phase 16: Hero Grainy Gradient — Implementation** - El fondo del Hero home pasa de sólido a shader animado (`GrainGradient` de `@paper-design/shaders-react`) con colores ember/navy, copy intacto, respeta `prefers-reduced-motion` (completed 2026-07-12)
 - [x] **Phase 17: Hero Grainy Gradient — Performance & Mobile Verification** - Verificación real de que el shader no degrada Lighthouse/CWV ni causa overflow/jank mobile-first (completed 2026-07-12)
-- [ ] **Phase 18: SEO Technical Fixes + Metadata** - H1 semántico en /contact y Author page, Author page sumada a plugin-seo (completed —)
+- [x] **Phase 18: SEO Technical Fixes + Metadata** - H1 semántico en /contact y Author page, Author page sumada a plugin-seo (completed —) (completed 2026-07-12)
 - [ ] **Phase 19: Service Pages** - Página Servicios + landings individuales, incluyendo SEO para IA/GEO como línea propia (completed —)
 - [ ] **Phase 20: SEO Local Geo-pages** - Landings "SEO técnico en Lima" y "SEO técnico en Madrid" con contenido genuinamente diferenciado (completed —)
 - [ ] **Phase 21: Home Optimization & Service Linking** - Home refuerza el ángulo desarrollo+SEO técnico y enlaza a las páginas de servicio nuevas (completed —)
@@ -524,7 +524,7 @@ Plans:
 
 Plans:
 
-- [ ] 18-01-PLAN.md — H1 fixes on /contact + Author page, Authors wired into plugin-seo, migration + generateMetadata update
+- [x] 18-01-PLAN.md — H1 fixes on /contact + Author page, Authors wired into plugin-seo, migration + generateMetadata update
 
 ### Phase 19: Service Pages
 
@@ -598,7 +598,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 15. Sitemap XSL + HTML | 2/2 | Complete   | 2026-07-12 |
 | 16. Hero Grainy Gradient — Implementation | 3/3 | Complete   | 2026-07-12 |
 | 17. Hero Grainy Gradient — Performance & Mobile Verification | 1/1 | Complete   | 2026-07-12 |
-| 18. SEO Technical Fixes + Metadata | 0/1 | Not started | - |
+| 18. SEO Technical Fixes + Metadata | 1/1 | Complete   | 2026-07-12 |
 | 19. Service Pages | 0/TBD | Not started | - |
 | 20. SEO Local Geo-pages | 0/TBD | Not started | - |
 | 21. Home Optimization & Service Linking | 0/TBD | Not started | - |
