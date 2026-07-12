@@ -18,6 +18,7 @@
     "@payloadcms/email-resend": "3.85.2",
     "@payloadcms/next": "3.85.2",
     "@payloadcms/plugin-cloud-storage": "^3.85.2",
+    "@payloadcms/plugin-mcp": "^3.85.2",
     "@payloadcms/plugin-redirects": "3.85.2",
     "@payloadcms/plugin-search": "^3.85.2",
     "@payloadcms/plugin-seo": "3.85.2",

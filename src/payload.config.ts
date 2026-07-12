@@ -6,6 +6,7 @@ import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { cloudStoragePlugin } from '@payloadcms/plugin-cloud-storage'
+import { mcpPlugin } from '@payloadcms/plugin-mcp'
 import { resendAdapter } from '@payloadcms/email-resend'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
@@ -131,6 +132,32 @@ export default buildConfig({
           }),
         ]
       : []),
+    // Conservative ceiling: delete is disabled everywhere (schema/data-loss
+    // risk sits with `payload migrate`, not this plugin, but a wrong bulk
+    // delete via MCP is unrecoverable the same way). Users/Media are
+    // find-only — auth and file uploads aren't a fit for MCP write access.
+    // Individual API keys (admin-managed) can further restrict below this
+    // ceiling but never exceed it.
+    mcpPlugin({
+      collections: {
+        pages: { enabled: { find: true, create: true, update: true, delete: false } },
+        posts: { enabled: { find: true, create: true, update: true, delete: false } },
+        'case-studies': { enabled: { find: true, create: true, update: true, delete: false } },
+        authors: { enabled: { find: true, create: true, update: true, delete: false } },
+        testimonials: { enabled: { find: true, create: true, update: true, delete: false } },
+        clientes: { enabled: { find: true, create: true, update: true, delete: false } },
+        'speaking-events': { enabled: { find: true, create: true, update: true, delete: false } },
+        categories: { enabled: { find: true, create: true, update: true, delete: false } },
+        users: { enabled: { find: true } },
+        media: { enabled: { find: true } },
+      },
+      globals: {
+        llms: { enabled: { find: true, update: true } },
+        header: { enabled: { find: true, update: true } },
+        footer: { enabled: { find: true, update: true } },
+        'featured-content': { enabled: { find: true, update: true } },
+      },
+    }),
   ],
   sharp,
   typescript: {
