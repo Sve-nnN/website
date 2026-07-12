@@ -41,7 +41,10 @@ function parseArgs(argv) {
   for (let i = 0; i < argv.length; i++) {
     if (argv[i] === '--base-url') args.baseUrl = argv[++i]
     else if (argv[i] === '--out') args.out = argv[++i]
-    else if (argv[i] === '--routes-only') args.routesOnly = argv[++i]
+    // Comma-separated list support (e.g. --routes-only /en,/es); a single
+    // route with no comma still yields a 1-element array, so downstream
+    // consumers no longer need the `? [x] : ROUTES` ternary.
+    else if (argv[i] === '--routes-only') args.routesOnly = argv[++i].split(',').map((r) => r.trim()).filter(Boolean)
   }
   return args
 }
@@ -68,11 +71,18 @@ async function runLighthouse(url, chromePath) {
       { extends: 'lighthouse:default', settings: { formFactor: 'mobile', screenEmulation: { mobile: true, width: 375, height: 812, deviceScaleFactor: 2, disabled: false } } },
     )
     const categories = result.lhr.categories
+    const audits = result.lhr.audits
     return {
       performance: Math.round(categories.performance.score * 100),
       accessibility: Math.round(categories.accessibility.score * 100),
       'best-practices': Math.round(categories['best-practices'].score * 100),
       seo: Math.round(categories.seo.score * 100),
+      lcpMs: Math.round(audits['largest-contentful-paint'].numericValue),
+      cls: Number(audits['cumulative-layout-shift'].numericValue.toFixed(3)),
+      // Total Blocking Time (ms) is Lighthouse's lab-metric proxy for INP —
+      // true INP requires real-user field data (Chrome UX Report), which a
+      // pre-production local build cannot produce.
+      tbtMs: Math.round(audits['total-blocking-time'].numericValue),
     }
   } finally {
     await chrome.kill()
@@ -81,7 +91,7 @@ async function runLighthouse(url, chromePath) {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2))
-  const routes = args.routesOnly ? [args.routesOnly] : ROUTES
+  const routes = args.routesOnly ?? ROUTES
 
   const chromePath = await getChromePath()
   console.log(`Using Chrome at: ${chromePath}`)
