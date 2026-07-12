@@ -58,7 +58,11 @@ async function main() {
   const enFooter = await payload.findGlobal({ slug: 'footer', locale: 'en' })
 
   for (const locale of LOCALES) {
-    const footer = await payload.findGlobal({ slug: 'footer', locale })
+    // Reuse the already-fetched EN footer instead of re-fetching it — avoids
+    // a redundant network round-trip and the risk of `footer`/`enFooter`
+    // reading a stale snapshot after the other is updated within this run
+    // (IN-03).
+    const footer = locale === 'en' ? enFooter : await payload.findGlobal({ slug: 'footer', locale })
     const legalLinks = footer.legalLinks ?? []
     const columns = footer.columns ?? []
 

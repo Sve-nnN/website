@@ -76,6 +76,11 @@
                   <xsl:value-of select="sm:lastmod"/>
                 </td>
                 <td>
+                  <!-- sitemap.xml/route.ts currently always emits both
+                       hreflang="es" and hreflang="en" xhtml:link children for
+                       every url entry, so the xsl:otherwise branch below is
+                       defensive/future-proofing rather than reachable today
+                       (IN-01). -->
                   <xsl:choose>
                     <xsl:when test="xhtml:link">
                       <xsl:for-each select="xhtml:link">
