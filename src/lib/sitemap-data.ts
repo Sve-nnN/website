@@ -37,8 +37,11 @@ const SITEMAP_COLLECTIONS: SitemapCollection[] = [
   { collection: 'categories', prefix: 'categories', hasDrafts: false, group: 'categories' },
 ]
 
+export type SitemapLocale = 'es' | 'en'
+
 export type SitemapEntry = {
   url: string
+  locale: SitemapLocale
   lastModified: string | Date
   group: 'pages' | 'blog' | 'case-studies' | 'authors' | 'categories'
   alternates: { es: string; en: string }
@@ -66,21 +69,33 @@ export async function getSitemapEntries(): Promise<SitemapEntry[]> {
         ...(hasDrafts ? { where: { _status: { equals: 'published' } } } : {}),
       })
 
-      return result.docs.map((doc) => {
+      return result.docs.flatMap((doc) => {
         const path =
           prefix === '' ? (doc.slug !== 'home' ? doc.slug : '') : `${prefix}/${doc.slug}`
 
-        const url = path ? `${SITE_URL}/${path}` : SITE_URL
+        const esUrl = path ? `${SITE_URL}/${path}` : SITE_URL
+        const enUrl = path ? `${SITE_URL}/en/${path}` : `${SITE_URL}/en`
 
-        return {
-          url,
-          lastModified: doc.updatedAt,
-          group,
-          alternates: {
-            es: url,
-            en: path ? `${SITE_URL}/en/${path}` : `${SITE_URL}/en`,
-          },
-        } satisfies SitemapEntry
+        const alternates = { es: esUrl, en: enUrl }
+
+        // Emit one <url> entry per locale (not one per doc) so each language
+        // variant is independently indexable, per Google's hreflang sitemap
+        // guidance — each entry carries the full reciprocal set of alternates.
+        const locales: Array<{ locale: SitemapLocale; url: string }> = [
+          { locale: 'es', url: esUrl },
+          { locale: 'en', url: enUrl },
+        ]
+
+        return locales.map(
+          ({ locale, url }) =>
+            ({
+              url,
+              locale,
+              lastModified: doc.updatedAt,
+              group,
+              alternates,
+            }) satisfies SitemapEntry,
+        )
       })
     }),
   )

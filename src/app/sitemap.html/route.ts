@@ -11,15 +11,27 @@ function escapeHtml(value: string): string {
     .replace(/'/g, '&#39;')
 }
 
+const OTHER_LOCALE: Record<SitemapEntry['locale'], SitemapEntry['locale']> = {
+  es: 'en',
+  en: 'es',
+}
+
+const LOCALE_LABEL: Record<SitemapEntry['locale'], string> = {
+  es: 'ES',
+  en: 'EN',
+}
+
 function renderItem(entry: SitemapEntry): string {
   const url = escapeHtml(entry.url)
-  const hasAlternates = entry.alternates.en !== entry.alternates.es
+  const otherLocale = OTHER_LOCALE[entry.locale]
+  const otherUrl = entry.alternates[otherLocale]
+  const hasOtherLocale = otherUrl !== entry.url
 
-  const langTag = hasAlternates
-    ? ` <span class="lang-tag"><a href="${escapeHtml(entry.alternates.en)}">EN</a> · <a href="${escapeHtml(entry.alternates.es)}">ES</a></span>`
+  const langTag = hasOtherLocale
+    ? ` <span class="lang-tag"><a hreflang="${otherLocale}" href="${escapeHtml(otherUrl)}">${LOCALE_LABEL[otherLocale]}</a></span>`
     : ''
 
-  return `      <li><a href="${url}">${url}</a>${langTag}</li>`
+  return `      <li><a hreflang="${entry.locale}" href="${url}">${url}</a>${langTag}</li>`
 }
 
 export async function GET() {
