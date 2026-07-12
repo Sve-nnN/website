@@ -1,17 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: none (awaiting next milestone)
-milestone_name: none
-status: v1.3 (Hero Grainy Gradient Animation) CLOSED 2026-07-12. 6/6 requirements verified live by v1.3-MILESTONE-AUDIT.md, 0 blocking gaps. Awaiting Juan's definition of the next milestone.
-stopped_at: v1.3 milestone completed (Phases 16-17, 6/6 requirements). No active milestone. Phase 6 (Deploy + Cutover) remains the sole open project-wide item, paused pending real Hostinger/DNS/Resend credentials. See .planning/MILESTONES.md for the closure record.
-last_updated: "2026-07-12T06:00:00.000Z"
-last_activity: "2026-07-12 — v1.3 milestone completed: MILESTONES.md updated with full closure summary (incl. live design iteration wave→ripple→blob, mouse-reactivity added then removed, a mid-session process note about a corrected mis-flagged user preference), PROJECT.md updated (v1.3 moved to Milestone Anterior, HERO-ANIM-01..06 moved to Validated, Phase 6 confirmed as sole open item), ROADMAP.md marked v1.3 CLOSED, STATE.md reset to awaiting-next-milestone position."
+milestone: v1.4
+milestone_name: SEO Competitivo — Auditoría y Optimización
+status: planning
+last_updated: "2026-07-12T06:31:40.384Z"
+last_activity: 2026-07-12
 progress:
-  total_phases: 17
-  completed_phases: 17
-  total_plans: 73
-  completed_plans: 69
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -25,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: Not started (no active milestone)
+Phase: Not started (defining requirements)
 Plan: —
-Status: v1.1, v1.2, v1.3 all closed. Awaiting Juan's definition of the next milestone. Phase 6 (Deploy + Cutover) remains the sole open project-wide item, paused.
-Last activity: 2026-07-12 — v1.3 milestone completed (Phases 16-17, 6/6 requirements verified live)
+Status: Defining requirements
+Last activity: 2026-07-12 — Milestone v1.4 started
 
 ## Performance Metrics
 

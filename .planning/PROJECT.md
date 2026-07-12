@@ -75,9 +75,18 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | SpeakingEvents como colección standalone (no array field en Authors) | Juan pidió poder seguir agregando eventos post-launch sin reabrir el schema de Authors (pedido directo, mid-Phase 12) | ✓ Good |
 | `targetKeyword` (v1.2) como campo editorial informativo, sin llamadas en vivo a DinoRank/Ahrefs | Mantiene la exclusión de "dinorank tooling" de Out of Scope — el research vía API es insumo estático, no integración en vivo | ✓ Good |
 
-## Current Milestone
+## Current Milestone: v1.4 SEO Competitivo — Auditoría y Optimización
 
-Ninguno activo. v1.1, v1.2 y v1.3 están cerrados — ver secciones "Milestone Anterior" más abajo y `.planning/MILESTONES.md` para el historial completo. **Phase 6 (Deploy + Cutover)** sigue siendo el único trabajo abierto a nivel de proyecto, en pausa, a la espera de que Juan confirme el arranque con credenciales reales de Hostinger/DNS/Resend. El próximo milestone todavía no ha sido definido.
+**Goal:** Extraer encabezados/metadata/keyword-target de todas las páginas de competidores (excepto blog), identificar gaps reales frente al sitio de Juan, y usar esos hallazgos para optimizar encabezados/copy/estructura del sitio (incluyendo decisión sobre author page vs about page vs atribución de blog, y análisis de servicios/precios/SEO local de la competencia).
+
+**Target features:**
+- Extracción sistemática de h1-h3 + meta title/description + keyword-target inferida de todas las páginas no-blog de los competidores ya identificados en `research/COMPETITOR-ANALYSIS.md` (Carlos Sánchez Donate, Chesus Rodrigo, Manu Fuentes, Capitán SEO + long-tail), sumando más competidores si el research lo justifica
+- Gap analysis estructurado: qué tienen ellos (secciones, encabezados, ángulos de copy, servicios, pricing, SEO local) que el sitio de Juan no tiene
+- Optimización de encabezados/copy del sitio actual basada en esos hallazgos — nuevas secciones si hacen falta (ej. servicios/precios), sin romper el modelo de contenido ya validado (case studies, E-E-A-T)
+- Decisión de arquitectura de información: ¿hace falta author page separada de about/sobre-mí? ¿Es mejor que la atribución de autor en blog posts sea un link a una única página "sobre mí" con listado de posts al final, en vez de páginas author dedicadas?
+- Análisis de servicios ofrecidos, pricing, y SEO local de la competencia, para decidir qué aplica al sitio de Juan
+
+**Key context:** Todos los hallazgos de research (competidores, negocio, SEO) van a `/research` en la raíz del repo (no `.planning/research`) — carpeta ya existente con `COMPETITOR-ANALYSIS.md`, `JUAN-PROFILE.md`, `keyword-research/`. `.planning/REQUIREMENTS.md` y `.planning/ROADMAP.md` siguen en su ubicación estándar. Competidores base ya identificados vía SERP real (DinoRank); research de este milestone amplía si hace falta, y por primera vez cubre TODAS las páginas no-blog (no solo home/sobre-mí como en la pasada anterior).
 
 ## Milestone Anterior: v1.3 Hero Grainy Gradient Animation (cerrado 2026-07-12)
 
