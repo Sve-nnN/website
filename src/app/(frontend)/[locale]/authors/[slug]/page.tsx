@@ -68,8 +68,8 @@ export async function generateMetadata({
   if (!doc) return {}
 
   return {
-    title: doc.name,
-    description: doc.jobTitle ?? '',
+    title: doc.meta?.title ?? doc.name,
+    description: doc.meta?.description ?? doc.jobTitle ?? '',
   }
 }
 
