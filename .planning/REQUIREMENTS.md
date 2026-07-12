@@ -358,9 +358,26 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ### Traceability (v1.4)
 
-_Pendiente — se completa cuando el roadmapper mapea cada requirement a una fase._
+| Req ID | Phase | Status |
+|--------|-------|--------|
+| SEO-STRUCT-01 | Phase 18 | Pending |
+| SEO-STRUCT-02 | Phase 18 | Pending |
+| SEO-META-01 | Phase 18 | Pending |
+| SEO-SVC-01 | Phase 19 | Pending |
+| SEO-SVC-02 | Phase 19 | Pending |
+| SEO-SVC-03 | Phase 19 | Pending |
+| SEO-LOCAL-01 | Phase 20 | Pending |
+| SEO-LOCAL-02 | Phase 20 | Pending |
+| SEO-HOME-01 | Phase 21 | Pending |
+| SEO-HOME-02 | Phase 21 | Pending |
+
+**Coverage:**
+
+- v1.4 requirements: 10 total
+- Mapped to phases: 10
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-07-09*
-*Last updated: 2026-07-12 — v1.4 requirements defined (SEO-STRUCT, SEO-SVC, SEO-LOCAL, SEO-HOME, SEO-META), pendiente de roadmap*
+*Last updated: 2026-07-12 — v1.4 roadmap created: 4 phases (18-21), 10/10 requirements mapped, 0 unmapped*
 </content>

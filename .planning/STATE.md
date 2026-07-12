@@ -2,11 +2,11 @@
 gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: SEO Competitivo — Auditoría y Optimización
-status: planning
+status: roadmapped
 last_updated: "2026-07-12T06:31:40.384Z"
 last_activity: 2026-07-12
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Ningún milestone activo. v1.3 (Hero Grainy Gradient Animation) cerrado 2026-07-12 con 6/6 requirements verificados en vivo (`.planning/v1.3-MILESTONE-AUDIT.md`, 0 gaps bloqueantes) — ver `.planning/MILESTONES.md` para el resumen completo de cierre. v1.1 y v1.2 también cerrados. El único ítem abierto a nivel de proyecto es **Phase 6 (Deploy + Cutover)**, en pausa, retoma cuando Juan confirme con credenciales reales de Hostinger/DNS/Resend. Awaiting Juan's definition of the next milestone — not started.
+**Current focus:** Milestone v1.4 (SEO Competitivo — Auditoría y Optimización) roadmapped 2026-07-12: 4 fases nuevas (18-21), 10/10 requirements mapeados, 0 unmapped. Siguiente paso: `/gsd:plan-phase 18`. El único ítem abierto a nivel de proyecto aparte de v1.4 es **Phase 6 (Deploy + Cutover)**, en pausa, retoma cuando Juan confirme con credenciales reales de Hostinger/DNS/Resend.
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 18 (SEO Technical Fixes + Metadata) — not started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-12 — Milestone v1.4 started
+Status: Roadmap approved, ready for /gsd:plan-phase 18
+Last activity: 2026-07-12 — Milestone v1.4 roadmap created (Phases 18-21)
 
 ## Performance Metrics
 
@@ -90,6 +90,7 @@ Last activity: 2026-07-12 — Milestone v1.4 started
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- [Milestone v1.4]: Roadmap: 4 fases (18-21) derivadas de los 10 requirements v1.4, continuando la numeración desde Phase 17. Phase 18 (fixes técnicos H1 + metadata Author page) primero por ser independiente y de bajo riesgo/alto impacto. Phase 19 (páginas de servicio + SEO para IA/GEO) antes de Phase 21 porque Home no puede enlazar páginas de servicio que no existen todavía. Phase 20 (geo-pages Lima/Madrid) es independiente — puede correr en paralelo a Phase 19 o después, sin dependencia real. Phase 21 (Home: encabezados + linking a servicios) depende explícitamente de Phase 19.
 - [Milestone v1.2]: Roadmap: 4 fases (12-15) derivadas de los 18 requirements v1.2, continuando la numeración desde Phase 11 (Phase 6 sigue en pausa, sin re-numerar). Phase 12 (Author E-E-A-T) primero por ser el trabajo de mayor superficie (schema + 3 secciones UI + JSON-LD); Phase 13 agrupa las dos poblaciones de contenido de Home (AboutSection features+CTA y FAQ) por ser del mismo tipo de trabajo; Phase 14 (targetKeyword) y Phase 15 (sitemap XSL/HTML) quedan como fases técnicas compactas independientes, sin dependencia real entre sí más allá del orden secuencial de ejecución. v1.2 corre en paralelo a Phase 6 (Deploy + Cutover, en pausa), sin bloquearlo ni depender de su cierre.
 - Roadmap: Estructura de 6 fases en capas horizontales (Schema → Bilingüe/SEO → Cloudinary spike → Migración → Frontend → Deploy), siguiendo la propuesta de research/SUMMARY.md sin modificaciones
 - Roadmap: Phase 4 (Migración) depende de Phase 2 y Phase 3 juntas — la migración no puede empezar hasta que i18n y storage estén resueltos, para no reescribir contenido migrado después

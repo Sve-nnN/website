@@ -12,6 +12,8 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 
 **Milestone v1.3 — Hero Grainy Gradient Animation, creado 2026-07-12:** Pedido directo de Juan — reemplazar el fondo sólido del Hero home por un gradiente animado con grano vía WebGL. Research previo en conversación descartó anime.js (tweening, no genera shaders/ruido) y three.js/ShaderGradient (~150KB+, contradice el presupuesto de performance del propio Hero, que anuncia "Performance 100"); se eligió `@paper-design/shaders-react` → componente `GrainGradient` (~5KB, zero-dependency, WebGL nativo). 2 fases nuevas (16-17): implementación del shader (Phase 16) y verificación de Lighthouse/CWV + mobile (Phase 17), separadas porque la verificación requiere build de producción y es un gate binario distinto de la codificación. Revierte puntualmente la exclusión de motion/animación de v1.1 (UI-02/UI-03) solo para este fondo — el resto de esas exclusiones (carruseles, toggle de dark mode) siguen vigentes. Ver `.planning/REQUIREMENTS.md` sección "v1.3 Requirements — Hero Grainy Gradient Animation" para el detalle completo. **v1.3 CERRADO 2026-07-12** — 6/6 requirements verificados en vivo, 0 gaps bloqueantes (ver `.planning/v1.3-MILESTONE-AUDIT.md` y `.planning/MILESTONES.md`).
 
+**Milestone v1.4 — SEO Competitivo: Auditoría y Optimización, creado 2026-07-12:** Investigación en profundidad de encabezados/metadata/servicios/precios/SEO local de 4 competidores directos (`research/SEO-COMPETITIVE-AUDIT-v1.4.md`) encontró 2 bugs técnicos reales (H1 faltante en `/contact` y en la Author page) y gaps de posicionamiento puro: sin páginas de servicio, sin "SEO para IA/GEO" nombrado pese a tener la infraestructura (`llms.txt`/`llms-full.txt`), sin SEO local. 4 fases nuevas (18-21), continuando la numeración desde Phase 17: fixes técnicos de jerarquía semántica y metadata de la Author page (Phase 18, independiente y de bajo riesgo), páginas de servicio incluyendo SEO para IA/GEO como línea propia (Phase 19), 2 geo-pages con contenido genuinamente diferenciado en vez del patrón templated que Juan rechazó explícitamente (Phase 20, independiente de Phase 19), y refuerzo de encabezados/copy de Home más el enlace hacia las páginas de servicio nuevas (Phase 21, depende de Phase 19 porque Home no puede enlazar páginas que no existen todavía). Decisiones de Juan: sin precios publicados en servicios (patrón dominante, 3/4 competidores); solo Lima + Madrid como geo-pages, sin expandir a más ciudades. La decisión de arquitectura de información (Author page vs About page vs atribución de blog) quedó confirmada sin cambios — el patrón actual ya sigue la práctica recomendada. Ver `.planning/REQUIREMENTS.md` sección "v1.4 Requirements — SEO Competitivo: Auditoría y Optimización" para el detalle completo.
+
 ## Phases
 
 **Phase Numbering:**
@@ -42,6 +44,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 15: Sitemap XSL + HTML** - sitemap.xml con hoja de estilos navegable (XSLT 1.0) + sitemap.html navegable agrupado por sección + link "Sitemap" agregado al footer (es+en), verificado en vivo contra el dev server sin regresión en robots.txt/Phase 2 (completed 2026-07-11)
 - [x] **Phase 16: Hero Grainy Gradient — Implementation** - El fondo del Hero home pasa de sólido a shader animado (`GrainGradient` de `@paper-design/shaders-react`) con colores ember/navy, copy intacto, respeta `prefers-reduced-motion` (completed 2026-07-12)
 - [x] **Phase 17: Hero Grainy Gradient — Performance & Mobile Verification** - Verificación real de que el shader no degrada Lighthouse/CWV ni causa overflow/jank mobile-first (completed 2026-07-12)
+- [ ] **Phase 18: SEO Technical Fixes + Metadata** - H1 semántico en /contact y Author page, Author page sumada a plugin-seo (completed —)
+- [ ] **Phase 19: Service Pages** - Página Servicios + landings individuales, incluyendo SEO para IA/GEO como línea propia (completed —)
+- [ ] **Phase 20: SEO Local Geo-pages** - Landings "SEO técnico en Lima" y "SEO técnico en Madrid" con contenido genuinamente diferenciado (completed —)
+- [ ] **Phase 21: Home Optimization & Service Linking** - Home refuerza el ángulo desarrollo+SEO técnico y enlaza a las páginas de servicio nuevas (completed —)
 
 ## Phase Details
 
@@ -502,10 +508,68 @@ Plans:
 
 - [x] 17-01-PLAN.md — Extend lighthouse-mobile.mjs with CWV extraction, run production-build Lighthouse against /en+/es vs Phase 11 baseline, production-build mobile spot-check + verification report
 
+### Phase 18: SEO Technical Fixes + Metadata
+
+**Goal**: Corregir los 2 bugs de jerarquía semántica (H1 faltante) y el gap de metadata editable de la Author page encontrados por la auditoría competitiva, sin tocar copy ni layout más allá de lo estrictamente necesario para el fix.
+**Depends on**: Nothing (independiente, primera fase del milestone)
+**Requirements**: SEO-STRUCT-01, SEO-STRUCT-02, SEO-META-01
+**Success Criteria** (what must be TRUE):
+
+  1. `/contact` (ambos locales) renderiza un `<h1>` semántico real — hoy el único heading es un H2 ("Hablemos"/"Get in Touch") dentro de `ContactFormBlockComponent`
+  2. `/authors/[slug]` renderiza el nombre del autor dentro de un elemento `<h1>` real, no un `<Link>` con clases visuales de heading (`AuthorCard.tsx`)
+  3. `authors` aparece en la lista de colecciones configuradas de `@payloadcms/plugin-seo` en `payload.config.ts`
+  4. El meta title/description de la Author page en `<head>` se lee del tab SEO editable desde `/admin` (campo `meta.title`/`meta.description` de la colección `authors`), no del fallback manual hardcodeado anterior
+
+**Plans**: TBD
+
+### Phase 19: Service Pages
+
+**Goal**: Juan tiene una oferta de servicios explícita y navegable — 4 líneas de servicio con landing propia cada una, siguiendo el patrón estructural validado por los 4 competidores auditados, y "SEO para IA/GEO" nombrado como línea propia aprovechando la infraestructura `llms.txt`/`llms-full.txt` ya existente.
+**Depends on**: Nothing (independiente de Phase 18; debe completarse antes de Phase 21)
+**Requirements**: SEO-SVC-01, SEO-SVC-02, SEO-SVC-03
+**Success Criteria** (what must be TRUE):
+
+  1. Existe una página "Servicios" (`/servicios` en ES, `/services` en EN) que lista las 4 líneas de servicio (Auditoría SEO Técnica, Consultoría SEO, Desarrollo Full-Stack con SEO integrado, SEO para IA/GEO), sin precios publicados, con CTA a contacto
+  2. Cada servicio individual tiene su propia landing (`/servicios/[slug]`) que sigue el patrón H1 del servicio → problema/dolor → qué incluye → cómo trabajo → FAQ → CTA final, validado por los 4 competidores auditados
+  3. "SEO para IA / GEO" tiene su propia página de servicio con copy que referencia explícitamente `llms.txt`/`llms-full.txt` como parte tangible de la oferta (no solo el nombre del servicio)
+  4. Las páginas de servicio (índice + individuales) están disponibles y curl-eables en ambos locales (EN/ES), con contenido traducido, no solo URL espejada
+
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 20: SEO Local Geo-pages
+
+**Goal**: Juan tiene 2 landings locales (Lima, Madrid) con contenido genuinamente diferenciado, evitando el patrón de páginas templated/find-replace por ciudad rechazado explícitamente por Juan.
+**Requirements**: SEO-LOCAL-01, SEO-LOCAL-02
+**Depends on**: Nothing (independiente — puede ejecutarse en paralelo o después de Phase 19)
+**Success Criteria** (what must be TRUE):
+
+  1. Landing "SEO técnico en Lima" existe y es curl-eable, con contenido específico sobre la base real de Juan en Lima/Perú (referencias concretas, no genéricas)
+  2. Landing "SEO técnico en Madrid/España" existe y es curl-eable, con contenido específico sobre el mercado ES identificado en `research/keyword-research/`
+  3. El copy de ambas landings es verificablemente distinto entre sí más allá del nombre de la ciudad — cada una tiene al menos una sección/argumento que no aparece en la otra (prueba directa contra el riesgo de contenido fino/duplicado)
+  4. Ambas landings tienen H1 y meta title/description propios vía `@payloadcms/plugin-seo`, distintos entre sí y del resto del sitio
+
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 21: Home Optimization & Service Linking
+
+**Goal**: Home refuerza el ángulo competitivo "desarrollo real (Next.js/Payload/CMS headless) + SEO técnico" y deja de mantener implícita la oferta de servicios, enlazando a las páginas de servicio creadas en Phase 19.
+**Depends on**: Phase 19 (Home no puede enlazar páginas de servicio que todavía no existen)
+**Requirements**: SEO-HOME-01, SEO-HOME-02
+**Success Criteria** (what must be TRUE):
+
+  1. El copy del Hero y/o `AboutSection` de Home (ambos locales) refuerza explícitamente el ángulo "desarrollo real (Next.js/Payload/CMS headless) + SEO técnico" frente al "SEO + WordPress genérico" identificado en 3 de los 4 competidores auditados
+  2. Home tiene al menos un link visible hacia la página de Servicios y/o hacia páginas de servicio individuales, ubicado en `AboutSection` y/o en la navegación principal
+  3. Los links de Home hacia Servicios resuelven sin 404 en ambos locales
+
+**Plans**: TBD
+**UI hint**: yes
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 (v1.1 y v1.2 cerrados 2026-07-12; v1.3 [Phase 16-17] en curso; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 (v1.1, v1.2, v1.3 cerrados; v1.4 [Phase 18-21] planificado — Phase 21 depende de Phase 19; Phase 20 puede correr en paralelo a Phase 19; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -530,4 +594,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 15. Sitemap XSL + HTML | 2/2 | Complete   | 2026-07-12 |
 | 16. Hero Grainy Gradient — Implementation | 3/3 | Complete   | 2026-07-12 |
 | 17. Hero Grainy Gradient — Performance & Mobile Verification | 1/1 | Complete   | 2026-07-12 |
+| 18. SEO Technical Fixes + Metadata | 0/TBD | Not started | - |
+| 19. Service Pages | 0/TBD | Not started | - |
+| 20. SEO Local Geo-pages | 0/TBD | Not started | - |
+| 21. Home Optimization & Service Linking | 0/TBD | Not started | - |
 </content>
