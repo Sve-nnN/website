@@ -36,7 +36,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 11: Verificación Cruzada Final** - Contraste WCAG, layout `/es`, grep de contenido hardcodeado, Lighthouse móvil, disciplina mobile-first confirmada de punta a punta (completed 2026-07-10)
 - [x] **Phase 12: Author Page E-E-A-T Expansion** - Author page recupera expertise/educación/experiencia recortados en Phase 1, más una 4ta sección de speaking events, con JSON-LD enriquecido — verificado 7/7, code review limpio (4 warnings corregidos), Juan confirmó visualmente (completed 2026-07-11)
 - [x] **Phase 13: Home Content Population** - AboutSection extendido con features + FAQ poblado en Home (completed 2026-07-11)
-- [ ] **Phase 14: Target Keyword Field** - Campo editorial targetKeyword en Pages/Authors, poblado con picks de keyword research real
+- [x] **Phase 14: Target Keyword Field** - Campo editorial targetKeyword en Pages/Authors, poblado con picks de keyword research real (completed 2026-07-12)
 - [ ] **Phase 15: Sitemap XSL + HTML** - sitemap.xml con hoja de estilos navegable + sitemap.html enlazado desde el footer
 
 ## Phase Details
@@ -435,7 +435,7 @@ Plans:
 
 Plans:
 
-- [ ] 14-01-PLAN.md — targetKeyword group field (en/es) on Pages + Authors, migration, idempotent seed of Home + real Author picks
+- [x] 14-01-PLAN.md — targetKeyword group field (en/es) on Pages + Authors, migration, idempotent seed of Home + real Author picks
 
 ### Phase 15: Sitemap XSL + HTML
 
@@ -473,6 +473,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 11. Verificación Cruzada Final | 3/3 | Complete   | 2026-07-10 |
 | 12. Author Page E-E-A-T Expansion | 5/4 | Complete   | 2026-07-11 |
 | 13. Home Content Population | 2/2 | Complete   | 2026-07-11 |
-| 14. Target Keyword Field | 0/TBD | Not planned | - |
+| 14. Target Keyword Field | 1/1 | Complete   | 2026-07-12 |
 | 15. Sitemap XSL + HTML | 0/TBD | Not planned | - |
 </content>

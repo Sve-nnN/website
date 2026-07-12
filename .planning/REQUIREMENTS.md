@@ -244,8 +244,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ### SEO-KW (Keyword objetivo por página)
 
-- [ ] **SEO-KW-01**: Campo `targetKeyword` (grupo `en`/`es`, texto simple) agregado a las colecciones `pages` y `authors` — campo editorial informativo, no dispara llamadas en vivo a ninguna API externa
-- [ ] **SEO-KW-02**: Home y Author page (Juan) poblados con los picks de `research/keyword-research/KEYWORD-RESEARCH.md`: Home ES = "seo técnico", Home EN = "technical seo consultant", Author ES = "auditoría seo técnico", Author EN = "technical seo specialist"
+- [x] **SEO-KW-01**: Campo `targetKeyword` (grupo `en`/`es`, texto simple) agregado a las colecciones `pages` y `authors` — campo editorial informativo, no dispara llamadas en vivo a ninguna API externa
+- [x] **SEO-KW-02**: Home y Author page (Juan) poblados con los picks de `research/keyword-research/KEYWORD-RESEARCH.md`: Home ES = "seo técnico", Home EN = "technical seo consultant", Author ES = "auditoría seo técnico", Author EN = "technical seo specialist"
 
 ### SITEMAP (Sitemap navegable/estilado)
 
@@ -271,8 +271,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ABOUT-01 | Phase 13 | Complete |
 | ABOUT-02 | Phase 13 | Complete |
 | FAQ-01 | Phase 13 | Complete |
-| SEO-KW-01 | Phase 14 | Pending |
-| SEO-KW-02 | Phase 14 | Pending |
+| SEO-KW-01 | Phase 14 | Complete |
+| SEO-KW-02 | Phase 14 | Complete |
 | SITEMAP-01 | Phase 15 | Pending |
 | SITEMAP-02 | Phase 15 | Pending |
 

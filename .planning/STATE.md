@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: milestone
-status: "Phase 12 and Phase 13 both closed 2026-07-11. Phase 13 hit a real gap (AboutSection eyebrow/title left stale from Phase 10.7) caught by verifier, closed via 13-03 gap-closure plan; code review found 1 blocker (icon picker 24 options vs 4 mapped icons) + fixed. Juan trusts automated verification, skipped manual icon-picker click-through. Next: Phase 14 (Target Keyword Field)."
-stopped_at: "Phase 13 fully closed (13-01, 13-02, 13-03 gap closure, review-fix) — AboutSection features/CTA + real copy + FAQ live on Home in both locales, #contact anchor real, icon picker maps all 24 options correctly."
-last_updated: "2026-07-11T23:45:00.000Z"
-last_activity: "2026-07-11 — Phase 13 fully closed: verify-phase caught a real gap (AboutSection eyebrow/title still showed Phase 10.7 placeholder instead of Phase 13's locked copy) — closed via 13-03 gap-closure plan, re-verified 3/3 (human_needed only for admin icon-picker click-through, which Juan opted to skip and trust automated verification for). Code review found 1 BLOCKER (icon picker offered 24 icons but frontend iconMap only covered 4, silent incorrect fallback) + 3 warnings + 3 info — all fixed via code-fixer (iconMap now derives from ICON_OPTIONS, ctaLink validated against unsafe schemes, ARIA attributes added to icon picker, sharedProps no longer leak to all Home blocks). tsc clean, dev server confirmed serving correct content."
+status: Phase 14 (Target Keyword Field) closed 1/1 plans. Phase 15 (sitemap XSL/HTML) next in v1.2.
+stopped_at: Phase 14 (Target Keyword Field) closed 1/1 plans (14-01). Phase 12 still paused on Juan's checkpoint (12-04 Task 2). Phase 15 (sitemap XSL/HTML) remains in the v1.2 ROADMAP, not yet started.
+last_updated: "2026-07-12T00:18:00.000Z"
+last_activity: "2026-07-12 — Phase 14 (Target Keyword Field) executed and closed: targetKeyword group field (en/es) added to Pages and Authors, migration applied, Home + real Author seeded with the 4 locked picks, verified via /api/pages and /api/authors in both locales. Fixed a pre-existing es-locale contactInfo data gap that blocked the seed script (Rule 3 deviation)."
 progress:
   total_phases: 15
-  completed_phases: 13
-  total_plans: 63
+  completed_phases: 14
+  total_plans: 64
   completed_plans: 60
-  percent: 87
+  percent: 94
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: Phase 13 — CLOSED (3/3 verified after gap closure, code review clean after fixing 1 blocker). Phase 14 (Target Keyword Field) — not started.
-Plan: Phase 13 fully closed (13-01, 13-02, 13-03). Next: smart discuss → plan → execute Phase 14.
-Status: Phases 12-13 both closed. Moving to Phase 14 (targetKeyword field on pages+authors, populated from existing research/keyword-research/KEYWORD-RESEARCH.md picks).
-Last activity: 2026-07-11 — Phase 13 gap closure (13-03: fixed AboutSection eyebrow/title mismatch) + code review fix (icon picker iconMap coverage blocker + 3 warnings). Re-verified 3/3, human_needed item (icon-picker click-through) explicitly waived by Juan in favor of trusting automated verification.
+Phase: Phase 14 (Target Keyword Field) — CLOSED (1/1 plan executed and verified). Phase 15 (sitemap XSL/HTML) — not started.
+Plan: Phase 14 fully closed (14-01). Next: smart discuss → plan → execute Phase 15.
+Status: Phase 14 (Target Keyword Field) closed 1/1 plans. Phase 15 (sitemap XSL/HTML) next in v1.2.
+Last activity: 2026-07-12 — Phase 14 (Target Keyword Field) executed and closed: targetKeyword group field (en/es) added to Pages and Authors, migration applied, Home + real Author seeded with the 4 locked picks, verified via /api/pages and /api/authors in both locales. Fixed a pre-existing es-locale contactInfo data gap that blocked the seed script (Rule 3 deviation).
 
 ## Performance Metrics
 
@@ -76,6 +76,7 @@ Last activity: 2026-07-11 — Phase 13 gap closure (13-03: fixed AboutSection ey
 | Phase 10.6 P02 | 20min | 2 tasks | 1 files |
 | Phase 13 P01 | 15min | 3 tasks | 8 files |
 | Phase 13 P02 | 35min | 2 tasks | 5 files |
+| Phase 14 P01 | 6min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -127,6 +128,7 @@ Recent decisions affecting current work:
 - [Phase 13]: 13-01: `IconPickerField` built on `@payloadcms/ui`'s Modal/useField/useModal/FieldLabel instead of shadcn's Dialog — the Payload admin route only imports `@payloadcms/next/css`, not the site's globals.css, so Tailwind/shadcn classes have no effect there; icon values kept camelCase (trendingUp, zap, code, monitor, ...) matching the existing iconMap/socialIconMap convention already used in AuthorCard.tsx; features[]/ctaText/ctaLink added additively to AboutSection (no new block type, per ABOUT-01); migration generated via payload migrate:create and applied, push:false untouched
 - [Phase 13]: 13-02: added a `contactFormBlock` to Home's layout (not previously present) reusing scripts/seed-contact-page.ts's exact copy verbatim, closing a gap CONTEXT.md's CTA decision assumed away (`#contact` anchor had nothing to scroll to); each locale's full layout fetched fresh via `findByID({ locale })` inside the seed script to avoid cross-locale content bleed on sibling blocks; discovered during verification that nested sub-arrays (features[]/faqs[]) need the same id-reuse-across-locale-writes discipline as top-level blocks (Payload full-replaces arrays on update) — fixed in the seed script; also fixed a pre-existing Phase 10.7 bug (leftover Spanish AboutSection paragraph on the EN Home page, root cause: `author.bio ?? fallback` evaluated identically regardless of locale in seed-phase10-7-gap-fill.ts) as part of this phase's own bilingual sanity pass
 - [Phase 13]: Admin icon-picker (`IconPickerField`) interactive modal not yet visually confirmed by Juan — no admin credentials available to the executor to log in and test the popup grid live. TypeScript compiles clean, importMap.js registers the component, /admin/login loads without a build/runtime crash. Flagged for Juan's quick manual pass.
+- [Phase 14]: 14-01: targetKeyword added as a standalone top-level group field (en/es plain text, not localized:true) on Pages and Authors, separate from plugin-seo's meta fields — no SEO tab exists on either collection today, so it's a sibling field, not nested; migration generated via payload migrate:create/migrate, push:false untouched; seed script populated Home + the real Author with the 4 locked picks from KEYWORD-RESEARCH.md, verified directly against the running dev server's /api/pages and /api/authors in both locales. Deviation (Rule 3): fixed a pre-existing es-locale contactInfo.title/value gap on Home's contactFormBlock (empty, required, blocking any update() on the doc) — backfilled to match the en-locale values ("Email"/"hello@juan-tech.com"); worth a quick visual check of the Spanish Home page's contact section.
 
 ### Pending Todos
 
