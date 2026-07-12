@@ -15,6 +15,7 @@ import * as migration_20260711_204216_phase12_speaking_events from './20260711_2
 import * as migration_20260711_224308_phase13_about_features_faq from './20260711_224308_phase13_about_features_faq';
 import * as migration_20260712_001122_phase14_target_keyword_field from './20260712_001122_phase14_target_keyword_field';
 import * as migration_20260712_070605_phase18_authors_seo_meta from './20260712_070605_phase18_authors_seo_meta';
+import * as migration_20260712_202954_phase19_calltoaction_localized from './20260712_202954_phase19_calltoaction_localized';
 
 export const migrations = [
   {
@@ -100,6 +101,11 @@ export const migrations = [
   {
     up: migration_20260712_070605_phase18_authors_seo_meta.up,
     down: migration_20260712_070605_phase18_authors_seo_meta.down,
-    name: '20260712_070605_phase18_authors_seo_meta'
+    name: '20260712_070605_phase18_authors_seo_meta',
+  },
+  {
+    up: migration_20260712_202954_phase19_calltoaction_localized.up,
+    down: migration_20260712_202954_phase19_calltoaction_localized.down,
+    name: '20260712_202954_phase19_calltoaction_localized'
   },
 ];

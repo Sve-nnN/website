@@ -168,6 +168,16 @@ Use these entry points:
 Do not make direct repo edits outside a GSD workflow unless the user explicitly asks to bypass it.
 <!-- GSD:workflow-end -->
 
+## Database Safety (manual — not GSD-managed, do not overwrite)
+
+There is no separate dev/staging database. `DATABASE_URI` in `.env` points at the real Neon Postgres used in production. Any `payload migrate` run here writes to real data — there is no sandbox to catch a mistake before it lands.
+
+**Hard rule:** never run `payload migrate` (or execute a migration's `up()` directly against the DB) as an unattended/autonomous step — including inside `/gsd:execute-phase` or `/gsd:autonomous` — without a human reading the migration SQL first. This applies especially to any migration containing `DROP COLUMN`, `DROP TABLE`, `TRUNCATE`, or a field changing from non-localized to localized (or vice versa) — those are the patterns that silently destroy existing rows/columns instead of just adding structure.
+
+If a plan requires a schema migration: generate it with `payload migrate:create`, then stop and show Juan the generated SQL (up and down) before running `payload migrate`. If the migration touches an existing column with data in it (localizing a field, narrowing a type, dropping/renaming a column), the migration must explicitly back-fill the data into the new shape before dropping anything — never assume Payload does this for you.
+
+**Incident (2026-07-12):** an autonomous phase-19 run generated `20260712_202954_phase19_calltoaction_localized.ts` to localize `CallToAction.richText`, applied it unattended against production, and it `DROP COLUMN`'d the old `rich_text` without copying existing values into the new locale rows first — wiped the Home page's CTA copy. Recovered via Neon point-in-time restore. The migration file has since been fixed to back-fill both locales before dropping the column — see the file for the corrected pattern.
+
 <!-- GSD:profile-start -->
 
 ## Developer Profile
