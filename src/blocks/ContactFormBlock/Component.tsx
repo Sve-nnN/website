@@ -6,6 +6,7 @@ import { Container } from '@/components/Container'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { HeroGrainGradient } from '@/components/HeroGrainGradient'
 
 // lucide-react no longer ships brand icons (linkedin/github removed) —
 // Link2/Code2 are the closest generic-icon substitutes.
@@ -80,38 +81,42 @@ export function ContactFormBlockComponent(props: ContactFormComponentProps) {
           </form>
         </div>
 
-        <div className="bg-secondary text-secondary-foreground rounded-lg p-8">
-          {sidebarTitle && <h3 className="font-heading text-heading">{sidebarTitle}</h3>}
-          {sidebarDescription && <p className="mt-3 text-body opacity-90">{sidebarDescription}</p>}
+        <div className="relative overflow-hidden rounded-lg">
+          <HeroGrainGradient />
+          <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
+          <div className="relative z-10 text-secondary-foreground p-8">
+            {sidebarTitle && <h3 className="font-heading text-heading">{sidebarTitle}</h3>}
+            {sidebarDescription && <p className="mt-3 text-body opacity-90">{sidebarDescription}</p>}
 
-          <ul className="mt-6 space-y-4">
-            {contactInfo?.map((info, i) => {
-              const Icon = iconMap[info.icon as keyof typeof iconMap] ?? Mail
-              const content = (
-                <div className="flex items-center gap-3">
-                  <Icon className="size-5 text-primary" />
-                  <div>
-                    <p className="text-label">{info.title}</p>
-                    <p className="text-body">{info.value}</p>
+            <ul className="mt-6 space-y-4">
+              {contactInfo?.map((info, i) => {
+                const Icon = iconMap[info.icon as keyof typeof iconMap] ?? Mail
+                const content = (
+                  <div className="flex items-center gap-3">
+                    <Icon className="size-5 text-primary" />
+                    <div>
+                      <p className="text-label">{info.title}</p>
+                      <p className="text-body">{info.value}</p>
+                    </div>
                   </div>
-                </div>
-              )
+                )
 
-              return (
-                <li key={i}>
-                  {info.href ? (
-                    <a href={info.href} className="hover:opacity-80">
-                      {content}
-                    </a>
-                  ) : (
-                    content
-                  )}
-                </li>
-              )
-            })}
-          </ul>
+                return (
+                  <li key={i}>
+                    {info.href ? (
+                      <a href={info.href} className="hover:opacity-80">
+                        {content}
+                      </a>
+                    ) : (
+                      content
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
 
-          {socialProofText && <p className="mt-8 text-label opacity-80">{socialProofText}</p>}
+            {socialProofText && <p className="mt-8 text-label opacity-80">{socialProofText}</p>}
+          </div>
         </div>
       </div>
     </Container>
