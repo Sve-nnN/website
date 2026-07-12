@@ -44,11 +44,55 @@ const NEAR_BLACK = '#0A0A0F'
  * reviewed both live and explicitly preferred `blob`'s calmer, more
  * minimal read — closer to "casi negro" than `ripple`'s bolder ribbon.
  */
-const SHADER_SHAPE = 'blob' as const
-const SHADER_SOFTNESS = 0.15
-const SHADER_INTENSITY = 0.2
-const SHADER_NOISE = 0.35
-const SHADER_SCALE = 1.4
+export type HeroGrainGradientVariant = 'default' | 'cta'
+
+interface ShaderVariantConfig {
+  shape: 'wave' | 'dots' | 'truchet' | 'corners' | 'ripple' | 'blob' | 'sphere'
+  softness: number
+  intensity: number
+  noise: number
+  scale: number
+  offsetX?: number
+  offsetY?: number
+  speed: number
+}
+
+/**
+ * Per-variant shader config, both built from the exact same
+ * LIGHT_COLORS/DARK_COLORS/NEAR_BLACK constants above.
+ *
+ * `default` — the Hero/ContactFormBlock look documented above (byte-identical
+ * to the pre-`variant`-prop constants: shape `blob`, softness 0.15,
+ * intensity 0.2, noise 0.35, scale 1.4, base speed 0.3).
+ *
+ * `cta` — quick task 260712-1f1: a deliberate, distinct variation for the
+ * "Ready to work together?" strip only. Reuses `ripple` (the phase-16-vetted
+ * bolder alternative documented above — "a bolder, more graphic single
+ * curved arc") with a static offsetX/offsetY parking its concentric-ring
+ * center off-center per that same code comment's own guidance, plus a
+ * slightly livelier base motion speed. Same palette, different shape/motion
+ * feel from the Hero's calm `blob`.
+ */
+const SHADER_VARIANTS: Record<HeroGrainGradientVariant, ShaderVariantConfig> = {
+  default: {
+    shape: 'blob',
+    softness: 0.15,
+    intensity: 0.2,
+    noise: 0.35,
+    scale: 1.4,
+    speed: 0.3,
+  },
+  cta: {
+    shape: 'ripple',
+    softness: 0.35,
+    intensity: 0.45,
+    noise: 0.3,
+    scale: 1.1,
+    offsetX: 0.2,
+    offsetY: -0.15,
+    speed: 0.45,
+  },
+}
 
 interface ShaderErrorBoundaryProps {
   children: ReactNode
@@ -91,7 +135,12 @@ class ShaderErrorBoundary extends Component<ShaderErrorBoundaryProps, ShaderErro
   }
 }
 
-export function HeroGrainGradient() {
+interface HeroGrainGradientProps {
+  variant?: HeroGrainGradientVariant
+}
+
+export function HeroGrainGradient({ variant = 'default' }: HeroGrainGradientProps = {}) {
+  const variantConfig = SHADER_VARIANTS[variant]
   // Initialized to `false` (matching what the server always renders, since
   // `window` doesn't exist during SSR) to avoid a hydration mismatch — React
   // does not patch mismatched attributes after hydration, so the real
@@ -139,7 +188,7 @@ export function HeroGrainGradient() {
 
   const colors = isDark ? DARK_COLORS : LIGHT_COLORS
 
-  const motionProps = reducedMotion ? { speed: 0, frame: 0 } : { speed: 0.3 }
+  const motionProps = reducedMotion ? { speed: 0, frame: 0 } : { speed: variantConfig.speed }
 
   return (
     <div
@@ -153,11 +202,13 @@ export function HeroGrainGradient() {
           <GrainGradient
             colors={colors}
             colorBack={NEAR_BLACK}
-            shape={SHADER_SHAPE}
-            softness={SHADER_SOFTNESS}
-            intensity={SHADER_INTENSITY}
-            noise={SHADER_NOISE}
-            scale={SHADER_SCALE}
+            shape={variantConfig.shape}
+            softness={variantConfig.softness}
+            intensity={variantConfig.intensity}
+            noise={variantConfig.noise}
+            scale={variantConfig.scale}
+            offsetX={variantConfig.offsetX}
+            offsetY={variantConfig.offsetY}
             width="100%"
             height="100%"
             {...motionProps}
