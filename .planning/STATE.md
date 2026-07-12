@@ -175,15 +175,16 @@ None yet.
 
 ## Deferred Items
 
-Items acknowledged and carried forward from previous milestone close:
+Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated to v1.4 scope — pre-existing quick tasks from before this milestone started):
 
-| Category | Item | Status | Deferred At |
-|----------|------|--------|-------------|
-| *(none)* | | | |
+| Category | Item | Status |
+|----------|------|--------|
+| quick_task | 260712-159-gradient-cta-sections | unknown (Task 3 blocking human-verify checkpoint pending per STATE.md Quick Tasks Completed note) |
+| quick_task | 260712-1f1-cta-ready-to-work-together-variante-de-g | missing (no completion record found) |
 
 ## Session Continuity
 
-Last session: 2026-07-12T16:51:10.270Z
-Stopped at: Phase 18 execution complete (plan 18-01, 3/3 tasks)
-Resume file: .planning/phases/18-seo-technical-fixes-metadata/18-01-SUMMARY.md
+Last session: 2026-07-12T22:15:00.000Z
+Stopped at: Milestone v1.4 audit passed (10/10), proceeding to complete-milestone
+Resume file: .planning/v1.4-MILESTONE-AUDIT.md
 </content>
