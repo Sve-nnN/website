@@ -327,28 +327,28 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ### SEO-STRUCT (Fixes técnicos de jerarquía semántica)
 
-- [ ] **SEO-STRUCT-01**: `/contact` tiene un H1 semántico real (hoy la página no tiene ningún `<h1>`, solo un H2 "Hablemos"/"Get in Touch")
-- [ ] **SEO-STRUCT-02**: Author page (`/authors/[slug]`) tiene un H1 semántico real con el nombre del autor (hoy se renderiza como `<Link>` con clases visuales de heading, no como elemento `<h1>`)
+- [x] **SEO-STRUCT-01**: `/contact` tiene un H1 semántico real (hoy la página no tiene ningún `<h1>`, solo un H2 "Hablemos"/"Get in Touch")
+- [x] **SEO-STRUCT-02**: Author page (`/authors/[slug]`) tiene un H1 semántico real con el nombre del autor (hoy se renderiza como `<Link>` con clases visuales de heading, no como elemento `<h1>`)
 
 ### SEO-SVC (Páginas de servicio)
 
-- [ ] **SEO-SVC-01**: Página/sección "Servicios" lista las líneas de servicio de Juan (Auditoría SEO Técnica, Consultoría SEO, Desarrollo Full-Stack con SEO integrado, SEO para IA/GEO), sin precios publicados, con CTA a contacto — patrón de cotización a medida (mismo modelo que 3 de 4 competidores auditados)
-- [ ] **SEO-SVC-02**: Cada servicio individual sigue el patrón estructural validado por los 4 competidores auditados (H1 del servicio → problema/dolor → qué incluye → cómo trabajo → FAQ → CTA final)
-- [ ] **SEO-SVC-03**: "SEO para IA / GEO" nombrado explícitamente como línea de servicio propia con su propia página, aprovechando la infraestructura ya existente (`llms.txt`/`llms-full.txt`) — gap de posicionamiento puro, no de infraestructura (2 de 4 competidores ya lo nombran así)
+- [x] **SEO-SVC-01**: Página/sección "Servicios" lista las líneas de servicio de Juan (Auditoría SEO Técnica, Consultoría SEO, Desarrollo Full-Stack con SEO integrado, SEO para IA/GEO), sin precios publicados, con CTA a contacto — patrón de cotización a medida (mismo modelo que 3 de 4 competidores auditados)
+- [x] **SEO-SVC-02**: Cada servicio individual sigue el patrón estructural validado por los 4 competidores auditados (H1 del servicio → problema/dolor → qué incluye → cómo trabajo → FAQ → CTA final)
+- [x] **SEO-SVC-03**: "SEO para IA / GEO" nombrado explícitamente como línea de servicio propia con su propia página, aprovechando la infraestructura ya existente (`llms.txt`/`llms-full.txt`) — gap de posicionamiento puro, no de infraestructura (2 de 4 competidores ya lo nombran así)
 
 ### SEO-LOCAL (Geo-pages con contenido real, no templated)
 
-- [ ] **SEO-LOCAL-01**: Landing "SEO técnico en Lima" con contenido genuinamente diferenciado (no find-replace de ciudad), reflejando la base real de Juan en Lima, Perú
-- [ ] **SEO-LOCAL-02**: Landing "SEO técnico en Madrid/España" con contenido genuinamente diferenciado, reflejando el mercado ES principal identificado en el keyword research existente (`research/keyword-research/`)
+- [x] **SEO-LOCAL-01**: Landing "SEO técnico en Lima" con contenido genuinamente diferenciado (no find-replace de ciudad), reflejando la base real de Juan en Lima, Perú
+- [x] **SEO-LOCAL-02**: Landing "SEO técnico en Madrid/España" con contenido genuinamente diferenciado, reflejando el mercado ES principal identificado en el keyword research existente (`research/keyword-research/`)
 
 ### SEO-HOME (Encabezados y copy)
 
-- [ ] **SEO-HOME-01**: Encabezados/copy de Home reforzados con el ángulo "desarrollo real (Next.js/Payload/CMS headless) + SEO técnico" frente al "SEO + WordPress genérico" de 3 de los 4 competidores auditados
-- [ ] **SEO-HOME-02**: Home enlaza a las nuevas páginas de servicio (desde `AboutSection` y/o navegación) — hoy la oferta de Juan vive implícita sin desglose por servicio
+- [x] **SEO-HOME-01**: Encabezados/copy de Home reforzados con el ángulo "desarrollo real (Next.js/Payload/CMS headless) + SEO técnico" frente al "SEO + WordPress genérico" de 3 de los 4 competidores auditados
+- [x] **SEO-HOME-02**: Home enlaza a las nuevas páginas de servicio (desde `AboutSection` y/o navegación) — hoy la oferta de Juan vive implícita sin desglose por servicio
 
 ### SEO-META (Gap técnico de metadata)
 
-- [ ] **SEO-META-01**: Meta title/description de la Author page pasan por `@payloadcms/plugin-seo` (hoy `authors` no está en la lista de colecciones del plugin en `payload.config.ts`, así que usa un fallback manual sin editabilidad desde admin)
+- [x] **SEO-META-01**: Meta title/description de la Author page pasan por `@payloadcms/plugin-seo` (hoy `authors` no está en la lista de colecciones del plugin en `payload.config.ts`, así que usa un fallback manual sin editabilidad desde admin)
 
 ### Out of Scope (v1.4)
 
@@ -360,16 +360,16 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Req ID | Phase | Status |
 |--------|-------|--------|
-| SEO-STRUCT-01 | Phase 18 | Pending |
-| SEO-STRUCT-02 | Phase 18 | Pending |
-| SEO-META-01 | Phase 18 | Pending |
-| SEO-SVC-01 | Phase 19 | Pending |
-| SEO-SVC-02 | Phase 19 | Pending |
-| SEO-SVC-03 | Phase 19 | Pending |
-| SEO-LOCAL-01 | Phase 20 | Pending |
-| SEO-LOCAL-02 | Phase 20 | Pending |
-| SEO-HOME-01 | Phase 21 | Pending |
-| SEO-HOME-02 | Phase 21 | Pending |
+| SEO-STRUCT-01 | Phase 18 | Complete |
+| SEO-STRUCT-02 | Phase 18 | Complete |
+| SEO-META-01 | Phase 18 | Complete |
+| SEO-SVC-01 | Phase 19 | Complete |
+| SEO-SVC-02 | Phase 19 | Complete |
+| SEO-SVC-03 | Phase 19 | Complete |
+| SEO-LOCAL-01 | Phase 20 | Complete |
+| SEO-LOCAL-02 | Phase 20 | Complete |
+| SEO-HOME-01 | Phase 21 | Complete |
+| SEO-HOME-02 | Phase 21 | Complete |
 
 **Coverage:**
 
