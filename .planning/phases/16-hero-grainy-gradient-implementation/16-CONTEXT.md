@@ -33,14 +33,19 @@ Primera pasada (`shape="wave"`) funcionalmente correcta (4/4 verificado, screens
 **Investigación técnica (tipos reales instalados, `node_modules/@paper-design/shaders/dist/shaders/grain-gradient.d.ts` y `shader-sizing.d.ts`, no la doc web — más confiable):**
 - `GrainGradientParams` soporta 7 `shape`: `wave`, `dots`, `truchet`, `corners`, `ripple`, `blob`, `sphere` — `ripple` o `blob` son mejores candidatos visuales que `wave` para una cinta curva única; probar ambos y comparar contra la referencia antes de fijar uno
 - `GrainGradientParams extends ShaderSizingParams` — confirma props reales `offsetX`/`offsetY`/`rotation`/`scale`/`fit`/`worldWidth`/`worldHeight` (uniforms `u_offsetX`, `u_offsetY`, `u_rotation`, `u_scale`), todos números simples
-- **No existe ningún prop nativo de mouse/pointer** en la librería (confirmado, sin `onPointerMove` ni equivalente documentado en los tipos) — la reactividad al mouse se implementa a mano: listener de `pointermove` en el contenedor del Hero, posición normalizada del cursor mapeada a `offsetX`/`offsetY` (rango -1 a 1) y/o `rotation`, actualizados vía React state — reactividad real (mueve el centro del gradiente siguiendo el cursor), no simulada
+- **No existe ningún prop nativo de mouse/pointer** en la librería (confirmado, sin `onPointerMove` ni equivalente documentado en los tipos) — ver "Reactividad al mouse — REVERTIDA" más abajo
 - `colorBack` (fondo) puede ir a un negro casi puro (`#0a0a0f` o similar, no negro absoluto para mantener algo de la identidad navy) para lograr el look de "cinta sobre fondo oscuro" de la referencia, en vez del navy sólido actual
 
 **Nueva decisión:**
-- Retunear `HeroGrainGradient.tsx`: probar `shape="ripple"` y `shape="blob"` contra la referencia (screenshot comparison), quedarse con el que más se acerque
-- Agregar reactividad real al mouse vía `offsetX`/`offsetY` (y opcionalmente `rotation`) driven por `pointermove`, con throttle/rAF para no saturar el hilo principal — debe seguir respetando `prefers-reduced-motion` (con reduced-motion activo, la reactividad al mouse también se desactiva, no solo la animación base)
-- `colorBack` se oscurece hacia casi-negro para el efecto "ribbon sobre fondo oscuro" de la referencia
-- Mobile: sin mouse real — el shader mobile queda con su comportamiento animado actual (sin reactividad, no hay pointer en touch); esto no estaba explícito pero es la lectura razonable ya que "reactivo con el mouse" es un concepto de desktop
+- Retunear `HeroGrainGradient.tsx`: probar `shape="ripple"` y `shape="blob"` contra la referencia (screenshot comparison), quedarse con el que más se acerque — **resultado: `ripple` elegido.** El patrón de anillos concéntricos de `ripple` irradia desde un centro fijo, por lo que `offsetX`/`offsetY` estáticos pueden dejar ese centro justo fuera del cuadro, mostrando un único arco curvo estable. `blob` genera varios puntos calientes que orbitan de forma independiente (trayectorias basadas en tiempo, hardcodeadas en el shader), a menudo invisibles del todo con la paleta de marca (tonos navy cercanos entre sí) y sin control de posición fiable — no sirve para una cinta única y estable.
+- `colorBack` se oscurece hacia casi-negro (`#0A0A0F`) para el efecto "ribbon sobre fondo oscuro" de la referencia
+- `offsetX`/`offsetY` fijos (no dinámicos) posicionan el centro del `ripple` fuera del cuadro para dejar un solo arco curvo visible, con mucho negative space alrededor
+
+**Reactividad al mouse — REVERTIDA (mismo día, tras probarla en vivo):**
+- Se implementó reactividad real al mouse (no simulada): listener de `pointermove` en el contenedor del Hero, posición normalizada del cursor mapeada a `offsetX`/`offsetY` vía React state con throttle por `requestAnimationFrame`, respetando `prefers-reduced-motion` (reactividad desactivada junto con la animación base) y filtrando `pointerType !== 'mouse'` (sin reactividad en touch/mobile). Verificado funcionando de verdad (el centro de la cinta se movía siguiendo el cursor en capturas reales).
+- Juan probó el resultado en vivo y **pidió quitarla por completo** — no la quiere en el Hero ni en ningún otro componente futuro (se había considerado evaluar agregarla a otros lados después; esa idea también queda descartada).
+- Se revirtió el listener de `pointermove`, el estado de posición del cursor, y el binding de `offsetX`/`offsetY`/`rotation` al mouse. El shader quedó con su animación de tiempo normal (`speed`) únicamente, sin ningún tracking de puntero. `offsetX`/`offsetY` volvieron a ser valores estáticos (los mismos usados para posicionar la cinta fuera de cuadro), no dinámicos.
+- Mobile: sin mouse real de todas formas — el shader mobile mantiene su comportamiento animado (sin reactividad), consistente con que "reactivo al mouse" era un concepto de desktop que ya no aplica en absoluto tras el revert.
 
 ### Claude's Discretion
 - Nombre exacto del archivo/componente del wrapper client-side del shader
