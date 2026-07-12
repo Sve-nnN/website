@@ -99,10 +99,14 @@ export function HeroGrainGradient() {
   // update, not part of the hydration pass) instead of a useState lazy
   // initializer.
   const [reducedMotion, setReducedMotion] = useState(false)
-  const [isDark] = useState(() => {
-    if (typeof document === 'undefined') return false
-    return document.documentElement.classList.contains('dark')
-  })
+  // Same SSR-safe pattern as `reducedMotion` above: initialize to `false`
+  // (matching the server, which never has `document`) and set the real value
+  // in an effect, instead of reading `document` inside a `useState` lazy
+  // initializer. Dark mode isn't reachable today (no next-themes/toggle in
+  // this codebase), but this keeps the pattern consistent so wiring dark
+  // mode later doesn't silently reintroduce the hydration-mismatch bug that
+  // was already fixed for `reducedMotion`.
+  const [isDark, setIsDark] = useState(false)
 
   // Cheap synchronous feature-detect. Avoids depending on
   // `ShaderErrorBoundary` to observe this library's async WebGL-init failure
@@ -127,6 +131,10 @@ export function HeroGrainGradient() {
     const handleChange = (event: MediaQueryListEvent) => setReducedMotion(event.matches)
     mediaQuery.addEventListener('change', handleChange)
     return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [])
+
+  useEffect(() => {
+    setIsDark(document.documentElement.classList.contains('dark'))
   }, [])
 
   const colors = isDark ? DARK_COLORS : LIGHT_COLORS
