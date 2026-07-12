@@ -74,21 +74,50 @@ async function main() {
       }
 
       // Backfill missing column titles + nested link labels, preserving ids.
-      // Match column-by-column against the EN structure (positional — same
-      // shared, non-localized array/ids across locales).
-      columns.forEach((column, columnIndex) => {
-        const enColumn = enFooter.columns?.[columnIndex]
+      // Match column-by-column against the EN structure by the array row's
+      // stable `id` (Payload auto-generates one per row) rather than by
+      // positional index — index-based matching would silently backfill
+      // the wrong ES title onto the wrong column if `columns` is ever
+      // reordered or its length diverges between locales (WR-07).
+      columns.forEach((column) => {
+        const enColumn = enFooter.columns?.find((candidate) => candidate.id === column.id)
 
-        if (!column.title && enColumn?.title && COLUMN_TITLE_ES[enColumn.title]) {
-          column.title = COLUMN_TITLE_ES[enColumn.title]
-          backfilled = true
+        if (!enColumn) {
+          console.warn(
+            `No matching EN column found for ES column id "${column.id}" — skipping title backfill for this column.`,
+          )
+        } else if (!column.title && enColumn.title) {
+          const mappedTitle = COLUMN_TITLE_ES[enColumn.title]
+          if (mappedTitle) {
+            column.title = mappedTitle
+            backfilled = true
+          } else {
+            console.warn(
+              `No ES title mapping found for EN column title "${enColumn.title}" (column id "${column.id}") — leaving title blank.`,
+            )
+          }
         }
 
         column.links?.forEach((linkItem) => {
           const url = linkItem.link?.url
-          if (url && !linkItem.link?.label && LINK_LABEL_ES[url]) {
-            linkItem.link.label = LINK_LABEL_ES[url]
-            backfilled = true
+
+          if (linkItem.link?.type !== 'custom') {
+            console.warn(
+              `Skipping footer link item with link.type=${String(linkItem.link?.type)} (not 'custom') — cannot match by URL.`,
+            )
+            return
+          }
+
+          if (!url) return
+
+          if (!linkItem.link?.label) {
+            const mappedLabel = LINK_LABEL_ES[url]
+            if (mappedLabel) {
+              linkItem.link.label = mappedLabel
+              backfilled = true
+            } else {
+              console.warn(`No ES label mapping found for footer link URL "${url}" — leaving label blank.`)
+            }
           }
         })
       })
