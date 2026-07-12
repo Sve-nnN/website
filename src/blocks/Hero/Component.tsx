@@ -5,6 +5,7 @@ import type { HeroBlock as HeroBlockProps } from '@/payload-types'
 
 import { Container } from '@/components/Container'
 import { CMSLink } from '@/components/CMSLink'
+import { HeroGrainGradient } from '@/components/HeroGrainGradient'
 
 /**
  * Renders per `variant`: `home` uses the Display-size title over the
@@ -31,11 +32,12 @@ export function HeroComponent(props: HeroBlockProps) {
     <section
       className={
         isHome
-          ? 'relative bg-secondary text-secondary-foreground py-16 md:py-24'
+          ? 'relative bg-secondary text-secondary-foreground py-16 md:py-24 overflow-hidden'
           : 'relative bg-secondary text-secondary-foreground py-12 md:py-16'
       }
     >
-      {image?.url && (
+      {isHome && <HeroGrainGradient />}
+      {!isHome && image?.url && (
         <div className="absolute inset-0 opacity-30">
           <Image src={image.url} alt={image.alt ?? ''} fill className="object-cover" priority />
         </div>
