@@ -25,11 +25,11 @@ function renderItem(entry: SitemapEntry): string {
   const url = escapeHtml(entry.url)
   const otherLocale = OTHER_LOCALE[entry.locale]
   const otherUrl = entry.alternates[otherLocale]
-  const hasOtherLocale = otherUrl !== entry.url
 
-  const langTag = hasOtherLocale
-    ? ` <span class="lang-tag"><a hreflang="${otherLocale}" href="${escapeHtml(otherUrl)}">${LOCALE_LABEL[otherLocale]}</a></span>`
-    : ''
+  // getSitemapEntries() always produces distinct es/en alternates for every
+  // entry today (there is no locale-neutral entry shape), so the switcher
+  // link is always rendered — no dead "no alternates" branch to carry (WR-05).
+  const langTag = ` <span class="lang-tag"><a hreflang="${otherLocale}" href="${escapeHtml(otherUrl)}">${LOCALE_LABEL[otherLocale]}</a></span>`
 
   return `      <li><a hreflang="${entry.locale}" href="${url}">${url}</a>${langTag}</li>`
 }
