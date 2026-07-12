@@ -83,7 +83,17 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | Geo-pages (v1.4): Lima grounded en presencia física real, Madrid honesto sobre trabajo remoto sin oficina física | Evita el patrón templated/find-replace-por-ciudad que Juan rechazó explícitamente — cada página necesitaba un argumento genuinamente distinto, no solo el nombre de la ciudad cambiado | ✓ Good |
 | Database Safety rule (root CLAUDE.md, agregada durante v1.4, luego relajada por Juan) | Un incidente real de pérdida de datos (migración de fase 19 sin backfill, recuperada vía Neon PITR) forzó una regla dura de aprobación humana antes de cualquier escritura contra la DB real; Juan luego la relajó a solo operaciones destructivas (DROP/TRUNCATE/delete/reshape con pérdida) una vez que confió en el patrón | ✓ Good |
 
-## Current Milestone: Ninguno — v1.4 cerrado, esperando próximo milestone
+## Current Milestone: v1.5 UI/UX Pro Max — Polish y Competitividad
+
+**Goal:** Pasar una pasada de diseño profesional (`ui-ux-pro-max`) sobre todas las plantillas, componentes y layouts del sitio para pulir la ejecución visual, elevar la integridad de página a página, y hacer que las páginas de servicio compitan de verdad con la competencia directa — con foco inicial en Home y Servicios.
+
+**Target features:**
+- Research de UI/UX de competidores directos (Arianna Lupi y otros portfolios SEO/dev) para justificar decisiones concretas de diseño
+- Breadcrumbs en la página de Servicios y sus landings individuales
+- Componente de Servicios en el Home (vitrina/resumen de los 4 servicios con link a landings)
+- Páginas de servicio más llamativas y competitivas (jerarquía visual, prueba social, CTA, comparación de valor)
+- Pulido general de componentes/layouts existentes detectado durante el pase (a criterio de Claude, con propuesta explícita a Juan)
+- Fases priorizadas por impacto: Home + Servicios primero, resto (Case Studies, Blog, Author, etc.) en fases subsiguientes
 
 ## Milestone Anterior: v1.4 SEO Competitivo — Auditoría y Optimización (cerrado 2026-07-12)
 
@@ -119,4 +129,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-12 — milestone v1.4 closed, 10/10 requirements validated; awaiting next milestone (Phase 6 Deploy + Cutover remains the sole open project-wide item, paused pending Juan's go-ahead with real Hostinger/DNS/Resend credentials)*
+*Last updated: 2026-07-12 — milestone v1.5 (UI/UX Pro Max) started; Phase 6 Deploy + Cutover remains the sole other open project-wide item, paused pending Juan's go-ahead with real Hostinger/DNS/Resend credentials*
