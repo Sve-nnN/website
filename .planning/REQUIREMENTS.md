@@ -282,7 +282,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 - Mapped to phases: 18
 - Unmapped: 0 ✓
 
+**v1.2 status: CLOSED (2026-07-12)** — all 18 requirements independently re-verified live against the running dev server and real Postgres data by `.planning/v1.2-MILESTONE-AUDIT.md` (0 blocking gaps, 2 non-blocking accepted by Juan). See `.planning/MILESTONES.md` for the full closure summary.
+
 ---
 *Requirements defined: 2026-07-09*
-*Last updated: 2026-07-11 — v1.2 roadmap created: Phase 12 (Author Page E-E-A-T Expansion), Phase 13 (Home Content Population), Phase 14 (Target Keyword Field), Phase 15 (Sitemap XSL + HTML) — 18/18 v1.2 requirements mapped*
+*Last updated: 2026-07-12 — v1.2 milestone closed: 18/18 requirements verified and validated, moved to PROJECT.md Validated section*
 </content>

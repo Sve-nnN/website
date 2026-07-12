@@ -12,7 +12,11 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 
 ### Validated
 
-(None yet — ship to validate)
+- **AUTHOR-01..06** (Phase 12): colección `Authors` recupera `expertise[]`/`education[]`/`experience[]`; author page con secciones Expertise/Educación/Experiencia diseñadas con `ui-ux-pro-max`; Person JSON-LD enriquecido (`sameAs`/`knowsAbout`/`hasCredential`); contenido real de Juan poblado en ambos locales — verificado en vivo por `.planning/v1.2-MILESTONE-AUDIT.md`
+- **ABOUT-01, ABOUT-02** (Phase 13): `AboutSection` extendido con `features[]` (4 items) + `ctaText`/`ctaLink`; Home poblado con "Mi enfoque en Consultoría Técnica" — verificado en vivo
+- **FAQ-01** (Phase 13): bloque `FAQ` poblado en Home con 5 preguntas reales — verificado en vivo
+- **SEO-KW-01, SEO-KW-02** (Phase 14): campo editorial `targetKeyword` (en/es) en `pages`/`authors`, poblado con picks reales de keyword research en Home y Author page — verificado en vivo, sin llamadas a APIs externas
+- **SITEMAP-01, SITEMAP-02** (Phase 15): `sitemap.xml` con hoja de estilos XSL navegable + `sitemap.html` nuevo enlazado desde el footer — verificado en vivo
 
 ### Active
 
@@ -30,6 +34,8 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 - [ ] Rendimiento optimizado: Core Web Vitals en verde, imágenes optimizadas vía Cloudinary, output standalone
 - [ ] Research de competencia (portfolios de ingenieros/SEO experts) para incorporar tácticas que funcionan
 
+**Nota:** todos los requirements "Active" listados arriba corresponden funcionalmente a trabajo de Phases 1-5 (Schema, i18n/SEO, Cloudinary, Migración, Frontend Pages), ya completado según ROADMAP.md, y a Phase 6 (Deploy + Cutover), el único ítem abierto a nivel de proyecto — ver "Current Milestone" más abajo. Estos checkboxes reflejan la redacción original de v1 y se cerrarán formalmente cuando Phase 6 verifique el sitio en producción.
+
 ### Out of Scope
 
 - Dashboard interno de analytics/SEO tooling (AdBanners, BrokenLinks, GSCMetrics, KeywordMetrics, PageMetrics, dinorank, internal-links apply, keyword-score/coverage) — es el "clutter" que se descarta explícitamente en esta reconstrucción. **Aclaración v1.2:** esta exclusión es sobre el dashboard/live-integration de dinorank dentro de la app; el campo editorial `targetKeyword` (v1.2) y el research puntual vía DinoRank API para elegir esos valores son un insumo estático de investigación, no una integración en vivo — no reabre esta exclusión.
@@ -45,6 +51,7 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 - Referencia de backend limpio: `/Users/juan/Documents/Codigo/Arianna/aprendoclub/aprendoclub` — Payload 3.85 con Postgres, colecciones lean (Users, Media, Testimonios, ClientesTrabajados, Programas, TeamMembers, Faq, Pages, Category, Author, BlogPost), plugins mínimos (nested-docs, redirects, seo), sin tooling interno.
 - Se detectó y resolvió una carpeta `.planning` huérfana en `/Users/juan/Documents/Codigo/.planning` (movida a `.planning.orphan-backup-20260709`) que interfería con la detección de raíz de proyecto de gsd-sdk.
 - Modelo de case study a replicar (referencia de competencia de Juan, `ariannalupi.com/casos/ecommerce-vape/`): hero con métrica principal (ej. "$41K → $76K"), metadatos (cliente/sector/período/servicios), 4 KPIs en tarjetas, sección "El cliente" (contexto), "El reto" (lista de problemas), "La solución" (proceso en pasos numerados), "Resultados" (comparativa antes/después por período), conclusión estratégica, CTA doble. Coincide con el patrón "métrica en el titular" ya identificado en FEATURES.md.
+- Con v1.1 y v1.2 cerrados, el único trabajo abierto a nivel de proyecto es **Phase 6 (Deploy + Cutover)**, en pausa, retoma solo cuando Juan dé el visto bueno explícito con credenciales reales de Hostinger/DNS/Resend (`RESEND_API_KEY` sigue siendo placeholder/inválido).
 
 ## Constraints
 
@@ -64,24 +71,20 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | Base de datos: PostgreSQL | Alinea con backend de referencia (aprendoclub) y evita depender de Mongo Atlas externo en Hostinger | ✓ Good |
 | Idiomas: EN + ES | Mismo alcance SEO internacional que el sitio actual | ✓ Good |
 | Works vs Clientes: se elimina Works, Clientes queda como colección propia solo para carrusel de logos (nombre, logo, link a web); CaseStudies se enriquece con el modelo estructurado de ariannalupi.com/casos/ | Juan no quiere "Works" como concepto separado — prefiere case studies ricos como vitrina principal, y Clientes como pieza aparte solo para credibilidad visual (logos) | ✓ Good |
+| SpeakingEvents como colección standalone (no array field en Authors) | Juan pidió poder seguir agregando eventos post-launch sin reabrir el schema de Authors (pedido directo, mid-Phase 12) | ✓ Good |
+| `targetKeyword` (v1.2) como campo editorial informativo, sin llamadas en vivo a DinoRank/Ahrefs | Mantiene la exclusión de "dinorank tooling" de Out of Scope — el research vía API es insumo estático, no integración en vivo | ✓ Good |
 
-## Current Milestone: v1.2 Content Parity — Home + Author Page
+## Current Milestone
 
-**Goal:** Cerrar las brechas reales de contenido/componentes detectadas al comparar Home y Author page del rebuild contra el sitio de referencia real (`JuanPortfolio`, corriendo en `localhost:3000`), diseñando cualquier sección nueva con la skill `ui-ux-pro-max`, y asignar keyword objetivo (EN/ES, con research real vía DinoRank) a Home y Author page.
+Ninguno activo. v1.1 (UI/UX Polish Pass) y v1.2 (Content Parity — Home + Author Page) están cerrados — ver secciones "Milestone Anterior" más abajo y `.planning/MILESTONES.md` para el historial completo. **Phase 6 (Deploy + Cutover)** sigue siendo el único trabajo abierto a nivel de proyecto, en pausa, a la espera de que Juan confirme el arranque con credenciales reales de Hostinger/DNS/Resend. El próximo milestone (v1.3 o el que Juan defina) todavía no ha sido iniciado.
 
-**Target features:**
-- Colección `Authors`: recuperar los campos `education[]`, `experience[]`, `expertise[]` que fueron recortados a propósito en Phase 1 ("later content-audit-phase elaboration") — ahora sí hacen falta
-- Author page: 3 secciones nuevas — Expertise (tags), Educación/Certificaciones (logo/institución/fechas/certificado), Experiencia (timeline laboral) — diseñadas con `ui-ux-pro-max`, pobladas con contenido real de Juan donde exista o placeholder editable desde `/admin`
-- Person schema (JSON-LD) del author page enriquecido: `sameAs` (todas las redes), `knowsAbout` (expertise), `hasCredential` (educación) — igual que el sitio de referencia
-- Bloque `AboutSection` extendido con `features[4]` (icon+título+descripción) + CTA — el gap real de "Mi enfoque en Consultoría Técnica" que la investigación previa (Phase 10.7) marcó como "fold into AboutSection" pero nunca se implementó
-- Bloque `FAQ` (ya existe, nunca se pobló) poblado en Home con contenido real
-- Campo `targetKeyword` (grupo `en`/`es`) en colecciones `pages` y `authors`, poblado con los picks de `research/keyword-research/KEYWORD-RESEARCH.md` (seo técnico / technical seo consultant / auditoría seo técnico / technical seo specialist) — campo editorial, no dispara llamadas en vivo a DinoRank
-- `sitemap.xml` con hoja de estilos XSL (visualización humana al abrir la URL) + `sitemap.html` navegable nuevo
-- CalendlyEmbed queda explícitamente fuera de scope (Juan confirmó que ya no usa Calendly)
+## Milestone Anterior: v1.2 Content Parity — Home + Author Page (cerrado 2026-07-12)
+
+Cerró las 3 brechas reales de contenido/componentes detectadas al comparar Home y Author page del rebuild contra el sitio de referencia real (`JuanPortfolio`), más el pedido de keyword objetivo (EN/ES) informado por research real. Author page ganó 4 secciones nuevas (Expertise, Educación y Certificaciones, Experiencia, Eventos como ponente — esta última añadida mid-milestone por pedido de Juan), Home se pobló con "Mi enfoque en Consultoría Técnica" y el bloque FAQ, se agregó el campo editorial `targetKeyword`, y el sitemap ganó una versión XSL navegable + `sitemap.html`. Durante el milestone se encontraron y corrigieron 4 bugs reales fuera del scope original: gap de eyebrow/título de `AboutSection` en inglés, un bloqueo de mapeo del icon-picker de admin, una fuga de acceso a nivel de campo en `targetKeyword`, y bugs de labels ES vacíos en Footer y Header. Auditoría (`.planning/v1.2-MILESTONE-AUDIT.md`) verificó 18/18 requirements en vivo contra el dev server y la DB real; cerrado con 0 gaps bloqueantes y 2 no bloqueantes aceptados explícitamente por Juan (click-through manual del icon-picker pendiente, y un 500 pre-existente de Phase 1 en `GET /api/posts?depth>=1` sin impacto en el sitio real). Ver `.planning/MILESTONES.md` para el detalle completo.
 
 ## Milestone Anterior: v1.1 UI/UX Polish Pass (cerrado parcialmente 2026-07-11)
 
-Todos los componentes del sitio recibieron una pasada de diseño profesional (Phases 7-11, 10/11 completas). Incluyó auditoría de los 16 bloques actuales contra los ~39 bloques del sitio Payload viejo, cierre de gaps genuinos (AboutSection, TestimonialSection), enriquecimiento del Hero (CTA/breadcrumbs), y verificación cruzada final (contraste WCAG, layout `/es`, Lighthouse móvil). **Phase 6 (Deploy + Cutover) sigue abierta y en pausa** — no se re-numera, retoma cuando Juan dé el visto bueno con credenciales reales de Hostinger/DNS/Resend. v1.2 corre en paralelo sobre contenido/componentes, sin bloquear ni depender del cierre de Phase 6.
+Todos los componentes del sitio recibieron una pasada de diseño profesional (Phases 7-11, 10/11 completas). Incluyó auditoría de los 16 bloques actuales contra los ~39 bloques del sitio Payload viejo, cierre de gaps genuinos (AboutSection, TestimonialSection), enriquecimiento del Hero (CTA/breadcrumbs), y verificación cruzada final (contraste WCAG, layout `/es`, Lighthouse móvil). **Phase 6 (Deploy + Cutover) sigue abierta y en pausa** — no se re-numera, retoma cuando Juan dé el visto bueno con credenciales reales de Hostinger/DNS/Resend. v1.2 corrió en paralelo sobre contenido/componentes, sin bloquear ni depender del cierre de Phase 6.
 
 ## Evolution
 
@@ -101,4 +104,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-11 — milestone v1.2 started*
+*Last updated: 2026-07-12 — milestone v1.2 closed, 18/18 requirements validated; awaiting next milestone (Phase 6 Deploy + Cutover remains the sole open project-wide item, paused pending Juan's go-ahead with real Hostinger/DNS/Resend credentials)*

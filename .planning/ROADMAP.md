@@ -8,7 +8,7 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 
 **Scope expandido 2026-07-10 (post Phase 10.5 Wave 1):** Tras feedback directo de Juan rechazando la dirección visual acumulada de Phases 7-10 como insuficiente, el milestone se amplía con tres fases nuevas (10.6, 10.7, 10.8) insertadas entre Phase 10.5 y Phase 11: completar header/footer con verificación mobile real, cerrar los gaps de componentes identificados contra el sitio Payload viejo (`JuanPortfolio`, `COMPONENT-GAP-ANALYSIS.md`) agregando y **poblando** dos bloques nuevos, y enriquecer el bloque Hero con CTA/breadcrumbs también poblados. Disciplina mobile-first (~375px primero) se vuelve la práctica estándar de verificación desde aquí en adelante, reforzada explícitamente en Phase 11. Phase 10.5 queda cerrada con alcance reducido a solo lo que ya completó (tipografía + schema de Footer); el trabajo de restyle de header/footer que tenía pendiente se absorbe en Phase 10.6.
 
-**Milestone v1.2 — Content Parity (Home + Author Page), creado 2026-07-11:** Con v1.1 cerrado (Phases 7-11 completas, Phase 6 aún en pausa), una comparación directa contra el sitio de referencia real (`JuanPortfolio`, `localhost:3000`) reveló 3 brechas concretas de contenido/componentes no cerradas por v1.1, más un pedido nuevo de asignación de keyword objetivo (EN/ES) informada por research real. El milestone agrega 4 fases nuevas (12-15): recuperar las secciones E-E-A-T recortadas del author page (Phase 12), poblar Home con la sección "Mi enfoque en Consultoría Técnica" (`AboutSection` extendido) y el bloque FAQ ya existente pero nunca poblado (Phase 13), agregar el campo editorial `targetKeyword` a Pages/Authors (Phase 14), y dar al sitemap una hoja de estilos XSL navegable más una versión HTML (Phase 15). Blog/posts queda explícitamente fuera de alcance (pedido de Juan), y CalendlyEmbed queda cerrado definitivamente (Juan ya no usa Calendly). Ver `.planning/REQUIREMENTS.md` sección "v1.2 Requirements — Content Parity" para el detalle completo.
+**Milestone v1.2 — Content Parity (Home + Author Page), creado 2026-07-11:** Con v1.1 cerrado (Phases 7-11 completas, Phase 6 aún en pausa), una comparación directa contra el sitio de referencia real (`JuanPortfolio`, `localhost:3000`) reveló 3 brechas concretas de contenido/componentes no cerradas por v1.1, más un pedido nuevo de asignación de keyword objetivo (EN/ES) informada por research real. El milestone agrega 4 fases nuevas (12-15): recuperar las secciones E-E-A-T recortadas del author page (Phase 12), poblar Home con la sección "Mi enfoque en Consultoría Técnica" (`AboutSection` extendido) y el bloque FAQ ya existente pero nunca poblado (Phase 13), agregar el campo editorial `targetKeyword` a Pages/Authors (Phase 14), y dar al sitemap una hoja de estilos XSL navegable más una versión HTML (Phase 15). Blog/posts queda explícitamente fuera de alcance (pedido de Juan), y CalendlyEmbed queda cerrado definitivamente (Juan ya no usa Calendly). Ver `.planning/REQUIREMENTS.md` sección "v1.2 Requirements — Content Parity" para el detalle completo. **v1.2 CERRADO 2026-07-12** — 18/18 requirements verificados en vivo, 0 gaps bloqueantes (ver `.planning/v1.2-MILESTONE-AUDIT.md` y `.planning/MILESTONES.md`).
 
 ## Phases
 
@@ -462,7 +462,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 (Phase 6 en pausa, retoma tras el cierre de v1.1/v1.2)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 (v1.1 y v1.2 cerrados 2026-07-12; Phase 6 en pausa, único ítem abierto a nivel de proyecto, retoma con el visto bueno de Juan)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -471,7 +471,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 3. Cloudinary Media Spike | 3/3 | Complete   | 2026-07-09 |
 | 4. Migración Mongo → Postgres | 8/8 | Complete   | 2026-07-10 |
 | 5. Frontend Pages | 13/13 | Complete   | 2026-07-10 |
-| 6. Deploy + Cutover | 0/TBD | Paused (resumes after v1.1/v1.2) | - |
+| 6. Deploy + Cutover | 0/TBD | Paused (sole open project-wide item; resumes on Juan's go-ahead w/ real Hostinger/DNS/Resend creds) | - |
 | 7. Design-Token Foundation | 1/1 | Complete   | 2026-07-10 |
 | 8. shadcn Primitives + Global Chrome | 2/2 | Complete   | 2026-07-10 |
 | 9. Hero + Resultados/KPI + Tipografía | 3/3 | Complete   | 2026-07-10 |
