@@ -42,9 +42,16 @@ function parseArgs(argv) {
     if (argv[i] === '--base-url') args.baseUrl = argv[++i]
     else if (argv[i] === '--out') args.out = argv[++i]
     // Comma-separated list support (e.g. --routes-only /en,/es); a single
-    // route with no comma still yields a 1-element array, so downstream
-    // consumers no longer need the `? [x] : ROUTES` ternary.
-    else if (argv[i] === '--routes-only') args.routesOnly = argv[++i].split(',').map((r) => r.trim()).filter(Boolean)
+    // route with no comma still yields a 1-element array. A missing or
+    // empty value (e.g. trailing `--routes-only`, or `--routes-only ""`)
+    // falls back to `null` so `args.routesOnly ?? ROUTES` downstream uses
+    // the full route list instead of crashing or silently running zero
+    // routes.
+    else if (argv[i] === '--routes-only') {
+      const raw = argv[++i]
+      const parsed = raw ? raw.split(',').map((r) => r.trim()).filter(Boolean) : []
+      args.routesOnly = parsed.length > 0 ? parsed : null
+    }
   }
   return args
 }
