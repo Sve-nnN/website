@@ -1,17 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: none (awaiting next milestone)
-milestone_name: none
-status: v1.2 (Content Parity — Home + Author Page) CLOSED 2026-07-12. 18/18 requirements verified live by v1.2-MILESTONE-AUDIT.md, 0 blocking gaps, 2 non-blocking accepted by Juan. Awaiting Juan's definition of the next milestone.
-stopped_at: v1.2 milestone closed (Phases 12-15, 18/18 requirements). No active milestone. Phase 6 (Deploy + Cutover) remains the sole open project-wide item, paused pending real Hostinger/DNS/Resend credentials. See .planning/MILESTONES.md for the closure record.
-last_updated: "2026-07-12T00:00:00Z"
-last_activity: "2026-07-12 — v1.2 milestone completed: MILESTONES.md created with full closure summary, PROJECT.md updated (v1.2 moved to Milestone Anterior, 13 requirements moved to Validated, Phase 6 confirmed as sole open item), ROADMAP.md/REQUIREMENTS.md marked v1.2 CLOSED, STATE.md reset to awaiting-next-milestone position."
+milestone: v1.3
+milestone_name: Hero Grainy Gradient Animation
+status: planning
+last_updated: "2026-07-12T02:57:23.512Z"
+last_activity: 2026-07-12
 progress:
-  total_phases: 15
-  completed_phases: 15
-  total_plans: 66
-  completed_plans: 62
-  percent: 94
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -21,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Ningún milestone activo. v1.2 (Content Parity — Home + Author Page) cerrado 2026-07-12 con 18/18 requirements verificados en vivo (`.planning/v1.2-MILESTONE-AUDIT.md`, 0 gaps bloqueantes, 2 no bloqueantes aceptados por Juan) — ver `.planning/MILESTONES.md` para el resumen completo de cierre. v1.1 (UI/UX Polish Pass) también cerrado (10/11 fases). El único ítem abierto a nivel de proyecto es **Phase 6 (Deploy + Cutover)**, en pausa, retoma cuando Juan confirme con credenciales reales de Hostinger/DNS/Resend (`RESEND_API_KEY` sigue siendo placeholder/inválido; Author E-E-A-T ya poblado en v1.2). Awaiting Juan's definition of the next milestone (v1.3 or otherwise) — not started.
+**Current focus:** Milestone v1.3 (Hero Grainy Gradient Animation) — iniciado 2026-07-12. Reemplaza el fondo sólido del Hero home por un gradiente animado con grano vía WebGL (`@paper-design/shaders-react`, componente `GrainGradient`, ~5KB zero-dependency), manteniendo título/subtítulo/CTAs actuales sin cambios. Revierte puntualmente la exclusión de motion/animación de v1.1 (UI-02/UI-03), solo para este fondo — el resto de esas exclusiones (carruseles, toggle de dark mode) siguen vigentes. Research previo descartó anime.js (tweening, no genera shaders/ruido) y three.js/ShaderGradient (~150KB+, contradice presupuesto de performance). v1.2 (Content Parity) y v1.1 (UI/UX Polish Pass) quedan cerrados — ver `.planning/MILESTONES.md`. **Phase 6 (Deploy + Cutover)** sigue siendo el único trabajo abierto aparte, en pausa, retoma cuando Juan confirme con credenciales reales de Hostinger/DNS/Resend.
 
 ## Current Position
 
-Phase: None active. v1.2's last planned phase (Phase 15) closed 2/2 plans; milestone audited and closed 2026-07-12.
-Plan: None active. All 4 planned v1.2 phases (12-15) executed, verified, and closed. Next: Juan defines the next milestone (v1.3 or otherwise) — no plan committed to yet.
-Status: v1.2 (Content Parity — Home + Author Page) CLOSED. Awaiting next milestone.
-Last activity: 2026-07-12 — Milestone v1.2 completed via /gsd:complete-milestone: MILESTONES.md created, PROJECT.md/ROADMAP.md/REQUIREMENTS.md updated to reflect closure, STATE.md reset to awaiting-next-milestone position. The Header global ES-locale nav-label bug flagged in Phase 15 was found and fixed before this closure (confirmed live by v1.2-MILESTONE-AUDIT.md).
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-12 — Milestone v1.3 started
 
 ## Performance Metrics
 

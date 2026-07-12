@@ -74,9 +74,18 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | SpeakingEvents como colección standalone (no array field en Authors) | Juan pidió poder seguir agregando eventos post-launch sin reabrir el schema de Authors (pedido directo, mid-Phase 12) | ✓ Good |
 | `targetKeyword` (v1.2) como campo editorial informativo, sin llamadas en vivo a DinoRank/Ahrefs | Mantiene la exclusión de "dinorank tooling" de Out of Scope — el research vía API es insumo estático, no integración en vivo | ✓ Good |
 
-## Current Milestone
+## Current Milestone: v1.3 Hero Grainy Gradient Animation
 
-Ninguno activo. v1.1 (UI/UX Polish Pass) y v1.2 (Content Parity — Home + Author Page) están cerrados — ver secciones "Milestone Anterior" más abajo y `.planning/MILESTONES.md` para el historial completo. **Phase 6 (Deploy + Cutover)** sigue siendo el único trabajo abierto a nivel de proyecto, en pausa, a la espera de que Juan confirme el arranque con credenciales reales de Hostinger/DNS/Resend. El próximo milestone (v1.3 o el que Juan defina) todavía no ha sido iniciado.
+**Goal:** El Hero del home reemplaza su fondo sólido actual por un gradiente animado con grano (grainy gradient) vía WebGL, manteniendo intacto el título/subtítulo/CTAs actuales, sin degradar Core Web Vitals ni el Lighthouse 100 que el propio hero promociona.
+
+**Target features:**
+- Fondo del Hero (`variant: 'home'`) reemplazado por `GrainGradient` de `@paper-design/shaders-react` (WebGL, ~5KB, zero-dependency) — colores tomados de los tokens ember/navy ya definidos en Phase 7
+- `prefers-reduced-motion` respetado: pausa el shader / muestra frame estático (reusa la regla global ya existente de Phase 7)
+- Verificación de que Lighthouse Performance/CWV no se degradan respecto al baseline actual (el hero literalmente muestra "Performance 100" en su propio copy — no puede mentir)
+- Título/subtítulo/CTAs/breadcrumbs existentes del bloque Hero no cambian — solo el fondo
+- **Decisión revertida de v1.1:** UI-02/UI-03 habían diferido explícitamente motion/animación (carruseles, scroll-reveal, toggle de tema) — este milestone reabre esa exclusión puntualmente solo para el fondo animado del Hero, por pedido directo de Juan; el resto de las exclusiones de v1.1 (carruseles, toggle de dark mode) siguen vigentes
+
+**Research previo (en conversación, antes de abrir el milestone):** se evaluaron anime.js (descartado — librería de tweening, no genera shaders/ruido), three.js/ShaderGradient (descartado — arrastra three.js completo, ~150KB+, contradice el presupuesto de performance), CSS puro vía SVG `feTurbulence` (0 KB JS, alternativa más conservadora, considerada pero no elegida), y `@paper-design/shaders-react` → componente `GrainGradient` (elegido — 5KB, zero-dependency, WebGL nativo, ~2-5% uso de GPU en hardware moderno).
 
 ## Milestone Anterior: v1.2 Content Parity — Home + Author Page (cerrado 2026-07-12)
 
@@ -104,4 +113,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-12 — milestone v1.2 closed, 18/18 requirements validated; awaiting next milestone (Phase 6 Deploy + Cutover remains the sole open project-wide item, paused pending Juan's go-ahead with real Hostinger/DNS/Resend credentials)*
+*Last updated: 2026-07-12 — milestone v1.3 started (Hero Grainy Gradient Animation)*
