@@ -296,8 +296,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 - [x] **HERO-ANIM-02**: Colores del `GrainGradient` derivados de los tokens ember/navy ya definidos en Phase 7 (no colores nuevos inventados)
 - [x] **HERO-ANIM-03**: Título, subtítulo, CTAs y breadcrumbs del Hero permanecen visualmente idénticos (mismo componente, mismo copy) — el cambio es exclusivamente el fondo
 - [x] **HERO-ANIM-04**: Regla `prefers-reduced-motion` (ya existente desde Phase 7) pausa el shader / muestra un frame estático en vez de la animación en vivo
-- [ ] **HERO-ANIM-05**: Verificación real de Lighthouse Performance/Core Web Vitals contra el baseline pre-milestone (mismo método que Phase 11-03: build de producción local) — sin degradación significativa, dado que el propio Hero anuncia "Performance 100" en su copy
-- [ ] **HERO-ANIM-06**: Verificación mobile-first (375/768/1280px) de que el shader no causa overflow, jank visual, ni consumo excesivo de batería observable (spot-check, no medición de batería instrumentada)
+- [x] **HERO-ANIM-05**: Verificación real de Lighthouse Performance/Core Web Vitals contra el baseline pre-milestone (mismo método que Phase 11-03: build de producción local) — sin degradación significativa, dado que el propio Hero anuncia "Performance 100" en su copy
+- [x] **HERO-ANIM-06**: Verificación mobile-first (375/768/1280px) de que el shader no causa overflow, jank visual, ni consumo excesivo de batería observable (spot-check, no medición de batería instrumentada)
 
 ### Out of Scope (v1.3)
 
@@ -312,8 +312,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | HERO-ANIM-02 | Phase 16 | Complete |
 | HERO-ANIM-03 | Phase 16 | Complete |
 | HERO-ANIM-04 | Phase 16 | Complete |
-| HERO-ANIM-05 | Phase 17 | Pending |
-| HERO-ANIM-06 | Phase 17 | Pending |
+| HERO-ANIM-05 | Phase 17 | Complete |
+| HERO-ANIM-06 | Phase 17 | Complete |
 
 **Coverage:**
 

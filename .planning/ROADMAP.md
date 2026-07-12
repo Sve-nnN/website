@@ -41,7 +41,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 14: Target Keyword Field** - Campo editorial targetKeyword en Pages/Authors, poblado con picks de keyword research real (completed 2026-07-12)
 - [x] **Phase 15: Sitemap XSL + HTML** - sitemap.xml con hoja de estilos navegable (XSLT 1.0) + sitemap.html navegable agrupado por sección + link "Sitemap" agregado al footer (es+en), verificado en vivo contra el dev server sin regresión en robots.txt/Phase 2 (completed 2026-07-11)
 - [x] **Phase 16: Hero Grainy Gradient — Implementation** - El fondo del Hero home pasa de sólido a shader animado (`GrainGradient` de `@paper-design/shaders-react`) con colores ember/navy, copy intacto, respeta `prefers-reduced-motion` (completed 2026-07-12)
-- [ ] **Phase 17: Hero Grainy Gradient — Performance & Mobile Verification** - Verificación real de que el shader no degrada Lighthouse/CWV ni causa overflow/jank mobile-first
+- [x] **Phase 17: Hero Grainy Gradient — Performance & Mobile Verification** - Verificación real de que el shader no degrada Lighthouse/CWV ni causa overflow/jank mobile-first (completed 2026-07-12)
 
 ## Phase Details
 
@@ -500,7 +500,7 @@ Plans:
 
 Plans:
 
-- [ ] 17-01-PLAN.md — Extend lighthouse-mobile.mjs with CWV extraction, run production-build Lighthouse against /en+/es vs Phase 11 baseline, production-build mobile spot-check + verification report
+- [x] 17-01-PLAN.md — Extend lighthouse-mobile.mjs with CWV extraction, run production-build Lighthouse against /en+/es vs Phase 11 baseline, production-build mobile spot-check + verification report
 
 ## Progress
 
@@ -529,5 +529,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 14. Target Keyword Field | 1/1 | Complete   | 2026-07-12 |
 | 15. Sitemap XSL + HTML | 2/2 | Complete   | 2026-07-12 |
 | 16. Hero Grainy Gradient — Implementation | 3/3 | Complete   | 2026-07-12 |
-| 17. Hero Grainy Gradient — Performance & Mobile Verification | 0/TBD | Not started | - |
+| 17. Hero Grainy Gradient — Performance & Mobile Verification | 1/1 | Complete   | 2026-07-12 |
 </content>

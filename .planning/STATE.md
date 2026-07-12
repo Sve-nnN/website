@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: milestone
-status: Phase 16 closed (verified 5/5, code review clean after 2 warnings fixed). Phase 17 next.
-stopped_at: "Phase 16 (Hero Grainy Gradient — Implementation) fully closed: implemented (wave), retuned twice live with Juan (wave→ripple→blob final, colorBack near-black), mouse-reactivity prototyped then fully removed per Juan's request, verified 5/5 independently, code review found 2 warnings (WebGL error-boundary couldn't catch async failure, isDark hydration-mismatch risk) both fixed. Next: Phase 17 (HERO-ANIM-05/06 — Lighthouse/CWV verification + mobile-first spot-check)."
-last_updated: "2026-07-12T05:30:00.000Z"
-last_activity: "2026-07-12 — Phase 16 closed after live retune cycle with Juan and code-review fixes. Also corrected an orchestrator misstep mid-phase: briefly (and wrongly) flagged Juan's real 'prefiero blob' preference as a fabricated executor claim due to summarized context, corrected immediately once Juan clarified — docs restored to accurate record."
+status: verifying
+stopped_at: "Phase 17 (Hero Grainy Gradient — Performance & Mobile Verification) complete, 1/1 plan. Milestone v1.3 (Hero Grainy Gradient Animation) fully complete — HERO-ANIM-01..06 all closed across Phases 16-17. Phase 6 (Deploy + Cutover) remains the only open work, paused, awaiting real Hostinger/DNS/Resend credentials."
+last_updated: "2026-07-12T05:30:02.099Z"
+last_activity: "2026-07-12 — 17-01 complete (production-build Lighthouse + mobile spot-check, RESULT: PASS, no significant Performance/CWV regression from the Hero shader; HERO-ANIM-05/06 marked complete)"
 progress:
   total_phases: 17
   completed_phases: 16
-  total_plans: 71
-  completed_plans: 67
+  total_plans: 69
+  completed_plans: 65
   percent: 94
 ---
 
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 16 (Hero Grainy Gradient — Implementation) — complete (3/3 plans)
-Plan: 03/03 complete
-Status: Phase 16 closed. Next: Phase 17 (Lighthouse/CWV verification + mobile-first spot-check, HERO-ANIM-05/06)
-Last activity: 2026-07-12 — 16-03 complete (Playwright verification script + report, RESULT: PASS, 0 failures/0 warnings; HERO-ANIM-01..04 marked complete)
+Phase: 17 (Hero Grainy Gradient — Performance & Mobile Verification) — complete (1/1 plan)
+Plan: 01/01 complete
+Status: Phase 17 closed. Milestone v1.3 (Hero Grainy Gradient Animation) fully complete (Phases 16-17, HERO-ANIM-01..06 all closed). Phase 6 (Deploy + Cutover) remains the only open work, paused.
+Last activity: 2026-07-12 — 17-01 complete (production-build Lighthouse + mobile spot-check, RESULT: PASS, no significant Performance/CWV regression from the Hero shader; HERO-ANIM-05/06 marked complete)
 
 ## Performance Metrics
 
@@ -82,6 +82,7 @@ Last activity: 2026-07-12 — 16-03 complete (Playwright verification script + r
 | Phase 16 P01 | 4min | 2 tasks | 2 files |
 | Phase 16 P02 | 25min | 2 tasks | 2 files |
 | Phase 16 P03 | 20min | 2 tasks | 2 files |
+| Phase 17 P01 | 20min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -140,6 +141,7 @@ Recent decisions affecting current work:
 - [Phase 16]: 16-02: reducedMotion state must init to false (SSR-matching) and read matchMedia inside useEffect, not a useState lazy initializer -- React does not patch attribute-level hydration mismatches after the initial commit
 - [Phase 16]: 16-03: verification script confirmed 0 failures/0 warnings — shader canvas renders on both locales, no overflow at any breakpoint, copy unchanged, reduced-motion correctly detected; HERO-ANIM-01..04 all closed with real headless-browser evidence
 - [Phase 16]: Post-implementation retune: Hero shader went wave -> ripple -> blob (final, per Juan's live preference 'me gusta mas blob que ripple'); mouse reactivity was built, verified working, then explicitly removed per Juan's rejection -- no pointer tracking anywhere in the component or planned elsewhere
+- [Phase ?]: [Phase 17] 17-01: Baseline source is Phase 11-03's post-11-02 lh-current.json (pre-shader); regression threshold ~5 Performance points or CWV entering poor lab band per 17-CONTEXT.md -- both /en and /es measured Delta-3, PASS, no regression flagged
 
 ### Pending Todos
 
@@ -168,7 +170,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-12T03:17:05.095Z
+Last session: 2026-07-12T05:27:05.767Z
 Stopped at: v1.3 milestone (Hero Grainy Gradient Animation) roadmap created — 2 phases (16-17), continuing numbering after v1.2's Phase 15 (Phase 6 Deploy+Cutover stays paused, out of this roadmap). Phase 16 covers HERO-ANIM-01..04 (shader implementation, token colors, copy parity, reduced-motion). Phase 17 covers HERO-ANIM-05..06 (Lighthouse/CWV verification + mobile-first spot-check). Awaiting roadmap approval, then `/gsd:plan-phase 16`.
 Resume file: None
 </content>
