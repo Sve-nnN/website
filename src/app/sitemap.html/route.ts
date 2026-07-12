@@ -35,7 +35,21 @@ function renderItem(entry: SitemapEntry): string {
 }
 
 export async function GET() {
-  const entries = await getSitemapEntries()
+  let entries
+
+  try {
+    entries = await getSitemapEntries()
+  } catch (error) {
+    console.error('[sitemap.html] Failed to load sitemap entries:', error)
+
+    return new Response('Sitemap temporarily unavailable. Please try again later.', {
+      status: 500,
+      headers: {
+        'content-type': 'text/plain; charset=utf-8',
+        'cache-control': 'no-store',
+      },
+    })
+  }
 
   const groups = Object.keys(SITEMAP_GROUP_LABELS) as Array<keyof typeof SITEMAP_GROUP_LABELS>
 

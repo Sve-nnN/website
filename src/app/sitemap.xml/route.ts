@@ -12,7 +12,26 @@ function escapeXml(value: string): string {
 }
 
 export async function GET() {
-  const entries = await getSitemapEntries()
+  let entries
+
+  try {
+    entries = await getSitemapEntries()
+  } catch (error) {
+    console.error('[sitemap.xml] Failed to load sitemap entries:', error)
+
+    const emptyXml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+</urlset>`
+
+    return new Response(emptyXml, {
+      status: 500,
+      headers: {
+        'content-type': 'application/xml; charset=utf-8',
+        'cache-control': 'no-store',
+      },
+    })
+  }
 
   const urls = entries
     .map((entry) => {
