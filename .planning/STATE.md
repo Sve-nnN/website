@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: milestone
-status: "Phase 12 (Author Page E-E-A-T) closed 2026-07-11 — Juan reviewed visually, 2 bugs found+fixed, verified 7/7, code review clean. Phase 13 (Home Content Population) code/content complete, 2/2 plans, awaiting Juan's visual sign-off (incl. admin icon-picker click-through, not yet confirmed) and verify+review before closing."
-stopped_at: "Phase 13 executed end-to-end (13-01 schema/admin icon-picker, 13-02 frontend render + seed content) — AboutSection features/CTA + FAQ live on Home in both locales, #contact anchor real. Phase 12 fully closed."
-last_updated: "2026-07-11T23:10:00.000Z"
-last_activity: "2026-07-11 — Phase 13 executed: AboutSection.features[]/ctaText/ctaLink schema + IconPickerField admin Modal-based icon picker + migration applied (13-01); AboutSection features grid + CTA rendered, FAQ block + ContactFormBlock added to Home layout, real bilingual content seeded, headless Playwright verification PASS across ES/EN and 375/768/1280 breakpoints (13-02). Deviations: fixed a features[]/faqs[] sub-array id-reuse bug in the seed script, and fixed a pre-existing Phase 10.7 bug (leftover Spanish AboutSection paragraph on the EN Home page). Phase 12 remains blocked on Juan's checkpoint (12-04 Task 2), unaffected by Phase 13's work."
+status: "Phase 12 and Phase 13 both closed 2026-07-11. Phase 13 hit a real gap (AboutSection eyebrow/title left stale from Phase 10.7) caught by verifier, closed via 13-03 gap-closure plan; code review found 1 blocker (icon picker 24 options vs 4 mapped icons) + fixed. Juan trusts automated verification, skipped manual icon-picker click-through. Next: Phase 14 (Target Keyword Field)."
+stopped_at: "Phase 13 fully closed (13-01, 13-02, 13-03 gap closure, review-fix) — AboutSection features/CTA + real copy + FAQ live on Home in both locales, #contact anchor real, icon picker maps all 24 options correctly."
+last_updated: "2026-07-11T23:45:00.000Z"
+last_activity: "2026-07-11 — Phase 13 fully closed: verify-phase caught a real gap (AboutSection eyebrow/title still showed Phase 10.7 placeholder instead of Phase 13's locked copy) — closed via 13-03 gap-closure plan, re-verified 3/3 (human_needed only for admin icon-picker click-through, which Juan opted to skip and trust automated verification for). Code review found 1 BLOCKER (icon picker offered 24 icons but frontend iconMap only covered 4, silent incorrect fallback) + 3 warnings + 3 info — all fixed via code-fixer (iconMap now derives from ICON_OPTIONS, ctaLink validated against unsafe schemes, ARIA attributes added to icon picker, sharedProps no longer leak to all Home blocks). tsc clean, dev server confirmed serving correct content."
 progress:
   total_phases: 15
-  completed_phases: 12
-  total_plans: 61
-  completed_plans: 57
-  percent: 80
+  completed_phases: 13
+  total_plans: 63
+  completed_plans: 60
+  percent: 87
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: Phase 12 — CLOSED (7/7 verified, code review clean, Juan confirmed visually). Phase 13 — Home Content Population (AboutSection Features + FAQ) — code/content complete 2/2 plans, pending Juan's visual sign-off + formal verify/review.
-Plan: Phase 13 executed (13-01, 13-02). Next: verify-phase 13, code-review 13, then Phase 14.
-Status: Phase 13 built — AboutSection features/CTA + FAQ live on Home (ES+EN), #contact anchor functional via new ContactFormBlock. Needs Juan's visual check (incl. clicking through the new admin icon-picker modal, which the executor couldn't do without admin credentials) before final close.
-Last activity: 2026-07-11 — Phase 13 executed end-to-end: 13-01 (AboutSection features[]/ctaText/ctaLink schema, IconPickerField admin Modal-based icon picker, migration applied), 13-02 (features grid + CTA rendered on Home, FAQ + ContactFormBlock added to layout, real bilingual seed content, headless Playwright verification PASS). Fixed 2 real bugs found during self-verification: features[]/faqs[] sub-array id-reuse in the new seed script, and a pre-existing Phase 10.7 bug (leftover Spanish paragraph on the EN AboutSection).
+Phase: Phase 13 — CLOSED (3/3 verified after gap closure, code review clean after fixing 1 blocker). Phase 14 (Target Keyword Field) — not started.
+Plan: Phase 13 fully closed (13-01, 13-02, 13-03). Next: smart discuss → plan → execute Phase 14.
+Status: Phases 12-13 both closed. Moving to Phase 14 (targetKeyword field on pages+authors, populated from existing research/keyword-research/KEYWORD-RESEARCH.md picks).
+Last activity: 2026-07-11 — Phase 13 gap closure (13-03: fixed AboutSection eyebrow/title mismatch) + code review fix (icon picker iconMap coverage blocker + 3 warnings). Re-verified 3/3, human_needed item (icon-picker click-through) explicitly waived by Juan in favor of trusting automated verification.
 
 ## Performance Metrics
 
