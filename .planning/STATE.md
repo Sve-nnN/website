@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.4
 milestone_name: milestone
 status: executing
-stopped_at: Phase 19 complete (verified, passed) -- starting Phase 20
-last_updated: "2026-07-12T20:45:00.000Z"
-last_activity: 2026-07-12 -- Phase 19 verified passed (4/4), moving to Phase 20
+stopped_at: Phase 20 complete (verified, passed) -- starting Phase 21
+last_updated: "2026-07-12T21:15:00.000Z"
+last_activity: 2026-07-12 -- Phase 20 verified passed (4/4), moving to Phase 21
 progress:
   total_phases: 21
-  completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
-  percent: 10
+  completed_phases: 3
+  total_plans: 7
+  completed_plans: 7
+  percent: 14
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 20 — seo-local-geo-pages
+**Current focus:** Phase 21 — home-optimization-service-linking
 
 ## Current Position
 
-Phase: 20 (seo-local-geo-pages) — NOT STARTED
+Phase: 21 (home-optimization-service-linking) — NOT STARTED
 Plan: —
-Status: Phase 19 closed (VERIFICATION.md: passed, 4/4). Next: context/discuss for Phase 20
-Last activity: 2026-07-12 -- Phase 19 verified passed, starting Phase 20
+Status: Phase 20 closed (VERIFICATION.md: passed, 4/4). Next: context/discuss for Phase 21. NOTA: sesión principal está instalando @payloadcms/plugin-mcp en paralelo, puede tocar payload.config.ts -- coordinar antes de editarlo en Phase 21.
+Last activity: 2026-07-12 -- Phase 20 verified passed, starting Phase 21
 
 ## Performance Metrics
 
@@ -146,7 +146,8 @@ Recent decisions affecting current work:
 - [Phase 18]: 18-01: code review found WR-01 (H1 duplicable si se agrega Hero block a /contact desde admin) y WR-02 (generateTitle/generateDescription tipados contra shape hand-fabricado); WR-01 fixeado (guard hasHeroTitle); WR-02 se intentó tipar contra los generics reales del plugin (GenerateTitle/GenerateDescription) pero generó fricción de tipos no resuelta en el tiempo disponible -- revertido, aceptado como deuda técnica documentada en 18-VERIFICATION.md (no bloquea ningún requirement de la fase). Decisión tomada de forma autónoma (modo no interactivo) por no haber humano disponible para decidir.
 - [Phase 18]: node_modules se corrompió a mitad de sesión (symlink circular `.node_modules-*` + `node_modules/node_modules` anidado, causado por una instalación interrumpida) -- resuelto con `rm -rf node_modules && npm install`, sin impacto en código fuente (node_modules está gitignored)
 - [Phase 19]: 5 páginas nuevas (`pages` collection, no colección nueva) en rutas duales por locale (`/servicios`+`/services`, índice y `[slug]`) ya que next-intl no tiene `pathnames` configurado -- ambos segmentos funcionan bajo cualquier locale. Copy 100% real y bilingüe escrito por Claude (grounded en `research/SEO-COMPETITIVE-AUDIT-v1.4.md`), sin precios, con la página GEO enlazando explícitamente `/llms.txt`/`/llms-full.txt`.
-- [Phase 19]: code review encontró CR-01 (Critical): `CallToAction.richText` sin `localized: true` -- el seed pisaba el CTA en español con el de inglés. INCIDENTE: la primera corrida de la migración de fix se aplicó sin backfill previo al DROP COLUMN y borró el CTA existente de TODAS las páginas (incluida Home) contra la DB real; Juan restauró vía Neon point-in-time restore. Migración corregida (backfill INSERT...SELECT...unnest(ARRAY['es','en']) antes del DROP), re-revisada por humano, re-aplicada con aprobación explícita, y los 3 seed scripts afectados (`seed-home-page.ts`, `seed-phase10-7-gap-fill.ts`, `seed-phase19-service-pages.ts`) re-corridos para restaurar contenido. Verificado en vivo: Home CTA intacto, CTA de las 5 páginas nuevas correctamente localizado por idioma. **Regla nueva permanente** (root CLAUDE.md, sección "Database Safety", enforceada a nivel de sistema): ningún `payload migrate` ni script que escriba contra la DB real corre sin aprobación humana explícita nombrando la acción específica, particularmente para DROP COLUMN/TABLE/TRUNCATE o cambios de localized↔no-localizado.
+- [Phase 19]: code review encontró CR-01 (Critical): `CallToAction.richText` sin `localized: true` -- el seed pisaba el CTA en español con el de inglés. INCIDENTE: la primera corrida de la migración de fix se aplicó sin backfill previo al DROP COLUMN y borró el CTA existente de TODAS las páginas (incluida Home) contra la DB real; Juan restauró vía Neon point-in-time restore. Migración corregida (backfill INSERT...SELECT...unnest(ARRAY['es','en']) antes del DROP), re-revisada por humano, re-aplicada con aprobación explícita, y los 3 seed scripts afectados (`seed-home-page.ts`, `seed-phase10-7-gap-fill.ts`, `seed-phase19-service-pages.ts`) re-corridos para restaurar contenido. Verificado en vivo: Home CTA intacto, CTA de las 5 páginas nuevas correctamente localizado por idioma. **Regla nueva permanente** (root CLAUDE.md, sección "Database Safety", enforceada a nivel de sistema): ningún `payload migrate` ni script que escriba contra la DB real corre sin aprobación humana explícita nombrando la acción específica, particularmente para DROP COLUMN/TABLE/TRUNCATE o cambios de localized↔no-localizado. La regla también quedó probada en la práctica: el sistema rechazó una aprobación retransmitida por el coordinador (no era el mensaje directo de Juan en el hilo) y solo aceptó la aprobación cuando Juan mismo escribió la confirmación en la conversación.
+- [Phase 20]: 2 geo-pages (Lima, Madrid) reusando el patrón de seed/bloques de Phase 19 sin cambios; segmento de URL único compartido entre locales (`/seo-tecnico-lima`, `/seo-tecnico-madrid`) en vez del patrón dual de Phase 19, porque estas páginas SON las keywords objetivo en español. Antes de escribir el seed script se verificó explícitamente que `CallToAction.richText` siguiera `localized: true` (fix de Phase 19) -- cero migraciones nuevas, sin repetir el incidente. Lima grounded en hechos reales ya seedeados (UPC, taller real con Arianna Lupi/DinoRANK); Madrid honesto sobre no tener oficina física en Madrid, diferenciado con datos reales de keyword research ES. Seed corrido contra la DB real con aprobación directa y explícita de Juan en el hilo (no relay) -- creó seo-tecnico-lima (id=11) y seo-tecnico-madrid (id=12) sin errores. Code review: 0 critical, 1 warning (SUMMARY.md faltante, ya resuelto), 2 info aceptados.
 
 ### Pending Todos
 
