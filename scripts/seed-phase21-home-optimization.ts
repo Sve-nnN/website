@@ -114,9 +114,27 @@ async function addServicesNavLink(payload: Awaited<ReturnType<typeof getPayload>
   const headerEs = await payload.findGlobal({ slug: 'header', locale: 'es' })
   const existingEs = (headerEs.navItems ?? []) as NavItem[]
 
-  const alreadyExists = existingEs.some((item) => item.link?.url === NAV_SERVICES_URL)
-  if (alreadyExists) {
-    console.log('Services nav item already exists, skipping append.')
+  const existingItem = existingEs.find((item) => item.link?.url === NAV_SERVICES_URL)
+  if (existingItem) {
+    // WR-01 self-heal: the item already exists (from a prior run), but its
+    // label may be wrong in one or both locales (the exact class of bug
+    // fixed once already — see fix-phase21-services-nav-label-en.ts). Re-run
+    // the correction for both locales unconditionally instead of silently
+    // trusting the existing url match, so this script is safe to re-run as
+    // its own remediation without needing a separate one-off fix script.
+    for (const locale of LOCALES) {
+      const header = await payload.findGlobal({ slug: 'header', locale })
+      const items = (header.navItems ?? []) as NavItem[]
+      const target = items.find((item) => item.id === existingItem.id)
+      if (target && target.link?.label !== navLabelByLocale[locale]) {
+        const fixed = items.map((item) =>
+          item.id === existingItem.id ? { ...item, link: { ...item.link, label: navLabelByLocale[locale] } } : item,
+        )
+        await payload.updateGlobal({ slug: 'header', locale, data: { navItems: fixed as never } })
+        console.log(`Self-healed Services nav item label (locale=${locale})`)
+      }
+    }
+    console.log('Services nav item already exists — verified/self-healed labels, skipping append.')
     return
   }
 
