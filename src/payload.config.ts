@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
+import type { GenerateDescription, GenerateTitle } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { cloudStoragePlugin } from '@payloadcms/plugin-cloud-storage'
 import { resendAdapter } from '@payloadcms/email-resend'
@@ -29,6 +30,15 @@ import { Footer } from './globals/Footer'
 import { FeaturedContent } from './globals/FeaturedContent'
 import { beforeSyncWithSearch } from './search/beforeSync'
 import { searchFields } from './search/fieldOverrides'
+import type { Author, CaseStudy, Page, Post } from './payload-types'
+
+// The seoPlugin's generateTitle/generateDescription callbacks are shared
+// across all four collections registered below (pages/posts/case-studies/
+// authors), so `doc` is a union of their generated document shapes rather
+// than a single collection's type. Using the real generated types (instead
+// of a hand-fabricated structural guess) means `tsc` catches drift if any
+// of these collections' schemas change.
+type SeoDoc = Page | Post | CaseStudy | Author
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -91,21 +101,16 @@ export default buildConfig({
       collections: ['pages', 'posts', 'case-studies', 'authors'],
       uploadsCollection: 'media',
       tabbedUI: true,
-      generateTitle: ({
-        doc,
-      }: {
-        doc: { title?: string; name?: string; heroSubtitle?: string; excerpt?: string; jobTitle?: string }
-      }) =>
+      generateTitle: (({ doc }) =>
         doc?.name
           ? `${doc.name} | Juan Carlos Angulo`
           : doc?.title
             ? `${doc.title} | Juan Carlos Angulo`
-            : 'Juan Carlos Angulo',
-      generateDescription: ({
-        doc,
-      }: {
-        doc: { title?: string; name?: string; heroSubtitle?: string; excerpt?: string; jobTitle?: string }
-      }) => (doc?.name ? (doc?.jobTitle ?? '') : (doc?.heroSubtitle ?? doc?.excerpt ?? '')),
+            : 'Juan Carlos Angulo') satisfies GenerateTitle<SeoDoc> as GenerateTitle<SeoDoc>,
+      generateDescription: (({ doc }) =>
+        doc?.name
+          ? ((doc as Author)?.jobTitle ?? '')
+          : ((doc as CaseStudy)?.heroSubtitle ?? (doc as Post)?.excerpt ?? '')) satisfies GenerateDescription<SeoDoc> as GenerateDescription<SeoDoc>,
     }),
     redirectsPlugin({
       collections: ['pages', 'posts', 'case-studies', 'categories', 'authors'],
