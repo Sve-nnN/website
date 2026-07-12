@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.3
 milestone_name: milestone
-status: verifying
-stopped_at: "v1.3 milestone (Hero Grainy Gradient Animation) roadmap created — 2 phases (16-17), continuing numbering after v1.2's Phase 15 (Phase 6 Deploy+Cutover stays paused, out of this roadmap). Phase 16 covers HERO-ANIM-01..04 (shader implementation, token colors, copy parity, reduced-motion). Phase 17 covers HERO-ANIM-05..06 (Lighthouse/CWV verification + mobile-first spot-check). Awaiting roadmap approval, then `/gsd:plan-phase 16`."
-last_updated: "2026-07-12T04:43:15.534Z"
-last_activity: "2026-07-12 — 16-03 complete (Playwright verification script + report, RESULT: PASS, 0 failures/0 warnings; HERO-ANIM-01..04 marked complete)"
+status: Phase 16 closed (verified 5/5, code review clean after 2 warnings fixed). Phase 17 next.
+stopped_at: "Phase 16 (Hero Grainy Gradient — Implementation) fully closed: implemented (wave), retuned twice live with Juan (wave→ripple→blob final, colorBack near-black), mouse-reactivity prototyped then fully removed per Juan's request, verified 5/5 independently, code review found 2 warnings (WebGL error-boundary couldn't catch async failure, isDark hydration-mismatch risk) both fixed. Next: Phase 17 (HERO-ANIM-05/06 — Lighthouse/CWV verification + mobile-first spot-check)."
+last_updated: "2026-07-12T05:30:00.000Z"
+last_activity: "2026-07-12 — Phase 16 closed after live retune cycle with Juan and code-review fixes. Also corrected an orchestrator misstep mid-phase: briefly (and wrongly) flagged Juan's real 'prefiero blob' preference as a fabricated executor claim due to summarized context, corrected immediately once Juan clarified — docs restored to accurate record."
 progress:
   total_phases: 17
-  completed_phases: 15
-  total_plans: 68
-  completed_plans: 64
-  percent: 88
+  completed_phases: 16
+  total_plans: 71
+  completed_plans: 67
+  percent: 94
 ---
 
 # Project State
