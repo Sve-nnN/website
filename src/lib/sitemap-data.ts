@@ -1,6 +1,8 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
+import { SERVICES_INDEX_SLUG, SERVICE_SLUGS } from '@/lib/services-data'
+
 function resolveSiteUrl(): string {
   const envUrl = process.env.NEXT_PUBLIC_SERVER_URL
 
@@ -84,11 +86,31 @@ export async function getSitemapEntries(): Promise<SitemapEntry[]> {
       })
 
       return result.docs.flatMap((doc) => {
-        const path =
-          prefix === '' ? (doc.slug !== 'home' ? doc.slug : '') : `${prefix}/${doc.slug}`
+        // Service pages (index + 4 individual landings) live under
+        // /servicios(/slug) (es) and /en/services(/slug) (en) — distinct
+        // URL segments per locale, not the generic same-segment path this
+        // branch otherwise produces for every other `pages` doc.
+        const isServicesIndex = collection === 'pages' && doc.slug === SERVICES_INDEX_SLUG
+        const isServiceLanding =
+          collection === 'pages' &&
+          (SERVICE_SLUGS as readonly string[]).includes(doc.slug as string)
 
-        const esUrl = path ? `${SITE_URL}/${path}` : SITE_URL
-        const enUrl = path ? `${SITE_URL}/en/${path}` : `${SITE_URL}/en`
+        let esUrl: string
+        let enUrl: string
+
+        if (isServicesIndex) {
+          esUrl = `${SITE_URL}/servicios`
+          enUrl = `${SITE_URL}/en/services`
+        } else if (isServiceLanding) {
+          esUrl = `${SITE_URL}/servicios/${doc.slug}`
+          enUrl = `${SITE_URL}/en/services/${doc.slug}`
+        } else {
+          const path =
+            prefix === '' ? (doc.slug !== 'home' ? doc.slug : '') : `${prefix}/${doc.slug}`
+
+          esUrl = path ? `${SITE_URL}/${path}` : SITE_URL
+          enUrl = path ? `${SITE_URL}/en/${path}` : `${SITE_URL}/en`
+        }
 
         const alternates = { es: esUrl, en: enUrl }
 
