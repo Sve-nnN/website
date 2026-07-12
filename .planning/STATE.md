@@ -160,6 +160,12 @@ None yet.
 - [v1.2 → v1.3 backlog, 2026-07-11] Juan pidió reestructurar URLs de blog (`/blog/categoria/slug` para posts, `/blog/categoria-slug` para listados de categoría) + agregar paginación al blog. Explícitamente diferido — cierra v1.2 (Home+Author, blog fuera de scope) primero. Cambio SEO-sensible: requiere estrategia de redirects 301 para no perder el resultado "0 URL deltas" ya verificado en Phase 4 (04-VERIFICATION.md). Candidato a nueva fase (v1.2 extendida o v1.3), no ejecutar ad-hoc.
 - ~~[Phase 15, 2026-07-11] Header global (main site nav) tiene el mismo bug de labels ES vacíos ya corregido en Footer durante 15-02~~ — RESUELTO antes del cierre de v1.2: `scripts/fix-header-navitems-es-labels.ts` corrigió `navItems[].link.label` en ES; confirmado en vivo por `.planning/v1.2-MILESTONE-AUDIT.md` ("Blog, Casos de éxito, Autores, Contacto" renderizan con texto ES correcto en `/`).
 
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 260712-159 | Gradient CTA sections: reuse HeroGrainGradient shader as background on ContactFormBlock sidebar + CallToAction strip (Tasks 1-2 done; Task 3 blocking human-verify checkpoint pending) | 2026-07-12 | f76678f | [260712-159-gradient-cta-sections](./quick/260712-159-gradient-cta-sections/) |
+
 ## Deferred Items
 
 Items acknowledged and carried forward from previous milestone close:
@@ -170,7 +176,7 @@ Items acknowledged and carried forward from previous milestone close:
 
 ## Session Continuity
 
-Last session: 2026-07-12T05:27:05.767Z
-Stopped at: v1.3 milestone (Hero Grainy Gradient Animation) roadmap created — 2 phases (16-17), continuing numbering after v1.2's Phase 15 (Phase 6 Deploy+Cutover stays paused, out of this roadmap). Phase 16 covers HERO-ANIM-01..04 (shader implementation, token colors, copy parity, reduced-motion). Phase 17 covers HERO-ANIM-05..06 (Lighthouse/CWV verification + mobile-first spot-check). Awaiting roadmap approval, then `/gsd:plan-phase 16`.
-Resume file: None
+Last session: 2026-07-12T05:54:40Z
+Stopped at: Quick task 260712-159 (gradient CTA sections) — Tasks 1-2 executed and committed (ContactFormBlock sidebar + CallToAction strip now render HeroGrainGradient background). Task 3 is a blocking human-verify checkpoint awaiting Juan's visual approval in browser (light/dark theme, EN/ES, reduced-motion).
+Resume file: .planning/quick/260712-159-gradient-cta-sections/260712-159-PLAN.md (Task 3 checkpoint)
 </content>
