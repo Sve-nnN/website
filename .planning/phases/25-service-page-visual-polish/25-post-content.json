@@ -1,0 +1,298 @@
+{
+  "/servicios/seo-technical-audit": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Auditoría SEO Técnica"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "http://localhost:3000"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Servicios",
+              "item": "http://localhost:3000/servicios"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Auditoría SEO Técnica",
+              "item": "http://localhost:3000/servicios/seo-technical-audit"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/servicios/seo-consulting": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Consultoría SEO"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "http://localhost:3000"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Servicios",
+              "item": "http://localhost:3000/servicios"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Consultoría SEO",
+              "item": "http://localhost:3000/servicios/seo-consulting"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/servicios/fullstack-development": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Desarrollo Full-Stack con SEO integrado"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "http://localhost:3000"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Servicios",
+              "item": "http://localhost:3000/servicios"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Desarrollo Full-Stack con SEO integrado",
+              "item": "http://localhost:3000/servicios/fullstack-development"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/servicios/ai-seo-geo": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "SEO para IA / GEO"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "http://localhost:3000"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Servicios",
+              "item": "http://localhost:3000/servicios"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "SEO para IA / GEO",
+              "item": "http://localhost:3000/servicios/ai-seo-geo"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/en/services/seo-technical-audit": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Technical SEO Audit"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "http://localhost:3000/en"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services",
+              "item": "http://localhost:3000/en/services"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Technical SEO Audit",
+              "item": "http://localhost:3000/en/services/seo-technical-audit"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/en/services/seo-consulting": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "SEO Consulting"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "http://localhost:3000/en"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services",
+              "item": "http://localhost:3000/en/services"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "SEO Consulting",
+              "item": "http://localhost:3000/en/services/seo-consulting"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/en/services/fullstack-development": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Full-Stack Development with SEO Built In"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "http://localhost:3000/en"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services",
+              "item": "http://localhost:3000/en/services"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Full-Stack Development with SEO Built In",
+              "item": "http://localhost:3000/en/services/fullstack-development"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/en/services/ai-seo-geo": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "AI SEO / GEO"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "http://localhost:3000/en"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services",
+              "item": "http://localhost:3000/en/services"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "AI SEO / GEO",
+              "item": "http://localhost:3000/en/services/ai-seo-geo"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
