@@ -106,7 +106,9 @@ export function SiteHeaderChrome({
       )}
     >
       <Container className="flex items-center justify-between py-4">
-        <Link href="/" className="flex items-center gap-2">
+        {/* FIX (26-REVIEW WR-04): was hardcoded to `/` regardless of locale — on
+            EN pages that's the ES home, not `/en`. */}
+        <Link href={locale === 'en' ? '/en' : '/'} className="flex items-center gap-2">
           {logo?.url ? (
             <Image src={logo.url} alt={logo.alt ?? 'Logo'} width={40} height={40} />
           ) : (
@@ -126,7 +128,12 @@ export function SiteHeaderChrome({
                         {...item.link}
                         aria-current={active ? 'page' : undefined}
                         className={cn(
-                          'relative pb-1 border-b-2 border-transparent hover:border-primary hover:text-primary focus-visible:border-primary focus-visible:text-primary transition-colors duration-fast ease-out text-body',
+                          // FIX (26-REVIEW WR-01): CMSLink's own default (no-`appearance`)
+                          // branch unconditionally applies `text-primary` — without an
+                          // explicit text-color class here for BOTH states, twMerge has
+                          // nothing to dedupe against and every nav item renders ember
+                          // regardless of `active`, making this toggle a no-op.
+                          'relative pb-1 border-b-2 border-transparent no-underline text-secondary-foreground hover:border-primary hover:text-primary focus-visible:border-primary focus-visible:text-primary transition-colors duration-fast ease-out text-body',
                           active && 'border-primary text-primary',
                         )}
                       />
@@ -164,7 +171,9 @@ export function SiteHeaderChrome({
                       {...item.link}
                       aria-current={active ? 'page' : undefined}
                       className={cn(
-                        'font-heading rounded-md px-3 py-3 min-h-11 flex items-center border-b-2 border-transparent hover:border-primary hover:bg-muted focus-visible:border-primary focus-visible:bg-muted transition-colors duration-fast ease-out text-body',
+                        // FIX (26-REVIEW WR-01): see desktop nav comment above — same
+                        // twMerge-dedup requirement applies to the mobile Sheet nav.
+                        'font-heading rounded-md px-3 py-3 min-h-11 flex items-center border-b-2 border-transparent no-underline text-foreground hover:border-primary hover:bg-muted focus-visible:border-primary focus-visible:bg-muted transition-colors duration-fast ease-out text-body',
                         active && 'border-primary text-primary',
                       )}
                     />
