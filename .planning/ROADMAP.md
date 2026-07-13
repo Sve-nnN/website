@@ -51,7 +51,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 20: SEO Local Geo-pages** - Landings "SEO técnico en Lima" y "SEO técnico en Madrid" con contenido genuinamente diferenciado (completed 2026-07-12)
 - [x] **Phase 21: Home Optimization & Service Linking** - Home refuerza el ángulo desarrollo+SEO técnico y enlaza a las páginas de servicio nuevas (completed 2026-07-12)
 
-- [ ] **Phase 22: Breadcrumbs (visual + schema)** - Servicios index + 4 landings ganan trail visual y BreadcrumbList JSON-LD desde una sola fuente
+- [x] **Phase 22: Breadcrumbs (visual + schema)** - Servicios index + 4 landings ganan trail visual y BreadcrumbList JSON-LD desde una sola fuente (completed 2026-07-12)
 - [ ] **Phase 23: Canonical + hreflang hardening** - Las 4 combinaciones de URL de servicio emiten canonical/hreflang correctos, metadataBase sitewide
 - [ ] **Phase 24: ServicesShowcase en Home** - Home muestra las 4 tarjetas de servicio leyendo SERVICE_SLUGS en vivo, aditivo
 - [ ] **Phase 25: Service-page visual polish** - Las 4 landings de servicio ganan anatomía visual completa y prueba social competitiva
@@ -602,7 +602,7 @@ Plans:
 
 Plans:
 
-- [ ] 22-01-PLAN.md — src/lib/breadcrumbs.ts (buildTrail/buildBreadcrumbJsonLd) + wired into all 4 Servicios page.tsx files + seo-schema agent validation sweep
+- [x] 22-01-PLAN.md — src/lib/breadcrumbs.ts (buildTrail/buildBreadcrumbJsonLd) + wired into all 4 Servicios page.tsx files + seo-schema agent validation sweep
 
 ### Phase 23: Canonical + hreflang hardening
 

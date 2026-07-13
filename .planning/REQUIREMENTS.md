@@ -9,9 +9,9 @@ Requirements para el milestone v1.5. Cada uno mapea a una fase del roadmap (Home
 
 ### Breadcrumbs
 
-- [ ] **BREAD-01**: Usuario ve un trail de breadcrumbs visual en la página índice de Servicios y en las 4 landings individuales, en ambos locales (ES/EN)
-- [ ] **BREAD-02**: Cada página con breadcrumbs emite `BreadcrumbList` JSON-LD derivado de la misma fuente que el trail visual (una sola función `buildTrail()`, sin duplicar lógica de URL/locale)
-- [ ] **BREAD-03**: El schema `BreadcrumbList` se valida sin errores en ambos locales usando el agente/MCP de schema SEO disponible en el proyecto (`seo-schema`) antes de dar la fase por cerrada
+- [x] **BREAD-01**: Usuario ve un trail de breadcrumbs visual en la página índice de Servicios y en las 4 landings individuales, en ambos locales (ES/EN)
+- [x] **BREAD-02**: Cada página con breadcrumbs emite `BreadcrumbList` JSON-LD derivado de la misma fuente que el trail visual (una sola función `buildTrail()`, sin duplicar lógica de URL/locale)
+- [x] **BREAD-03**: El schema `BreadcrumbList` se valida sin errores en ambos locales usando el agente/MCP de schema SEO disponible en el proyecto (`seo-schema`) antes de dar la fase por cerrada
 
 ### SEO Técnico (Canonical / Hreflang)
 
@@ -65,9 +65,9 @@ Explícitamente excluido de v1.5. Documentado para prevenir scope creep.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BREAD-01 | Phase 22 | Pending |
-| BREAD-02 | Phase 22 | Pending |
-| BREAD-03 | Phase 22 | Pending |
+| BREAD-01 | Phase 22 | Done |
+| BREAD-02 | Phase 22 | Done |
+| BREAD-03 | Phase 22 | Done |
 | SEOTECH-01 | Phase 23 | Pending |
 | SEOTECH-02 | Phase 23 | Pending |
 | SEOTECH-03 | Phase 23 | Pending |

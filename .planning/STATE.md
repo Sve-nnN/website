@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: UI/UX Pro Max — Polish y Competitividad
-status: roadmapped
-last_updated: "2026-07-12T23:30:00.000Z"
+status: in_progress
+last_updated: "2026-07-12T23:45:00.000Z"
 last_activity: 2026-07-12
 progress:
   total_phases: 4
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  completed_phases: 1
+  total_plans: 1
+  completed_plans: 1
+  percent: 25
 ---
 
 # Project State
@@ -20,7 +20,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 22 (Breadcrumbs) — v1.5 roadmap created, ready to plan
+**Current focus:** Phase 23 (Canonical + hreflang hardening) — Phase 22 closed 3/3, autonomous run in progress
 
 ## Current Position
 
@@ -152,6 +152,7 @@ Recent decisions affecting current work:
 - [Phase 21]: Home's aboutSection reforzado (Next.js/Payload/CMS headless + SEO en el código, ambos locales) y nav principal con link "Servicios"/"Services" a `/services`. Regla de Database Safety relajada por Juan durante esta fase ("no me preguntes por confirmaciones, solo hazlo si necesitas eliminar algo", commit f74c230 en CLAUDE.md) -- escrituras normales/aditivas ya no pausan, solo lo destructivo. El classifier del sistema exigió correctamente el propio mensaje directo de Juan en el hilo (no un relay del coordinador) antes de aplicar ese cambio de política a una escritura real. Bug real encontrado y arreglado en la propia ejecución: `Header.navItems` es un array compartido no-localizado (solo `link.label` lo es) -- el primer intento de escribir el nuevo nav item en locale 'en' colisionó de id con la fila ya creada por el write 'es', dejando "Servicios" en la home en inglés; corregido en el script fuente (filtrar por id antes de re-appendear) y con un script correctivo puntual no destructivo, verificado estable. Guard de idempotencia reforzado post-review para auto-sanar el label en cualquier re-run (WR-01).
 
 - [Milestone v1.5]: Roadmap: 4 fases (22-25) derivadas de los 18 requirements v1.5, continuando la numeración desde Phase 21, siguiendo la estructura propuesta por research/SUMMARY.md sin modificaciones estructurales — orden estrictamente secuencial por riesgo ascendente de regresión/DB (breadcrumbs sin riesgo de schema -> canonical/hreflang frontend-only -> ServicesShowcase aditivo -> polish visual, la fase de mayor superficie/riesgo, va última). Cada fase depende de la inmediatamente anterior porque cada una re-toca los mismos templates de Servicios que la anterior tocó.
+- [Phase 22]: 22-01: `src/lib/breadcrumbs.ts` nuevo, módulo puro sin acceso a DB — `buildTrail()`/`buildBreadcrumbJsonLd()` como única fuente de verdad, reutiliza el prop `breadcrumbs` que el bloque Hero (variant `listing`) ya aceptaba desde Phase 10.8 en vez del campo editorial manual de Payload (override vía `blockProps` en `RenderBlocks`, cero campo nuevo, cero migración). Wireado en los 4 `page.tsx` de Servicios (índice + `[slug]`, ES/EN). Verificado en vivo contra las 10 URLs (dev server real): trail visual correcto (2 niveles índice, 3 landing) + JSON-LD `BreadcrumbList` coincide exactamente. BREAD-03 (validación `seo-schema`) inicialmente quedó `human_needed` porque ni el executor ni el verifier tenían la tool Task en su set — resuelto por el orquestador invocando el agente `seo-schema` directamente (sí disponible a ese nivel) contra las 10 URLs, 10/10 PASS. Code review encontró WR-01 (comentario de seguridad en `JsonLd.tsx` afirmaba incorrectamente que `JSON.stringify` escapa `</script>` — falso, no escapa `<`/`>`/`&`) fixeado agregando escape a secuencias unicode antes de inyectar; WR-02 (falta de tests unitarios para `buildTrail()`) e IN-01/IN-02 (duplicación preexistente de Phase 19 entre `servicios/`↔`services/`, código muerto menor) aceptados como deuda no bloqueante.
 
 ### Pending Todos
 
