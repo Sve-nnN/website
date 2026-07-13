@@ -3,10 +3,10 @@ gsd_state_version: 1.0
 milestone: v1.6
 milestone_name: UI/UX Pro Max II — Componentes, Motion y Voz
 status: planning
-last_updated: "2026-07-13T04:44:46.284Z"
+last_updated: "2026-07-13T05:00:00.000Z"
 last_activity: 2026-07-13
 progress:
-  total_phases: 0
+  total_phases: 6
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** v1.5 milestone (4 fases, 22→25) todas cerradas, 18/18 requirements — solo queda Phase 6 (Deploy + Cutover), fuera de este run por decisión explícita de Juan. Ver "Operator Next Steps" abajo.
+**Current focus:** v1.6 milestone — ROADMAP.md creado (6 fases, 26→31, 20/20 requirements mapeados). Track A (UI/motion, 26-28) y Track B (humanización de contenido, 29-31, Phase 29 prerequisito duro por historial real de pérdida de datos). Phase 6 (Deploy + Cutover) sigue en pausa, fuera de scope.
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 26 of 31 (UI/UX Polish Pass — Low-Risk Components) — ready to plan
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-13 — Milestone v1.6 started
+Status: Roadmap created, ready for /gsd:plan-phase 26
+Last activity: 2026-07-13 — v1.6 ROADMAP.md + STATE.md written, REQUIREMENTS.md traceability updated (20/20 mapped)
 
 ## Performance Metrics
 
@@ -149,6 +149,7 @@ Recent decisions affecting current work:
 - [Phase 20]: 2 geo-pages (Lima, Madrid) reusando el patrón de seed/bloques de Phase 19 sin cambios; segmento de URL único compartido entre locales (`/seo-tecnico-lima`, `/seo-tecnico-madrid`) en vez del patrón dual de Phase 19, porque estas páginas SON las keywords objetivo en español. Antes de escribir el seed script se verificó explícitamente que `CallToAction.richText` siguiera `localized: true` (fix de Phase 19) -- cero migraciones nuevas, sin repetir el incidente. Lima grounded en hechos reales ya seedeados (UPC, taller real con Arianna Lupi/DinoRANK); Madrid honesto sobre no tener oficina física en Madrid, diferenciado con datos reales de keyword research ES. Seed corrido contra la DB real con aprobación directa y explícita de Juan en el hilo (no relay) -- creó seo-tecnico-lima (id=11) y seo-tecnico-madrid (id=12) sin errores. Code review: 0 critical, 1 warning (SUMMARY.md faltante, ya resuelto), 2 info aceptados.
 - [Phase 21]: Home's aboutSection reforzado (Next.js/Payload/CMS headless + SEO en el código, ambos locales) y nav principal con link "Servicios"/"Services" a `/services`. Regla de Database Safety relajada por Juan durante esta fase ("no me preguntes por confirmaciones, solo hazlo si necesitas eliminar algo", commit f74c230 en CLAUDE.md) -- escrituras normales/aditivas ya no pausan, solo lo destructivo. El classifier del sistema exigió correctamente el propio mensaje directo de Juan en el hilo (no un relay del coordinador) antes de aplicar ese cambio de política a una escritura real. Bug real encontrado y arreglado en la propia ejecución: `Header.navItems` es un array compartido no-localizado (solo `link.label` lo es) -- el primer intento de escribir el nuevo nav item en locale 'en' colisionó de id con la fila ya creada por el write 'es', dejando "Servicios" en la home en inglés; corregido en el script fuente (filtrar por id antes de re-appendear) y con un script correctivo puntual no destructivo, verificado estable. Guard de idempotencia reforzado post-review para auto-sanar el label en cualquier re-run (WR-01).
 
+- [Milestone v1.6]: Roadmap: 6 fases (26-31) derivadas de los 20 requirements v1.6, continuando la numeración desde Phase 25. Dos tracks independientes por perfil de riesgo, no interleaved: Track A (26 UI polish bajo-riesgo -> 27 adopción de librería motion -> 28 rollout de motion + Hero variants + grillas de blog, cierre con gate CWV) y Track B (29 safety net -- auditoría de campos + snapshot + 2 fixes de schema aprobados + perfil de voz, prerequisito duro -> 30 humanización globals/core/servicios/geo -> 31 humanización posts/case-studies + verificación final conjunta). Orden de Track B motivado directamente por el historial real del proyecto (3 bugs repetidos de campos no-localizados, 1 pérdida de datos real recuperada vía Neon PITR). VOICE-06/VOICE-07 formalmente cierran en Phase 31 aunque el trabajo empieza en Phase 30 (reescritura por blast-radius ascendente, sin DB de staging).
 - [Milestone v1.5]: Roadmap: 4 fases (22-25) derivadas de los 18 requirements v1.5, continuando la numeración desde Phase 21, siguiendo la estructura propuesta por research/SUMMARY.md sin modificaciones estructurales — orden estrictamente secuencial por riesgo ascendente de regresión/DB (breadcrumbs sin riesgo de schema -> canonical/hreflang frontend-only -> ServicesShowcase aditivo -> polish visual, la fase de mayor superficie/riesgo, va última). Cada fase depende de la inmediatamente anterior porque cada una re-toca los mismos templates de Servicios que la anterior tocó.
 - [Phase 22]: 22-01: `src/lib/breadcrumbs.ts` nuevo, módulo puro sin acceso a DB — `buildTrail()`/`buildBreadcrumbJsonLd()` como única fuente de verdad, reutiliza el prop `breadcrumbs` que el bloque Hero (variant `listing`) ya aceptaba desde Phase 10.8 en vez del campo editorial manual de Payload (override vía `blockProps` en `RenderBlocks`, cero campo nuevo, cero migración). Wireado en los 4 `page.tsx` de Servicios (índice + `[slug]`, ES/EN). Verificado en vivo contra las 10 URLs (dev server real): trail visual correcto (2 niveles índice, 3 landing) + JSON-LD `BreadcrumbList` coincide exactamente. BREAD-03 (validación `seo-schema`) inicialmente quedó `human_needed` porque ni el executor ni el verifier tenían la tool Task en su set — resuelto por el orquestador invocando el agente `seo-schema` directamente (sí disponible a ese nivel) contra las 10 URLs, 10/10 PASS. Code review encontró WR-01 (comentario de seguridad en `JsonLd.tsx` afirmaba incorrectamente que `JSON.stringify` escapa `</script>` — falso, no escapa `<`/`>`/`&`) fixeado agregando escape a secuencias unicode antes de inyectar; WR-02 (falta de tests unitarios para `buildTrail()`) e IN-01/IN-02 (duplicación preexistente de Phase 19 entre `servicios/`↔`services/`, código muerto menor) aceptados como deuda no bloqueante.
 - [Phase 23]: 23-01: `src/lib/canonical.ts` nuevo, módulo puro — `buildServiceAlternates(locale, current?)` calcula el canonical purmente desde `locale`, no desde la carpeta de ruta física que llamó (mecanismo real que colapsa las 4 URLs físicas en 2 targets canónicos: los combos "incorrectos" `/services` sin prefijo y `/en/servicios` canonicalizan al segmento correcto de su locale en vez de auto-referenciarse). `metadataBase` definido una única vez en `[locale]/layout.tsx` (único root real del árbol frontend público, no hay `src/app/layout.tsx` por encima). Reutiliza `SITE_URL` de `sitemap-data.ts` en vez de re-derivar resolución de dominio. Verificado en vivo (curl real, 6 URLs: 2 combos correctos + 2 incorrectos + 2 landings con hreflang es/en/x-default) por el executor y re-derivado independientemente por el verifier sin confiar en el SUMMARY — passed 5/5. Code review encontró WR-01 (`canonical.ts` importa transitivamente `getPayload`/`@payload-config` vía `sitemap-data.ts`, no es tan "puro" como el comentario afirma — riesgo latente si algún día se importa desde un Client Component) y 2 infos (sin normalización de trailing slash en `SITE_URL`, patrón preexistente; cast `locale as 'es'|'en'` sin validación runtime, hoy inalcanzable por el matcher de next-intl) — WR-01 no se fixeó porque el guardrail (`import 'server-only'`) requeriría agregar una dependencia npm nueva para un riesgo hoy inerte (todo Server Components); aceptado como deuda documentada, no bloqueante. Se mataron 2 procesos `next dev` viejos que quedaron corriendo en puertos 3000-3002 de sesiones anteriores.
@@ -190,10 +191,10 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-13T02:15:00.000Z
-Stopped at: v1.5 milestone complete — Phases 22, 23, 24, 25 all closed, 18/18 requirements done, verified live, code-reviewed, gaps closed. Milestone lifecycle (audit/complete/cleanup) intentionally NOT run — Phase 6 (Deploy + Cutover) remains open and out of scope for this run.
+Last session: 2026-07-13T05:00:00.000Z
+Stopped at: v1.6 ROADMAP.md written (6 phases, 26-31), REQUIREMENTS.md traceability updated (20/20 requirements mapped, 0 orphans). Awaiting user approval of roadmap draft before planning begins.
 Resume file: None
 
 ## Operator Next Steps
 
-- Start the next milestone with /gsd:new-milestone
+- Review/approve the v1.6 roadmap, then run /gsd:plan-phase 26 to start Track A (UI/UX Polish Pass)

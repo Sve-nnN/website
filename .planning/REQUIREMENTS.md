@@ -50,23 +50,23 @@ Requirements para el milestone v1.6. Dos tracks independientes: (1) pasada de di
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| UIPOL-01 | TBD | Pending |
-| UIPOL-02 | TBD | Pending |
-| UIPOL-03 | TBD | Pending |
-| UIPOL-04 | TBD | Pending |
-| UIPOL-05 | TBD | Pending |
-| UIPOL-06 | TBD | Pending |
-| UIPOL-07 | TBD | Pending |
-| UIPOL-08 | TBD | Pending |
-| UIPOL-09 | TBD | Pending |
-| MOTION-01 | TBD | Pending |
-| MOTION-02 | TBD | Pending |
-| MOTION-03 | TBD | Pending |
-| MOTION-04 | TBD | Pending |
-| VOICE-01 | TBD | Pending |
-| VOICE-02 | TBD | Pending |
-| VOICE-03 | TBD | Pending |
-| VOICE-04 | TBD | Pending |
-| VOICE-05 | TBD | Pending |
-| VOICE-06 | TBD | Pending |
-| VOICE-07 | TBD | Pending |
+| UIPOL-01 | Phase 26 | Pending |
+| UIPOL-02 | Phase 26 | Pending |
+| UIPOL-03 | Phase 28 | Pending |
+| UIPOL-04 | Phase 26 | Pending |
+| UIPOL-05 | Phase 26 | Pending |
+| UIPOL-06 | Phase 26 | Pending |
+| UIPOL-07 | Phase 28 | Pending |
+| UIPOL-08 | Phase 28 | Pending |
+| UIPOL-09 | Phase 26 | Pending |
+| MOTION-01 | Phase 27 | Pending |
+| MOTION-02 | Phase 27 | Pending |
+| MOTION-03 | Phase 28 | Pending |
+| MOTION-04 | Phase 28 | Pending |
+| VOICE-01 | Phase 29 | Pending |
+| VOICE-02 | Phase 29 | Pending |
+| VOICE-03 | Phase 29 | Pending |
+| VOICE-04 | Phase 29 | Pending |
+| VOICE-05 | Phase 29 | Pending |
+| VOICE-06 | Phase 31 | Pending |
+| VOICE-07 | Phase 31 | Pending |

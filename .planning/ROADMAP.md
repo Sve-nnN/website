@@ -15,6 +15,7 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 **Milestone v1.4 — SEO Competitivo: Auditoría y Optimización, creado 2026-07-12:** Investigación en profundidad de encabezados/metadata/servicios/precios/SEO local de 4 competidores directos (`research/SEO-COMPETITIVE-AUDIT-v1.4.md`) encontró 2 bugs técnicos reales (H1 faltante en `/contact` y en la Author page) y gaps de posicionamiento puro: sin páginas de servicio, sin "SEO para IA/GEO" nombrado pese a tener la infraestructura (`llms.txt`/`llms-full.txt`), sin SEO local. 4 fases nuevas (18-21), continuando la numeración desde Phase 17: fixes técnicos de jerarquía semántica y metadata de la Author page (Phase 18, independiente y de bajo riesgo), páginas de servicio incluyendo SEO para IA/GEO como línea propia (Phase 19), 2 geo-pages con contenido genuinamente diferenciado en vez del patrón templated que Juan rechazó explícitamente (Phase 20, independiente de Phase 19), y refuerzo de encabezados/copy de Home más el enlace hacia las páginas de servicio nuevas (Phase 21, depende de Phase 19 porque Home no puede enlazar páginas que no existen todavía). Decisiones de Juan: sin precios publicados en servicios (patrón dominante, 3/4 competidores); solo Lima + Madrid como geo-pages, sin expandir a más ciudades. La decisión de arquitectura de información (Author page vs About page vs atribución de blog) quedó confirmada sin cambios — el patrón actual ya sigue la práctica recomendada. Ver `.planning/REQUIREMENTS.md` sección "v1.4 Requirements — SEO Competitivo: Auditoría y Optimización" para el detalle completo. **v1.4 CERRADO 2026-07-12** — 10/10 requirements verificados en vivo, 0 gaps bloqueantes (ver `.planning/v1.4-MILESTONE-AUDIT.md` y `.planning/MILESTONES.md`).
 
 **Milestone v1.5 — UI/UX Pro Max: Polish y Competitividad, creado 2026-07-12:** Pasada de diseño profesional sobre Servicios y Home, priorizada por research de competencia directa (Arianna Lupi, Aleyda Solis — ambas sin URLs de servicio dedicadas ni breadcrumbs, confirmando que la arquitectura de landings individuales de Phase 19 ya es una ventaja estructural a pulir, no abandonar). 4 fases nuevas (22-25), continuando la numeración desde Phase 21, ordenadas por riesgo ascendente de regresión/DB per `research/SUMMARY.md`: breadcrumbs visual + JSON-LD en Servicios (Phase 22, sin riesgo de schema, sienta el helper `buildTrail()` compartido); canonical/hreflang en las 4 combinaciones de URL de servicio + `metadataBase` sitewide (Phase 23, cierra el gap de contenido duplicado dual-slug antes de que el rediseño lo vuelva más visible); bloque `ServicesShowcase` en Home leyendo `SERVICE_SLUGS` en vivo (Phase 24, aditivo, sin tocar columnas existentes); y polish visual + prueba social reforzada en las 4 landings de servicio (Phase 25, la fase de mayor superficie/riesgo de regresión, por eso va última, con gates explícitos de Lighthouse/CWV, paridad EN/ES y preservación de H1/JSON-LD contra baseline pre-pase). Sin dependencias nuevas de runtime (shadcn/Radix/Tailwind ya cubre todo lo necesario); sin tabla de precios (regla dura del proyecto); sin colección `Services` nueva (se reutiliza `pages`, Key Decision D-01). Ver `.planning/REQUIREMENTS.md` sección "v1.5 Requirements" para el detalle completo.
+**Milestone v1.6 — UI/UX Pro Max II: Componentes, Motion y Voz, creado 2026-07-13:** Segunda pasada de diseño sobre los componentes/plantillas que v1.5 no tocó (navbar, heroes de listing, CTA strip, FAQ, clientes, testimonios, grillas de blog, case studies), sumando micro-animaciones consistentes con la estética del hero de Home sin pegarle a performance, y humanizando todo el copy real de la base de datos con la voz de Juan calibrada contra sus competidores directos (Arianna Lupi, Aleyda Solis). Dos tracks independientes con historial de riesgo muy distinto: Track A (UI/motion, fases 26-28, continuando la numeración desde Phase 25) es una serie de cambios de código con gate de build/Lighthouse; Track B (humanización de contenido, fases 29-31) es la parte de mayor riesgo del milestone — el proyecto ya tiene un historial documentado de 3 bugs reales de campos no-localizados pisados por escrituras bulk y un incidente real de pérdida de datos (2026-07-12, recuperado vía Neon point-in-time restore) — por eso Phase 29 (auditoría de campos + snapshot + los 2 fixes de schema ya aprobados por Juan) es un prerequisito duro antes de reescribir una sola palabra, y la reescritura real (Phases 30-31) se ordena por riesgo/blast-radius ascendente (globals+páginas núcleo+servicios primero, posts+case studies al final, por ser lo de mayor volumen y visibilidad SEO). Ver `.planning/REQUIREMENTS.md` sección "v1.6 Requirements" y `.planning/research/SUMMARY-v1.6.md` para el detalle completo.
 
 ## Phases
 
@@ -55,6 +56,12 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 23: Canonical + hreflang hardening** - Las 4 combinaciones de URL de servicio emiten canonical/hreflang correctos, metadataBase sitewide (completed 2026-07-12)
 - [x] **Phase 24: ServicesShowcase en Home** - Home muestra las 4 tarjetas de servicio leyendo SERVICE_SLUGS en vivo, aditivo (completed 2026-07-13)
 - [x] **Phase 25: Service-page visual polish** - Las 4 landings de servicio ganan anatomía visual completa y prueba social competitiva (completed 2026-07-13)
+- [ ] **Phase 26: UI/UX Polish Pass — Low-Risk Components** - CTA sale del full-width vw, navbar/FAQ/logos/testimonios pulidos, breadcrumbs unificados en Case Studies (Track A)
+- [ ] **Phase 27: Micro-animation Library Adoption** - `motion` instalado vía LazyMotion, bundle-size verificado contra build real, hook `useReducedMotion()` compartido (Track A)
+- [ ] **Phase 28: Component Motion Rollout + Hero Variants + Blog Grids** - Hero listing/post-header/case-study-header diferenciados, grillas de blog pulidas, scroll-reveal/hover aplicados, gate de cero regresión CWV (Track A, cierre)
+- [ ] **Phase 29: Content Humanization Safety Net** - Auditoría de campos localizados, snapshot completo, 2 fixes de schema aprobados por Juan, perfil de voz escrito (Track B, prerequisito duro)
+- [ ] **Phase 30: Content Humanization — Globals, Core Pages, Services & Geo** - Copy reescrito en la voz de Juan para el primer tramo, de menor riesgo (Track B)
+- [ ] **Phase 31: Content Humanization — Posts & Case Studies + Verificación Final** - Copy de mayor volumen/visibilidad SEO reescrito, verificación final conjunta de ambos tracks (Track B, cierre de milestone)
 
 ## Phase Details
 
@@ -663,11 +670,100 @@ Plans:
 - [x] 25-03-PLAN.md — Author + humanize copy, seed the 10-block anatomy onto all 4 service landings (real DB write)
 - [x] 25-04-PLAN.md — Re-capture snapshot/Lighthouse, diff against baseline, confirm zero regression + ES/EN parity
 
+### Phase 26: UI/UX Polish Pass — Low-Risk Components
+
+**Goal**: Los componentes compartidos que v1.5 no tocó (CTA strip, navbar, FAQ, clientes, testimonios) ganan tratamiento visual pulido de nivel `ui-ux-pro-max`, y Case Studies gana el mismo trail de breadcrumbs visual + JSON-LD que Servicios, cerrando la queja nombrada de Juan (CTA full-width) el primer día del milestone.
+**Depends on**: Nothing (primera fase del milestone, no toca schema ni contenido de forma destructiva — solo JSX/Tailwind + un helper compartido de breadcrumbs ya existente)
+**Requirements**: UIPOL-01, UIPOL-02, UIPOL-04, UIPOL-05, UIPOL-06, UIPOL-09
+**Success Criteria** (what must be TRUE):
+
+  1. El bloque `CallToAction` renderiza dentro del mismo wrapper `Container` que el resto de los bloques del sitio, sin bleed full-width `vw`, en ambos locales
+  2. `SiteHeader` muestra un estado visual distinguible al hacer scroll y/o un indicador de ruta activa, usando los tokens de elevación/motion ya establecidos en Phase 7
+  3. El bloque FAQ muestra agrupación visual pulida, distinguible del look template-default actual, manteniendo el `<details>` nativo
+  4. `ClientLogosBlock` y `TestimonialsCarousel` muestran tratamiento visual pulido (normalización de tamaño de logos / affordance de scroll en testimonios)
+  5. El listado y el detalle de Case Studies muestran un trail de breadcrumbs visual real construido con el mismo helper `buildTrail()` que usa Servicios, con `BreadcrumbList` JSON-LD consistente (reemplazando la implementación propia y desalineada actual)
+
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 27: Micro-animation Library Adoption
+
+**Goal**: La librería de micro-animaciones queda decidida, instalada y validada contra un build de producción real antes de aplicarse a ningún componente — decisión técnica real (motion vs GSAP vs Anime.js), no asumida.
+**Depends on**: Phase 26 (evita mezclar la decisión de librería con los componentes que ya se están tocando en el polish pass; Phase 26 no necesita motion para cerrar)
+**Requirements**: MOTION-01, MOTION-02
+**Success Criteria** (what must be TRUE):
+
+  1. El paquete `motion` (`LazyMotion`+`m`+`domAnimation`) está instalado y wireado a través de un único provider raíz consumido por 2-3 componentes piloto
+  2. El costo real de bundle (diff de `next build` antes/después) queda medido y documentado — no solo estimado por el research — confirmando que se ajusta al presupuesto de ~20KB
+  3. Existe un hook compartido `useReducedMotion()` (SSR-safe, sin mismatch de hidratación, mismo patrón ya probado en `HeroGrainGradient`) y los componentes piloto ya lo usan de forma consistente
+
+**Plans**: TBD
+
+### Phase 28: Component Motion Rollout + Hero Variants + Blog Grids
+
+**Goal**: Las variantes de Hero quedan visualmente diferenciadas, las grillas de blog ganan tratamiento visual pulido, y las micro-interacciones (scroll-reveal + hover) se extienden de forma consistente a todos los componentes de la pasada Track A — cerrando con un gate de cero regresión de Lighthouse/CWV.
+**Depends on**: Phase 27 (necesita la librería y el patrón de componente-cliente ya validados antes de un rollout más amplio)
+**Requirements**: UIPOL-03, UIPOL-07, UIPOL-08, MOTION-03, MOTION-04
+**Success Criteria** (what must be TRUE):
+
+  1. Las variantes de Hero `listing`/`post-header`/`case-study-header` son visualmente distinguibles entre sí (hoy son pixel-idénticas salvo breadcrumbs), con H1/breadcrumbs/JSON-LD intactos
+  2. La grilla de blog (`/blog`) y `FeaturedPostsBlock` muestran tratamiento visual pulido con scroll-reveal/hover consistentes con la estética del hero de Home
+  3. Todo componente animado en Phases 26-28 usa el hook `useReducedMotion()` compartido de forma consistente, verificado con una pasada headless de `prefers-reduced-motion` sobre todas las páginas tocadas
+  4. Un re-chequeo de Lighthouse/CWV mobile contra las rutas representativas tocadas por Track A no muestra regresión atribuible a las animaciones nuevas, comparado contra un baseline pre-pase (mismo patrón de gate que v1.5 Phase 25)
+
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 29: Content Humanization Safety Net
+
+**Goal**: Toda la herramienta de seguridad (auditoría de campos, snapshot, fixes de schema bloqueantes, perfil de voz) existe y está verificada antes de reescribir una sola palabra de contenido real — prerequisito duro, no una fase paralela opcional, dado el historial real del proyecto (3 bugs repetidos de campos no-localizados pisados, 1 incidente real de pérdida de datos el 2026-07-12 recuperado vía Neon point-in-time restore).
+**Depends on**: Nothing (Track B es independiente de Track A — puede arrancar en paralelo a Phase 26, pero se lista después en la numeración por orden de riesgo del milestone)
+**Requirements**: VOICE-01, VOICE-02, VOICE-03, VOICE-04, VOICE-05
+**Success Criteria** (what must be TRUE):
+
+  1. Existe un documento de auditoría pre-vuelo cubriendo todo campo de texto público en cada colección/global de Payload, clasificando localizado vs no-localizado, completado antes de tocar cualquier contenido real
+  2. `TestimonialsCarousel.title` queda migrado a `localized: true` con backfill correcto — la migración generada fue leída por Claude y aprobada por nombre por Juan antes de aplicarse contra la Neon real, cerrando el patrón de bug repetido 3 veces en v1.5 (**recordatorio de scope**: esta es una migración que toca una columna existente con datos — requiere backfill explícito de ambos locales antes de cualquier `DROP`, y aprobación nombrada de Juan; no es una escritura aditiva que se pueda correr sin pausar, per la sección "Database Safety" de `CLAUDE.md`)
+  3. `CaseStudies.services[].service` queda resuelto de forma locale-segura (fix de schema si aplica — mismo protocolo de aprobación que el punto anterior si toca una columna existente — o decisión documentada de no tocarlo)
+  4. Existe un snapshot completo de texto real (no solo metadata) de toda la DB, diffable, usable como base de rollback más allá del point-in-time restore de Neon
+  5. Existe un perfil de voz escrito (español neutro, sin voceo, profesional-directo, primera persona con reclamos de credenciales directos estilo Arianna Lupi, framing de CTA colaborativo) derivado del research de Arianna Lupi/Aleyda Solis, listo como brief para la skill `humanizer`
+
+**Plans**: TBD
+
+### Phase 30: Content Humanization — Globals, Core Pages, Services & Geo
+
+**Goal**: El primer tramo de reescritura real, de menor riesgo/blast-radius (globals y colecciones lean, páginas núcleo, servicios y geo-pages), queda humanizado en la voz de Juan y verificado, validando el toolchain de snapshot/paridad antes de tocar el contenido de mayor volumen.
+**Depends on**: Phase 29 (prerequisito duro — nada se reescribe sin la auditoría, el snapshot, los 2 fixes de schema y el perfil de voz ya cerrados y verificados)
+**Requirements**: VOICE-06 (parte 1 de 2 — ver Phase 31 para el cierre formal del requirement), VOICE-07 (parte 1 de 2 — verificación de este tramo)
+**Success Criteria** (what must be TRUE):
+
+  1. El copy real de Header/Footer/Llms/Authors/Testimonials/Clientes/SpeakingEvents/Categories queda reescrito en la voz de Juan (perfil de VOICE-05), en ambos locales, sin tocar `meta.title`/`meta.description`/`targetKeyword`
+  2. El copy real de Home/Contact/Privacy/Terms queda reescrito en la voz de Juan, en ambos locales
+  3. El copy real del índice de Servicios + 4 landings + 2 geo-pages queda reescrito en la voz de Juan, en ambos locales
+  4. Una verificación de paridad de locale sobre todas las colecciones/globals tocados en este tramo no muestra ningún campo colapsado/pisado entre `es`/`en`
+  5. El `BreadcrumbList`/`Person`/JSON-LD y los campos `meta.title`/`meta.description` de SEO siguen válidos e intactos en todas las páginas tocadas, verificado en vivo (curl/validación de schema)
+
+**Plans**: TBD
+
+### Phase 31: Content Humanization — Posts & Case Studies + Verificación Final
+
+**Goal**: El tramo de mayor volumen/visibilidad SEO (Posts y Case Studies) queda humanizado, cerrando formalmente el requirement de reescritura completa, y el milestone cierra con una verificación conjunta final de ambos tracks (Track A motion + Track B contenido) contra el baseline pre-milestone.
+**Depends on**: Phase 30 (el tramo de mayor blast-radius corre último, sobre un toolchain de snapshot/paridad ya validado en tramos de menor riesgo)
+**Requirements**: VOICE-06 (cierre formal — todo el copy real de la DB reescrito), VOICE-07 (cierre formal — verificación post-sweep completa)
+**Success Criteria** (what must be TRUE):
+
+  1. El body rich-text de todos los Posts y Case Studies queda reescrito en la voz de Juan, en ambos locales, sin tocar campos SEO/meta
+  2. Existe un snapshot post-sweep diffado contra el snapshot pre-humanize de VOICE-04, disponible para que Juan lo lea antes de considerar el track cerrado
+  3. `reindex-search.ts` corre de nuevo después del sweep completo, reflejando el copy reescrito en los resultados de `/search`
+  4. Un barrido en vivo (curl, ambos locales) sobre todas las rutas tocadas por Track B más una validación de JSON-LD confirma cero structured data roto
+  5. Un gate final de Lighthouse/CWV sobre las rutas representativas tocadas por ambos tracks (motion + contenido reescrito) no muestra regresión respecto al baseline pre-milestone
+
+**Plans**: TBD
+
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 (v1.1, v1.2, v1.3, v1.4 cerrados; v1.5 [Phase 22-25] planificado, orden estrictamente secuencial por riesgo ascendente de regresión/DB per research/SUMMARY.md; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 (v1.1-v1.5 cerrados; v1.6 [Phase 26-31] planificado — Track A [26-28: UI polish → motion library → motion rollout] y Track B [29-31: safety net → humanización ascendente por riesgo], Phase 29 es prerequisito duro de 30/31 per research/SUMMARY-v1.6.md; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -700,4 +796,10 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 23. Canonical + hreflang hardening | 0/TBD | Not started | - |
 | 24. ServicesShowcase en Home | 0/TBD | Not started | - |
 | 25. Service-page visual polish | 0/TBD | Not started | - |
+| 26. UI/UX Polish Pass — Low-Risk Components | 0/TBD | Not started | - |
+| 27. Micro-animation Library Adoption | 0/TBD | Not started | - |
+| 28. Component Motion Rollout + Hero Variants + Blog Grids | 0/TBD | Not started | - |
+| 29. Content Humanization Safety Net | 0/TBD | Not started | - |
+| 30. Content Humanization — Globals, Core Pages, Services & Geo | 0/TBD | Not started | - |
+| 31. Content Humanization — Posts & Case Studies + Verificación Final | 0/TBD | Not started | - |
 </content>
