@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { getServicePage } from '@/lib/services-data'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
+import { buildServiceAlternates } from '@/lib/canonical'
 import { JsonLd } from '@/components/JsonLd'
 
 async function getPage(locale: string, slug: string) {
@@ -24,6 +25,7 @@ export async function generateMetadata({
   return {
     title: doc.meta?.title ?? doc.title,
     description: doc.meta?.description ?? '',
+    alternates: buildServiceAlternates(locale as 'es' | 'en', { slug: doc.slug ?? slug }),
   }
 }
 

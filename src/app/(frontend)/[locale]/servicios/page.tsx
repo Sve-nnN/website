@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { getServicesIndexPage } from '@/lib/services-data'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
+import { buildServiceAlternates } from '@/lib/canonical'
 import { JsonLd } from '@/components/JsonLd'
 
 async function getPage(locale: string) {
@@ -16,6 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return {
     title: doc?.meta?.title ?? doc?.title ?? (locale === 'es' ? 'Servicios' : 'Services'),
     description: doc?.meta?.description ?? '',
+    alternates: buildServiceAlternates(locale as 'es' | 'en'),
   }
 }
 
