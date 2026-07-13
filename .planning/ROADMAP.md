@@ -633,12 +633,12 @@ Plans:
   2. Cada tarjeta enlaza a su landing correspondiente en el locale activo, leída dinámicamente del set fijo `SERVICE_SLUGS` (no hardcodeada por instancia)
   3. El bloque se registra como aditivo en Payload (config + `RenderBlocks` + `payload generate:types`) sin modificar columnas existentes; si llegara a requerir tocar una columna existente, se pide aprobación nombrada de Juan primero, y la migración generada se lee antes de aplicarse
 
-**Plans**: TBD
+**Plans**: 1 plan (1 wave)
 **UI hint**: yes
 
 Plans:
 
-- [ ] 24-01: TBD
+- [ ] 24-01-PLAN.md — ServicesShowcase block (config + Component, dynamic SERVICE_SLUGS grid) + additive Pages/RenderBlocks registration + migration + Home seed (both locales) + live verification
 
 ### Phase 25: Service-page visual polish
 
