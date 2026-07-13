@@ -57,8 +57,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 24: ServicesShowcase en Home** - Home muestra las 4 tarjetas de servicio leyendo SERVICE_SLUGS en vivo, aditivo (completed 2026-07-13)
 - [x] **Phase 25: Service-page visual polish** - Las 4 landings de servicio ganan anatomía visual completa y prueba social competitiva (completed 2026-07-13)
 - [x] **Phase 26: UI/UX Polish Pass — Low-Risk Components** - CTA sale del full-width vw, navbar/FAQ/logos/testimonios pulidos, breadcrumbs unificados en Case Studies (Track A) (completed 2026-07-13)
-- [ ] **Phase 27: Micro-animation Library Adoption** - `motion` instalado vía LazyMotion, bundle-size verificado contra build real, hook `useReducedMotion()` compartido (Track A)
-- [ ] **Phase 28: Component Motion Rollout + Hero Variants + Blog Grids** - Hero listing/post-header/case-study-header diferenciados, grillas de blog pulidas, scroll-reveal/hover aplicados, gate de cero regresión CWV (Track A, cierre)
+- [x] **Phase 27: Micro-animation Library Adoption** - `motion` instalado vía LazyMotion, bundle-size verificado contra build real, hook `useReducedMotion()` compartido (Track A) (completed 2026-07-13)
+- [x] **Phase 28: Component Motion Rollout + Hero Variants + Blog Grids** - Hero listing/post-header/case-study-header diferenciados (CSS-only, scope minimal), grillas de blog pulidas con scroll-reveal/hover, gate CWV cerrado sobre lo atribuible a las animaciones — TTFB preexistente de /en/blog logueado como follow-up separado, no bloqueante (Track A, cierre) (completed 2026-07-13)
 - [ ] **Phase 29: Content Humanization Safety Net** - Auditoría de campos localizados, snapshot completo, 2 fixes de schema aprobados por Juan, perfil de voz escrito (Track B, prerequisito duro)
 - [ ] **Phase 30: Content Humanization — Globals, Core Pages, Services & Geo** - Copy reescrito en la voz de Juan para el primer tramo, de menor riesgo (Track B)
 - [ ] **Phase 31: Content Humanization — Posts & Case Studies + Verificación Final** - Copy de mayor volumen/visibilidad SEO reescrito, verificación final conjunta de ambos tracks (Track B, cierre de milestone)
@@ -707,7 +707,7 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [ ] 27-01-PLAN.md — Instala `motion`, provider raíz + hook `useReducedMotion()`, pilotos FAQ (scroll-reveal) + Testimonials (hover), bundle-size real medido
+- [x] 27-01-PLAN.md — Instala `motion`, provider raíz + hook `useReducedMotion()`, pilotos FAQ (scroll-reveal) + Testimonials (hover), bundle-size real medido (completed 2026-07-13; gap doc cerrado — bundle cost es per-RenderBlocks-template, no per-instancia)
 
 ### Phase 28: Component Motion Rollout + Hero Variants + Blog Grids
 
@@ -721,8 +721,14 @@ Plans:
   3. Todo componente animado en Phases 26-28 usa el hook `useReducedMotion()` compartido de forma consistente, verificado con una pasada headless de `prefers-reduced-motion` sobre todas las páginas tocadas
   4. Un re-chequeo de Lighthouse/CWV mobile contra las rutas representativas tocadas por Track A no muestra regresión atribuible a las animaciones nuevas, comparado contra un baseline pre-pase (mismo patrón de gate que v1.5 Phase 25)
 
-**Plans**: TBD
+**Plans**: 4 plans (3 waves) — completed 2026-07-13
 **UI hint**: yes
+
+Plans:
+- [x] 28-01-PLAN.md — Baseline pre-cambio: H1/JSON-LD snapshot + Lighthouse mobile en 6 rutas representativas
+- [x] 28-02-PLAN.md — Diferenciación CSS-only de Hero listing/post-header/case-study-header (scope minimal confirmado por Juan — sin tocar blog/[slug] ni case-studies/[slug])
+- [x] 28-03-PLAN.md — ScrollReveal en ArchiveBlock/FeaturedPostsBlock + PostCard hover migrado a whileHover
+- [x] 28-04-PLAN.md — Gate de regresión: reduced-motion PASS 6/6, H1/JSON-LD PASS 6/6, Lighthouse inicialmente FAIL 2/6 (LCP) — gap closure encontró y arregló 2 bugs reales (ScrollReveal SSR-opacity, PostCard sin `priority`); LCP residual en `/en/blog` root-caused a TTFB preexistente (no atribuible a las animaciones nuevas) — cerrado, TTFB logueado como follow-up separado en `28-REGRESSION-DIFF.md`
 
 ### Phase 29: Content Humanization Safety Net
 
@@ -807,8 +813,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 24. ServicesShowcase en Home | 0/TBD | Not started | - |
 | 25. Service-page visual polish | 0/TBD | Not started | - |
 | 26. UI/UX Polish Pass — Low-Risk Components | 0/TBD | Not started | - |
-| 27. Micro-animation Library Adoption | 0/TBD | Not started | - |
-| 28. Component Motion Rollout + Hero Variants + Blog Grids | 0/TBD | Not started | - |
+| 27. Micro-animation Library Adoption | 1/1 | Complete   | 2026-07-13 |
+| 28. Component Motion Rollout + Hero Variants + Blog Grids | 4/4 | Complete   | 2026-07-13 |
 | 29. Content Humanization Safety Net | 0/TBD | Not started | - |
 | 30. Content Humanization — Globals, Core Pages, Services & Geo | 0/TBD | Not started | - |
 | 31. Content Humanization — Posts & Case Studies + Verificación Final | 0/TBD | Not started | - |

@@ -7,10 +7,10 @@ last_updated: "2026-07-13T06:00:00.000Z"
 last_activity: 2026-07-13
 progress:
   total_phases: 6
-  completed_phases: 1
-  total_plans: 3
-  completed_plans: 3
-  percent: 17
+  completed_phases: 3
+  total_plans: 8
+  completed_plans: 8
+  percent: 50
 ---
 
 # Project State
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** v1.6 milestone — Phase 26 cerrada (6/6 requirements). Sigue Phase 27 (Micro-animation Library Adoption). Track A (UI/motion, 26-28) y Track B (humanización de contenido, 29-31, Phase 29 prerequisito duro por historial real de pérdida de datos). Phase 6 (Deploy + Cutover) sigue en pausa, fuera de scope.
+**Current focus:** v1.6 milestone — Track A (UI/motion, 26-28) CERRADO. Sigue Track B (humanización de contenido, 29-31); Phase 29 es prerequisito duro (auditoría de campos, migración de schema con backfill, perfil de voz) antes de reescribir contenido real, dado el historial real de pérdida de datos (incidente 2026-07-12). Phase 6 (Deploy + Cutover) sigue en pausa, fuera de scope.
 
 ## Current Position
 
-Phase: 27 of 31 (Micro-animation Library Adoption) — Phase 26 closed 6/6
+Phase: 29 of 31 (Content Humanization Safety Net) — Phases 26/27/28 closed
 Plan: —
-Status: Ready for /gsd:plan-phase 27
-Last activity: 2026-07-13 — Phase 26 closed: UIPOL-01/02/04/05/06/09 done, verified live, code-reviewed (2 real fixes: active-nav no-op, logo wrong-locale link)
+Status: Ready for planning Phase 29 — involves a live-DB schema migration (TestimonialsCarousel.title -> localized:true with backfill) requiring Juan's named approval before applying, per CLAUDE.md Database Safety rules
+Last activity: 2026-07-13 — Phase 28 closed: Hero variants differentiated (CSS-only, minimal scope per Juan), blog grid ScrollReveal+hover motion added, 2 real LCP bugs found+fixed in gap closure (SSR-opacity-hidden ScrollReveal content, missing PostCard image priority); remaining /en/blog LCP band-crossing root-caused to a pre-existing TTFB issue (searchParams-forced dynamic rendering, present before Phase 28) — logged as separate follow-up, not blocking closure since it's not attributable to the new animations (MOTION-04's actual criterion)
 
 ## Performance Metrics
 
