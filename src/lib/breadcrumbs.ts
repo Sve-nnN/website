@@ -31,30 +31,76 @@ function servicesIndexHref(locale: Locale): string {
   return `${home === '/' ? '' : home}/${servicesSegment(locale)}`
 }
 
+type Section = 'services' | 'case-studies'
+
+const SECTION_LABELS: Record<Section, Record<Locale, string>> = {
+  services: { es: 'Servicios', en: 'Services' },
+  'case-studies': { es: 'Casos de éxito', en: 'Case Studies' },
+}
+
+// Case Studies routes are NOT locale-prefixed in their segment (confirmed:
+// src/app/(frontend)/[locale]/case-studies/page.tsx serves both /case-studies
+// and /en/case-studies under the same folder name) — unlike Services, which
+// has a genuinely different Spanish segment ('servicios' vs 'services').
+const SECTION_SEGMENTS: Record<Section, Record<Locale, string>> = {
+  services: { es: 'servicios', en: 'services' },
+  'case-studies': { es: 'case-studies', en: 'case-studies' },
+}
+
+function sectionIndexHref(locale: Locale, section: Section): string {
+  const home = homeHref(locale)
+  return `${home === '/' ? '' : home}/${SECTION_SEGMENTS[section][locale]}`
+}
+
+function buildSectionTrail(
+  locale: Locale,
+  section: Section,
+  current?: { slug: string; title: string },
+): BreadcrumbItem[] {
+  const trail: BreadcrumbItem[] = [
+    { label: LABELS[locale].home, url: homeHref(locale) },
+    { label: SECTION_LABELS[section][locale], url: sectionIndexHref(locale, section) },
+  ]
+
+  if (current) {
+    trail.push({
+      label: current.title,
+      url: `${sectionIndexHref(locale, section)}/${current.slug}`,
+    })
+  }
+
+  return trail
+}
+
 /**
  * Builds the breadcrumb trail for the Servicios index page (2 levels) or one
  * of its 4 individual landings (3 levels, when `current` is provided).
  *
  * `current.title` must be the already-locale-fetched Payload `title` field
  * the caller passes in — this function performs no Payload query of its own.
+ *
+ * Thin wrapper around `buildSectionTrail()` — kept byte-for-byte compatible
+ * (same exported signature/behavior) so the 4 existing Services call sites
+ * require zero changes.
  */
 export function buildTrail(
   locale: Locale,
   current?: { slug: string; title: string },
 ): BreadcrumbItem[] {
-  const trail: BreadcrumbItem[] = [
-    { label: LABELS[locale].home, url: homeHref(locale) },
-    { label: LABELS[locale].services, url: servicesIndexHref(locale) },
-  ]
+  return buildSectionTrail(locale, 'services', current)
+}
 
-  if (current) {
-    trail.push({
-      label: current.title,
-      url: `${servicesIndexHref(locale)}/${current.slug}`,
-    })
-  }
-
-  return trail
+/**
+ * Builds the breadcrumb trail for the Case Studies index page (2 levels) or
+ * one of its individual detail pages (3 levels, when `current` is provided).
+ * Sibling to `buildTrail()`, sharing the same internal `buildSectionTrail()`
+ * so URL/locale logic is never duplicated across sections (UIPOL-09).
+ */
+export function buildCaseStudiesTrail(
+  locale: Locale,
+  current?: { slug: string; title: string },
+): BreadcrumbItem[] {
+  return buildSectionTrail(locale, 'case-studies', current)
 }
 
 /**
