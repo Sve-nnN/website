@@ -704,7 +704,10 @@ Plans:
   2. El costo real de bundle (diff de `next build` antes/después) queda medido y documentado — no solo estimado por el research — confirmando que se ajusta al presupuesto de ~20KB
   3. Existe un hook compartido `useReducedMotion()` (SSR-safe, sin mismatch de hidratación, mismo patrón ya probado en `HeroGrainGradient`) y los componentes piloto ya lo usan de forma consistente
 
-**Plans**: TBD
+**Plans:** 1 plan
+
+Plans:
+- [ ] 27-01-PLAN.md — Instala `motion`, provider raíz + hook `useReducedMotion()`, pilotos FAQ (scroll-reveal) + Testimonials (hover), bundle-size real medido
 
 ### Phase 28: Component Motion Rollout + Hero Variants + Blog Grids
 
