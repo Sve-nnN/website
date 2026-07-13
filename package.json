@@ -10,7 +10,8 @@
     "start": "next start",
     "start:standalone": "node .next/standalone/server.js",
     "generate:types": "payload generate:types",
-    "generate:importmap": "payload generate:importmap"
+    "generate:importmap": "payload generate:importmap",
+    "doctor": "npx react-doctor@latest"
   },
   "dependencies": {
     "@paper-design/shaders-react": "^0.0.77",
@@ -26,7 +27,6 @@
     "@radix-ui/react-avatar": "^1.2.2",
     "@radix-ui/react-dialog": "^1.1.19",
     "@radix-ui/react-navigation-menu": "^1.2.18",
-    "@radix-ui/react-select": "^2.3.3",
     "@radix-ui/react-separator": "^1.1.11",
     "@radix-ui/react-slot": "^1.3.0",
     "@radix-ui/react-tabs": "^1.1.17",
