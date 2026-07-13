@@ -21,6 +21,7 @@ export function ScrollReveal({ children }: { children: ReactNode }) {
 
   return (
     <m.div
+      data-testid="scroll-reveal"
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}

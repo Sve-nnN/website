@@ -7,6 +7,7 @@ import config from '@/payload.config'
 import { Container } from '@/components/Container'
 import { PostCard } from '@/components/PostCard'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
+import { ScrollReveal } from '@/components/ScrollReveal'
 import {
   Tabs,
   TabsList,
@@ -103,13 +104,15 @@ export async function ArchiveBlockComponent(props: ArchiveBlockComponentProps) {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {docs.map((doc) =>
-            relationTo === 'posts' ? (
-              <PostCard key={doc.id} post={doc as Post} />
-            ) : (
-              <CaseStudyCard key={doc.id} caseStudy={doc as CaseStudy} />
-            ),
-          )}
+          {docs.map((doc) => (
+            <ScrollReveal key={doc.id}>
+              {relationTo === 'posts' ? (
+                <PostCard post={doc as Post} />
+              ) : (
+                <CaseStudyCard caseStudy={doc as CaseStudy} />
+              )}
+            </ScrollReveal>
+          ))}
         </div>
       )}
     </Container>

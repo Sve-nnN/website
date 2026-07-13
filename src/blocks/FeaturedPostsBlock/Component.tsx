@@ -6,6 +6,7 @@ import type { FeaturedPostsBlock as FeaturedPostsBlockProps, Post } from '@/payl
 import config from '@/payload.config'
 import { Container } from '@/components/Container'
 import { PostCard } from '@/components/PostCard'
+import { ScrollReveal } from '@/components/ScrollReveal'
 
 export async function FeaturedPostsBlockComponent(props: FeaturedPostsBlockProps) {
   const { title, limit } = props
@@ -29,7 +30,9 @@ export async function FeaturedPostsBlockComponent(props: FeaturedPostsBlockProps
       {title && <h2 className="font-heading text-heading mb-6">{title}</h2>}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {posts.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <ScrollReveal key={post.id}>
+            <PostCard post={post} />
+          </ScrollReveal>
         ))}
       </div>
     </Container>
