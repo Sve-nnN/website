@@ -102,7 +102,7 @@ export default async function CaseStudyPage({
               {trail.map((crumb, i) => {
                 const isLast = i === trail.length - 1
                 return (
-                  <li key={i} className="flex items-center gap-x-2">
+                  <li key={crumb.url} className="flex items-center gap-x-2">
                     {i > 0 && <span aria-hidden="true">/</span>}
                     {isLast ? (
                       <span aria-current="page">{crumb.label}</span>
@@ -138,7 +138,7 @@ export default async function CaseStudyPage({
         <Container className="py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {doc.kpis.map((kpi, i) => (
-              <div key={i} className="rounded-lg bg-secondary text-secondary-foreground p-6 text-center">
+              <div key={kpi.id ?? i} className="rounded-lg bg-secondary text-secondary-foreground p-6 text-center">
                 <p className="text-display font-display font-semibold text-primary tracking-tight tabular-nums">
                   {kpi.value}
                 </p>
@@ -165,7 +165,7 @@ export default async function CaseStudyPage({
             <h2 className="font-heading text-heading mt-10 mb-4">{t.challenge}</h2>
             <ul className="list-disc pl-6 space-y-2 text-body">
               {doc.challenge.map((item, i) => (
-                <li key={i}>{item.text}</li>
+                <li key={item.id ?? i}>{item.text}</li>
               ))}
             </ul>
           </section>
@@ -176,7 +176,7 @@ export default async function CaseStudyPage({
             <h2 className="font-heading text-heading mt-10 mb-4">{t.solution}</h2>
             <ol className="space-y-4">
               {doc.solution.map((step, i) => (
-                <li key={i} className="flex gap-4">
+                <li key={step.id ?? i} className="flex gap-4">
                   <span className="font-heading text-heading text-primary">{i + 1}</span>
                   <div>
                     <p className="font-semibold text-body">{step.title}</p>
@@ -202,7 +202,7 @@ export default async function CaseStudyPage({
             )}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {doc.results.metrics.map((metric, i) => (
-                <div key={i} className="rounded-lg border border-border p-4">
+                <div key={metric.id ?? i} className="rounded-lg border border-border p-4">
                   <p className="text-label text-muted-foreground uppercase tracking-wide">
                     {metric.label}
                   </p>

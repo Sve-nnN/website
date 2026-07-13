@@ -180,7 +180,7 @@ export default async function AuthorProfilePage({
             <h2 className="font-heading text-heading mb-6">{t.expertise}</h2>
             <div className="flex flex-wrap gap-2">
               {doc.expertise.map((item, i) => (
-                <Badge key={i} variant="secondary">
+                <Badge key={item.id ?? i} variant="secondary">
                   {item.topic}
                 </Badge>
               ))}
@@ -197,7 +197,7 @@ export default async function AuthorProfilePage({
                 const dateRange = formatDateRange(item.startDate, item.endDate, locale, t.present)
 
                 return (
-                  <Card key={i} className="flex gap-4 p-6">
+                  <Card key={item.id ?? i} className="flex gap-4 p-6">
                     <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-muted">
                       {logo?.url ? (
                         <Image
@@ -235,7 +235,7 @@ export default async function AuthorProfilePage({
                   const dateRange = formatDateRange(item.startDate, item.endDate, locale, t.present)
 
                   return (
-                    <li key={i} className="relative">
+                    <li key={item.id ?? i} className="relative">
                       <span
                         aria-hidden
                         className="absolute -left-8 top-1 size-3.5 rounded-full border-2 border-background bg-primary"

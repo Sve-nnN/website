@@ -41,7 +41,7 @@ export default async function CaseStudiesListPage({
             {trail.map((crumb, i) => {
               const isLast = i === trail.length - 1
               return (
-                <li key={i} className="flex items-center gap-x-2">
+                <li key={crumb.url} className="flex items-center gap-x-2">
                   {i > 0 && <span aria-hidden="true">/</span>}
                   {isLast ? (
                     <span aria-current="page">{crumb.label}</span>
