@@ -182,6 +182,7 @@ None yet.
 |---|-------------|------|--------|-----------|
 | 260712-159 | Gradient CTA sections: reuse HeroGrainGradient shader as background on ContactFormBlock sidebar + CallToAction strip (Tasks 1-2 done; Task 3 blocking human-verify checkpoint pending) | 2026-07-12 | f76678f | [260712-159-gradient-cta-sections](./quick/260712-159-gradient-cta-sections/) |
 | 260713-1zw | React Doctor top-3 fix pass: deleted 2 genuinely-dead UI files (select.tsx, skeleton.tsx), replaced 3 JSON.parse(JSON.stringify(x)) deep-clones with structuredClone(x) in migration scripts. Next CVE-2026-23870 fix (Task 2) explicitly skipped — only compatible patch is a Next 16 major bump, deferred to a separate decision per Juan | 2026-07-13 | f8ea619 | [260713-1zw-fix-top-3-react-doctor-issues-unused-fil](./quick/260713-1zw-fix-top-3-react-doctor-issues-unused-fil/) |
+| 260713-2ce | React Doctor top-3 fix pass (round 2): triaged all 23 unused-file findings as CLI-invoked false positives (PM2 config + migration registry, zero deletions), removed unused `@radix-ui/react-select` dependency. Next CVE-2026-23870 fix skipped again — `@payloadcms/next@3.85.2` peerDependencies has a hard gap excluding all 15.5.x, only compatible patch is Next 16 major bump | 2026-07-13 | d3acae4 | [260713-2ce-fix-top-3-react-doctor-issues-unused-fil](./quick/260713-2ce-fix-top-3-react-doctor-issues-unused-fil/) |
 
 ## Deferred Items
 
