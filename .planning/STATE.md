@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: UI/UX Pro Max — Polish y Competitividad
-status: in_progress
-last_updated: "2026-07-13T00:45:00.000Z"
+status: complete
+last_updated: "2026-07-13T02:15:00.000Z"
 last_activity: 2026-07-13
 progress:
   total_phases: 4
-  completed_phases: 3
-  total_plans: 3
-  completed_plans: 3
-  percent: 75
+  completed_phases: 4
+  total_plans: 7
+  completed_plans: 7
+  percent: 100
 ---
 
 # Project State
@@ -20,7 +20,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 25 (Service-page visual polish, última de v1.5) — Phases 22-24 closed 9/9 requirements, autonomous run in progress
+**Current focus:** v1.5 milestone (4 fases, 22→25) todas cerradas, 18/18 requirements — solo queda Phase 6 (Deploy + Cutover), fuera de este run por decisión explícita de Juan. Ver "Operator Next Steps" abajo.
 
 ## Current Position
 
@@ -156,6 +156,7 @@ Recent decisions affecting current work:
 - [Phase 23]: 23-01: `src/lib/canonical.ts` nuevo, módulo puro — `buildServiceAlternates(locale, current?)` calcula el canonical purmente desde `locale`, no desde la carpeta de ruta física que llamó (mecanismo real que colapsa las 4 URLs físicas en 2 targets canónicos: los combos "incorrectos" `/services` sin prefijo y `/en/servicios` canonicalizan al segmento correcto de su locale en vez de auto-referenciarse). `metadataBase` definido una única vez en `[locale]/layout.tsx` (único root real del árbol frontend público, no hay `src/app/layout.tsx` por encima). Reutiliza `SITE_URL` de `sitemap-data.ts` en vez de re-derivar resolución de dominio. Verificado en vivo (curl real, 6 URLs: 2 combos correctos + 2 incorrectos + 2 landings con hreflang es/en/x-default) por el executor y re-derivado independientemente por el verifier sin confiar en el SUMMARY — passed 5/5. Code review encontró WR-01 (`canonical.ts` importa transitivamente `getPayload`/`@payload-config` vía `sitemap-data.ts`, no es tan "puro" como el comentario afirma — riesgo latente si algún día se importa desde un Client Component) y 2 infos (sin normalización de trailing slash en `SITE_URL`, patrón preexistente; cast `locale as 'es'|'en'` sin validación runtime, hoy inalcanzable por el matcher de next-intl) — WR-01 no se fixeó porque el guardrail (`import 'server-only'`) requeriría agregar una dependencia npm nueva para un riesgo hoy inerte (todo Server Components); aceptado como deuda documentada, no bloqueante. Se mataron 2 procesos `next dev` viejos que quedaron corriendo en puertos 3000-3002 de sesiones anteriores.
 - [Phase 24]: 24-01: Bloque nuevo `src/blocks/ServicesShowcase/` (config+Component) — grid 2x2 per 24-UI-SPEC.md, badge de ícono por slug (Search/TrendingUp/Code/Sparkles), lee las 4 cards en vivo de `SERVICE_SLUGS`/`getServicePage` (sin curación tipo `featured-content`, a diferencia de `FeaturedCaseStudiesBlock`). Registro 100% aditivo en `Pages/index.ts` + `RenderBlocks.tsx` (confirmado por diff línea a línea, cero edits a código existente). Migración generada, leída antes de aplicar (solo `CREATE TABLE`/`ADD CONSTRAINT`/`CREATE INDEX` para las tablas del bloque nuevo, cero `DROP`/`ALTER` en columnas existentes) y aplicada contra Neon real sin incidentes — sin necesidad de aprobación nombrada de Juan porque es puramente aditiva, per la regla del proyecto. Home seedeado en ambos locales (idempotente, mismo id en re-run). Verificado en vivo por el executor y re-derivado independientemente por el verifier (curl real, 4 cards únicas por locale, 8 URLs de destino 200, migración re-leída por el verifier). Code review encontró WR-01 (4 queries paralelas en vez de 1 sola `where: slug in [...]` — no urgente, N fijo=4, bajo tráfico de portfolio, no fixeado) y WR-02 (real, fixeado): `getServicePage`/`getServicesIndexPage` en `services-data.ts` (helper preexistente de Phase 19) no pasaban `overrideAccess: false`, así que la Local API bypaseaba `read: authenticatedOrPublished` de `Pages` — una página en borrador podía aparecer públicamente, y esta fase la exponía por primera vez en la página de mayor tráfico (Home). Fix aplicado a ambos helpers, re-verificado en vivo que las páginas publicadas siguen sirviendo 200.
 - [Fuera de fase, 2026-07-13, reportado en vivo por Juan]: bug real encontrado mientras corría Phase 25 (después de capturar el baseline de 25-01) — en `/servicios` (ES), tanto el link "Servicios" del nav como las tarjetas "Ver más" del índice apuntaban a `/services` (combo no-canónico) en vez de `/servicios`. Root cause: 3 instancias del mismo problema — `Header.navItems.url` y `Content` block's `link.url` son campos NO localizados en Payload (confirmado leyendo el doc crudo vía API: `richText`/`label` sí difieren por locale, `url` no — queda el valor de cualquier locale que se haya escrito último), y `LocaleSwitcher` hacía swap ingenuo de prefijo (`/servicios` -> `/en/servicios` en vez de `/en/services`). Fix: extraídos los helpers puros (`SERVICE_SLUGS`, `isServiceSlug`, `normalizeServiceHref` nuevo) a `src/lib/service-slugs.ts` (cero imports de Payload, seguro para el client component `LocaleSwitcher`; `services-data.ts` re-exporta para no romper los 8 importadores existentes). `normalizeServiceHref` aplicado en render-time en `SiteHeader`, `Content` block y `LocaleSwitcher` — no se intentó arreglar a nivel de dato porque el campo no-localizado no puede sostener 2 valores por locale sin reshape de schema. También corregido `scripts/seed-phase19-service-pages.ts` (URL hardcodeada a `/services/` sin importar locale) y re-corrido contra la DB real (update aditivo). Verificado en vivo: 10 URLs de Servicios + Home en ambos locales, todas 200, nav/cards/locale-switcher ahora apuntan al combo correcto por locale, canonical/hreflang sin cambios. Nota: este fix corrió DESPUÉS del baseline de 25-01 — no debería afectar H1/JSON-LD (no tocados) y el impacto en Lighthouse debería ser nulo/insignificante, pero 25-04 (verificación final contra baseline) debe tenerlo presente si ve cualquier delta inesperado en estas páginas.
+- [Phase 25]: 25-01 capturó baseline real (H1+JSON-LD+Lighthouse mobile) de las 8 URLs antes de tocar nada. 25-02 agregó 2 bloques Payload nuevos (`ServiceScopeCard` — tarjeta única sin precio; `RelatedCaseStudyBlock` — genérico por relationship con fallback al case study más reciente, `overrideAccess:false`), 100% aditivo, migración leída antes de aplicar. 25-03 escribió copy bilingüe nuevo (dolor/alcance/framing de case study) para los 4 servicios, pasado por humanizer (0 em/en dash confirmado), y reestructuró las 8 páginas a la anatomía de 10 bloques. Por decisión directa de Juan (2026-07-13, respuesta a pregunta explícita): el único case study real (id=14) se muestra en las 4 landings con framing honesto ("un caso real de cómo trabajo"), sin fingir vinculación 1:1 por servicio — no se inventó contenido. 25-04 corrió el gate de regresión final: **FAIL inicial** (1/8 rutas de Lighthouse fuera de umbral) — gap closure investigó con entorno limpio (maté 4 procesos `next dev` huérfanos de la sesión) y confirmó que era ruido de medición real de la máquina (una ruta "control" ya aprobada mostró el mismo ruido en ambiente limpio, ningún CWV individual cruzó de banda) — **PASS final**. El gap closure también encontró y arregló una regresión real de accesibilidad (98→94 uniforme en las 8 URLs): contraste insuficiente de `text-primary` sobre fondo claro en 2 puntos puntuales (nuevo token aditivo `--primary-text`, sin tocar los ~15 usos preexistentes fuera de alcance) y un salto de `h1`→`h3` en el seed (corregido a `h2`) — accesibilidad terminó en 100/100, por encima del baseline original. Code review post-cierre encontró 2 críticos reales: `RelatedCaseStudyBlock` consultaba `depth:1` (insuficiente para poblar `caseStudy.client`, un relationship de 2do nivel) — subido a `depth:2` en ambas queries del componente; y `TestimonialsCarousel.title` (campo no localizado, mismo patrón de bug que el fix de nav fuera-de-fase) mostraba "Testimonials" en inglés en la página ES — el primer intento de fix (omitir la key del seed) no alcanzó porque Payload conserva campos no-localizados ausentes del payload de update en vez de limpiarlos; el fix real fue escribir `title: null` explícito + fallback real vía `getTranslations` en el componente (nuevo namespace i18n `testimonialsCarousel`). Nota de contenido, no bloqueante: el case study real (id=14) tiene `client: null` en la DB — el nombre de cliente nunca se mostrará en la tarjeta hasta que Juan asigne un cliente real al case study vía `/admin` (el fix de depth ya deja el código listo para cuando eso pase).
 
 ### Pending Todos
 
@@ -191,10 +192,12 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-12T23:30:00.000Z
-Stopped at: v1.5 ROADMAP.md created (4 phases, 22-25), REQUIREMENTS.md traceability updated, 18/18 requirements mapped
+Last session: 2026-07-13T02:15:00.000Z
+Stopped at: v1.5 milestone complete — Phases 22, 23, 24, 25 all closed, 18/18 requirements done, verified live, code-reviewed, gaps closed. Milestone lifecycle (audit/complete/cleanup) intentionally NOT run — Phase 6 (Deploy + Cutover) remains open and out of scope for this run.
 Resume file: None
 
 ## Operator Next Steps
 
-- Review and approve the v1.5 roadmap, then run /gsd:plan-phase 22 to start planning Breadcrumbs
+- v1.5 (UI/UX Pro Max — Polish y Competitividad) está funcionalmente completo. Cuando quieras, correr `/gsd:audit-milestone` → `/gsd:complete-milestone v1.5` → `/gsd:cleanup` para cerrar el milestone formalmente (no lo hice automático porque Phase 6 sigue pendiente y el milestone-level "all phases complete" check no se cumple hasta que decidas sobre el deploy).
+- Contenido pendiente, no bloqueante: asignar un cliente real al case study id=14 vía `/admin` (`client` field) para que su nombre aparezca en la tarjeta "Case study relacionado" de las 4 landings de Servicios.
+- Fase 6 (Deploy + Cutover) sigue en pausa — retoma solo con tu visto bueno explícito y credenciales reales de Hostinger/DNS/Resend (`RESEND_API_KEY` sigue siendo placeholder).

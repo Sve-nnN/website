@@ -54,7 +54,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 22: Breadcrumbs (visual + schema)** - Servicios index + 4 landings ganan trail visual y BreadcrumbList JSON-LD desde una sola fuente (completed 2026-07-12)
 - [x] **Phase 23: Canonical + hreflang hardening** - Las 4 combinaciones de URL de servicio emiten canonical/hreflang correctos, metadataBase sitewide (completed 2026-07-12)
 - [x] **Phase 24: ServicesShowcase en Home** - Home muestra las 4 tarjetas de servicio leyendo SERVICE_SLUGS en vivo, aditivo (completed 2026-07-13)
-- [ ] **Phase 25: Service-page visual polish** - Las 4 landings de servicio ganan anatomía visual completa y prueba social competitiva
+- [x] **Phase 25: Service-page visual polish** - Las 4 landings de servicio ganan anatomía visual completa y prueba social competitiva (completed 2026-07-13)
 
 ## Phase Details
 
@@ -658,10 +658,10 @@ Plans:
 
 Plans:
 
-- [ ] 25-01-PLAN.md — Capture pre-change baseline (H1/JSON-LD snapshot + Lighthouse mobile) for all 8 service URLs
-- [ ] 25-02-PLAN.md — Build ServiceScopeCard + RelatedCaseStudyBlock, register additively, apply additive migration
-- [ ] 25-03-PLAN.md — Author + humanize copy, seed the 10-block anatomy onto all 4 service landings (real DB write)
-- [ ] 25-04-PLAN.md — Re-capture snapshot/Lighthouse, diff against baseline, confirm zero regression + ES/EN parity
+- [x] 25-01-PLAN.md — Capture pre-change baseline (H1/JSON-LD snapshot + Lighthouse mobile) for all 8 service URLs
+- [x] 25-02-PLAN.md — Build ServiceScopeCard + RelatedCaseStudyBlock, register additively, apply additive migration
+- [x] 25-03-PLAN.md — Author + humanize copy, seed the 10-block anatomy onto all 4 service landings (real DB write)
+- [x] 25-04-PLAN.md — Re-capture snapshot/Lighthouse, diff against baseline, confirm zero regression + ES/EN parity
 
 
 ## Progress

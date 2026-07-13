@@ -27,15 +27,15 @@ Requirements para el milestone v1.5. Cada uno mapea a una fase del roadmap (Home
 
 ### Páginas de Servicio — Polish Visual y Competitividad
 
-- [ ] **SVCPOL-01**: Cada una de las 4 landings de servicio tiene una anatomía visual completa y distinguible por bloques: H1 → dolor/problema → qué incluye → proceso → prueba social → FAQ → CTA — sin muro único de rich text
-- [ ] **SVCPOL-02**: Cada landing de servicio incluye prueba social reforzada (testimonios y/o logos de clientes y/o resultados cuantificados), cerrando el gap detectado frente a la competencia
-- [ ] **SVCPOL-03**: Cada landing de servicio incluye una tarjeta "alcance del servicio" (alcance/resultado/tiempo) sin precio, como sustituto de tabla de precios — respeta la regla de no-precios del proyecto
-- [ ] **SVCPOL-04**: Cada landing de servicio muestra un case study relacionado (tarjeta con métrica en el titular) vinculado al servicio correspondiente
-- [ ] **SVCPOL-05**: El CTA primario se repite arriba (Hero) y abajo (CallToAction) de cada landing, con misma acción/label
-- [ ] **SVCPOL-06**: Todo el copy nuevo o reescrito en esta fase (ES y EN) pasa por la skill `humanizer` antes de publicarse — sin marcas de escritura de IA, sin em/en dash, voz natural variada
-- [ ] **SVCPOL-07**: Ninguna landing de servicio pierde su H1 semántico único ni el `BreadcrumbList`/`Person`/JSON-LD existente durante el polish — verificado contra un baseline pre-pase
-- [ ] **SVCPOL-08**: Ninguna landing de servicio regresa Core Web Vitals/Lighthouse mobile respecto al baseline pre-pase (gate por fase, `next/image` con dimensiones explícitas, sin `'use client'` a nivel de página)
-- [ ] **SVCPOL-09**: Todo componente/string nuevo tiene paridad ES/EN verificada en vivo (sin labels vacíos, sin campos no localizados compartidos) antes de cerrar la fase
+- [x] **SVCPOL-01**: Cada una de las 4 landings de servicio tiene una anatomía visual completa y distinguible por bloques: H1 → dolor/problema → qué incluye → proceso → prueba social → FAQ → CTA — sin muro único de rich text
+- [x] **SVCPOL-02**: Cada landing de servicio incluye prueba social reforzada (testimonios y/o logos de clientes y/o resultados cuantificados), cerrando el gap detectado frente a la competencia
+- [x] **SVCPOL-03**: Cada landing de servicio incluye una tarjeta "alcance del servicio" (alcance/resultado/tiempo) sin precio, como sustituto de tabla de precios — respeta la regla de no-precios del proyecto
+- [x] **SVCPOL-04**: Cada landing de servicio muestra un case study relacionado (tarjeta con métrica en el titular) vinculado al servicio correspondiente
+- [x] **SVCPOL-05**: El CTA primario se repite arriba (Hero) y abajo (CallToAction) de cada landing, con misma acción/label
+- [x] **SVCPOL-06**: Todo el copy nuevo o reescrito en esta fase (ES y EN) pasa por la skill `humanizer` antes de publicarse — sin marcas de escritura de IA, sin em/en dash, voz natural variada
+- [x] **SVCPOL-07**: Ninguna landing de servicio pierde su H1 semántico único ni el `BreadcrumbList`/`Person`/JSON-LD existente durante el polish — verificado contra un baseline pre-pase
+- [x] **SVCPOL-08**: Ninguna landing de servicio regresa Core Web Vitals/Lighthouse mobile respecto al baseline pre-pase (gate por fase, `next/image` con dimensiones explícitas, sin `'use client'` a nivel de página)
+- [x] **SVCPOL-09**: Todo componente/string nuevo tiene paridad ES/EN verificada en vivo (sin labels vacíos, sin campos no localizados compartidos) antes de cerrar la fase
 
 ## v2 Requirements (Deferred)
 
@@ -74,15 +74,15 @@ Explícitamente excluido de v1.5. Documentado para prevenir scope creep.
 | SVCHOME-01 | Phase 24 | Done |
 | SVCHOME-02 | Phase 24 | Done |
 | SVCHOME-03 | Phase 24 | Done |
-| SVCPOL-01 | Phase 25 | Pending |
-| SVCPOL-02 | Phase 25 | Pending |
-| SVCPOL-03 | Phase 25 | Pending |
-| SVCPOL-04 | Phase 25 | Pending |
-| SVCPOL-05 | Phase 25 | Pending |
-| SVCPOL-06 | Phase 25 | Pending |
-| SVCPOL-07 | Phase 25 | Pending |
-| SVCPOL-08 | Phase 25 | Pending |
-| SVCPOL-09 | Phase 25 | Pending |
+| SVCPOL-01 | Phase 25 | Done |
+| SVCPOL-02 | Phase 25 | Done |
+| SVCPOL-03 | Phase 25 | Done |
+| SVCPOL-04 | Phase 25 | Done |
+| SVCPOL-05 | Phase 25 | Done |
+| SVCPOL-06 | Phase 25 | Done |
+| SVCPOL-07 | Phase 25 | Done |
+| SVCPOL-08 | Phase 25 | Done |
+| SVCPOL-09 | Phase 25 | Done |
 
 **Coverage:** 18/18 v1.5 requirements mapped, 0 orphaned.
 
