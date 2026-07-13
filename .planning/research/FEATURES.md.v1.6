@@ -1,0 +1,218 @@
+# Feature Research — v1.6 UI/UX Pro Max II
+
+**Domain:** Second-pass component polish (navbar, CTA strip, secondary Hero variants, FAQ, client logos, testimonials, blog/case-study grids) + copy-voice calibration, on an existing shipped Payload 3.85 + Next.js 15 bilingual (EN/ES) consultant portfolio
+**Researched:** 2026-07-13
+**Confidence:** HIGH (codebase read directly for every component in scope) / MEDIUM (voice profile — 2 live competitor fetches, single-pass extraction each, cross-referenced against v1.5's structural findings)
+
+## Codebase Baseline (verified directly, not researched)
+
+Facts that constrain every recommendation below — read from the actual files in scope, not assumed.
+
+- **`CallToAction` is the "full-width vw" complaint, confirmed structurally.** `src/blocks/CallToAction/Component.tsx` wraps its background (`HeroGrainGradient variant="cta"`) and gradient overlay directly on the outer `<section>` with **no `Container` wrapper** — only the *inner* content (`RichTextRenderer` + links) sits inside a `Container`. Every other block in the registry (`Hero`, `FAQ`, `ClientLogosBlock`, `TestimonialsCarousel`, `FeaturedPostsBlock`, `ArchiveBlock`) puts `Container` as the section's direct child or wraps the whole section in one. The CTA's `rounded-2xl shadow-xl ring-1 ring-white/10` classes are card styling applied to a section that stretches the full width of whatever parent renders it — a rounded card whose corners touch the page edges reads as broken, not as a "full-bleed banner," because the shape says "card" and the layout says "edge-to-edge." This is a one-line structural fix (wrap the outer `<section>` in `Container`, or add an inset margin), not a redesign.
+- **`SiteHeader`** already has real infrastructure: sticky (`sticky top-0 z-50`), `NavigationMenu` (desktop) + `Sheet` (mobile drawer), `LocaleSwitcher`, CTA button, and a locale-normalization fix for nav URLs (`normalizeServiceHref`). What it visibly lacks vs a "pro" navbar: no scroll-state treatment (background/shadow is static from `bg-secondary shadow-md` regardless of scroll position — no shrink/blur-on-scroll, no transparent-over-hero-then-solid pattern), no active-route highlighting (`NavigationMenuLink` has no `aria-current`/active-state styling keyed to the current path), and the underline-on-hover treatment (`border-b-2 border-transparent hover:border-primary`) is a good micro-interaction already in place — this is the pattern to extend, not replace.
+- **`Hero` block variants beyond `home` are visually undifferentiated from each other.** The component only branches on `isHome` (background/typography) — `listing`, `post-header`, and `case-study-header` all render through the exact same `!isHome` branch: same `py-12 md:py-16` padding, same `opacity-30` image overlay, same `text-heading` title size. The only variant-specific behavior at all is that breadcrumbs render **only** on `listing`. There's no visual distinction between a blog-listing header, a single blog-post header, and a case-study header today — they're the same component with 3 unused label values.
+- **Case-study detail pages hand-roll their own breadcrumb JSON-LD** (`case-studies/[slug]/page.tsx:93-101`) independently from the `buildTrail()`/`Breadcrumbs.tsx` helper v1.5 built for Services — and render **no visual breadcrumb at all** (no `<nav>`, just the schema). This is a second, drifted breadcrumb implementation in the codebase; the case-study Hero uses `case-study-header` variant, not `listing`, so it doesn't even wire into the Hero's existing (gated) breadcrumb field.
+- **`FAQ` block** is solid semantically (`<details>/<summary>`, native accordion, no JS) but visually plain: no icon/chevron treatment beyond a `+` glyph rotating 45°, no card/border grouping, flat `divide-y` list. Functionally table-stakes-complete; visually a template-default look.
+- **`ClientLogosBlock`** already has the right micro-interaction primitive (`grayscale opacity-70 hover:opacity-100 hover:grayscale-0`) but logos are `flex flex-wrap items-center justify-center gap-8` with no marquee/scroll option, no distinguishing size treatment, and every logo is fixed at `120×48` regardless of source aspect ratio (`object-contain` masks this but very wide or very square logos will look inconsistent in scale next to each other).
+- **`TestimonialsCarousel`** is a `overflow-x-auto` scroll-snap row, not a real carousel — no prev/next controls, no dot indicators, no auto-scroll, relies entirely on the user dragging/trackpad-scrolling a `flex` row. This is a legitimate lightweight choice per the project's explicit "no `embla-carousel-react`" guardrail (STACK-v1.5.md), but it currently has zero visual affordance telling a user there's more content to scroll to (no fade-edge gradient, no scroll-hint arrow) — a real polish gap, not an anti-pattern to reverse.
+- **`TestimonialSection`** (singular, different block from `TestimonialsCarousel`) is a single static blockquote with a left border accent — used inline (e.g., inside case-study `testimonialSection`). Minimal but on-brand; the polish opportunity is typographic weight/quote-mark treatment, not restructuring.
+- **Blog grid (`/blog`) is entirely delegated to `RenderBlocks`** — the actual grid markup lives in `ArchiveBlockComponent`, which already has a real category filter (`Tabs`, URL-param-driven, validated server-side) and a real empty state. The `PostCard` used by both the grid and `FeaturedPostsBlock` is a plain `Card` with `aspect-[16/10]` image + hover `scale-105` — no date/reading-time/category badge on the card itself, no author avatar, nothing that signals "this person publishes serious, dated technical content" at a glance.
+- **`FeaturedPostsBlock`** reads from a `featured-content` global (editorial curation, not automatic "latest N"), reuses `PostCard` — same visual gaps as the main grid since it's the same card.
+- **Case-studies listing (`/case-studies`) is hand-built page markup, not a block** — plain `h1` + `grid` of `CaseStudyCard`, with a real (if generic) empty state. It duplicates the `Container`/heading pattern that `ArchiveBlock` already encapsulates for posts instead of reusing it.
+- **Case-study detail page is the richest template in the codebase** (metric-in-hero, KPI grid, client/challenge/solution/results narrative, embedded testimonial, author byline) and already matches the Arianna Lupi case-study anatomy noted in v1.5 research. The visual gaps are narrower here: KPI cards use `bg-secondary` (navy) even though the page background is default — creates a slightly disconnected "boxes floating on the page" look rather than an integrated section; the numbered solution steps (`<ol>` with a bare numeral) have no visual container (border/card) distinguishing each step, so on a long solution list the numbers alone carry all the structure.
+
+## Voice/Tone Research: Arianna Lupi vs Aleyda Solis
+
+Both sites were fetched live (2026-07-13) specifically for sentence-level voice, not structure (structure already covered in v1.5 `FEATURES.md`/`SUMMARY.md` — not repeated here).
+
+### Arianna Lupi (ariannalupi.com) — first-person, informal-professional, inclusive "we"
+
+Observed text:
+- Hero: "Hola, soy Arianna Lupi" / "Growth marketer y consultora de búsqueda venezolana con más de 8 años de experiencia."
+- Bio: "Soy consultora e instructora SEO y fundadora de AprendoClub. Soy magíster en Big Data Analytics por St. Thomas University y tengo más de 8 años de experiencia optimizando sitios web en software, educación, entretenimiento, e-commerce y productos al consumidor en Europa, LATAM y EE.UU."
+- Service lines: "Creo y dirijo estrategias SEO a medida para negocios de todos los tamaños"; "Sesiones individuales para revisar el estado de tu posicionamiento"; "Capacito a equipos de marketing y producto para que el SEO deje de ser una caja negra"
+- CTAs: "Escríbeme →", "Trabajemos juntos →", "Hablemos →" (repeated per service card)
+- Testimonials section title: "Vidas que cambiaron de rumbo" / "Historias reales de estudiantes y profesionales que cambiaron su carrera aplicando el sistema."
+
+**Voice markers:**
+- **First person singular throughout** ("Soy", "Creo y dirijo", "Capacito") — she is the subject of every sentence about her own expertise. Never "Arianna Lupi es..." in her own copy.
+- **Formality:** informal register (**tú**, not usted) — "tu posicionamiento", "Trabajemos juntos". Warmer, closer distance to the reader than Aleyda.
+- **Sentence rhythm:** short declarative openers (hero is two fragments, no verb-heavy complexity), then one longer credential sentence (degree + years + industries + geography packed into a single compound sentence) — a "quick hook, then the proof paragraph" pattern, not evenly-paced prose.
+- **Credential framing is a direct, quantified claim, not a humble-brag hedge:** "más de 8 años de experiencia", named university, named industries/regions. States it, doesn't soften it with "creo que" or "me gustaría pensar que".
+- **CTAs are verbs of collaboration, not of service-request:** "Hablemos", "Trabajemos juntos", "Escríbeme" — imperative but framed as a joint action (nosotros-implied) rather than a transaction. This mirrors the informal "tú" register.
+- **Service descriptions use active present-tense verbs as the sentence subject** ("Creo y dirijo...", "Capacito...") rather than noun-phrase service labels ("SEO strategy creation", "Team training") — she describes what she *does*, continuously, not what the service *is*.
+
+### Aleyda Solis (aleydasolis.com) — third-person, formal, credential-forward
+
+Observed text:
+- Hero: "Aleyda Solis" / "Consultora, Autora & Conferenciante SEO"
+- Bio: "Aleyda es una reconocida consultora SEO con amplia experiencia y especializada en procesos SEOs Internacionales, Ecommerce y SaaS"
+- Section label: "Marcas que confían en Aleyda"
+- CTAs: "Contacta Ahora", "Solicita Consultoría SEO", "Conoce Más Sobre Aleyda"
+- Testimonial (David Adams, Sniffspot): "He trabajado con muchos consultores SEO y Aleyda ha sido noche y día la mejor... hemos visto crecer nuestro tráfico de SEO en un 500%"
+
+**Voice markers:**
+- **Third person throughout her own bio copy** ("Aleyda es...", not "Soy..."). This reads as a personal-brand/press-kit register — appropriate for someone whose credibility is built on external validation (Forbes mention, "200+ conferencias en 30 países", per v1.5 research) rather than first-person narrative.
+- **Formality:** neutral-to-formal register, no explicit tú/usted markers in the fetched copy (CTAs are bare imperatives — "Contacta", "Solicita", "Conoce" — which in Spanish avoid the tú/usted choice entirely by using the imperative mood without a pronoun). This is a deliberately *pronoun-agnostic* CTA style — reads professional without being distant.
+- **Sentence rhythm:** short, title-card-like fragments ("Consultora, Autora & Conferenciante SEO" — three noun phrases, no verb at all) rather than Arianna's fragment+verb hook. The bio sentence is a single compound clause listing specialization areas ("Internacionales, Ecommerce y SaaS") — denser noun-stacking, less narrative flow than Arianna's.
+- **Credential framing leans on external proof, not self-description:** the strongest claims in her copy come from a client testimonial with a specific number ("500%"), not from her own bio adjectives. Her own bio uses soft-but-confident adjectives ("reconocida", "amplia experiencia") rather than Arianna's hard numbers (years, university, geography) — Aleyda's specificity comes from *others* vouching for her.
+- **CTAs are transactional imperatives, not collaborative ones:** "Solicita Consultoría SEO", "Contacta Ahora" — request-a-service framing, not "let's work together." Matches the third-person, more formal register.
+
+### Voice Divergence Table
+
+| Dimension | Arianna Lupi | Aleyda Solis |
+|---|---|---|
+| Grammatical person (self-description) | First person singular ("Soy", "Creo") | Third person ("Aleyda es...") |
+| Formality | Informal (tú) — "tu posicionamiento" | Neutral/formal, pronoun-agnostic imperatives |
+| Credential claim style | Direct, quantified, self-stated (years, university, regions) | Soft self-adjectives + external testimonial numbers doing the heavy lifting |
+| CTA framing | Collaborative verb ("Hablemos", "Trabajemos juntos") | Transactional imperative ("Solicita", "Contacta") |
+| Sentence shape | Fragment hook → dense compound proof sentence | Noun-phrase title-cards → dense compound bio sentence |
+
+### Synthesized Voice Profile for Juan (target: neutral Spanish, no voceo, professional but direct)
+
+Juan's brief already rules out voceo (no "vos"/"tenés") and asks for neutral Spanish — this sits between the two competitors' registers rather than copying either wholesale. Recommended blend, grounded in the observed patterns above:
+
+1. **Person: first person singular, like Arianna, not third person like Aleyda.** Juan is a solo consultant selling direct engagement, not a personal brand run through a press-kit register — "Soy ingeniero de software y consultor SEO" reads as more honest for this site's positioning than "Juan es un reconocido...". Reserve third-person only for bio blurbs written for external reuse (e.g., speaker-bio snippets), never for on-site first-person sections (Hero, About, service intros).
+2. **Formality: neutral Spanish, which in practice means defaulting to usted-avoidant, pronoun-light constructions** — favor imperatives without an explicit tú/vos/usted marker where possible ("Trabajemos juntos", "Hablemos de tu proyecto" — Arianna's collaborative-imperative pattern works in neutral Spanish too, since "hablemos" is a nosotros-form, not a tú-conjugation). Avoid Aleyda's fully impersonal third-person distance — Juan's Core Value is proving expertise *directly*, which favors an accountable "yo hice esto" over a distanced "se ha logrado esto."
+3. **Credential framing: Arianna's direct-claim style, not Aleyda's adjective-softened style.** State the number, the institution, the years — "más de X años", named clients/results — rather than "reconocido"/"amplia experiencia" hedge-adjectives. This matches the project's existing pattern (case-study metric-in-headline) and Juan's own "no voceo, direct" brief.
+4. **Sentence rhythm: short hook, then one dense compound proof sentence** — both competitors converge on this pattern (Arianna's hero fragment→bio sentence; Aleyda's title-card hero→bio sentence). Apply it to Hero/About copy: a short, punchy opening statement, then a single sentence packing the concrete credentials (role, years, stack, notable outcome) — not a string of short choppy sentences, not one long run-on paragraph.
+5. **CTAs: collaborative-imperative over transactional-imperative.** "Hablemos", "Conversemos sobre tu proyecto", "Trabajemos juntos" over "Solicita una consultoría" — Juan's target relationship (senior technical partner) reads better as a peer conversation invite than a service request form, and it's consistent with the existing `CallToAction`/`Hero` link copy pattern already partially in place on the site.
+6. **No em/en dashes (project-wide hard rule from CLAUDE.md), no AI-writing tells** — apply via the `humanizer` skill as already mandated; this voice profile constrains *content*, humanizer constrains *surface artifacts* (dash usage, sentence-starter variety, etc.) — both apply together on every rewritten string.
+
+## Feature Landscape
+
+### Table Stakes (Users Expect These)
+
+A prospect evaluating a senior technical consultant penalizes these components for looking template-default — they read as "not the person who claims to obsess over execution detail."
+
+| Feature | Why Expected | Complexity | Notes |
+|---------|--------------|------------|-------|
+| CTA strip contained, not edge-to-edge | A rounded, shadowed "card" that touches the viewport edges reads as a layout bug, not a design choice, on a site whose Core Value is technical polish | LOW | Wrap `CallToAction`'s outer `<section>` in `Container` (or apply matching inset margin) — one-line structural fix, matches every other block's pattern already |
+| Scroll-aware navbar treatment | Sticky headers with zero scroll-state feedback (no shrink/blur/shadow-intensify) read as unfinished on any 2026-era marketing site; users expect *some* visual response to scrolling | LOW-MEDIUM | `SiteHeader` is already `sticky` with a static `shadow-md` — add a scroll-triggered class toggle (backdrop-blur + shadow intensification) via a small client island, CSS-only where possible (`scroll-driven animations` / `IntersectionObserver`, no JS framework) |
+| Active nav-item indication | A multi-page site (Home/Servicios/Blog/Case Studies/Contact) without highlighting the current section makes orientation harder — table stakes for any nav with >2 items | LOW | `NavigationMenuLink` already has the hover underline pattern (`border-b-2`); extend with `aria-current="page"` + persistent (not just hover) underline keyed off `usePathname()` |
+| Visually distinct secondary Hero variants | `listing`/`post-header`/`case-study-header` currently render pixel-identical to each other — a blog post and a case study should not look like the same template with different text; distinct treatment signals "distinct content types," not "same component reused lazily" | MEDIUM | Differentiate at minimum: image treatment (post-header could show author/date inline; case-study-header could show the metric like the detail page already does elsewhere), height/padding scale, or accent color per content type — CSS/markup only, no new dependency |
+| Breadcrumbs unified across Services AND Case Studies (visual + schema, one source of truth) | v1.5 built `buildTrail()`/`Breadcrumbs.tsx` for Services; case-study detail pages hand-roll their own JSON-LD with **no visual breadcrumb at all** — an inconsistency a careful reviewer (i.e., Juan's own ICP) would notice | LOW-MEDIUM | Extend the existing `Breadcrumbs`/`buildTrail()` helper to Case Studies instead of leaving a second, drifted implementation; add the visual `<nav>` that's currently entirely missing there |
+| FAQ visual grouping beyond a flat `divide-y` list | A flat list of `<details>` with a `+` glyph is functionally complete but visually a bootstrap-default accordion; expected polish is subtle card/border treatment and icon consistency with the rest of the design system | LOW | Style pass only — no new interaction model needed (native `<details>` accessibility is already correct, don't replace with a JS accordion) |
+| Client-logo scale normalization | Logos of wildly different native aspect ratios sitting in a fixed `120×48` box next to each other reads inconsistent at a glance | LOW | Normalize apparent visual weight (e.g. consistent max-height with `width: auto`, or a subtle uniform backdrop chip) rather than forcing a fixed box that distorts `object-contain` framing |
+| Scroll affordance on the testimonials row | `overflow-x-auto` with zero visual hint (no edge fade, no arrow, no dot indicator) means users may not realize there's more than what's in the first viewport | LOW | CSS mask-image fade-edge or a subtle scroll-hint chevron — no carousel library needed, keeps the existing lightweight scroll-snap approach |
+| Post/case-study cards carry metadata at a glance (date, category, or reading time) | A "serious technical writer" portfolio without dates/categories on its own card grid undercuts the E-E-A-T story the site is selling; readers can't judge recency or relevance without opening the post | LOW-MEDIUM | Add a small badge/label row to `PostCard` (category + date) — data already exists on `Post` (categories relation, `publishedAt`), purely a rendering gap |
+| Case-studies listing reuses the same visual language as the blog grid (`ArchiveBlock`) | The listing currently duplicates `Container`+`h1`+`grid` markup by hand instead of routing through the same block pattern the blog grid uses — no functional bug, but a consistency/maintenance gap that shows up as "this page feels slightly different" | LOW | Either route Case Studies through `ArchiveBlock` (it already supports `relationTo: 'case-studies'`) or intentionally keep it separate but align spacing/heading treatment exactly |
+
+### Differentiators (Competitive Advantage)
+
+Where this polish pass gives Juan an edge over Arianna Lupi / Aleyda Solis rather than just matching a generic "good portfolio" bar — both competitors are flat single-page sites with none of these secondary templates at all.
+
+| Feature | Value Proposition | Complexity | Notes |
+|---------|-------------------|------------|-------|
+| Consistent, restrained micro-motion (scroll-reveal, hover states) tied to the same aesthetic as the Home `HeroGrainGradient` | Neither competitor has any component-level motion system — a coherent (not flashy) motion language across secondary pages extends the "this person cares about the tiny details" pitch beyond the homepage, which is currently the only animated surface | MEDIUM | Research + pick the lightest viable library (per milestone's own explicit task) — evaluate against the CWV budget that already cost -3 Lighthouse points on the Home shader; `prefers-reduced-motion` is non-negotiable |
+| Distinct visual identity per Hero variant that doubles as an implicit content-type signal | Neither Arianna nor Aleyda run dedicated post/case-study header templates at all (they don't have separate URLs for this content); differentiating `post-header` vs `case-study-header` reinforces the "many distinct, well-built page types" IA edge v1.5 already established for Services | MEDIUM | Reuse the case-study detail page's existing metric/KPI visual language as inspiration for `case-study-header`'s distinct look, rather than inventing a fourth style from scratch |
+| Voice-consistent copy across every real DB string, grounded in named-competitor analysis rather than generic "professional tone" | Competitors' copy is internally consistent to *their own* voice but neither would survive a side-by-side audit the way a deliberately-calibrated voice does — this is a differentiator in process/rigor, not just output | MEDIUM-HIGH (breadth: touches every collection with editorial copy) | Apply the Voice Profile above + `humanizer` skill to every string in Pages/Posts/CaseStudies/Testimonials/FAQ/CTA content — the highest-surface-area, highest-review-cost item in the milestone |
+| Unified breadcrumb system spanning Services AND Case Studies (and ready to extend to Blog) | Extends v1.5's differentiator (neither competitor has breadcrumbs anywhere) to a second content vertical, closing the one visible inconsistency (Case Studies' schema-only, no-visual-nav breadcrumb) before a reviewer notices it | LOW-MEDIUM | Direct reuse of `buildTrail()`/`Breadcrumbs.tsx` from v1.5 — mostly a wiring task, not new design |
+
+### Anti-Features (Commonly Requested, Often Problematic)
+
+| Feature | Why Requested | Why Problematic | Alternative |
+|---------|---------------|-----------------|-------------|
+| Replacing `TestimonialsCarousel`'s scroll-snap row with a JS carousel library (embla, swiper) for "real" prev/next controls | Feels more polished, more "premium SaaS site" | Explicitly rejected already in v1.5 STACK research (no `embla-carousel-react` — CWV guardrail); a heavier client-JS carousel for 8 testimonial cards is disproportionate | Keep CSS scroll-snap; add only a lightweight fade-edge/arrow affordance (CSS + minimal JS) |
+| Replacing the native `<details>/<summary>` FAQ with a JS accordion component (Radix Accordion) for animated open/close | Wants smoother open/close transitions than the native toggle | `<details>` is already accessible and JS-free; a Radix accordion add is a new dependency (not currently installed) for a purely cosmetic transition, and native `<details>` now supports CSS `::details-content` transitions in modern browsers without any JS | Style the existing `<details>` more, or add a CSS-only open/close transition; don't add a new Radix primitive for this alone |
+| A heavyweight animation library (GSAP, Framer Motion) for scroll-reveal across every touched component | "Everything should animate in" is a common ask once one component (Home hero) has motion | Directly the CWV risk the milestone's own task list flags — must be weighed by bundle size, not features, per this project's explicit precedent (three.js rejected in v1.3, embla rejected in v1.5) | Whatever the milestone's animation-library research picks, scope it to the smallest primitive that does scroll-reveal + hover-state, and apply `prefers-reduced-motion` globally, not per-component |
+| Rewriting Hero/service copy structure while doing the "component polish" pass | Once touching a component, tempting to also restructure its copy | Scope creep exactly like v1.5 explicitly flagged and avoided ("Rewriting all service copy during a visual polish pass") — conflates two different milestone tasks (component polish vs. DB-wide voice humanization) that have different review/regression risk profiles | Keep the two tracks separate: component visual/motion polish is a code change; copy humanization is a content change — verify each independently, don't bundle a copy rewrite into a component's structural fix |
+| Adopting Aleyda Solis's fully third-person, press-kit voice for Juan's own first-person site sections | Sounds "more established/authoritative" | Third person only works when your credibility runs through external validation (press mentions, huge conference count) the way Aleyda's does; for Juan's site, whose Core Value is *demonstrating* his own hands-on engineering/SEO work, first-person accountable claims ("hice", "construí") land as more credible, not less | First person throughout (per Voice Profile above); reserve third person only for externally-reusable bio snippets, not on-site copy |
+| Mega/marquee auto-scroll for `ClientLogosBlock` | Marquees feel "dynamic," commonly requested for logo strips | Auto-scrolling content that never stops is a known accessibility/attention anti-pattern and adds constant-motion CPU/layout cost sitewide, conflicting with `prefers-reduced-motion` intent and the CWV guardrail | Static, well-spaced, size-normalized grid with the hover grayscale-to-color treatment already implemented — sufficient signal without motion cost |
+
+## Feature Dependencies
+
+```
+CTA strip Container fix (structural, isolated)
+        └──independent of──> everything else in this milestone (safest, do-first item)
+
+Breadcrumbs unification (Services + Case Studies)
+        └──requires──> existing buildTrail()/Breadcrumbs.tsx from v1.5 (already built)
+        └──enables───> consistent Hero variant treatment for case-study-header (shares hierarchy data)
+
+Hero variant differentiation (listing/post-header/case-study-header)
+        └──benefits-from──> Breadcrumbs unification (case-study-header can render the same trail Services uses)
+        └──independent of──> navbar/CTA/FAQ work
+
+Micro-animation library selection (research task)
+        └──gates──> every "scroll-reveal"/"hover state" item in Table Stakes + Differentiators
+        └──must-respect──> prefers-reduced-motion, CWV budget (same guardrail as v1.3/v1.5)
+
+DB-wide copy humanization (voice pass)
+        └──requires──> Voice Profile (this document)
+        └──independent-of──> component visual/motion work (content change, not code change)
+        └──touches──> Pages, Posts, CaseStudies, Testimonials, FAQ, CallToAction collections — broad surface, needs per-locale verification (project's repeat EN/ES parity bug history)
+```
+
+### Dependency Notes
+
+- **CTA Container fix has zero dependencies and zero risk** — pure Tailwind/JSX change to one component, no schema touch, no other component affected. Natural first task of the milestone.
+- **Breadcrumbs unification should precede or pair with `case-study-header` Hero differentiation** — if case-study-header gains its own visual identity in the same pass that finally wires up its breadcrumb, the two changes compose naturally (breadcrumb trail as one of the elements distinguishing the variant) rather than being done twice.
+- **Animation-library selection blocks every motion item** — must land first among the "polish" tasks so every subsequent component-touch (navbar scroll-state, card hover, FAQ open/close, scroll-reveal) uses one consistent primitive instead of five different ad hoc CSS approaches.
+- **Copy humanization is architecturally independent from every component task** — it's a content/DB change, not a code change, and should be tracked (and regression-tested) separately per the project's own precedent of `push:false`+read-migration-first discipline. Bundling it into a component-touching phase raises the review surface for no benefit.
+
+## MVP Definition
+
+### Launch With (v1.6 core — safest, highest-certainty items)
+
+- [ ] CTA strip Container fix — removes the specific visual complaint Juan named, zero risk
+- [ ] Breadcrumbs extended from Services to Case Studies (reuse `buildTrail()`/`Breadcrumbs.tsx`, add the missing visual `<nav>`)
+- [ ] Navbar scroll-state treatment + active-route indication on `SiteHeader`
+- [ ] FAQ visual grouping/icon polish (no interaction-model change)
+- [ ] Client-logo scale normalization
+- [ ] Testimonials-row scroll affordance (fade-edge/hint)
+- [ ] PostCard metadata (date/category badge) on blog grid + `FeaturedPostsBlock`
+- [ ] Micro-animation library selection + baseline scroll-reveal/hover implementation, `prefers-reduced-motion` respected, Lighthouse-gated
+- [ ] Voice Profile applied to a first humanization pass across DB copy (Home/Services already partially humanized in v1.5 — extend to Blog/Case Studies/Testimonials/FAQ content)
+
+### Add After Validation (later in v1.6, if scope allows)
+
+- [ ] Distinct visual treatment per Hero variant (`listing` vs `post-header` vs `case-study-header`) — trigger: after the breadcrumb/navbar work stabilizes the shared Hero surface
+- [ ] Case-studies listing routed through `ArchiveBlock` for full visual parity with the blog grid — trigger: if the two listings' inconsistency becomes visible after other polish lands
+- [ ] KPI-card background integration on case-study detail (currently `bg-secondary` floating boxes) — trigger: if case-study detail gets touched anyway for Hero-variant work
+
+### Future Consideration (subsequent milestones)
+
+- [ ] Breadcrumbs extended to Blog (`post` detail pages) — same mechanism, deferred since Blog wasn't named in this milestone's explicit scope
+- [ ] Author-page polish pass — out of this milestone's named component list
+- [ ] Full copy audit against Aleyda Solis-style third-person snippet variants for external reuse (press kit, speaker bio) — separate from the on-site first-person voice this milestone targets
+
+## Feature Prioritization Matrix
+
+| Feature | User Value | Implementation Cost | Priority |
+|---------|------------|---------------------|----------|
+| CTA strip Container fix | HIGH (named complaint) | LOW | P1 |
+| Breadcrumbs unification (Case Studies) | MEDIUM-HIGH | LOW-MEDIUM | P1 |
+| Navbar scroll-state + active-route | MEDIUM-HIGH | LOW-MEDIUM | P1 |
+| Micro-animation library selection + baseline motion | HIGH | MEDIUM | P1 |
+| DB-wide voice humanization pass | HIGH | MEDIUM-HIGH (breadth) | P1 |
+| FAQ visual polish | MEDIUM | LOW | P1 |
+| Client-logo normalization | LOW-MEDIUM | LOW | P1 |
+| Testimonials scroll affordance | MEDIUM | LOW | P1 |
+| PostCard metadata badges | MEDIUM-HIGH | LOW-MEDIUM | P1 |
+| Hero variant differentiation | MEDIUM | MEDIUM | P2 |
+| Case-studies listing → `ArchiveBlock` parity | LOW-MEDIUM | LOW | P2 |
+| KPI-card background integration | LOW | LOW | P2 |
+| Blog breadcrumbs | LOW-MEDIUM | LOW | P3 (later milestone) |
+
+## Competitor Feature Analysis
+
+| Feature | Arianna Lupi | Aleyda Solis | Our Approach |
+|---------|--------------|--------------|--------------|
+| Secondary page templates (post/case-study headers) | None — single-page site, no separate URLs | None — single-page site, no separate URLs | Distinct Hero variants per content type — an IA edge neither competitor can match structurally |
+| Component-level motion/micro-interactions | None observed | None observed | Restrained, CWV-budgeted motion system — a genuine differentiator since neither runs any |
+| Voice (self-description) | First person, informal, direct-numeric credentials | Third person, formal, testimonial-driven credentials | First person (like Arianna) + direct-numeric credentials (like Arianna), collaborative CTAs, neutral-Spanish register (no voceo) |
+| Breadcrumb-style content navigation | None (anchor-scroll single page) | None (anchor-scroll single page) | Unified `buildTrail()` across Services + Case Studies (extending v1.5) |
+| Testimonial presentation | 12+ named testimonials, dense social-proof wall | 5 detailed exec testimonials w/ quantified results | Lightweight scroll-snap row (already built) + fade-edge affordance — proof density is a v1.5-era gap already tracked, not this milestone's focus |
+
+## Sources
+
+- Direct codebase inspection (HIGH), read 2026-07-13: `src/blocks/CallToAction/{Component,config}.tsx`, `src/components/SiteHeader.tsx`, `src/blocks/Hero/{Component,config}.tsx`, `src/blocks/FAQ/Component.tsx`, `src/blocks/ClientLogosBlock/Component.tsx`, `src/blocks/TestimonialsCarousel/Component.tsx`, `src/blocks/TestimonialSection/Component.tsx`, `src/blocks/FeaturedPostsBlock/Component.tsx`, `src/blocks/ArchiveBlock/Component.tsx`, `src/blocks/RenderBlocks.tsx`, `src/components/Container.tsx`, `src/components/PostCard.tsx`, `src/app/(frontend)/[locale]/blog/page.tsx`, `src/app/(frontend)/[locale]/case-studies/page.tsx`, `src/app/(frontend)/[locale]/case-studies/[slug]/page.tsx`
+- ariannalupi.com — live fetch 2026-07-13, voice-specific extraction (hero, bio, service-line copy, CTA text, testimonial section title) — MEDIUM
+- aleydasolis.com — live fetch 2026-07-13, voice-specific extraction (hero, bio, section labels, CTA text, one testimonial quote) — MEDIUM
+- `.planning/research/FEATURES.md` (v1.5) and `.planning/research/SUMMARY.md` (v1.5) — structural competitor baseline (not repeated here), read for continuity — HIGH
+- `.planning/PROJECT.md` — v1.6 milestone goal/target features, Core Value, DB-safety rule, CLAUDE.md humanizer hard rule — HIGH
+
+---
+*Feature research for: v1.6 UI/UX Pro Max II — component polish, motion, and voice*
+*Researched: 2026-07-13*
