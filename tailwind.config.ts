@@ -50,7 +50,10 @@ const config: Config = {
   			},
   			primary: {
   				DEFAULT: 'var(--primary)',
-  				foreground: 'var(--primary-foreground)'
+  				foreground: 'var(--primary-foreground)',
+  				// Phase 25 gap-closure: AA-safe emphasis-text variant of primary for
+  				// use as a text color on light surfaces (see globals.css comment).
+  				text: 'var(--primary-text)'
   			},
   			secondary: {
   				DEFAULT: 'var(--secondary)',

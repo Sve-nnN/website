@@ -32,7 +32,7 @@ export async function ServiceScopeCardComponent(props: ServiceScopeCardBlockProp
 
             <div>
               <p className="text-label uppercase tracking-wide opacity-70">{t('timelineLabel')}</p>
-              <p className="mt-1 text-body text-primary font-semibold">{timeline}</p>
+              <p className="mt-1 text-body text-primary-text font-semibold">{timeline}</p>
             </div>
           </div>
         </CardContent>

@@ -18,6 +18,17 @@
     --popover-foreground: #12141C;
     --primary: #F7581E;
     --primary-foreground: #12141C;
+    /* Phase 25 gap-closure: --primary (#F7581E) on light --card/--background
+       (#FAFAF7) is only 3.15:1 — fails WCAG AA (4.5:1) for normal text and
+       barely misses the 3:1 large-text floor once weight/size are accounted
+       for. --primary is tuned for background use (paired with
+       --primary-foreground text on top, e.g. buttons), not for direct text
+       color on a light surface. --primary-text is a darkened same-hue
+       variant (4.61:1 on --card) for emphasis text that sits directly on
+       light backgrounds (ServiceScopeCard timeline value, CaseStudyCard hero
+       metric). Dark mode's --primary already passes (6.42:1 on --card), so
+       --primary-text mirrors it there unchanged. */
+    --primary-text: #D03D07;
     --secondary: #12141C;
     --secondary-foreground: #FAFAF7;
     --muted: oklch(0.97 0 0);
@@ -68,6 +79,9 @@
     --popover-foreground: #FAFAF7;
     --primary: #FF7A45;
     --primary-foreground: #12141C;
+    /* Dark-mode --primary already passes AA (6.42:1 on --card) — mirror it
+       verbatim for --primary-text rather than introducing a second value. */
+    --primary-text: #FF7A45;
     --secondary: #23283A;
     --secondary-foreground: #FAFAF7;
     --muted: #1F2230;

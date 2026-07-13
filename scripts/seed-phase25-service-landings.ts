@@ -91,7 +91,15 @@ function lexicalWithHeading(heading: string, paragraphs: string[]) {
       children: [
         {
           type: 'heading',
-          tag: 'h3',
+          // Phase 25 gap-closure: was 'h3', which sits directly after the
+          // page's single <h1> (Hero title) with no <h2> in between on every
+          // service landing — a WCAG 1.3.1/2.4.6 "skipped heading level"
+          // violation flagged by Lighthouse's axe-core heading-order audit
+          // (98 -> 94 accessibility regression, uniform across all 8 URLs).
+          // 'h2' restores h1 -> h2 -> h2(ServiceScopeCard) -> h2 -> h2(...)
+          // sequential order; CaseStudyCard's <h3> nested under
+          // RelatedCaseStudyBlock's <h2> is unaffected and already correct.
+          tag: 'h2',
           version: 1,
           children: [{ type: 'text', version: 1, text: heading }],
           direction: 'ltr' as const,

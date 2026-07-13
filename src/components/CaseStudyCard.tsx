@@ -15,7 +15,7 @@ export function CaseStudyCard({ caseStudy }: { caseStudy: CaseStudy }) {
           <h3 className="font-heading text-heading mt-1">{caseStudy.title}</h3>
           {caseStudy.sector && <p className="mt-1 text-body text-muted-foreground">{caseStudy.sector}</p>}
           {caseStudy.heroMetric && (
-            <p className="mt-4 font-heading text-heading font-semibold text-primary">
+            <p className="mt-4 font-heading text-heading font-semibold text-primary-text">
               {caseStudy.heroMetric}
             </p>
           )}
