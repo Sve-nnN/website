@@ -653,12 +653,15 @@ Plans:
   4. Todo el copy nuevo o reescrito (ES y EN) pasa por la skill `humanizer` antes de publicarse — sin marcas de escritura de IA, sin em/en dash, voz natural variada
   5. Ninguna landing pierde su H1 semántico único ni el `BreadcrumbList`/`Person`/JSON-LD existente frente a un baseline pre-pase, ninguna regresa Core Web Vitals/Lighthouse mobile respecto a ese baseline, y todo componente/string nuevo tiene paridad ES/EN verificada en vivo
 
-**Plans**: TBD
+**Plans**: 4 plans
 **UI hint**: yes
 
 Plans:
 
-- [ ] 25-01: TBD
+- [ ] 25-01-PLAN.md — Capture pre-change baseline (H1/JSON-LD snapshot + Lighthouse mobile) for all 8 service URLs
+- [ ] 25-02-PLAN.md — Build ServiceScopeCard + RelatedCaseStudyBlock, register additively, apply additive migration
+- [ ] 25-03-PLAN.md — Author + humanize copy, seed the 10-block anatomy onto all 4 service landings (real DB write)
+- [ ] 25-04-PLAN.md — Re-capture snapshot/Lighthouse, diff against baseline, confirm zero regression + ES/EN parity
 
 
 ## Progress
