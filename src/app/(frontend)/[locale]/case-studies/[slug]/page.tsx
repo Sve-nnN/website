@@ -94,7 +94,14 @@ export default async function CaseStudyPage({
     <main>
       <section className="relative bg-secondary text-secondary-foreground">
         <div className="relative aspect-[21/9] w-full opacity-40">
-          <Image src={heroImageUrl} alt={heroImage?.alt ?? doc.title} fill className="object-cover" priority />
+          <Image
+            src={heroImageUrl}
+            alt={heroImage?.alt ?? doc.title}
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
         </div>
         <Container className="py-8">
           <nav aria-label="Breadcrumb" className="mb-4">

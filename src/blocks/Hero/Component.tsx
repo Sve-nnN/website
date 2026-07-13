@@ -62,7 +62,14 @@ export function HeroComponent(props: HeroBlockProps) {
       {isHome && <HeroGrainGradient />}
       {!isHome && !isListing && image?.url && styles.overlayOpacity && (
         <div className={`absolute inset-0 ${styles.overlayOpacity}`}>
-          <Image src={image.url} alt={image.alt ?? ''} fill className="object-cover" priority />
+          <Image
+            src={image.url}
+            alt={image.alt ?? ''}
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
         </div>
       )}
       <Container className="relative z-10">

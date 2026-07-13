@@ -101,7 +101,14 @@ export default async function PostPage({
     <main>
       <section className="relative">
         <div className="relative aspect-[21/9] w-full">
-          <Image src={heroImageUrl} alt={heroImage?.alt ?? doc.title} fill className="object-cover" priority />
+          <Image
+            src={heroImageUrl}
+            alt={heroImage?.alt ?? doc.title}
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
         </div>
         <Container className="py-8">
           <div className="flex flex-wrap gap-2 mb-4">

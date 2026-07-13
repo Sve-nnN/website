@@ -42,6 +42,7 @@ export function AboutSectionComponent(props: AboutSectionBlockProps) {
                 alt={photoDoc.alt ?? title ?? ''}
                 fill
                 className="object-cover"
+                sizes="(min-width: 768px) 41vw, 100vw"
               />
             </div>
           </div>

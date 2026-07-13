@@ -18,6 +18,7 @@ export function MediaBlockComponent(props: MediaBlockProps) {
           alt={image.alt ?? ''}
           fill
           className="object-cover rounded-md"
+          sizes="100vw"
         />
       </div>
     </Container>

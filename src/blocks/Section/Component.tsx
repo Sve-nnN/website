@@ -44,7 +44,7 @@ export function SectionComponent(props: SectionBlockProps) {
     <section id={anchorId || undefined} className={sectionClassName}>
       {backgroundStyle === 'image' && bgImage?.url && (
         <div className="absolute inset-0 -z-10">
-          <Image src={bgImage.url} alt={bgImage.alt ?? ''} fill className="object-cover" />
+          <Image src={bgImage.url} alt={bgImage.alt ?? ''} fill className="object-cover" sizes="100vw" />
         </div>
       )}
       {container === 'full' ? content : <Container>{content}</Container>}
