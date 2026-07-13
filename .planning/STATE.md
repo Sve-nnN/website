@@ -178,11 +178,12 @@ None yet.
 
 ### Quick Tasks Completed
 
-| # | Description | Date | Commit | Directory |
-|---|-------------|------|--------|-----------|
-| 260712-159 | Gradient CTA sections: reuse HeroGrainGradient shader as background on ContactFormBlock sidebar + CallToAction strip (Tasks 1-2 done; Task 3 blocking human-verify checkpoint pending) | 2026-07-12 | f76678f | [260712-159-gradient-cta-sections](./quick/260712-159-gradient-cta-sections/) |
-| 260713-1zw | React Doctor top-3 fix pass: deleted 2 genuinely-dead UI files (select.tsx, skeleton.tsx), replaced 3 JSON.parse(JSON.stringify(x)) deep-clones with structuredClone(x) in migration scripts. Next CVE-2026-23870 fix (Task 2) explicitly skipped — only compatible patch is a Next 16 major bump, deferred to a separate decision per Juan | 2026-07-13 | f8ea619 | [260713-1zw-fix-top-3-react-doctor-issues-unused-fil](./quick/260713-1zw-fix-top-3-react-doctor-issues-unused-fil/) |
-| 260713-2ce | React Doctor top-3 fix pass (round 2): triaged all 23 unused-file findings as CLI-invoked false positives (PM2 config + migration registry, zero deletions), removed unused `@radix-ui/react-select` dependency. Next CVE-2026-23870 fix skipped again — `@payloadcms/next@3.85.2` peerDependencies has a hard gap excluding all 15.5.x, only compatible patch is Next 16 major bump | 2026-07-13 | d3acae4 | [260713-2ce-fix-top-3-react-doctor-issues-unused-fil](./quick/260713-2ce-fix-top-3-react-doctor-issues-unused-fil/) |
+| # | Description | Date | Commit | Status | Directory |
+|---|-------------|------|--------|--------|-----------|
+| 260712-159 | Gradient CTA sections: reuse HeroGrainGradient shader as background on ContactFormBlock sidebar + CallToAction strip (Tasks 1-2 done; Task 3 blocking human-verify checkpoint pending) | 2026-07-12 | f76678f | | [260712-159-gradient-cta-sections](./quick/260712-159-gradient-cta-sections/) |
+| 260713-1zw | React Doctor top-3 fix pass: deleted 2 genuinely-dead UI files (select.tsx, skeleton.tsx), replaced 3 JSON.parse(JSON.stringify(x)) deep-clones with structuredClone(x) in migration scripts. Next CVE-2026-23870 fix (Task 2) explicitly skipped — only compatible patch is a Next 16 major bump, deferred to a separate decision per Juan | 2026-07-13 | f8ea619 | | [260713-1zw-fix-top-3-react-doctor-issues-unused-fil](./quick/260713-1zw-fix-top-3-react-doctor-issues-unused-fil/) |
+| 260713-2ce | React Doctor top-3 fix pass (round 2): triaged all 23 unused-file findings as CLI-invoked false positives (PM2 config + migration registry, zero deletions), removed unused `@radix-ui/react-select` dependency. Next CVE-2026-23870 fix skipped again — `@payloadcms/next@3.85.2` peerDependencies has a hard gap excluding all 15.5.x, only compatible patch is Next 16 major bump | 2026-07-13 | d3acae4 | | [260713-2ce-fix-top-3-react-doctor-issues-unused-fil](./quick/260713-2ce-fix-top-3-react-doctor-issues-unused-fil/) |
+| 260713-2q2 | React Doctor remaining findings by priority (44 of 68): unsafe-json-in-html (verified false positive, hardened doc + regression script), server-auth-actions (false positive on auth premise, added real per-IP rate limit to public contact action), 19 no-array-index-as-key sites fixed with stable Payload ids, 7 next/image fill sites given layout-correct `sizes`, 2 sequential-await sites parallelized, 6 performance findings (Intl hoisting, flatMap, hydration flicker, async-in-loop), 1 a11y autofocus removed, 7 maintainability findings (variant exports split, inline styles hoisted, RenderBlocks/Section circular dep broken via next/dynamic). New server-no-mutable-module-state finding from the rate limiter documented as false positive (persistent Node/PM2 process, not serverless) | 2026-07-13 | d892077 | Verified | [260713-2q2-fix-remaining-react-doctor-findings-by-p](./quick/260713-2q2-fix-remaining-react-doctor-findings-by-p/) |
 
 ## Deferred Items
 
@@ -193,7 +194,7 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 | quick_task | 260712-159-gradient-cta-sections | unknown (Task 3 blocking human-verify checkpoint pending per STATE.md Quick Tasks Completed note) |
 | quick_task | 260712-1f1-cta-ready-to-work-together-variante-de-g | missing (no completion record found) |
 | react_doctor | CVE-2026-23870 (next@15.4.11 RSC DoS) — patch requires next@16.2.x, no compatible 15.5.x exists in @payloadcms/next@3.85.2 peer range | deferred, needs separate go/no-go decision on Next 16 major bump |
-| react_doctor | 69 remaining findings from full scan (23 unused-file false positives already triaged, plus bugs/perf/a11y/maintainability categories) | not yet triaged — see /var/folders/sr/ygkpxm857vd5w3bn003cy8mm0000gn/T/react-doctor-a89c0bd0-289e-4062-ad60-b25fc7c5ed1f for original full run |
+| react_doctor | 27 remaining findings after quick task 260713-2q2 (down from 69): 23 unused-file false positives (documented), 1 CVE-2026-23870 blocker (above), 1 unsafe-json-in-html false positive (documented, escape already correct), 1 server-auth-actions false positive (documented, public form by design), 1 server-no-mutable-module-state false positive introduced by the Task 2 rate limiter (documented, persistent Node process not serverless) | closed — all 27 are either already-fixed, documented false positives, or the deferred CVE decision; nothing left to triage |
 
 ## Session Continuity
 
