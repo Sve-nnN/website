@@ -1,0 +1,122 @@
+{
+  "/en": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Juan Carlos Angulo: Software Engineer &amp; SEO Expert"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Person",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "Juan Carlos Angulo",
+          "jobTitle": "Software Engineer & SEO Expert",
+          "url": "http://localhost:3000"
+        }
+      }
+    ]
+  },
+  "/es": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Juan Carlos Angulo: Ingeniero de Software y Experto SEO"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Person",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "name": "Juan Carlos Angulo",
+          "jobTitle": "Ingeniero de Software y Experto SEO",
+          "url": "http://localhost:3000"
+        }
+      }
+    ]
+  },
+  "/en/blog": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Blog"
+      ]
+    },
+    "jsonLd": []
+  },
+  "/servicios": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Servicios"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "http://localhost:3000"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Servicios",
+              "item": "http://localhost:3000/servicios"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/en/services": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Services"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "http://localhost:3000/en"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services",
+              "item": "http://localhost:3000/en/services"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/en/seo-tecnico-lima": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Technical SEO in Lima"
+      ]
+    },
+    "jsonLd": []
+  }
+}
