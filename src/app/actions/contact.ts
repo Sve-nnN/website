@@ -16,6 +16,14 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 // process on Hostinger (not serverless), so a module-level Map survives
 // between requests within the process — sufficient for a low-traffic
 // portfolio contact form. No Redis / external dependency.
+// KNOWN FALSE POSITIVE (react-doctor `server-no-mutable-module-state`): that
+// rule assumes a serverless/edge deployment where module state does not
+// reliably survive between invocations. This project's CLAUDE.md/ARCHITECTURE
+// explicitly targets a single persistent Node process on Hostinger (PM2,
+// `next start`, not Vercel/edge) -- shared module state across requests
+// within that one process is the intended mechanism here, not a bug. Do not
+// "fix" this by moving to per-request storage; that would defeat the rate
+// limiter entirely.
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
 const RATE_LIMIT_MAX_SUBMISSIONS = 5
 const submissionLog = new Map<string, number[]>()
