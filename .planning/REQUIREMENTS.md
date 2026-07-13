@@ -1,90 +1,72 @@
 # Requirements: Juan Carlos Angulo — Portfolio (Payload rebuild)
 
-**Defined:** 2026-07-12
+**Defined:** 2026-07-13
 **Core Value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en el contenido (case studies, blog) como en la ejecución técnica (rendimiento y SEO impecables). Si el rendimiento o el SEO fallan, el sitio no cumple su propósito.
 
-## v1.5 Requirements — UI/UX Pro Max: Polish y Competitividad
+## v1.6 Requirements — UI/UX Pro Max II: Componentes, Motion y Voz
 
-Requirements para el milestone v1.5. Cada uno mapea a una fase del roadmap (Home + Servicios primero).
+Requirements para el milestone v1.6. Dos tracks independientes: (1) pasada de diseño + micro-animaciones sobre componentes que v1.5 no tocó, (2) humanización de todo el copy real de la DB en la voz de Juan. Ver `.planning/research/SUMMARY-v1.6.md` para el detalle completo del research.
 
-### Breadcrumbs
+### UI/UX Polish
 
-- [x] **BREAD-01**: Usuario ve un trail de breadcrumbs visual en la página índice de Servicios y en las 4 landings individuales, en ambos locales (ES/EN)
-- [x] **BREAD-02**: Cada página con breadcrumbs emite `BreadcrumbList` JSON-LD derivado de la misma fuente que el trail visual (una sola función `buildTrail()`, sin duplicar lógica de URL/locale)
-- [x] **BREAD-03**: El schema `BreadcrumbList` se valida sin errores en ambos locales usando el agente/MCP de schema SEO disponible en el proyecto (`seo-schema`) antes de dar la fase por cerrada
+- [ ] **UIPOL-01**: El bloque CTA (`CallToAction`) deja de ser full-width `vw` — usa el mismo wrapper `Container` que el resto de los bloques del sitio
+- [ ] **UIPOL-02**: El navbar (`SiteHeader`) gana tratamiento visual pulido (estado de scroll y/o indicador de ruta activa), consistente con los tokens de elevación/motion ya establecidos
+- [ ] **UIPOL-03**: Las variantes de Hero `listing`/`post-header`/`case-study-header` quedan visualmente diferenciadas entre sí (hoy son pixel-idénticas salvo breadcrumbs), manteniendo el H1/breadcrumbs/JSON-LD intactos
+- [ ] **UIPOL-04**: El bloque FAQ gana tratamiento visual pulido (hoy es funcional pero template-default)
+- [ ] **UIPOL-05**: La sección de clientes (`ClientLogosBlock`) gana tratamiento visual pulido
+- [ ] **UIPOL-06**: La sección de testimonios (`TestimonialsCarousel`) gana tratamiento visual pulido
+- [ ] **UIPOL-07**: La grilla de blog (`/blog`) gana tratamiento visual pulido
+- [ ] **UIPOL-08**: La grilla de blog destacados (`FeaturedPostsBlock`) gana tratamiento visual pulido
+- [ ] **UIPOL-09**: La página de case studies (listado + detalle) gana tratamiento visual pulido, incluyendo trail de breadcrumbs visual real (hoy el detalle solo emite JSON-LD propio, desalineado del helper `buildTrail()` de Servicios) unificado con el mismo patrón de fuente única
 
-### SEO Técnico (Canonical / Hreflang)
+### Micro-animaciones
 
-- [x] **SEOTECH-01**: Cada una de las 4 combinaciones de URL de servicio (`/servicios/[slug]`, `/en/services/[slug]`) emite `alternates.canonical` correcto en `generateMetadata`, construido con un helper compartido (no hardcodeado)
-- [x] **SEOTECH-02**: Cada página de servicio emite `alternates.languages` (hreflang) apuntando a su contraparte en el otro locale
-- [x] **SEOTECH-03**: El layout raíz define `metadataBase` una sola vez, desbloqueando canonicals correctos en todo el sitio (no solo Servicios)
+- [ ] **MOTION-01**: Librería `motion` (paquete npm `motion`, vía `LazyMotion`+`m`+`domAnimation`) adoptada como única dependencia de animación del sitio, costo real de bundle verificado contra el build de producción (no solo estimado)
+- [ ] **MOTION-02**: Hook compartido `useReducedMotion()` (SSR-safe, sin mismatch de hidratación — mismo patrón ya probado en `HeroGrainGradient`) usado por todo componente animado, respetando `prefers-reduced-motion` de forma consistente
+- [ ] **MOTION-03**: Micro-interacciones (scroll-reveal + hover) aplicadas de forma consistente en los componentes de la pasada UIPOL-01..09, siguiendo la estética ya validada del hero de Home
+- [ ] **MOTION-04**: Cero regresión de Lighthouse/CWV atribuible a las animaciones nuevas, verificado contra un baseline pre-pase (mismo patrón de gate que v1.5 Phase 25)
 
-### Home — Vitrina de Servicios
+### Voz y Humanización de Contenido
 
-- [x] **SVCHOME-01**: Usuario ve un componente "Servicios" en el Home (bloque `ServicesShowcase`) con las 4 tarjetas de servicio, en ambos locales
-- [x] **SVCHOME-02**: Las tarjetas del bloque leen dinámicamente el set fijo de servicios (`SERVICE_SLUGS`) en vez de estar hardcodeadas por instancia, y cada una enlaza a su landing correspondiente en el locale activo
-- [x] **SVCHOME-03**: El bloque se registra como aditivo en Payload (config + `RenderBlocks` + `payload generate:types`) sin modificar columnas existentes; si llegara a requerir tocar una columna existente, se pide aprobación nombrada de Juan primero
+- [ ] **VOICE-01**: Auditoría pre-vuelo de todo campo de texto público en cada colección/global de Payload, clasificando localizado vs no-localizado, documentada antes de escribir nada
+- [ ] **VOICE-02**: `TestimonialsCarousel.title` migrado a `localized: true` con backfill correcto (migración leída antes de aplicar, aprobación nombrada de Juan) — cierra el patrón de bug repetido 3 veces en v1.5
+- [ ] **VOICE-03**: `CaseStudies.services[].service` resuelto de forma locale-segura (fix de schema si aplica, o decisión documentada) — trap nuevo encontrado por el research, sin workaround previo
+- [ ] **VOICE-04**: Snapshot completo del copy real actual (no solo metadata) tomado antes de reescribir nada, diffable por Juan y usable como base de rollback más allá del point-in-time restore de Neon
+- [ ] **VOICE-05**: Perfil de voz escrito (español neutro, sin voceo, profesional-directo, primera persona con reclamos de credenciales directos estilo Arianna Lupi, framing de CTA colaborativo) derivado del research de tono de Arianna Lupi y Aleyda Solis, usado como brief para la skill `humanizer`
+- [ ] **VOICE-06**: Todo el copy real en globals, pages, servicios, posts y case studies reescrito vía skill `humanizer` con el perfil de voz de VOICE-05 — sin em/en dash, sin marcas de escritura de IA
+- [ ] **VOICE-07**: Verificación post-sweep: paridad de locale sin campos pisados entre idiomas, JSON-LD sigue válido, `meta.title`/`meta.description` de SEO no rotos, cero regresión contra el snapshot de VOICE-04
 
-### Páginas de Servicio — Polish Visual y Competitividad
+## Future Requirements
 
-- [x] **SVCPOL-01**: Cada una de las 4 landings de servicio tiene una anatomía visual completa y distinguible por bloques: H1 → dolor/problema → qué incluye → proceso → prueba social → FAQ → CTA — sin muro único de rich text
-- [x] **SVCPOL-02**: Cada landing de servicio incluye prueba social reforzada (testimonios y/o logos de clientes y/o resultados cuantificados), cerrando el gap detectado frente a la competencia
-- [x] **SVCPOL-03**: Cada landing de servicio incluye una tarjeta "alcance del servicio" (alcance/resultado/tiempo) sin precio, como sustituto de tabla de precios — respeta la regla de no-precios del proyecto
-- [x] **SVCPOL-04**: Cada landing de servicio muestra un case study relacionado (tarjeta con métrica en el titular) vinculado al servicio correspondiente
-- [x] **SVCPOL-05**: El CTA primario se repite arriba (Hero) y abajo (CallToAction) de cada landing, con misma acción/label
-- [x] **SVCPOL-06**: Todo el copy nuevo o reescrito en esta fase (ES y EN) pasa por la skill `humanizer` antes de publicarse — sin marcas de escritura de IA, sin em/en dash, voz natural variada
-- [x] **SVCPOL-07**: Ninguna landing de servicio pierde su H1 semántico único ni el `BreadcrumbList`/`Person`/JSON-LD existente durante el polish — verificado contra un baseline pre-pase
-- [x] **SVCPOL-08**: Ninguna landing de servicio regresa Core Web Vitals/Lighthouse mobile respecto al baseline pre-pase (gate por fase, `next/image` con dimensiones explícitas, sin `'use client'` a nivel de página)
-- [x] **SVCPOL-09**: Todo componente/string nuevo tiene paridad ES/EN verificada en vivo (sin labels vacíos, sin campos no localizados compartidos) antes de cerrar la fase
-
-## v2 Requirements (Deferred)
-
-Fuera de este milestone, priorizadas por impacto según research — quedan para fases/milestones futuros.
-
-### Polish de otras plantillas
-
-- **POLISH-CASE-01**: Pasada de diseño profesional sobre listado + template de Case Studies
-- **POLISH-BLOG-01**: Pasada de diseño profesional sobre listado + template de Blog/Post
-- **POLISH-AUTHOR-01**: Revisión visual adicional de la Author page (ya recibió trabajo en v1.2)
+- Fase 6 (Deploy + Cutover) — sigue en pausa, fuera de scope de v1.6, retoma con el visto bueno explícito de Juan y credenciales reales de Hostinger/DNS/Resend
 
 ## Out of Scope
 
-Explícitamente excluido de v1.5. Documentado para prevenir scope creep.
-
-| Feature | Reason |
-|---------|--------|
-| Tabla de precios en páginas de servicio | Regla dura del proyecto (PROJECT.md) — commoditiza un engagement a medida; se sustituye por tarjeta de alcance/valor (SVCPOL-03) |
-| Nueva colección `Services` en Payload | Decisión ya tomada (Key Decision D-01 en PROJECT.md) — se reutiliza `pages` con bloques |
-| Librería de animación (framer-motion, GSAP, Lenis, three.js) | Riesgo de regresión de Core Web Vitals — mismo criterio que descartó three.js en v1.3; el sistema shadcn/Radix/CSS ya cubre todo lo necesario (STACK-v1.5.md) |
-| Breadcrumbs en Home/páginas raíz de 1 nivel | Ruido en una jerarquía plana; se limita a la jerarquía de Servicios |
-| Mega-menú/dropdown para los 4 servicios | Sobre-ingeniería — la vitrina de Home + índice `/services` ya resuelven descubribilidad |
-| Reescritura del copy ya grounded de Phase 19 (más allá del polish visual) | Scope creep — riesgo de regresionar copy ya validado con research real |
-| Polish de Case Studies, Blog, Author page | Priorizado para fases/milestones posteriores a Home + Servicios (ver v2 Requirements) |
+- Reemplazar el shader `HeroGrainGradient` del hero de Home — ya validado en v1.3, esta milestone solo agrega motion al resto de los componentes
+- Migrar el listado de Case Studies a `ArchiveBlock` para paridad completa con Blog — señalado por el research como decisión P2, no resuelta acá, no bloquea el polish visual de UIPOL-09
+- Reescribir contenido nuevo o expandir copy más allá de humanizar lo ya existente — esta milestone no agrega secciones de contenido nuevas (eso fue v1.2/v1.5), solo pule voz/tono de lo que ya está
 
 ## Traceability
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BREAD-01 | Phase 22 | Done |
-| BREAD-02 | Phase 22 | Done |
-| BREAD-03 | Phase 22 | Done |
-| SEOTECH-01 | Phase 23 | Done |
-| SEOTECH-02 | Phase 23 | Done |
-| SEOTECH-03 | Phase 23 | Done |
-| SVCHOME-01 | Phase 24 | Done |
-| SVCHOME-02 | Phase 24 | Done |
-| SVCHOME-03 | Phase 24 | Done |
-| SVCPOL-01 | Phase 25 | Done |
-| SVCPOL-02 | Phase 25 | Done |
-| SVCPOL-03 | Phase 25 | Done |
-| SVCPOL-04 | Phase 25 | Done |
-| SVCPOL-05 | Phase 25 | Done |
-| SVCPOL-06 | Phase 25 | Done |
-| SVCPOL-07 | Phase 25 | Done |
-| SVCPOL-08 | Phase 25 | Done |
-| SVCPOL-09 | Phase 25 | Done |
-
-**Coverage:** 18/18 v1.5 requirements mapped, 0 orphaned.
-
----
-*Requirements defined: 2026-07-12*
+| UIPOL-01 | TBD | Pending |
+| UIPOL-02 | TBD | Pending |
+| UIPOL-03 | TBD | Pending |
+| UIPOL-04 | TBD | Pending |
+| UIPOL-05 | TBD | Pending |
+| UIPOL-06 | TBD | Pending |
+| UIPOL-07 | TBD | Pending |
+| UIPOL-08 | TBD | Pending |
+| UIPOL-09 | TBD | Pending |
+| MOTION-01 | TBD | Pending |
+| MOTION-02 | TBD | Pending |
+| MOTION-03 | TBD | Pending |
+| MOTION-04 | TBD | Pending |
+| VOICE-01 | TBD | Pending |
+| VOICE-02 | TBD | Pending |
+| VOICE-03 | TBD | Pending |
+| VOICE-04 | TBD | Pending |
+| VOICE-05 | TBD | Pending |
+| VOICE-06 | TBD | Pending |
+| VOICE-07 | TBD | Pending |
