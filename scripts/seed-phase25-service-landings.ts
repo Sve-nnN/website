@@ -133,11 +133,6 @@ const CLIENT_LOGOS_TITLE: Record<Locale, string> = {
   en: 'Clients',
 }
 
-const TESTIMONIALS_TITLE: Record<Locale, string> = {
-  es: 'Testimonios',
-  en: 'Testimonials',
-}
-
 /**
  * Builds the full 10-block anatomy for one service landing, one locale.
  * Order per 25-UI-SPEC.md "Block Anatomy & Order":
@@ -212,8 +207,16 @@ function buildLayout(
       title: CLIENT_LOGOS_TITLE[locale],
     },
     {
+      // FIX (25-REVIEW critical finding): `title` explicitly set to null,
+      // not omitted — Payload's per-locale `update()` leaves non-localized
+      // fields untouched when they're absent from the submitted data (it
+      // does NOT clear them), so omitting the key left the stale English
+      // value from the original (pre-fix) seed run in place regardless of
+      // locale. An explicit `null` clears it on both locale writes. The
+      // component falls back to a real per-locale translation whenever
+      // `title` is null/undefined.
       blockType: 'testimonialsCarousel',
-      title: TESTIMONIALS_TITLE[locale],
+      title: null,
       showRating: true,
       limit: 3,
     },

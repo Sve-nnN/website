@@ -14,16 +14,23 @@ export async function RelatedCaseStudyBlockComponent(props: RelatedCaseStudyBloc
 
   let resolved: CaseStudy | null = null
 
-  if (caseStudy && typeof caseStudy === 'object') {
-    resolved = caseStudy
-  } else if (caseStudy) {
+  // 25-REVIEW critical finding: the parent page's own query resolves
+  // `caseStudy` at whatever depth IT was fetched with (depth:1 in the
+  // Servicios page.tsx calls), which is enough to turn the relationship
+  // into an object but NOT enough to populate that object's own nested
+  // `client` relationship. Re-deriving the id and always re-fetching here
+  // at depth:2 guarantees `client` is populated regardless of what depth
+  // the caller used.
+  const caseStudyId = typeof caseStudy === 'object' && caseStudy !== null ? caseStudy.id : caseStudy
+
+  if (caseStudyId) {
     // SECURITY (mirrors 24-REVIEW WR-02 / services-data.ts precedent): Local
     // API bypasses `read: authenticatedOrPublished` by default — an
     // unpublished draft must never leak here.
     resolved = await payload.findByID({
       collection: 'case-studies',
-      id: caseStudy,
-      depth: 1,
+      id: caseStudyId,
+      depth: 2,
       locale,
       overrideAccess: false,
     })
@@ -34,7 +41,7 @@ export async function RelatedCaseStudyBlockComponent(props: RelatedCaseStudyBloc
       collection: 'case-studies',
       limit: 1,
       sort: '-createdAt',
-      depth: 1,
+      depth: 2,
       locale,
       overrideAccess: false,
     })
