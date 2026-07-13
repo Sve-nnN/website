@@ -40,7 +40,7 @@ key-files:
 
 key-decisions:
   - "MotionProvider wraps inside NextIntlClientProvider, around SiteHeader/children/SiteFooter — smallest diff that still covers every route in the public frontend tree for Phase 28"
-  - "LazyMotion's feature bundle (domAnimation) does NOT show up in 'First Load JS shared by all' — it's loaded as a route-specific chunk only on routes that actually render an m.* component, so the measured delta appears per-route (home, seo-tecnico-lima, seo-tecnico-madrid: +15KB), not in the global shared baseline"
+  - "LazyMotion's feature bundle (domAnimation) does NOT show up in 'First Load JS shared by all' — it's paid by every route rendered through the Pages/RenderBlocks template (static-import driven: RenderBlocks statically imports every block component, including FAQComponent and TestimonialsCarouselComponent), not selectively by whether a given page's content includes a FAQ/Testimonials block instance. Verified via a rebuilt pre-motion baseline: /services and /contact (no FAQ/Testimonials content) grew by the same +15KB as the homepage."
   - "Reduced-motion branches collapse transitions to duration:0/empty animate objects rather than skipping the m.* wrapper entirely, keeping DOM structure identical regardless of the user's OS preference (same discipline as HeroGrainGradient's motionProps branch)"
 
 patterns-established:
@@ -102,11 +102,11 @@ Command used throughout: `npx next build` (never `npm run build`, which runs `pa
 | After provider wired (no pilots yet) | 2.08 kB | 158 kB | 101 kB |
 | After pilots (ScrollReveal + TestimonialCardMotion) | 2.32 kB | 173 kB | 101 kB |
 
-**Real delta: +15KB First Load JS**, applied only to routes that actually render an `m.*` component (home `/`, `/seo-tecnico-lima`, `/seo-tecnico-madrid` — everywhere FAQ or Testimonials render). Routes without these blocks (e.g. `/services`, `/contact`) show **zero** bundle growth.
+**Real delta: +15KB First Load JS**, paid by every route rendered through the Pages/`RenderBlocks` template — verified against a rebuilt pre-motion baseline (`git worktree` at commit `909e419`): `/services` and `/contact` (whose page content has no FAQ/Testimonials block instance) grew by the exact same +15KB as the homepage. Only routes with genuinely separate templates that bypass `RenderBlocks` (`/authors`, `/blog/[slug]`, `/case-studies`, `/search`) stayed at their pre-motion size.
 
-Compared to STACK-v1.6.md's ~19-20KB gzip estimate: the measured **+15KB is lower than the research estimate**, and — notably — **it does not land in the shared-by-all bundle at all**. `LazyMotion` code-splits the `domAnimation` feature set into a per-route chunk that only loads on routes actually rendering an `m.*` component, rather than adding to the global 101 kB shared baseline paid by every route (including ones with zero animation, e.g. `/admin`, `/api/*`). This is a more favorable result than the flat "~20KB paid once sitewide" framing in the research: the real cost is paid only by routes that use motion, and it's smaller than expected.
+Compared to STACK-v1.6.md's ~19-20KB gzip estimate: the measured **+15KB is lower than the research estimate**, and it does not land in the shared-by-all 101 kB bundle. The mechanism, however, is static-import code-splitting at the `RenderBlocks` module-graph level — every Pages-template route statically imports every block component (including `FAQComponent` → `ScrollReveal` and `TestimonialsCarouselComponent` → `TestimonialCardMotion`), so all Pages-template routes pay the `LazyMotion`/`domAnimation` chunk cost regardless of whether that page's actual content renders an `m.*` instance. It is not per-instance runtime code-splitting.
 
-This is a finding worth carrying into Phase 28: as more routes adopt `m.*` components, watch whether Next's chunking keeps sharing this feature-set chunk across those routes (likely, since it's the same dynamic import target) or whether each route pulls its own copy — re-measure after 2-3 more rollout components land.
+This is a finding worth carrying into Phase 28: more `m.*` pilot components added to RenderBlocks-reachable blocks will compound this cost sitewide (for the Pages-template family), not selectively by page content — plan bundle-size expectations accordingly.
 
 ## Decisions Made
 - `MotionProvider` placement: inside `NextIntlClientProvider`, wrapping `SiteHeader`/`{children}`/`SiteFooter` — smallest diff to `layout.tsx` while still covering every route Phase 28 will touch.
@@ -131,7 +131,7 @@ Phase 28 (full Motion rollout to Hero variants, blog grids, remaining Phase 26 c
 - `MotionProvider` already covers every route in the public frontend tree.
 - `useReducedMotion()` is ready to reuse as-is.
 - The `motion/react-m` + `LazyMotion` import discipline is proven end-to-end on 2 real components.
-- Re-measure bundle size after 2-3 more Phase 28 components land motion, to confirm whether the `domAnimation` feature chunk is shared across routes or duplicated per route (open question noted above).
+- The `domAnimation` feature chunk is paid sitewide by every Pages/RenderBlocks-template route (static-import driven), not per-instance — factor this into Phase 28 bundle-size expectations rather than assuming selective per-page cost.
 
 ---
 *Phase: 27-micro-animation-library-adoption*
