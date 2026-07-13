@@ -6,6 +6,51 @@ import type { SelectFieldClientProps } from 'payload'
 
 import { ICON_OPTIONS } from './icons'
 
+// MAINTAINABILITY (no-inline-exhaustive-style): the Payload admin route only
+// loads @payloadcms/next/css, not this project's globals.css, so Tailwind
+// utility classes have no effect here (13-01 decision) -- these can't be
+// converted to className strings. The static parts of each large inline
+// style object are hoisted to module scope instead, so they build once
+// instead of rebuilding on every render; only the genuinely stateful parts
+// (readOnly's cursor, isSelected's boxShadow) stay as computed styles below.
+const triggerButtonBaseStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: 8,
+  padding: '8px 12px',
+  borderRadius: 4,
+  border: '1px solid var(--theme-border-color)',
+  background: 'var(--theme-elevation-0)',
+  color: 'var(--theme-text)',
+  minWidth: 200,
+}
+
+const modalContainerStyle: React.CSSProperties = {
+  background: 'var(--theme-elevation-0)',
+  border: '1px solid var(--theme-border-color)',
+  borderRadius: 6,
+  padding: 16,
+  maxWidth: 480,
+  margin: '10vh auto',
+  maxHeight: '70vh',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 12,
+}
+
+const iconGridButtonBaseStyle: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 44,
+  height: 44,
+  borderRadius: 4,
+  border: '1px solid var(--theme-border-color)',
+  background: 'var(--theme-elevation-50, var(--theme-elevation-0))',
+  color: 'var(--theme-text)',
+  cursor: 'pointer',
+}
+
 // Custom Payload admin Field component — replaces the plain <select> with a
 // searchable popup/modal grid of lucide-react icons (13-CONTEXT.md "Icon
 // picker de admin"). Only ever writes one of ICON_OPTIONS' known string
@@ -37,18 +82,7 @@ export function IconPickerField(props: SelectFieldClientProps) {
         aria-haspopup="dialog"
         aria-expanded={isModalOpen(modalSlug)}
         onClick={() => toggleModal(modalSlug)}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
-          padding: '8px 12px',
-          borderRadius: 4,
-          border: '1px solid var(--theme-border-color)',
-          background: 'var(--theme-elevation-0)',
-          color: 'var(--theme-text)',
-          cursor: readOnly ? 'not-allowed' : 'pointer',
-          minWidth: 200,
-        }}
+        style={{ ...triggerButtonBaseStyle, cursor: readOnly ? 'not-allowed' : 'pointer' }}
       >
         {SelectedIcon ? (
           <>
@@ -61,20 +95,7 @@ export function IconPickerField(props: SelectFieldClientProps) {
       </button>
 
       <Modal slug={modalSlug}>
-        <div
-          style={{
-            background: 'var(--theme-elevation-0)',
-            border: '1px solid var(--theme-border-color)',
-            borderRadius: 6,
-            padding: 16,
-            maxWidth: 480,
-            margin: '10vh auto',
-            maxHeight: '70vh',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 12,
-          }}
-        >
+        <div style={modalContainerStyle}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <strong style={{ color: 'var(--theme-text)' }}>Select icon</strong>
             <button
@@ -128,16 +149,7 @@ export function IconPickerField(props: SelectFieldClientProps) {
                     closeModal(modalSlug)
                   }}
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    width: 44,
-                    height: 44,
-                    borderRadius: 4,
-                    border: '1px solid var(--theme-border-color)',
-                    background: 'var(--theme-elevation-50, var(--theme-elevation-0))',
-                    color: 'var(--theme-text)',
-                    cursor: 'pointer',
+                    ...iconGridButtonBaseStyle,
                     boxShadow: isSelected ? 'inset 0 0 0 2px var(--theme-success-500)' : undefined,
                   }}
                 >
