@@ -15,5 +15,14 @@
   },
   "servicesShowcase": {
     "cta": "Explore service"
+  },
+  "serviceScopeCard": {
+    "title": "Service scope",
+    "scopeLabel": "What's included",
+    "outcomeLabel": "What you'll get",
+    "timelineLabel": "Estimated timeline"
+  },
+  "relatedCaseStudyBlock": {
+    "title": "A real example of how I work"
   }
 }

@@ -248,6 +248,8 @@ export interface Page {
       | ClientLogosBlock
       | AboutSectionBlock
       | ServicesShowcaseBlock
+      | ServiceScopeCardBlock
+      | RelatedCaseStudyBlockBlock
     )[];
   };
   slug?: string | null;
@@ -1042,6 +1044,52 @@ export interface ServicesShowcaseBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceScopeCardBlock".
+ */
+export interface ServiceScopeCardBlock {
+  /**
+   * Optional card heading — defaults to "Alcance de este servicio"/"Service scope" in the component if empty.
+   */
+  title?: string | null;
+  /**
+   * "Qué incluye" / "What's included"
+   */
+  scope: string;
+  /**
+   * "Qué vas a lograr" / "What you'll get"
+   */
+  outcome: string;
+  /**
+   * Short freeform phrase (e.g. "2-3 semanas") — NOT a number field, timelines vary in phrasing per service.
+   */
+  timeline: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'serviceScopeCard';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelatedCaseStudyBlockBlock".
+ */
+export interface RelatedCaseStudyBlockBlock {
+  /**
+   * Optional heading — defaults to "Un caso real de cómo trabajo"/"A real example of how I work" in the component if empty.
+   */
+  title?: string | null;
+  /**
+   * Honest-framing sentence written per landing (not a single hardcoded string) — must not imply the case study is specific to this exact service.
+   */
+  framingText?: string | null;
+  /**
+   * If empty, the component falls back to the most recently created case study.
+   */
+  caseStudy?: (number | null) | CaseStudy;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'relatedCaseStudyBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -1639,6 +1687,8 @@ export interface PagesSelect<T extends boolean = true> {
               clientLogosBlock?: T | ClientLogosBlockSelect<T>;
               aboutSection?: T | AboutSectionBlockSelect<T>;
               servicesShowcase?: T | ServicesShowcaseBlockSelect<T>;
+              serviceScopeCard?: T | ServiceScopeCardBlockSelect<T>;
+              relatedCaseStudyBlock?: T | RelatedCaseStudyBlockBlockSelect<T>;
             };
       };
   slug?: T;
@@ -1956,6 +2006,29 @@ export interface AboutSectionBlockSelect<T extends boolean = true> {
  */
 export interface ServicesShowcaseBlockSelect<T extends boolean = true> {
   title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServiceScopeCardBlock_select".
+ */
+export interface ServiceScopeCardBlockSelect<T extends boolean = true> {
+  title?: T;
+  scope?: T;
+  outcome?: T;
+  timeline?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RelatedCaseStudyBlockBlock_select".
+ */
+export interface RelatedCaseStudyBlockBlockSelect<T extends boolean = true> {
+  title?: T;
+  framingText?: T;
+  caseStudy?: T;
   id?: T;
   blockName?: T;
 }

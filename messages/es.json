@@ -15,5 +15,14 @@
   },
   "servicesShowcase": {
     "cta": "Explorar servicio"
+  },
+  "serviceScopeCard": {
+    "title": "Alcance de este servicio",
+    "scopeLabel": "Qué incluye",
+    "outcomeLabel": "Qué vas a lograr",
+    "timelineLabel": "Tiempo estimado"
+  },
+  "relatedCaseStudyBlock": {
+    "title": "Un caso real de cómo trabajo"
   }
 }
