@@ -36,33 +36,41 @@ export const beforeSyncWithSearch: BeforeSync = async ({ collectionSlug, req, or
   const categories = originalDoc.categories
 
   if (categories && Array.isArray(categories) && categories.length > 0) {
-    const populatedCategories: { id: string | number; title: string }[] = []
+    // PERF (async-await-in-loop): resolve every unpopulated category id in
+    // parallel instead of one `findByID` at a time, then merge results back
+    // in the original `categories` order (search-index category display
+    // order depends on it) -- a plain concat would scramble already-object
+    // rows ahead of freshly-looked-up ones.
+    const resolved: ({ id: string | number; title: string } | null)[] = await Promise.all(
+      categories.map(async (category) => {
+        if (!category) return null
 
-    for (const category of categories) {
-      if (!category) continue
+        if (typeof category === 'object') {
+          return category
+        }
 
-      if (typeof category === 'object') {
-        populatedCategories.push(category)
-        continue
-      }
+        const doc = await req.payload.findByID({
+          collection: 'categories',
+          id: category,
+          disableErrors: true,
+          depth: 0,
+          select: { title: true },
+          req,
+        })
 
-      const doc = await req.payload.findByID({
-        collection: 'categories',
-        id: category,
-        disableErrors: true,
-        depth: 0,
-        select: { title: true },
-        req,
-      })
+        if (doc === null) {
+          console.error(
+            `Failed. Category not found when syncing collection '${collectionSlug}' with id: '${originalDoc.id}' to search.`,
+          )
+        }
 
-      if (doc !== null) {
-        populatedCategories.push(doc)
-      } else {
-        console.error(
-          `Failed. Category not found when syncing collection '${collectionSlug}' with id: '${originalDoc.id}' to search.`,
-        )
-      }
-    }
+        return doc
+      }),
+    )
+
+    const populatedCategories = resolved.filter(
+      (each): each is { id: string | number; title: string } => each !== null,
+    )
 
     modifiedDoc.categories = populatedCategories.map((each) => ({
       relationTo: 'categories',

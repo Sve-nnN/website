@@ -1,6 +1,6 @@
 'use client'
 
-import { Component, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { Component, useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from 'react'
 
 import { GrainGradient } from '@paper-design/shaders-react'
 
@@ -29,6 +29,28 @@ const LIGHT_COLORS = ['#23283A', '#3A4159', '#F7581E']
 const DARK_COLORS = ['#3A4159', '#4B5470', '#FF7A45']
 /** Near-black, not pure #000, so the navy brand identity isn't fully lost. */
 const NEAR_BLACK = '#0A0A0F'
+
+// PERF (rendering-hydration-no-flicker): reading `document.documentElement`'s
+// class in a plain `useEffect` + `useState` pair (the old pattern) commits an
+// extra post-mount render just to flip colors, which is the flash the rule
+// warns about. `useSyncExternalStore` is React's canonical fix -- it reads
+// the real snapshot synchronously as part of the render/commit React already
+// does, with `getServerSnapshot` keeping SSR/first-paint consistent (no dark
+// mode toggle exists in this codebase today, so this is a no-op in practice,
+// but the pattern is now flicker-safe for whenever dark mode is wired).
+function subscribeToDarkClass(callback: () => void) {
+  const observer = new MutationObserver(callback)
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+  return () => observer.disconnect()
+}
+
+function getDarkClassSnapshot() {
+  return document.documentElement.classList.contains('dark')
+}
+
+function getServerDarkClassSnapshot() {
+  return false
+}
 
 /**
  * Shape decision: `ripple` and `blob` were both built and compared live
@@ -148,14 +170,16 @@ export function HeroGrainGradient({ variant = 'default' }: HeroGrainGradientProp
   // update, not part of the hydration pass) instead of a useState lazy
   // initializer.
   const [reducedMotion, setReducedMotion] = useState(false)
-  // Same SSR-safe pattern as `reducedMotion` above: initialize to `false`
-  // (matching the server, which never has `document`) and set the real value
-  // in an effect, instead of reading `document` inside a `useState` lazy
-  // initializer. Dark mode isn't reachable today (no next-themes/toggle in
-  // this codebase), but this keeps the pattern consistent so wiring dark
-  // mode later doesn't silently reintroduce the hydration-mismatch bug that
-  // was already fixed for `reducedMotion`.
-  const [isDark, setIsDark] = useState(false)
+  // SSR-safe and flicker-safe: `useSyncExternalStore` reads the real dark-mode
+  // snapshot as part of React's normal render/commit instead of a follow-up
+  // `useEffect` state flip (see PERF comment above `subscribeToDarkClass`).
+  // Dark mode isn't reachable today (no next-themes/toggle in this codebase),
+  // but this keeps the pattern flicker-safe for whenever it's wired.
+  const isDark = useSyncExternalStore(
+    subscribeToDarkClass,
+    getDarkClassSnapshot,
+    getServerDarkClassSnapshot,
+  )
 
   // Cheap synchronous feature-detect. Avoids depending on
   // `ShaderErrorBoundary` to observe this library's async WebGL-init failure
@@ -180,10 +204,6 @@ export function HeroGrainGradient({ variant = 'default' }: HeroGrainGradientProp
     const handleChange = (event: MediaQueryListEvent) => setReducedMotion(event.matches)
     mediaQuery.addEventListener('change', handleChange)
     return () => mediaQuery.removeEventListener('change', handleChange)
-  }, [])
-
-  useEffect(() => {
-    setIsDark(document.documentElement.classList.contains('dark'))
   }, [])
 
   const colors = isDark ? DARK_COLORS : LIGHT_COLORS

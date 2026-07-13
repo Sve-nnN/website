@@ -52,20 +52,19 @@ export async function GET() {
   const groups = Object.keys(SITEMAP_GROUP_LABELS) as Array<keyof typeof SITEMAP_GROUP_LABELS>
 
   const sections = groups
-    .map((group) => {
+    .flatMap((group) => {
       const groupEntries = entries.filter((entry) => entry.group === group)
-      if (groupEntries.length === 0) return null
+      if (groupEntries.length === 0) return []
 
       const items = groupEntries.map(renderItem).join('\n')
 
-      return `    <section>
+      return [`    <section>
       <h2>${escapeHtml(SITEMAP_GROUP_LABELS[group])}</h2>
       <ul>
 ${items}
       </ul>
-    </section>`
+    </section>`]
     })
-    .filter(Boolean)
     .join('\n')
 
   const html = `<!DOCTYPE html>

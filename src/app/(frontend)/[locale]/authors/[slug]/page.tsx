@@ -15,6 +15,36 @@ import { Card } from '@/components/ui/card'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://juancarlosangulo.com'
 
+// PERF (js-hoist-intl): `locale` is a runtime parameter, not a module
+// constant, so a single top-level formatter can't be hoisted. Memoize per
+// locale instead -- this codebase only ever uses 'es'/'en', so each cache
+// stays at most 2 entries.
+const dateRangeFormatters = new Map<string, Intl.DateTimeFormat>()
+const eventDateFormatters = new Map<string, Intl.DateTimeFormat>()
+
+function getDateRangeFormatter(locale: string): Intl.DateTimeFormat {
+  let formatter = dateRangeFormatters.get(locale)
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric', timeZone: 'UTC' })
+    dateRangeFormatters.set(locale, formatter)
+  }
+  return formatter
+}
+
+function getEventDateFormatter(locale: string): Intl.DateTimeFormat {
+  let formatter = eventDateFormatters.get(locale)
+  if (!formatter) {
+    formatter = new Intl.DateTimeFormat(locale, {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+      timeZone: 'UTC',
+    })
+    eventDateFormatters.set(locale, formatter)
+  }
+  return formatter
+}
+
 /**
  * Formats a date range for education/experience items, e.g. "May 2022 – Aug 2028".
  * Falls back to `presentLabel` when `endDate` is missing (ongoing item).
@@ -28,7 +58,7 @@ function formatDateRange(
 ) {
   if (!startDate) return ''
 
-  const formatter = new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric', timeZone: 'UTC' })
+  const formatter = getDateRangeFormatter(locale)
   const start = formatter.format(new Date(startDate))
   const end = endDate ? formatter.format(new Date(endDate)) : presentLabel
 
@@ -38,12 +68,7 @@ function formatDateRange(
 /** Formats a single date (day/month/year), e.g. "12 nov 2025". Empty string if missing. */
 function formatEventDate(date: string | null | undefined, locale: string) {
   if (!date) return ''
-  return new Intl.DateTimeFormat(locale, {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-    timeZone: 'UTC',
-  }).format(new Date(date))
+  return getEventDateFormatter(locale).format(new Date(date))
 }
 
 async function getAuthor(locale: string, slug: string) {

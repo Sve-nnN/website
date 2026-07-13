@@ -38,7 +38,7 @@ export async function ArchiveBlockComponent(props: ArchiveBlockComponentProps) {
   let categories: Category[] = []
 
   if (mode === 'manual' && selectedDocs?.length) {
-    docs = selectedDocs.map((d) => d.value as Post | CaseStudy).filter((d) => typeof d === 'object')
+    docs = selectedDocs.flatMap((d) => (typeof d.value === 'object' ? [d.value as Post | CaseStudy] : []))
   } else {
     // T-05-04-01: validate the category param against the real fetched
     // categories list before using it in a `where` clause — never pass raw
