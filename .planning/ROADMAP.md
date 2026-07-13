@@ -616,11 +616,11 @@ Plans:
   3. El layout raíz define `metadataBase` una sola vez, desbloqueando canonicals correctos en todo el sitio (no solo Servicios)
   4. Los tags canonical/hreflang se verifican en vivo (curl/view-source) contra las 4 combinaciones de URL antes de cerrar la fase
 
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
 
-- [ ] 23-01: TBD
+- [ ] 23-01-PLAN.md — Shared canonical/hreflang helper, metadataBase, wired into all 4 Servicios generateMetadata + live curl verification
 
 ### Phase 24: ServicesShowcase en Home
 
