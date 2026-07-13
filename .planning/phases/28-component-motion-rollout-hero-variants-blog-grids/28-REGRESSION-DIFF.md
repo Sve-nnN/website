@@ -79,3 +79,61 @@ Threshold per `28-04-PLAN.md`: flag if `performance` drops more than 5 points, o
 **This is not being silently glossed over.** Per this plan's threat-model mitigation (T-28-07) and Juan's explicit instruction, this FAIL is surfaced as the closing verdict of Phase 28's regression gate rather than marked done. MOTION-04 (no CWV regression) is not satisfied as written for `/en` and `/en/blog` — the specific failing metric is LCP (both routes) plus the aggregate Performance category score (`/en/blog` only). MOTION-03 (consistent `useReducedMotion()` usage / reduced-motion correctness) is fully satisfied — Task 1's reduced-motion pass is a clean 6/6 PASS, and the H1/JSON-LD integrity check is also a clean 6/6 PASS. The defect is isolated to LCP timing caused by the SSR-hidden `ScrollReveal` initial state, not to reduced-motion handling, hydration correctness, or content/SEO integrity.
 
 **Required next step:** a follow-up plan (or gap-closure pass, same pattern as Phase 25's 25-04 -> Gap-Closure) should fix `src/components/ScrollReveal.tsx`'s SSR-visible-content LCP delay and re-run this same measurement suite (`scripts/verify-reduced-motion-phase28.mjs` + `scripts/capture-service-page-snapshot.mjs` + `scripts/lighthouse-mobile.mjs`) against `/en` and `/en/blog` at minimum to confirm the fix closes both gaps without breaking the now-passing reduced-motion / H1 / JSON-LD checks.
+
+---
+
+## Gap-Closure Attempt (2026-07-13)
+
+Per the required next step above, this gap-closure pass investigated the actual Lighthouse-identified LCP element on `/en` and `/en/blog` (rather than assuming), fixed the confirmed root causes in `src/components/ScrollReveal.tsx` and `src/components/PostCard.tsx`, re-ran the full gate, and is reporting the result honestly — **the gate is still FAIL**, though for a partially different, now more precisely diagnosed reason than 28-04's original writeup.
+
+### Root-cause investigation (direct LCP-element inspection)
+
+28-04 assumed the LCP-relevant content was ScrollReveal-wrapped based on indirect page-timing evidence. This gap-closure ran Lighthouse's `lcp-breakdown-insight` / `lcp-discovery-insight` audits directly (Lighthouse 13's replacement for the removed `largest-contentful-paint-element` audit) against a clean production build to identify the actual LCP DOM node on each route:
+
+- **`/en/blog`:** LCP element confirmed to be the **first `PostCard`'s thumbnail `<img>`** (`div.rounded-xl > div.relative > div.h-full > img.object-cover`, "Tablas hash: Estructuras clave..." post). This image was SSR-rendered with **`loading="lazy"`** — `next/image` was never passed a `priority` prop in `PostCard.tsx`, so even the first, above-the-fold grid item was explicitly opted into lazy-loading. This is a genuine, separate LCP-correctness bug on top of 28-04's original ScrollReveal finding, both compounding on the same element (it's also ScrollReveal-wrapped).
+- **`/en`:** LCP element confirmed to be the **`AboutSection` intro paragraph** (`div.grid > div.md:col-span-12 > div.mt-4 > p.text-body`) — this text block is **not** ScrollReveal-wrapped at all (only `ArchiveBlock`/`FeaturedPostsBlock`/`FAQ` use `ScrollReveal`). So 28-04's root-cause theory (ScrollReveal SSR-opacity) does not directly apply to `/en`'s specific LCP node; the `/en` LCP increase is better explained by overall page paint-ordering/hydration cost shifting slightly with more Motion content on the page, not a single suppressed element.
+
+### Fix applied (commit `7be700c`)
+
+1. **`ScrollReveal.tsx`:** added a `priority` prop. Tested (and rejected) `initial={false}` first — direct SSR HTML diffing proved Motion's `whileInView` still emits a hidden `opacity:0` style by default even with `initial={false}`, because it cannot know server-side whether the element is already in the viewport. The working fix instead **skips the Motion wrapper entirely** when `priority` is set, rendering plain always-visible markup with the same `data-testid="scroll-reveal"` (so the reduced-motion assertion script — which counts these — still finds the same total element counts as 28-04's baseline: 8/8/15/0/0/4 across the 6 routes).
+2. **`PostCard.tsx`:** added a `priority` prop threaded to `next/image`'s `priority`.
+3. **`ArchiveBlock.tsx` / `FeaturedPostsBlock.tsx`:** mark the first grid row (`index < 3`, matching `lg:grid-cols-3` — above the fold on every breakpoint this grid renders at) as `priority` on both `ScrollReveal` and `PostCard`.
+
+**Verified via direct SSR HTML diff (clean production build):** the first 6 `[data-testid="scroll-reveal"]` elements on `/en/blog` (3 from `FeaturedPostsBlock` + 3 from `ArchiveBlock`) now render with **no `style` attribute at all** (previously `style="opacity:0;transform:translateY(16px)"` on every instance), the first-row `PostCard` images now render **without `loading="lazy"`** and are correctly emitted as `<link rel="preload" as="image">` in `<head>` (previously `loading="lazy"` on every image including the first). H1 text and reduced-motion consistency (6/6 routes, same element counts) confirmed unchanged after the fix.
+
+### Re-run result: LCP gate is STILL FAIL on `/en` and `/en/blog`
+
+Full 6-route Lighthouse mobile re-run (`lh-phase28-gapclosure.json`, clean production build, port 3038, `caffeinate -u` held throughout):
+
+| Route | Baseline (28-01) LCP | 28-04 (post-28-03, pre-fix) LCP | Gap-closure (post-fix) LCP | Verdict |
+|---|---|---|---|---|
+| /en | 3810ms (needs-improvement) | 3938-4097ms (poor, 3/4 runs) | 4087, 4232, 4235, 4235ms — **poor, 4/4 runs** | **STILL FAIL** |
+| /es | 4097ms (poor, unchanged from baseline) | 4261ms (poor, no change) | 4377ms (poor, no change vs baseline — was already poor) | PASS (no new regression) |
+| /en/blog | 3799ms (needs-improvement) | 4424-4943ms (poor, 4/4 runs) | 4437, 4444, 4479, 4506ms — **poor, 4/4 runs** | **STILL FAIL** |
+| /servicios | 3668ms | 3830ms (needs-improvement, no change) | 3785ms (needs-improvement, no change) | PASS |
+| /en/services | 3623ms | 3783ms (needs-improvement, no change) | 3788ms (needs-improvement, no change) | PASS |
+| /en/seo-tecnico-lima | 3627ms | 3777ms (needs-improvement, no change) | 3832ms (needs-improvement, no change) | PASS |
+
+The fix measurably eliminated the specific defects it targeted (SSR-hidden opacity, lazy-loaded LCP image) — confirmed via direct SSR HTML diffing, not inferred — but total LCP on `/en` and `/en/blog` did **not** drop below the 4000ms `poor` threshold. Investigating why:
+
+**New finding: `/en/blog`'s server response time (TTFB) itself is the dominant cost, and it is NOT something this plan's scope (Motion/ScrollReveal) touches.** Direct `curl` timing against the same production server, repeated after warm-up to rule out cold-start noise:
+
+| Route | TTFB (curl `time_total`, warm, 3-6 reps) |
+|---|---|
+| /en/blog | consistently 2.1-2.4s (one-off spikes to 4-6s seen on the very first hit after a server restart) |
+| /en | ~0.27-0.29s |
+| /en/services | ~0.26-0.28s |
+| /en/case-studies (also uses `ArchiveBlock`) | ~0.25-0.27s after warm-up |
+
+`/en/blog` is the only route with multi-second TTFB even under repeated warm requests — every other `ArchiveBlock`-using route (`/en/case-studies`) responds in ~250ms. The build output marks `/[locale]/blog` as `●` (SSG), but its measured runtime behavior does not match static serving; the page component consumes `searchParams` (for the category-tab filter), which is a strong candidate for opting the route out of static caching and forcing per-request re-execution of `ArchiveBlock`'s category-filter `payload.find` query, the posts `payload.find`, and `FeaturedPostsBlock`'s `payload.findGlobal` — three sequential DB round-trips on every request, unique to this route's block composition. Lighthouse's mobile-preset network/CPU throttling amplifies this multi-second TTFB further in the simulated-throttled LCP number.
+
+**This is a pre-existing, out-of-scope issue — not caused by Phase 28's Motion work.** It was already present at the 28-01 baseline measurement time (baseline LCP of 3799ms on `/en/blog` already reflects this same TTFB cost; the data-fetching code in `ArchiveBlock`/`FeaturedPostsBlock` was not touched by 28-02 or 28-03). It only became gate-failing once 28-03's ScrollReveal/lazy-image overhead pushed the already-borderline baseline (3799ms, just 201ms under the 4000ms threshold) over the line — and now that those specific overheads are fixed, the pre-existing TTFB latency is what's keeping both routes just over 4000ms.
+
+**Not fixed in this gap-closure pass.** Per this task's explicit scope (fix the Motion/ScrollReveal-caused LCP regression, keep the fix minimal, don't introduce new patterns) and Rule 4 (architectural changes require a decision, not an auto-fix), root-causing and fixing `/en/blog`'s TTFB — likely a missing cache/revalidation strategy for the category-filter query, or removing the `searchParams` dependency from the static path — is out of scope here and is flagged as a new, distinct required follow-up.
+
+### Gap-Closure Verdict: STILL FAIL (2/6 routes: `/en`, `/en/blog`) — root cause partially corrected, new blocking factor identified
+
+- **Confirmed fixed (verified via SSR HTML diff, not assumed):** ScrollReveal's SSR-`opacity:0` hiding of above-the-fold grid content, and the missing `priority` on the first-row `PostCard` LCP image on `/en/blog`.
+- **Still failing:** LCP on `/en` and `/en/blog` remains in the `poor` band (>4000ms), now dominated by a distinct, pre-existing, out-of-scope issue — `/en/blog`'s per-request TTFB (~2.1-2.4s warm, unique to this route among `ArchiveBlock` consumers, most likely caused by `searchParams` forcing dynamic rendering + 3 sequential DB queries) — rather than the client-side render-suppression this plan's scope covers.
+- **Reduced-motion consistency (MOTION-03) and H1/JSON-LD integrity:** still clean 6/6 PASS after the fix, confirming no regression was introduced by this gap-closure's changes.
+- **Required next step:** a new, separately-scoped investigation into `/en/blog`'s TTFB — specifically whether `searchParams` usage in `src/app/(frontend)/[locale]/blog/page.tsx` is forcing dynamic rendering of an otherwise-static page, and whether `ArchiveBlock`'s category-filter query and `FeaturedPostsBlock`'s global fetch can be cached/parallelized/deferred. This is a data-fetching/caching architecture question, not a Motion/animation one, and needs its own scoped plan.

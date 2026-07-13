@@ -1,0 +1,222 @@
+{
+  "failures": [],
+  "warnings": [],
+  "notes": [
+    "[/en] zero hydration-mismatch console/page errors",
+    "[/en] 8 scroll-reveal element(s) found",
+    "[/en] all 8 scroll-reveal element(s) at opacity:1 under reduced-motion emulation",
+    "[/es] zero hydration-mismatch console/page errors",
+    "[/es] 8 scroll-reveal element(s) found",
+    "[/es] all 8 scroll-reveal element(s) at opacity:1 under reduced-motion emulation",
+    "[/en/blog] zero hydration-mismatch console/page errors",
+    "[/en/blog] 15 scroll-reveal element(s) found",
+    "[/en/blog] all 15 scroll-reveal element(s) at opacity:1 under reduced-motion emulation",
+    "[/servicios] zero hydration-mismatch console/page errors",
+    "[/servicios] no [data-testid=\"scroll-reveal\"] elements present (not necessarily a failure — Hero-only routes may not have any)",
+    "[/en/services] zero hydration-mismatch console/page errors",
+    "[/en/services] no [data-testid=\"scroll-reveal\"] elements present (not necessarily a failure — Hero-only routes may not have any)",
+    "[/en/seo-tecnico-lima] zero hydration-mismatch console/page errors",
+    "[/en/seo-tecnico-lima] 4 scroll-reveal element(s) found",
+    "[/en/seo-tecnico-lima] all 4 scroll-reveal element(s) at opacity:1 under reduced-motion emulation"
+  ],
+  "routes": {
+    "/en": {
+      "route": "/en",
+      "hydrationConsoleErrors": [],
+      "hydrationPageErrors": [],
+      "scrollRevealCount": 8,
+      "scrollRevealOpacities": [
+        {
+          "index": 0,
+          "opacity": "1"
+        },
+        {
+          "index": 1,
+          "opacity": "1"
+        },
+        {
+          "index": 2,
+          "opacity": "1"
+        },
+        {
+          "index": 3,
+          "opacity": "1"
+        },
+        {
+          "index": 4,
+          "opacity": "1"
+        },
+        {
+          "index": 5,
+          "opacity": "1"
+        },
+        {
+          "index": 6,
+          "opacity": "1"
+        },
+        {
+          "index": 7,
+          "opacity": "1"
+        }
+      ],
+      "hydrationCheck": "PASS",
+      "scrollRevealCheck": "PASS"
+    },
+    "/es": {
+      "route": "/es",
+      "hydrationConsoleErrors": [],
+      "hydrationPageErrors": [],
+      "scrollRevealCount": 8,
+      "scrollRevealOpacities": [
+        {
+          "index": 0,
+          "opacity": "1"
+        },
+        {
+          "index": 1,
+          "opacity": "1"
+        },
+        {
+          "index": 2,
+          "opacity": "1"
+        },
+        {
+          "index": 3,
+          "opacity": "1"
+        },
+        {
+          "index": 4,
+          "opacity": "1"
+        },
+        {
+          "index": 5,
+          "opacity": "1"
+        },
+        {
+          "index": 6,
+          "opacity": "1"
+        },
+        {
+          "index": 7,
+          "opacity": "1"
+        }
+      ],
+      "hydrationCheck": "PASS",
+      "scrollRevealCheck": "PASS"
+    },
+    "/en/blog": {
+      "route": "/en/blog",
+      "hydrationConsoleErrors": [],
+      "hydrationPageErrors": [],
+      "scrollRevealCount": 15,
+      "scrollRevealOpacities": [
+        {
+          "index": 0,
+          "opacity": "1"
+        },
+        {
+          "index": 1,
+          "opacity": "1"
+        },
+        {
+          "index": 2,
+          "opacity": "1"
+        },
+        {
+          "index": 3,
+          "opacity": "1"
+        },
+        {
+          "index": 4,
+          "opacity": "1"
+        },
+        {
+          "index": 5,
+          "opacity": "1"
+        },
+        {
+          "index": 6,
+          "opacity": "1"
+        },
+        {
+          "index": 7,
+          "opacity": "1"
+        },
+        {
+          "index": 8,
+          "opacity": "1"
+        },
+        {
+          "index": 9,
+          "opacity": "1"
+        },
+        {
+          "index": 10,
+          "opacity": "1"
+        },
+        {
+          "index": 11,
+          "opacity": "1"
+        },
+        {
+          "index": 12,
+          "opacity": "1"
+        },
+        {
+          "index": 13,
+          "opacity": "1"
+        },
+        {
+          "index": 14,
+          "opacity": "1"
+        }
+      ],
+      "hydrationCheck": "PASS",
+      "scrollRevealCheck": "PASS"
+    },
+    "/servicios": {
+      "route": "/servicios",
+      "hydrationConsoleErrors": [],
+      "hydrationPageErrors": [],
+      "scrollRevealCount": 0,
+      "scrollRevealOpacities": [],
+      "hydrationCheck": "PASS",
+      "scrollRevealCheck": "PASS"
+    },
+    "/en/services": {
+      "route": "/en/services",
+      "hydrationConsoleErrors": [],
+      "hydrationPageErrors": [],
+      "scrollRevealCount": 0,
+      "scrollRevealOpacities": [],
+      "hydrationCheck": "PASS",
+      "scrollRevealCheck": "PASS"
+    },
+    "/en/seo-tecnico-lima": {
+      "route": "/en/seo-tecnico-lima",
+      "hydrationConsoleErrors": [],
+      "hydrationPageErrors": [],
+      "scrollRevealCount": 4,
+      "scrollRevealOpacities": [
+        {
+          "index": 0,
+          "opacity": "1"
+        },
+        {
+          "index": 1,
+          "opacity": "1"
+        },
+        {
+          "index": 2,
+          "opacity": "1"
+        },
+        {
+          "index": 3,
+          "opacity": "1"
+        }
+      ],
+      "hydrationCheck": "PASS",
+      "scrollRevealCheck": "PASS"
+    }
+  }
+}
