@@ -1,0 +1,74 @@
+{
+  "/servicios/seo-technical-audit": {
+    "performance": 82,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 83,
+    "lcpMs": 3486,
+    "cls": 0,
+    "tbtMs": 173
+  },
+  "/servicios/seo-consulting": {
+    "performance": 84,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 83,
+    "lcpMs": 3464,
+    "cls": 0,
+    "tbtMs": 79
+  },
+  "/servicios/fullstack-development": {
+    "performance": 87,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 83,
+    "lcpMs": 3468,
+    "cls": 0,
+    "tbtMs": 49
+  },
+  "/servicios/ai-seo-geo": {
+    "performance": 87,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 83,
+    "lcpMs": 3546,
+    "cls": 0,
+    "tbtMs": 46
+  },
+  "/en/services/seo-technical-audit": {
+    "performance": 87,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 83,
+    "lcpMs": 3469,
+    "cls": 0,
+    "tbtMs": 46
+  },
+  "/en/services/seo-consulting": {
+    "performance": 87,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 83,
+    "lcpMs": 3476,
+    "cls": 0,
+    "tbtMs": 51
+  },
+  "/en/services/fullstack-development": {
+    "performance": 87,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 83,
+    "lcpMs": 3467,
+    "cls": 0,
+    "tbtMs": 44
+  },
+  "/en/services/ai-seo-geo": {
+    "performance": 87,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 83,
+    "lcpMs": 3466,
+    "cls": 0,
+    "tbtMs": 42
+  }
+}
