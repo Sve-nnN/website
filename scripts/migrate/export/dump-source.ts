@@ -90,7 +90,7 @@ async function dump() {
       draft: true,
     })
 
-    const docs = JSON.parse(JSON.stringify(result.docs))
+    const docs = structuredClone(result.docs)
     const outPath = path.join(OUTPUT_DIR, `${collection}.json`)
     fs.writeFileSync(outPath, JSON.stringify(docs, null, 2))
     console.log(`${collection}: ${docs.length} docs -> ${outPath}`)

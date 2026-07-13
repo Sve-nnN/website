@@ -182,7 +182,7 @@ async function remapInternalLinksPass2(payload: any, table: any, needsReview: st
 
       // Re-run the media remap (idempotent) AND resolve internal post links
       // in the same pass.
-      const cloned = JSON.parse(JSON.stringify(original))
+      const cloned = structuredClone(original)
       const root = (cloned as Record<string, unknown>)?.root
 
       function walkLinks(node: unknown) {

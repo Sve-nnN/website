@@ -51,7 +51,7 @@ export function remapRichTextMediaRefs(
   mediaRemap: Record<string, string | number>,
 ): unknown {
   if (!richText) return richText
-  const cloned = JSON.parse(JSON.stringify(richText))
+  const cloned = structuredClone(richText)
   const root = (cloned as Record<string, unknown>)?.root
   if (root) {
     walk(root, mediaRemap)
