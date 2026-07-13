@@ -683,7 +683,14 @@ Plans:
   4. `ClientLogosBlock` y `TestimonialsCarousel` muestran tratamiento visual pulido (normalización de tamaño de logos / affordance de scroll en testimonios)
   5. El listado y el detalle de Case Studies muestran un trail de breadcrumbs visual real construido con el mismo helper `buildTrail()` que usa Servicios, con `BreadcrumbList` JSON-LD consistente (reemplazando la implementación propia y desalineada actual)
 
-**Plans**: TBD
+**Plans**: 3 plans (1 wave)
+
+Plans:
+
+- [ ] 26-01-PLAN.md — CTA Container fix + FAQ visual grouping + ClientLogos scale normalization + TestimonialsCarousel scroll affordance (UIPOL-01, 04, 05, 06)
+- [ ] 26-02-PLAN.md — SiteHeader scroll-state + active-route indicator, extracted into SiteHeaderChrome client component (UIPOL-02)
+- [ ] 26-03-PLAN.md — Case Studies breadcrumbs: buildCaseStudiesTrail() sibling export + listing/detail wiring (UIPOL-09)
+
 **UI hint**: yes
 
 ### Phase 27: Micro-animation Library Adoption
