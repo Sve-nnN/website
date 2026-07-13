@@ -1,0 +1,56 @@
+{
+  "/en": {
+    "performance": 84,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4097,
+    "cls": 0,
+    "tbtMs": 161
+  },
+  "/es": {
+    "performance": 84,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4261,
+    "cls": 0,
+    "tbtMs": 155
+  },
+  "/en/blog": {
+    "performance": 73,
+    "accessibility": 95,
+    "best-practices": 96,
+    "seo": 92,
+    "lcpMs": 4943,
+    "cls": 0,
+    "tbtMs": 15
+  },
+  "/servicios": {
+    "performance": 89,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 83,
+    "lcpMs": 3830,
+    "cls": 0,
+    "tbtMs": 53
+  },
+  "/en/services": {
+    "performance": 89,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 75,
+    "lcpMs": 3783,
+    "cls": 0,
+    "tbtMs": 37
+  },
+  "/en/seo-tecnico-lima": {
+    "performance": 89,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 91,
+    "lcpMs": 3777,
+    "cls": 0,
+    "tbtMs": 59
+  }
+}
