@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation'
 
 import { getServicePage } from '@/lib/services-data'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { buildTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
+import { JsonLd } from '@/components/JsonLd'
 
 async function getPage(locale: string, slug: string) {
   return getServicePage(locale as 'es' | 'en', slug)
@@ -37,9 +39,15 @@ export default async function ServicePage({
     notFound()
   }
 
+  const trail = buildTrail(locale as 'es' | 'en', { slug: doc.slug ?? slug, title: doc.title })
+
   return (
     <main>
-      <RenderBlocks blocks={doc.content?.layout ?? []} />
+      <JsonLd data={buildBreadcrumbJsonLd(trail)} />
+      <RenderBlocks
+        blocks={doc.content?.layout ?? []}
+        blockProps={{ hero: { breadcrumbs: trail } }}
+      />
     </main>
   )
 }
