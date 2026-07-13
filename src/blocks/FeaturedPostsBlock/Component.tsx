@@ -29,11 +29,17 @@ export async function FeaturedPostsBlockComponent(props: FeaturedPostsBlockProps
     <Container className="py-12">
       {title && <h2 className="font-heading text-heading mb-6">{title}</h2>}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {posts.map((post) => (
-          <ScrollReveal key={post.id}>
-            <PostCard post={post} />
-          </ScrollReveal>
-        ))}
+        {posts.map((post, i) => {
+          // 28-04 gap-closure (LCP fix): first row is above the fold on
+          // every breakpoint — see ArchiveBlock's same pattern and
+          // ScrollReveal.tsx for the root cause.
+          const isAboveFold = i < 3
+          return (
+            <ScrollReveal key={post.id} priority={isAboveFold}>
+              <PostCard post={post} priority={isAboveFold} />
+            </ScrollReveal>
+          )
+        })}
       </div>
     </Container>
   )

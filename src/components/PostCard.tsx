@@ -10,7 +10,7 @@ import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { Card, CardContent } from '@/components/ui/card'
 
-export function PostCard({ post }: { post: Post }) {
+export function PostCard({ post, priority = false }: { post: Post; priority?: boolean }) {
   const reducedMotion = useReducedMotion()
   const heroImage = typeof post.heroImage === 'object' ? post.heroImage : null
   const imageUrl = heroImage?.url ?? getFallbackHeroImage(post.slug ?? String(post.id))
@@ -30,6 +30,7 @@ export function PostCard({ post }: { post: Post }) {
               fill
               className="object-cover"
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              priority={priority}
             />
           </m.div>
         </div>

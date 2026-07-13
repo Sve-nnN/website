@@ -104,15 +104,22 @@ export async function ArchiveBlockComponent(props: ArchiveBlockComponentProps) {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {docs.map((doc) => (
-            <ScrollReveal key={doc.id}>
-              {relationTo === 'posts' ? (
-                <PostCard post={doc as Post} />
-              ) : (
-                <CaseStudyCard caseStudy={doc as CaseStudy} />
-              )}
-            </ScrollReveal>
-          ))}
+          {docs.map((doc, i) => {
+            // 28-04 gap-closure (LCP fix): the first row (lg:grid-cols-3) is
+            // above the fold on every breakpoint this grid renders at — do
+            // not SSR-hide it behind ScrollReveal's opacity:0 initial state,
+            // and do not lazy-load its thumbnail image. See ScrollReveal.tsx.
+            const isAboveFold = i < 3
+            return (
+              <ScrollReveal key={doc.id} priority={isAboveFold}>
+                {relationTo === 'posts' ? (
+                  <PostCard post={doc as Post} priority={isAboveFold} />
+                ) : (
+                  <CaseStudyCard caseStudy={doc as CaseStudy} />
+                )}
+              </ScrollReveal>
+            )
+          })}
         </div>
       )}
     </Container>

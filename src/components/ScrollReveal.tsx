@@ -15,9 +15,34 @@ import { useReducedMotion } from '@/hooks/useReducedMotion'
  * (`duration: 0`) rather than skipping the wrapper entirely, so the DOM
  * structure stays identical either way — same discipline as
  * `HeroGrainGradient`'s `motionProps` branch.
+ *
+ * `priority` (28-04 gap-closure, LCP fix): content that is already visible
+ * on initial load (above-the-fold grid items) must not be SSR-rendered with
+ * `opacity:0` — Lighthouse's LCP measurement only counts a paint once the
+ * element is actually visible, so hiding an above-the-fold LCP candidate
+ * behind Motion's hydration + `whileInView`/IntersectionObserver reveal
+ * measurably delays LCP (root-caused in 28-04's regression gate). Note that
+ * `initial={false}` alone does NOT fix this: Motion's `whileInView` still
+ * emits a hidden SSR style by default because it cannot know server-side
+ * whether the element is already in the viewport — confirmed by direct SSR
+ * HTML inspection during this gap-closure. So `priority` instead skips the
+ * motion wrapper entirely and renders plain, always-visible markup — no
+ * animated reveal for that instance, but no risk of an SSR-hidden LCP
+ * candidate. Callers should reserve this for content confirmed to be
+ * above-the-fold (e.g. the first grid row).
  */
-export function ScrollReveal({ children }: { children: ReactNode }) {
+export function ScrollReveal({
+  children,
+  priority = false,
+}: {
+  children: ReactNode
+  priority?: boolean
+}) {
   const reducedMotion = useReducedMotion()
+
+  if (priority) {
+    return <div data-testid="scroll-reveal">{children}</div>
+  }
 
   return (
     <m.div
