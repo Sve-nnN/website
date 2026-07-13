@@ -23,6 +23,7 @@ findings:
   info: 2
   total: 7
 status: issues_found
+post_review_note: "Both CRITICAL findings (client name missing due to depth:1, testimonials title locale-clobber) fixed in commit 12f02f3 — depth bumped to 2 on RelatedCaseStudyBlock's own queries; TestimonialsCarousel.title cleared with explicit null (omitting the key alone did not clear a non-localized field's stale value) and the component now falls back to a real getTranslations() call. Re-verified live: all 10 Servicios URLs + Home 200, testimonials heading correct per locale. The 3 WARNING and 2 INFO findings were left as documented non-blocking debt per the review's own severity assessment."
 ---
 
 # Phase 25: Code Review Report
