@@ -7,6 +7,7 @@ import type { TestimonialsCarouselBlock as TestimonialsCarouselBlockProps } from
 import config from '@/payload.config'
 import { Container } from '@/components/Container'
 import { Card, CardContent } from '@/components/ui/card'
+import { TestimonialCardMotion } from '@/components/TestimonialCardMotion'
 
 export async function TestimonialsCarouselComponent(props: TestimonialsCarouselBlockProps) {
   const { title, limit } = props
@@ -44,28 +45,30 @@ export async function TestimonialsCarouselComponent(props: TestimonialsCarouselB
             const avatar = typeof testimonial.avatar === 'object' ? testimonial.avatar : null
 
             return (
-              <Card key={testimonial.id} className="min-w-[300px] snap-start">
-                <CardContent className="pt-6">
-                  <p className="text-body italic">&ldquo;{testimonial.testimonial}&rdquo;</p>
-                  <div className="mt-4 flex items-center gap-3">
-                    {avatar?.url && (
-                      <Image
-                        src={avatar.url}
-                        alt={avatar.alt ?? testimonial.name}
-                        width={40}
-                        height={40}
-                        className="rounded-full"
-                      />
-                    )}
-                    <div>
-                      <p className="text-label">{testimonial.name}</p>
-                      <p className="text-label text-muted-foreground">
-                        {testimonial.role} · {testimonial.company}
-                      </p>
+              <TestimonialCardMotion key={testimonial.id}>
+                <Card className="min-w-[300px] snap-start">
+                  <CardContent className="pt-6">
+                    <p className="text-body italic">&ldquo;{testimonial.testimonial}&rdquo;</p>
+                    <div className="mt-4 flex items-center gap-3">
+                      {avatar?.url && (
+                        <Image
+                          src={avatar.url}
+                          alt={avatar.alt ?? testimonial.name}
+                          width={40}
+                          height={40}
+                          className="rounded-full"
+                        />
+                      )}
+                      <div>
+                        <p className="text-label">{testimonial.name}</p>
+                        <p className="text-label text-muted-foreground">
+                          {testimonial.role} · {testimonial.company}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </TestimonialCardMotion>
             )
           })}
         </div>
