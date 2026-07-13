@@ -20,25 +20,48 @@ import { HeroGrainGradient } from '@/components/HeroGrainGradient'
  * CallToAction (src/blocks/CallToAction). `breadcrumbs` (10.8, UI-23):
  * optional label+url trail, only exposed on the `listing` variant in the
  * schema, rendered as a plain <nav> above the title.
+ *
+ * Non-home variants (`listing`/`post-header`/`case-study-header`) are
+ * differentiated via `variantStyles` below (padding scale, overlay opacity,
+ * accent border) — CSS-only, no new schema fields (28-02, UIPOL-03).
  */
+const variantStyles: Record<
+  NonNullable<HeroBlockProps['variant']>,
+  { padding: string; overlayOpacity: string | null; border: string }
+> = {
+  home: { padding: 'py-16 md:py-24', overlayOpacity: null, border: '' },
+  listing: { padding: 'py-10 md:py-14', overlayOpacity: null, border: 'border-b-4 border-primary' },
+  'post-header': {
+    padding: 'py-12 md:py-16',
+    overlayOpacity: 'opacity-30',
+    border: 'border-t-4 border-primary',
+  },
+  'case-study-header': {
+    padding: 'py-14 md:py-20',
+    overlayOpacity: 'opacity-45',
+    border: 'border-t-8 border-primary',
+  },
+}
+
 export function HeroComponent(props: HeroBlockProps) {
   const { variant, title, subtitle, media, links, breadcrumbs } = props
   const image = typeof media === 'object' ? media : null
 
   const isHome = variant === 'home'
   const isListing = variant === 'listing'
+  const styles = variantStyles[variant]
 
   return (
     <section
       className={
         isHome
           ? 'relative bg-secondary text-secondary-foreground py-16 md:py-24 overflow-hidden'
-          : 'relative bg-secondary text-secondary-foreground py-12 md:py-16'
+          : `relative bg-secondary text-secondary-foreground ${styles.padding} ${styles.border}`
       }
     >
       {isHome && <HeroGrainGradient />}
-      {!isHome && image?.url && (
-        <div className="absolute inset-0 opacity-30">
+      {!isHome && !isListing && image?.url && styles.overlayOpacity && (
+        <div className={`absolute inset-0 ${styles.overlayOpacity}`}>
           <Image src={image.url} alt={image.alt ?? ''} fill className="object-cover" priority />
         </div>
       )}
