@@ -247,6 +247,7 @@ export interface Page {
       | FeaturedCaseStudiesBlock
       | ClientLogosBlock
       | AboutSectionBlock
+      | ServicesShowcaseBlock
     )[];
   };
   slug?: string | null;
@@ -1028,6 +1029,19 @@ export interface AboutSectionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServicesShowcaseBlock".
+ */
+export interface ServicesShowcaseBlock {
+  /**
+   * Section heading — editable per page instance.
+   */
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'servicesShowcase';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -1624,6 +1638,7 @@ export interface PagesSelect<T extends boolean = true> {
               featuredCaseStudiesBlock?: T | FeaturedCaseStudiesBlockSelect<T>;
               clientLogosBlock?: T | ClientLogosBlockSelect<T>;
               aboutSection?: T | AboutSectionBlockSelect<T>;
+              servicesShowcase?: T | ServicesShowcaseBlockSelect<T>;
             };
       };
   slug?: T;
@@ -1932,6 +1947,15 @@ export interface AboutSectionBlockSelect<T extends boolean = true> {
       };
   ctaText?: T;
   ctaLink?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ServicesShowcaseBlock_select".
+ */
+export interface ServicesShowcaseBlockSelect<T extends boolean = true> {
+  title?: T;
   id?: T;
   blockName?: T;
 }

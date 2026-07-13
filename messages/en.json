@@ -12,5 +12,8 @@
   "common": {
     "readMore": "Read more",
     "viewAll": "View all"
+  },
+  "servicesShowcase": {
+    "cta": "Explore service"
   }
 }

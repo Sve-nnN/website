@@ -20,6 +20,7 @@ import { ClientLogosBlockComponent } from '@/blocks/ClientLogosBlock/Component'
 import { ContactFormBlockComponent } from '@/blocks/ContactFormBlock/Component'
 import { AboutSectionComponent } from '@/blocks/AboutSection/Component'
 import { TestimonialSectionComponent } from '@/blocks/TestimonialSection/Component'
+import { ServicesShowcaseComponent } from '@/blocks/ServicesShowcase/Component'
 
 type LayoutBlocks = Page['content']['layout']
 type LayoutBlock = LayoutBlocks[number]
@@ -47,6 +48,7 @@ const blockComponents: Record<string, (props: any) => ReactNode> = {
   contactFormBlock: ContactFormBlockComponent,
   aboutSection: AboutSectionComponent,
   testimonialSection: TestimonialSectionComponent,
+  servicesShowcase: ServicesShowcaseComponent,
 }
 
 interface RenderBlocksProps {

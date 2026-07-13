@@ -22,6 +22,7 @@ import { FeaturedPostsBlock } from '@/blocks/FeaturedPostsBlock/config'
 import { FeaturedCaseStudiesBlock } from '@/blocks/FeaturedCaseStudiesBlock/config'
 import { ClientLogosBlock } from '@/blocks/ClientLogosBlock/config'
 import { AboutSection } from '@/blocks/AboutSection/config'
+import { ServicesShowcase } from '@/blocks/ServicesShowcase/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -81,6 +82,7 @@ export const Pages: CollectionConfig = {
             FeaturedCaseStudiesBlock,
             ClientLogosBlock,
             AboutSection,
+            ServicesShowcase,
           ],
         },
       ],
