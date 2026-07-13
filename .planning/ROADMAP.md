@@ -52,7 +52,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 21: Home Optimization & Service Linking** - Home refuerza el ángulo desarrollo+SEO técnico y enlaza a las páginas de servicio nuevas (completed 2026-07-12)
 
 - [x] **Phase 22: Breadcrumbs (visual + schema)** - Servicios index + 4 landings ganan trail visual y BreadcrumbList JSON-LD desde una sola fuente (completed 2026-07-12)
-- [ ] **Phase 23: Canonical + hreflang hardening** - Las 4 combinaciones de URL de servicio emiten canonical/hreflang correctos, metadataBase sitewide
+- [x] **Phase 23: Canonical + hreflang hardening** - Las 4 combinaciones de URL de servicio emiten canonical/hreflang correctos, metadataBase sitewide (completed 2026-07-12)
 - [ ] **Phase 24: ServicesShowcase en Home** - Home muestra las 4 tarjetas de servicio leyendo SERVICE_SLUGS en vivo, aditivo
 - [ ] **Phase 25: Service-page visual polish** - Las 4 landings de servicio ganan anatomía visual completa y prueba social competitiva
 
@@ -620,7 +620,7 @@ Plans:
 
 Plans:
 
-- [ ] 23-01-PLAN.md — Shared canonical/hreflang helper, metadataBase, wired into all 4 Servicios generateMetadata + live curl verification
+- [x] 23-01-PLAN.md — Shared canonical/hreflang helper, metadataBase, wired into all 4 Servicios generateMetadata + live curl verification
 
 ### Phase 24: ServicesShowcase en Home
 

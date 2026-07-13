@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.5
 milestone_name: UI/UX Pro Max — Polish y Competitividad
 status: in_progress
-last_updated: "2026-07-12T23:45:00.000Z"
+last_updated: "2026-07-13T00:10:00.000Z"
 last_activity: 2026-07-12
 progress:
   total_phases: 4
-  completed_phases: 1
-  total_plans: 1
-  completed_plans: 1
-  percent: 25
+  completed_phases: 2
+  total_plans: 2
+  completed_plans: 2
+  percent: 50
 ---
 
 # Project State
@@ -20,7 +20,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 23 (Canonical + hreflang hardening) — Phase 22 closed 3/3, autonomous run in progress
+**Current focus:** Phase 24 (ServicesShowcase en Home) — Phases 22-23 closed 6/6 requirements, autonomous run in progress
 
 ## Current Position
 
@@ -153,6 +153,7 @@ Recent decisions affecting current work:
 
 - [Milestone v1.5]: Roadmap: 4 fases (22-25) derivadas de los 18 requirements v1.5, continuando la numeración desde Phase 21, siguiendo la estructura propuesta por research/SUMMARY.md sin modificaciones estructurales — orden estrictamente secuencial por riesgo ascendente de regresión/DB (breadcrumbs sin riesgo de schema -> canonical/hreflang frontend-only -> ServicesShowcase aditivo -> polish visual, la fase de mayor superficie/riesgo, va última). Cada fase depende de la inmediatamente anterior porque cada una re-toca los mismos templates de Servicios que la anterior tocó.
 - [Phase 22]: 22-01: `src/lib/breadcrumbs.ts` nuevo, módulo puro sin acceso a DB — `buildTrail()`/`buildBreadcrumbJsonLd()` como única fuente de verdad, reutiliza el prop `breadcrumbs` que el bloque Hero (variant `listing`) ya aceptaba desde Phase 10.8 en vez del campo editorial manual de Payload (override vía `blockProps` en `RenderBlocks`, cero campo nuevo, cero migración). Wireado en los 4 `page.tsx` de Servicios (índice + `[slug]`, ES/EN). Verificado en vivo contra las 10 URLs (dev server real): trail visual correcto (2 niveles índice, 3 landing) + JSON-LD `BreadcrumbList` coincide exactamente. BREAD-03 (validación `seo-schema`) inicialmente quedó `human_needed` porque ni el executor ni el verifier tenían la tool Task en su set — resuelto por el orquestador invocando el agente `seo-schema` directamente (sí disponible a ese nivel) contra las 10 URLs, 10/10 PASS. Code review encontró WR-01 (comentario de seguridad en `JsonLd.tsx` afirmaba incorrectamente que `JSON.stringify` escapa `</script>` — falso, no escapa `<`/`>`/`&`) fixeado agregando escape a secuencias unicode antes de inyectar; WR-02 (falta de tests unitarios para `buildTrail()`) e IN-01/IN-02 (duplicación preexistente de Phase 19 entre `servicios/`↔`services/`, código muerto menor) aceptados como deuda no bloqueante.
+- [Phase 23]: 23-01: `src/lib/canonical.ts` nuevo, módulo puro — `buildServiceAlternates(locale, current?)` calcula el canonical purmente desde `locale`, no desde la carpeta de ruta física que llamó (mecanismo real que colapsa las 4 URLs físicas en 2 targets canónicos: los combos "incorrectos" `/services` sin prefijo y `/en/servicios` canonicalizan al segmento correcto de su locale en vez de auto-referenciarse). `metadataBase` definido una única vez en `[locale]/layout.tsx` (único root real del árbol frontend público, no hay `src/app/layout.tsx` por encima). Reutiliza `SITE_URL` de `sitemap-data.ts` en vez de re-derivar resolución de dominio. Verificado en vivo (curl real, 6 URLs: 2 combos correctos + 2 incorrectos + 2 landings con hreflang es/en/x-default) por el executor y re-derivado independientemente por el verifier sin confiar en el SUMMARY — passed 5/5. Code review encontró WR-01 (`canonical.ts` importa transitivamente `getPayload`/`@payload-config` vía `sitemap-data.ts`, no es tan "puro" como el comentario afirma — riesgo latente si algún día se importa desde un Client Component) y 2 infos (sin normalización de trailing slash en `SITE_URL`, patrón preexistente; cast `locale as 'es'|'en'` sin validación runtime, hoy inalcanzable por el matcher de next-intl) — WR-01 no se fixeó porque el guardrail (`import 'server-only'`) requeriría agregar una dependencia npm nueva para un riesgo hoy inerte (todo Server Components); aceptado como deuda documentada, no bloqueante. Se mataron 2 procesos `next dev` viejos que quedaron corriendo en puertos 3000-3002 de sesiones anteriores.
 
 ### Pending Todos
 

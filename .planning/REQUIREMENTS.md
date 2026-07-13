@@ -15,9 +15,9 @@ Requirements para el milestone v1.5. Cada uno mapea a una fase del roadmap (Home
 
 ### SEO Técnico (Canonical / Hreflang)
 
-- [ ] **SEOTECH-01**: Cada una de las 4 combinaciones de URL de servicio (`/servicios/[slug]`, `/en/services/[slug]`) emite `alternates.canonical` correcto en `generateMetadata`, construido con un helper compartido (no hardcodeado)
-- [ ] **SEOTECH-02**: Cada página de servicio emite `alternates.languages` (hreflang) apuntando a su contraparte en el otro locale
-- [ ] **SEOTECH-03**: El layout raíz define `metadataBase` una sola vez, desbloqueando canonicals correctos en todo el sitio (no solo Servicios)
+- [x] **SEOTECH-01**: Cada una de las 4 combinaciones de URL de servicio (`/servicios/[slug]`, `/en/services/[slug]`) emite `alternates.canonical` correcto en `generateMetadata`, construido con un helper compartido (no hardcodeado)
+- [x] **SEOTECH-02**: Cada página de servicio emite `alternates.languages` (hreflang) apuntando a su contraparte en el otro locale
+- [x] **SEOTECH-03**: El layout raíz define `metadataBase` una sola vez, desbloqueando canonicals correctos en todo el sitio (no solo Servicios)
 
 ### Home — Vitrina de Servicios
 
@@ -68,9 +68,9 @@ Explícitamente excluido de v1.5. Documentado para prevenir scope creep.
 | BREAD-01 | Phase 22 | Done |
 | BREAD-02 | Phase 22 | Done |
 | BREAD-03 | Phase 22 | Done |
-| SEOTECH-01 | Phase 23 | Pending |
-| SEOTECH-02 | Phase 23 | Pending |
-| SEOTECH-03 | Phase 23 | Pending |
+| SEOTECH-01 | Phase 23 | Done |
+| SEOTECH-02 | Phase 23 | Done |
+| SEOTECH-03 | Phase 23 | Done |
 | SVCHOME-01 | Phase 24 | Pending |
 | SVCHOME-02 | Phase 24 | Pending |
 | SVCHOME-03 | Phase 24 | Pending |
