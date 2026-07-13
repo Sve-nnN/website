@@ -181,6 +181,7 @@ None yet.
 | # | Description | Date | Commit | Directory |
 |---|-------------|------|--------|-----------|
 | 260712-159 | Gradient CTA sections: reuse HeroGrainGradient shader as background on ContactFormBlock sidebar + CallToAction strip (Tasks 1-2 done; Task 3 blocking human-verify checkpoint pending) | 2026-07-12 | f76678f | [260712-159-gradient-cta-sections](./quick/260712-159-gradient-cta-sections/) |
+| 260713-1zw | React Doctor top-3 fix pass: deleted 2 genuinely-dead UI files (select.tsx, skeleton.tsx), replaced 3 JSON.parse(JSON.stringify(x)) deep-clones with structuredClone(x) in migration scripts. Next CVE-2026-23870 fix (Task 2) explicitly skipped — only compatible patch is a Next 16 major bump, deferred to a separate decision per Juan | 2026-07-13 | f8ea619 | [260713-1zw-fix-top-3-react-doctor-issues-unused-fil](./quick/260713-1zw-fix-top-3-react-doctor-issues-unused-fil/) |
 
 ## Deferred Items
 
@@ -190,6 +191,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 |----------|------|--------|
 | quick_task | 260712-159-gradient-cta-sections | unknown (Task 3 blocking human-verify checkpoint pending per STATE.md Quick Tasks Completed note) |
 | quick_task | 260712-1f1-cta-ready-to-work-together-variante-de-g | missing (no completion record found) |
+| react_doctor | CVE-2026-23870 (next@15.4.11 RSC DoS) — patch requires next@16.2.x, no compatible 15.5.x exists in @payloadcms/next@3.85.2 peer range | deferred, needs separate go/no-go decision on Next 16 major bump |
+| react_doctor | 69 remaining findings from full scan (23 unused-file false positives already triaged, plus bugs/perf/a11y/maintainability categories) | not yet triaged — see /var/folders/sr/ygkpxm857vd5w3bn003cy8mm0000gn/T/react-doctor-a89c0bd0-289e-4062-ad60-b25fc7c5ed1f for original full run |
 
 ## Session Continuity
 
