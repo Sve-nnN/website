@@ -148,7 +148,11 @@ function buildIndexLayout(copy: IndexPageCopy, locale: Locale): Record<string, u
         enableLink: true,
         link: {
           type: 'custom',
-          url: `/services/${s.slug}`,
+          // FIX (live bug reported by Juan, 2026-07-13): was hardcoded to
+          // the `/services/` (en) segment regardless of `locale`, so the
+          // ES index page's own "Ver más" cards linked to the non-canonical
+          // combo instead of `/servicios/{slug}`.
+          url: locale === 'es' ? `/servicios/${s.slug}` : `/en/services/${s.slug}`,
           label: locale === 'es' ? 'Ver más' : 'Learn more',
           appearance: 'default',
         },

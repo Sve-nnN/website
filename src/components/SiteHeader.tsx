@@ -16,6 +16,7 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/s
 import { Separator } from '@/components/ui/separator'
 import { Menu } from 'lucide-react'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
+import { normalizeServiceHref } from '@/lib/service-slugs'
 
 export async function SiteHeader({ locale }: { locale: string }) {
   const payload = await getPayload({ config })
@@ -27,6 +28,18 @@ export async function SiteHeader({ locale }: { locale: string }) {
   })
 
   const logo = typeof header.logo === 'object' ? header.logo : null
+
+  // FIX (live bug reported by Juan, 2026-07-13): Header.navItems is a
+  // non-localized array field — a stored url like `/services` renders
+  // identically on both locales instead of `/servicios` on es. Correct it
+  // here at render time rather than the stored data, same rationale as
+  // canonical.ts/breadcrumbs.ts (locale-derived, not folder/content-derived).
+  const navItems = (header.navItems ?? []).map((item) => ({
+    ...item,
+    link: item.link?.url
+      ? { ...item.link, url: normalizeServiceHref(item.link.url, locale as 'es' | 'en') }
+      : item.link,
+  }))
 
   return (
     <header className="sticky top-0 z-50 bg-secondary text-secondary-foreground shadow-md border-b border-border/20 transition-shadow duration-base ease-standard">
@@ -42,7 +55,7 @@ export async function SiteHeader({ locale }: { locale: string }) {
         <nav className="hidden md:flex items-center gap-8">
           <NavigationMenu>
             <NavigationMenuList>
-              {header.navItems?.map((item, i) => (
+              {navItems.map((item, i) => (
                 <NavigationMenuItem key={item.id ?? i}>
                   <NavigationMenuLink asChild>
                     <CMSLink
@@ -74,7 +87,7 @@ export async function SiteHeader({ locale }: { locale: string }) {
             <SheetTitle className="sr-only">Navigation menu</SheetTitle>
             <nav className="flex flex-col mt-8">
               <div className="flex flex-col gap-1">
-                {header.navItems?.map((item, i) => (
+                {navItems.map((item, i) => (
                   <CMSLink
                     key={item.id ?? i}
                     {...item.link}
