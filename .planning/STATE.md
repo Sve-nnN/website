@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.5
-milestone_name: UI/UX Pro Max — Polish y Competitividad
-status: complete
-last_updated: "2026-07-13T02:15:00.000Z"
+milestone: v1.6
+milestone_name: UI/UX Pro Max II — Componentes, Motion y Voz
+status: planning
+last_updated: "2026-07-13T04:44:46.284Z"
 last_activity: 2026-07-13
 progress:
-  total_phases: 4
-  completed_phases: 4
-  total_plans: 7
-  completed_plans: 7
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -24,12 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 22 of 25 (Breadcrumbs — visual + schema)
-Plan: TBD (not yet planned)
-Status: Ready to plan
-Last activity: 2026-07-12 — ROADMAP.md created for v1.5 (4 phases: 22-25), 18/18 requirements mapped
-
-Progress: [░░░░░░░░░░] 0%
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-13 — Milestone v1.6 started
 
 ## Performance Metrics
 
@@ -198,6 +196,4 @@ Resume file: None
 
 ## Operator Next Steps
 
-- v1.5 (UI/UX Pro Max — Polish y Competitividad) está funcionalmente completo. Cuando quieras, correr `/gsd:audit-milestone` → `/gsd:complete-milestone v1.5` → `/gsd:cleanup` para cerrar el milestone formalmente (no lo hice automático porque Phase 6 sigue pendiente y el milestone-level "all phases complete" check no se cumple hasta que decidas sobre el deploy).
-- Contenido pendiente, no bloqueante: asignar un cliente real al case study id=14 vía `/admin` (`client` field) para que su nombre aparezca en la tarjeta "Case study relacionado" de las 4 landings de Servicios.
-- Fase 6 (Deploy + Cutover) sigue en pausa — retoma solo con tu visto bueno explícito y credenciales reales de Hostinger/DNS/Resend (`RESEND_API_KEY` sigue siendo placeholder).
+- Start the next milestone with /gsd:new-milestone

@@ -1,5 +1,78 @@
 # Milestones
 
+## v1.5 v1.5 (Shipped: 2026-07-13)
+
+**Phases completed:** 21 phases, 76 plans, 110 tasks
+
+**Key accomplishments:**
+
+- 1. [Rule 3 - Blocking issue] `.gitignore` `media/` pattern was shadowing `src/collections/Media/`
+- Three lean Payload collections — public Authors profile, minimal Clientes logo-carousel, and Testimonials with mandatory name/role/company attribution — ready for Wave 4 config wiring
+- Structured CaseStudies collection (hero/metadata/kpis/clientContext/challenge/solution/results/conclusion) matching the ariannalupi.com/casos/ reference model, replacing JuanPortfolio's single rich-text blob.
+- 6 consolidated Payload block configs replacing ~35 near-duplicate blocks from the old JuanPortfolio site — Hero's variant discriminator replaces 4+ hero slugs, ArchiveBlock's relationTo+mode replaces 9+ "Featured X" grid blocks.
+- Pages collection wired to all 13 consolidated blocks via `content.layout` blocks field, with draft/versioning access control gating unpublished content
+- Single source-of-truth Payload config wiring all 9 KEEP-list collections onto a push:false Postgres adapter, with plugin-seo (tabbedUI), plugin-redirects, and email-resend
+- next-intl@4.13.1 installed with defaultLocale 'es', localePrefix 'as-needed', and localeDetection disabled, wired into next.config.mjs alongside the existing withPayload wrapper
+- Payload localization activated for the first time (es default, en secondary, fallback true), Media.alt localized, Llms global created and registered, seoPlugin generate functions added, and the resulting `_locales` join tables + `llms` table applied to the live Neon Postgres DB via a committed migration
+- Composed next-intl locale middleware with URL parity (es unprefixed, en prefixed, no Accept-Language override) plus a redirects-collection lookup delegated to a Node.js Route Handler, and a real `[locale]` home page with Person JSON-LD via JSON.stringify.
+- Hand-written Next.js MetadataRoute + Payload Local API routes for /sitemap.xml, /robots.txt, /llms.txt, and /llms-full.txt — no plugins, all four SEO/GEO discoverability endpoints reading live content directly.
+- Idempotent Phase 2 seed script plus blog/case-study detail pages with hand-written Article/CreativeWork/BreadcrumbList JSON-LD — closing the phase by exercising every i18n/SEO code path (locale parity, redirects, sitemap, llms.txt, JSON-LD, SEO-tab-to-HTML) against real seeded bilingual content.
+- Installed cloudinary@2.10.0 and @payloadcms/plugin-cloud-storage@3.85.2, with cloudinary's legitimacy confirmed live against the npm registry (official repo, official maintainers, 874,251 weekly downloads)
+- Built the corrected Cloudinary storage adapter (fixing two real bugs found in the reference implementation), wired it conditionally into payload.config.ts, gated Media's imageSizes to avoid a parallel-upload data-corruption bug, and applied the resulting schema migration to the real Neon database.
+- Proved the Cloudinary adapter works against real infrastructure — and in doing so, found and fixed two real bugs that static type-checking never caught: a wrong MIME type on upload, and a broken delete due to a duplicated path prefix.
+- 1. [Rule 3 - Blocking issue] `payload.config.kv` missing crashes `getPayload` init against the older sibling config
+- 1. [Rule 3 - Blocking issue] No `dotenv` package installed; plain `npx tsx` doesn't load `.env`
+- 1. [Rule 1 - Bug] Slug unique-constraint collision with Phase 2's seed script
+- 1. [Rule 1 - Bug] Old source data for testimonials was stored as plain strings, not `{es,en}`
+- 1. [Rule 3 - Blocking issue] Old schema nests `heroImage`/`tldr`/`content` under a `content` tab-group
+- "Que Works viejos se convierten en CaseStudies nuevos vs se descartan"
+- Tailwind v3 + shadcn (new-york/neutral/CSS-vars/lucide-react) initialized from a bare repo, with Inter/Fraunces fonts and UI-SPEC color/typography tokens wired as reusable Tailwind theme values.
+- Header/Footer/FeaturedContent globals plus Authors credentials/yearsExperience/socialLinks fields, migrated against the real Neon Postgres, with confirmed-clean fixture state.
+- FeaturedPostsBlock/FeaturedCaseStudiesBlock/ClientLogosBlock configs plus an ArchiveBlock category-filter toggle, registered on Pages (16 blocks total) and migrated against real Neon Postgres.
+- Single RenderBlocks registry resolving all 16 Pages blocks, with FeaturedPosts/FeaturedCaseStudies reading curated docs from the FeaturedContent global and a validated category-filter on ArchiveBlock.
+- SiteHeader/SiteFooter rendering the Header/Footer globals site-wide, AuthorByline/AuthorCard E-E-A-T components, and a deterministic FNV-1a hero-image fallback replicating the old site's 53-image Cloudinary pool behavior.
+- Home page fully composed via RenderBlocks (Hero, Featured Case Studies, About, Client Logos, Featured Posts, Testimonials, Contact CTA), seeded with real migrated data in both locales.
+- /blog listing route with a featured-posts section above a category-filterable chronological grid, verified against a real running server for both the empty state and real category filtering.
+- Full post detail page — deterministic hero-image fallback, compact + expanded author E-E-A-T components, rich-text content, related posts, and table of contents — verified end-to-end against real migrated content.
+- Case studies listing (grid or localized empty state) and a full structured detail page (KPIs, El cliente/reto/solución, before-after results, author E-E-A-T byline), with the previously-missing CaseStudies.author relationship added and backfilled.
+- Authors listing grid and profile page giving CONT-02's E-E-A-T differentiator its own dedicated surface, with real posts/case studies listed per author.
+- @payloadcms/plugin-search installed and indexing posts/case-studies/authors, with a /search page returning cross-collection results and exact UI-SPEC empty/error-state copy.
+- Real Resend-backed contact form, ported Privacy/Terms legal pages, CONT-06 confirmed clean — plus a real cross-cutting localization bug found and fixed that was silently breaking every seeded bilingual Content block across the whole phase.
+- Full bilingual, real-data walkthrough of every Phase 5 page approved directly by Juan against the live dev server and real Neon Postgres data — Phase 5 closes 13/13 with two explicit, non-blocking-for-phase-completion follow-ups logged for pre-deploy.
+- Shadow/motion CSS token layer wired into Tailwind, a global prefers-reduced-motion safety net, and an ember/navy `.dark` rebrand verified by a self-written WCAG AA contrast script (all 10 checked pairs pass, script exits 0).
+- Replaced every bare/unnamed `shadow` and untimed `transition-colors`/`transition-all` across all 12 shadcn primitives with Phase 7's named `shadow-sm/md/lg/focus` and `duration-fast/base/slow` + `ease-out/standard` tokens, closing the real gap where `theme.extend.boxShadow` has no `DEFAULT` key.
+- Restyled global chrome with shadow-elevated sticky header and accent nav indicators, replaced footer's hardcoded border color with the token-driven Separator primitive, and closed the phase with an automated 16-block smoke check (15 PASS, 1 documented SKIP) plus a verified zero-diff gate on config.ts/payload-types.ts.
+- Strengthened Hero title/subtitle hierarchy with tracking-tight/muted-subtitle tokens, and added an automated WCAG contrast script that samples all 53 real Cloudinary fallback images (worst case 7.72:1) confirming the existing opacity-30 overlay already passes without adjustment.
+- Reinforced metric-number dominance across ResultsSection and case-study KPI/results surfaces via tracking-tight/tabular-nums values and receded uppercase labels, plus aligned case-study section headings to Prose.tsx's mt-10 rhythm — zero heading tag/semantics changes (1 h1, 4 h2 confirmed before/after).
+- Added an editorial Fraunces blockquote treatment with a primary-accent left rule to Prose.tsx, strengthened h1/h2/h3 tracking and h2/h3 differentiation via opacity, and aligned the blog article header rhythm to match — zero heading tag/semantics changes (1 h1 confirmed, no h2/h3 outside rich text).
+- PostCard, CaseStudyCard, and AuthorCard now compose the Phase 8-refined `Card`/`CardContent` primitive instead of hand-rolled `rounded-lg border ... hover:shadow-md transition-shadow` divs, giving all four card-grid surfaces (ArchiveBlock, FeaturedPostsBlock, FeaturedCaseStudiesBlock, RelatedPosts) identical elevation/radius, and making AuthorCard's years-of-experience read as a KPI-style headline stat with accessible focus-visible social-link icons.
+- Seeded, verified, and cleanly removed 7 throwaway fixtures (1 fully-populated Author + 6 CaseStudies) against the real production Postgres database to prove the card-grid consistency and E-E-A-T prominence styling from 10-01 holds at repeater min/max boundaries, in both locales, and against the two longest real Spanish post titles — with zero residual data or altered field values left behind.
+- Both-theme WCAG AA contrast checker found and fixed 4 real light-theme failures (unverified since shadcn scaffold); zero hardcoded content and zero schema drift confirmed across the full milestone diff.
+- Re-ran and extended the ES layout verification against real content that didn't exist when this plan first ran: Phase 10.7's real case study (with embedded TestimonialSection) and Phase 10.8's Hero CTA/breadcrumbs. All checks pass — zero overflow, zero clipping, zero broken layout — across home, authors, case-studies list/detail, and blog listing, in ES and EN, at 375/768/1280px.
+- Captured mobile Lighthouse scores for a local-production-build baseline (pre-Phase-7 commit `4be20f5`) and current HEAD (post 11-01/11-02) across 6 real routes. Accessibility/Best-Practices/SEO show zero regression (Accessibility improved on the blog listing). Performance shows a modest, largely noise-comparable softening on 2 of 6 routes, investigated with multi-sample re-measurement and flagged as a Phase 6 real-production re-baseline follow-up rather than chased with a speculative fix against a noisy local signal.
+- Task 1 — Authors collection fields
+- Task 1 — 3 new sections
+- Task 1 — `scripts/seed-author-eeat.ts`
+- STATUS: Task 1 complete and committed. Task 2 (checkpoint:human-verify, gate="blocking") is NOT resolved — flagged for Juan per orchestrator instruction, not auto-approved.
+- SpeakingEvents collection
+- Extended AboutSection with a features[]/CTA schema and gave `features[].icon` a real searchable Modal-based icon-grid picker (24 lucide-react icons) instead of a plain `<select>`, built on `@payloadcms/ui` primitives since the admin route doesn't load the site's Tailwind/shadcn build.
+- Rendered the features grid/CTA on AboutSection, populated Home with the real "Mi enfoque en Consultoría Técnica" content and the FAQ's 5 real Q&A pairs, added a working ContactFormBlock so the new CTA's `#contact` anchor is a real functional form (not a dead link) — plus fixed a pre-existing Phase 10.7 bug where the EN Home page was showing a Spanish AboutSection paragraph.
+- scripts/seed-phase13-home-content.ts now overwrites Home's aboutSection eyebrow/title/description with the locked "Mi enfoque en Consultoría Técnica" copy (ES+EN) instead of preserving Phase 10.7's unrelated "Sobre mí" bio, closing the last open gap from 13-VERIFICATION.md
+- Added an editorial `targetKeyword` group field (en/es plain text) to Pages and Authors, migrated Postgres, and seeded Home + the real Author with the four already-researched keyword picks.
+- Custom `/sitemap.xml` route handler emitting hand-built XML with an `xml-stylesheet` processing instruction, paired with a static `public/sitemap.xsl` table stylesheet, replacing Next.js's native `MetadataRoute.Sitemap` convention which has no way to reference an XSL transform.
+- Real navigable `/sitemap.html` page grouped by section (Pages/Blog/Case Studies/Authors/Categories), wired into the footer's `legalLinks` via an idempotent seed script — plus a Rule 3 fix for a pre-existing ES-locale bilingual data gap (missing required localized labels) that was blocking any write to the Footer global.
+- Installed `@paper-design/shaders-react@0.0.77` with a confirmed clean dependency tree (only sibling package `@paper-design/shaders`, no three.js/@react-three chain), clearing Wave 2's blocking package-legitimacy gate.
+- Home Hero's solid navy background replaced by a live WebGL `GrainGradient` shader (navy-to-ember wave gradient with grain), built from a new isolated Client Component and wired only into the `isHome` branch — non-home variants, title/subtitle/CTAs/breadcrumbs, and `prefers-reduced-motion` handling all verified unchanged/working via a real headless-browser run.
+- Real Chromium-headless run confirms the shader canvas actually paints (non-blank, correct-height bounding box) on both `/es` and `/en`, with zero horizontal overflow at 375/768/1280px, unchanged title/subtitle/CTA copy, and `prefers-reduced-motion` correctly flipping the component's `data-motion` attribute — script exits 0 with 0 failures and 0 warnings.
+- Confirmed with real Lighthouse + Playwright evidence against a local production build that the Hero's WebGL GrainGradient shader causes no significant Performance/CWV regression (Δ-3 on both /en and /es vs Phase 11's pre-shader baseline) and zero mobile layout/overflow breakage.
+- Pure `buildServiceAlternates(locale, current?)` helper collapses the 4 physical Servicios URL combinations into 2 canonical targets by computing canonical purely from `locale`, wired into all 4 generateMetadata functions, plus a single sitewide `metadataBase` in the frontend root layout — all 6 representative URLs curl-verified live against the running dev server.
+- Pre-change H1/JSON-LD content snapshot and production-build Lighthouse mobile baseline captured for all 8 service-page URLs (4 slugs x 2 locales), gating Plans 25-02 through 25-04 from touching any landing before this exists.
+- Two new Payload blocks (structured scope-card spec sheet, generic related-case-study summary) built, additively registered, and their schema migration applied cleanly against real production Neon Postgres — zero existing lines touched, zero DROP/ALTER on any pre-existing table.
+- Wrote and humanized new bilingual copy (pain section, scope-card spec sheet, honest per-landing case-study framing) for all 4 service slugs, then restructured all 8 live URLs from the Phase 19 4-block anatomy into the full 10-block anatomy, seeded against the real production Neon Postgres and confirmed idempotent on re-run.
+- Re-ran the exact 25-01 measurement tooling (H1/JSON-LD capture + production-build Lighthouse mobile) against all 8 post-change service URLs and diffed programmatically against the 25-01 baseline: H1/JSON-LD/ES-EN-parity are a clean 8/8 PASS, but Lighthouse Performance regressed 6 points (over the 5-point threshold, confirmed reproducible across 3 runs) on `/en/services/fullstack-development` — explicit phase-closing verdict is FAIL, recorded in 25-REGRESSION-DIFF.md, not silently marked done.
+
+---
+
 ## v1.4 SEO Competitivo (Shipped: 2026-07-12)
 
 **Phases completed:** 4 phases, 8 plans, 18 tasks
