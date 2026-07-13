@@ -17,6 +17,7 @@ import * as migration_20260712_001122_phase14_target_keyword_field from './20260
 import * as migration_20260712_070605_phase18_authors_seo_meta from './20260712_070605_phase18_authors_seo_meta';
 import * as migration_20260712_202954_phase19_calltoaction_localized from './20260712_202954_phase19_calltoaction_localized';
 import * as migration_20260712_211605_phase_mcp_plugin from './20260712_211605_phase_mcp_plugin';
+import * as migration_20260713_005924 from './20260713_005924';
 
 export const migrations = [
   {
@@ -112,6 +113,11 @@ export const migrations = [
   {
     up: migration_20260712_211605_phase_mcp_plugin.up,
     down: migration_20260712_211605_phase_mcp_plugin.down,
-    name: '20260712_211605_phase_mcp_plugin'
+    name: '20260712_211605_phase_mcp_plugin',
+  },
+  {
+    up: migration_20260713_005924.up,
+    down: migration_20260713_005924.down,
+    name: '20260713_005924'
   },
 ];
