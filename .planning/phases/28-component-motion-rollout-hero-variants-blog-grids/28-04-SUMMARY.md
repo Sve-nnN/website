@@ -124,6 +124,20 @@ Phase 28 is **not** verifiably done as measured. A required follow-up (gap-closu
 3. Update `28-REGRESSION-DIFF.md` with a final verdict once the fix is verified, per the Phase 25 precedent of appending a "Gap-Closure Resolution" section rather than editing the original FAIL record.
 
 ---
+
+## Gap-Closure Update (2026-07-13)
+
+The required follow-up above was attempted (commits `7be700c`, `3bd4d7a`). Full detail lives in `28-REGRESSION-DIFF.md`'s "Gap-Closure Attempt" section; summary here:
+
+**Root cause was more precise than originally diagnosed.** Direct inspection of Lighthouse's `lcp-breakdown-insight`/`lcp-discovery-insight` audits (this plan's original FAIL only inferred the root cause from SSR HTML `curl`, not from the actual LCP-element audit) found:
+- `/en/blog`'s real LCP element is the first `PostCard` thumbnail image — which was both (a) ScrollReveal-SSR-hidden as originally diagnosed, AND (b) missing `priority` on `next/image`, so it was also explicitly `loading="lazy"` in the SSR HTML. A second, compounding bug this plan didn't catch.
+- `/en`'s real LCP element is the `AboutSection` intro paragraph, which is **not** ScrollReveal-wrapped at all — this plan's root-cause theory didn't directly apply to `/en`'s actual LCP node.
+
+**Fix applied and verified working as intended:** `ScrollReveal.tsx` gained a `priority` prop that skips the Motion wrapper entirely for above-the-fold content (an `initial={false}` approach was tried first and rejected — verified via SSR diffing that Motion's `whileInView` still hides content by default even with `initial={false}`). `PostCard.tsx` gained a matching `priority` prop wired to `next/image`. `ArchiveBlock`/`FeaturedPostsBlock` mark their first grid row as `priority`. Confirmed via SSR HTML diff: no more `opacity:0` style and no more `loading="lazy"` on the first-row grid items.
+
+**Gate is still FAIL.** Even with both confirmed defects fixed, LCP on `/en` and `/en/blog` remains in the `poor` band (>4000ms). The residual cause: `/en/blog`'s server response time (TTFB) is ~2.1-2.4s even warm — every other `ArchiveBlock`-consuming route responds in ~250ms. This is a pre-existing, out-of-scope data-fetching/caching issue (likely `searchParams` forcing the page out of static rendering, re-running 3 sequential Payload queries per request), not caused by Phase 28's Motion work, and was already present (just under the 4000ms threshold) at the 28-01 baseline. Flagged as a new, separately-scoped required follow-up — not a Motion/animation task.
+
+---
 *Phase: 28-component-motion-rollout-hero-variants-blog-grids*
 *Completed: 2026-07-13*
 
