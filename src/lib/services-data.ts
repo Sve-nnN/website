@@ -37,6 +37,11 @@ export async function getServicesIndexPage(locale: 'es' | 'en') {
     locale,
     depth: 1,
     limit: 1,
+    // SECURITY (24-REVIEW WR-02): Local API bypasses collection `access`
+    // rules by default. Without this, an unpublished draft would still be
+    // returned and rendered publicly (both on its own route and, since
+    // Phase 24, as a clickable card on Home) despite `read: authenticatedOrPublished`.
+    overrideAccess: false,
   })
   return docs[0]
 }
@@ -56,6 +61,10 @@ export async function getServicePage(locale: 'es' | 'en', slug: string) {
     locale,
     depth: 1,
     limit: 1,
+    // SECURITY (24-REVIEW WR-02): see getServicesIndexPage — without this,
+    // a draft page would still leak publicly (this fn backs both the
+    // /servicios/[slug] route and, since Phase 24, Home's ServicesShowcase cards).
+    overrideAccess: false,
   })
   return docs[0]
 }
