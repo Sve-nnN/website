@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 
@@ -11,8 +12,7 @@ import { AuthorCard } from '@/components/AuthorCard'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
-
-const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://juancarlosangulo.com'
+import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 
 async function getCaseStudy(locale: string, slug: string) {
   const payload = await getPayload({ config })
@@ -52,16 +52,12 @@ const copy = {
     challenge: 'El reto',
     solution: 'La solución',
     results: 'Resultados',
-    home: 'Inicio',
-    caseStudies: 'Casos de éxito',
   },
   en: {
     client: 'The Client',
     challenge: 'The Challenge',
     solution: 'The Solution',
     results: 'Results',
-    home: 'Home',
-    caseStudies: 'Case Studies',
   },
 }
 
@@ -82,22 +78,16 @@ export default async function CaseStudyPage({
   const client = typeof doc.client === 'object' ? doc.client : null
   const heroImage = typeof doc.heroImage === 'object' ? doc.heroImage : null
   const heroImageUrl = heroImage?.url ?? getFallbackHeroImage(doc.slug ?? String(doc.id))
+  const trail = buildCaseStudiesTrail(locale as 'es' | 'en', {
+    slug: doc.slug ?? slug,
+    title: doc.title,
+  })
 
   const creativeWorkData = {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
     name: doc.title,
     about: doc.heroSubtitle,
-  }
-
-  const breadcrumbData = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: t.home, item: SITE_URL },
-      { '@type': 'ListItem', position: 2, name: t.caseStudies, item: `${SITE_URL}/case-studies` },
-      { '@type': 'ListItem', position: 3, name: doc.title, item: `${SITE_URL}/case-studies/${doc.slug}` },
-    ],
   }
 
   return (
@@ -107,6 +97,28 @@ export default async function CaseStudyPage({
           <Image src={heroImageUrl} alt={heroImage?.alt ?? doc.title} fill className="object-cover" priority />
         </div>
         <Container className="py-8">
+          <nav aria-label="Breadcrumb" className="mb-4">
+            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-secondary-foreground/70">
+              {trail.map((crumb, i) => {
+                const isLast = i === trail.length - 1
+                return (
+                  <li key={i} className="flex items-center gap-x-2">
+                    {i > 0 && <span aria-hidden="true">/</span>}
+                    {isLast ? (
+                      <span aria-current="page">{crumb.label}</span>
+                    ) : (
+                      <Link
+                        href={crumb.url}
+                        className="hover:text-secondary-foreground underline-offset-2 hover:underline"
+                      >
+                        {crumb.label}
+                      </Link>
+                    )}
+                  </li>
+                )
+              })}
+            </ol>
+          </nav>
           <div className="flex flex-wrap gap-4 text-label opacity-80">
             {client?.name && <span>{client.name}</span>}
             {doc.sector && <span>{doc.sector}</span>}
@@ -223,7 +235,7 @@ export default async function CaseStudyPage({
       </Container>
 
       <JsonLd data={creativeWorkData} />
-      <JsonLd data={breadcrumbData} />
+      <JsonLd data={buildBreadcrumbJsonLd(trail)} />
     </main>
   )
 }

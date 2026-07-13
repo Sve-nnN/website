@@ -1,8 +1,11 @@
+import Link from 'next/link'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import { Container } from '@/components/Container'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
+import { JsonLd } from '@/components/JsonLd'
+import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 
 async function getCaseStudies(locale: string) {
   const payload = await getPayload({ config })
@@ -28,10 +31,33 @@ export default async function CaseStudiesListPage({
 }) {
   const { locale } = await params
   const caseStudies = await getCaseStudies(locale)
+  const trail = buildCaseStudiesTrail(locale as 'es' | 'en')
 
   return (
     <main>
       <Container className="py-16">
+        <nav aria-label="Breadcrumb" className="mb-4">
+          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
+            {trail.map((crumb, i) => {
+              const isLast = i === trail.length - 1
+              return (
+                <li key={i} className="flex items-center gap-x-2">
+                  {i > 0 && <span aria-hidden="true">/</span>}
+                  {isLast ? (
+                    <span aria-current="page">{crumb.label}</span>
+                  ) : (
+                    <Link
+                      href={crumb.url}
+                      className="hover:text-foreground underline-offset-2 hover:underline"
+                    >
+                      {crumb.label}
+                    </Link>
+                  )}
+                </li>
+              )
+            })}
+          </ol>
+        </nav>
         <h1 className="font-display text-display">
           {locale === 'es' ? 'Casos de éxito' : 'Case Studies'}
         </h1>
@@ -55,6 +81,7 @@ export default async function CaseStudiesListPage({
           </div>
         )}
       </Container>
+      <JsonLd data={buildBreadcrumbJsonLd(trail)} />
     </main>
   )
 }
