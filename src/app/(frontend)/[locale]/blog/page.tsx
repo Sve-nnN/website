@@ -33,8 +33,7 @@ export default async function BlogPage({
   params: Promise<{ locale: string }>
   searchParams: Promise<{ category?: string }>
 }) {
-  const { locale } = await params
-  const { category } = await searchParams
+  const [{ locale }, { category }] = await Promise.all([params, searchParams])
   const doc = await getBlogPage(locale)
 
   if (!doc) {

@@ -38,8 +38,7 @@ export default async function ContactPage({
   params: Promise<{ locale: string }>
   searchParams: Promise<{ sent?: string }>
 }) {
-  const { locale } = await params
-  const { sent } = await searchParams
+  const [{ locale }, { sent }] = await Promise.all([params, searchParams])
   const doc = await getContactPage(locale)
 
   if (!doc) {
