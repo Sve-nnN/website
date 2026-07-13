@@ -8,6 +8,7 @@ import { array, khand, geistSans, geistMono } from '@/fonts'
 import { routing } from '@/i18n/routing'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
+import { MotionProvider } from '@/components/MotionProvider'
 import { SITE_URL } from '@/lib/sitemap-data'
 import '../../globals.css'
 
@@ -44,9 +45,11 @@ export default async function RootLayout({
     >
       <body className="font-sans">
         <NextIntlClientProvider>
-          <SiteHeader locale={locale} />
-          {children}
-          <SiteFooter locale={locale} />
+          <MotionProvider>
+            <SiteHeader locale={locale} />
+            {children}
+            <SiteFooter locale={locale} />
+          </MotionProvider>
         </NextIntlClientProvider>
       </body>
     </html>
