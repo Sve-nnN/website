@@ -187,7 +187,7 @@ export const serviceLandingCopy: Record<string, BilingualServiceLandingCopy> = {
         title: 'Si tu contenido no es citable, la respuesta cita a otro',
         paragraphs: [
           'Cada vez más búsquedas terminan en una respuesta generada por IA sin que nadie haga clic en ningún resultado. Si tu contenido está disperso por la página, sin pasajes claros y autocontenidos, un sistema de IA no lo puede extraer ni citar.',
-          'Esto no se arregla escribiendo más contenido. Se arregla reestructurando lo que ya existe para que sea legible tanto por buscadores tradicionales como por los motores de respuesta que están cambiando la forma en que la gente busca.',
+          'Escribir más contenido no resuelve esto. Lo que hace falta es reorganizar lo que ya existe, de modo que quede legible tanto para buscadores tradicionales como para los motores de respuesta que están cambiando cómo la gente busca.',
         ],
       },
       scopeCard: {
