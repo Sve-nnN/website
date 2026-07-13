@@ -98,7 +98,6 @@ export function IconPickerField(props: SelectFieldClientProps) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar icono…"
-            autoFocus
             style={{
               padding: '8px 12px',
               borderRadius: 4,
