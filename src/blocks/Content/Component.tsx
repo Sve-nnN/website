@@ -33,7 +33,7 @@ export async function ContentComponent(props: ContentBlockProps) {
               : col.link
 
           return (
-            <div key={i} className={sizeToColSpan[col.size ?? 'oneThird']}>
+            <div key={col.id ?? i} className={sizeToColSpan[col.size ?? 'oneThird']}>
               <RichTextRenderer data={col.richText} />
               {col.enableLink && link && <CMSLink {...link} className="mt-4 inline-block" />}
             </div>

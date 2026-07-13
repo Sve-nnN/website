@@ -22,11 +22,14 @@ export function CallToActionComponent(props: CallToActionBlockProps) {
           </div>
           {links && links.length > 0 && (
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
-              {links.map(({ link }, i) => (
-                <div key={i} className="w-full sm:w-auto">
-                  <CMSLink {...link} className="w-full sm:w-auto" />
-                </div>
-              ))}
+              {links.map((row, i) => {
+                const { link } = row
+                return (
+                  <div key={row.id ?? i} className="w-full sm:w-auto">
+                    <CMSLink {...link} className="w-full sm:w-auto" />
+                  </div>
+                )
+              })}
             </div>
           )}
         </div>

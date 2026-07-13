@@ -28,7 +28,7 @@ export function AboutSectionComponent(props: AboutSectionBlockProps) {
           <h2 className="font-heading text-heading">{title}</h2>
           <div className="mt-4 space-y-4">
             {paragraphs?.map((paragraph, i) => (
-              <p key={i} className="text-body text-muted-foreground">
+              <p key={paragraph.id ?? i} className="text-body text-muted-foreground">
                 {paragraph.text}
               </p>
             ))}
@@ -52,7 +52,7 @@ export function AboutSectionComponent(props: AboutSectionBlockProps) {
           {features.map((item, i) => {
             const Icon = iconMap[item.icon] ?? Code
             return (
-              <div key={i} className="flex gap-4">
+              <div key={item.id ?? i} className="flex gap-4">
                 <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/10">
                   <Icon className="size-5 text-primary" />
                 </div>

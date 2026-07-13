@@ -102,7 +102,7 @@ export function ContactFormBlockComponent(props: ContactFormComponentProps) {
                 )
 
                 return (
-                  <li key={i}>
+                  <li key={info.id ?? i}>
                     {info.href ? (
                       <a href={info.href} className="hover:opacity-80">
                         {content}
