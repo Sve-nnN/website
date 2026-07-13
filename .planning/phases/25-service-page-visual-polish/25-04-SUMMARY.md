@@ -121,3 +121,16 @@ None - this plan introduced no new network endpoint, auth path, file access patt
 ## Self-Check: PASSED
 
 All created files verified present on disk (`25-post-content.json`, `lh-phase25-post.json`, `25-REGRESSION-DIFF.md`); both task commits (`578a2c7`, `d1acbee`) verified present in git log.
+
+---
+
+## Gap-Closure Update (2026-07-12)
+
+**The FAIL verdict above has been superseded by a PASS after a dedicated gap-closure investigation.** Full detail, data, and root-cause analysis in `25-REGRESSION-DIFF.md`'s "Gap-Closure Resolution" section — this is a pointer, not a duplicate.
+
+Short version:
+
+- **Performance FAIL was measurement noise, not a code regression.** Juan killed 4 orphaned `next dev` processes left running from this session. A clean re-measurement (zero competing processes, verified) still showed 5-8 point run-to-run swings on the flagged route — but the *exact same magnitude* of swing also appeared on a control route that had officially passed in this plan's own measurement (`/servicios/seo-consulting`, 84 baseline, swung to 77/78 in the clean re-run despite passing at 82 here). That control-route behavior is the proof: this machine's Lighthouse lab-benchmark noise floor exceeds the plan's 5-point single-run threshold regardless of route. No CWV band ever crossed to a worse tier in any run, noisy or clean.
+- **Accessibility drop (98 -> 94) was real and has been fixed.** Root-caused to 2 genuine Phase 25 defects: a contrast failure (`--primary` used as literal text color on a light card background, 3.15:1 vs the 4.5:1 AA floor, in `ServiceScopeCard` and `CaseStudyCard`/`RelatedCaseStudyBlock`) and a heading-order violation (the seed script's `lexicalWithHeading()` hardcoded `<h3>` directly after the page's `<h1>` with no `<h2>` between). Both fixed — accessibility now measures 100/100, exceeding the original 98 baseline.
+
+**Updated Phase 25 Regression Gate verdict: PASS.** SVCPOL-07/08/09 all satisfied.
