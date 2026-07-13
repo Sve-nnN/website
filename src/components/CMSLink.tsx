@@ -17,6 +17,8 @@ interface CMSLinkProps {
   appearance?: 'default' | 'outline' | null
   className?: string
   children?: ReactNode
+  /** Forwarded verbatim to the rendered anchor for active-route indication (e.g. SiteHeaderChrome). */
+  'aria-current'?: 'page' | boolean
 }
 
 /**
@@ -26,6 +28,7 @@ interface CMSLinkProps {
  */
 export function CMSLink(props: CMSLinkProps) {
   const { type, newTab, reference, url, label, appearance, className, children } = props
+  const ariaCurrent = props['aria-current']
 
   let href = url ?? '#'
 
@@ -41,7 +44,12 @@ export function CMSLink(props: CMSLinkProps) {
   if (appearance) {
     return (
       <Button asChild variant={appearance === 'outline' ? 'outline' : 'default'} className={className}>
-        <Link href={href} target={newTab ? '_blank' : undefined} rel={newTab ? 'noopener noreferrer' : undefined}>
+        <Link
+          href={href}
+          target={newTab ? '_blank' : undefined}
+          rel={newTab ? 'noopener noreferrer' : undefined}
+          aria-current={ariaCurrent}
+        >
           {content}
         </Link>
       </Button>
@@ -54,6 +62,7 @@ export function CMSLink(props: CMSLinkProps) {
       target={newTab ? '_blank' : undefined}
       rel={newTab ? 'noopener noreferrer' : undefined}
       className={cn('text-primary underline underline-offset-2', className)}
+      aria-current={ariaCurrent}
     >
       {content}
     </Link>
