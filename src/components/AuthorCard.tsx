@@ -74,7 +74,7 @@ export async function AuthorCard({
       {author.credentials && author.credentials.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-2">
           {author.credentials.map((c, i) => (
-            <Badge key={i} variant="secondary">
+            <Badge key={c.id ?? i} variant="secondary">
               {c.label}
             </Badge>
           ))}
@@ -91,7 +91,7 @@ export async function AuthorCard({
             const Icon = socialIconMap[social.platform] ?? Globe
             return (
               <a
-                key={i}
+                key={social.id ?? i}
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"

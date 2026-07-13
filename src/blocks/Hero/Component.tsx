@@ -72,7 +72,7 @@ export function HeroComponent(props: HeroBlockProps) {
               {breadcrumbs.map((crumb, i) => {
                 const isLast = i === breadcrumbs.length - 1
                 return (
-                  <li key={crumb.id ?? i} className="flex items-center gap-x-2">
+                  <li key={crumb.id ?? crumb.url} className="flex items-center gap-x-2">
                     {i > 0 && <span aria-hidden="true">/</span>}
                     {isLast || !crumb.url ? (
                       <span aria-current={isLast ? 'page' : undefined}>{crumb.label}</span>
@@ -103,8 +103,8 @@ export function HeroComponent(props: HeroBlockProps) {
         )}
         {links && links.length > 0 && (
           <div className="mt-8 flex flex-wrap gap-4">
-            {links.map(({ link }, i) => (
-              <CMSLink key={i} {...link} />
+            {links.map((row, i) => (
+              <CMSLink key={row.id ?? i} {...row.link} />
             ))}
           </div>
         )}

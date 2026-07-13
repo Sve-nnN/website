@@ -19,7 +19,7 @@ export function FAQComponent(props: FAQBlockProps) {
       {title && <h2 className="font-heading text-heading mb-6">{title}</h2>}
       <div className="space-y-3">
         {faqs?.map((item, i) => (
-          <ScrollReveal key={i}>
+          <ScrollReveal key={item.id ?? i}>
             <details className="group rounded-lg border border-border bg-card px-6 shadow-sm hover:shadow-md transition-shadow duration-base ease-standard">
               <summary className="cursor-pointer font-sans font-semibold text-body list-none flex items-center justify-between py-4">
                 {item.question}

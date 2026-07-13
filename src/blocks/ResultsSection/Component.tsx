@@ -19,7 +19,7 @@ export function ResultsSectionComponent(props: ResultsSectionBlockProps) {
         {description && <p className="mt-2 text-body max-w-2xl">{description}</p>}
         <div className="mt-8 grid grid-cols-2 md:grid-cols-3 gap-12">
           {stats?.map((stat, i) => (
-            <div key={i}>
+            <div key={stat.id ?? i}>
               {/* KPI numbers reuse Display size at Heading weight, in the accent color, per UI-SPEC */}
               <p className="text-display font-display font-semibold text-primary tracking-tight tabular-nums">
                 {stat.value}
