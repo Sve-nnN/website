@@ -1,11 +1,43 @@
 'use server'
 
+import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+// SECURITY (T-260713-2q2-02): minimal per-IP rate limit for this public,
+// unauthenticated server action. `server-auth-actions` flags this action for
+// having no auth check — that's a false positive on the auth premise: a
+// public contact form is intentionally callable without login. The real gap
+// was abuse protection, closed here. This runs as a single persistent Node
+// process on Hostinger (not serverless), so a module-level Map survives
+// between requests within the process — sufficient for a low-traffic
+// portfolio contact form. No Redis / external dependency.
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
+const RATE_LIMIT_MAX_SUBMISSIONS = 5
+const submissionLog = new Map<string, number[]>()
+
+async function isRateLimited(): Promise<boolean> {
+  const headerList = await headers()
+  const forwardedFor = headerList.get('x-forwarded-for')
+  const clientIp = forwardedFor?.split(',')[0]?.trim() || headerList.get('x-real-ip') || 'unknown'
+
+  const now = Date.now()
+  const existing = submissionLog.get(clientIp) ?? []
+  const recent = existing.filter((timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS)
+
+  if (recent.length >= RATE_LIMIT_MAX_SUBMISSIONS) {
+    submissionLog.set(clientIp, recent)
+    return true
+  }
+
+  recent.push(now)
+  submissionLog.set(clientIp, recent)
+  return false
+}
 
 // Very small HTML-escape to prevent the submitted message from injecting
 // markup into the outbound email body (T-05-12-03).
@@ -32,6 +64,10 @@ export async function sendContactMessage(formData: FormData): Promise<void> {
   const honeypot = String(formData.get('company_website') ?? '').trim()
   const locale = String(formData.get('locale') ?? 'es')
   const redirectBase = locale === 'en' ? '/en/contact' : '/contact'
+
+  if (await isRateLimited()) {
+    redirect(`${redirectBase}?sent=false`)
+  }
 
   if (honeypot) {
     redirect(`${redirectBase}?sent=true`)
