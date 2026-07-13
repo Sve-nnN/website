@@ -597,12 +597,12 @@ Plans:
   2. Cada página con breadcrumbs emite `BreadcrumbList` JSON-LD derivado de la misma función `buildTrail()` que alimenta el trail visual, sin lógica de URL/locale duplicada
   3. El `BreadcrumbList` JSON-LD valida sin errores en ambos locales usando el agente/MCP `seo-schema` disponible en el proyecto, antes de cerrar la fase
 
-**Plans**: TBD
+**Plans**: 1 plan (1 wave)
 **UI hint**: yes
 
 Plans:
 
-- [ ] 22-01: TBD
+- [ ] 22-01-PLAN.md — src/lib/breadcrumbs.ts (buildTrail/buildBreadcrumbJsonLd) + wired into all 4 Servicios page.tsx files + seo-schema agent validation sweep
 
 ### Phase 23: Canonical + hreflang hardening
 
