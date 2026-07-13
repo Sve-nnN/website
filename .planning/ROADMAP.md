@@ -53,7 +53,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 22: Breadcrumbs (visual + schema)** - Servicios index + 4 landings ganan trail visual y BreadcrumbList JSON-LD desde una sola fuente (completed 2026-07-12)
 - [x] **Phase 23: Canonical + hreflang hardening** - Las 4 combinaciones de URL de servicio emiten canonical/hreflang correctos, metadataBase sitewide (completed 2026-07-12)
-- [ ] **Phase 24: ServicesShowcase en Home** - Home muestra las 4 tarjetas de servicio leyendo SERVICE_SLUGS en vivo, aditivo
+- [x] **Phase 24: ServicesShowcase en Home** - Home muestra las 4 tarjetas de servicio leyendo SERVICE_SLUGS en vivo, aditivo (completed 2026-07-13)
 - [ ] **Phase 25: Service-page visual polish** - Las 4 landings de servicio ganan anatomía visual completa y prueba social competitiva
 
 ## Phase Details
@@ -638,7 +638,7 @@ Plans:
 
 Plans:
 
-- [ ] 24-01-PLAN.md — ServicesShowcase block (config + Component, dynamic SERVICE_SLUGS grid) + additive Pages/RenderBlocks registration + migration + Home seed (both locales) + live verification
+- [x] 24-01-PLAN.md — ServicesShowcase block (config + Component, dynamic SERVICE_SLUGS grid) + additive Pages/RenderBlocks registration + migration + Home seed (both locales) + live verification
 
 ### Phase 25: Service-page visual polish
 

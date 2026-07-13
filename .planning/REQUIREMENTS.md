@@ -21,9 +21,9 @@ Requirements para el milestone v1.5. Cada uno mapea a una fase del roadmap (Home
 
 ### Home — Vitrina de Servicios
 
-- [ ] **SVCHOME-01**: Usuario ve un componente "Servicios" en el Home (bloque `ServicesShowcase`) con las 4 tarjetas de servicio, en ambos locales
-- [ ] **SVCHOME-02**: Las tarjetas del bloque leen dinámicamente el set fijo de servicios (`SERVICE_SLUGS`) en vez de estar hardcodeadas por instancia, y cada una enlaza a su landing correspondiente en el locale activo
-- [ ] **SVCHOME-03**: El bloque se registra como aditivo en Payload (config + `RenderBlocks` + `payload generate:types`) sin modificar columnas existentes; si llegara a requerir tocar una columna existente, se pide aprobación nombrada de Juan primero
+- [x] **SVCHOME-01**: Usuario ve un componente "Servicios" en el Home (bloque `ServicesShowcase`) con las 4 tarjetas de servicio, en ambos locales
+- [x] **SVCHOME-02**: Las tarjetas del bloque leen dinámicamente el set fijo de servicios (`SERVICE_SLUGS`) en vez de estar hardcodeadas por instancia, y cada una enlaza a su landing correspondiente en el locale activo
+- [x] **SVCHOME-03**: El bloque se registra como aditivo en Payload (config + `RenderBlocks` + `payload generate:types`) sin modificar columnas existentes; si llegara a requerir tocar una columna existente, se pide aprobación nombrada de Juan primero
 
 ### Páginas de Servicio — Polish Visual y Competitividad
 
@@ -71,9 +71,9 @@ Explícitamente excluido de v1.5. Documentado para prevenir scope creep.
 | SEOTECH-01 | Phase 23 | Done |
 | SEOTECH-02 | Phase 23 | Done |
 | SEOTECH-03 | Phase 23 | Done |
-| SVCHOME-01 | Phase 24 | Pending |
-| SVCHOME-02 | Phase 24 | Pending |
-| SVCHOME-03 | Phase 24 | Pending |
+| SVCHOME-01 | Phase 24 | Done |
+| SVCHOME-02 | Phase 24 | Done |
+| SVCHOME-03 | Phase 24 | Done |
 | SVCPOL-01 | Phase 25 | Pending |
 | SVCPOL-02 | Phase 25 | Pending |
 | SVCPOL-03 | Phase 25 | Pending |
