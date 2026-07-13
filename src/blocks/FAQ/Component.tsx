@@ -1,3 +1,5 @@
+import { Plus } from 'lucide-react'
+
 import type { FAQBlock as FAQBlockProps } from '@/payload-types'
 
 import { Container } from '@/components/Container'
@@ -14,14 +16,20 @@ export function FAQComponent(props: FAQBlockProps) {
   return (
     <Container className="py-12">
       {title && <h2 className="font-heading text-heading mb-6">{title}</h2>}
-      <div className="divide-y divide-border">
+      <div className="space-y-3">
         {faqs?.map((item, i) => (
-          <details key={i} className="py-4 group">
-            <summary className="cursor-pointer font-sans font-semibold text-body list-none flex items-center justify-between">
+          <details
+            key={i}
+            className="group rounded-lg border border-border bg-card px-6 shadow-sm hover:shadow-md transition-shadow duration-base ease-standard"
+          >
+            <summary className="cursor-pointer font-sans font-semibold text-body list-none flex items-center justify-between py-4">
               {item.question}
-              <span className="ml-4 text-primary group-open:rotate-45 transition-transform">+</span>
+              <Plus
+                className="ml-4 size-5 text-primary transition-transform duration-fast ease-out group-open:rotate-45"
+                aria-hidden="true"
+              />
             </summary>
-            <div className="mt-3">
+            <div className="pb-4">
               <RichTextRenderer data={item.answer} />
             </div>
           </details>
