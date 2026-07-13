@@ -18,6 +18,7 @@ import * as migration_20260712_070605_phase18_authors_seo_meta from './20260712_
 import * as migration_20260712_202954_phase19_calltoaction_localized from './20260712_202954_phase19_calltoaction_localized';
 import * as migration_20260712_211605_phase_mcp_plugin from './20260712_211605_phase_mcp_plugin';
 import * as migration_20260713_005924 from './20260713_005924';
+import * as migration_20260713_022605 from './20260713_022605';
 
 export const migrations = [
   {
@@ -118,6 +119,11 @@ export const migrations = [
   {
     up: migration_20260713_005924.up,
     down: migration_20260713_005924.down,
-    name: '20260713_005924'
+    name: '20260713_005924',
+  },
+  {
+    up: migration_20260713_022605.up,
+    down: migration_20260713_022605.down,
+    name: '20260713_022605'
   },
 ];
