@@ -30,13 +30,15 @@ export async function ClientLogosBlockComponent(props: ClientLogosBlockProps) {
           if (!logo?.url) return null
 
           const image = (
-            <Image
-              src={logo.url}
-              alt={logo.alt ?? client.name}
-              width={120}
-              height={48}
-              className="object-contain grayscale opacity-70 hover:opacity-100 hover:grayscale-0 transition-all"
-            />
+            <div className="flex h-10 md:h-12 items-center">
+              <Image
+                src={logo.url}
+                alt={logo.alt ?? client.name}
+                width={160}
+                height={48}
+                className="h-full w-auto max-w-[140px] object-contain grayscale opacity-70 hover:opacity-100 hover:grayscale-0 transition-all duration-base ease-standard"
+              />
+            </div>
           )
 
           return client.websiteUrl ? (

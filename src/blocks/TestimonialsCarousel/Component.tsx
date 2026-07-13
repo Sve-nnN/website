@@ -38,35 +38,41 @@ export async function TestimonialsCarouselComponent(props: TestimonialsCarouselB
   return (
     <Container className="py-12">
       {resolvedTitle && <h2 className="font-heading text-heading mb-6">{resolvedTitle}</h2>}
-      <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
-        {testimonials.map((testimonial) => {
-          const avatar = typeof testimonial.avatar === 'object' ? testimonial.avatar : null
+      <div className="relative">
+        <div className="flex gap-4 overflow-x-auto pb-4 snap-x">
+          {testimonials.map((testimonial) => {
+            const avatar = typeof testimonial.avatar === 'object' ? testimonial.avatar : null
 
-          return (
-            <Card key={testimonial.id} className="min-w-[300px] snap-start">
-              <CardContent className="pt-6">
-                <p className="text-body italic">&ldquo;{testimonial.testimonial}&rdquo;</p>
-                <div className="mt-4 flex items-center gap-3">
-                  {avatar?.url && (
-                    <Image
-                      src={avatar.url}
-                      alt={avatar.alt ?? testimonial.name}
-                      width={40}
-                      height={40}
-                      className="rounded-full"
-                    />
-                  )}
-                  <div>
-                    <p className="text-label">{testimonial.name}</p>
-                    <p className="text-label text-muted-foreground">
-                      {testimonial.role} · {testimonial.company}
-                    </p>
+            return (
+              <Card key={testimonial.id} className="min-w-[300px] snap-start">
+                <CardContent className="pt-6">
+                  <p className="text-body italic">&ldquo;{testimonial.testimonial}&rdquo;</p>
+                  <div className="mt-4 flex items-center gap-3">
+                    {avatar?.url && (
+                      <Image
+                        src={avatar.url}
+                        alt={avatar.alt ?? testimonial.name}
+                        width={40}
+                        height={40}
+                        className="rounded-full"
+                      />
+                    )}
+                    <div>
+                      <p className="text-label">{testimonial.name}</p>
+                      <p className="text-label text-muted-foreground">
+                        {testimonial.role} · {testimonial.company}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          )
-        })}
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background to-transparent"
+          aria-hidden="true"
+        />
       </div>
     </Container>
   )
