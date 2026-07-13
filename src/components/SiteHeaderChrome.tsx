@@ -102,7 +102,15 @@ export function SiteHeaderChrome({
     <header
       className={cn(
         'sticky top-0 z-50 text-secondary-foreground border-b border-border/20 transition-[background-color,box-shadow] duration-base ease-standard',
-        scrolled ? 'bg-secondary/95 backdrop-blur-sm shadow-lg' : 'bg-secondary shadow-md',
+        // FIX (live bug reported by Juan, 2026-07-13): `bg-secondary/95` -
+        // Tailwind's opacity slash-modifier doesn't work against a CSS
+        // custom property defined as a plain hex string (`--secondary:
+        // #12141C`), so the generated color was invalid and the header
+        // rendered fully transparent past the scroll threshold, leaving
+        // white nav text with nothing behind it. Solid bg-secondary (same
+        // as the idle state) at both scroll states — the shadow/blur still
+        // differentiate the scrolled state.
+        scrolled ? 'bg-secondary shadow-lg' : 'bg-secondary shadow-md',
       )}
     >
       <Container className="flex items-center justify-between py-4">
