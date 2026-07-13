@@ -56,7 +56,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 23: Canonical + hreflang hardening** - Las 4 combinaciones de URL de servicio emiten canonical/hreflang correctos, metadataBase sitewide (completed 2026-07-12)
 - [x] **Phase 24: ServicesShowcase en Home** - Home muestra las 4 tarjetas de servicio leyendo SERVICE_SLUGS en vivo, aditivo (completed 2026-07-13)
 - [x] **Phase 25: Service-page visual polish** - Las 4 landings de servicio ganan anatomía visual completa y prueba social competitiva (completed 2026-07-13)
-- [ ] **Phase 26: UI/UX Polish Pass — Low-Risk Components** - CTA sale del full-width vw, navbar/FAQ/logos/testimonios pulidos, breadcrumbs unificados en Case Studies (Track A)
+- [x] **Phase 26: UI/UX Polish Pass — Low-Risk Components** - CTA sale del full-width vw, navbar/FAQ/logos/testimonios pulidos, breadcrumbs unificados en Case Studies (Track A) (completed 2026-07-13)
 - [ ] **Phase 27: Micro-animation Library Adoption** - `motion` instalado vía LazyMotion, bundle-size verificado contra build real, hook `useReducedMotion()` compartido (Track A)
 - [ ] **Phase 28: Component Motion Rollout + Hero Variants + Blog Grids** - Hero listing/post-header/case-study-header diferenciados, grillas de blog pulidas, scroll-reveal/hover aplicados, gate de cero regresión CWV (Track A, cierre)
 - [ ] **Phase 29: Content Humanization Safety Net** - Auditoría de campos localizados, snapshot completo, 2 fixes de schema aprobados por Juan, perfil de voz escrito (Track B, prerequisito duro)
@@ -687,9 +687,9 @@ Plans:
 
 Plans:
 
-- [ ] 26-01-PLAN.md — CTA Container fix + FAQ visual grouping + ClientLogos scale normalization + TestimonialsCarousel scroll affordance (UIPOL-01, 04, 05, 06)
-- [ ] 26-02-PLAN.md — SiteHeader scroll-state + active-route indicator, extracted into SiteHeaderChrome client component (UIPOL-02)
-- [ ] 26-03-PLAN.md — Case Studies breadcrumbs: buildCaseStudiesTrail() sibling export + listing/detail wiring (UIPOL-09)
+- [x] 26-01-PLAN.md — CTA Container fix + FAQ visual grouping + ClientLogos scale normalization + TestimonialsCarousel scroll affordance (UIPOL-01, 04, 05, 06)
+- [x] 26-02-PLAN.md — SiteHeader scroll-state + active-route indicator, extracted into SiteHeaderChrome client component (UIPOL-02)
+- [x] 26-03-PLAN.md — Case Studies breadcrumbs: buildCaseStudiesTrail() sibling export + listing/detail wiring (UIPOL-09)
 
 **UI hint**: yes
 

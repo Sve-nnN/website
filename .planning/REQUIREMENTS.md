@@ -9,15 +9,15 @@ Requirements para el milestone v1.6. Dos tracks independientes: (1) pasada de di
 
 ### UI/UX Polish
 
-- [ ] **UIPOL-01**: El bloque CTA (`CallToAction`) deja de ser full-width `vw` — usa el mismo wrapper `Container` que el resto de los bloques del sitio
-- [ ] **UIPOL-02**: El navbar (`SiteHeader`) gana tratamiento visual pulido (estado de scroll y/o indicador de ruta activa), consistente con los tokens de elevación/motion ya establecidos
+- [x] **UIPOL-01**: El bloque CTA (`CallToAction`) deja de ser full-width `vw` — usa el mismo wrapper `Container` que el resto de los bloques del sitio
+- [x] **UIPOL-02**: El navbar (`SiteHeader`) gana tratamiento visual pulido (estado de scroll y/o indicador de ruta activa), consistente con los tokens de elevación/motion ya establecidos
 - [ ] **UIPOL-03**: Las variantes de Hero `listing`/`post-header`/`case-study-header` quedan visualmente diferenciadas entre sí (hoy son pixel-idénticas salvo breadcrumbs), manteniendo el H1/breadcrumbs/JSON-LD intactos
-- [ ] **UIPOL-04**: El bloque FAQ gana tratamiento visual pulido (hoy es funcional pero template-default)
-- [ ] **UIPOL-05**: La sección de clientes (`ClientLogosBlock`) gana tratamiento visual pulido
-- [ ] **UIPOL-06**: La sección de testimonios (`TestimonialsCarousel`) gana tratamiento visual pulido
+- [x] **UIPOL-04**: El bloque FAQ gana tratamiento visual pulido (hoy es funcional pero template-default)
+- [x] **UIPOL-05**: La sección de clientes (`ClientLogosBlock`) gana tratamiento visual pulido
+- [x] **UIPOL-06**: La sección de testimonios (`TestimonialsCarousel`) gana tratamiento visual pulido
 - [ ] **UIPOL-07**: La grilla de blog (`/blog`) gana tratamiento visual pulido
 - [ ] **UIPOL-08**: La grilla de blog destacados (`FeaturedPostsBlock`) gana tratamiento visual pulido
-- [ ] **UIPOL-09**: La página de case studies (listado + detalle) gana tratamiento visual pulido, incluyendo trail de breadcrumbs visual real (hoy el detalle solo emite JSON-LD propio, desalineado del helper `buildTrail()` de Servicios) unificado con el mismo patrón de fuente única
+- [x] **UIPOL-09**: La página de case studies (listado + detalle) gana tratamiento visual pulido, incluyendo trail de breadcrumbs visual real (hoy el detalle solo emite JSON-LD propio, desalineado del helper `buildTrail()` de Servicios) unificado con el mismo patrón de fuente única
 
 ### Micro-animaciones
 
@@ -50,15 +50,15 @@ Requirements para el milestone v1.6. Dos tracks independientes: (1) pasada de di
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| UIPOL-01 | Phase 26 | Pending |
-| UIPOL-02 | Phase 26 | Pending |
+| UIPOL-01 | Phase 26 | Done |
+| UIPOL-02 | Phase 26 | Done |
 | UIPOL-03 | Phase 28 | Pending |
-| UIPOL-04 | Phase 26 | Pending |
-| UIPOL-05 | Phase 26 | Pending |
-| UIPOL-06 | Phase 26 | Pending |
+| UIPOL-04 | Phase 26 | Done |
+| UIPOL-05 | Phase 26 | Done |
+| UIPOL-06 | Phase 26 | Done |
 | UIPOL-07 | Phase 28 | Pending |
 | UIPOL-08 | Phase 28 | Pending |
-| UIPOL-09 | Phase 26 | Pending |
+| UIPOL-09 | Phase 26 | Done |
 | MOTION-01 | Phase 27 | Pending |
 | MOTION-02 | Phase 27 | Pending |
 | MOTION-03 | Phase 28 | Pending |
