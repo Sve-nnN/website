@@ -13,6 +13,7 @@ import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
+import { CaseStudyResultsChart } from '@/components/CaseStudyResultsChart'
 
 async function getCaseStudy(locale: string, slug: string) {
   const payload = await getPayload({ config })
@@ -52,12 +53,16 @@ const copy = {
     challenge: 'El reto',
     solution: 'La solución',
     results: 'Resultados',
+    before: 'Antes',
+    after: 'Después',
   },
   en: {
     client: 'The Client',
     challenge: 'The Challenge',
     solution: 'The Solution',
     results: 'Results',
+    before: 'Before',
+    after: 'After',
   },
 }
 
@@ -207,7 +212,11 @@ export default async function CaseStudyPage({
                 {doc.results.periodBefore} → {doc.results.periodAfter}
               </p>
             )}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <CaseStudyResultsChart
+              metrics={doc.results.metrics}
+              copy={{ before: t.before, after: t.after }}
+            />
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {doc.results.metrics.map((metric, i) => (
                 <div key={metric.id ?? i} className="rounded-lg border border-border p-4">
                   <p className="text-label text-muted-foreground uppercase tracking-wide">
