@@ -35,7 +35,7 @@ export const CaseStudies: CollectionConfig = {
     {
       name: 'services',
       type: 'array',
-      fields: [{ name: 'service', type: 'text', required: true }],
+      fields: [{ name: 'service', type: 'text', required: true, localized: true }],
     },
     {
       name: 'kpis',
