@@ -328,6 +328,25 @@ async function captureScreenshot(url: string): Promise<Buffer> {
   }
 }
 
+/**
+ * `highlights`/`challenges` are arrays whose ONLY localized field is the
+ * nested `text` — the array structure/ids themselves are shared across
+ * locales. Writing a locale's array without reusing the ids the OTHER
+ * locale's write already assigned makes Payload treat it as a brand-new
+ * set of items, orphaning the other locale's saved text (same bug pattern
+ * documented in scripts/seed-phase19-service-pages.ts's reapplyIds). Always
+ * fetch the current item ids first and reuse them for every locale write.
+ */
+function withReusedIds(
+  existingItems: { id?: string | number }[] | undefined,
+  texts: string[],
+): { id?: string | number; text: string }[] {
+  return texts.map((text, i) => {
+    const id = existingItems?.[i]?.id
+    return id !== undefined ? { id, text } : { text }
+  })
+}
+
 async function upsertWebsite(
   payload: Awaited<ReturnType<typeof getPayload>>,
   chromePath: string,
@@ -389,18 +408,26 @@ async function upsertWebsite(
     console.log(`[${site.slug}] Skipped (already exists, id=${docId}) — refreshing localized text only`)
   }
 
-  await payload.update({
-    collection: 'websites',
-    id: docId,
-    locale: 'en',
-    data: {
-      title: site.titleByLocale.en,
-      role: site.roleByLocale.en,
-      industry: site.industryByLocale.en,
-      highlights: site.highlightsByLocale.en.map((text) => ({ text })),
-      challenges: site.challengesByLocale.en.map((text) => ({ text })),
-    },
-  })
+  // Fetch current array item ids (shared across locales) so the locale
+  // writes below reuse them instead of minting new ones per locale.
+  const current = await payload.findByID({ collection: 'websites', id: docId, depth: 0 })
+  const existingHighlights = current.highlights as { id?: string | number }[] | undefined
+  const existingChallenges = current.challenges as { id?: string | number }[] | undefined
+
+  for (const locale of LOCALES) {
+    await payload.update({
+      collection: 'websites',
+      id: docId,
+      locale,
+      data: {
+        title: site.titleByLocale[locale],
+        role: site.roleByLocale[locale],
+        industry: site.industryByLocale[locale],
+        highlights: withReusedIds(existingHighlights, site.highlightsByLocale[locale]),
+        challenges: withReusedIds(existingChallenges, site.challengesByLocale[locale]),
+      },
+    })
+  }
 }
 
 async function main() {
