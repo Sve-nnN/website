@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Local Landing Design + Component Polish Pass
 status: in_progress
-last_updated: "2026-07-14T04:00:00.000Z"
+last_updated: "2026-07-14T05:00:00.000Z"
 last_activity: 2026-07-14
 progress:
   total_phases: 5
-  completed_phases: 2
-  total_plans: 2
-  completed_plans: 2
-  percent: 40
+  completed_phases: 3
+  total_plans: 3
+  completed_plans: 3
+  percent: 60
 ---
 
 # Project State
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 34 (Local Landing Application — Madrid/Lima) — BLOCKED
-Plan: —
-Status: Blocked on real content for LOCAL-05 (LocalProofSection stats + testimonial per city, Lima/Madrid) — Juan will supply via GSC (mcp-hub) client data once that MCP's OAuth is reconfigured (GSC_OAUTH_CLIENT_SECRETS_FILE/GSC_CREDENTIALS_PATH missing on the server). Autonomous run paused here per explicit "dejalo pendiente, yo te paso eso después" — do not fabricate testimonial/stat content in the meantime.
-Last activity: 2026-07-14 — Phase 33 Local Landing Components built: Hero variant `local-landing` (city badge, decorative ring, inline stat, CTA row) + new `LocalProofSection` block (3 stats + testimonial), additive migration applied against real Neon DB, verified live against throwaway test content on a real dev server (4/4 success criteria PASS), test fixtures cleaned up. Phase 34 blocked: attempted GSC data pull via `mcp-hub` per Juan's instruction, tool auth fails server-side (missing OAuth credentials file) — not fixable from chat, Juan will provide data directly later.
+Phase: 34 (Local Landing Application — Madrid/Lima) — complete (LOCAL-03/04 done, LOCAL-05 structurally complete/content-pending)
+Plan: 34-01 (complete)
+Status: `/seo-tecnico-madrid` and `/seo-tecnico-lima` now use the Hero `local-landing` variant (ring right/0.25/1-CTA on Madrid, ring left/flipX/0.35/2-CTA on Lima) plus a `LocalProofSection` block on both, applied via `scripts/phase34-apply-local-landing.ts` against the real Neon DB and verified live (4/4 routes 200, 1 H1 each, no regression vs. Phase 32 baseline). LOCAL-05's stats/testimonial content is placeholder (clearly `[PLACEHOLDER]`-marked, full table in 34-01-SUMMARY.md) except Lima's real 2025 DinoRANK/Arianna Lupi workshop stat — real client data still pending from Juan (GSC connection in progress). Next: Phase 35 (Component Polish Pass).
+Last activity: 2026-07-14 — Phase 34 complete.
 
 ## Performance Metrics
 

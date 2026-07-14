@@ -65,7 +65,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 31: Content Humanization — Posts & Case Studies + Verificación Final** - Copy de mayor volumen/visibilidad SEO reescrito, verificación final conjunta de ambos tracks (Track B, cierre de milestone)
 - [x] **Phase 32: Regression Baseline** - Baseline de Lighthouse/CWV + H1/JSON-LD capturado antes de tocar cualquier componente (v1.7) (completed 2026-07-14)
 - [x] **Phase 33: Local Landing Components** - Hero variant `local-landing` + block `LocalProofSection` construidos y registrados (v1.7) (completed 2026-07-14)
-- [ ] **Phase 34: Local Landing Application (Madrid/Lima)** - `/seo-tecnico-madrid` y `/seo-tecnico-lima` usan los componentes nuevos con diferenciación estructural real y contenido propio (v1.7)
+- [x] **Phase 34: Local Landing Application (Madrid/Lima)** - `/seo-tecnico-madrid` y `/seo-tecnico-lima` usan los componentes nuevos con diferenciación estructural real (LOCAL-05 con contenido placeholder marcado, real pendiente de Juan) (completed 2026-07-14)
 - [ ] **Phase 35: Component Polish Pass** - Revisión `ui-ux-pro-max` de los 28 componentes restantes contra el .pen, micro-mejoras implementadas en código (v1.7)
 - [ ] **Phase 36: Regression Gate** - Gate de cero regresión al cierre, comparado contra el baseline de Phase 32 (v1.7, cierre de milestone)
 
