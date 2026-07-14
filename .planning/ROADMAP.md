@@ -925,8 +925,8 @@ Plans:
 
 - [x] 39-01-PLAN.md — Foundation: WebsiteCard component + buildWebsitesTrail() breadcrumb helper + websites sitemap entry
 - [ ] 39-02-PLAN.md — FeaturedWebsitesBlock (config+Component) + FeaturedContent.featuredWebsites field + blockRegistry/Pages registration + migration
-- [ ] 39-03-PLAN.md — ArchiveBlock extended with relationTo: 'websites'
-- [ ] 39-04-PLAN.md — /[locale]/websites (listado) + /[locale]/websites/[slug] (detalle) con JSON-LD CreativeWork
+- [x] 39-03-PLAN.md — ArchiveBlock extended with relationTo: 'websites'
+- [x] 39-04-PLAN.md — /[locale]/websites (listado) + /[locale]/websites/[slug] (detalle) con JSON-LD CreativeWork
 
 **UI hint**: yes
 
@@ -994,6 +994,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 36. Regression Gate | 1/1 | Complete | 2026-07-14 |
 | 37. Case Studies Content Audit & Fix | 0/TBD | Not started | - |
 | 38. Websites — Schema & Collection Design | 1/1 | Complete   | 2026-07-14 |
-| 39. Websites — Frontend Components & Routes | 1/4 | In Progress|  |
+| 39. Websites — Frontend Components & Routes | 3/4 | In Progress|  |
 | 40. Websites — Content Population (Real Data Capture) | 0/TBD | Not started | - |
 </content>
