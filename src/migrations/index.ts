@@ -20,6 +20,7 @@ import * as migration_20260712_211605_phase_mcp_plugin from './20260712_211605_p
 import * as migration_20260713_005924 from './20260713_005924';
 import * as migration_20260713_022605 from './20260713_022605';
 import * as migration_20260714_023126_phase33_local_landing_components from './20260714_023126_phase33_local_landing_components';
+import * as migration_20260714_163429 from './20260714_163429';
 
 export const migrations = [
   {
@@ -130,6 +131,11 @@ export const migrations = [
   {
     up: migration_20260714_023126_phase33_local_landing_components.up,
     down: migration_20260714_023126_phase33_local_landing_components.down,
-    name: '20260714_023126_phase33_local_landing_components'
+    name: '20260714_023126_phase33_local_landing_components',
+  },
+  {
+    up: migration_20260714_163429.up,
+    down: migration_20260714_163429.down,
+    name: '20260714_163429'
   },
 ];

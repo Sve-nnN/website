@@ -78,6 +78,7 @@ export interface Config {
     testimonials: Testimonial;
     clientes: Cliente;
     'speaking-events': SpeakingEvent;
+    websites: Website;
     redirects: Redirect;
     search: Search;
     'payload-mcp-api-keys': PayloadMcpApiKey;
@@ -99,6 +100,7 @@ export interface Config {
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     clientes: ClientesSelect<false> | ClientesSelect<true>;
     'speaking-events': SpeakingEventsSelect<false> | SpeakingEventsSelect<true>;
+    websites: WebsitesSelect<false> | WebsitesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
     'payload-mcp-api-keys': PayloadMcpApiKeysSelect<false> | PayloadMcpApiKeysSelect<true>;
@@ -1185,6 +1187,62 @@ export interface SpeakingEvent {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "websites".
+ */
+export interface Website {
+  id: number;
+  title: string;
+  role?: string | null;
+  industry?: string | null;
+  year?: number | null;
+  highlights?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  stack?:
+    | {
+        tag: string;
+        id?: string | null;
+      }[]
+    | null;
+  challenges?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  screenshots?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  lighthouse?: {
+    performance?: number | null;
+    accessibility?: number | null;
+    bestPractices?: number | null;
+    seo?: number | null;
+  };
+  lighthouseCapturedAt: string;
+  client?: (number | null) | Cliente;
+  relatedCaseStudy?: (number | null) | CaseStudy;
+  slug?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1603,6 +1661,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'speaking-events';
         value: number | SpeakingEvent;
+      } | null)
+    | ({
+        relationTo: 'websites';
+        value: number | Website;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2345,6 +2407,62 @@ export interface SpeakingEventsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "websites_select".
+ */
+export interface WebsitesSelect<T extends boolean = true> {
+  title?: T;
+  role?: T;
+  industry?: T;
+  year?: T;
+  highlights?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  stack?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  challenges?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  screenshots?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  lighthouse?:
+    | T
+    | {
+        performance?: T;
+        accessibility?: T;
+        bestPractices?: T;
+        seo?: T;
+      };
+  lighthouseCapturedAt?: T;
+  client?: T;
+  relatedCaseStudy?: T;
+  slug?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects_select".
  */
 export interface RedirectsSelect<T extends boolean = true> {
@@ -2825,6 +2943,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'case-studies';
           value: number | CaseStudy;
+        } | null)
+      | ({
+          relationTo: 'websites';
+          value: number | Website;
         } | null);
     global?: string | null;
     user?: (number | null) | User;
