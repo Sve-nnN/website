@@ -89,23 +89,22 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | Geo-pages (v1.4): Lima grounded en presencia física real, Madrid honesto sobre trabajo remoto sin oficina física | Evita el patrón templated/find-replace-por-ciudad que Juan rechazó explícitamente — cada página necesitaba un argumento genuinamente distinto, no solo el nombre de la ciudad cambiado | ✓ Good |
 | Database Safety rule (root CLAUDE.md, agregada durante v1.4, luego relajada por Juan) | Un incidente real de pérdida de datos (migración de fase 19 sin backfill, recuperada vía Neon PITR) forzó una regla dura de aprobación humana antes de cualquier escritura contra la DB real; Juan luego la relajó a solo operaciones destructivas (DROP/TRUNCATE/delete/reshape con pérdida) una vez que confió en el patrón | ✓ Good |
 
-## Current Milestone: v1.8 Case Studies Content Audit & Fix (ids 15-20)
+## Milestone En Cola: v1.8 Case Studies Content Audit & Fix (ids 15-20) — Phase 37 a mitad de camino
 
-**Goal:** Corregir bugs reales de contenido en los 6 case studies borrador (ids 15-20) que Juan verificó a mano en el admin — el sitio no puede publicar case studies con huecos de contenido, KPIs sin sentido o un cliente real expuesto sin anonimizar.
+Phase 37 tiene CONTEXT.md y UI-SPEC.md (ambos aprobados) pero aún no plan-phase/execute-phase. Queda en pausa mientras corre v1.9 — retomar con `/gsd:plan-phase 37` cuando v1.9 cierre. Detalle completo del scope más abajo, sección "Milestone Anterior".
+
+## Current Milestone: v1.9 Websites Portfolio Section
+
+**Goal:** Juan tiene una colección de sitios web reales que construyó (no solo case studies con storytelling SEO) — el sitio hoy no tiene dónde mostrar ese trabajo técnico como portfolio de desarrollo, separado del ángulo de resultados/case study.
 
 **Target features:**
-- "El reto" y "La solución" completos en ambos locales (en/es) para los 6 docs
-- Cada KPI con label explicando qué mide (no números sueltos tipo "+83%")
-- Doc 20 (despacho penal Pittsburgh) completamente anonimizado: sin nombre real, dominio real, condado, ni conteo de reseñas real
-- `results.metrics` poblado con más filas reales por caso (clics, impresiones, posición) para que los charts no queden con 1-2 barras, usando datos reales de Google Search Console (MCP `gsc-juan-*`) de las propiedades detrás de cada caso — sin exponer branding/nombre/dominio real del cliente
-- Tarjeta de autor deduplicada en la página de case study (sale 2 veces actualmente)
-- JSON-LD Schema.org correcto, optimizado y dinámico por doc en los 6 case studies
-- Chart de resultados no mezcla escalas dispares en el mismo eje (ej. posición ~8 vs impresiones ~30,000 hace invisible la métrica chica) + charts responsive en mobile
-- Estructura de la página revisada contra `ariannalupi.com/casos/ecommerce-vape/` como referencia, agregando secciones que falten
+- Colección nueva `Websites` (Payload): slug, `liveUrl`, `stack` (tags), screenshots reales (media), `challenges` (array, mismo patrón que `CaseStudies.challenge`), scores de Lighthouse (performance/accessibility/best-practices/SEO), año de lanzamiento, rol (diseño+dev+SEO vs. solo dev), industria/nicho, highlights técnicos (SSR/ISR/headless/etc.), relación opcional a `Clientes` y relación opcional cruzada a `CaseStudies`
+- Sección nueva en Home (mismo patrón ya establecido por `FeaturedCaseStudiesBlock`/`FeaturedContent` global) + página de listado + página de detalle por sitio
+- Poblado con 6 sitios reales: ariannalupi.com, aprendoclub.com, estylopia.com, drmanuelvargashidalgo.com, apturio.com, juan-tech.com — stack confirmado interactivamente con Juan sitio por sitio (inferir lo que no confirme), métricas de Lighthouse reales, screenshots reales, link a Clientes/CaseStudies donde exista
 
-Nota de ejecución: intento previo de correr scripts Local API (`npx payload run`) para leer/arreglar en vivo falló en el shell de Juan (exit 0, sin salida, sin error) — probado con dev server arriba y abajo, con `console.log` y `writeFileSync`. Funcionó en agentes previos del mismo hilo. El agente que ejecute este milestone debe evitar ese camino sin verificar primero que produce salida real, y debe devolver el JSON crudo completo de los 6 docs corregidos (no un resumen) para que Juan lo verifique él mismo — el agente anterior dijo "verificado" sin estarlo.
+Nota de ejecución: Juan quiere que se le pregunte el stack de CADA uno de los 6 sitios al momento de montarlos (no asumir todo de una), completando con inferencia solo lo que no responda.
 
-Dos milestones/fases pausadas siguen esperando decisión de Juan y no se tocan en este milestone:
+Milestones/fases pausadas que no se tocan en este milestone:
 
 - **v1.6 Track B — Content Humanization** (Phases 29-31, pausado): auditoría de campos + humanización de copy real de la DB con la voz de Juan, prerequisito duro de seguridad de datos ya investigado (research completo, ver `.planning/research/SUMMARY-v1.6.md`).
 - **Phase 6 — Deploy + Cutover** (pausado): sitio en producción en Hostinger, bloqueado en `RESEND_API_KEY` real y credenciales de Hostinger/DNS.
@@ -164,4 +163,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-14 — milestone v1.8 (Case Studies Content Audit & Fix, ids 15-20) iniciado; v1.7 cerrado previamente (13/13 requirements Done); pausados sin tocar: v1.6 Track B (Content Humanization, fases 29-31) y Phase 6 Deploy + Cutover*
+*Last updated: 2026-07-14 — milestone v1.9 (Websites Portfolio Section) iniciado; v1.8 (Case Studies Content Audit & Fix) queda en cola con Phase 37 a mitad de camino (CONTEXT.md + UI-SPEC.md aprobados, falta plan/execute); pausados sin tocar: v1.6 Track B (Content Humanization, fases 29-31) y Phase 6 Deploy + Cutover*

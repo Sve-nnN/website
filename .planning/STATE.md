@@ -1,12 +1,12 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.8
-milestone_name: Case Studies Content Audit & Fix
+milestone: v1.9
+milestone_name: Websites Portfolio Section
 status: planning
-last_updated: "2026-07-14T05:16:44.074Z"
+last_updated: "2026-07-14T05:53:11.138Z"
 last_activity: 2026-07-14
 progress:
-  total_phases: 1
+  total_phases: 0
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 37 of 37 (Case Studies Content Audit & Fix)
-Plan: TBD (not yet planned)
-Status: Ready to plan
-Last activity: 2026-07-14 — Roadmap v1.8 created (Phase 37, 6/6 requirements mapped)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-07-14 — Milestone v1.9 started
 
 ## Performance Metrics
 
