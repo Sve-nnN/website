@@ -13,6 +13,7 @@ import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { CaseStudyResultsChart } from '@/components/CaseStudyResultsChart'
+import { Button } from '@/components/ui/button'
 
 async function getCaseStudy(locale: string, slug: string) {
   const payload = await getPayload({ config })
@@ -54,6 +55,9 @@ const copy = {
     results: 'Resultados',
     before: 'Antes',
     after: 'Después',
+    ctaHeading: '¿Quieres resultados como estos?',
+    ctaPrimary: 'Hablemos de tu proyecto',
+    ctaSecondary: 'Ver más casos de éxito',
   },
   en: {
     client: 'The Client',
@@ -62,6 +66,9 @@ const copy = {
     results: 'Results',
     before: 'Before',
     after: 'After',
+    ctaHeading: 'Want results like these?',
+    ctaPrimary: "Let's talk about your project",
+    ctaSecondary: 'See more case studies',
   },
 }
 
@@ -86,6 +93,8 @@ export default async function CaseStudyPage({
     slug: doc.slug ?? slug,
     title: doc.title,
   })
+
+  const localePrefix = locale === 'es' ? '' : '/en'
 
   const creativeWorkData = {
     '@context': 'https://schema.org',
@@ -252,6 +261,18 @@ export default async function CaseStudyPage({
             <RichTextRenderer data={doc.conclusion} />
           </section>
         )}
+
+        <section className="text-center mt-10">
+          <h2 className="font-heading text-heading mb-4">{t.ctaHeading}</h2>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button asChild variant="default">
+              <Link href={`${localePrefix}/contact`}>{t.ctaPrimary}</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href={`${localePrefix}/case-studies`}>{t.ctaSecondary}</Link>
+            </Button>
+          </div>
+        </section>
 
         {author && (
           <section>
