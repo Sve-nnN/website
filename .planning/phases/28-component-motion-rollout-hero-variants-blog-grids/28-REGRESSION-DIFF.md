@@ -1,4 +1,6 @@
-# Phase 28 Regression Gate: FAIL (see below)
+# Phase 28 Regression Gate: PASS (Motion-attributable scope) — pre-existing /en/blog TTFB spun off as separate follow-up
+
+**Closure note (2026-07-13, Juan):** Both Motion-caused defects (ScrollReveal SSR-opacity, missing PostCard `priority`) are confirmed fixed. The remaining LCP band-crossing on `/en` and `/en/blog` is root-caused to a pre-existing `/en/blog` TTFB issue (~2.1-2.4s, present at the 28-01 baseline before any Phase 28 change, not touched by 28-02/28-03) — not attributable to the new animations per the phase's MOTION-04 criterion wording. Phase 28 is closed on that basis. The TTFB issue is logged as a required, separately-scoped follow-up (likely `searchParams`-forced dynamic rendering in `blog/page.tsx` triggering 3 sequential DB queries per request) — not Track A motion work.
 
 Diff of the post-change site (Plans 28-02/28-03) against the Plan 28-01 baseline, across all 6 representative routes. Same measurement scripts as 28-01, re-run verbatim, plus a new reduced-motion headless pass (`scripts/verify-reduced-motion-phase28.mjs`).
 

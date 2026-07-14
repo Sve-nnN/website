@@ -1,0 +1,57 @@
+{
+  "/": {
+    "performance": 85,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4106,
+    "cls": 0,
+    "tbtMs": 142
+  },
+  "/en": {
+    "performance": 85,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4108,
+    "cls": 0,
+    "tbtMs": 159
+  },
+  "/seo-tecnico-madrid": {
+    "performance": 88,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 91,
+    "lcpMs": 3797,
+    "cls": 0,
+    "tbtMs": 88,
+    "_note": "Original official run scored performance:62/tbtMs:1714 (one-off spike). Reproduced with 3 clean re-runs (88/3802/122, 88/3797/88, 89/3796/42) confirming the spike was measurement noise, not a real regression. This entry uses re-run 2 as representative. See 36-REGRESSION-DIFF.md for full repro detail."
+  },
+  "/en/seo-tecnico-madrid": {
+    "performance": 87,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 91,
+    "lcpMs": 3828,
+    "cls": 0,
+    "tbtMs": 131
+  },
+  "/seo-tecnico-lima": {
+    "performance": 88,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 91,
+    "lcpMs": 3797,
+    "cls": 0,
+    "tbtMs": 108
+  },
+  "/en/seo-tecnico-lima": {
+    "performance": 89,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 91,
+    "lcpMs": 3814,
+    "cls": 0,
+    "tbtMs": 57
+  }
+}

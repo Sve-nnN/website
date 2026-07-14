@@ -27,7 +27,7 @@
 ### Regresión
 
 - [x] **REG-01**: Baseline de Lighthouse/CWV + verificación de H1/JSON-LD tomado antes de tocar componentes existentes (mismo patrón que v1.5 Phase 25 / v1.6 Phase 28).
-- [ ] **REG-02**: Gate de cero regresión de performance/SEO al cerrar el milestone, comparado contra el baseline de REG-01.
+- [x] **REG-02**: Gate de cero regresión de performance/SEO al cerrar el milestone, comparado contra el baseline de REG-01. **Done** — PASS 6/6 rutas (Lighthouse mobile sin caída >5pt ni cruce de banda CWV; H1/JSON-LD byte-idénticos). Ver `.planning/phases/36-regression-gate/36-REGRESSION-DIFF.md`.
 
 ## Out of Scope
 
@@ -56,13 +56,14 @@
 | POLISH-05 | Phase 35 | Done |
 | POLISH-06 | Phase 35 | Done |
 | REG-01 | Phase 32 | Done |
-| REG-02 | Phase 36 | Pending |
+| REG-02 | Phase 36 | Done |
 
 **Coverage:**
 - v1 requirements: 13 total
 - Mapped to phases: 13
 - Unmapped: 0 ✓
+- **13/13 requirements Done** (LOCAL-05 carries a placeholder-content caveat — structurally complete, real client stats/testimonials pending Juan per the note above — not overstated as unconditionally done)
 
 ---
 *Requirements defined: 2026-07-13*
-*Last updated: 2026-07-13 after roadmap creation (milestone v1.7) — 13/13 requirements mapped to Phases 32-36, 0 orphans*
+*Last updated: 2026-07-14 after Phase 36 (Regression Gate) closed the milestone — 13/13 requirements mapped to Phases 32-36 and Done, 0 orphans, 0 pending*
