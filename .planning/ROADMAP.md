@@ -781,7 +781,13 @@ Plans:
   4. Una verificación de paridad de locale sobre todas las colecciones/globals tocados en este tramo no muestra ningún campo colapsado/pisado entre `es`/`en`
   5. El `BreadcrumbList`/`Person`/JSON-LD y los campos `meta.title`/`meta.description` de SEO siguen válidos e intactos en todas las páginas tocadas, verificado en vivo (curl/validación de schema)
 
-**Plans**: TBD
+**Plans**: 4 plans (3 waves)
+
+Plans:
+- [ ] 30-01-PLAN.md — Pre-sweep snapshot + humanize Header/Footer globals (fix ctaButton.label + legalLinks[2] locale bugs) + lean collections (Authors/Testimonials/SpeakingEvents/Categories), Clientes confirmed no-op
+- [ ] 30-02-PLAN.md — Humanize Home, Contact, Privacy, Terms pages (id-reuse discipline on nested content.layout blocks)
+- [ ] 30-03-PLAN.md — Humanize Services index + 4 service landings + 2 geo-pages (reapplyIds/upsertPage pattern, update-only)
+- [ ] 30-04-PLAN.md — Post-sweep snapshot + locale-parity verification + live JSON-LD/meta verification (closes VOICE-07 part 1)
 
 ### Phase 31: Content Humanization — Posts & Case Studies + Verificación Final
 
