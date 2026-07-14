@@ -943,7 +943,10 @@ Plans:
   4. Cada documento tiene scores de Lighthouse reales corridos una sola vez contra la URL en vivo del sitio (mismo patrón que `scripts/lighthouse-mobile.mjs`), con `lighthouseCapturedAt` seteado a la fecha real de esa corrida — visible en la UI, no solo en el dato crudo
   5. Las relaciones `client`/`relatedCaseStudy` quedan pobladas donde exista match real (ej. si el dominio ya es cliente en `Clientes` o tiene un case study existente), sin duplicar ni contradecir qué dato vive en `Websites` vs. en `CaseStudies` para el mismo sitio
 
-**Plans**: TBD
+**Plans**: 1 plan (1 wave)
+
+Plans:
+- [ ] 40-01-PLAN.md — Seed script (write + run) capturing real screenshot/Lighthouse and upserting the 6 Websites docs, plus human-verify checkpoint
 
 ## Progress
 
