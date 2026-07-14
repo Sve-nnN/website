@@ -4,13 +4,13 @@ milestone: v1.6
 milestone_name: milestone
 status: verifying
 stopped_at: Completed 30-01-PLAN.md
-last_updated: "2026-07-14T20:59:13.727Z"
+last_updated: "2026-07-14T21:07:11.909Z"
 last_activity: 2026-07-14
 progress:
   total_phases: 40
   completed_phases: 24
   total_plans: 95
-  completed_plans: 89
+  completed_plans: 90
   percent: 60
 ---
 
@@ -194,6 +194,8 @@ Recent decisions affecting current work:
 - [Phase ?]: Home hero rewritten to first person per VOICE-PROFILE
 - [Phase ?]: Fixed 3 locale-collapse bugs on Home block titles (clientLogosBlock/featuredPostsBlock/featuredCaseStudiesBlock) and Home CallToAction's duplicated placeholder richText
 - [Phase ?]: Legal pages (Privacy/Terms): only body prose rewritten, same section count/order/headings, no legal meaning/obligation changed
+- [Phase ?]: In-place block patching for pages.content.layout when live layout has grown beyond an earlier seed script's shape
+- [Phase ?]: Fixed voceo-to-tuteo across Services/Geo ES copy (CLAUDE.md hard rule 'no voceo nunca' was being violated)
 
 ### Pending Todos
 
@@ -235,7 +237,7 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-14T20:59:05.535Z
+Last session: 2026-07-14T21:06:19.457Z
 Stopped at: Completed 30-01-PLAN.md
 Resume file: None
 
