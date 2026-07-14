@@ -4,13 +4,13 @@ milestone: v1.6
 milestone_name: milestone
 status: verifying
 stopped_at: Completed 30-01-PLAN.md
-last_updated: "2026-07-14T20:47:08.263Z"
+last_updated: "2026-07-14T20:59:13.727Z"
 last_activity: 2026-07-14
 progress:
   total_phases: 40
   completed_phases: 24
   total_plans: 95
-  completed_plans: 88
+  completed_plans: 89
   percent: 60
 ---
 
@@ -94,6 +94,7 @@ Last activity: 2026-07-14
 | Phase 29 P01 | 40min | 2 tasks | 2 files |
 | Phase 29 P02 | 25min | 2 tasks | 4 files |
 | Phase 30 P01 | 25min | 3 tasks | 3 files |
+| Phase 30 P02 | 35 | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -190,6 +191,9 @@ Recent decisions affecting current work:
 - [Phase ?]: CaseStudies.services[].service: MIGRATION REQUIRED — live values are descriptive Spanish service labels, not proper nouns
 - [Phase ?]: Header.ctaButton.label and Footer.legalLinks[2] locale-parity bugs fixed with distinct es/en collaborative CTA values
 - [Phase ?]: Categories.title/description had 3 additional locale-parity gaps beyond plan scope (General/Development missing en title, SEO Strategy en description was placeholder 'Test category.'), fixed under Rule 1
+- [Phase ?]: Home hero rewritten to first person per VOICE-PROFILE
+- [Phase ?]: Fixed 3 locale-collapse bugs on Home block titles (clientLogosBlock/featuredPostsBlock/featuredCaseStudiesBlock) and Home CallToAction's duplicated placeholder richText
+- [Phase ?]: Legal pages (Privacy/Terms): only body prose rewritten, same section count/order/headings, no legal meaning/obligation changed
 
 ### Pending Todos
 
@@ -231,7 +235,7 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-14T20:47:08.253Z
+Last session: 2026-07-14T20:59:05.535Z
 Stopped at: Completed 30-01-PLAN.md
 Resume file: None
 
