@@ -25,7 +25,7 @@ function resolveSiteUrl(): string {
 export const SITE_URL = resolveSiteUrl()
 
 type SitemapCollection = {
-  collection: 'pages' | 'posts' | 'case-studies' | 'authors' | 'categories'
+  collection: 'pages' | 'posts' | 'case-studies' | 'authors' | 'categories' | 'websites'
   prefix: string
   hasDrafts: boolean
   group: SitemapEntry['group']
@@ -37,6 +37,7 @@ const SITEMAP_COLLECTIONS: SitemapCollection[] = [
   { collection: 'case-studies', prefix: 'case-studies', hasDrafts: true, group: 'case-studies' },
   { collection: 'authors', prefix: 'authors', hasDrafts: false, group: 'authors' },
   { collection: 'categories', prefix: 'categories', hasDrafts: false, group: 'categories' },
+  { collection: 'websites', prefix: 'websites', hasDrafts: true, group: 'websites' },
 ]
 
 export type SitemapLocale = 'es' | 'en'
@@ -45,7 +46,7 @@ export type SitemapEntry = {
   url: string
   locale: SitemapLocale
   lastModified: string | Date
-  group: 'pages' | 'blog' | 'case-studies' | 'authors' | 'categories'
+  group: 'pages' | 'blog' | 'case-studies' | 'authors' | 'categories' | 'websites'
   alternates: { es: string; en: string }
 }
 
@@ -71,6 +72,7 @@ export const SITEMAP_GROUP_LABELS: Record<SitemapGroup, string> = {
   'case-studies': 'Case Studies',
   authors: 'Authors',
   categories: 'Categories',
+  websites: 'Websites',
 }
 
 export async function getSitemapEntries(): Promise<SitemapEntry[]> {
