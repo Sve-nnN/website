@@ -34,14 +34,22 @@ function parseLeadingNumber(raw: string | null | undefined): number | null {
   return num
 }
 
-type ChartRow = {
+type ParsedRow = {
   label: string
   before: number
   after: number
 }
 
-function buildChartRows(metrics: Metric[]): ChartRow[] {
-  const rows: ChartRow[] = []
+type ChartRow = {
+  label: string
+  beforeLeft?: number
+  afterLeft?: number
+  beforeRight?: number
+  afterRight?: number
+}
+
+function buildChartRows(metrics: Metric[]): ParsedRow[] {
+  const rows: ParsedRow[] = []
   for (const metric of metrics) {
     const before = parseLeadingNumber(metric.before)
     const after = parseLeadingNumber(metric.after)
@@ -51,12 +59,71 @@ function buildChartRows(metrics: Metric[]): ChartRow[] {
   return rows
 }
 
+/**
+ * Buckets already-parsed rows by order-of-magnitude so wildly different
+ * scales (e.g. position ~8 vs impressions ~30,000) don't get plotted on the
+ * same linear Y-axis where the small-scale metric becomes invisible.
+ *
+ * Algorithm (37-UI-SPEC.md Fix 2, authoritative):
+ * 1. magnitude = max(|before|, |after|) per row, order = floor(log10(magnitude))
+ *    (magnitude === 0 guarded to order 0, avoids -Infinity from log10(0)).
+ * 2. Collect distinct orders across all rows, sorted ascending.
+ * 3. If only 1 distinct order -> every row buckets `left`, no right axis.
+ * 4. If 2+ distinct orders -> split at the largest gap between consecutive
+ *    orders; orders at/below the split -> `left`, above -> `right`.
+ */
+export function bucketRowsByMagnitude(
+  rows: ParsedRow[],
+): { rows: ChartRow[]; hasRightAxis: boolean } {
+  const orderOf = (row: ParsedRow): number => {
+    const magnitude = Math.max(Math.abs(row.before), Math.abs(row.after))
+    if (magnitude === 0) return 0
+    return Math.floor(Math.log10(magnitude))
+  }
+
+  const orders = rows.map(orderOf)
+  const distinctOrders = Array.from(new Set(orders)).sort((a, b) => a - b)
+
+  let splitOrder = Number.POSITIVE_INFINITY // every order <= splitOrder -> left
+  if (distinctOrders.length > 1) {
+    let largestGap = -Infinity
+    let gapSplit = distinctOrders[0]
+    for (let i = 1; i < distinctOrders.length; i++) {
+      const gap = distinctOrders[i] - distinctOrders[i - 1]
+      if (gap > largestGap) {
+        largestGap = gap
+        gapSplit = distinctOrders[i - 1]
+      }
+    }
+    splitOrder = gapSplit
+  }
+
+  const hasRightAxis = distinctOrders.length > 1
+
+  const chartRows: ChartRow[] = rows.map((row, i) => {
+    const isLeft = orders[i] <= splitOrder
+    return isLeft
+      ? { label: row.label, beforeLeft: row.before, afterLeft: row.after }
+      : { label: row.label, beforeRight: row.before, afterRight: row.after }
+  })
+
+  return { rows: chartRows, hasRightAxis }
+}
+
 const chartConfig = {
-  before: {
+  beforeLeft: {
     label: 'Before',
     color: 'var(--chart-2)',
   },
-  after: {
+  afterLeft: {
+    label: 'After',
+    color: 'var(--chart-1)',
+  },
+  beforeRight: {
+    label: 'Before',
+    color: 'var(--chart-2)',
+  },
+  afterRight: {
     label: 'After',
     color: 'var(--chart-1)',
   },
@@ -69,16 +136,20 @@ export function CaseStudyResultsChart({
   metrics: Metric[] | null | undefined
   copy: { before: string; after: string }
 }) {
-  const rows = buildChartRows(metrics ?? [])
+  const parsedRows = buildChartRows(metrics ?? [])
 
-  if (rows.length === 0) {
+  if (parsedRows.length === 0) {
     return null
   }
 
+  const { rows, hasRightAxis } = bucketRowsByMagnitude(parsedRows)
+
   const config: ChartConfig = {
     ...chartConfig,
-    before: { ...chartConfig.before, label: copy.before },
-    after: { ...chartConfig.after, label: copy.after },
+    beforeLeft: { ...chartConfig.beforeLeft, label: copy.before },
+    afterLeft: { ...chartConfig.afterLeft, label: copy.after },
+    beforeRight: { ...chartConfig.beforeRight, label: copy.before },
+    afterRight: { ...chartConfig.afterRight, label: copy.after },
   }
 
   return (
@@ -94,10 +165,33 @@ export function CaseStudyResultsChart({
           interval={0}
           height={40}
         />
-        <YAxis tickLine={false} axisLine={false} width={40} tick={{ fontSize: 11 }} />
+        <YAxis
+          yAxisId="left"
+          orientation="left"
+          tickLine={false}
+          axisLine={false}
+          width={40}
+          tick={{ fontSize: 11 }}
+        />
+        {hasRightAxis && (
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            tickLine={false}
+            axisLine={false}
+            width={40}
+            tick={{ fontSize: 11 }}
+          />
+        )}
         <ChartTooltip content={<ChartTooltipContent />} />
-        <Bar dataKey="before" fill="var(--color-before)" radius={4} />
-        <Bar dataKey="after" fill="var(--color-after)" radius={4} />
+        <Bar dataKey="beforeLeft" yAxisId="left" fill="var(--color-beforeLeft)" radius={4} />
+        <Bar dataKey="afterLeft" yAxisId="left" fill="var(--color-afterLeft)" radius={4} />
+        {hasRightAxis && (
+          <>
+            <Bar dataKey="beforeRight" yAxisId="right" fill="var(--color-beforeRight)" radius={4} />
+            <Bar dataKey="afterRight" yAxisId="right" fill="var(--color-afterRight)" radius={4} />
+          </>
+        )}
       </BarChart>
     </ChartContainer>
   )
