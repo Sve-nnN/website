@@ -759,7 +759,13 @@ Plans:
   4. Existe un snapshot completo de texto real (no solo metadata) de toda la DB, diffable, usable como base de rollback más allá del point-in-time restore de Neon
   5. Existe un perfil de voz escrito (español neutro, sin voceo, profesional-directo, primera persona con reclamos de credenciales directos estilo Arianna Lupi, framing de CTA colaborativo) derivado del research de Arianna Lupi/Aleyda Solis, listo como brief para la skill `humanizer`
 
-**Plans**: TBD
+**Plans**: 4 plans (2 waves)
+
+Plans:
+- [ ] 29-01-PLAN.md — Field-localization audit + voice profile doc (autonomous)
+- [ ] 29-02-PLAN.md — Content snapshot script extension + CaseStudies.services live-data investigation (autonomous)
+- [ ] 29-03-PLAN.md — TestimonialsCarousel.title migration (BLOCKING — Juan's named approval)
+- [ ] 29-04-PLAN.md — CaseStudies.services[].service resolution, conditional on 29-02's verdict (BLOCKING — Juan's named approval)
 
 ### Phase 30: Content Humanization — Globals, Core Pages, Services & Geo
 
