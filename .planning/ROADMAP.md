@@ -75,7 +75,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 37: Case Studies Content Audit & Fix** - Los 6 case studies borrador (ids 15-20) quedan con contenido completo, KPIs explicados, doc 20 anonimizado, `results.metrics` respaldado por datos reales de GSC, autor deduplicado, schema JSON-LD dinámico, chart con escalas/mobile arreglado, y estructura revisada contra ariannalupi.com/casos
 - [x] **Phase 38: Websites — Schema & Collection Design** - Colección `Websites` modelada, registrada y tipada, con relaciones opcionales a Clientes/CaseStudies y captura de fecha obligatoria para Lighthouse (completed 2026-07-14)
 - [x] **Phase 39: Websites — Frontend Components & Routes** - `WebsiteCard`, sección en Home, `ArchiveBlock` extendido, rutas de listado/detalle con JSON-LD `CreativeWork` y sitemap actualizado (completed 2026-07-14)
-- [ ] **Phase 40: Websites — Content Population (Real Data Capture)** - 6 sitios reales poblados con stack confirmado por Juan, screenshots reales y Lighthouse real capturado una sola vez
+- [x] **Phase 40: Websites — Content Population (Real Data Capture)** - 6 sitios reales poblados con stack confirmado por Juan, screenshots reales y Lighthouse real capturado una sola vez (completed 2026-07-14)
 
 ## Phase Details
 
@@ -946,7 +946,8 @@ Plans:
 **Plans**: 1 plan (1 wave)
 
 Plans:
-- [ ] 40-01-PLAN.md — Seed script (write + run) capturing real screenshot/Lighthouse and upserting the 6 Websites docs, plus human-verify checkpoint
+
+- [x] 40-01-PLAN.md — Seed script (write + run) capturing real screenshot/Lighthouse and upserting the 6 Websites docs, plus human-verify checkpoint
 
 ## Progress
 
@@ -998,5 +999,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 37. Case Studies Content Audit & Fix | 0/TBD | Not started | - |
 | 38. Websites — Schema & Collection Design | 1/1 | Complete   | 2026-07-14 |
 | 39. Websites — Frontend Components & Routes | 4/4 | Complete   | 2026-07-14 |
-| 40. Websites — Content Population (Real Data Capture) | 0/TBD | Not started | - |
+| 40. Websites — Content Population (Real Data Capture) | 1/1 | Complete   | 2026-07-14 |
 </content>

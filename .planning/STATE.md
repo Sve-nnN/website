@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.9
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 39-03-PLAN.md
-last_updated: "2026-07-14T17:07:09.280Z"
-last_activity: 2026-07-14
+status: completed
+stopped_at: Completed 40-01-PLAN.md
+last_updated: "2026-07-14T17:52:05.835Z"
+last_activity: 2026-07-14 -- Phase 40 marked complete
 progress:
   total_phases: 40
-  completed_phases: 21
-  total_plans: 82
-  completed_plans: 78
-  percent: 53
+  completed_phases: 22
+  total_plans: 83
+  completed_plans: 79
+  percent: 55
 ---
 
 # Project State
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 38 (Websites — Schema & Collection Design) — Plan 01 complete
+Phase: 40 — COMPLETE
 Plan: 01 of 1 (planned so far)
-Status: Phase complete — ready for verification
-Last activity: 2026-07-14
+Status: Phase 40 complete
+Last activity: 2026-07-14 -- Phase 40 marked complete
 
 ## Performance Metrics
 
@@ -88,6 +88,7 @@ Last activity: 2026-07-14
 | Phase 39 P04 | 15min | 3 tasks | 2 files |
 | Phase 39 P03 | 12min | 2 tasks | 3 files |
 | Phase 39 P02 | 12min | 3 tasks | 9 files |
+| Phase 40-websites-content-population-real-data-capture P01 | 25min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -176,6 +177,8 @@ Recent decisions affecting current work:
 - [Phase ?]: Detail page hero stays text-only (no heroImage field on Websites); Lighthouse grid renders unconditionally as 4 fixed cards; JSON-LD uses CreativeWork never SoftwareApplication
 - [Phase 39]: Manually patched ArchiveBlock's relationTo/selectedDocs union in payload-types.ts instead of running payload generate:types, to avoid pulling in concurrent 39-02 agent's uncommitted mid-flight edits
 - [Phase 39]: Applied additive featuredWebsites migration without pausing per CLAUDE.md Database Safety rule (up() confirmed purely additive: CREATE TABLE / ADD COLUMN / ADD CONSTRAINT / ALTER TYPE ADD VALUE only)
+- [Phase 40]: juan-tech.com Lighthouse cleared to null (not fake 0/0/0/0) porque el sitio vivo devuelve HTTP 402 DEPLOYMENT_DISABLED de Vercel; screenshot queda documentado como no representativo. Juan aprobo dejarlo asi, sin reintentar ni borrar.
+- [Phase 40]: Corregido bug de reuso de ids en arrays localizados (highlights/challenges) en seed-phase40-websites.ts durante la corrida en vivo, mismo patron que reapplyIds de seed-phase19.
 
 ### Pending Todos
 
@@ -217,8 +220,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-14T17:04:52.872Z
-Stopped at: Completed 39-03-PLAN.md
+Last session: 2026-07-14T17:51:23.003Z
+Stopped at: Completed 40-01-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

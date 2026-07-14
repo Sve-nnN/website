@@ -81,11 +81,11 @@ Coverage: 11/11 v1.8 requirements mapped. No orphans, no duplicates.
 
 #### Poblado de Contenido Real (Phase C)
 
-- [ ] **WEB-12**: 6 docs reales creados: ariannalupi.com, aprendoclub.com, estylopia.com, drmanuelvargashidalgo.com, apturio.com, juan-tech.com
-- [ ] **WEB-13**: Stack de cada sitio confirmado interactivamente con Juan sitio por sitio (una pregunta por sitio) — lo que no confirme se infiere del código/contenido público del sitio
-- [ ] **WEB-14**: Screenshot real de cada sitio (full-page, vía Playwright) capturado una sola vez y subido a Cloudinary por el pipeline de Media existente — nunca iframe en vivo ni fetch de captura en tiempo de request
-- [ ] **WEB-15**: Lighthouse real corrido una sola vez contra la URL en vivo de cada sitio (cloná el patrón de `scripts/lighthouse-mobile.mjs`), con `lighthouseCapturedAt` seteado a la fecha real de esa corrida
-- [ ] **WEB-16**: Relaciones a `Clientes`/`CaseStudies` pobladas donde exista match real (ej. si alguno de los 6 dominios ya es cliente en la colección `Clientes` o está detrás de un case study existente) — regla explícita antes de poblar: qué dato vive en `Websites` vs. en `CaseStudies` para el mismo sitio, sin duplicar ni contradecir
+- [x] **WEB-12**: 6 docs reales creados: ariannalupi.com, aprendoclub.com, estylopia.com, drmanuelvargashidalgo.com, apturio.com, juan-tech.com
+- [x] **WEB-13**: Stack de cada sitio confirmado interactivamente con Juan sitio por sitio (una pregunta por sitio) — lo que no confirme se infiere del código/contenido público del sitio
+- [x] **WEB-14**: Screenshot real de cada sitio (full-page, vía Playwright) capturado una sola vez y subido a Cloudinary por el pipeline de Media existente — nunca iframe en vivo ni fetch de captura en tiempo de request
+- [x] **WEB-15**: Lighthouse real corrido una sola vez contra la URL en vivo de cada sitio (cloná el patrón de `scripts/lighthouse-mobile.mjs`), con `lighthouseCapturedAt` seteado a la fecha real de esa corrida
+- [x] **WEB-16**: Relaciones a `Clientes`/`CaseStudies` pobladas donde exista match real (ej. si alguno de los 6 dominios ya es cliente en la colección `Clientes` o está detrás de un case study existente) — regla explícita antes de poblar: qué dato vive en `Websites` vs. en `CaseStudies` para el mismo sitio, sin duplicar ni contradecir
 
 ### Future Requirements
 
@@ -114,10 +114,10 @@ Coverage: 11/11 v1.8 requirements mapped. No orphans, no duplicates.
 | WEB-09 | Phase 39 | Complete |
 | WEB-10 | Phase 39 | Complete |
 | WEB-11 | Phase 39 | Complete |
-| WEB-12 | Phase 40 | Pending |
-| WEB-13 | Phase 40 | Pending |
-| WEB-14 | Phase 40 | Pending |
-| WEB-15 | Phase 40 | Pending |
-| WEB-16 | Phase 40 | Pending |
+| WEB-12 | Phase 40 | Complete |
+| WEB-13 | Phase 40 | Complete |
+| WEB-14 | Phase 40 | Complete |
+| WEB-15 | Phase 40 | Complete |
+| WEB-16 | Phase 40 | Complete |
 
 Coverage: 16/16 v1.9 requirements mapped. No orphans, no duplicates.
