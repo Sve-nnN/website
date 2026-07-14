@@ -7,7 +7,6 @@ import config from '@payload-config'
 import type { Author } from '@/payload-types'
 import { JsonLd } from '@/components/JsonLd'
 import { Container } from '@/components/Container'
-import { AuthorByline } from '@/components/AuthorByline'
 import { AuthorCard } from '@/components/AuthorCard'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
@@ -242,10 +241,7 @@ export default async function CaseStudyPage({
 
         {author && (
           <section>
-            <AuthorByline author={author} />
-            <div className="mt-6">
-              <AuthorCard author={author} />
-            </div>
+            <AuthorCard author={author} />
           </section>
         )}
       </Container>
