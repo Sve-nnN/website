@@ -89,9 +89,19 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | Geo-pages (v1.4): Lima grounded en presencia física real, Madrid honesto sobre trabajo remoto sin oficina física | Evita el patrón templated/find-replace-por-ciudad que Juan rechazó explícitamente — cada página necesitaba un argumento genuinamente distinto, no solo el nombre de la ciudad cambiado | ✓ Good |
 | Database Safety rule (root CLAUDE.md, agregada durante v1.4, luego relajada por Juan) | Un incidente real de pérdida de datos (migración de fase 19 sin backfill, recuperada vía Neon PITR) forzó una regla dura de aprobación humana antes de cualquier escritura contra la DB real; Juan luego la relajó a solo operaciones destructivas (DROP/TRUNCATE/delete/reshape con pérdida) una vez que confió en el patrón | ✓ Good |
 
-## Current Milestone: ninguno (planificando el siguiente)
+## Current Milestone: v1.8 Case Studies Content Audit & Fix (ids 15-20)
 
-Con v1.7 cerrado (2026-07-14, 13/13 requirements Done, ver `.planning/v1.7-MILESTONE-AUDIT.md`), no hay milestone activo. Dos candidatos abiertos esperan que Juan decida cuál retomar primero:
+**Goal:** Corregir bugs reales de contenido en los 6 case studies borrador (ids 15-20) que Juan verificó a mano en el admin — el sitio no puede publicar case studies con huecos de contenido, KPIs sin sentido o un cliente real expuesto sin anonimizar.
+
+**Target features:**
+- "El reto" y "La solución" completos en ambos locales (en/es) para los 6 docs
+- Cada KPI con label explicando qué mide (no números sueltos tipo "+83%")
+- Doc 20 (despacho penal Pittsburgh) completamente anonimizado: sin nombre real, dominio real, condado, ni conteo de reseñas real
+- `results.metrics` poblado con más filas reales por caso (clics, impresiones, posición) para que los charts no queden con 1-2 barras
+
+Nota de ejecución: intento previo de correr scripts Local API (`npx payload run`) para leer/arreglar en vivo falló en el shell de Juan (exit 0, sin salida, sin error) — probado con dev server arriba y abajo, con `console.log` y `writeFileSync`. Funcionó en agentes previos del mismo hilo. El agente que ejecute este milestone debe evitar ese camino sin verificar primero que produce salida real, y debe devolver el JSON crudo completo de los 6 docs corregidos (no un resumen) para que Juan lo verifique él mismo — el agente anterior dijo "verificado" sin estarlo.
+
+Dos milestones/fases pausadas siguen esperando decisión de Juan y no se tocan en este milestone:
 
 - **v1.6 Track B — Content Humanization** (Phases 29-31, pausado): auditoría de campos + humanización de copy real de la DB con la voz de Juan, prerequisito duro de seguridad de datos ya investigado (research completo, ver `.planning/research/SUMMARY-v1.6.md`).
 - **Phase 6 — Deploy + Cutover** (pausado): sitio en producción en Hostinger, bloqueado en `RESEND_API_KEY` real y credenciales de Hostinger/DNS.
@@ -150,4 +160,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-14 — milestone v1.7 (Local Landing Design + Component Polish Pass) cerrado, 13/13 requirements Done (LOCAL-05 con caveat de contenido placeholder, autorizado por Juan); sin milestone activo — candidatos: v1.6 Track B (Content Humanization, fases 29-31, pausado) y Phase 6 Deploy + Cutover (pausado)*
+*Last updated: 2026-07-14 — milestone v1.8 (Case Studies Content Audit & Fix, ids 15-20) iniciado; v1.7 cerrado previamente (13/13 requirements Done); pausados sin tocar: v1.6 Track B (Content Humanization, fases 29-31) y Phase 6 Deploy + Cutover*

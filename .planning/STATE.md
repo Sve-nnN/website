@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.7
-milestone_name: Local Landing Design + Component Polish Pass
-status: Awaiting next milestone
-last_updated: "2026-07-14T23:15:00.000Z"
-last_activity: 2026-07-14 — milestone v1.7 audited (gaps_found, 13/13 requirements, 1 non-blocking known gap) and archived to .planning/milestones/
+milestone: v1.8
+milestone_name: Case Studies Content Audit & Fix
+status: planning
+last_updated: "2026-07-14T05:16:44.074Z"
+last_activity: 2026-07-14
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 5
-  completed_plans: 5
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: Milestone v1.7 complete and archived
+Phase: Not started (defining requirements)
 Plan: —
-Status: Milestone v1.7 audited (`.planning/v1.7-MILESTONE-AUDIT.md`, status `gaps_found` — 13/13 requirements Done, 1 non-blocking Juan-authorized gap on LOCAL-05's placeholder content) and archived (`ROADMAP.md`/`REQUIREMENTS.md`/`MILESTONE-AUDIT.md` snapshots copied to `.planning/milestones/v1.7-*`, `PROJECT.md` Validated section updated with LOCAL-01..05/POLISH-01..06/REG-01/02, git tag `v1.7` created). Phase directories (32-36) intentionally left in `.planning/phases/` — phase-directory archival is a separate, interactive `gsd-cleanup` step not run as part of this pass. Awaiting Juan's decision on which paused candidate (v1.6 Track B or Phase 6) to resume next.
-Last activity: 2026-07-14 — Milestone v1.7 audited and archived.
+Status: Defining requirements
+Last activity: 2026-07-14 — Milestone v1.8 started
 
 ## Performance Metrics
 
