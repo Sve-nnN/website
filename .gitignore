@@ -25,6 +25,10 @@ scripts/migrate/data/
 # content (ids/updatedAt), not source code
 .planning/phases/06-deploy-cutover/freeze-snapshots/
 
+# content-humanization full-text snapshots (Phase 29, VOICE-04) — regenerable
+# dumps of real production content (full field values), not source code
+.planning/phases/29-content-humanization-safety-net/content-snapshots/
+
 # Phase 10 fixture-cleanup cross-script state scratch file — regenerable,
 # always deleted by scripts/cleanup-phase10-eeat-fixtures.ts, not source code
 scripts/.phase10-fixture-state.json
