@@ -22,6 +22,8 @@ import * as migration_20260713_022605 from './20260713_022605';
 import * as migration_20260714_023126_phase33_local_landing_components from './20260714_023126_phase33_local_landing_components';
 import * as migration_20260714_163429 from './20260714_163429';
 import * as migration_20260714_170202 from './20260714_170202';
+import * as migration_20260714_200158 from './20260714_200158';
+import * as migration_20260714_200220_phase29_casestudies_services_localized from './20260714_200220_phase29_casestudies_services_localized';
 
 export const migrations = [
   {
@@ -142,6 +144,16 @@ export const migrations = [
   {
     up: migration_20260714_170202.up,
     down: migration_20260714_170202.down,
-    name: '20260714_170202'
+    name: '20260714_170202',
+  },
+  {
+    up: migration_20260714_200158.up,
+    down: migration_20260714_200158.down,
+    name: '20260714_200158',
+  },
+  {
+    up: migration_20260714_200220_phase29_casestudies_services_localized.up,
+    down: migration_20260714_200220_phase29_casestudies_services_localized.down,
+    name: '20260714_200220_phase29_casestudies_services_localized'
   },
 ];

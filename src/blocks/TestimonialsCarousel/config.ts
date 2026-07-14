@@ -13,6 +13,7 @@ export const TestimonialsCarousel: Block = {
       type: 'text',
       label: 'Título',
       required: false,
+      localized: true,
       defaultValue: 'Testimonios',
     },
     {
