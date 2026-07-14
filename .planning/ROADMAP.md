@@ -18,6 +18,8 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 **Milestone v1.6 — UI/UX Pro Max II: Componentes, Motion y Voz, creado 2026-07-13:** Segunda pasada de diseño sobre los componentes/plantillas que v1.5 no tocó (navbar, heroes de listing, CTA strip, FAQ, clientes, testimonios, grillas de blog, case studies), sumando micro-animaciones consistentes con la estética del hero de Home sin pegarle a performance, y humanizando todo el copy real de la base de datos con la voz de Juan calibrada contra sus competidores directos (Arianna Lupi, Aleyda Solis). Dos tracks independientes con historial de riesgo muy distinto: Track A (UI/motion, fases 26-28, continuando la numeración desde Phase 25) es una serie de cambios de código con gate de build/Lighthouse; Track B (humanización de contenido, fases 29-31) es la parte de mayor riesgo del milestone — el proyecto ya tiene un historial documentado de 3 bugs reales de campos no-localizados pisados por escrituras bulk y un incidente real de pérdida de datos (2026-07-12, recuperado vía Neon point-in-time restore) — por eso Phase 29 (auditoría de campos + snapshot + los 2 fixes de schema ya aprobados por Juan) es un prerequisito duro antes de reescribir una sola palabra, y la reescritura real (Phases 30-31) se ordena por riesgo/blast-radius ascendente (globals+páginas núcleo+servicios primero, posts+case studies al final, por ser lo de mayor volumen y visibilidad SEO). Ver `.planning/REQUIREMENTS.md` sección "v1.6 Requirements" y `.planning/research/SUMMARY-v1.6.md` para el detalle completo.
 **Milestone v1.7 — Local Landing Design + Component Polish Pass, creado 2026-07-13:** El archivo de diseño Pencil `designs/current-site-real.pen` (réplica fiel del design system actual, no un rediseño — ver `designs/DESIGN-SYSTEM-PEN.md`) aporta solo 2 piezas nuevas: un variant `local-landing` para el bloque Hero (badge de ciudad, anillo decorativo, stat inline, CTA row) y un block nuevo `LocalProofSection` (prueba social localizada), pensados para diferenciar estructuralmente las landings de Lima y Madrid — hoy ambas reusan bloques genéricos sin diferenciación visual real. El resto del .pen (28 componentes) ya tiene equivalente exacto en código, así que el milestone suma una pasada de polish puntual sobre esos 28 componentes. 5 fases nuevas (32-36), continuando la numeración desde Phase 31 (v1.6 Track B queda pausado, retoma después): baseline de regresión antes de tocar nada (Phase 32, mismo patrón que v1.5 Phase 25 / v1.6 Phase 28); construcción de los 2 componentes nuevos (Phase 33); aplicación real y diferenciada a Madrid/Lima (Phase 34, depende de Phase 33); pasada de polish visual sobre los 28 componentes restantes (Phase 35); y gate de cero regresión al cierre (Phase 36, última, comparado contra el baseline de Phase 32). Ver `.planning/REQUIREMENTS.md` sección "v1 Requirements" (milestone v1.7) para el detalle completo. **v1.7 CERRADO 2026-07-14** — 13/13 requirements Done (LOCAL-05 con contenido placeholder de `LocalProofSection` en ambas landings, autorizado explícitamente por Juan, pendiente de datos reales de clientes), 0 gaps bloqueantes (ver `.planning/milestones/v1.7-MILESTONE-AUDIT.md` y `.planning/MILESTONES.md`).
 
+**Milestone v1.8 — Case Studies Content Audit & Fix, creado 2026-07-14:** Juan verificó a mano en el admin los 6 case studies borrador (ids 15-20) y encontró bugs reales de contenido: "El reto"/"La solución" incompletos en uno o ambos locales, KPIs mostrados como números sueltos sin label explicativo, el doc 20 (despacho penal Pittsburgh) exponiendo datos reales de un cliente sin anonimizar (nombre, dominio, condado, conteo de reseñas), y `results.metrics` con muy pocas filas por caso (charts de 1-2 barras). 1 fase nueva (Phase 37), continuando la numeración desde Phase 36: corrige los 6 docs de punta a punta — contenido completo bilingüe, KPIs con label, doc 20 anonimizado, y `results.metrics` poblado con datos reales de Google Search Console (MCP `gsc-juan-*`) sin exponer branding del cliente. Nota de ejecución dura: un intento previo de correr scripts Local API (`npx payload run`) para leer/escribir en vivo falló en silencio en el shell de Juan (exit 0, sin salida) pese a funcionar en agentes previos del mismo hilo — el plan de esta fase debe preferir el servidor MCP `juan-payload` (`http://localhost:3000/api/mcp`, dev server debe estar levantado) para leer/escribir los docs en lugar de repetir ese camino roto; si igual se usa un script Local API, debe verificar primero que produce salida real antes de confiar en él. Cierra devolviendo el JSON crudo completo de los 6 docs corregidos (no un resumen) para que Juan lo verifique él mismo, ya que un intento anterior declaró "verificado" sin estarlo. Ver `.planning/REQUIREMENTS.md` sección "v1 Requirements" (milestone v1.8) para el detalle completo.
+
 ## Phases
 
 **Phase Numbering:**
@@ -68,6 +70,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 34: Local Landing Application (Madrid/Lima)** - `/seo-tecnico-madrid` y `/seo-tecnico-lima` usan los componentes nuevos con diferenciación estructural real (LOCAL-05 con contenido placeholder marcado, real pendiente de Juan) (completed 2026-07-14)
 - [x] **Phase 35: Component Polish Pass** - Revisión `ui-ux-pro-max` de los 28 componentes restantes contra el .pen, micro-mejoras implementadas en código (v1.7) (completed 2026-07-14)
 - [x] **Phase 36: Regression Gate** - Gate de cero regresión al cierre, comparado contra el baseline de Phase 32 (v1.7, cierre de milestone) (completed 2026-07-14)
+- [ ] **Phase 37: Case Studies Content Audit & Fix** - Los 6 case studies borrador (ids 15-20) quedan con contenido completo, KPIs explicados, doc 20 anonimizado, y `results.metrics` respaldado por datos reales de GSC
 
 ## Phase Details
 
@@ -856,10 +859,26 @@ Plans:
 **Plans**: TBD
 
 
+### Phase 37: Case Studies Content Audit & Fix
+
+**Goal**: Los 6 case studies borrador (ids 15-20) que Juan verificó a mano en el admin quedan corregidos de punta a punta — sin huecos de contenido, sin KPIs sin sentido, sin cliente real expuesto — listos para que Juan decida publicarlos.
+**Depends on**: Phase 36 (continúa la numeración; sin dependencia técnica real, milestone independiente)
+**Requirements**: CASE-01, CASE-02, CASE-03, CASE-04, CASE-05, CASE-06
+**Success Criteria** (what must be TRUE):
+  1. Los 6 case studies (ids 15-20) tienen `challenge` y `solution` no vacíos en ambos locales (en/es) — verificable leyendo el doc crudo de cada uno.
+  2. Cada KPI mostrado en los 6 docs (tarjetas tipo "+83%"/"+71%"/"86,000"/"22.4M") tiene un label visible que explica qué mide — ningún número suelto sin contexto.
+  3. El doc 20 (despacho penal Pittsburgh) no contiene nombre real del cliente, dominio real, condado real ni conteo de reseñas real en ningún campo (incluidos metadata/clientContext) — reemplazado por datos anonimizados consistentes con el resto de case studies.
+  4. `results.metrics` de cada uno de los 6 docs tiene múltiples filas reales (clics, impresiones, posición) sourced de Google Search Console real vía cualquier MCP `gsc-*` ya conectado y en vivo (no se requiere agregar propiedades nuevas) para la propiedad que respalda cada caso — sin exponer branding/nombre/dominio real del cliente. Cada fila/valor de la tabla (ej. "47,108"/"86,000"/"13.1M"/"22.4M"/"36.3"/"19.2") también lleva un título/label visible indicando qué métrica es — suficientes filas para que el chart antes/después no quede en 1-2 barras.
+  5. La ejecución de la fase devuelve el JSON crudo completo de los 6 docs corregidos (no un resumen) para verificación manual de Juan, obtenido preferentemente vía el MCP `juan-payload` (`http://localhost:3000/api/mcp`, requiere dev server levantado) o por otra vía confirmada como funcional (no asumida) dado que un intento previo de scripting vía Local API falló en silencio en el shell de Juan.
+**Plans**: TBD
+
+Plans:
+- [ ] 37-01: TBD (definido en /gsd:plan-phase 37 — cubre auditoría de los 6 docs, fetch de datos GSC reales, escritura corregida contra la DB real, y verificación con JSON crudo devuelto)
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 → 32 → 33 → 34 → 35 → 36 (v1.1-v1.5 cerrados; v1.6 Track A [26-28] cerrado, Track B [29-31] pausado, retoma después de v1.7; v1.7 CERRADO [Phase 32-36 completas] — baseline de regresión → componentes nuevos de Local Landing → aplicación real a Madrid/Lima → polish pass de los 28 componentes restantes → gate de cierre (PASS, 6/6 rutas limpias); Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 → 32 → 33 → 34 → 35 → 36 → 37 (v1.1-v1.5 cerrados; v1.6 Track A [26-28] cerrado, Track B [29-31] pausado, retoma después de v1.7; v1.7 CERRADO [Phase 32-36 completas] — baseline de regresión → componentes nuevos de Local Landing → aplicación real a Madrid/Lima → polish pass de los 28 componentes restantes → gate de cierre (PASS, 6/6 rutas limpias); v1.8 [Phase 37, ready to plan] — fix de contenido/anonimización/datos GSC reales en los 6 case studies borrador ids 15-20; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -903,4 +922,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 34. Local Landing Application (Madrid/Lima) | 1/1 | Complete | 2026-07-14 |
 | 35. Component Polish Pass | 1/1 | Complete | 2026-07-14 |
 | 36. Regression Gate | 1/1 | Complete | 2026-07-14 |
+| 37. Case Studies Content Audit & Fix | 0/TBD | Not started | - |
 </content>

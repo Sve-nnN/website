@@ -5,7 +5,7 @@
 ### Case Study Content Completeness
 
 - [ ] **CASE-01**: Los 6 case studies borrador (ids 15-20) tienen "El reto" (`challenge`) y "La solución" (`solution`) completos y no vacíos en ambos locales (en/es)
-- [ ] **CASE-02**: Cada KPI mostrado en un case study tiene un label que explica qué mide (ningún número suelto tipo "+83%" sin contexto)
+- [ ] **CASE-02**: Cada KPI mostrado en un case study (tarjetas tipo "+83%"/"+71%"/"86,000"/"22.4M") tiene un label visible que explica qué mide (ningún número suelto sin contexto)
 
 ### Anonimización
 
@@ -14,7 +14,7 @@
 ### Datos de Resultados
 
 - [ ] **CASE-04**: `results.metrics` de cada uno de los 6 docs tiene suficientes filas reales (clics, impresiones, posición) para que el chart de antes/después no quede con 1-2 barras
-- [ ] **CASE-06**: Los datos de `results.metrics` vienen de Google Search Console real (vía MCP `gsc-juan-*`) para las propiedades que respaldan cada case study — no números inventados — manteniendo el cliente anonimizado (sin branding/nombre/dominio real expuesto)
+- [ ] **CASE-06**: Los datos de `results.metrics` vienen de Google Search Console real (vía cualquier MCP `gsc-*` ya conectado y en vivo — no hace falta agregar propiedades nuevas) para las propiedades que respaldan cada case study — no números inventados — manteniendo el cliente anonimizado (sin branding/nombre/dominio real expuesto), y cada fila/valor de la tabla lleva su título/label visible indicando qué métrica es
 
 ### Verificación
 
@@ -32,4 +32,13 @@
 
 ## Traceability
 
-(a completar por el roadmapper)
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| CASE-01 | Phase 37 | Pending |
+| CASE-02 | Phase 37 | Pending |
+| CASE-03 | Phase 37 | Pending |
+| CASE-04 | Phase 37 | Pending |
+| CASE-05 | Phase 37 | Pending |
+| CASE-06 | Phase 37 | Pending |
+
+Coverage: 6/6 v1 requirements mapped. No orphans, no duplicates.

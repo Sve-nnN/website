@@ -6,7 +6,7 @@ status: planning
 last_updated: "2026-07-14T05:16:44.074Z"
 last_activity: 2026-07-14
 progress:
-  total_phases: 0
+  total_phases: 1
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Sin milestone activo. v1.7 (Local Landing Design + Component Polish Pass) CERRADO Y ARCHIVADO 2026-07-14 — 5/5 fases (32-36) completas, 13/13 requirements Done, auditoría `gaps_found` (0 bloqueantes / 1 no bloqueante ya autorizado por Juan — LOCAL-05 placeholder), archivos archivados a `.planning/milestones/v1.7-*`, tag git `v1.7` aplicado. Dos candidatos abiertos esperan decisión de Juan: v1.6 Track B (humanización de contenido, 29-31, pausado) o Phase 6 (Deploy + Cutover, pausado).
+**Current focus:** Milestone v1.8 (Case Studies Content Audit & Fix) — Phase 37, roadmap recién creado, lista para `/gsd:plan-phase 37`. v1.7 sigue cerrado y archivado (13/13 Done). Dos candidatos siguen pausados esperando decisión de Juan: v1.6 Track B (humanización de contenido, 29-31) y Phase 6 (Deploy + Cutover).
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-07-14 — Milestone v1.8 started
+Phase: 37 of 37 (Case Studies Content Audit & Fix)
+Plan: TBD (not yet planned)
+Status: Ready to plan
+Last activity: 2026-07-14 — Roadmap v1.8 created (Phase 37, 6/6 requirements mapped)
 
 ## Performance Metrics
 
@@ -90,6 +90,7 @@ Last activity: 2026-07-14 — Milestone v1.8 started
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- [Milestone v1.8]: Roadmap: 1 fase nueva (Phase 37), continuando la numeración desde Phase 36. Los 6 requirements (CASE-01..06) son un solo bug-fix de contenido coherente sobre los mismos 6 docs — auditoría, fix bilingüe, anonimización, fetch de datos GSC reales y verificación con JSON crudo son todos pasos de la misma unidad de trabajo, no fases separadas (granularity=coarse, milestone acotado). Nota de riesgo de ejecución explícita en la fase: un intento previo de Local API scripting falló en silencio en el shell de Juan — el plan debe verificar output real antes de confiar en cualquier script y devolver JSON crudo completo para verificación manual, no un resumen.
 - [Milestone v1.7]: Roadmap: 5 fases (32-36) derivadas de las 13 requirements v1.7, continuando la numeración desde Phase 31 (v1.6 Track B queda pausado, retoma después). Orden estrictamente secuencial por dependencia real: Phase 32 (baseline REG-01) primero porque debe existir antes de tocar cualquier componente, mismo patrón "baseline antes, gate después" que v1.5 Phase 25 / v1.6 Phase 28; Phase 33 (componentes nuevos LOCAL-01/02) antes de Phase 34 (aplicación real a Madrid/Lima, LOCAL-03/04/05) porque no se puede aplicar lo que no existe; Phase 35 (polish pass de los 28 componentes restantes, POLISH-01..06) va después de terminar todo el trabajo de Local Landing para no pulir esos componentes dos veces; Phase 36 (gate REG-02) cierra el milestone, comparado contra el baseline de Phase 32. Granularity=coarse per config.json, 5 fases mantiene el milestone lean (portfolio site, no enterprise).
 
 - [Milestone v1.4]: Roadmap: 4 fases (18-21) derivadas de los 10 requirements v1.4, continuando la numeración desde Phase 17. Phase 18 (fixes técnicos H1 + metadata Author page) primero por ser independiente y de bajo riesgo/alto impacto. Phase 19 (páginas de servicio + SEO para IA/GEO) antes de Phase 21 porque Home no puede enlazar páginas de servicio que no existen todavía. Phase 20 (geo-pages Lima/Madrid) es independiente — puede correr en paralelo a Phase 19 o después, sin dependencia real. Phase 21 (Home: encabezados + linking a servicios) depende explícitamente de Phase 19.
@@ -203,11 +204,12 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-14T23:15:00.000Z
-Stopped at: Milestone v1.7 audited (gaps_found, 13/13 requirements) and archived (milestones/v1.7-ROADMAP.md, v1.7-REQUIREMENTS.md, v1.7-MILESTONE-AUDIT.md; PROJECT.md Validated updated; git tag v1.7 applied).
-Resume file: .planning/v1.7-MILESTONE-AUDIT.md
+Last session: 2026-07-14T05:16:44.000Z
+Stopped at: Milestone v1.8 (Case Studies Content Audit & Fix) roadmap created — Phase 37 defined, 6/6 requirements (CASE-01..06) mapped, ROADMAP.md/STATE.md/REQUIREMENTS.md traceability written. Not yet planned or executed.
+Resume file: None — next step is `/gsd:plan-phase 37`
 
 ## Operator Next Steps
 
-- v1.7 is closed and archived. Next candidate: resume v1.6 Track B (Content Humanization, Phases 29-31, paused) per Juan's prior decision, or Phase 6 (Deploy + Cutover, paused pending Hostinger/DNS/Resend credentials) — both await Juan's go-ahead on which to pick up next.
-- Optional cleanup (not run as part of this milestone close, deferred per instruction): archive `.planning/phases/32-*` through `36-*` into `.planning/milestones/v1.7-phases/` via `/gsd:cleanup` if/when Juan wants phase directories tidied up, matching the v1.4/v1.5 precedent.
+- Run `/gsd:plan-phase 37` to break Phase 37 (Case Studies Content Audit & Fix) into executable plans.
+- v1.6 Track B (Content Humanization, Phases 29-31) and Phase 6 (Deploy + Cutover) remain paused, untouched by v1.8, awaiting Juan's separate go-ahead.
+- Optional cleanup (still deferred): archive `.planning/phases/32-*` through `36-*` into `.planning/milestones/v1.7-phases/` via `/gsd:cleanup` if/when Juan wants phase directories tidied up, matching the v1.4/v1.5 precedent.
