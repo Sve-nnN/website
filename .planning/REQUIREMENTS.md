@@ -64,11 +64,11 @@ Coverage: 11/11 v1.8 requirements mapped. No orphans, no duplicates.
 
 #### Schema & Collection (Phase A)
 
-- [ ] **WEB-01**: Colección nueva `Websites` en Payload, modelada sobre el mismo patrón que `CaseStudies` (título, slug, array de tags de stack, screenshots reales vía Media/Cloudinary, array `challenges` reusando el patrón de `CaseStudies.challenge`, año de lanzamiento, rol en el proyecto, industria/nicho, highlights técnicos)
-- [ ] **WEB-02**: Scores de Lighthouse reales (performance/accessibility/best-practices/SEO) con campo `lighthouseCapturedAt` (fecha) obligatorio — los números nunca se presentan como si fueran en vivo
-- [ ] **WEB-03**: Relación opcional `client` → `Clientes` (`hasMany: false`) — varios sitios (apturio.com, juan-tech.com) no tienen cliente externo y deben poder quedar sin este campo sin romper nada
-- [ ] **WEB-04**: Relación opcional `relatedCaseStudy` → `case-studies` (`hasMany: false`, unidireccional, sin back-reference simétrico) para cruzar con el case study de resultados cuando exista
-- [ ] **WEB-05**: `Websites` registrada en `payload.config.ts` y en `@payloadcms/plugin-seo` (`collections[]`); `payload generate:types` corrido después del schema
+- [x] **WEB-01**: Colección nueva `Websites` en Payload, modelada sobre el mismo patrón que `CaseStudies` (título, slug, array de tags de stack, screenshots reales vía Media/Cloudinary, array `challenges` reusando el patrón de `CaseStudies.challenge`, año de lanzamiento, rol en el proyecto, industria/nicho, highlights técnicos)
+- [x] **WEB-02**: Scores de Lighthouse reales (performance/accessibility/best-practices/SEO) con campo `lighthouseCapturedAt` (fecha) obligatorio — los números nunca se presentan como si fueran en vivo
+- [x] **WEB-03**: Relación opcional `client` → `Clientes` (`hasMany: false`) — varios sitios (apturio.com, juan-tech.com) no tienen cliente externo y deben poder quedar sin este campo sin romper nada
+- [x] **WEB-04**: Relación opcional `relatedCaseStudy` → `case-studies` (`hasMany: false`, unidireccional, sin back-reference simétrico) para cruzar con el case study de resultados cuando exista
+- [x] **WEB-05**: `Websites` registrada en `payload.config.ts` y en `@payloadcms/plugin-seo` (`collections[]`); `payload generate:types` corrido después del schema
 
 #### Frontend & Rutas (Phase B)
 
@@ -103,11 +103,11 @@ Coverage: 11/11 v1.8 requirements mapped. No orphans, no duplicates.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| WEB-01 | Phase 38 | Pending |
-| WEB-02 | Phase 38 | Pending |
-| WEB-03 | Phase 38 | Pending |
-| WEB-04 | Phase 38 | Pending |
-| WEB-05 | Phase 38 | Pending |
+| WEB-01 | Phase 38 | Complete |
+| WEB-02 | Phase 38 | Complete |
+| WEB-03 | Phase 38 | Complete |
+| WEB-04 | Phase 38 | Complete |
+| WEB-05 | Phase 38 | Complete |
 | WEB-06 | Phase 39 | Pending |
 | WEB-07 | Phase 39 | Pending |
 | WEB-08 | Phase 39 | Pending |

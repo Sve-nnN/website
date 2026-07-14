@@ -1,16 +1,17 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.9
-milestone_name: Websites Portfolio Section
-status: planning
-last_updated: "2026-07-14T06:10:00.000Z"
-last_activity: 2026-07-14
+milestone_name: milestone
+status: Plan 38-01 executed — Websites collection schema created, registered, migration applied to Neon, types regenerated
+stopped_at: Milestone v1.9 (Websites Portfolio Section) roadmap created — Phases 38 (Schema & Collection Design), 39 (Frontend Components & Routes), 40 (Content Population), 16/16 requirements (WEB-01..16) mapped, ROADMAP.md/STATE.md/REQUIREMENTS.md traceability written. Not yet planned or executed.
+last_updated: "2026-07-14T16:38:50.618Z"
+last_activity: 2026-07-14 — Executed 38-01-PLAN.md (WEB-01..05 complete)
 progress:
-  total_phases: 3
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_phases: 40
+  completed_phases: 20
+  total_plans: 78
+  completed_plans: 74
+  percent: 50
 ---
 
 # Project State
@@ -24,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 38 (Websites — Schema & Collection Design) — not started
-Plan: —
-Status: Roadmap created, awaiting plan-phase
-Last activity: 2026-07-14 — Milestone v1.9 roadmap created (Phases 38, 39, 40; 16/16 requirements mapped)
+Phase: 38 (Websites — Schema & Collection Design) — Plan 01 complete
+Plan: 01 of 1 (planned so far)
+Status: Plan 38-01 executed — Websites collection schema created, registered, migration applied to Neon, types regenerated
+Last activity: 2026-07-14 — Executed 38-01-PLAN.md (WEB-01..05 complete)
 
 ## Performance Metrics
 
@@ -82,6 +83,7 @@ Last activity: 2026-07-14 — Milestone v1.9 roadmap created (Phases 38, 39, 40;
 | Phase 16 P02 | 25min | 2 tasks | 2 files |
 | Phase 16 P03 | 20min | 2 tasks | 2 files |
 | Phase 17 P01 | 20min | 3 tasks | 3 files |
+| Phase 38 P01 | 15min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -165,6 +167,7 @@ Recent decisions affecting current work:
 - [Phase 35]: 35-01: Reviewed all 28 `.pen`-modeled components (UI primitives, chrome, existing Hero variants, content blocks, authorship) against structured `.pen` node data (`mcp__pencil__batch_get`, `resolveVariables:true`) rather than screenshot-only comparison. Found and fixed a real pre-existing bug (not just a token-value drift): `text-destructive-foreground` in `button-variants.ts`/`badge-variants.ts` compiled to nothing because `tailwind.config.ts`'s `destructive` color has no `.foreground` sub-key (unlike primary/secondary/muted/accent) — fixed by reusing the already-existing `text-primary-foreground` token (matches the .pen's own modeled dark-on-red text exactly, no new CSS variable added). 5 other token-consistency fixes applied (Badge/Card corner-radius, AboutSection gap, ServiceScopeCard padding, ContactForm sidebar radius), each reusing a class already precedented elsewhere in the codebase. 6 candidate findings explicitly discarded with reasons (mostly judged as `.pen`-side modeling artifacts — e.g. SiteHeader's `.pen` node has an inverted light background contradicting the documented dark-band pattern that the .pen's own SiteFooter node gets right — rather than real code defects). Zero new tokens added, `HeroGrainGradient` confirmed untouched via diff, `tsc`/Phase-8-pattern smoke check both green.
 - [Phase 33]: 33-01: Hero `config.ts` gained a `local-landing` variant + 5 new conditional fields (`cityName`, `inlineStat`, `ringSide`, `ringOpacity`, `ringFlipX`), gated on `variant === 'local-landing'` via the same `admin.condition` pattern as the existing `breadcrumbs` field; `Component.tsx` renders city badge (MapPin), stroke-only decorative ellipse SVG (opacity/side/flipX per field), inline stat (CheckCircle2), reusing the existing generic `links` CTA-row unmodified. New block `LocalProofSection` (3-stat array + testimonial group with name/business) modeled directly on `ResultsSection`/`TestimonialSection`, registered in `blockRegistry.tsx` + `Pages/index.ts`. Migration generated and read in full before applying (2 new ENUM types, 8 new tables, new nullable/defaulted columns — zero DROP/TRUNCATE) — applied against the real Neon DB per project database-safety rules (purely additive, no named approval needed). Verified live: throwaway test page (2 Hero local-landing instances — Madrid config ring-right/opacity 0.25/no-flip, Lima config ring-left/opacity 0.35/flipX — + 1 LocalProofSection) rendered correctly on a real `next dev` server, zero errors, both locale routes 200; test page + test route deleted after verification. Zero new Tailwind tokens added. `/seo-tecnico-madrid`/`/seo-tecnico-lima` content untouched (Phase 34 scope).
 - [Phase 26]: 26-01/02/03, 3 planes en 1 wave, ejecutados secuencialmente (sin worktree). CTA ahora anida en un solo `Container` (bug real: el bloque ponía el styling de card en el `<section>` externo sin wrapper, único bloque del sitio que no lo tenía). FAQ con tarjetas bordeadas individuales + ícono `Plus` de lucide. Logos de clientes normalizados por altura, testimonios con fade de scroll. `SiteHeaderChrome` (nuevo client component) separa el estado de scroll y ruta activa del `SiteHeader` server component — mismo patrón SSR-safe que evitó el hydration mismatch de Phase 16 (estado inicial `false` en servidor y cliente, lectura de `window` solo en `useEffect`). Case Studies (listado + detalle) ganó breadcrumbs visuales reales vía `buildCaseStudiesTrail()`, función hermana de `buildTrail()` (Phase 22) sin romper los 4 call sites de Servicios — reemplazó el JSON-LD de breadcrumbs hecho a mano y desalineado que tenía el detalle. Code review encontró 2 bugs reales (no solo deuda): (1) el indicador de "ruta activa" del nav era un no-op — `CMSLink` fuerza `text-primary` incondicional en su rama default, así que el toggle condicional del nav no tenía nada que sobreescribir vía `twMerge`; fix: clase de color explícita en ambos estados (activo/inactivo) para que el dedupe de `twMerge` funcione de verdad, verificado en vivo (inactivos = `text-body`, activo = `text-primary`); (2) el logo del header enlazaba a `/` sin importar el idioma, mandando visitantes EN a la home en español — corregido a locale-aware. 2 hallazgos menores (reference-type nav items sin active-match, `normalizePath` duplicado de `LocaleSwitcher`) aceptados como deuda no bloqueante. 1 ítem de verificación humana no bloqueante (nav móvil/Sheet no inspeccionable por curl, lógica idéntica confirmada por código) — intenté verificarlo yo mismo vía Chrome pero la extensión no respondió (posible prompt de permiso pendiente), no bloqueó el cierre de fase.
+- [Phase 38]: 38-01: Websites collection created exactly per CONTEXT.md/PATTERNS.md, zero deviations; additive migration applied against real Neon Postgres (CREATE TABLE websites + sub-tables + versions tables, FK to clientes/case-studies, no DROP/ALTER on pre-existing tables); payload-types.ts regenerated with Website interface
 
 ### Pending Todos
 
@@ -206,13 +209,13 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-14T06:10:00.000Z
-Stopped at: Milestone v1.9 (Websites Portfolio Section) roadmap created — Phases 38 (Schema & Collection Design), 39 (Frontend Components & Routes), 40 (Content Population), 16/16 requirements (WEB-01..16) mapped, ROADMAP.md/STATE.md/REQUIREMENTS.md traceability written. Not yet planned or executed.
-Resume file: None — next step is `/gsd:plan-phase 38`
+Last session: 2026-07-14T16:38:50.000Z
+Stopped at: Completed 38-01-PLAN.md — Websites collection schema created, registered in payload.config.ts + seoPlugin, additive migration applied against real Neon Postgres, payload-types.ts regenerated. WEB-01..05 done.
+Resume file: None — Phase 38 plan 01 closed; next step is `/gsd:plan-phase 39` (or confirm Phase 38 needs no further plans before moving on)
 
 ## Operator Next Steps
 
-- Run `/gsd:plan-phase 38` to break Phase 38 (Websites — Schema & Collection Design) into executable plans.
+- Phase 38 (Websites — Schema & Collection Design) plan 01 complete — 5/5 requirements (WEB-01..05) done. Confirm no further Phase 38 plans are needed, then run `/gsd:plan-phase 39` for Frontend Components & Routes.
 - Phase 37 (Case Studies Content Audit & Fix, v1.8) stays queued — CONTEXT.md/UI-SPEC.md already approved — resume with `/gsd:plan-phase 37` once v1.9 closes.
 - v1.6 Track B (Content Humanization, Phases 29-31) and Phase 6 (Deploy + Cutover) remain paused, untouched by v1.9, awaiting Juan's separate go-ahead.
 - Optional cleanup (still deferred): archive `.planning/phases/32-*` through `36-*` into `.planning/milestones/v1.7-phases/` via `/gsd:cleanup` if/when Juan wants phase directories tidied up, matching the v1.4/v1.5 precedent.
