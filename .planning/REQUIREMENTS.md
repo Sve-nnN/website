@@ -72,12 +72,12 @@ Coverage: 11/11 v1.8 requirements mapped. No orphans, no duplicates.
 
 #### Frontend & Rutas (Phase B)
 
-- [ ] **WEB-06**: Componente `WebsiteCard` compartido entre el bloque de Home, `ArchiveBlock` y la página de listado
+- [x] **WEB-06**: Componente `WebsiteCard` compartido entre el bloque de Home, `ArchiveBlock` y la página de listado
 - [ ] **WEB-07**: Sección nueva en Home vía `FeaturedWebsitesBlock` + campo `featuredWebsites` en el global `FeaturedContent` — mismo patrón que `FeaturedCaseStudiesBlock`, nunca una sección hardcodeada
 - [ ] **WEB-08**: `ArchiveBlock` extendido con opción `relationTo: 'websites'` (y en `selectedDocs.relationTo`) — no se crea un block nuevo, sigue la convención ya documentada en el código
-- [ ] **WEB-09**: Rutas `/[locale]/websites` (listado) y `/[locale]/websites/[slug]` (detalle) espejando el patrón de `/case-studies`, con `buildWebsitesTrail()` (wrapper sobre `buildSectionTrail()` existente) para breadcrumbs
+- [x] **WEB-09**: Rutas `/[locale]/websites` (listado) y `/[locale]/websites/[slug]` (detalle) espejando el patrón de `/case-studies`, con `buildWebsitesTrail()` (wrapper sobre `buildSectionTrail()` existente) para breadcrumbs
 - [ ] **WEB-10**: JSON-LD tipo `CreativeWork` (no `SoftwareApplication`) en la página de detalle, validado conceptualmente contra Rich Results antes del cierre del milestone
-- [ ] **WEB-11**: `src/lib/sitemap-data.ts` extendido para incluir las URLs de `/websites` y `/websites/[slug]`
+- [x] **WEB-11**: `src/lib/sitemap-data.ts` extendido para incluir las URLs de `/websites` y `/websites/[slug]`
 
 #### Poblado de Contenido Real (Phase C)
 
@@ -108,12 +108,12 @@ Coverage: 11/11 v1.8 requirements mapped. No orphans, no duplicates.
 | WEB-03 | Phase 38 | Complete |
 | WEB-04 | Phase 38 | Complete |
 | WEB-05 | Phase 38 | Complete |
-| WEB-06 | Phase 39 | Pending |
+| WEB-06 | Phase 39 | Complete |
 | WEB-07 | Phase 39 | Pending |
 | WEB-08 | Phase 39 | Pending |
-| WEB-09 | Phase 39 | Pending |
+| WEB-09 | Phase 39 | Complete |
 | WEB-10 | Phase 39 | Pending |
-| WEB-11 | Phase 39 | Pending |
+| WEB-11 | Phase 39 | Complete |
 | WEB-12 | Phase 40 | Pending |
 | WEB-13 | Phase 40 | Pending |
 | WEB-14 | Phase 40 | Pending |
