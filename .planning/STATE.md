@@ -4,13 +4,13 @@ milestone: v1.8
 milestone_name: milestone
 status: completed
 stopped_at: Completed 37-04-PLAN.md
-last_updated: "2026-07-14T19:57:10.513Z"
+last_updated: "2026-07-14T19:59:01.874Z"
 last_activity: 2026-07-14
 progress:
   total_phases: 40
   completed_phases: 23
   total_plans: 91
-  completed_plans: 85
+  completed_plans: 86
   percent: 58
 ---
 
@@ -92,6 +92,7 @@ Last activity: 2026-07-14
 | Phase 37 P01 | 20min | 3 tasks | 1 files |
 | Phase 37-case-studies-content-audit-fix P02 | 45min | 2 tasks | 2 files |
 | Phase 29 P01 | 40min | 2 tasks | 2 files |
+| Phase 29 P02 | 25min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -185,6 +186,7 @@ Recent decisions affecting current work:
 - [Phase 37]: CTA section renders unconditionally (not gated on doc.conclusion) so every case study gets the closing CTA regardless of conclusion field state
 - [Phase ?]: Recharts conditional children must use per-element ternaries, not Fragment-wrapped conditionals (Fragments are silently dropped by Recharts' child-type detection) — Discovered via live-browser mobile check at 375px against real case-study data; fixed and verified in Plan 37-02
 - [Phase ?]: Voice profile primary source is research/voice-sample-juan.md (real writing sample), applied to both ES and EN
+- [Phase ?]: CaseStudies.services[].service: MIGRATION REQUIRED — live values are descriptive Spanish service labels, not proper nouns
 
 ### Pending Todos
 
@@ -226,8 +228,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-14T19:56:14.196Z
-Stopped at: Completed 37-02-PLAN.md
+Last session: 2026-07-14T19:59:01.874Z
+Stopped at: Completed 29-02-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
