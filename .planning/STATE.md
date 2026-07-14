@@ -6,7 +6,7 @@ status: planning
 last_updated: "2026-07-14T02:09:38.495Z"
 last_activity: 2026-07-14
 progress:
-  total_phases: 0
+  total_phases: 5
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** v1.6 milestone — Track A (UI/motion, 26-28) CERRADO. Sigue Track B (humanización de contenido, 29-31); Phase 29 es prerequisito duro (auditoría de campos, migración de schema con backfill, perfil de voz) antes de reescribir contenido real, dado el historial real de pérdida de datos (incidente 2026-07-12). Phase 6 (Deploy + Cutover) sigue en pausa, fuera de scope.
+**Current focus:** v1.7 milestone (Local Landing Design + Component Polish Pass) — Roadmap recién creado, 5 fases nuevas (32-36): baseline de regresión → componentes nuevos de Local Landing (Hero variant + LocalProofSection) → aplicación real a Madrid/Lima → polish pass de 28 componentes restantes → gate de cierre. v1.6 Track B (humanización de contenido, 29-31) queda pausado, retoma después de v1.7 por decisión de Juan. Phase 6 (Deploy + Cutover) sigue en pausa, fuera de scope.
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 32 (Regression Baseline) — not yet started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-14 — Milestone v1.7 started
+Status: Roadmap created, awaiting user approval
+Last activity: 2026-07-14 — v1.7 ROADMAP.md written (Phases 32-36), REQUIREMENTS.md traceability updated (13/13 mapped, 0 orphans)
 
 ## Performance Metrics
 
@@ -89,6 +89,8 @@ Last activity: 2026-07-14 — Milestone v1.7 started
 
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
+
+- [Milestone v1.7]: Roadmap: 5 fases (32-36) derivadas de las 13 requirements v1.7, continuando la numeración desde Phase 31 (v1.6 Track B queda pausado, retoma después). Orden estrictamente secuencial por dependencia real: Phase 32 (baseline REG-01) primero porque debe existir antes de tocar cualquier componente, mismo patrón "baseline antes, gate después" que v1.5 Phase 25 / v1.6 Phase 28; Phase 33 (componentes nuevos LOCAL-01/02) antes de Phase 34 (aplicación real a Madrid/Lima, LOCAL-03/04/05) porque no se puede aplicar lo que no existe; Phase 35 (polish pass de los 28 componentes restantes, POLISH-01..06) va después de terminar todo el trabajo de Local Landing para no pulir esos componentes dos veces; Phase 36 (gate REG-02) cierra el milestone, comparado contra el baseline de Phase 32. Granularity=coarse per config.json, 5 fases mantiene el milestone lean (portfolio site, no enterprise).
 
 - [Milestone v1.4]: Roadmap: 4 fases (18-21) derivadas de los 10 requirements v1.4, continuando la numeración desde Phase 17. Phase 18 (fixes técnicos H1 + metadata Author page) primero por ser independiente y de bajo riesgo/alto impacto. Phase 19 (páginas de servicio + SEO para IA/GEO) antes de Phase 21 porque Home no puede enlazar páginas de servicio que no existen todavía. Phase 20 (geo-pages Lima/Madrid) es independiente — puede correr en paralelo a Phase 19 o después, sin dependencia real. Phase 21 (Home: encabezados + linking a servicios) depende explícitamente de Phase 19.
 - [Milestone v1.2]: Roadmap: 4 fases (12-15) derivadas de los 18 requirements v1.2, continuando la numeración desde Phase 11 (Phase 6 sigue en pausa, sin re-numerar). Phase 12 (Author E-E-A-T) primero por ser el trabajo de mayor superficie (schema + 3 secciones UI + JSON-LD); Phase 13 agrupa las dos poblaciones de contenido de Home (AboutSection features+CTA y FAQ) por ser del mismo tipo de trabajo; Phase 14 (targetKeyword) y Phase 15 (sitemap XSL/HTML) quedan como fases técnicas compactas independientes, sin dependencia real entre sí más allá del orden secuencial de ejecución. v1.2 corre en paralelo a Phase 6 (Deploy + Cutover, en pausa), sin bloquearlo ni depender de su cierre.
@@ -198,10 +200,10 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-13T05:00:00.000Z
-Stopped at: v1.6 ROADMAP.md written (6 phases, 26-31), REQUIREMENTS.md traceability updated (20/20 requirements mapped, 0 orphans). Awaiting user approval of roadmap draft before planning begins.
+Last session: 2026-07-14T00:00:00.000Z
+Stopped at: v1.7 ROADMAP.md written (5 phases, 32-36), REQUIREMENTS.md traceability updated (13/13 requirements mapped, 0 orphans). Awaiting user approval of roadmap draft before planning begins.
 Resume file: None
 
 ## Operator Next Steps
 
-- Review/approve the v1.6 roadmap, then run /gsd:plan-phase 26 to start Track A (UI/UX Polish Pass)
+- Review/approve the v1.7 roadmap, then run /gsd:plan-phase 32 to start with the Regression Baseline

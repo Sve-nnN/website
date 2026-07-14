@@ -44,25 +44,25 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LOCAL-01 | TBD | Pending |
-| LOCAL-02 | TBD | Pending |
-| LOCAL-03 | TBD | Pending |
-| LOCAL-04 | TBD | Pending |
-| LOCAL-05 | TBD | Pending |
-| POLISH-01 | TBD | Pending |
-| POLISH-02 | TBD | Pending |
-| POLISH-03 | TBD | Pending |
-| POLISH-04 | TBD | Pending |
-| POLISH-05 | TBD | Pending |
-| POLISH-06 | TBD | Pending |
-| REG-01 | TBD | Pending |
-| REG-02 | TBD | Pending |
+| LOCAL-01 | Phase 33 | Pending |
+| LOCAL-02 | Phase 33 | Pending |
+| LOCAL-03 | Phase 34 | Pending |
+| LOCAL-04 | Phase 34 | Pending |
+| LOCAL-05 | Phase 34 | Pending |
+| POLISH-01 | Phase 35 | Pending |
+| POLISH-02 | Phase 35 | Pending |
+| POLISH-03 | Phase 35 | Pending |
+| POLISH-04 | Phase 35 | Pending |
+| POLISH-05 | Phase 35 | Pending |
+| POLISH-06 | Phase 35 | Pending |
+| REG-01 | Phase 32 | Pending |
+| REG-02 | Phase 36 | Pending |
 
 **Coverage:**
 - v1 requirements: 13 total
-- Mapped to phases: 0 (pendiente roadmapper)
-- Unmapped: 13 ⚠️
+- Mapped to phases: 13
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-07-13*
-*Last updated: 2026-07-13 after initial definition (milestone v1.7)*
+*Last updated: 2026-07-13 after roadmap creation (milestone v1.7) — 13/13 requirements mapped to Phases 32-36, 0 orphans*

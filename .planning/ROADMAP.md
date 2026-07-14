@@ -16,6 +16,7 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 
 **Milestone v1.5 — UI/UX Pro Max: Polish y Competitividad, creado 2026-07-12:** Pasada de diseño profesional sobre Servicios y Home, priorizada por research de competencia directa (Arianna Lupi, Aleyda Solis — ambas sin URLs de servicio dedicadas ni breadcrumbs, confirmando que la arquitectura de landings individuales de Phase 19 ya es una ventaja estructural a pulir, no abandonar). 4 fases nuevas (22-25), continuando la numeración desde Phase 21, ordenadas por riesgo ascendente de regresión/DB per `research/SUMMARY.md`: breadcrumbs visual + JSON-LD en Servicios (Phase 22, sin riesgo de schema, sienta el helper `buildTrail()` compartido); canonical/hreflang en las 4 combinaciones de URL de servicio + `metadataBase` sitewide (Phase 23, cierra el gap de contenido duplicado dual-slug antes de que el rediseño lo vuelva más visible); bloque `ServicesShowcase` en Home leyendo `SERVICE_SLUGS` en vivo (Phase 24, aditivo, sin tocar columnas existentes); y polish visual + prueba social reforzada en las 4 landings de servicio (Phase 25, la fase de mayor superficie/riesgo de regresión, por eso va última, con gates explícitos de Lighthouse/CWV, paridad EN/ES y preservación de H1/JSON-LD contra baseline pre-pase). Sin dependencias nuevas de runtime (shadcn/Radix/Tailwind ya cubre todo lo necesario); sin tabla de precios (regla dura del proyecto); sin colección `Services` nueva (se reutiliza `pages`, Key Decision D-01). Ver `.planning/REQUIREMENTS.md` sección "v1.5 Requirements" para el detalle completo.
 **Milestone v1.6 — UI/UX Pro Max II: Componentes, Motion y Voz, creado 2026-07-13:** Segunda pasada de diseño sobre los componentes/plantillas que v1.5 no tocó (navbar, heroes de listing, CTA strip, FAQ, clientes, testimonios, grillas de blog, case studies), sumando micro-animaciones consistentes con la estética del hero de Home sin pegarle a performance, y humanizando todo el copy real de la base de datos con la voz de Juan calibrada contra sus competidores directos (Arianna Lupi, Aleyda Solis). Dos tracks independientes con historial de riesgo muy distinto: Track A (UI/motion, fases 26-28, continuando la numeración desde Phase 25) es una serie de cambios de código con gate de build/Lighthouse; Track B (humanización de contenido, fases 29-31) es la parte de mayor riesgo del milestone — el proyecto ya tiene un historial documentado de 3 bugs reales de campos no-localizados pisados por escrituras bulk y un incidente real de pérdida de datos (2026-07-12, recuperado vía Neon point-in-time restore) — por eso Phase 29 (auditoría de campos + snapshot + los 2 fixes de schema ya aprobados por Juan) es un prerequisito duro antes de reescribir una sola palabra, y la reescritura real (Phases 30-31) se ordena por riesgo/blast-radius ascendente (globals+páginas núcleo+servicios primero, posts+case studies al final, por ser lo de mayor volumen y visibilidad SEO). Ver `.planning/REQUIREMENTS.md` sección "v1.6 Requirements" y `.planning/research/SUMMARY-v1.6.md` para el detalle completo.
+**Milestone v1.7 — Local Landing Design + Component Polish Pass, creado 2026-07-13:** El archivo de diseño Pencil `designs/current-site-real.pen` (réplica fiel del design system actual, no un rediseño — ver `designs/DESIGN-SYSTEM-PEN.md`) aporta solo 2 piezas nuevas: un variant `local-landing` para el bloque Hero (badge de ciudad, anillo decorativo, stat inline, CTA row) y un block nuevo `LocalProofSection` (prueba social localizada), pensados para diferenciar estructuralmente las landings de Lima y Madrid — hoy ambas reusan bloques genéricos sin diferenciación visual real. El resto del .pen (28 componentes) ya tiene equivalente exacto en código, así que el milestone suma una pasada de polish puntual sobre esos 28 componentes. 5 fases nuevas (32-36), continuando la numeración desde Phase 31 (v1.6 Track B queda pausado, retoma después): baseline de regresión antes de tocar nada (Phase 32, mismo patrón que v1.5 Phase 25 / v1.6 Phase 28); construcción de los 2 componentes nuevos (Phase 33); aplicación real y diferenciada a Madrid/Lima (Phase 34, depende de Phase 33); pasada de polish visual sobre los 28 componentes restantes (Phase 35); y gate de cero regresión al cierre (Phase 36, última, comparado contra el baseline de Phase 32). Ver `.planning/REQUIREMENTS.md` sección "v1 Requirements" (milestone v1.7) para el detalle completo.
 
 ## Phases
 
@@ -62,6 +63,11 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 29: Content Humanization Safety Net** - Auditoría de campos localizados, snapshot completo, 2 fixes de schema aprobados por Juan, perfil de voz escrito (Track B, prerequisito duro)
 - [ ] **Phase 30: Content Humanization — Globals, Core Pages, Services & Geo** - Copy reescrito en la voz de Juan para el primer tramo, de menor riesgo (Track B)
 - [ ] **Phase 31: Content Humanization — Posts & Case Studies + Verificación Final** - Copy de mayor volumen/visibilidad SEO reescrito, verificación final conjunta de ambos tracks (Track B, cierre de milestone)
+- [ ] **Phase 32: Regression Baseline** - Baseline de Lighthouse/CWV + H1/JSON-LD capturado antes de tocar cualquier componente (v1.7)
+- [ ] **Phase 33: Local Landing Components** - Hero variant `local-landing` + block `LocalProofSection` construidos y registrados (v1.7)
+- [ ] **Phase 34: Local Landing Application (Madrid/Lima)** - `/seo-tecnico-madrid` y `/seo-tecnico-lima` usan los componentes nuevos con diferenciación estructural real y contenido propio (v1.7)
+- [ ] **Phase 35: Component Polish Pass** - Revisión `ui-ux-pro-max` de los 28 componentes restantes contra el .pen, micro-mejoras implementadas en código (v1.7)
+- [ ] **Phase 36: Regression Gate** - Gate de cero regresión al cierre, comparado contra el baseline de Phase 32 (v1.7, cierre de milestone)
 
 ## Phase Details
 
@@ -776,10 +782,84 @@ Plans:
 **Plans**: TBD
 
 
+### Phase 32: Regression Baseline
+
+**Goal**: Existe un snapshot medible (Lighthouse/CWV + H1/JSON-LD) del estado actual del sitio, capturado antes de que cualquier plan de este milestone toque un componente, siguiendo el mismo patrón "baseline antes, gate después" que v1.5 Phase 25 y v1.6 Phase 28.
+**Depends on**: Nothing (primera fase del milestone; continúa la numeración desde Phase 31, que queda pausada)
+**Requirements**: REG-01
+**Success Criteria** (what must be TRUE):
+
+  1. Lighthouse mobile capturado (misma tooling que Phase 25/28, `scripts/lighthouse-mobile.mjs` o equivalente) para un set representativo de rutas, incluyendo explícitamente `/seo-tecnico-madrid` y `/seo-tecnico-lima` (únicas rutas que Phase 34 va a modificar estructuralmente)
+  2. H1 y JSON-LD capturados para el mismo set de rutas, mismo patrón de snapshot que fases anteriores
+  3. El snapshot queda documentado en un archivo committeado (ej. `32-REGRESSION-BASELINE.md`) antes de que arranque cualquier plan de Phase 33
+  4. Ningún componente ni contenido es modificado durante esta fase — es puramente de medición
+
+**Plans**: TBD
+
+### Phase 33: Local Landing Components
+
+**Goal**: Los 2 componentes nuevos que el .pen aporta (Hero variant `local-landing`, block `LocalProofSection`) existen en código, están registrados en Payload, y renderizan correctamente contra contenido de prueba — sin tocar todavía las páginas reales de Madrid/Lima.
+**Depends on**: Phase 32 (baseline debe existir antes de tocar código)
+**Requirements**: LOCAL-01, LOCAL-02
+**Success Criteria** (what must be TRUE):
+
+  1. `src/blocks/Hero/config.ts` acepta un nuevo valor de variant `local-landing`, y `Component.tsx` renderiza badge de ciudad (ícono map-pin + nombre), anillo decorativo (ellipse con stroke, sin fill), stat inline con check-icon, y CTA row cuando ese variant está activo
+  2. Existe un block Payload nuevo `LocalProofSection` (config + componente React) registrado en la lista de bloques de `Pages` y en el registry de `RenderBlocks`, editable desde `/admin` con 3 stats numéricos + testimonial card (nombre/negocio)
+  3. Ambos componentes reusan únicamente tokens de color/tipografía/espaciado ya existentes — cero tokens nuevos agregados a `tailwind.config.ts`/`globals.css`
+  4. Ambos renderizan sin error contra un dev server real cuando se agregan a una página de prueba (seed o vía admin), confirmado en vivo
+
+**Plans**: TBD
+
+### Phase 34: Local Landing Application (Madrid/Lima)
+
+**Goal**: Las 2 landings locales reales dejan de reusar bloques genéricos sin diferenciación y pasan a tener una identidad visual/estructural propia por ciudad, con contenido real (no placeholder).
+**Depends on**: Phase 33 (los componentes deben existir antes de aplicarlos)
+**Requirements**: LOCAL-03, LOCAL-04, LOCAL-05
+**Success Criteria** (what must be TRUE):
+
+  1. `/seo-tecnico-madrid` usa el Hero variant `local-landing` con el anillo decorativo a la derecha, opacity 0.25, y una CTA row de un solo botón primario
+  2. `/seo-tecnico-lima` usa el Hero variant `local-landing` con el anillo espejado (`flipX`) a la izquierda, opacity 0.35, y una CTA row de botón primario + botón outline ("Ver casos en Lima")
+  3. Ambas landings incorporan `LocalProofSection` con stats y testimonial reales y propios de cada ciudad (no contenido templated/placeholder)
+  4. La diferenciación Madrid vs Lima es estructural, confirmable por diff de código (props/config), no solo de copy — ambas rutas devuelven 200 verificado en vivo
+
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 35: Component Polish Pass
+
+**Goal**: Los 28 componentes restantes que el .pen ya mapea 1:1 contra el código actual reciben una revisión visual profesional (`ui-ux-pro-max`), y toda micro-mejora genuina encontrada queda implementada en código, no solo documentada.
+**Depends on**: Phase 34 (evita pulir el Hero `local-landing`/`LocalProofSection` dos veces — la superficie completa del milestone ya existe antes de esta pasada)
+**Requirements**: POLISH-01, POLISH-02, POLISH-03, POLISH-04, POLISH-05, POLISH-06
+**Success Criteria** (what must be TRUE):
+
+  1. Los 5 grupos de componentes (UI primitives, chrome, Hero variants existentes, bloques de contenido, componentes de autoría) quedan revisados contra su definición exacta en el .pen, con hallazgos documentados por grupo
+  2. Toda micro-mejora genuina encontrada queda implementada en código, o descartada con razón explícita registrada cuando el .pen y el código ya son visualmente equivalentes
+  3. `HeroGrainGradient` del Hero de Home queda intacto, confirmado por diff (no se toca, ya validado en v1.3)
+  4. Cero tokens de diseño nuevos agregados — solo ajustes sobre tokens ya existentes
+  5. `tsc --noEmit` limpio y los smoke checks existentes (ej. patrón de Phase 8) siguen en verde después de los cambios
+
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 36: Regression Gate
+
+**Goal**: El milestone cierra solo si una comparación medible contra el baseline de Phase 32 confirma cero regresión de performance/SEO atribuible al trabajo de Phase 33-35.
+**Depends on**: Phase 35 (corre después de todo el trabajo de Local Landing y Polish)
+**Requirements**: REG-02
+**Success Criteria** (what must be TRUE):
+
+  1. La misma medición de Lighthouse/CWV de Phase 32 se vuelve a correr sobre las mismas rutas y se diffea programáticamente contra el baseline
+  2. H1/JSON-LD se vuelven a verificar en las mismas rutas y se diffean contra el baseline de Phase 32
+  3. Queda un veredicto explícito PASS/FAIL registrado en un documento (ej. `36-REGRESSION-DIFF.md`), con gap closure corrido si el veredicto es FAIL (mismo patrón que Phase 25/28)
+  4. El milestone solo se considera cerrable cuando el gate final es PASS
+
+**Plans**: TBD
+
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 (v1.1-v1.5 cerrados; v1.6 [Phase 26-31] planificado — Track A [26-28: UI polish → motion library → motion rollout] y Track B [29-31: safety net → humanización ascendente por riesgo], Phase 29 es prerequisito duro de 30/31 per research/SUMMARY-v1.6.md; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 → 32 → 33 → 34 → 35 → 36 (v1.1-v1.5 cerrados; v1.6 Track A [26-28] cerrado, Track B [29-31] pausado, retoma después de v1.7; v1.7 [Phase 32-36] planificado — baseline de regresión → componentes nuevos de Local Landing → aplicación real a Madrid/Lima → polish pass de los 28 componentes restantes → gate de cierre; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -818,4 +898,9 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 29. Content Humanization Safety Net | 0/TBD | Not started | - |
 | 30. Content Humanization — Globals, Core Pages, Services & Geo | 0/TBD | Not started | - |
 | 31. Content Humanization — Posts & Case Studies + Verificación Final | 0/TBD | Not started | - |
+| 32. Regression Baseline | 0/TBD | Not started | - |
+| 33. Local Landing Components | 0/TBD | Not started | - |
+| 34. Local Landing Application (Madrid/Lima) | 0/TBD | Not started | - |
+| 35. Component Polish Pass | 0/TBD | Not started | - |
+| 36. Regression Gate | 0/TBD | Not started | - |
 </content>
