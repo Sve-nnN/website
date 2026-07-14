@@ -247,6 +247,7 @@ export interface Page {
       | SectionBlock
       | FeaturedPostsBlock
       | FeaturedCaseStudiesBlock
+      | FeaturedWebsitesBlock
       | ClientLogosBlock
       | AboutSectionBlock
       | ServicesShowcaseBlock
@@ -685,6 +686,62 @@ export interface TestimonialSectionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "websites".
+ */
+export interface Website {
+  id: number;
+  title: string;
+  role?: string | null;
+  industry?: string | null;
+  year?: number | null;
+  highlights?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  stack?:
+    | {
+        tag: string;
+        id?: string | null;
+      }[]
+    | null;
+  challenges?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  screenshots?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  lighthouse?: {
+    performance?: number | null;
+    accessibility?: number | null;
+    bestPractices?: number | null;
+    seo?: number | null;
+  };
+  lighthouseCapturedAt: string;
+  client?: (number | null) | Cliente;
+  relatedCaseStudy?: (number | null) | CaseStudy;
+  slug?: string | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
@@ -982,6 +1039,20 @@ export interface FeaturedCaseStudiesBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedWebsitesBlock".
+ */
+export interface FeaturedWebsitesBlock {
+  /**
+   * Section heading — editable per page instance.
+   */
+  title?: string | null;
+  limit?: number | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuredWebsitesBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ClientLogosBlock".
  */
 export interface ClientLogosBlock {
@@ -1188,62 +1259,6 @@ export interface SpeakingEvent {
   flyer?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "websites".
- */
-export interface Website {
-  id: number;
-  title: string;
-  role?: string | null;
-  industry?: string | null;
-  year?: number | null;
-  highlights?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  stack?:
-    | {
-        tag: string;
-        id?: string | null;
-      }[]
-    | null;
-  challenges?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  screenshots?:
-    | {
-        image: number | Media;
-        id?: string | null;
-      }[]
-    | null;
-  lighthouse?: {
-    performance?: number | null;
-    accessibility?: number | null;
-    bestPractices?: number | null;
-    seo?: number | null;
-  };
-  lighthouseCapturedAt: string;
-  client?: (number | null) | Cliente;
-  relatedCaseStudy?: (number | null) | CaseStudy;
-  slug?: string | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1802,6 +1817,7 @@ export interface PagesSelect<T extends boolean = true> {
               section?: T | SectionBlockSelect<T>;
               featuredPostsBlock?: T | FeaturedPostsBlockSelect<T>;
               featuredCaseStudiesBlock?: T | FeaturedCaseStudiesBlockSelect<T>;
+              featuredWebsitesBlock?: T | FeaturedWebsitesBlockSelect<T>;
               clientLogosBlock?: T | ClientLogosBlockSelect<T>;
               aboutSection?: T | AboutSectionBlockSelect<T>;
               servicesShowcase?: T | ServicesShowcaseBlockSelect<T>;
@@ -2082,6 +2098,16 @@ export interface FeaturedPostsBlockSelect<T extends boolean = true> {
  * via the `definition` "FeaturedCaseStudiesBlock_select".
  */
 export interface FeaturedCaseStudiesBlockSelect<T extends boolean = true> {
+  title?: T;
+  limit?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedWebsitesBlock_select".
+ */
+export interface FeaturedWebsitesBlockSelect<T extends boolean = true> {
   title?: T;
   limit?: T;
   id?: T;
@@ -2810,6 +2836,10 @@ export interface FeaturedContent {
    * Drives the Home page "Featured Case Studies" section.
    */
   featuredCaseStudies?: (number | CaseStudy)[] | null;
+  /**
+   * Drives the Home page "Featured Websites" section.
+   */
+  featuredWebsites?: (number | Website)[] | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2913,6 +2943,7 @@ export interface FooterSelect<T extends boolean = true> {
 export interface FeaturedContentSelect<T extends boolean = true> {
   featuredPosts?: T;
   featuredCaseStudies?: T;
+  featuredWebsites?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
