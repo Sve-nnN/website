@@ -885,7 +885,7 @@ Plans:
 
 Plans:
 
-- [ ] 37-01-PLAN.md — Author dedup (CASE-07) + dynamic per-doc JSON-LD (CASE-08) + closing CTA structural addition (CASE-11), all in case-studies/[slug]/page.tsx
+- [x] 37-01-PLAN.md — Author dedup (CASE-07) + dynamic per-doc JSON-LD (CASE-08) + closing CTA structural addition (CASE-11), all in case-studies/[slug]/page.tsx
 - [ ] 37-02-PLAN.md — CaseStudyResultsChart.tsx dual-axis magnitude bucketing (CASE-09) + mobile verification (CASE-10)
 - [ ] 37-03-PLAN.md — Full 6-doc audit + GSC property mapping, fix docs 15-17 (challenge/solution/kpis/results.metrics + real GSC data)
 - [ ] 37-04-PLAN.md — Fix docs 18-19, anonymize doc 20 (CASE-03), final verification returning full raw JSON of all 6 docs (CASE-05)
@@ -999,7 +999,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 34. Local Landing Application (Madrid/Lima) | 1/1 | Complete | 2026-07-14 |
 | 35. Component Polish Pass | 1/1 | Complete | 2026-07-14 |
 | 36. Regression Gate | 1/1 | Complete | 2026-07-14 |
-| 37. Case Studies Content Audit & Fix | 0/TBD | Not started | - |
+| 37. Case Studies Content Audit & Fix | 1/4 | In Progress|  |
 | 38. Websites — Schema & Collection Design | 1/1 | Complete   | 2026-07-14 |
 | 39. Websites — Frontend Components & Routes | 4/4 | Complete   | 2026-07-14 |
 | 40. Websites — Content Population (Real Data Capture) | 1/1 | Complete   | 2026-07-14 |
