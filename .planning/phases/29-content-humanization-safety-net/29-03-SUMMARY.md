@@ -29,16 +29,16 @@ key-decisions:
   - "Migration generated via `payload migrate:create` and manually edited to insert backfill INSERTs before DROP COLUMN, mirroring the corrected Phase 19 CallToAction pattern exactly — Payload's auto-diff does not preserve data by default (confirmed, same behavior as the original 2026-07-12 incident)"
   - "Migration is NOT applied. Per CLAUDE.md Database Safety section, this plan is BLOCKED at Task 2 (checkpoint:decision, gate=blocking) pending Juan's explicit named approval before running `payload migrate` against the real Neon Postgres database"
 
-requirements-completed: []  # VOICE-02 NOT yet complete — migration generated/reviewed but not applied; will mark complete only after Task 3 runs post-approval
+requirements-completed: [VOICE-02]  # Juan approved directly in the coordinating conversation; migration applied successfully against production Neon Postgres
 
 # Metrics
-duration: ~8min (Task 1 only; plan paused before Task 2/3)
+duration: ~10min (all 3 tasks)
 completed: 2026-07-14
 ---
 
 # Phase 29 Plan 03: TestimonialsCarousel.title Localization Migration Summary
 
-**Field localized and backfill migration generated + corrected, but BLOCKED pending Juan's named approval before applying to production Neon Postgres — plan is NOT complete.**
+**Field localized, migration generated, reviewed, approved by Juan directly, and applied successfully against production Neon Postgres. Plan complete.**
 
 ## Performance
 
@@ -87,11 +87,18 @@ None - plan executed exactly as written for Task 1. The plan explicitly anticipa
 
 None - no external service configuration required. This is a pending DATABASE APPROVAL, not external service setup — see "BLOCKING: Awaiting Juan's Approval" below.
 
-## BLOCKING: Awaiting Juan's Approval
+## Task 2/3: Approval received, migration applied
 
-**This plan is NOT complete.** Task 2 (checkpoint:decision, `gate="blocking"`) requires Juan's explicit **named** approval before Task 3 can run `payload migrate` against the real production Neon Postgres database.
+Juan approved directly in the coordinating conversation (subagents twice correctly refused relayed/second-hand approval per their instructions — an architectural limit, since only the orchestrating session has a direct channel to Juan; the orchestrating session then applied the migration itself once Juan's own message was received).
 
-**Full generated + corrected migration file** (`src/migrations/20260714_200158.ts`):
+`npx payload migrate` ran clean:
+```
+Migrating: 20260714_200158
+Migrated:  20260714_200158 (462ms)
+```
+`npx payload generate:types` regenerated `payload-types.ts` (confirmed `TestimonialsCarouselBlock.title` present). `npx tsc --noEmit` passes clean. Verified backfill via a temporary read-only Local API script (deleted after use) — no data loss confirmed on inspected docs.
+
+**Full applied migration file** (`src/migrations/20260714_200158.ts`):
 
 ```typescript
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
@@ -153,16 +160,10 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
 
 **No concerns identified.** This migration follows the correct backfill-before-drop pattern and does not repeat the 2026-07-12 incident's data-loss bug.
 
-**Next steps:**
-1. Juan reads the migration SQL above (or the file at `src/migrations/20260714_200158.ts`)
-2. Juan responds with explicit named approval (e.g., "Juan aprueba") to authorize Task 3, or rejects/requests changes
-3. Only after named approval: run `npx payload migrate` (or `CI=true npx payload migrate` if non-interactive) to apply against the real Neon Postgres DB, then `npx payload generate:types` to regenerate `src/payload-types.ts`
-4. Once Task 3 completes, update this SUMMARY, mark `VOICE-02` as complete in `requirements-completed`, and run the plan's final metadata commit / STATE.md updates
-
 ## Next Phase Readiness
 
-Not ready — this plan is blocked pending Juan's approval. Do NOT advance STATE.md's plan counter or mark VOICE-02 complete until Task 3 has run successfully post-approval. Phase 30/31 content rewrite work touching TestimonialsCarousel should wait for this migration to be applied so `title` is safely per-locale editable.
+Ready. `TestimonialsCarousel.title` is now safely per-locale editable — Phase 30/31 content rewrite work can proceed against it without risk of locale collapse.
 
 ---
 *Phase: 29-content-humanization-safety-net*
-*Status: BLOCKED — awaiting Juan's named approval (Task 2 checkpoint)*
+*Status: COMPLETE*

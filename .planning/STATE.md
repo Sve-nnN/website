@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.8
+milestone: v1.6
 milestone_name: milestone
-status: completed
-stopped_at: Completed 37-04-PLAN.md
-last_updated: "2026-07-14T19:59:01.874Z"
+status: in_progress
+stopped_at: Completed 29-04-PLAN.md
+last_updated: "2026-07-14T20:20:00.000Z"
 last_activity: 2026-07-14
 progress:
   total_phases: 40
-  completed_phases: 23
-  total_plans: 91
-  completed_plans: 86
-  percent: 58
+  completed_phases: 24
+  total_plans: 95
+  completed_plans: 90
+  percent: 60
 ---
 
 # Project State
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** v1.9 (Websites Portfolio Section, Phases 38-40) closed. v1.8 (Phase 37, Case Studies Content Audit & Fix) also closed — 4 plans (37-01..04), all 11 requirements (CASE-01..11) complete. Dos candidatos siguen pausados esperando decisión de Juan: v1.6 Track B (humanización de contenido, 29-31) y Phase 6 (Deploy + Cutover).
+**Current focus:** v1.9 and v1.8 closed (Phases 38-40 and 37). v1.6 Track B (Content Humanization) resumed at Juan's explicit go-ahead (`--from 29`) — Phase 29 (Safety Net) COMPLETE: field audit, voice profile (grounded in research/voice-sample-juan.md, Juan's fixed real-voice reference), content snapshot script, and both blocking schema migrations (TestimonialsCarousel.title, CaseStudies.services[].service) approved directly by Juan and applied to production Neon. Ready for Phase 30 (first content-rewrite tranche). Phase 6 (Deploy + Cutover) remains paused separately.
 
 ## Current Position
 
-Phase: 37 — COMPLETE (4/4 plans)
+Phase: 29 — COMPLETE (4/4 plans)
 Plan: 04 of 4
-Status: Phase complete, milestone v1.8 closed
+Status: Phase complete, safety net ready — Phase 30 (Content Humanization tranche 1) unblocked
 Last activity: 2026-07-14
 
 ## Performance Metrics

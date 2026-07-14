@@ -146,19 +146,19 @@
 
 Five items surfaced by the sweep require explicit resolution or documentation before the Phase 30/31 content rewrite begins.
 
-### 1. `TestimonialsCarousel.title` — non-localized, migration required
+### 1. `TestimonialsCarousel.title` — RESOLVED, migrated and applied
 
-**Status:** Migration required.
+**Status:** RESOLVED — migrated to `localized: true`, backfilled, applied 2026-07-14 (Juan's direct named approval, migration `20260714_200158.ts`).
 
-`src/blocks/TestimonialsCarousel/config.ts` defines `title` as a plain `text` field without `localized: true`. This is one of the three fields named in ROADMAP.md's repeated-bug list (alongside `CallToAction.richText` and `Header.navItems.url`, both already fixed). The fix is a config change (`localized: true`) plus a backfill-then-drop-column migration, following the corrected pattern in `src/migrations/20260712_202954_phase19_calltoaction_localized.ts` — copy the existing value into both `es`/`en` locale rows before dropping the shared column.
+`src/blocks/TestimonialsCarousel/config.ts` defines `title` as a plain `text` field without `localized: true`. This is one of the three fields named in ROADMAP.md's repeated-bug list (alongside `CallToAction.richText` and `Header.navItems.url`, both already fixed). The fix is a config change (`localized: true`) plus a backfill-then-drop-column migration, following the corrected pattern in `src/migrations/20260712_202954_phase19_calltoaction_localized.ts` — copy the existing value into both `es`/`en` locale rows before dropping the shared column. Applied successfully, verified via read-back — no data lost.
 
 Cross-reference: VOICE-02, resolved in Plan 29-03.
 
-### 2. `CaseStudies.services[].service` — non-localized, MIGRATION REQUIRED
+### 2. `CaseStudies.services[].service` — RESOLVED, migrated and applied
 
-**Status:** Resolved — MIGRATION REQUIRED. See `29-CASESTUDIES-SERVICES-DECISION.md` for full evidence.
+**Status:** RESOLVED — migrated to `localized: true`, backfilled, applied 2026-07-14 (Juan's direct named approval, migration `20260714_200220_phase29_casestudies_services_localized.ts`). See `29-CASESTUDIES-SERVICES-DECISION.md` for full evidence.
 
-`src/collections/CaseStudies/index.ts` defines `services[].service` as a plain `text` field, not localized. Live-data investigation (Plan 29-02, queried via `payload.find({ collection: 'case-studies', locale: 'all' })` against real production data) found the actual values are descriptive Spanish service-category labels — "SEO técnico", "Estrategia de contenido", "Optimización on-page", "SEO local", "Contenido educativo de salud", "Estrategia de contenido legal", "Estrategia de contenido de producto" — not proper nouns or brand terms. These need real EN translations, so this field requires the same backfill-then-drop-column migration treatment as `TestimonialsCarousel.title`.
+`src/collections/CaseStudies/index.ts` defines `services[].service` as a plain `text` field, not localized. Live-data investigation (Plan 29-02, queried via `payload.find({ collection: 'case-studies', locale: 'all' })` against real production data) found the actual values are descriptive Spanish service-category labels — "SEO técnico", "Estrategia de contenido", "Optimización on-page", "SEO local", "Contenido educativo de salud", "Estrategia de contenido legal", "Estrategia de contenido de producto" — not proper nouns or brand terms. Applied successfully, backfill verified via read-back on docs 18-20 — `en` currently holds the Spanish placeholder pending real translation in Phase 30/31, no data lost.
 
 Cross-reference: VOICE-03, investigated in Plan 29-02, resolved in Plan 29-04.
 

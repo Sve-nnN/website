@@ -3,7 +3,7 @@ phase: 29-content-humanization-safety-net
 plan: 04
 subsystem: content-localization
 tags: [payload, postgres, migration, localization, case-studies]
-status: BLOCKED — awaiting Juan's named approval
+status: COMPLETE
 dependency-graph:
   requires: ["29-02"]
   provides: []
@@ -29,11 +29,18 @@ metrics:
 
 # Phase 29 Plan 04: CaseStudies.services[].service Localization Summary
 
-**One-liner:** Localized `CaseStudies.services[].service` schema and generated a backfill-then-drop migration copying all 19 existing Spanish service-category values into both `es`/`en` locale rows — migration is generated, reviewed, and NOT applied, pending Juan's named approval.
+**One-liner:** Localized `CaseStudies.services[].service` schema and applied a backfill-then-drop migration copying all 19 existing Spanish service-category values into both `es`/`en` locale rows — approved by Juan directly and applied successfully against production Neon Postgres.
 
-## Status: BLOCKED on Juan's named approval (Task 2 checkpoint)
+## Status: COMPLETE — approved and applied
 
-This plan is `autonomous: false`. Per CLAUDE.md's Database Safety section (and the 2026-07-12 incident where an unattended migration DROP'd a populated column without backfill, wiping Home page CTA copy — recovered via Neon point-in-time restore), **Task 2's blocking checkpoint requires Juan's explicit named approval before `payload migrate` is run against the real production Neon Postgres.** That approval has not yet been given in this session, so Task 2 and Task 3 (apply + field-audit closeout) were not executed.
+Juan approved directly in the coordinating conversation (subagents twice correctly refused relayed/second-hand approval per their own instructions — an architectural limit, since only the orchestrating session has a direct channel to Juan; the orchestrating session applied the migration itself once Juan's own message was received).
+
+`npx payload migrate` ran clean:
+```
+Migrating: 20260714_200220_phase29_casestudies_services_localized
+Migrated:  20260714_200220_phase29_casestudies_services_localized (310ms)
+```
+`npx payload generate:types` regenerated `payload-types.ts`. `npx tsc --noEmit` passes clean. Verified backfill via a temporary read-only Local API script (deleted after use): all 19 real service values across docs 18-20 correctly copied to both `es` and `en` (e.g. `{"es":"SEO técnico","en":"SEO técnico"}`) — `en` currently holds the Spanish placeholder pending real translation in Phase 30/31, no data lost.
 
 ## What was done (Task 1 — complete)
 
@@ -125,20 +132,14 @@ No concerns — the migration is structurally identical to the corrected referen
 
 Plan 29-03 (TestimonialsCarousel.title migration) ran concurrently against the same working tree. Both plans edit `src/migrations/index.ts` (shared migration registry) via `payload migrate:create`. Checked `git log` before staging: 29-03 committed first (`feaec7f`), and because both agents' edits landed in the same shared `index.ts` working file before either committed, 29-03's commit incidentally included this plan's migration import/registry entry as well. This is a file-overlap artifact, not a functional problem — `index.ts` now correctly registers both migrations, and this plan's commit (`2dd4ede`) only added the `CaseStudies` collection field change and the new migration files, with no double-committed or conflicting content. Verified via `git show feaec7f -- src/migrations/index.ts` and confirmed no other file collisions occurred.
 
-## What was NOT done (blocked)
+## Task 2/3: Done
 
-- Task 2 (blocking checkpoint): Juan has not yet given named approval to apply this migration.
-- Task 3: `payload migrate` was NOT run, `payload generate:types` was NOT run, and `29-FIELD-AUDIT.md`'s "Pending investigation" placeholder for `CaseStudies.services[].service` was NOT yet updated to a final resolved status — all deferred until Task 2's approval is recorded.
-
-## Next steps
-
-1. Juan reviews the full migration content above (up/down SQL).
-2. Juan responds with named approval (e.g. "Juan aprueba") to proceed, or requests changes.
-3. Once approved, a follow-up execution resumes at Task 2→3: run `npx payload migrate` (or `CI=true npx payload migrate`), run `npx payload generate:types`, and update `29-FIELD-AUDIT.md`'s Action Needed #2 entry to "RESOLVED — migrated to localized:true, backfilled, applied `<date>`".
+- Task 2 (blocking checkpoint): resolved — Juan approved directly.
+- Task 3: `payload migrate` and `payload generate:types` both ran clean. `29-FIELD-AUDIT.md`'s entry for `CaseStudies.services[].service` updated to "RESOLVED — migrated to localized:true, backfilled, applied 2026-07-14".
 
 ## Deviations from Plan
 
-None beyond the expected checkpoint stop — Task 1 executed exactly as planned; Task 2/3 correctly withheld pending required human approval, per both the plan's own `autonomous: false` designation and CLAUDE.md's Database Safety hard rule.
+None beyond the expected checkpoint stop-and-resume — Task 1 executed exactly as planned; Task 2/3 correctly withheld until Juan's own direct approval was received (two subagent attempts correctly refused relayed approval first, per their instructions), then completed without issue once the orchestrating session applied the migration with Juan's direct confirmation in hand.
 
 ## Self-Check
 
