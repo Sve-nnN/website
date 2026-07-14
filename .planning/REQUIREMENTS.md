@@ -103,21 +103,21 @@ Coverage: 11/11 v1.8 requirements mapped. No orphans, no duplicates.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| WEB-01 | TBD | Pending |
-| WEB-02 | TBD | Pending |
-| WEB-03 | TBD | Pending |
-| WEB-04 | TBD | Pending |
-| WEB-05 | TBD | Pending |
-| WEB-06 | TBD | Pending |
-| WEB-07 | TBD | Pending |
-| WEB-08 | TBD | Pending |
-| WEB-09 | TBD | Pending |
-| WEB-10 | TBD | Pending |
-| WEB-11 | TBD | Pending |
-| WEB-12 | TBD | Pending |
-| WEB-13 | TBD | Pending |
-| WEB-14 | TBD | Pending |
-| WEB-15 | TBD | Pending |
-| WEB-16 | TBD | Pending |
+| WEB-01 | Phase 38 | Pending |
+| WEB-02 | Phase 38 | Pending |
+| WEB-03 | Phase 38 | Pending |
+| WEB-04 | Phase 38 | Pending |
+| WEB-05 | Phase 38 | Pending |
+| WEB-06 | Phase 39 | Pending |
+| WEB-07 | Phase 39 | Pending |
+| WEB-08 | Phase 39 | Pending |
+| WEB-09 | Phase 39 | Pending |
+| WEB-10 | Phase 39 | Pending |
+| WEB-11 | Phase 39 | Pending |
+| WEB-12 | Phase 40 | Pending |
+| WEB-13 | Phase 40 | Pending |
+| WEB-14 | Phase 40 | Pending |
+| WEB-15 | Phase 40 | Pending |
+| WEB-16 | Phase 40 | Pending |
 
-Coverage: 16/16 v1.9 requirements — fases a asignar por el roadmapper.
+Coverage: 16/16 v1.9 requirements mapped. No orphans, no duplicates.

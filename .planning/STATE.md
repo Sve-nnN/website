@@ -3,10 +3,10 @@ gsd_state_version: 1.0
 milestone: v1.9
 milestone_name: Websites Portfolio Section
 status: planning
-last_updated: "2026-07-14T05:53:11.138Z"
+last_updated: "2026-07-14T06:10:00.000Z"
 last_activity: 2026-07-14
 progress:
-  total_phases: 0
+  total_phases: 3
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Milestone v1.8 (Case Studies Content Audit & Fix) — Phase 37, roadmap recién creado, lista para `/gsd:plan-phase 37`. v1.7 sigue cerrado y archivado (13/13 Done). Dos candidatos siguen pausados esperando decisión de Juan: v1.6 Track B (humanización de contenido, 29-31) y Phase 6 (Deploy + Cutover).
+**Current focus:** Milestone v1.9 (Websites Portfolio Section) — roadmap recién creado (Phases 38-40), lista para `/gsd:plan-phase 38`. v1.8 (Phase 37, Case Studies Content Audit & Fix) queda en cola, CONTEXT.md/UI-SPEC.md ya aprobados, retoma cuando v1.9 cierre. Dos candidatos siguen pausados esperando decisión de Juan: v1.6 Track B (humanización de contenido, 29-31) y Phase 6 (Deploy + Cutover).
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 38 (Websites — Schema & Collection Design) — not started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-07-14 — Milestone v1.9 started
+Status: Roadmap created, awaiting plan-phase
+Last activity: 2026-07-14 — Milestone v1.9 roadmap created (Phases 38, 39, 40; 16/16 requirements mapped)
 
 ## Performance Metrics
 
@@ -90,6 +90,7 @@ Last activity: 2026-07-14 — Milestone v1.9 started
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- [Milestone v1.9]: Roadmap: 3 fases nuevas (38-40), continuando la numeración desde Phase 37 (que queda en cola, no se toca ni renumera — tiene CONTEXT.md/UI-SPEC.md ya aprobados para v1.8, retoma cuando v1.9 cierre). Estructura sigue directamente la recomendación de `research/SUMMARY-v1.9.md`: Phase 38 (schema `Websites`, WEB-01..05) primero porque todo lo demás depende de que el schema exista con las cardinalidades/fechas correctas — más barato de arreglar aquí que con contenido real ya cargado; Phase 39 (componentes/rutas de frontend, WEB-06..11) porque necesita el schema ya existente antes de poder consultarlo; Phase 40 (poblado de contenido real, WEB-12..16) va última para que el poblado interactivo con Juan (stack sitio por sitio) y la captura de screenshots/Lighthouse apunten a una UI que ya renderiza, permitiendo verificación visual inmediata de cada doc. Nota de ejecución explícita en Phase 40: Juan quiere que se le pregunte el stack de cada uno de los 6 sitios al momento de montarlos, no asumir todo de una vez; Lighthouse/screenshots son captura manual puntual, nunca en vivo/recurrente (viola el límite arquitectónico "sin SEO tooling en vivo" del proyecto) — de ahí el campo `lighthouseCapturedAt` obligatorio desde Phase 38. Granularity=coarse per config.json, 3 fases mantiene el milestone lean.
 - [Milestone v1.8]: Roadmap: 1 fase nueva (Phase 37), continuando la numeración desde Phase 36. Los 6 requirements (CASE-01..06) son un solo bug-fix de contenido coherente sobre los mismos 6 docs — auditoría, fix bilingüe, anonimización, fetch de datos GSC reales y verificación con JSON crudo son todos pasos de la misma unidad de trabajo, no fases separadas (granularity=coarse, milestone acotado). Nota de riesgo de ejecución explícita en la fase: un intento previo de Local API scripting falló en silencio en el shell de Juan — el plan debe verificar output real antes de confiar en cualquier script y devolver JSON crudo completo para verificación manual, no un resumen.
 - [Milestone v1.7]: Roadmap: 5 fases (32-36) derivadas de las 13 requirements v1.7, continuando la numeración desde Phase 31 (v1.6 Track B queda pausado, retoma después). Orden estrictamente secuencial por dependencia real: Phase 32 (baseline REG-01) primero porque debe existir antes de tocar cualquier componente, mismo patrón "baseline antes, gate después" que v1.5 Phase 25 / v1.6 Phase 28; Phase 33 (componentes nuevos LOCAL-01/02) antes de Phase 34 (aplicación real a Madrid/Lima, LOCAL-03/04/05) porque no se puede aplicar lo que no existe; Phase 35 (polish pass de los 28 componentes restantes, POLISH-01..06) va después de terminar todo el trabajo de Local Landing para no pulir esos componentes dos veces; Phase 36 (gate REG-02) cierra el milestone, comparado contra el baseline de Phase 32. Granularity=coarse per config.json, 5 fases mantiene el milestone lean (portfolio site, no enterprise).
 
@@ -181,6 +182,7 @@ None yet.
 - [Phase 10.7 pending confirmation] `CalendlyEmbed` no entró al roadmap por confianza MEDIA sobre si Juan sigue usando Calendly — si Juan confirma que sí, se puede insertar como fase adicional (ej. 10.75) más adelante
 - [v1.2 → v1.3 backlog, 2026-07-11] Juan pidió reestructurar URLs de blog (`/blog/categoria/slug` para posts, `/blog/categoria-slug` para listados de categoría) + agregar paginación al blog. Explícitamente diferido — cierra v1.2 (Home+Author, blog fuera de scope) primero. Cambio SEO-sensible: requiere estrategia de redirects 301 para no perder el resultado "0 URL deltas" ya verificado en Phase 4 (04-VERIFICATION.md). Candidato a nueva fase (v1.2 extendida o v1.3), no ejecutar ad-hoc.
 - ~~[Phase 15, 2026-07-11] Header global (main site nav) tiene el mismo bug de labels ES vacíos ya corregido en Footer durante 15-02~~ — RESUELTO antes del cierre de v1.2: `scripts/fix-header-navitems-es-labels.ts` corrigió `navItems[].link.label` en ES; confirmado en vivo por `.planning/v1.2-MILESTONE-AUDIT.md` ("Blog, Casos de éxito, Autores, Contacto" renderizan con texto ES correcto en `/`).
+- [Milestone v1.9, nota de ejecución dura para Phase 40] Juan quiere que se le pregunte el stack de CADA uno de los 6 sitios reales al momento de montarlos (una pregunta por sitio, no asumir todo de una vez) — completar solo con inferencia lo que no responda. Lighthouse y screenshots son captura manual puntual (una sola corrida por sitio), nunca live/recurrente — viola el límite arquitectónico explícito "sin SEO tooling en vivo" si se automatiza como re-audit programado.
 
 ### Quick Tasks Completed
 
@@ -204,12 +206,13 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-14T05:16:44.000Z
-Stopped at: Milestone v1.8 (Case Studies Content Audit & Fix) roadmap created — Phase 37 defined, 6/6 requirements (CASE-01..06) mapped, ROADMAP.md/STATE.md/REQUIREMENTS.md traceability written. Not yet planned or executed.
-Resume file: None — next step is `/gsd:plan-phase 37`
+Last session: 2026-07-14T06:10:00.000Z
+Stopped at: Milestone v1.9 (Websites Portfolio Section) roadmap created — Phases 38 (Schema & Collection Design), 39 (Frontend Components & Routes), 40 (Content Population), 16/16 requirements (WEB-01..16) mapped, ROADMAP.md/STATE.md/REQUIREMENTS.md traceability written. Not yet planned or executed.
+Resume file: None — next step is `/gsd:plan-phase 38`
 
 ## Operator Next Steps
 
-- Run `/gsd:plan-phase 37` to break Phase 37 (Case Studies Content Audit & Fix) into executable plans.
-- v1.6 Track B (Content Humanization, Phases 29-31) and Phase 6 (Deploy + Cutover) remain paused, untouched by v1.8, awaiting Juan's separate go-ahead.
+- Run `/gsd:plan-phase 38` to break Phase 38 (Websites — Schema & Collection Design) into executable plans.
+- Phase 37 (Case Studies Content Audit & Fix, v1.8) stays queued — CONTEXT.md/UI-SPEC.md already approved — resume with `/gsd:plan-phase 37` once v1.9 closes.
+- v1.6 Track B (Content Humanization, Phases 29-31) and Phase 6 (Deploy + Cutover) remain paused, untouched by v1.9, awaiting Juan's separate go-ahead.
 - Optional cleanup (still deferred): archive `.planning/phases/32-*` through `36-*` into `.planning/milestones/v1.7-phases/` via `/gsd:cleanup` if/when Juan wants phase directories tidied up, matching the v1.4/v1.5 precedent.

@@ -20,6 +20,8 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 
 **Milestone v1.8 — Case Studies Content Audit & Fix, creado 2026-07-14:** Juan verificó a mano en el admin los 6 case studies borrador (ids 15-20) y encontró bugs reales de contenido: "El reto"/"La solución" incompletos en uno o ambos locales, KPIs mostrados como números sueltos sin label explicativo, el doc 20 (despacho penal Pittsburgh) exponiendo datos reales de un cliente sin anonimizar (nombre, dominio, condado, conteo de reseñas), y `results.metrics` con muy pocas filas por caso (charts de 1-2 barras). 1 fase nueva (Phase 37), continuando la numeración desde Phase 36: corrige los 6 docs de punta a punta — contenido completo bilingüe, KPIs con label, doc 20 anonimizado, y `results.metrics` poblado con datos reales de Google Search Console (MCP `gsc-juan-*`) sin exponer branding del cliente. Nota de ejecución dura: un intento previo de correr scripts Local API (`npx payload run`) para leer/escribir en vivo falló en silencio en el shell de Juan (exit 0, sin salida) pese a funcionar en agentes previos del mismo hilo — el plan de esta fase debe preferir el servidor MCP `juan-payload` (`http://localhost:3000/api/mcp`, dev server debe estar levantado) para leer/escribir los docs en lugar de repetir ese camino roto; si igual se usa un script Local API, debe verificar primero que produce salida real antes de confiar en él. Cierra devolviendo el JSON crudo completo de los 6 docs corregidos (no un resumen) para que Juan lo verifique él mismo, ya que un intento anterior declaró "verificado" sin estarlo. Ver `.planning/REQUIREMENTS.md` sección "v1 Requirements" (milestone v1.8) para el detalle completo.
 
+**Milestone v1.9 — Websites Portfolio Section, creado 2026-07-14:** Juan tiene una colección de sitios web reales que construyó (no solo case studies con storytelling SEO) y hoy el sitio no tiene dónde mostrar ese trabajo técnico como portfolio de desarrollo, separado del ángulo de resultados/case study. 3 fases nuevas (38-40), continuando la numeración desde Phase 37 (queda en cola con CONTEXT.md/UI-SPEC.md aprobados, retoma después de v1.9): schema de la colección `Websites` (Phase 38, mismo patrón que `CaseStudies`, con relaciones opcionales a `Clientes`/`CaseStudies` y campo `lighthouseCapturedAt` obligatorio para que los scores nunca se presenten como en vivo); componentes/rutas de frontend (Phase 39, `WebsiteCard` compartido, `FeaturedWebsitesBlock`, extensión de `ArchiveBlock`, rutas `/websites`+`/websites/[slug]` con JSON-LD `CreativeWork`); y poblado de contenido real (Phase 40, 6 sitios reales — ariannalupi.com, aprendoclub.com, estylopia.com, drmanuelvargashidalgo.com, apturio.com, juan-tech.com — con stack confirmado interactivamente con Juan sitio por sitio, screenshots reales vía Playwright y Lighthouse real corrido una sola vez, no en vivo/recurrente). `Websites` y `CaseStudies` quedan separados a propósito (craft técnico vs. resultado de negocio), mismo principio que ya separa `Clientes` de `CaseStudies`. Ver `.planning/REQUIREMENTS.md` sección "Milestone v1.9" y `.planning/research/SUMMARY-v1.9.md` para el detalle completo.
+
 ## Phases
 
 **Phase Numbering:**
@@ -71,6 +73,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 35: Component Polish Pass** - Revisión `ui-ux-pro-max` de los 28 componentes restantes contra el .pen, micro-mejoras implementadas en código (v1.7) (completed 2026-07-14)
 - [x] **Phase 36: Regression Gate** - Gate de cero regresión al cierre, comparado contra el baseline de Phase 32 (v1.7, cierre de milestone) (completed 2026-07-14)
 - [ ] **Phase 37: Case Studies Content Audit & Fix** - Los 6 case studies borrador (ids 15-20) quedan con contenido completo, KPIs explicados, doc 20 anonimizado, `results.metrics` respaldado por datos reales de GSC, autor deduplicado, schema JSON-LD dinámico, chart con escalas/mobile arreglado, y estructura revisada contra ariannalupi.com/casos
+- [ ] **Phase 38: Websites — Schema & Collection Design** - Colección `Websites` modelada, registrada y tipada, con relaciones opcionales a Clientes/CaseStudies y captura de fecha obligatoria para Lighthouse
+- [ ] **Phase 39: Websites — Frontend Components & Routes** - `WebsiteCard`, sección en Home, `ArchiveBlock` extendido, rutas de listado/detalle con JSON-LD `CreativeWork` y sitemap actualizado
+- [ ] **Phase 40: Websites — Content Population (Real Data Capture)** - 6 sitios reales poblados con stack confirmado por Juan, screenshots reales y Lighthouse real capturado una sola vez
 
 ## Phase Details
 
@@ -879,10 +884,57 @@ Plans:
 Plans:
 - [ ] 37-01: TBD (definido en /gsd:plan-phase 37 — cubre auditoría de contenido de los 6 docs, fetch de datos GSC reales, escritura corregida contra la DB real, dedup de autor, schema JSON-LD dinámico, fix de escala/responsive del chart, benchmark contra ariannalupi.com/casos, y verificación con JSON crudo devuelto)
 
+
+### Phase 38: Websites — Schema & Collection Design
+
+**Goal**: Existe una colección `Websites` en Payload, modelada sobre el mismo patrón que `CaseStudies`, con todos los campos y cardinalidades correctos desde el día uno — este es el único punto del milestone donde los pitfalls de research (fecha de captura ausente, relaciones con cardinalidad incorrecta, contenido duplicado con `CaseStudies`) son baratos de prevenir, y caros de corregir después con contenido real ya cargado.
+**Depends on**: Nothing (primera fase del milestone; continúa la numeración desde Phase 37, que queda en cola sin tocar)
+**Requirements**: WEB-01, WEB-02, WEB-03, WEB-04, WEB-05
+**Success Criteria** (what must be TRUE):
+
+  1. Un editor puede crear un documento en `Websites` desde `/admin` con título, slug, array de tags de stack, screenshots reales (Media/Cloudinary), array `challenges` (mismo patrón que `CaseStudies.challenge`), año de lanzamiento, rol en el proyecto, industria/nicho y highlights técnicos
+  2. El documento expone 4 scores de Lighthouse (performance/accessibility/best-practices/SEO) junto a un campo `lighthouseCapturedAt` (fecha) obligatorio — ningún score puede guardarse sin su fecha de captura
+  3. El campo `client` (relación a `Clientes`, `hasMany: false`) y el campo `relatedCaseStudy` (relación a `case-studies`, `hasMany: false`, unidireccional) son ambos opcionales — un documento sin cliente externo (ej. apturio.com, juan-tech.com) se guarda sin error
+  4. `Websites` aparece en `payload.config.ts` y en la lista `collections[]` de `@payloadcms/plugin-seo`, y `payload generate:types` corrió después del schema (payload-types.ts refleja la colección nueva)
+
+**Plans**: TBD
+
+### Phase 39: Websites — Frontend Components & Routes
+
+**Goal**: La capa de renderizado reutilizable (card, bloque curado de Home, extensión de `ArchiveBlock`, rutas de listado/detalle) existe y sigue las convenciones ya establecidas del codebase (extender, no forkear) — un visitante puede navegar el nuevo portfolio de sitios igual que ya navega case studies.
+**Depends on**: Phase 38 (nada de esto puede consultar un schema que no existe)
+**Requirements**: WEB-06, WEB-07, WEB-08, WEB-09, WEB-10, WEB-11
+**Success Criteria** (what must be TRUE):
+
+  1. Un componente `WebsiteCard` compartido renderiza consistentemente en el bloque de Home, en `ArchiveBlock` y en la página de listado
+  2. Home muestra una sección curada de sitios vía un `FeaturedWebsitesBlock` nuevo + campo `featuredWebsites` en el global `FeaturedContent` — mismo patrón que `FeaturedCaseStudiesBlock`, sin ninguna sección hardcodeada
+  3. `ArchiveBlock` acepta `relationTo: 'websites'` (schema + `selectedDocs.relationTo`) sin crear un block nuevo
+  4. Un visitante puede navegar `/[locale]/websites` (listado) y `/[locale]/websites/[slug]` (detalle), con breadcrumbs vía `buildWebsitesTrail()` (wrapper sobre `buildSectionTrail()` existente)
+  5. La página de detalle emite JSON-LD tipo `CreativeWork` (no `SoftwareApplication`), validado conceptualmente contra Rich Results antes del cierre de la fase
+  6. `src/lib/sitemap-data.ts` incluye las URLs de `/websites` y `/websites/[slug]` en el sitemap generado
+
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 40: Websites — Content Population (Real Data Capture)
+
+**Goal**: Los 6 sitios reales que Juan construyó existen como documentos completos y verídicos en `Websites` — stack confirmado por Juan sitio por sitio, screenshots reales, y Lighthouse real capturado una sola vez con su fecha, sin ninguna infraestructura de re-auditoría en vivo.
+**Depends on**: Phase 39 (el poblado apunta a un schema y una UI ya renderizando, para verificar cada doc visualmente al cargarlo)
+**Requirements**: WEB-12, WEB-13, WEB-14, WEB-15, WEB-16
+**Success Criteria** (what must be TRUE):
+
+  1. Existen 6 documentos reales en `Websites`: ariannalupi.com, aprendoclub.com, estylopia.com, drmanuelvargashidalgo.com, apturio.com, juan-tech.com
+  2. El stack de cada uno de los 6 sitios fue confirmado interactivamente con Juan, un sitio a la vez (una pregunta por sitio) — lo que Juan no confirme se infiere del código/contenido público del sitio, no se asume de una sola vez para los 6
+  3. Cada documento tiene un screenshot real full-page (capturado vía Playwright, una sola corrida) subido a Cloudinary por el pipeline de Media existente — ningún iframe en vivo ni fetch de captura en tiempo de request
+  4. Cada documento tiene scores de Lighthouse reales corridos una sola vez contra la URL en vivo del sitio (mismo patrón que `scripts/lighthouse-mobile.mjs`), con `lighthouseCapturedAt` seteado a la fecha real de esa corrida — visible en la UI, no solo en el dato crudo
+  5. Las relaciones `client`/`relatedCaseStudy` quedan pobladas donde exista match real (ej. si el dominio ya es cliente en `Clientes` o tiene un case study existente), sin duplicar ni contradecir qué dato vive en `Websites` vs. en `CaseStudies` para el mismo sitio
+
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 → 32 → 33 → 34 → 35 → 36 → 37 (v1.1-v1.5 cerrados; v1.6 Track A [26-28] cerrado, Track B [29-31] pausado, retoma después de v1.7; v1.7 CERRADO [Phase 32-36 completas] — baseline de regresión → componentes nuevos de Local Landing → aplicación real a Madrid/Lima → polish pass de los 28 componentes restantes → gate de cierre (PASS, 6/6 rutas limpias); v1.8 [Phase 37, ready to plan] — fix de contenido/anonimización/datos GSC reales en los 6 case studies borrador ids 15-20; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 → 32 → 33 → 34 → 35 → 36 → 37 → 38 → 39 → 40 (v1.1-v1.5 cerrados; v1.6 Track A [26-28] cerrado, Track B [29-31] pausado, retoma después de v1.7; v1.7 CERRADO [Phase 32-36 completas] — baseline de regresión → componentes nuevos de Local Landing → aplicación real a Madrid/Lima → polish pass de los 28 componentes restantes → gate de cierre (PASS, 6/6 rutas limpias); v1.8 [Phase 37, EN COLA] — fix de contenido/anonimización/datos GSC reales en los 6 case studies borrador ids 15-20, CONTEXT.md/UI-SPEC.md aprobados, retoma cuando v1.9 cierre; v1.9 [Phase 38-40, ACTIVO] — schema `Websites` → componentes/rutas de frontend → poblado real de 6 sitios (stack confirmado con Juan, screenshots/Lighthouse capturados una sola vez); Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -927,4 +979,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 35. Component Polish Pass | 1/1 | Complete | 2026-07-14 |
 | 36. Regression Gate | 1/1 | Complete | 2026-07-14 |
 | 37. Case Studies Content Audit & Fix | 0/TBD | Not started | - |
+| 38. Websites — Schema & Collection Design | 0/TBD | Not started | - |
+| 39. Websites — Frontend Components & Routes | 0/TBD | Not started | - |
+| 40. Websites — Content Population (Real Data Capture) | 0/TBD | Not started | - |
 </content>
