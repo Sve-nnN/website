@@ -16,6 +16,7 @@ export const ArchiveBlock: Block = {
       options: [
         { label: 'Posts', value: 'posts' },
         { label: 'Case Studies', value: 'case-studies' },
+        { label: 'Websites', value: 'websites' },
       ],
     },
     {
@@ -36,7 +37,7 @@ export const ArchiveBlock: Block = {
     {
       name: 'selectedDocs',
       type: 'relationship',
-      relationTo: ['posts', 'case-studies'],
+      relationTo: ['posts', 'case-studies', 'websites'],
       hasMany: true,
       admin: { condition: (_, siblingData) => siblingData.mode === 'manual' },
     },
