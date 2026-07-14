@@ -919,7 +919,15 @@ Plans:
   5. La página de detalle emite JSON-LD tipo `CreativeWork` (no `SoftwareApplication`), validado conceptualmente contra Rich Results antes del cierre de la fase
   6. `src/lib/sitemap-data.ts` incluye las URLs de `/websites` y `/websites/[slug]` en el sitemap generado
 
-**Plans**: TBD
+**Plans**: 4 plans (2 waves)
+
+Plans:
+
+- [ ] 39-01-PLAN.md — Foundation: WebsiteCard component + buildWebsitesTrail() breadcrumb helper + websites sitemap entry
+- [ ] 39-02-PLAN.md — FeaturedWebsitesBlock (config+Component) + FeaturedContent.featuredWebsites field + blockRegistry/Pages registration + migration
+- [ ] 39-03-PLAN.md — ArchiveBlock extended with relationTo: 'websites'
+- [ ] 39-04-PLAN.md — /[locale]/websites (listado) + /[locale]/websites/[slug] (detalle) con JSON-LD CreativeWork
+
 **UI hint**: yes
 
 ### Phase 40: Websites — Content Population (Real Data Capture)
