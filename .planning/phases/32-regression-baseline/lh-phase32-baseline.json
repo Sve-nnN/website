@@ -1,0 +1,56 @@
+{
+  "/": {
+    "performance": 84,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4094,
+    "cls": 0,
+    "tbtMs": 154
+  },
+  "/en": {
+    "performance": 85,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4236,
+    "cls": 0,
+    "tbtMs": 75
+  },
+  "/seo-tecnico-madrid": {
+    "performance": 88,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 91,
+    "lcpMs": 3795,
+    "cls": 0,
+    "tbtMs": 65
+  },
+  "/en/seo-tecnico-madrid": {
+    "performance": 89,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 91,
+    "lcpMs": 3782,
+    "cls": 0,
+    "tbtMs": 64
+  },
+  "/seo-tecnico-lima": {
+    "performance": 89,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 91,
+    "lcpMs": 3783,
+    "cls": 0,
+    "tbtMs": 60
+  },
+  "/en/seo-tecnico-lima": {
+    "performance": 89,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 91,
+    "lcpMs": 3785,
+    "cls": 0,
+    "tbtMs": 60
+  }
+}

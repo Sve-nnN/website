@@ -1,0 +1,54 @@
+{
+  "/": {
+    "h1Count": 1,
+    "h1": [
+      "Juan Carlos Angulo: Ingeniero de Software y Experto SEO"
+    ],
+    "jsonLdCount": 1,
+    "jsonLdTypes": [
+      "Person"
+    ]
+  },
+  "/en": {
+    "h1Count": 1,
+    "h1": [
+      "Juan Carlos Angulo: Software Engineer &amp; SEO Expert"
+    ],
+    "jsonLdCount": 1,
+    "jsonLdTypes": [
+      "Person"
+    ]
+  },
+  "/seo-tecnico-madrid": {
+    "h1Count": 1,
+    "h1": [
+      "SEO Técnico en Madrid / España"
+    ],
+    "jsonLdCount": 0,
+    "jsonLdTypes": []
+  },
+  "/en/seo-tecnico-madrid": {
+    "h1Count": 1,
+    "h1": [
+      "Technical SEO in Madrid / Spain"
+    ],
+    "jsonLdCount": 0,
+    "jsonLdTypes": []
+  },
+  "/seo-tecnico-lima": {
+    "h1Count": 1,
+    "h1": [
+      "SEO Técnico en Lima"
+    ],
+    "jsonLdCount": 0,
+    "jsonLdTypes": []
+  },
+  "/en/seo-tecnico-lima": {
+    "h1Count": 1,
+    "h1": [
+      "Technical SEO in Lima"
+    ],
+    "jsonLdCount": 0,
+    "jsonLdTypes": []
+  }
+}

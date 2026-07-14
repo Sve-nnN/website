@@ -26,7 +26,7 @@
 
 ### Regresión
 
-- [ ] **REG-01**: Baseline de Lighthouse/CWV + verificación de H1/JSON-LD tomado antes de tocar componentes existentes (mismo patrón que v1.5 Phase 25 / v1.6 Phase 28).
+- [x] **REG-01**: Baseline de Lighthouse/CWV + verificación de H1/JSON-LD tomado antes de tocar componentes existentes (mismo patrón que v1.5 Phase 25 / v1.6 Phase 28).
 - [ ] **REG-02**: Gate de cero regresión de performance/SEO al cerrar el milestone, comparado contra el baseline de REG-01.
 
 ## Out of Scope
@@ -55,7 +55,7 @@
 | POLISH-04 | Phase 35 | Pending |
 | POLISH-05 | Phase 35 | Pending |
 | POLISH-06 | Phase 35 | Pending |
-| REG-01 | Phase 32 | Pending |
+| REG-01 | Phase 32 | Done |
 | REG-02 | Phase 36 | Pending |
 
 **Coverage:**
