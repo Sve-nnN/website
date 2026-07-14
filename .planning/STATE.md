@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 34 (Local Landing Application — Madrid/Lima) — not yet started
+Phase: 34 (Local Landing Application — Madrid/Lima) — BLOCKED
 Plan: —
-Status: Phase 33 complete (Hero `local-landing` variant + `LocalProofSection` block built, registered, migrated, verified live), running gsd-autonomous through remaining v1.7 phases
-Last activity: 2026-07-14 — Phase 33 Local Landing Components built: Hero variant `local-landing` (city badge, decorative ring, inline stat, CTA row) + new `LocalProofSection` block (3 stats + testimonial), additive migration applied against real Neon DB, verified live against throwaway test content on a real dev server (4/4 success criteria PASS), test fixtures cleaned up
+Status: Blocked on real content for LOCAL-05 (LocalProofSection stats + testimonial per city, Lima/Madrid) — Juan will supply via GSC (mcp-hub) client data once that MCP's OAuth is reconfigured (GSC_OAUTH_CLIENT_SECRETS_FILE/GSC_CREDENTIALS_PATH missing on the server). Autonomous run paused here per explicit "dejalo pendiente, yo te paso eso después" — do not fabricate testimonial/stat content in the meantime.
+Last activity: 2026-07-14 — Phase 33 Local Landing Components built: Hero variant `local-landing` (city badge, decorative ring, inline stat, CTA row) + new `LocalProofSection` block (3 stats + testimonial), additive migration applied against real Neon DB, verified live against throwaway test content on a real dev server (4/4 success criteria PASS), test fixtures cleaned up. Phase 34 blocked: attempted GSC data pull via `mcp-hub` per Juan's instruction, tool auth fails server-side (missing OAuth credentials file) — not fixable from chat, Juan will provide data directly later.
 
 ## Performance Metrics
 
