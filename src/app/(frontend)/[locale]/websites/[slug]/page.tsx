@@ -183,3 +183,54 @@ export default async function WebsitePage({
             </ul>
           </section>
         )}
+
+        {doc.stack && doc.stack.length > 0 && (
+          <section>
+            <h2 className="font-heading text-heading mt-10 mb-4">{t.stack}</h2>
+            <div className="flex flex-wrap gap-2">
+              {doc.stack.map((s, i) => (
+                <Badge key={s.id ?? i}>{s.tag}</Badge>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {doc.screenshots && doc.screenshots.length > 0 && (
+          <section>
+            <h2 className="font-heading text-heading mt-10 mb-4">{t.screenshots}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {doc.screenshots.map((s, i) => {
+                const img = typeof s.image === 'object' ? s.image : null
+                return img ? (
+                  <div key={s.id ?? i} className="relative aspect-video overflow-hidden rounded-lg">
+                    <Image
+                      src={img.url ?? ''}
+                      alt={img.alt ?? doc.title}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 640px) 50vw, 100vw"
+                    />
+                  </div>
+                ) : null
+              })}
+            </div>
+          </section>
+        )}
+
+        {relatedCaseStudy && (
+          <section>
+            <Link
+              href={`/case-studies/${relatedCaseStudy.slug}`}
+              className="text-primary-text underline underline-offset-2"
+            >
+              {t.relatedCaseStudy}
+            </Link>
+          </section>
+        )}
+      </Container>
+
+      <JsonLd data={creativeWorkData} />
+      <JsonLd data={buildBreadcrumbJsonLd(trail)} />
+    </main>
+  )
+}
