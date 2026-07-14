@@ -1,72 +1,68 @@
-# Requirements: Juan Carlos Angulo — Portfolio (Payload rebuild)
+# Requirements: Juan Carlos Angulo — Portfolio (Payload rebuild) — Milestone v1.7
 
 **Defined:** 2026-07-13
-**Core Value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en el contenido (case studies, blog) como en la ejecución técnica (rendimiento y SEO impecables). Si el rendimiento o el SEO fallan, el sitio no cumple su propósito.
+**Core Value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en el contenido como en la ejecución técnica (rendimiento y SEO impecables).
 
-## v1.6 Requirements — UI/UX Pro Max II: Componentes, Motion y Voz
+**Fuente:** `designs/current-site-real.pen` (comparado componente por componente contra el código real — ver `designs/DESIGN-SYSTEM-PEN.md`). El .pen replica 1:1 el design system actual salvo 2 componentes nuevos para landing locales.
 
-Requirements para el milestone v1.6. Dos tracks independientes: (1) pasada de diseño + micro-animaciones sobre componentes que v1.5 no tocó, (2) humanización de todo el copy real de la DB en la voz de Juan. Ver `.planning/research/SUMMARY-v1.6.md` para el detalle completo del research.
+## v1 Requirements
 
-### UI/UX Polish
+### Local Landing — Componentes Nuevos
 
-- [x] **UIPOL-01**: El bloque CTA (`CallToAction`) deja de ser full-width `vw` — usa el mismo wrapper `Container` que el resto de los bloques del sitio
-- [x] **UIPOL-02**: El navbar (`SiteHeader`) gana tratamiento visual pulido (estado de scroll y/o indicador de ruta activa), consistente con los tokens de elevación/motion ya establecidos
-- [ ] **UIPOL-03**: Las variantes de Hero `listing`/`post-header`/`case-study-header` quedan visualmente diferenciadas entre sí (hoy son pixel-idénticas salvo breadcrumbs), manteniendo el H1/breadcrumbs/JSON-LD intactos
-- [x] **UIPOL-04**: El bloque FAQ gana tratamiento visual pulido (hoy es funcional pero template-default)
-- [x] **UIPOL-05**: La sección de clientes (`ClientLogosBlock`) gana tratamiento visual pulido
-- [x] **UIPOL-06**: La sección de testimonios (`TestimonialsCarousel`) gana tratamiento visual pulido
-- [ ] **UIPOL-07**: La grilla de blog (`/blog`) gana tratamiento visual pulido
-- [ ] **UIPOL-08**: La grilla de blog destacados (`FeaturedPostsBlock`) gana tratamiento visual pulido
-- [x] **UIPOL-09**: La página de case studies (listado + detalle) gana tratamiento visual pulido, incluyendo trail de breadcrumbs visual real (hoy el detalle solo emite JSON-LD propio, desalineado del helper `buildTrail()` de Servicios) unificado con el mismo patrón de fuente única
+- [ ] **LOCAL-01**: Nuevo variant `local-landing` en `src/blocks/Hero/config.ts` + `Component.tsx` — badge de ciudad (icono map-pin + nombre), anillo decorativo (ellipse con stroke, sin fill), stat inline con check-icon, CTA row. Reusa tokens de color/tipografía/espaciado existentes, sin tokens nuevos.
+- [ ] **LOCAL-02**: Nuevo block `LocalProofSection` (Payload block config + componente React) — banda de prueba social localizada: 3 stats numéricos + testimonial card con nombre/negocio local, editable desde admin.
+- [ ] **LOCAL-03**: `/seo-tecnico-madrid` usa `Hero` variant `local-landing` con anillo a la derecha, opacity 0.25, CTA row con un solo botón primario.
+- [ ] **LOCAL-04**: `/seo-tecnico-lima` usa `Hero` variant `local-landing` con anillo espejado (`flipX`) a la izquierda, opacity 0.35, CTA row con botón primario + botón outline ("Ver casos en Lima").
+- [ ] **LOCAL-05**: Ambas landings incorporan `LocalProofSection` con stats/testimonial propios de cada ciudad (contenido real, no placeholder).
 
-### Micro-animaciones
+### Component Polish Pass (28 componentes existentes)
 
-- [ ] **MOTION-01**: Librería `motion` (paquete npm `motion`, vía `LazyMotion`+`m`+`domAnimation`) adoptada como única dependencia de animación del sitio, costo real de bundle verificado contra el build de producción (no solo estimado)
-- [ ] **MOTION-02**: Hook compartido `useReducedMotion()` (SSR-safe, sin mismatch de hidratación — mismo patrón ya probado en `HeroGrainGradient`) usado por todo componente animado, respetando `prefers-reduced-motion` de forma consistente
-- [ ] **MOTION-03**: Micro-interacciones (scroll-reveal + hover) aplicadas de forma consistente en los componentes de la pasada UIPOL-01..09, siguiendo la estética ya validada del hero de Home
-- [ ] **MOTION-04**: Cero regresión de Lighthouse/CWV atribuible a las animaciones nuevas, verificado contra un baseline pre-pase (mismo patrón de gate que v1.5 Phase 25)
+- [ ] **POLISH-01**: Revisión visual (`ui-ux-pro-max`) de UI primitives — Button/*, Input, Textarea, Badge/*, Tabs, Card — comparando contra su definición en el .pen, aplicando micro-mejoras encontradas.
+- [ ] **POLISH-02**: Revisión visual de chrome — `SiteHeader`, `SiteFooter` — contra el .pen.
+- [ ] **POLISH-03**: Revisión visual de Hero variants existentes — `home`, `listing`, `post-header`, `case-study-header` — contra el .pen, sin tocar el shader `HeroGrainGradient` de Home (ya validado en v1.3).
+- [ ] **POLISH-04**: Revisión visual de bloques de contenido — `CallToAction`, `FAQ Item`, `ContactForm`, `ResultsSection`, `ClientLogosBlock`, `AboutSection`, `ServiceScopeCard` — contra el .pen.
+- [ ] **POLISH-05**: Revisión visual de componentes de autoría — `AuthorCard`, `AuthorByline` — contra el .pen.
+- [ ] **POLISH-06**: Cada micro-mejora encontrada en POLISH-01..05 queda implementada en código (no solo documentada), o descartada con razón explícita si el .pen y el código ya son visualmente equivalentes.
 
-### Voz y Humanización de Contenido
+### Regresión
 
-- [ ] **VOICE-01**: Auditoría pre-vuelo de todo campo de texto público en cada colección/global de Payload, clasificando localizado vs no-localizado, documentada antes de escribir nada
-- [ ] **VOICE-02**: `TestimonialsCarousel.title` migrado a `localized: true` con backfill correcto (migración leída antes de aplicar, aprobación nombrada de Juan) — cierra el patrón de bug repetido 3 veces en v1.5
-- [ ] **VOICE-03**: `CaseStudies.services[].service` resuelto de forma locale-segura (fix de schema si aplica, o decisión documentada) — trap nuevo encontrado por el research, sin workaround previo
-- [ ] **VOICE-04**: Snapshot completo del copy real actual (no solo metadata) tomado antes de reescribir nada, diffable por Juan y usable como base de rollback más allá del point-in-time restore de Neon
-- [ ] **VOICE-05**: Perfil de voz escrito (español neutro, sin voceo, profesional-directo, primera persona con reclamos de credenciales directos estilo Arianna Lupi, framing de CTA colaborativo) derivado del research de tono de Arianna Lupi y Aleyda Solis, usado como brief para la skill `humanizer`
-- [ ] **VOICE-06**: Todo el copy real en globals, pages, servicios, posts y case studies reescrito vía skill `humanizer` con el perfil de voz de VOICE-05 — sin em/en dash, sin marcas de escritura de IA
-- [ ] **VOICE-07**: Verificación post-sweep: paridad de locale sin campos pisados entre idiomas, JSON-LD sigue válido, `meta.title`/`meta.description` de SEO no rotos, cero regresión contra el snapshot de VOICE-04
-
-## Future Requirements
-
-- Fase 6 (Deploy + Cutover) — sigue en pausa, fuera de scope de v1.6, retoma con el visto bueno explícito de Juan y credenciales reales de Hostinger/DNS/Resend
+- [ ] **REG-01**: Baseline de Lighthouse/CWV + verificación de H1/JSON-LD tomado antes de tocar componentes existentes (mismo patrón que v1.5 Phase 25 / v1.6 Phase 28).
+- [ ] **REG-02**: Gate de cero regresión de performance/SEO al cerrar el milestone, comparado contra el baseline de REG-01.
 
 ## Out of Scope
 
-- Reemplazar el shader `HeroGrainGradient` del hero de Home — ya validado en v1.3, esta milestone solo agrega motion al resto de los componentes
-- Migrar el listado de Case Studies a `ArchiveBlock` para paridad completa con Blog — señalado por el research como decisión P2, no resuelta acá, no bloquea el polish visual de UIPOL-09
-- Reescribir contenido nuevo o expandir copy más allá de humanizar lo ya existente — esta milestone no agrega secciones de contenido nuevas (eso fue v1.2/v1.5), solo pule voz/tono de lo que ya está
+| Feature | Reason |
+|---------|--------|
+| Rediseño completo de componentes existentes | El .pen es réplica 1:1 del código, no rediseño — solo polish puntual donde haya diferencias reales |
+| Nueva librería de micro-animaciones o cambios a las ya adoptadas en v1.6 (Phases 27-28) | Fuera de scope de v1.7, ya cerrado en v1.6 Track A |
+| Tercera ciudad de landing local | El .pen y esta milestone cubren solo Lima/Madrid; avisar si se necesita una tercera |
+| Reemplazar `HeroGrainGradient` del Hero de Home | Ya validado en v1.3, no se toca |
+| Humanización de copy real (voz/tono) | Es v1.6 Track B (fases 29-31), pausado, retoma después de v1.7 |
+| TestimonialsCarousel dentro de página completa, TableOfContentsBlock en contexto real, mobile nav (Sheet), estados hover/focus modelados en Pencil | No construidos en el .pen (fuera de esta pasada de diseño) — si Juan los necesita, requiere iteración nueva del .pen primero |
 
 ## Traceability
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| UIPOL-01 | Phase 26 | Done |
-| UIPOL-02 | Phase 26 | Done |
-| UIPOL-03 | Phase 28 | Pending |
-| UIPOL-04 | Phase 26 | Done |
-| UIPOL-05 | Phase 26 | Done |
-| UIPOL-06 | Phase 26 | Done |
-| UIPOL-07 | Phase 28 | Pending |
-| UIPOL-08 | Phase 28 | Pending |
-| UIPOL-09 | Phase 26 | Done |
-| MOTION-01 | Phase 27 | Pending |
-| MOTION-02 | Phase 27 | Pending |
-| MOTION-03 | Phase 28 | Pending |
-| MOTION-04 | Phase 28 | Pending |
-| VOICE-01 | Phase 29 | Pending |
-| VOICE-02 | Phase 29 | Pending |
-| VOICE-03 | Phase 29 | Pending |
-| VOICE-04 | Phase 29 | Pending |
-| VOICE-05 | Phase 29 | Pending |
-| VOICE-06 | Phase 31 | Pending |
-| VOICE-07 | Phase 31 | Pending |
+| LOCAL-01 | TBD | Pending |
+| LOCAL-02 | TBD | Pending |
+| LOCAL-03 | TBD | Pending |
+| LOCAL-04 | TBD | Pending |
+| LOCAL-05 | TBD | Pending |
+| POLISH-01 | TBD | Pending |
+| POLISH-02 | TBD | Pending |
+| POLISH-03 | TBD | Pending |
+| POLISH-04 | TBD | Pending |
+| POLISH-05 | TBD | Pending |
+| POLISH-06 | TBD | Pending |
+| REG-01 | TBD | Pending |
+| REG-02 | TBD | Pending |
+
+**Coverage:**
+- v1 requirements: 13 total
+- Mapped to phases: 0 (pendiente roadmapper)
+- Unmapped: 13 ⚠️
+
+---
+*Requirements defined: 2026-07-13*
+*Last updated: 2026-07-13 after initial definition (milestone v1.7)*
