@@ -1,16 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.6
-milestone_name: UI/UX Pro Max II — Componentes, Motion y Voz
-status: in_progress
-last_updated: "2026-07-13T06:00:00.000Z"
-last_activity: 2026-07-13
+milestone: v1.7
+milestone_name: Local Landing Design + Component Polish Pass
+status: planning
+last_updated: "2026-07-14T02:09:38.495Z"
+last_activity: 2026-07-14
 progress:
-  total_phases: 6
-  completed_phases: 3
-  total_plans: 8
-  completed_plans: 8
-  percent: 50
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -24,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 
 ## Current Position
 
-Phase: 29 of 31 (Content Humanization Safety Net) — Phases 26/27/28 closed
+Phase: Not started (defining requirements)
 Plan: —
-Status: Ready for planning Phase 29 — involves a live-DB schema migration (TestimonialsCarousel.title -> localized:true with backfill) requiring Juan's named approval before applying, per CLAUDE.md Database Safety rules
-Last activity: 2026-07-13 — Phase 28 closed: Hero variants differentiated (CSS-only, minimal scope per Juan), blog grid ScrollReveal+hover motion added, 2 real LCP bugs found+fixed in gap closure (SSR-opacity-hidden ScrollReveal content, missing PostCard image priority); remaining /en/blog LCP band-crossing root-caused to a pre-existing TTFB issue (searchParams-forced dynamic rendering, present before Phase 28) — logged as separate follow-up, not blocking closure since it's not attributable to the new animations (MOTION-04's actual criterion)
+Status: Defining requirements
+Last activity: 2026-07-14 — Milestone v1.7 started
 
 ## Performance Metrics
 

@@ -84,7 +84,19 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | Geo-pages (v1.4): Lima grounded en presencia física real, Madrid honesto sobre trabajo remoto sin oficina física | Evita el patrón templated/find-replace-por-ciudad que Juan rechazó explícitamente — cada página necesitaba un argumento genuinamente distinto, no solo el nombre de la ciudad cambiado | ✓ Good |
 | Database Safety rule (root CLAUDE.md, agregada durante v1.4, luego relajada por Juan) | Un incidente real de pérdida de datos (migración de fase 19 sin backfill, recuperada vía Neon PITR) forzó una regla dura de aprobación humana antes de cualquier escritura contra la DB real; Juan luego la relajó a solo operaciones destructivas (DROP/TRUNCATE/delete/reshape con pérdida) una vez que confió en el patrón | ✓ Good |
 
-## Current Milestone: v1.6 UI/UX Pro Max II — Componentes, Motion y Voz
+## Current Milestone: v1.7 Local Landing Design + Component Polish Pass (desde current-site-real.pen)
+
+**Goal:** Implementar en código las 2 piezas nuevas que el archivo de diseño Pencil `designs/current-site-real.pen` agrega para las landing pages locales (Lima/Madrid) — hoy ambas reusan bloques genéricos sin diferenciación visual real — y pasar una revisión de polish visual sobre los 28 componentes restantes que el .pen ya mapea 1:1 contra el código actual.
+
+**Contexto del .pen:** `designs/DESIGN-SYSTEM-PEN.md` documenta que `current-site-real.pen` es una réplica fiel del design system y componentes ya existentes en código (extraído 1:1 de `globals.css`/`tailwind.config.ts`/`src/components/**`/`src/blocks/**`), no un rediseño. Su único aporte de diseño nuevo son los 2 componentes de landing local. El resto del .pen (28 componentes: Button/*, Input, Textarea, Badge/*, Tabs, Card, SiteHeader, SiteFooter, Hero/Home, CallToAction, FAQ Item, ContactForm, ResultsSection, ClientLogosBlock, AboutSection, ServiceScopeCard, AuthorCard, AuthorByline, Hero/Listing, Hero/Post Header, Hero/Case Study Header) ya tiene equivalente exacto en código — mapeo completo verificado por research inline al arrancar este milestone.
+
+**Target features:**
+- `Hero/Local Landing`: variant nuevo en `src/blocks/Hero/Component.tsx` + `config.ts` — badge de ciudad (icono map-pin + nombre), anillo decorativo (ellipse con stroke, sin fill), stat inline con check-icon, CTA row. Reusa tokens existentes.
+- `Local Proof Section`: block nuevo (Payload block + componente) — banda de prueba social localizada: 3 stats numéricos + testimonial card con nombre/negocio local.
+- Diferenciación estructural real Madrid vs Lima en `/seo-tecnico-madrid` y `/seo-tecnico-lima` (no solo copy): Madrid con anillo a la derecha/opacity 0.25/CTA único; Lima con anillo espejado (`flipX`) a la izquierda/opacity 0.35/CTA row doble (primario + outline "Ver casos en Lima").
+- Pasada de revisión visual (`ui-ux-pro-max`) sobre los 28 componentes restantes, comparando cada uno contra su definición en el .pen para detectar polish/micro-mejoras aunque el .pen sea espejo del código actual.
+
+## Milestone Pausado: v1.6 UI/UX Pro Max II — Componentes, Motion y Voz (Track A cerrado, Track B pendiente)
 
 **Goal:** Segunda pasada `ui-ux-pro-max` sobre los componentes/plantillas que v1.5 no tocó (navbar, heroes de listing, CTA strip, FAQ, clientes, testimonios, grillas de blog, case studies), sumar micro-animaciones consistentes con la estética del hero de Home sin pegarle a performance, y humanizar todo el copy real de la base de datos con la voz/tono de Juan grounded en cómo hablan sus competidores directos (incluida Aleyda Solis, ya identificada en el research de v1.5).
 
@@ -134,4 +146,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-12 — milestone v1.5 (UI/UX Pro Max) started; Phase 6 Deploy + Cutover remains the sole other open project-wide item, paused pending Juan's go-ahead with real Hostinger/DNS/Resend credentials*
+*Last updated: 2026-07-13 — milestone v1.7 (Local Landing Design + Component Polish Pass, desde current-site-real.pen) started; v1.6 Track B (Content Humanization, fases 29-31) queda pausado, retoma después de v1.7 por decisión de Juan; Phase 6 Deploy + Cutover sigue pausada, fuera de scope*
