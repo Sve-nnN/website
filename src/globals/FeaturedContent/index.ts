@@ -27,5 +27,14 @@ export const FeaturedContent: GlobalConfig = {
         description: 'Drives the Home page "Featured Case Studies" section.',
       },
     },
+    {
+      name: 'featuredWebsites',
+      type: 'relationship',
+      relationTo: 'websites',
+      hasMany: true,
+      admin: {
+        description: 'Drives the Home page "Featured Websites" section.',
+      },
+    },
   ],
 }

@@ -20,6 +20,7 @@ import { ResultsSection } from '@/blocks/ResultsSection/config'
 import { Section } from '@/blocks/Section/config'
 import { FeaturedPostsBlock } from '@/blocks/FeaturedPostsBlock/config'
 import { FeaturedCaseStudiesBlock } from '@/blocks/FeaturedCaseStudiesBlock/config'
+import { FeaturedWebsitesBlock } from '@/blocks/FeaturedWebsitesBlock/config'
 import { ClientLogosBlock } from '@/blocks/ClientLogosBlock/config'
 import { AboutSection } from '@/blocks/AboutSection/config'
 import { ServicesShowcase } from '@/blocks/ServicesShowcase/config'
@@ -83,6 +84,7 @@ export const Pages: CollectionConfig = {
             Section,
             FeaturedPostsBlock,
             FeaturedCaseStudiesBlock,
+            FeaturedWebsitesBlock,
             ClientLogosBlock,
             AboutSection,
             ServicesShowcase,

@@ -14,6 +14,7 @@ import { TableOfContentsBlockComponent } from '@/blocks/TableOfContentsBlock/Com
 import { ResultsSectionComponent } from '@/blocks/ResultsSection/Component'
 import { FeaturedPostsBlockComponent } from '@/blocks/FeaturedPostsBlock/Component'
 import { FeaturedCaseStudiesBlockComponent } from '@/blocks/FeaturedCaseStudiesBlock/Component'
+import { FeaturedWebsitesBlockComponent } from '@/blocks/FeaturedWebsitesBlock/Component'
 import { ClientLogosBlockComponent } from '@/blocks/ClientLogosBlock/Component'
 import { ContactFormBlockComponent } from '@/blocks/ContactFormBlock/Component'
 import { AboutSectionComponent } from '@/blocks/AboutSection/Component'
@@ -56,6 +57,7 @@ export const blockComponents: Record<string, (props: any) => ReactNode> = {
   resultsSection: ResultsSectionComponent,
   featuredPostsBlock: FeaturedPostsBlockComponent,
   featuredCaseStudiesBlock: FeaturedCaseStudiesBlockComponent,
+  featuredWebsitesBlock: FeaturedWebsitesBlockComponent,
   clientLogosBlock: ClientLogosBlockComponent,
   contactFormBlock: ContactFormBlockComponent,
   aboutSection: AboutSectionComponent,
