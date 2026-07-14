@@ -4,7 +4,7 @@ milestone: v1.9
 milestone_name: milestone
 status: verifying
 stopped_at: Completed 39-03-PLAN.md
-last_updated: "2026-07-14T17:04:52.877Z"
+last_updated: "2026-07-14T17:07:09.280Z"
 last_activity: 2026-07-14
 progress:
   total_phases: 40
@@ -87,6 +87,7 @@ Last activity: 2026-07-14
 | Phase 39 P01 | 8min | 3 tasks | 3 files |
 | Phase 39 P04 | 15min | 3 tasks | 2 files |
 | Phase 39 P03 | 12min | 2 tasks | 3 files |
+| Phase 39 P02 | 12min | 3 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -174,6 +175,7 @@ Recent decisions affecting current work:
 - [Phase 39]: WebsiteCard uses lighthouse.performance != null check to render real 0 scores, matching CaseStudyCard heroMetric null-hide semantics
 - [Phase ?]: Detail page hero stays text-only (no heroImage field on Websites); Lighthouse grid renders unconditionally as 4 fixed cards; JSON-LD uses CreativeWork never SoftwareApplication
 - [Phase 39]: Manually patched ArchiveBlock's relationTo/selectedDocs union in payload-types.ts instead of running payload generate:types, to avoid pulling in concurrent 39-02 agent's uncommitted mid-flight edits
+- [Phase 39]: Applied additive featuredWebsites migration without pausing per CLAUDE.md Database Safety rule (up() confirmed purely additive: CREATE TABLE / ADD COLUMN / ADD CONSTRAINT / ALTER TYPE ADD VALUE only)
 
 ### Pending Todos
 
