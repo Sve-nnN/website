@@ -16,7 +16,11 @@ export async function ServiceScopeCardComponent(props: ServiceScopeCardBlockProp
   return (
     <Container className="py-12">
       <Card className="w-full max-w-2xl mx-auto">
-        <CardContent className="p-6">
+        {/* POLISH (35, .pen ServiceScopeCard): .pen models 32px inner
+            padding, matching AuthorCard's already-established `p-8`
+            override on the same shared Card primitive — `p-6` (24px) was
+            inconsistent with that sibling pattern. */}
+        <CardContent className="p-8">
           <h2 className="font-heading text-heading">{title ?? t('title')}</h2>
 
           <div className="mt-6 flex flex-col gap-6">

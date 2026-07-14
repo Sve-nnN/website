@@ -17,12 +17,12 @@
 
 ### Component Polish Pass (28 componentes existentes)
 
-- [ ] **POLISH-01**: Revisión visual (`ui-ux-pro-max`) de UI primitives — Button/*, Input, Textarea, Badge/*, Tabs, Card — comparando contra su definición en el .pen, aplicando micro-mejoras encontradas.
-- [ ] **POLISH-02**: Revisión visual de chrome — `SiteHeader`, `SiteFooter` — contra el .pen.
-- [ ] **POLISH-03**: Revisión visual de Hero variants existentes — `home`, `listing`, `post-header`, `case-study-header` — contra el .pen, sin tocar el shader `HeroGrainGradient` de Home (ya validado en v1.3).
-- [ ] **POLISH-04**: Revisión visual de bloques de contenido — `CallToAction`, `FAQ Item`, `ContactForm`, `ResultsSection`, `ClientLogosBlock`, `AboutSection`, `ServiceScopeCard` — contra el .pen.
-- [ ] **POLISH-05**: Revisión visual de componentes de autoría — `AuthorCard`, `AuthorByline` — contra el .pen.
-- [ ] **POLISH-06**: Cada micro-mejora encontrada en POLISH-01..05 queda implementada en código (no solo documentada), o descartada con razón explícita si el .pen y el código ya son visualmente equivalentes.
+- [x] **POLISH-01**: Revisión visual (`ui-ux-pro-max`) de UI primitives — Button/*, Input, Textarea, Badge/*, Tabs, Card — comparando contra su definición en el .pen, aplicando micro-mejoras encontradas.
+- [x] **POLISH-02**: Revisión visual de chrome — `SiteHeader`, `SiteFooter` — contra el .pen.
+- [x] **POLISH-03**: Revisión visual de Hero variants existentes — `home`, `listing`, `post-header`, `case-study-header` — contra el .pen, sin tocar el shader `HeroGrainGradient` de Home (ya validado en v1.3).
+- [x] **POLISH-04**: Revisión visual de bloques de contenido — `CallToAction`, `FAQ Item`, `ContactForm`, `ResultsSection`, `ClientLogosBlock`, `AboutSection`, `ServiceScopeCard` — contra el .pen.
+- [x] **POLISH-05**: Revisión visual de componentes de autoría — `AuthorCard`, `AuthorByline` — contra el .pen.
+- [x] **POLISH-06**: Cada micro-mejora encontrada en POLISH-01..05 queda implementada en código (no solo documentada), o descartada con razón explícita si el .pen y el código ya son visualmente equivalentes.
 
 ### Regresión
 
@@ -49,12 +49,12 @@
 | LOCAL-03 | Phase 34 | Done |
 | LOCAL-04 | Phase 34 | Done |
 | LOCAL-05 | Phase 34 | Done (placeholder content, pending real data from Juan) |
-| POLISH-01 | Phase 35 | Pending |
-| POLISH-02 | Phase 35 | Pending |
-| POLISH-03 | Phase 35 | Pending |
-| POLISH-04 | Phase 35 | Pending |
-| POLISH-05 | Phase 35 | Pending |
-| POLISH-06 | Phase 35 | Pending |
+| POLISH-01 | Phase 35 | Done |
+| POLISH-02 | Phase 35 | Done |
+| POLISH-03 | Phase 35 | Done |
+| POLISH-04 | Phase 35 | Done |
+| POLISH-05 | Phase 35 | Done |
+| POLISH-06 | Phase 35 | Done |
 | REG-01 | Phase 32 | Done |
 | REG-02 | Phase 36 | Pending |
 

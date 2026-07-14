@@ -10,8 +10,14 @@ export const buttonVariants = cva(
       variant: {
         default:
           "bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 hover:shadow-md",
+        // POLISH (35): see badge-variants.ts for the full rationale —
+        // `text-destructive-foreground` isn't a real Tailwind utility here
+        // (no `.foreground` sub-key defined for `destructive` in
+        // tailwind.config.ts), so it rendered as inherited text. The .pen's
+        // Button/Destructive node confirms dark text (#12141C) is intended,
+        // which is exactly the existing `--primary-foreground` token.
         destructive:
-          "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 hover:shadow-md",
+          "bg-destructive text-primary-foreground shadow-sm hover:bg-destructive/90 hover:shadow-md",
         outline:
           "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
         secondary:

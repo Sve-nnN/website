@@ -20,7 +20,11 @@ export function AboutSectionComponent(props: AboutSectionBlockProps) {
 
   return (
     <Container className="py-12">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+      {/* POLISH (35, .pen AboutSection): .pen models a 48px gap between the
+          text column and photo (gap-12), matching the same two-column gap
+          already used by ContactFormBlock's `md:grid-cols-2 gap-12` — the
+          previous `gap-8` (32px) was inconsistent with that sibling pattern. */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
         <div className={photoDoc?.url ? 'md:col-span-7' : 'md:col-span-12'}>
           {eyebrow && (
             <p className="text-label uppercase tracking-wide text-primary mb-2">{eyebrow}</p>

@@ -81,7 +81,12 @@ export function ContactFormBlockComponent(props: ContactFormComponentProps) {
           </form>
         </div>
 
-        <div className="relative overflow-hidden rounded-lg">
+        {/* POLISH (35, .pen ContactForm Sidebar): .pen models a 16px corner
+            radius on this CTA-styled sidebar panel, matching the same
+            `rounded-2xl` already used by the sibling CallToAction block
+            (same HeroGrainGradient `cta` variant) — plain `rounded-lg` (8px,
+            the base --radius token) undersold the panel's CTA-like styling. */}
+        <div className="relative overflow-hidden rounded-2xl">
           <HeroGrainGradient variant="cta" />
           <div className="absolute inset-0 bg-black/25" aria-hidden="true" />
           <div className="relative z-10 text-secondary-foreground p-8">
