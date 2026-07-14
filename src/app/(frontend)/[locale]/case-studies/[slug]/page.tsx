@@ -92,6 +92,20 @@ export default async function CaseStudyPage({
     '@type': 'CreativeWork',
     name: doc.title,
     about: doc.heroSubtitle,
+    description: doc.heroSubtitle,
+    ...(author ? { author: { '@type': 'Person', name: author.name } } : {}),
+    dateCreated: doc.createdAt,
+    dateModified: doc.updatedAt,
+    ...(client?.name ? { creator: { '@type': 'Organization', name: client.name } } : {}),
+    ...(doc.kpis && doc.kpis.length > 0
+      ? {
+          additionalProperty: doc.kpis.map((kpi) => ({
+            '@type': 'PropertyValue',
+            name: kpi.label,
+            value: kpi.value,
+          })),
+        }
+      : {}),
   }
 
   return (
