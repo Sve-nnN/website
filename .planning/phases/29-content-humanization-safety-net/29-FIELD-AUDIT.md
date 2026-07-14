@@ -162,9 +162,9 @@ Cross-reference: VOICE-02, resolved in Plan 29-03.
 
 Cross-reference: VOICE-03, investigated in Plan 29-02, resolved in Plan 29-04.
 
-### 3. `Llms.llmsTxt` / `Llms.llmsFull` — AWAITING JUAN'S CALL
+### 3. `Llms.llmsTxt` / `Llms.llmsFull` — RESOLVED, intentional single-locale exception
 
-**Status:** AWAITING JUAN'S CALL.
+**Status:** RESOLVED — Option B. Juan confirmed 2026-07-14: leave non-localized.
 
 This is a new finding from this session's grep sweep, not previously named in ROADMAP.md's 3-repeat bug list. Both `llmsTxt` and `llmsFull` on the `Llms` global are `textarea` fields, not localized, and both are public AI-crawler-facing copy (`llms.txt` / `llms-full.txt`).
 
