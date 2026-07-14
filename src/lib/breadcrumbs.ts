@@ -31,20 +31,23 @@ function servicesIndexHref(locale: Locale): string {
   return `${home === '/' ? '' : home}/${servicesSegment(locale)}`
 }
 
-type Section = 'services' | 'case-studies'
+type Section = 'services' | 'case-studies' | 'websites'
 
 const SECTION_LABELS: Record<Section, Record<Locale, string>> = {
   services: { es: 'Servicios', en: 'Services' },
   'case-studies': { es: 'Casos de éxito', en: 'Case Studies' },
+  websites: { es: 'Sitios web', en: 'Websites' },
 }
 
-// Case Studies routes are NOT locale-prefixed in their segment (confirmed:
-// src/app/(frontend)/[locale]/case-studies/page.tsx serves both /case-studies
-// and /en/case-studies under the same folder name) — unlike Services, which
-// has a genuinely different Spanish segment ('servicios' vs 'services').
+// Case Studies and Websites routes are NOT locale-prefixed in their segment
+// (confirmed: src/app/(frontend)/[locale]/case-studies/page.tsx serves both
+// /case-studies and /en/case-studies under the same folder name) — unlike
+// Services, which has a genuinely different Spanish segment ('servicios' vs
+// 'services').
 const SECTION_SEGMENTS: Record<Section, Record<Locale, string>> = {
   services: { es: 'servicios', en: 'services' },
   'case-studies': { es: 'case-studies', en: 'case-studies' },
+  websites: { es: 'websites', en: 'websites' },
 }
 
 function sectionIndexHref(locale: Locale, section: Section): string {
@@ -101,6 +104,20 @@ export function buildCaseStudiesTrail(
   current?: { slug: string; title: string },
 ): BreadcrumbItem[] {
   return buildSectionTrail(locale, 'case-studies', current)
+}
+
+/**
+ * Builds the breadcrumb trail for the Websites index page (2 levels) or one
+ * of its individual detail pages (3 levels, when `current` is provided).
+ * Sibling to `buildTrail()` and `buildCaseStudiesTrail()`, sharing the same
+ * internal `buildSectionTrail()` so URL/locale logic is never duplicated
+ * across sections (UIPOL-09).
+ */
+export function buildWebsitesTrail(
+  locale: Locale,
+  current?: { slug: string; title: string },
+): BreadcrumbItem[] {
+  return buildSectionTrail(locale, 'websites', current)
 }
 
 /**
