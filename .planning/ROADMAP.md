@@ -70,7 +70,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 34: Local Landing Application (Madrid/Lima)** - `/seo-tecnico-madrid` y `/seo-tecnico-lima` usan los componentes nuevos con diferenciación estructural real (LOCAL-05 con contenido placeholder marcado, real pendiente de Juan) (completed 2026-07-14)
 - [x] **Phase 35: Component Polish Pass** - Revisión `ui-ux-pro-max` de los 28 componentes restantes contra el .pen, micro-mejoras implementadas en código (v1.7) (completed 2026-07-14)
 - [x] **Phase 36: Regression Gate** - Gate de cero regresión al cierre, comparado contra el baseline de Phase 32 (v1.7, cierre de milestone) (completed 2026-07-14)
-- [ ] **Phase 37: Case Studies Content Audit & Fix** - Los 6 case studies borrador (ids 15-20) quedan con contenido completo, KPIs explicados, doc 20 anonimizado, y `results.metrics` respaldado por datos reales de GSC
+- [ ] **Phase 37: Case Studies Content Audit & Fix** - Los 6 case studies borrador (ids 15-20) quedan con contenido completo, KPIs explicados, doc 20 anonimizado, `results.metrics` respaldado por datos reales de GSC, autor deduplicado, schema JSON-LD dinámico, chart con escalas/mobile arreglado, y estructura revisada contra ariannalupi.com/casos
 
 ## Phase Details
 
@@ -863,17 +863,21 @@ Plans:
 
 **Goal**: Los 6 case studies borrador (ids 15-20) que Juan verificó a mano en el admin quedan corregidos de punta a punta — sin huecos de contenido, sin KPIs sin sentido, sin cliente real expuesto — listos para que Juan decida publicarlos.
 **Depends on**: Phase 36 (continúa la numeración; sin dependencia técnica real, milestone independiente)
-**Requirements**: CASE-01, CASE-02, CASE-03, CASE-04, CASE-05, CASE-06
+**Requirements**: CASE-01, CASE-02, CASE-03, CASE-04, CASE-05, CASE-06, CASE-07, CASE-08, CASE-09, CASE-10, CASE-11
 **Success Criteria** (what must be TRUE):
   1. Los 6 case studies (ids 15-20) tienen `challenge` y `solution` no vacíos en ambos locales (en/es) — verificable leyendo el doc crudo de cada uno.
   2. Cada KPI mostrado en los 6 docs (tarjetas tipo "+83%"/"+71%"/"86,000"/"22.4M") tiene un label visible que explica qué mide — ningún número suelto sin contexto.
   3. El doc 20 (despacho penal Pittsburgh) no contiene nombre real del cliente, dominio real, condado real ni conteo de reseñas real en ningún campo (incluidos metadata/clientContext) — reemplazado por datos anonimizados consistentes con el resto de case studies.
   4. `results.metrics` de cada uno de los 6 docs tiene múltiples filas reales (clics, impresiones, posición) sourced de Google Search Console real vía cualquier MCP `gsc-*` ya conectado y en vivo (no se requiere agregar propiedades nuevas) para la propiedad que respalda cada caso — sin exponer branding/nombre/dominio real del cliente. Cada fila/valor de la tabla (ej. "47,108"/"86,000"/"13.1M"/"22.4M"/"36.3"/"19.2") también lleva un título/label visible indicando qué métrica es — suficientes filas para que el chart antes/después no quede en 1-2 barras.
   5. La ejecución de la fase devuelve el JSON crudo completo de los 6 docs corregidos (no un resumen) para verificación manual de Juan, obtenido preferentemente vía el MCP `juan-payload` (`http://localhost:3000/api/mcp`, requiere dev server levantado) o por otra vía confirmada como funcional (no asumida) dado que un intento previo de scripting vía Local API falló en silencio en el shell de Juan.
+  6. La tarjeta de autor (JU / Juan Carlos Angulo / Ingeniero de Software y Consultor SEO Técnico + bio) aparece una sola vez en la página de detalle de case study, no duplicada.
+  7. Los 6 case studies tienen JSON-LD Schema.org válido, optimizado y dinámico por doc — cada uno refleja sus propios datos (no un schema genérico/hardcodeado copiado entre docs).
+  8. El chart de resultados no mezcla en el mismo eje métricas de escalas muy distintas (ej. posición ~8 vs impresiones ~30,000 dejando la métrica chica invisible) — resuelto con eje secundario, normalización o separación de charts — y se ve correctamente en mobile (sin overflow, labels ilegibles, ni barras cortadas).
+  9. La estructura de la página de case study fue comparada contra `https://ariannalupi.com/casos/ecommerce-vape/` como referencia, y se agregaron las secciones/elementos que faltaban y tenían sentido para el modelo de datos actual.
 **Plans**: TBD
 
 Plans:
-- [ ] 37-01: TBD (definido en /gsd:plan-phase 37 — cubre auditoría de los 6 docs, fetch de datos GSC reales, escritura corregida contra la DB real, y verificación con JSON crudo devuelto)
+- [ ] 37-01: TBD (definido en /gsd:plan-phase 37 — cubre auditoría de contenido de los 6 docs, fetch de datos GSC reales, escritura corregida contra la DB real, dedup de autor, schema JSON-LD dinámico, fix de escala/responsive del chart, benchmark contra ariannalupi.com/casos, y verificación con JSON crudo devuelto)
 
 ## Progress
 
