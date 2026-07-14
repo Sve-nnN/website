@@ -762,8 +762,9 @@ Plans:
 **Plans**: 4 plans (2 waves)
 
 Plans:
-- [ ] 29-01-PLAN.md — Field-localization audit + voice profile doc (autonomous)
-- [ ] 29-02-PLAN.md — Content snapshot script extension + CaseStudies.services live-data investigation (autonomous)
+
+- [x] 29-01-PLAN.md — Field-localization audit + voice profile doc (autonomous)
+- [x] 29-02-PLAN.md — Content snapshot script extension + CaseStudies.services live-data investigation (autonomous)
 - [ ] 29-03-PLAN.md — TestimonialsCarousel.title migration (BLOCKING — Juan's named approval)
 - [ ] 29-04-PLAN.md — CaseStudies.services[].service resolution, conditional on 29-02's verdict (BLOCKING — Juan's named approval)
 
@@ -997,7 +998,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 26. UI/UX Polish Pass — Low-Risk Components | 0/TBD | Not started | - |
 | 27. Micro-animation Library Adoption | 1/1 | Complete   | 2026-07-13 |
 | 28. Component Motion Rollout + Hero Variants + Blog Grids | 4/4 | Complete   | 2026-07-13 |
-| 29. Content Humanization Safety Net | 0/TBD | Not started | - |
+| 29. Content Humanization Safety Net | 2/4 | In Progress|  |
 | 30. Content Humanization — Globals, Core Pages, Services & Geo | 0/TBD | Not started | - |
 | 31. Content Humanization — Posts & Case Studies + Verificación Final | 0/TBD | Not started | - |
 | 32. Regression Baseline | 1/1 | Complete | 2026-07-14 |
