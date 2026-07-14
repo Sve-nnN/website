@@ -24,6 +24,7 @@ import { CaseStudies } from './collections/CaseStudies'
 import { Testimonials } from './collections/Testimonials'
 import { Clientes } from './collections/Clientes'
 import { SpeakingEvents } from './collections/SpeakingEvents'
+import { Websites } from './collections/Websites'
 import { Llms } from './globals/Llms'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
@@ -85,11 +86,12 @@ export default buildConfig({
     Testimonials,
     Clientes,
     SpeakingEvents,
+    Websites,
   ],
   globals: [Llms, Header, Footer, FeaturedContent],
   plugins: [
     seoPlugin({
-      collections: ['pages', 'posts', 'case-studies', 'authors'],
+      collections: ['pages', 'posts', 'case-studies', 'authors', 'websites'],
       uploadsCollection: 'media',
       tabbedUI: true,
       generateTitle: ({
