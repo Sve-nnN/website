@@ -97,7 +97,7 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 - "El reto" y "La solución" completos en ambos locales (en/es) para los 6 docs
 - Cada KPI con label explicando qué mide (no números sueltos tipo "+83%")
 - Doc 20 (despacho penal Pittsburgh) completamente anonimizado: sin nombre real, dominio real, condado, ni conteo de reseñas real
-- `results.metrics` poblado con más filas reales por caso (clics, impresiones, posición) para que los charts no queden con 1-2 barras
+- `results.metrics` poblado con más filas reales por caso (clics, impresiones, posición) para que los charts no queden con 1-2 barras, usando datos reales de Google Search Console (MCP `gsc-juan-*`) de las propiedades detrás de cada caso — sin exponer branding/nombre/dominio real del cliente
 
 Nota de ejecución: intento previo de correr scripts Local API (`npx payload run`) para leer/arreglar en vivo falló en el shell de Juan (exit 0, sin salida, sin error) — probado con dev server arriba y abajo, con `console.log` y `writeFileSync`. Funcionó en agentes previos del mismo hilo. El agente que ejecute este milestone debe evitar ese camino sin verificar primero que produce salida real, y debe devolver el JSON crudo completo de los 6 docs corregidos (no un resumen) para que Juan lo verifique él mismo — el agente anterior dijo "verificado" sin estarlo.
 
