@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.9
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 37-01-PLAN.md
-last_updated: "2026-07-14T18:28:23.035Z"
+stopped_at: Completed 37-02-PLAN.md
+last_updated: "2026-07-14T18:43:09.431Z"
 last_activity: 2026-07-14
 progress:
   total_phases: 40
   completed_phases: 22
   total_plans: 87
-  completed_plans: 80
+  completed_plans: 81
   percent: 55
 ---
 
@@ -90,6 +90,7 @@ Last activity: 2026-07-14
 | Phase 39 P02 | 12min | 3 tasks | 9 files |
 | Phase 40-websites-content-population-real-data-capture P01 | 25min | 2 tasks | 1 files |
 | Phase 37 P01 | 20min | 3 tasks | 1 files |
+| Phase 37-case-studies-content-audit-fix P02 | 45min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -181,6 +182,7 @@ Recent decisions affecting current work:
 - [Phase 40]: juan-tech.com Lighthouse cleared to null (not fake 0/0/0/0) porque el sitio vivo devuelve HTTP 402 DEPLOYMENT_DISABLED de Vercel; screenshot queda documentado como no representativo. Juan aprobo dejarlo asi, sin reintentar ni borrar.
 - [Phase 40]: Corregido bug de reuso de ids en arrays localizados (highlights/challenges) en seed-phase40-websites.ts durante la corrida en vivo, mismo patron que reapplyIds de seed-phase19.
 - [Phase 37]: CTA section renders unconditionally (not gated on doc.conclusion) so every case study gets the closing CTA regardless of conclusion field state
+- [Phase ?]: Recharts conditional children must use per-element ternaries, not Fragment-wrapped conditionals (Fragments are silently dropped by Recharts' child-type detection) — Discovered via live-browser mobile check at 375px against real case-study data; fixed and verified in Plan 37-02
 
 ### Pending Todos
 
@@ -222,8 +224,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-14T18:28:23.029Z
-Stopped at: Completed 37-01-PLAN.md
+Last session: 2026-07-14T18:43:09.417Z
+Stopped at: Completed 37-02-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
