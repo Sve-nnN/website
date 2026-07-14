@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.9
 milestone_name: milestone
 status: verifying
-stopped_at: Completed 38-01-PLAN.md — Websites collection schema created, registered in payload.config.ts + seoPlugin, additive migration applied against real Neon Postgres, payload-types.ts regenerated. WEB-01..05 done.
-last_updated: "2026-07-14T17:03:35.506Z"
+stopped_at: Completed 39-03-PLAN.md
+last_updated: "2026-07-14T17:04:52.877Z"
 last_activity: 2026-07-14
 progress:
   total_phases: 40
-  completed_phases: 20
+  completed_phases: 21
   total_plans: 82
-  completed_plans: 77
-  percent: 50
+  completed_plans: 78
+  percent: 53
 ---
 
 # Project State
@@ -86,6 +86,7 @@ Last activity: 2026-07-14
 | Phase 38 P01 | 15min | 3 tasks | 6 files |
 | Phase 39 P01 | 8min | 3 tasks | 3 files |
 | Phase 39 P04 | 15min | 3 tasks | 2 files |
+| Phase 39 P03 | 12min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -172,6 +173,7 @@ Recent decisions affecting current work:
 - [Phase 38]: 38-01: Websites collection created exactly per CONTEXT.md/PATTERNS.md, zero deviations; additive migration applied against real Neon Postgres (CREATE TABLE websites + sub-tables + versions tables, FK to clientes/case-studies, no DROP/ALTER on pre-existing tables); payload-types.ts regenerated with Website interface
 - [Phase 39]: WebsiteCard uses lighthouse.performance != null check to render real 0 scores, matching CaseStudyCard heroMetric null-hide semantics
 - [Phase ?]: Detail page hero stays text-only (no heroImage field on Websites); Lighthouse grid renders unconditionally as 4 fixed cards; JSON-LD uses CreativeWork never SoftwareApplication
+- [Phase 39]: Manually patched ArchiveBlock's relationTo/selectedDocs union in payload-types.ts instead of running payload generate:types, to avoid pulling in concurrent 39-02 agent's uncommitted mid-flight edits
 
 ### Pending Todos
 
@@ -213,8 +215,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-14T17:03:27.310Z
-Stopped at: Completed 38-01-PLAN.md — Websites collection schema created, registered in payload.config.ts + seoPlugin, additive migration applied against real Neon Postgres, payload-types.ts regenerated. WEB-01..05 done.
+Last session: 2026-07-14T17:04:52.872Z
+Stopped at: Completed 39-03-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

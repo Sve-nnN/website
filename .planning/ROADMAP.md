@@ -74,7 +74,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 36: Regression Gate** - Gate de cero regresión al cierre, comparado contra el baseline de Phase 32 (v1.7, cierre de milestone) (completed 2026-07-14)
 - [ ] **Phase 37: Case Studies Content Audit & Fix** - Los 6 case studies borrador (ids 15-20) quedan con contenido completo, KPIs explicados, doc 20 anonimizado, `results.metrics` respaldado por datos reales de GSC, autor deduplicado, schema JSON-LD dinámico, chart con escalas/mobile arreglado, y estructura revisada contra ariannalupi.com/casos
 - [x] **Phase 38: Websites — Schema & Collection Design** - Colección `Websites` modelada, registrada y tipada, con relaciones opcionales a Clientes/CaseStudies y captura de fecha obligatoria para Lighthouse (completed 2026-07-14)
-- [ ] **Phase 39: Websites — Frontend Components & Routes** - `WebsiteCard`, sección en Home, `ArchiveBlock` extendido, rutas de listado/detalle con JSON-LD `CreativeWork` y sitemap actualizado
+- [x] **Phase 39: Websites — Frontend Components & Routes** - `WebsiteCard`, sección en Home, `ArchiveBlock` extendido, rutas de listado/detalle con JSON-LD `CreativeWork` y sitemap actualizado (completed 2026-07-14)
 - [ ] **Phase 40: Websites — Content Population (Real Data Capture)** - 6 sitios reales poblados con stack confirmado por Juan, screenshots reales y Lighthouse real capturado una sola vez
 
 ## Phase Details
@@ -924,7 +924,7 @@ Plans:
 Plans:
 
 - [x] 39-01-PLAN.md — Foundation: WebsiteCard component + buildWebsitesTrail() breadcrumb helper + websites sitemap entry
-- [ ] 39-02-PLAN.md — FeaturedWebsitesBlock (config+Component) + FeaturedContent.featuredWebsites field + blockRegistry/Pages registration + migration
+- [x] 39-02-PLAN.md — FeaturedWebsitesBlock (config+Component) + FeaturedContent.featuredWebsites field + blockRegistry/Pages registration + migration
 - [x] 39-03-PLAN.md — ArchiveBlock extended with relationTo: 'websites'
 - [x] 39-04-PLAN.md — /[locale]/websites (listado) + /[locale]/websites/[slug] (detalle) con JSON-LD CreativeWork
 
@@ -994,6 +994,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 36. Regression Gate | 1/1 | Complete | 2026-07-14 |
 | 37. Case Studies Content Audit & Fix | 0/TBD | Not started | - |
 | 38. Websites — Schema & Collection Design | 1/1 | Complete   | 2026-07-14 |
-| 39. Websites — Frontend Components & Routes | 3/4 | In Progress|  |
+| 39. Websites — Frontend Components & Routes | 4/4 | Complete   | 2026-07-14 |
 | 40. Websites — Content Population (Real Data Capture) | 0/TBD | Not started | - |
 </content>
