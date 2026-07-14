@@ -528,7 +528,7 @@ export interface ContentBlock {
  * via the `definition` "ArchiveBlock".
  */
 export interface ArchiveBlock {
-  relationTo: 'posts' | 'case-studies';
+  relationTo: 'posts' | 'case-studies' | 'websites';
   mode?: ('latest' | 'manual') | null;
   limit?: number | null;
   selectedDocs?:
@@ -540,6 +540,10 @@ export interface ArchiveBlock {
         | {
             relationTo: 'case-studies';
             value: number | CaseStudy;
+          }
+        | {
+            relationTo: 'websites';
+            value: number | Website;
           }
       )[]
     | null;

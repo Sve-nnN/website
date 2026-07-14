@@ -1,12 +1,13 @@
 import { getPayload } from 'payload'
 import { getLocale } from 'next-intl/server'
 
-import type { ArchiveBlock as ArchiveBlockProps, Post, CaseStudy, Category } from '@/payload-types'
+import type { ArchiveBlock as ArchiveBlockProps, Post, CaseStudy, Website, Category } from '@/payload-types'
 
 import config from '@/payload.config'
 import { Container } from '@/components/Container'
 import { PostCard } from '@/components/PostCard'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
+import { WebsiteCard } from '@/components/WebsiteCard'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import {
   Tabs,
@@ -34,11 +35,11 @@ export async function ArchiveBlockComponent(props: ArchiveBlockComponentProps) {
   const payload = await getPayload({ config })
   const locale = (await getLocale()) as 'en' | 'es'
 
-  let docs: (Post | CaseStudy)[] = []
+  let docs: (Post | CaseStudy | Website)[] = []
   let categories: Category[] = []
 
   if (mode === 'manual' && selectedDocs?.length) {
-    docs = selectedDocs.flatMap((d) => (typeof d.value === 'object' ? [d.value as Post | CaseStudy] : []))
+    docs = selectedDocs.flatMap((d) => (typeof d.value === 'object' ? [d.value as Post | CaseStudy | Website] : []))
   } else {
     // T-05-04-01: validate the category param against the real fetched
     // categories list before using it in a `where` clause — never pass raw
@@ -114,6 +115,8 @@ export async function ArchiveBlockComponent(props: ArchiveBlockComponentProps) {
               <ScrollReveal key={doc.id} priority={isAboveFold}>
                 {relationTo === 'posts' ? (
                   <PostCard post={doc as Post} priority={isAboveFold} />
+                ) : relationTo === 'websites' ? (
+                  <WebsiteCard website={doc as Website} />
                 ) : (
                   <CaseStudyCard caseStudy={doc as CaseStudy} />
                 )}
