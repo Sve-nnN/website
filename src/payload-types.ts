@@ -250,6 +250,7 @@ export interface Page {
       | ServicesShowcaseBlock
       | ServiceScopeCardBlock
       | RelatedCaseStudyBlockBlock
+      | LocalProofSectionBlock
     )[];
   };
   slug?: string | null;
@@ -277,7 +278,7 @@ export interface Page {
  * via the `definition` "HeroBlock".
  */
 export interface HeroBlock {
-  variant: 'home' | 'listing' | 'post-header' | 'case-study-header';
+  variant: 'home' | 'listing' | 'post-header' | 'case-study-header' | 'local-landing';
   title?: string | null;
   subtitle?: string | null;
   media?: (number | null) | Media;
@@ -318,6 +319,26 @@ export interface HeroBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Nombre de la ciudad mostrado en el badge (ej: "Madrid"). Solo variante Local Landing.
+   */
+  cityName?: string | null;
+  /**
+   * Texto del stat inline junto al check-icon (ej: "+40 proyectos entregados"). Solo variante Local Landing.
+   */
+  inlineStat?: string | null;
+  /**
+   * Lado donde se posiciona el anillo decorativo. Solo variante Local Landing.
+   */
+  ringSide?: ('left' | 'right') | null;
+  /**
+   * Opacidad del anillo decorativo (0 a 1). Solo variante Local Landing.
+   */
+  ringOpacity?: number | null;
+  /**
+   * Espeja el anillo decorativo horizontalmente. Solo variante Local Landing.
+   */
+  ringFlipX?: boolean | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'hero';
@@ -1090,6 +1111,37 @@ export interface RelatedCaseStudyBlockBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LocalProofSectionBlock".
+ */
+export interface LocalProofSectionBlock {
+  /**
+   * Exactamente 3 estadisticas numericas locales.
+   */
+  stats: {
+    /**
+     * Valor de la estadistica (ej: "+40", "98%", "5 anos")
+     */
+    value: string;
+    /**
+     * Descripcion de la estadistica
+     */
+    label: string;
+    id?: string | null;
+  }[];
+  /**
+   * Testimonio local con nombre y negocio.
+   */
+  testimonial: {
+    quote: string;
+    authorName: string;
+    authorBusiness: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'localProofSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -1689,6 +1741,7 @@ export interface PagesSelect<T extends boolean = true> {
               servicesShowcase?: T | ServicesShowcaseBlockSelect<T>;
               serviceScopeCard?: T | ServiceScopeCardBlockSelect<T>;
               relatedCaseStudyBlock?: T | RelatedCaseStudyBlockBlockSelect<T>;
+              localProofSection?: T | LocalProofSectionBlockSelect<T>;
             };
       };
   slug?: T;
@@ -1740,6 +1793,11 @@ export interface HeroBlockSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  cityName?: T;
+  inlineStat?: T;
+  ringSide?: T;
+  ringOpacity?: T;
+  ringFlipX?: T;
   id?: T;
   blockName?: T;
 }
@@ -2029,6 +2087,28 @@ export interface RelatedCaseStudyBlockBlockSelect<T extends boolean = true> {
   title?: T;
   framingText?: T;
   caseStudy?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LocalProofSectionBlock_select".
+ */
+export interface LocalProofSectionBlockSelect<T extends boolean = true> {
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  testimonial?:
+    | T
+    | {
+        quote?: T;
+        authorName?: T;
+        authorBusiness?: T;
+      };
   id?: T;
   blockName?: T;
 }

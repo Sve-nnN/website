@@ -21,6 +21,7 @@ import { TestimonialSectionComponent } from '@/blocks/TestimonialSection/Compone
 import { ServicesShowcaseComponent } from '@/blocks/ServicesShowcase/Component'
 import { ServiceScopeCardComponent } from '@/blocks/ServiceScopeCard/Component'
 import { RelatedCaseStudyBlockComponent } from '@/blocks/RelatedCaseStudyBlock/Component'
+import { LocalProofSectionComponent } from '@/blocks/LocalProofSection/Component'
 
 // MAINTAINABILITY (circular-dependency): the registry, RenderBlocks.tsx, and
 // Section/Component.tsx form a natural recursive relationship -- Section
@@ -62,4 +63,5 @@ export const blockComponents: Record<string, (props: any) => ReactNode> = {
   servicesShowcase: ServicesShowcaseComponent,
   serviceScopeCard: ServiceScopeCardComponent,
   relatedCaseStudyBlock: RelatedCaseStudyBlockComponent,
+  localProofSection: LocalProofSectionComponent,
 }

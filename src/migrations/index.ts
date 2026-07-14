@@ -19,6 +19,7 @@ import * as migration_20260712_202954_phase19_calltoaction_localized from './202
 import * as migration_20260712_211605_phase_mcp_plugin from './20260712_211605_phase_mcp_plugin';
 import * as migration_20260713_005924 from './20260713_005924';
 import * as migration_20260713_022605 from './20260713_022605';
+import * as migration_20260714_023126_phase33_local_landing_components from './20260714_023126_phase33_local_landing_components';
 
 export const migrations = [
   {
@@ -124,6 +125,11 @@ export const migrations = [
   {
     up: migration_20260713_022605.up,
     down: migration_20260713_022605.down,
-    name: '20260713_022605'
+    name: '20260713_022605',
+  },
+  {
+    up: migration_20260714_023126_phase33_local_landing_components.up,
+    down: migration_20260714_023126_phase33_local_landing_components.down,
+    name: '20260714_023126_phase33_local_landing_components'
   },
 ];

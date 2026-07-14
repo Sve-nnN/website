@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { MapPin, CheckCircle2 } from 'lucide-react'
 
 import type { HeroBlock as HeroBlockProps } from '@/payload-types'
 
@@ -41,25 +42,69 @@ const variantStyles: Record<
     overlayOpacity: 'opacity-45',
     border: 'border-t-8 border-primary',
   },
+  'local-landing': {
+    padding: 'py-16 md:py-24',
+    overlayOpacity: null,
+    border: '',
+  },
 }
 
 export function HeroComponent(props: HeroBlockProps) {
-  const { variant, title, subtitle, media, links, breadcrumbs } = props
+  const {
+    variant,
+    title,
+    subtitle,
+    media,
+    links,
+    breadcrumbs,
+    cityName,
+    inlineStat,
+    ringSide,
+    ringOpacity,
+    ringFlipX,
+  } = props
   const image = typeof media === 'object' ? media : null
 
   const isHome = variant === 'home'
   const isListing = variant === 'listing'
+  const isLocalLanding = variant === 'local-landing'
   const styles = variantStyles[variant]
 
   return (
     <section
       className={
-        isHome
+        isHome || isLocalLanding
           ? 'relative bg-secondary text-secondary-foreground py-16 md:py-24 overflow-hidden'
           : `relative bg-secondary text-secondary-foreground ${styles.padding} ${styles.border}`
       }
     >
       {isHome && <HeroGrainGradient />}
+      {isLocalLanding && (
+        <svg
+          aria-hidden="true"
+          className={`pointer-events-none absolute top-1/2 -translate-y-1/2 size-[28rem] md:size-[36rem] ${
+            ringSide === 'left' ? '-left-32 md:-left-40' : '-right-32 md:-right-40'
+          }`}
+          style={{
+            opacity: ringOpacity ?? 0.25,
+            transform: ringFlipX
+              ? 'translateY(-50%) scaleX(-1)'
+              : 'translateY(-50%)',
+          }}
+          viewBox="0 0 400 400"
+          fill="none"
+        >
+          <ellipse
+            cx="200"
+            cy="200"
+            rx="180"
+            ry="150"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="text-secondary-foreground"
+          />
+        </svg>
+      )}
       {!isHome && !isListing && image?.url && styles.overlayOpacity && (
         <div className={`absolute inset-0 ${styles.overlayOpacity}`}>
           <Image
@@ -94,6 +139,12 @@ export function HeroComponent(props: HeroBlockProps) {
             </ol>
           </nav>
         )}
+        {isLocalLanding && cityName && (
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-secondary-foreground/10 px-4 py-1.5 text-label">
+            <MapPin className="size-4 text-primary" />
+            <span>{cityName}</span>
+          </div>
+        )}
         {title && (
           <h1
             className={
@@ -107,6 +158,12 @@ export function HeroComponent(props: HeroBlockProps) {
         )}
         {subtitle && (
           <p className="mt-6 text-body max-w-2xl text-secondary-foreground/80">{subtitle}</p>
+        )}
+        {isLocalLanding && inlineStat && (
+          <div className="mt-4 flex items-center gap-2 text-body">
+            <CheckCircle2 className="size-5 text-primary" />
+            <span>{inlineStat}</span>
+          </div>
         )}
         {links && links.length > 0 && (
           <div className="mt-8 flex flex-wrap gap-4">

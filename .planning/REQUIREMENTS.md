@@ -9,8 +9,8 @@
 
 ### Local Landing — Componentes Nuevos
 
-- [ ] **LOCAL-01**: Nuevo variant `local-landing` en `src/blocks/Hero/config.ts` + `Component.tsx` — badge de ciudad (icono map-pin + nombre), anillo decorativo (ellipse con stroke, sin fill), stat inline con check-icon, CTA row. Reusa tokens de color/tipografía/espaciado existentes, sin tokens nuevos.
-- [ ] **LOCAL-02**: Nuevo block `LocalProofSection` (Payload block config + componente React) — banda de prueba social localizada: 3 stats numéricos + testimonial card con nombre/negocio local, editable desde admin.
+- [x] **LOCAL-01**: Nuevo variant `local-landing` en `src/blocks/Hero/config.ts` + `Component.tsx` — badge de ciudad (icono map-pin + nombre), anillo decorativo (ellipse con stroke, sin fill), stat inline con check-icon, CTA row. Reusa tokens de color/tipografía/espaciado existentes, sin tokens nuevos.
+- [x] **LOCAL-02**: Nuevo block `LocalProofSection` (Payload block config + componente React) — banda de prueba social localizada: 3 stats numéricos + testimonial card con nombre/negocio local, editable desde admin.
 - [ ] **LOCAL-03**: `/seo-tecnico-madrid` usa `Hero` variant `local-landing` con anillo a la derecha, opacity 0.25, CTA row con un solo botón primario.
 - [ ] **LOCAL-04**: `/seo-tecnico-lima` usa `Hero` variant `local-landing` con anillo espejado (`flipX`) a la izquierda, opacity 0.35, CTA row con botón primario + botón outline ("Ver casos en Lima").
 - [ ] **LOCAL-05**: Ambas landings incorporan `LocalProofSection` con stats/testimonial propios de cada ciudad (contenido real, no placeholder).
@@ -44,8 +44,8 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| LOCAL-01 | Phase 33 | Pending |
-| LOCAL-02 | Phase 33 | Pending |
+| LOCAL-01 | Phase 33 | Done |
+| LOCAL-02 | Phase 33 | Done |
 | LOCAL-03 | Phase 34 | Pending |
 | LOCAL-04 | Phase 34 | Pending |
 | LOCAL-05 | Phase 34 | Pending |

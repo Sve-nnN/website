@@ -25,6 +25,7 @@ import { AboutSection } from '@/blocks/AboutSection/config'
 import { ServicesShowcase } from '@/blocks/ServicesShowcase/config'
 import { ServiceScopeCard } from '@/blocks/ServiceScopeCard/config'
 import { RelatedCaseStudyBlock } from '@/blocks/RelatedCaseStudyBlock/config'
+import { LocalProofSection } from '@/blocks/LocalProofSection/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -87,6 +88,7 @@ export const Pages: CollectionConfig = {
             ServicesShowcase,
             ServiceScopeCard,
             RelatedCaseStudyBlock,
+            LocalProofSection,
           ],
         },
       ],
