@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.9
+milestone: v1.8
 milestone_name: milestone
-status: verifying
-stopped_at: Completed 37-02-PLAN.md
-last_updated: "2026-07-14T18:43:09.431Z"
+status: completed
+stopped_at: Completed 37-04-PLAN.md
+last_updated: "2026-07-14T19:30:00.000Z"
 last_activity: 2026-07-14
 progress:
   total_phases: 40
-  completed_phases: 22
-  total_plans: 87
-  completed_plans: 81
-  percent: 55
+  completed_phases: 23
+  total_plans: 91
+  completed_plans: 85
+  percent: 58
 ---
 
 # Project State
@@ -21,13 +21,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Milestone v1.9 (Websites Portfolio Section) — roadmap recién creado (Phases 38-40), lista para `/gsd:plan-phase 38`. v1.8 (Phase 37, Case Studies Content Audit & Fix) queda en cola, CONTEXT.md/UI-SPEC.md ya aprobados, retoma cuando v1.9 cierre. Dos candidatos siguen pausados esperando decisión de Juan: v1.6 Track B (humanización de contenido, 29-31) y Phase 6 (Deploy + Cutover).
+**Current focus:** v1.9 (Websites Portfolio Section, Phases 38-40) closed. v1.8 (Phase 37, Case Studies Content Audit & Fix) also closed — 4 plans (37-01..04), all 11 requirements (CASE-01..11) complete. Dos candidatos siguen pausados esperando decisión de Juan: v1.6 Track B (humanización de contenido, 29-31) y Phase 6 (Deploy + Cutover).
 
 ## Current Position
 
-Phase: 40 — COMPLETE
-Plan: 01 of 1 (planned so far)
-Status: Phase complete — ready for verification
+Phase: 37 — COMPLETE (4/4 plans)
+Plan: 04 of 4
+Status: Phase complete, milestone v1.8 closed
 Last activity: 2026-07-14
 
 ## Performance Metrics

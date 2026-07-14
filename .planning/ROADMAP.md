@@ -72,7 +72,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 34: Local Landing Application (Madrid/Lima)** - `/seo-tecnico-madrid` y `/seo-tecnico-lima` usan los componentes nuevos con diferenciación estructural real (LOCAL-05 con contenido placeholder marcado, real pendiente de Juan) (completed 2026-07-14)
 - [x] **Phase 35: Component Polish Pass** - Revisión `ui-ux-pro-max` de los 28 componentes restantes contra el .pen, micro-mejoras implementadas en código (v1.7) (completed 2026-07-14)
 - [x] **Phase 36: Regression Gate** - Gate de cero regresión al cierre, comparado contra el baseline de Phase 32 (v1.7, cierre de milestone) (completed 2026-07-14)
-- [ ] **Phase 37: Case Studies Content Audit & Fix** - Los 6 case studies borrador (ids 15-20) quedan con contenido completo, KPIs explicados, doc 20 anonimizado, `results.metrics` respaldado por datos reales de GSC, autor deduplicado, schema JSON-LD dinámico, chart con escalas/mobile arreglado, y estructura revisada contra ariannalupi.com/casos
+- [x] **Phase 37: Case Studies Content Audit & Fix** - Los 6 case studies borrador (ids 15-20) quedan con contenido completo, KPIs explicados, doc 20 anonimizado, `results.metrics` respaldado por datos reales de GSC, autor deduplicado, schema JSON-LD dinámico, chart con escalas/mobile arreglado, y estructura revisada contra ariannalupi.com/casos
 - [x] **Phase 38: Websites — Schema & Collection Design** - Colección `Websites` modelada, registrada y tipada, con relaciones opcionales a Clientes/CaseStudies y captura de fecha obligatoria para Lighthouse (completed 2026-07-14)
 - [x] **Phase 39: Websites — Frontend Components & Routes** - `WebsiteCard`, sección en Home, `ArchiveBlock` extendido, rutas de listado/detalle con JSON-LD `CreativeWork` y sitemap actualizado (completed 2026-07-14)
 - [x] **Phase 40: Websites — Content Population (Real Data Capture)** - 6 sitios reales poblados con stack confirmado por Juan, screenshots reales y Lighthouse real capturado una sola vez (completed 2026-07-14)
@@ -955,7 +955,7 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 → 32 → 33 → 34 → 35 → 36 → 37 → 38 → 39 → 40 (v1.1-v1.5 cerrados; v1.6 Track A [26-28] cerrado, Track B [29-31] pausado, retoma después de v1.7; v1.7 CERRADO [Phase 32-36 completas] — baseline de regresión → componentes nuevos de Local Landing → aplicación real a Madrid/Lima → polish pass de los 28 componentes restantes → gate de cierre (PASS, 6/6 rutas limpias); v1.8 [Phase 37, EN COLA] — fix de contenido/anonimización/datos GSC reales en los 6 case studies borrador ids 15-20, CONTEXT.md/UI-SPEC.md aprobados, retoma cuando v1.9 cierre; v1.9 [Phase 38-40, ACTIVO] — schema `Websites` → componentes/rutas de frontend → poblado real de 6 sitios (stack confirmado con Juan, screenshots/Lighthouse capturados una sola vez); Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 → 32 → 33 → 34 → 35 → 36 → 37 → 38 → 39 → 40 (v1.1-v1.5 cerrados; v1.6 Track A [26-28] cerrado, Track B [29-31] pausado, retoma después de v1.7; v1.7 CERRADO [Phase 32-36 completas] — baseline de regresión → componentes nuevos de Local Landing → aplicación real a Madrid/Lima → polish pass de los 28 componentes restantes → gate de cierre (PASS, 6/6 rutas limpias); v1.8 [Phase 37, CERRADO] — fix de contenido/anonimización/datos GSC reales en los 6 case studies borrador ids 15-20 completo (4/4 planes); v1.9 [Phase 38-40, CERRADO] — schema `Websites` → componentes/rutas de frontend → poblado real de 6 sitios (stack confirmado con Juan, screenshots/Lighthouse capturados una sola vez); Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -999,7 +999,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 34. Local Landing Application (Madrid/Lima) | 1/1 | Complete | 2026-07-14 |
 | 35. Component Polish Pass | 1/1 | Complete | 2026-07-14 |
 | 36. Regression Gate | 1/1 | Complete | 2026-07-14 |
-| 37. Case Studies Content Audit & Fix | 2/4 | In Progress|  |
+| 37. Case Studies Content Audit & Fix | 4/4 | Complete    | 2026-07-14 |
 | 38. Websites — Schema & Collection Design | 1/1 | Complete   | 2026-07-14 |
 | 39. Websites — Frontend Components & Routes | 4/4 | Complete   | 2026-07-14 |
 | 40. Websites — Content Population (Real Data Capture) | 1/1 | Complete   | 2026-07-14 |
