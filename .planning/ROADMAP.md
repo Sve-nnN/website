@@ -881,11 +881,14 @@ Plans:
   8. El chart de resultados no mezcla en el mismo eje métricas de escalas muy distintas (ej. posición ~8 vs impresiones ~30,000 dejando la métrica chica invisible) — resuelto con eje secundario, normalización o separación de charts — y se ve correctamente en mobile (sin overflow, labels ilegibles, ni barras cortadas).
   9. La estructura de la página de case study fue comparada contra `https://ariannalupi.com/casos/ecommerce-vape/` como referencia, y se agregaron las secciones/elementos que faltaban y tenían sentido para el modelo de datos actual.
 
-**Plans**: TBD
+**Plans**: 4 plans (3 waves)
 
 Plans:
 
-- [ ] 37-01: TBD (definido en /gsd:plan-phase 37 — cubre auditoría de contenido de los 6 docs, fetch de datos GSC reales, escritura corregida contra la DB real, dedup de autor, schema JSON-LD dinámico, fix de escala/responsive del chart, benchmark contra ariannalupi.com/casos, y verificación con JSON crudo devuelto)
+- [ ] 37-01-PLAN.md — Author dedup (CASE-07) + dynamic per-doc JSON-LD (CASE-08) + closing CTA structural addition (CASE-11), all in case-studies/[slug]/page.tsx
+- [ ] 37-02-PLAN.md — CaseStudyResultsChart.tsx dual-axis magnitude bucketing (CASE-09) + mobile verification (CASE-10)
+- [ ] 37-03-PLAN.md — Full 6-doc audit + GSC property mapping, fix docs 15-17 (challenge/solution/kpis/results.metrics + real GSC data)
+- [ ] 37-04-PLAN.md — Fix docs 18-19, anonymize doc 20 (CASE-03), final verification returning full raw JSON of all 6 docs (CASE-05)
 
 ### Phase 38: Websites — Schema & Collection Design
 
