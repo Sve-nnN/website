@@ -897,7 +897,10 @@ Plans:
   3. El campo `client` (relación a `Clientes`, `hasMany: false`) y el campo `relatedCaseStudy` (relación a `case-studies`, `hasMany: false`, unidireccional) son ambos opcionales — un documento sin cliente externo (ej. apturio.com, juan-tech.com) se guarda sin error
   4. `Websites` aparece en `payload.config.ts` y en la lista `collections[]` de `@payloadcms/plugin-seo`, y `payload generate:types` corrió después del schema (payload-types.ts refleja la colección nueva)
 
-**Plans**: TBD
+**Plans**: 1 plan
+
+Plans:
+- [ ] 38-01-PLAN.md — Crear colección Websites (schema completo), registrarla en payload.config.ts + plugin-seo, generar/aplicar migración y correr generate:types
 
 ### Phase 39: Websites — Frontend Components & Routes
 
