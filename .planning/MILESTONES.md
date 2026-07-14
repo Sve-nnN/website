@@ -1,5 +1,34 @@
 # Milestones
 
+## v1.7 — Local Landing Design + Component Polish Pass (Shipped: 2026-07-14)
+
+**Fases:** 32, 33, 34, 35, 36 (13/13 requirements)
+**Auditoría:** `.planning/milestones/v1.7-MILESTONE-AUDIT.md` — status `gaps_found` (0 blocking / 1 non-blocking), cierre aceptado explícitamente por Juan pese al item no bloqueante (LOCAL-05, contenido placeholder pre-autorizado).
+
+### Qué se cerró
+
+El archivo de diseño Pencil `designs/current-site-real.pen` (réplica fiel del design system actual, no un rediseño) aportaba solo 2 piezas nuevas: un variant `local-landing` para el bloque Hero y un block `LocalProofSection` de prueba social localizada, pensados para diferenciar estructuralmente las landings de Lima y Madrid, que hasta entonces reusaban bloques genéricos sin identidad propia. El resto del .pen (28 componentes) ya tenía equivalente exacto en código, así que el milestone sumó una pasada de polish puntual sobre esos 28 componentes.
+
+- **Phase 32 — Regression Baseline** (REG-01): Lighthouse mobile (build de producción) + snapshot H1/JSON-LD capturado para 6 rutas representativas (incluyendo ambas geo-pages) antes de tocar cualquier componente.
+- **Phase 33 — Local Landing Components** (LOCAL-01, LOCAL-02): Hero variant `local-landing` (badge de ciudad, anillo decorativo, stat inline, CTA row) + block nuevo `LocalProofSection` (3 stats + testimonial), registrados en Payload, cero tokens nuevos, migración puramente aditiva aplicada contra Neon real.
+- **Phase 34 — Local Landing Application (Madrid/Lima)** (LOCAL-03, LOCAL-04, LOCAL-05): `/seo-tecnico-madrid` (anillo derecha/opacity 0.25/CTA único) y `/seo-tecnico-lima` (anillo espejado izquierda/opacity 0.35/CTA doble con "Ver casos en Lima") ahora usan el Hero `local-landing` con diferenciación estructural real, confirmada por diff de config. `LocalProofSection` incorporado a ambas — Lima con 1 stat real (taller DinoRANK/Arianna Lupi 2025, 18 asistentes), el resto marcado `[PLACEHOLDER]` a la espera de datos reales de clientes.
+- **Phase 35 — Component Polish Pass** (POLISH-01..06): revisión `ui-ux-pro-max` de los 28 componentes restantes contra datos estructurados del .pen (`mcp__pencil__batch_get`), 6 micro-mejoras genuinas fixeadas en código y 6 descartadas con razón explícita.
+- **Phase 36 — Regression Gate** (REG-02): gate de cierre PASS 6/6 rutas — sin caída de performance >5pt, sin cruce de banda CWV, H1/JSON-LD byte-idénticos contra el baseline de Phase 32.
+
+### Bugs reales encontrados y corregidos durante el milestone (fuera del scope original)
+
+1. **`text-destructive-foreground` sin efecto real** (Phase 35, code review): el token `destructive` de `tailwind.config.ts` nunca tuvo una sub-clave `.foreground` (a diferencia de primary/secondary/muted/accent), así que las variantes destructive de Button y Badge compilaban a texto sin color. Corregido reusando `text-primary-foreground`, ya existente y visualmente idéntico al valor modelado en el .pen.
+
+### Items no bloqueantes aceptados por Juan al cierre
+
+1. **LOCAL-05 — contenido placeholder de `LocalProofSection`**: estructuralmente completo y funcionando en ambas landings (3 stats + testimonial, wireado correctamente), pero la mayoría del contenido (2 de 3 stats por ciudad + ambos testimonios) sigue marcado `[PLACEHOLDER]` — autorizado explícitamente por Juan durante Phase 34 mientras se conecta la fuente real de datos de clientes (Google Search Console). No bloquea el cierre del milestone; pendiente de reemplazo cuando Juan provea los datos reales.
+
+### Resultado
+
+13/13 requirements v1.7 verificados de forma independiente contra el dev server real, un build de producción local, y la base Postgres real (no solo documentados). `tsc --noEmit` limpio, git history commiteado sin cambios sueltos. Ver `.planning/milestones/v1.7-MILESTONE-AUDIT.md` para el detalle completo de verificación.
+
+---
+
 ## v1.5 v1.5 (Shipped: 2026-07-13)
 
 **Phases completed:** 21 phases, 76 plans, 110 tasks

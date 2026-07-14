@@ -2,9 +2,9 @@
 gsd_state_version: 1.0
 milestone: v1.7
 milestone_name: Local Landing Design + Component Polish Pass
-status: complete
-last_updated: "2026-07-14T22:30:00.000Z"
-last_activity: 2026-07-14
+status: Awaiting next milestone
+last_updated: "2026-07-14T23:15:00.000Z"
+last_activity: 2026-07-14 — milestone v1.7 audited (gaps_found, 13/13 requirements, 1 non-blocking known gap) and archived to .planning/milestones/
 progress:
   total_phases: 5
   completed_phases: 5
@@ -20,14 +20,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** v1.7 milestone (Local Landing Design + Component Polish Pass) — CLOSED, 5/5 fases (32-36) completas: baseline de regresión → componentes nuevos de Local Landing (Hero variant + LocalProofSection) → aplicación real a Madrid/Lima → polish pass de 28 componentes restantes → gate de cierre (PASS, 6/6 rutas limpias). v1.6 Track B (humanización de contenido, 29-31) sigue pausado, retoma ahora que v1.7 cerró, por decisión de Juan. Phase 6 (Deploy + Cutover) sigue en pausa, fuera de scope.
+**Current focus:** Sin milestone activo. v1.7 (Local Landing Design + Component Polish Pass) CERRADO Y ARCHIVADO 2026-07-14 — 5/5 fases (32-36) completas, 13/13 requirements Done, auditoría `gaps_found` (0 bloqueantes / 1 no bloqueante ya autorizado por Juan — LOCAL-05 placeholder), archivos archivados a `.planning/milestones/v1.7-*`, tag git `v1.7` aplicado. Dos candidatos abiertos esperan decisión de Juan: v1.6 Track B (humanización de contenido, 29-31, pausado) o Phase 6 (Deploy + Cutover, pausado).
 
 ## Current Position
 
-Phase: 36 (Regression Gate) — complete (REG-02 done, milestone v1.7 closed)
-Plan: 36-01 (complete)
-Status: Re-ran Phase 32's exact measurement (mobile Lighthouse production build + H1/JSON-LD snapshot) on the same 6 routes after Phase 33-35's work, diffed programmatically against the Phase 32 baseline. Result: PASS, 6/6 routes clean — no route dropped more than 5 Lighthouse performance points, no CWV metric (LCP/CLS/TBT) crossed into a worse lab band, H1 text byte-identical and JSON-LD presence/types unchanged on all 6 routes. One anomalous single-run Lighthouse reading (`/seo-tecnico-madrid` first pass: performance 62/TBT 1714ms) was investigated per Phase 28's reproduce-before-concluding discipline — 3 clean re-runs landed back at 88-89/42-122ms, confirming lab noise, not a regression; the diff table and raw JSON use the reproduced representative value with a documented note. Madrid/Lima's real new Phase 34 content (LocalProofSection, local-landing Hero variant) produced no measurable LCP degradation (2-46ms shift, same band). No gap closure was required. REG-02 satisfied; v1.7 traceability now shows 13/13 requirements Done (LOCAL-05 keeps its placeholder-content caveat, not overstated).
-Last activity: 2026-07-14 — Phase 36 complete, milestone v1.7 closed.
+Phase: Milestone v1.7 complete and archived
+Plan: —
+Status: Milestone v1.7 audited (`.planning/v1.7-MILESTONE-AUDIT.md`, status `gaps_found` — 13/13 requirements Done, 1 non-blocking Juan-authorized gap on LOCAL-05's placeholder content) and archived (`ROADMAP.md`/`REQUIREMENTS.md`/`MILESTONE-AUDIT.md` snapshots copied to `.planning/milestones/v1.7-*`, `PROJECT.md` Validated section updated with LOCAL-01..05/POLISH-01..06/REG-01/02, git tag `v1.7` created). Phase directories (32-36) intentionally left in `.planning/phases/` — phase-directory archival is a separate, interactive `gsd-cleanup` step not run as part of this pass. Awaiting Juan's decision on which paused candidate (v1.6 Track B or Phase 6) to resume next.
+Last activity: 2026-07-14 — Milestone v1.7 audited and archived.
 
 ## Performance Metrics
 
@@ -203,10 +203,11 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-14T22:30:00.000Z
-Stopped at: Phase 36 (Regression Gate) closed — REG-02 done, gate PASS 6/6 routes, milestone v1.7 fully closed (13/13 requirements Done).
-Resume file: None
+Last session: 2026-07-14T23:15:00.000Z
+Stopped at: Milestone v1.7 audited (gaps_found, 13/13 requirements) and archived (milestones/v1.7-ROADMAP.md, v1.7-REQUIREMENTS.md, v1.7-MILESTONE-AUDIT.md; PROJECT.md Validated updated; git tag v1.7 applied).
+Resume file: .planning/v1.7-MILESTONE-AUDIT.md
 
 ## Operator Next Steps
 
-- v1.7 is closed. Next candidate: resume v1.6 Track B (Content Humanization, Phases 29-31, paused) per Juan's prior decision, or Phase 6 (Deploy + Cutover, paused pending Hostinger/DNS/Resend credentials) — both await Juan's go-ahead on which to pick up next.
+- v1.7 is closed and archived. Next candidate: resume v1.6 Track B (Content Humanization, Phases 29-31, paused) per Juan's prior decision, or Phase 6 (Deploy + Cutover, paused pending Hostinger/DNS/Resend credentials) — both await Juan's go-ahead on which to pick up next.
+- Optional cleanup (not run as part of this milestone close, deferred per instruction): archive `.planning/phases/32-*` through `36-*` into `.planning/milestones/v1.7-phases/` via `/gsd:cleanup` if/when Juan wants phase directories tidied up, matching the v1.4/v1.5 precedent.
