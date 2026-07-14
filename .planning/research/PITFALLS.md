@@ -1,327 +1,202 @@
 # Pitfalls Research
 
-**Domain:** Retrofitting micro-animations onto an existing Next.js/Payload site + bulk-rewriting bilingual CMS content against live production Postgres
-**Researched:** 2026-07-13
-**Confidence:** HIGH (grounded directly in this project's own incident history — v1.3/v1.4/v1.5, Phases 16/19/21/25 — not generic advice)
+**Domain:** Adding a "Websites Portfolio" collection (real sites + Lighthouse scores + screenshots) to an existing Payload/Next.js portfolio that already has `case-studies` and `clientes`
+**Researched:** 2026-07-14
+**Confidence:** MEDIUM-HIGH (informed by direct read of `.planning/PROJECT.md` schema decisions + general web research on screenshot legality and schema.org typing; LOW confidence specifically on per-site ToS status of the 6 target sites, which needs a manual check, not research)
 
 ## Critical Pitfalls
 
-### Pitfall 1: Non-localized field clobbered by a per-locale bulk write (3rd+ occurrence)
+### Pitfall 1: Lighthouse scores captured once, presented as current forever
 
 **What goes wrong:**
-A bulk humanization sweep writes new copy per locale (ES pass, then EN pass, or vice versa) to a Payload doc. Any field on that doc missing `localized: true` is NOT locale-scoped in Postgres — it's one shared row. The last locale's `update()` call wins and silently overwrites the other locale's value for that field, even though the *localized* sibling fields (title, richText, label) look correct per locale.
+Lighthouse performance/accessibility/best-practices/SEO scores are stored as static numeric fields on the `Websites` doc at seed time. Six months later Juan redesigns `aprendoclub.com` or Google ships a Core Web Vitals algorithm change, and the site now shows stale (often inflated) numbers next to a `year: 2026` badge — the opposite of the "impeccable technical execution" core value this whole rebuild is built around. Nothing in the schema signals "as of X date," so a visitor (or Juan himself months later) can't tell if the number is trustworthy.
 
 **Why it happens:**
-This project has hit this exact bug **three separate times** across two milestones: `CallToAction.richText` (Phase 19, v1.4 — caused the DROP-COLUMN data-loss incident below), `Header.navItems.url` and `Content` block `link.url` (found out-of-phase during v1.5 Phase 25), and `TestimonialsCarousel.title` (Phase 25). Each time it was a *different* field on a *different* block/global. There is no single systemic guard yet — each was fixed ad hoc after being found live. A full-database humanization sweep touches orders of magnitude more fields than any single prior seed script, so the probability of hitting an as-yet-undiscovered non-localized field is high, not low.
+Lighthouse has no push/webhook model — it's a point-in-time CLI/PSI run. Teams model it as a plain number field because that's the simplest schema, and nobody schedules a re-check because there's no natural trigger (no CI, no cron already running against Payload).
 
 **How to avoid:**
-- Before writing the bulk-rewrite script, grep every collection/global/block config (`src/collections`, `src/globals`, `src/blocks/**/config.ts`) for every text/richText field the humanizer will touch and confirm `localized: true` is present. Do not assume — the last 3 bugs were all fields that "looked like they should obviously be localized."
-- Build a one-time audit script that reads each doc's raw API response in both locales side-by-side and flags any text field where the ES and EN values are byte-identical outside expected shared values (URLs, slugs, icon names) — a same-value signal on a field that should differ post-humanization is the fastest live detector.
-- Any field found non-localized that needs distinct per-locale copy is a schema change (`localized: true` reshape), which falls under this project's hard Database Safety rule — requires Juan's named approval and a backfill-before-drop migration (see Pitfall 2).
-- Write locale updates through a helper that reads the full current doc first, merges only the intended field, and writes back — never a partial/naive `update()` that could blow away a sibling non-localized field's last-written value from the *other* locale's pass.
+- Add a `lighthouseCapturedAt` (date) field alongside the four score fields — never store scores without a capture timestamp.
+- Render the date next to the scores in the UI ("Lighthouse 96/100 · captured Jul 2026") rather than presenting them as live facts.
+- Store the PSI/Lighthouse JSON report URL or raw JSON blob (not just the 4 numbers) so a future refresh can diff instead of re-running blind, and so the number is defensible ("here's the report").
+- Optional but cheap: a documented manual runbook ("re-run Lighthouse for all 6 Websites docs before any milestone that touches CWV, or every ~6 months") — don't build live PSI API polling infra for a portfolio's 6 static entries, that's over-engineering for this scale.
 
 **Warning signs:**
-A post-sweep diff shows ES and EN identical for a field that was supposed to be humanized differently, or a field silently reverted after the "other locale" pass ran later.
+- Score fields with no accompanying date field in the collection schema.
+- Scores that are suspiciously round or all-identical across sites (copy-paste seed data, not real runs).
 
 **Phase to address:**
-Content-humanization phase — as a mandatory pre-flight audit task before any bulk write starts, not a bugfix task discovered after.
+Schema/collection phase (when `Websites` fields are defined) — the `capturedAt` field is nearly free to add now, expensive to retrofit once content and any listing/sort-by-score UI already assumes 4 bare numbers.
 
 ---
 
-### Pitfall 2: Schema/column-level reshape drops data before backfilling (repeat of the Phase 19 incident)
+### Pitfall 2: Screenshotting external live sites without checking robots/ToS, ending up with rate-limit bans or legal exposure
 
 **What goes wrong:**
-Fixing a field found non-localized (Pitfall 1) requires a real schema migration: adding `localized: true` to a Postgres-backed text/richText column reshapes storage (single shared column → per-locale rows/columns depending on Payload's Drizzle strategy). If the generated migration's `DROP COLUMN` runs before a backfill `INSERT...SELECT` copies existing values into both locale slots, all existing content in that field is destroyed the instant the migration applies — with no way to recover except point-in-time restore.
+Someone (Juan or an agent) automates screenshots of the 6 external URLs via a headless-browser call each time content is refreshed, or worse, the site tries to fetch a live screenshot at request time. Two failure modes: (a) the target site's WAF/CDN detects the automated request pattern and rate-limits or blocks the IP — annoying if it's a client's own site (`drmanuelvargashidalgo.com`) that Juan doesn't want to accidentally hammer; (b) if any of the 6 sites is under NDA or the client relationship has since ended, publishing a full-page screenshot of their live UI/branding without a fresh check-in could be a client-relations problem even if not strictly illegal, since it visually represents their current product.
 
 **Why it happens:**
-This already happened for real: Phase 19's first migration attempt for `CallToAction.richText` dropped the old column before backfilling, wiping the Home page's CTA copy in production (no staging DB exists — `DATABASE_URI` is the real Neon instance). Recovered only via Neon point-in-time restore. The corrected pattern (backfill `INSERT...SELECT...unnest(ARRAY['es','en'])` before `DROP COLUMN`) is documented in the fixed migration file, but a bulk-humanization milestone is exactly the kind of high-volume, time-pressured work where a rushed migration could repeat the mistake at larger scale (multiple fields reshaped at once instead of one).
+Screenshotting your own past work feels risk-free because "it's public, anyone with a browser could see it" — true for a one-off manual capture, but automated/repeated capture at scale is what actually trips ToS and bot-detection rules, and portfolio content tends to get "refreshed" more than people expect (redesigns, new sections, future re-runs of this same phase).
 
 **How to avoid:**
-- Any migration touching an existing column with data (localizing a field, narrowing a type, renaming/dropping) must be generated with `payload migrate:create`, then hand-read in full before applying — this is already a hard rule in root `CLAUDE.md` and must not be bypassed for schema changes surfaced during this milestone just because most of the milestone's writes are "additive."
-- If multiple non-localized fields are found (per Pitfall 1's audit), reshape them in one reviewed migration with an explicit backfill step per column, not N separate rushed migrations under deadline pressure.
-- These reshape migrations always require Juan's named, explicit approval before applying — per the (relaxed but still-active) Database Safety rule: additive writes/migrations don't need confirmation, but anything that could lose existing data does.
-- Prefer: run the backfill migration and verify row counts / spot-check both locales' values *before* telling the orchestrator the migration is "done" — don't rely on "no errors" as success signal, verify the actual data landed correctly.
+- Capture screenshots **manually, once, as static assets** uploaded through the existing Cloudinary media pipeline — do not build an automated recurring screenshot job for 6 external sites. This matches the project's existing media pattern (Media collection + Cloudinary adapter) and avoids the entire bot-detection/ToS-automation risk category.
+- Before capturing, a quick sanity check per site: is it Juan's own site or a client he's still on good terms with? All 6 listed (ariannalupi.com, aprendoclub.com, estylopia.com, drmanuelvargashidalgo.com, apturio.com, juan-tech.com) read as Juan's own work/agency-adjacent sites, not arm's-length clients whose ToS would forbid this — but this is a judgment call for Juan, not something research can verify from outside. Flag it, don't assume.
+- Store screenshots with a captured-at context similar to Lighthouse (redesigns happen; a screenshot from 2026 of a site redesigned in 2027 is misleading the same way a stale score is).
+- Never hotlink/embed the live external site (e.g., iframe) to "always show current state" — that reintroduces the automation/ToS problem continuously instead of once, and adds a runtime dependency on 6 third-party uptimes for your own homepage.
 
 **Warning signs:**
-A generated migration file contains `DROP COLUMN` above/before any `INSERT`/`UPDATE` statement that references the same column — read migrations top-to-bottom for statement order, not just presence of a backfill statement anywhere in the file.
+- Any code path that fetches `liveUrl` at build/request time to render a preview (iframe, live screenshot API call) instead of a stored Cloudinary asset.
+- A screenshot job scheduled to run repeatedly rather than a one-time manual capture step in the content-population phase.
 
 **Phase to address:**
-Content-humanization phase, specifically any task that requires a schema reshape (should be rare — most humanization is content-only, not schema — but must be gated identically to Phase 19's fix if it recurs).
+Content population phase (when the 6 real sites are seeded) — capture screenshots manually as a one-time task, store via Media/Cloudinary, and make "static asset only, no live fetch" an explicit constraint in that phase's plan.
 
 ---
 
-### Pitfall 3: Shared non-localized array — id collision when array items are rewritten per locale
+### Pitfall 3: `Websites` and `CaseStudies` drift into duplicated or contradictory content
 
 **What goes wrong:**
-Arrays like `Header.navItems` are non-localized containers where only a nested sub-field (`link.label`) is localized. Writing the array once per locale (ES pass appends/updates items, then EN pass does the same) causes Payload to regenerate array-item ids on each write. If the ES and EN writes don't reuse the *same* ids for the *same* logical item, the second locale's write either orphans the first locale's item or creates a duplicate, and the array ends up showing the wrong locale's item (this exact bug shipped live: Home's nav showed "Servicios" in English because the `en` write collided ids with the `es` write, Phase 21).
+Both collections describe "a project Juan worked on." Without a clear rule for what goes where, editors (present or future Juan) end up either (a) creating a `CaseStudies` doc and a `Websites` doc for the same project with diverging descriptions of the same work — inconsistent stack/year/role facts visible to a visitor who clicks both, undermining the credibility the site is trying to build — or (b) treating them as fully redundant and never bothering to cross-link, so a visitor who finds the case study never discovers the matching technical portfolio entry (or vice versa), losing the cross-promotion value the optional relationship field was clearly designed to provide.
 
 **Why it happens:**
-Payload full-replaces array/block collections on `update()` by default; if a seed/rewrite script doesn't explicitly preserve existing sub-document ids across locale writes (by reading the doc first and reusing ids, or filtering-then-appending instead of blind-appending), the ids drift and the array's shared (non-localized) values get clobbered by whichever locale wrote last.
+The two collections encode genuinely different angles on the same underlying thing (client results/storytelling vs. technical build details), which is exactly why PROJECT.md's Core Value section calls out both "content (case studies)" and "technical execution" as the two things that must be demonstrated — but that intentional separation is easy to blur once someone is filling in forms for six real sites and needs to make an in-the-moment call about which collection a given site belongs in.
 
 **How to avoid:**
-- Any bulk-rewrite script touching array/block fields (not just top-level text fields) must read the full existing document first, mutate only the localized sub-fields in place by matching on stable identity (id or a stable key like `href`/`slug`), and write the array back with ids intact — never regenerate/blind-append.
-- Reuse the existing `normalizeServiceHref`-style pattern already extracted in this codebase (`src/lib/service-slugs.ts`) as the model: pure helpers with no Payload import, applied at render time as a defense-in-depth layer in case a data-level bug slips through again.
-- Add an idempotency self-check to any bulk script: run it twice against the same doc and diff before/after — if the second run isn't a no-op, the id-reuse logic is wrong.
+- Write down the rule explicitly before content population, not after: `CaseStudies` = "has measurable client results / before-after metrics, written as a narrative" (per the `ariannalupi.com/casos/ecommerce-vape` model already referenced in PROJECT.md); `Websites` = "a live URL I built, shown for the technical build quality (stack, scores, screenshots), independent of whether there's a results narrative." A site can have both a `CaseStudies` doc and a `Websites` doc — that's the intended use of the optional cross-relationship field, not a sign of duplication.
+- When a site has both, the two docs should state the *same* facts where they overlap (year built, stack, client name) — treat one as source of truth for shared facts (recommend `Websites` for technical facts, `CaseStudies` for narrative/results) rather than hand-typing the same field twice in both places.
+- Render the cross-link in both directions in the UI: from a `CaseStudies` detail page link to the matching `Websites` entry ("see the technical build") and vice versa ("see the results") — so the duplication risk becomes a feature (two angles, one linked pair) instead of two disconnected records.
 
 **Warning signs:**
-Nav/link arrays or other shared arrays showing the wrong locale's label/url after a sweep, or a doc's array growing in length after repeated runs (a sign of blind-appending instead of matching-and-updating).
+- A `Websites` doc and a `CaseStudies` doc for the same `liveUrl` with different `stack`/`year` values.
+- The optional cross-relationship field left empty on docs where a matching doc obviously exists in the other collection.
 
 **Phase to address:**
-Content-humanization phase, for any array/block-shaped field it touches (nav items, FAQ arrays, feature lists, testimonial arrays) — flag this class of field for extra script review before running against production.
+Should be resolved in the schema/collection-design phase (define the relationship field + the content rule) and re-verified during content population when the 6 real sites are seeded (check: does this site already have a CaseStudies doc? link it, don't duplicate facts).
 
 ---
 
-### Pitfall 4: Partial-failure mid-sweep leaves the DB in a mixed humanized/non-humanized state
+### Pitfall 4: Relationship modeling — treating `Clientes` and `CaseStudies` links as one-to-many when reality is many-to-many (or vice versa)
 
 **What goes wrong:**
-A full-database sweep across many collections (Pages, Posts, CaseStudies, Authors, globals) run as one long script or one long agent session can fail partway through (network hiccup, a validation error on one doc's field, a rate limit, an unhandled exception) after successfully writing N of M documents. Because there's no staging DB and no transactional wrapper across the whole sweep, this leaves production content in an inconsistent state — some pages fully humanized, others still in the old voice, with no clear record of which is which.
+`Clientes` today is described in PROJECT.md as "lean — only for carousel of logos" (name, logo, link). If the new `Websites` → `Clientes` relationship is modeled as a single `relationship` field assuming one client per site, it breaks the first time a site was built *for* a client but the client itself isn't in the lean `Clientes` collection (e.g., a personal/agency site like `apturio.com` or `juan-tech.com` with no external client), or the reverse case where one client relationship spans multiple sites (a client for whom Juan built more than one site over time). Conversely, over-modeling this as a many-to-many join collection for what is actually ~6 static entries is unnecessary schema complexity for a portfolio's scale.
 
 **Why it happens:**
-Payload's Local API writes are per-document REST/DB operations, not wrapped in one giant transaction across the whole sweep by default. Prior seed scripts in this project were narrow (one page, a handful of fields) so partial failure was low-risk and easy to eyeball; a full-DB sweep is the first time this project attempts bulk writes at a scale where partial failure is likely and hard to detect by inspection alone.
+Relationship cardinality mistakes are the classic CMS schema trap — it's tempting to copy the shape of an existing relationship (e.g., how `CaseStudies` already relates to `Clientes`, if it does) without checking whether the new collection's real-world cardinality actually matches.
 
 **How to avoid:**
-- Make the sweep script idempotent and resumable: track processed doc ids (a simple JSON/CSV log written as it goes, or a `humanizedAt` marker if adding a field is acceptable) so a re-run skips already-done docs instead of re-processing or, worse, double-applying humanization to already-humanized text.
-- Process and commit one document (or one small batch) at a time with its own try/catch and logging, rather than batching multiple docs into a single unchecked loop — a failure on doc 40 of 120 should not silently abort the other 80.
-- After the sweep, run a completeness audit: enumerate every doc in every touched collection/global and confirm each was actually touched (compare against the processed-id log), not just "the script exited 0."
-- Given Juan's relaxed Database Safety rule (no confirmation needed for additive/non-destructive writes), this sweep can run unattended — but "unattended" means the *script* must be the safety net (resumable, logged, idempotent), since there's no human in the loop pausing before each write.
+- Make the `Websites.client` relationship field **optional** (per the milestone's own description — "relación opcional a Clientes") and a single relationship (`hasMany: false`), not required — several of the 6 real sites (apturio.com, juan-tech.com are plausibly Juan's own/agency sites, not third-party clients) will legitimately have no client.
+- Do not build a many-to-many join table for this — Payload's built-in `relationship` field with `hasMany: false` on `Websites` (pointing at one `Clientes` doc) is sufficient at this scale; if a client ever has multiple sites, that's discoverable by querying `Websites` filtered by `client` equals X, no join collection needed.
+- Same logic for the optional cross-link to `CaseStudies`: keep it a single optional relationship field, not bidirectional-managed arrays on both sides (Payload can auto-generate the reverse lookup via a `join` field type in recent Payload versions if a "case studies related to this website" list view is wanted — verify `join` field support in Payload 3.85 before hand-rolling a reverse array).
 
 **Warning signs:**
-Script exits with an error mid-run; spot-checking a few random docs post-sweep shows some are humanized and others aren't with no pattern; the processed-id log is shorter than the total doc count in a collection.
+- A required (non-optional) `client` field on `Websites` that would block seeding the 2-3 sites without a matching client.
+- Any new junction/pivot collection created just to link `Websites` ↔ `Clientes` for 6 rows of data.
 
 **Phase to address:**
-Content-humanization phase — build the resumable/logged harness as the first task, before writing any actual humanized content, since every subsequent task depends on it being safe to re-run.
+Schema/collection-design phase — get the field's `required: false` and `hasMany: false` decisions right before content population starts, since changing cardinality after real docs exist means a data migration (per this project's Database Safety rule, any field reshape that could lose data needs Juan's named sign-off).
 
 ---
 
-### Pitfall 5: SEO-critical strings (meta title/description, targetKeyword) get humanized without re-verifying search intent
+### Pitfall 5: Wrong or missing JSON-LD type for the new content — SEO payoff assumed but not actually implemented correctly
 
 **What goes wrong:**
-`@payloadcms/plugin-seo` adds `meta.title`/`meta.description` fields on Pages/Posts/Authors, and this project also has an editorial `targetKeyword` field (en/es) populated from real keyword research (Phase 14, `KEYWORD-RESEARCH.md`). A blanket humanizer pass over "all copy in the DB" risks touching these fields too (directly, or indirectly if any generator function derives them from body copy) and rewriting them for voice/tone without preserving the exact keyword phrases and character-length constraints that were deliberately chosen for search performance. This is exactly the kind of SEO regression the project's Core Value statement explicitly calls a failure condition ("Si el rendimiento o el SEO fallan, el sitio no cumple su propósito").
+The whole point of this milestone, per Core Value, is demonstrating SEO expertise "tangibly." If `Websites` detail pages ship with no structured data, or with the wrong type (e.g., reusing `CaseStudies`' schema.org type verbatim, or picking `SoftwareApplication` — which Google's structured-data guidelines associate with actual downloadable/installable apps and expects `applicationCategory`/`operatingSystem`/`offers` properties that don't apply to "a website I built for a client"), that's a visible, checkable SEO gap on the site of someone whose core value proposition is SEO expertise.
 
 **Why it happens:**
-A generic "humanize all text content" instruction doesn't inherently know which fields are voice/prose (safe to rewrite freely) versus which are structured SEO assets (title length ~50-60 chars, description ~150-160 chars, must contain the locked target keyword) where humanization must be constrained, not free-form.
+`SoftwareApplication` sounds tempting because these are technically "web applications," but schema.org's own definition and Google's Rich Results eligibility for that type target installable software/apps with pricing/OS/category, not portfolio entries. Reusing the `CaseStudies` JSON-LD builder (if one exists as a shared component, per this project's established pattern of extracting shared helpers like `buildTrail()`) without checking whether its type/props fit "a website, not a results narrative" is the likely failure mode given this project already has a `CaseStudies` JSON-LD implementation to copy from.
 
 **How to avoid:**
-- Explicitly scope the humanization sweep to exclude `meta.title`, `meta.description`, `targetKeyword`, slugs, and any JSON-LD-only fields from the "rewrite for voice" pass by default — these are structured SEO surfaces, not prose.
-- If Juan wants meta titles/descriptions humanized too, treat that as a separate, narrower task with its own constraint set (keep target keyword present, respect length bounds, verify against `plugin-seo`'s preview) rather than folding it into the same bulk pass as body copy.
-- Before running the sweep, snapshot current `meta.title`/`meta.description`/`targetKeyword` values for every doc (a simple export) as a rollback reference independent of Neon PITR, since PITR restores the whole DB (losing any *other* legitimate work done in the same window), not just one field.
+- Use `CreativeWork` as the base type for each `Websites` detail page (schema.org's general-purpose type for portfolio items, valid Google-recognized properties: `name`, `description`, `url`, `dateCreated`/`datePublished`, `creator`/`author`, `keywords` for stack tags, `image` for screenshots).
+- Do not use `SoftwareApplication` unless the entry is genuinely a distributable app with pricing/OS info — none of the 6 target sites fit that (they're marketing/client sites, not downloadable software).
+- Consider layering `CreativeWork` with an `about`/`mentions` reference to the `Organization` (if the client is known) — reuse the existing `Person`/`Organization` JSON-LD building blocks from the Author/CaseStudies phases (per Phase 12's Person JSON-LD pattern) rather than inventing a new structured-data shape from scratch.
+- If a listing page exists (`/websites` or similar), wrap the collection in `ItemList` with each item pointing at its `CreativeWork` — this is the standard pattern already implicitly established by the Services/Case Studies listing pages in this project.
+- Verify in Google's Rich Results Test that the chosen type actually renders (or at minimum validates) — `CreativeWork` alone often produces no visible rich result in search, which is fine (it's for machine-readability/GEO/AI search, consistent with this project's `llms.txt` investment) but don't oversell it as "will show a rich snippet."
 
 **Warning signs:**
-Post-sweep diff shows the locked target keyword phrase from `KEYWORD-RESEARCH.md` no longer present verbatim in a page's meta description, or meta title/description length has drifted outside SEO-safe bounds.
+- Reusing the `CaseStudies` JSON-LD component verbatim with only field renames.
+- `SoftwareApplication` type present without `applicationCategory` + `operatingSystem` (Google will flag this as incomplete in Rich Results Test).
+- No structured data at all on the new detail/listing pages while every other content type in this project (Pages, Posts, Authors, Services, breadcrumbs) already has JSON-LD — an obvious regression relative to established project convention.
 
 **Phase to address:**
-Content-humanization phase — define field scope (prose vs. SEO-structured) as an explicit pre-flight decision before the sweep runs, not discovered after.
-
----
-
-### Pitfall 6: JSON-LD embeds copy fields directly — humanized text can silently break structured data
-
-**What goes wrong:**
-This codebase renders JSON-LD via `src/components/JsonLd.tsx` on Home, Author pages, Servicios index/detail, Blog posts, Case Studies — several of which pull copy fields (bio text, richText excerpts, testimonial titles) directly into `Person`/`Article`/`BreadcrumbList`/`FAQPage`-style structured data. A humanizer rewrite could (a) introduce characters that need escaping (quotes, special punctuation) that a naive string interpolation doesn't handle — this project already found and fixed a real `JsonLd.tsx` escaping bug in Phase 22 (comment incorrectly claimed `JSON.stringify` escapes `</script>`, it doesn't escape `<`/`>`/`&`) — or (b) change field length/content in a way that breaks a JSON-LD field's expected shape (e.g., an FAQ answer field expected to be plain text getting rewritten with markdown-ish punctuation the humanizer skill might introduce).
-
-**Why it happens:**
-JSON-LD generation code was written once against the original copy's shape/characteristics and not re-tested against arbitrary future rewrites. A bulk content change is effectively a fuzz test against every JsonLd-consuming component at once.
-
-**How to avoid:**
-- After the sweep, re-run this project's existing `seo-schema` validation pattern (already used in Phase 22, invoked as a subagent) against all URL types that render JSON-LD — not just the pages the humanizer explicitly targeted, since shared blocks (testimonials, FAQ) feed JSON-LD from multiple page types.
-- Spot check that `JsonLd.tsx`'s escaping fix (Phase 22) still holds against any new punctuation/character patterns the humanizer introduces (em/en dashes are explicitly banned by the humanizer skill already, which helps, but quotes/ampersands in rewritten prose are still a risk).
-- Treat "JSON-LD still validates" as a hard gate before closing the content-humanization phase, matching the same zero-regression gate pattern already used in Phase 25 (Lighthouse/CWV + H1/JSON-LD baseline-then-recheck).
-
-**Warning signs:**
-`seo-schema` validation returns new failures post-sweep that weren't present in the pre-sweep baseline; any JSON-LD field renders visibly broken (unescaped quote breaking the `<script>` block) when viewed via "View Page Source."
-
-**Phase to address:**
-Content-humanization phase — as part of its closing regression gate, not a separate follow-up.
-
----
-
-### Pitfall 7: Client Component boundary leak from adding animation to shared Server Components
-
-**What goes wrong:**
-Retrofitting scroll-reveal/hover animations onto shared components (`SiteHeader`, blocks like `FAQ`, `TestimonialsCarousel`, `ClientLogosBlock`, listing Hero variants) that are currently Server Components requires adding `'use client'` at some boundary. Done carelessly, this either (a) forces the *entire* component tree above the animated element to become client-rendered (losing RSC's server-only data-fetching and shipping unnecessary JS), or (b) is applied at too coarse a boundary, pulling Payload Local API calls or other server-only code into a client bundle, which breaks the build or silently increases bundle size far beyond just the animation library.
-
-**Why it happens:**
-The path of least resistance when "the whole component needs to animate" is to slap `'use client'` at the top of the file that already does data-fetching, rather than splitting the component into a server-fetching wrapper + a small client-only "animated shell" that receives already-fetched data/children as props. This project's existing pattern (`HeroGrainGradient.tsx`) already demonstrates the correct shape — it's a small, isolated `'use client'` leaf component consumed by a server-rendered Hero block — but that discipline needs to be repeated deliberately for every new animated component in this milestone, not assumed.
-
-**How to avoid:**
-- For every component slated for animation in the target list (navbar, Hero variants, FAQ, ClientLogosBlock, TestimonialsCarousel, blog/case-study grids), keep data-fetching in the existing Server Component and push only the visual animation wrapper (scroll-reveal container, hover-state button) into a new, small, leaf `'use client'` component that takes pre-fetched content as children/props — mirror `HeroGrainGradient.tsx`'s shape exactly.
-- After each component's animation work, diff the client bundle size (`next build` output route sizes) against the pre-change baseline — a jump disproportionate to "one small animation wrapper" signals a boundary was drawn too high.
-- Never add `'use client'` to a file that also calls Payload's Local API (`getPayload`, collection `find`/`findByID`) — that combination is what actually breaks (server-only code can't ship to the client), not just a style smell.
-
-**Warning signs:**
-Build errors referencing Node-only modules (`payload`, `pg`, `fs`) inside a client bundle; unexpectedly large new client-side JS chunk for a route that only got a hover effect added; a component that used to stream/render on the server now shows a loading flash it didn't have before.
-
-**Phase to address:**
-Animation phase — as an explicit per-component boundary check task, since the target list spans nearly every shared component in the site.
-
----
-
-### Pitfall 8: Cumulative Layout Shift from animated entrance states
-
-**What goes wrong:**
-Scroll-reveal animations commonly start elements at `opacity-0` with a transform offset (`translateY`), then animate to final position on scroll-into-view. If the initial "hidden" state collapses the element's box (e.g., via `display: none` or an animation library that removes it from layout before JS hydrates), or if the animation library's CSS loads after first paint, the element's arrival shifts surrounding content — a direct CLS regression on a site whose Core Value is explicitly "Core Web Vitals en verde."
-
-**Why it happens:**
-Animation libraries frequently ship examples that fade+translate elements using inline styles set only after a JS-driven "in view" observer fires, meaning the pre-JS/pre-hydration paint shows either nothing (still reserving space, safe) or the element at full size with the animation class not yet applied (also usually safe) — but a naive implementation that toggles `opacity-0 -translate-y-4` via a client-only class *without* reserving the element's layout box up front, or that applies `transform` in a way that changes computed height, produces a real shift the moment the observer fires and re-triggers layout.
-
-**How to avoid:**
-- Use `opacity`/`transform` only for the animated properties (both are compositor-only, don't trigger layout) — never animate `height`, `margin`, or anything that changes box dimensions for entrance reveals.
-- Reserve the final layout box from first paint (the element occupies its full final space even while `opacity: 0`) so scroll-into-view triggering never shifts anything else on the page.
-- Re-run Lighthouse CLS specifically (not just the aggregate score) on every page in the animation target list before/after, using the same baseline-then-recheck pattern this project already used in Phase 17 (Δ-3 Performance threshold) and Phase 25 (regression gate) — CLS is the metric most likely to regress silently since it's not always visually obvious in a quick manual look.
-
-**Warning signs:**
-Lighthouse CLS score increases even when Performance score looks stable; visually, content "jumps" on scroll on a slower device/throttled connection even though it looks fine on a fast dev machine.
-
-**Phase to address:**
-Animation phase — bake into the same zero-regression gate this milestone already commits to ("Baseline de regresión (Lighthouse/CWV + H1/JSON-LD) antes de tocar nada, gate de cero regresión al cerrar").
-
----
-
-### Pitfall 9: `prefers-reduced-motion` respected in one component but not consistently across all new animated components
-
-**What goes wrong:**
-Phase 16 already proved this project can correctly implement `prefers-reduced-motion` (via a `useEffect` + `matchMedia` pattern in `HeroGrainGradient.tsx`, avoiding hydration mismatch — see Pitfall 10). But that fix covers exactly one component. This milestone's target list is ~9 distinct component families (navbar, 3 Hero variants, FAQ, ClientLogosBlock, TestimonialsCarousel, blog grid, case-study listing/detail). If the reduced-motion check is re-implemented ad hoc per component instead of shared, it's easy for later components to skip it, especially if a different animation library (gsap/motion/animejs) is chosen that has its own reduced-motion affordance that isn't wired the same way as `HeroGrainGradient`'s custom hook.
-
-**Why it happens:**
-There is no shared reduced-motion hook/utility in this codebase yet (`HeroGrainGradient.tsx` inlines its own `useState`+`useEffect`+`matchMedia` logic locally). Copy-pasting that pattern nine times invites at least one component to be added later without it, especially under time pressure near the end of the phase.
-
-**How to avoid:**
-- Extract a single shared `useReducedMotion()` hook (same SSR-safe `false`-then-`useEffect` pattern already proven in `HeroGrainGradient.tsx`) into `src/lib/` or `src/hooks/` as this milestone's first animation task, before touching any of the 9 target components — every subsequent component consumes the same hook, not a reimplementation.
-- If the chosen animation library (gsap/motion/animejs) has its own built-in reduced-motion respect (e.g., Motion's `useReducedMotion`), decide explicitly whether to use the library's or the existing project hook, and document the choice — don't let some components use one and others use the other inconsistently.
-- Add reduced-motion to the same automated verification script pattern this project already used in Phase 16 (`scripts/verify-mobile-viewport.mjs`-style headless check) — assert every animated component's `data-motion` (or equivalent) attribute resolves to `reduced` when `prefers-reduced-motion: reduce` is emulated, across all 9 target components in one script run, not spot-checked manually per component.
-
-**Warning signs:**
-A newly-animated component still visibly animates in a browser/DevTools emulation with reduced-motion forced on, while others in the same page correctly go static.
-
-**Phase to address:**
-Animation phase — the shared hook is a prerequisite task before per-component animation work begins; the cross-component verification script is a closing gate task.
-
----
-
-### Pitfall 10: Hydration mismatch from client-only animation state (proven failure mode, Phase 16)
-
-**What goes wrong:**
-Any animation state that depends on browser-only APIs (`matchMedia`, `window`, `document`, viewport size, intersection observer results) differs between what the server can render (nothing — SSR has no `window`) and what the client's first paint would show if read eagerly. Initializing that state via a `useState` lazy initializer that reads `window`/`document` directly causes React to render different HTML on the server pass vs. the client's first hydration pass, producing a real hydration mismatch — a bug this project already hit and fixed once for `reducedMotion` in `HeroGrainGradient.tsx`.
-
-**Why it happens:**
-It's tempting to write `useState(() => window.matchMedia(...).matches)` for a "one-line" solution, but React hydration compares the server-rendered markup against the client's *first* render before any effects run — effects run after hydration completes, but a lazy initializer runs *during* that first client render, before hydration reconciliation, causing the mismatch. The documented fix (already in this codebase, see `HeroGrainGradient.tsx` lines 144-150) is: initialize state to the SSR-safe default (`false`), and only set the real value inside `useEffect`, which runs strictly after hydration.
-
-**How to avoid:**
-- Reuse the exact pattern already proven in `HeroGrainGradient.tsx` for every new component that needs any browser-only read for animation purposes (scroll position, intersection-observer "in view" state, viewport width breakpoints for conditional animation intensity): initialize to the server-safe default, read the real value inside `useEffect`, never inside a `useState` lazy initializer or during render.
-- If using a third-party animation/scroll library with its own hooks (e.g., `useInView` from Motion, ScrollTrigger from gsap), verify during evaluation (this milestone's own "research + selección de librería" task) whether that hook is SSR-safe by default or requires the same manual guard — don't assume a popular library handles this correctly out of the box; check its docs/source explicitly.
-- Treat any new `useState` that reads a browser global as a code-review flag requiring the SSR-safe-default-plus-effect pattern, mirroring the comment already left in `HeroGrainGradient.tsx` as the canonical in-repo example to point new code at.
-
-**Warning signs:**
-React DevTools/console hydration warnings ("Hydration failed because the server rendered HTML didn't match the client"); a component that flickers/pops on first load in production but not in an already-hydrated dev reload.
-
-**Phase to address:**
-Animation phase — as a mandatory pattern check on every new animated component, referencing `HeroGrainGradient.tsx` as the in-repo canonical example during the library-selection/research task and again during implementation review.
-
----
-
-### Pitfall 11: Animation-library bundle-size creep from importing more than needed
-
-**What goes wrong:**
-Pulling in a general-purpose animation library (gsap's full build, or importing an entire motion/animejs package without tree-shaking) for what's actually a handful of primitives (fade-in-on-scroll, a hover scale/lift) can add tens to hundreds of KB of client JS across every page that uses the shared navbar/footer/blocks — directly threatening the Lighthouse/CWV budget this milestone explicitly commits to protecting, and repeating the exact tradeoff this project already reasoned through once in v1.3 (rejecting three.js/ShaderGradient at ~150KB+ in favor of a ~5KB shader lib for the Hero background).
-
-**Why it happens:**
-Full-featured animation libraries are the default recommendation in most tutorials/examples, and it's easy to import the whole package (`import gsap from 'gsap'`) rather than the specific plugin/primitive actually needed, especially when multiple components each pull their own imports without a shared, minimal wrapper.
-
-**How to avoid:**
-- During the milestone's own "research + selección de librería" task, evaluate candidates explicitly by shipped bundle weight for *only the primitives needed* (scroll-reveal, hover states, simple transitions) — not full feature set. CSS-only or Framer Motion's `LazyMotion`-with-minimal-features pattern, or even native CSS `@starting-style`/`animation-timeline: view()` (no JS at all) are legitimate candidates worth comparing against a JS library, given this project's proven bias toward the lightest option that meets the visual bar (same reasoning as the v1.3 shader choice).
-- Centralize the animation primitives behind one shared wrapper module so every consuming component imports from that module, not directly from the library — makes it possible to swap/tree-shake later without touching 9 components.
-- Gate the choice with a real `next build` bundle-size comparison (shared JS chunk before/after) as part of the library-selection task, not just a subjective "feels fast" check.
-
-**Warning signs:**
-Shared/common JS chunk size grows noticeably after adding the animation library, even before any component-specific animation code is written; Lighthouse Performance score drops on the baseline-vs-recheck gate specifically attributable to increased JS parse/execute time rather than CLS/LCP shifts.
-
-**Phase to address:**
-Animation phase — library-selection task must include a bundle-size comparison gate before committing to a library, and the closing regression gate (already planned per PROJECT.md's milestone description) must catch any residual creep.
+Frontend pages phase (listing + detail page build) — schema choice should be locked in the same phase as the page templates, verified with Rich Results Test / schema validator before the milestone's audit gate.
 
 ---
 
 ## Technical Debt Patterns
 
 | Shortcut | Immediate Benefit | Long-term Cost | When Acceptable |
-|----------|-------------------|----------------|-----------------|
-| Re-implementing reduced-motion check per component instead of a shared hook | Faster to ship one component | Inconsistent accessibility coverage, exactly the failure mode this research flags (Pitfall 9) | Never — extract the hook first |
-| Running the humanization sweep as one long unattended script without per-doc logging | Simpler script, faster to write | Partial-failure state is invisible and hard to recover from (Pitfall 4) | Never for a full-DB sweep against a production-only DB with no staging |
-| Humanizing meta title/description alongside body copy in the same pass | One less task to plan | Risk of losing locked target-keyword phrases, direct SEO regression (Pitfall 5) | Only if explicitly scoped as its own constrained task with keyword/length checks, never folded silently into the general prose pass |
-| Adding `'use client'` at the top of an existing data-fetching Server Component to get an animation working quickly | Fastest path to "it animates" | Bundle bloat, possible server-only import breakage (Pitfall 7) | Never — always split into a small client leaf component |
+|----------|--------------------|-----------------|------------------|
+| Store Lighthouse scores as 4 bare numbers, no date/report link | Faster schema, faster seed | Numbers become silently misleading after any redesign; no way to know if a score is 1 month or 2 years old | Never — the `capturedAt` field costs almost nothing to add up front |
+| Reuse `CaseStudies`' JSON-LD builder unmodified for `Websites` | Zero new code | Wrong schema.org semantics shipped on a site whose core value is SEO correctness | Never for this project given its stated Core Value; acceptable only as a throwaway prototype never deployed |
+| Skip the `Websites` ↔ `CaseStudies` cross-link field at launch, add "later" | Simpler v1 schema | Duplicated facts across the two collections go unnoticed once both exist for the same site; harder to retrofit once content exists | Only acceptable if truly zero sites will ever have both a case study and a portfolio entry — unlikely given at least some of the 6 (e.g., aprendoclub.com) plausibly already have or will have a case study |
+| Manually capture screenshots once, no automated refresh pipeline | Avoids all screenshot-automation ToS/rate-limit risk | Screenshots go stale after a redesign, same staleness problem as Lighthouse scores | Acceptable indefinitely at this scale (6 sites) — the "cost" is just a manual re-capture task, not a design flaw, as long as a `capturedAt` date is stored alongside |
 
 ## Integration Gotchas
 
 | Integration | Common Mistake | Correct Approach |
-|-------------|----------------|------------------|
-| Payload localization + bulk scripts | Writing a field per-locale without checking `localized: true` first | Audit field config before any bulk write touching that field (Pitfall 1) |
-| Payload array/block fields + locale writes | Blind-append or full-replace regenerating ids per locale write | Read-merge-write preserving existing ids, matched by stable key (Pitfall 3) |
-| `@payloadcms/plugin-seo` + humanizer | Treating meta fields as generic prose to rewrite freely | Exclude SEO-structured fields from the free-form pass by default (Pitfall 5) |
-| JSON-LD components (`JsonLd.tsx`) + rewritten copy | Assuming existing escaping/shape handling is future-proof against arbitrary new text | Re-run `seo-schema` validation across all JSON-LD routes post-sweep (Pitfall 6) |
-| Neon Postgres (no staging) + bulk migrations | Applying a generated migration without reading statement order | Hand-read every migration for `DROP` position; backfill before drop, always (Pitfall 2) |
+|--------------|------------------|--------------------|
+| Lighthouse / PageSpeed Insights | Treating a single PSI run as ground truth; PSI lab scores vary run-to-run by several points due to network/CPU throttling variance | Run Lighthouse 2-3 times per site and record a representative score (or use PSI's field data / CrUX report where available for real-user data), and always store the capture date |
+| Screenshot capture of external sites | Automating repeated fetches against a client's live site, risking bot-detection/rate-limiting on infrastructure Juan doesn't control | Capture manually as a one-time task per site, store as a static Cloudinary asset — same env-gated Cloudinary pipeline already used for Media in this project |
+| Cross-collection relationship (`Websites` ↔ `CaseStudies` ↔ `Clientes`) | Building a bidirectional array-of-relationships pattern on both sides that must be kept in sync manually | Use a single-direction `relationship` field on `Websites` and rely on Payload's `join` field type (verify availability in 3.85) for reverse lookups instead of duplicating the link on both collections |
+| JSON-LD for new content type | Copy-pasting an existing JSON-LD builder (from `CaseStudies` or `Authors`) without checking the schema.org type still fits | Pick the type (`CreativeWork`) based on what the content actually is, not based on what code already exists to copy |
 
 ## Performance Traps
 
 | Trap | Symptoms | Prevention | When It Breaks |
-|------|----------|------------|----------------|
-| Full animation library import for a handful of primitives | Shared JS chunk grows disproportionately | Bundle-size gate during library selection (Pitfall 11) | Immediately measurable in `next build` output, doesn't need scale |
-| Scroll-reveal without reserved layout box | CLS increases | Animate only `opacity`/`transform`, reserve final box from first paint (Pitfall 8) | On any connection slower than dev machine's; visible in Lighthouse CLS immediately |
-| `'use client'` boundary drawn too high | Larger-than-expected route JS, possible server-only import breakage | Small leaf client components consuming server-fetched props (Pitfall 7) | Immediately on build/bundle inspection |
+|------|----------|------------|-----------------|
+| Storing large uncompressed screenshot images without going through the existing Cloudinary transform pipeline | Slow LCP on the new listing/detail pages, undermining the exact CWV story this milestone is meant to showcase | Route all screenshots through the same Cloudinary upload/adapter and responsive-size pattern already used for Media in this project — no bypass with raw `<img>` tags pointing at un-transformed originals | Immediately visible in Lighthouse for the new pages themselves — ironic if the "Lighthouse scores" showcase page has a bad Lighthouse score |
+| Rendering all 6 `Websites` docs' full screenshot sets on a single listing page with no lazy-loading | Listing page LCP/CLS regression | Reuse the existing lazy-load/image-optimization pattern from `FeaturedCaseStudiesBlock`/`FeaturedContent` rather than inventing new markup | Noticeable even at 6 items if screenshots are full-page (not thumbnail) captures |
 
 ## Security Mistakes
 
 | Mistake | Risk | Prevention |
 |---------|------|------------|
-| Running the full-DB humanization sweep with elevated Local API access (`overrideAccess: true` by default) without an explicit publish-status filter | Could humanize/expose draft-only content, or (inverse of Phase 24's bug) accidentally leak unpublished docs' content into a public-facing render path if any new component reads via Local API without `overrideAccess: false` | Explicit `_status: published` filter (or `overrideAccess: false`) on every Local API read the sweep or any new component performs, mirroring the fix already applied in Phase 24 for `services-data.ts` |
+| Storing a `liveUrl` field with no output-encoding/allowlist and rendering it as a raw link or (worse) an iframe src | Low but non-zero XSS/clickjacking surface if `liveUrl` content is ever attacker-influenced (unlikely here since Juan is the sole editor, but still a clean-code hygiene issue) | Treat `liveUrl` as a validated URL field (Payload's own URL validation) rendered only as an `<a href>`, never as an iframe or raw HTML injection |
+| Screenshot images potentially containing another site's user data (e.g., a demo/testimonial with a real name visible in a captured UI) | Minor GDPR/privacy exposure if the screenshot captures another person's personal data incidentally rendered on the target page | When manually capturing, prefer marketing/homepage views over dashboards or any page that could show real user data; crop or blur if unavoidable |
 
 ## UX Pitfalls
 
 | Pitfall | User Impact | Better Approach |
-|---------|-------------|-----------------|
-| Animation inconsistency across the 9 target components (some feel snappy, some sluggish, different easing curves) | Site feels less polished/professional — undermines the "demonstrate engineering pericia" Core Value | Centralize timing/easing tokens (duration-fast/base/slow, ease-out/standard already exist in this codebase from Phase 7/8 — reuse them for animation timing too, don't invent new ad hoc values per component) |
-| Humanized copy drifting into inconsistent terminology across pages that should match (e.g., how "SEO técnico" or a service name is phrased differs page to page after independent humanization passes) | Confuses readers/search engines about whether two pages are describing the same offering | Keep a running terminology/glossary reference (locked keyword phrases, service names, Juan's specific phrasing choices) that every humanization pass checks against, not independent per-page rewrites with no cross-reference |
+|---------|-------------|-------------------|
+| Presenting Lighthouse scores as if they are live/real-time | Visitor assumes the number reflects the site *today*, loses trust if they check the live site and see something different | Explicit "as of [date]" label next to scores, consistent with how the site already treats dated case study results |
+| Listing `Websites` and `CaseStudies` as visually identical card grids on Home with no distinguishing label | Visitor can't tell why there are two sections about "things Juan built" — feels redundant rather than complementary | Give each section its own distinct framing per PROJECT.md's stated intent ("no solo case studies con storytelling SEO" vs. "portfolio de desarrollo técnico") — different card content emphasis (stack/scores vs. metrics/results) |
+| No indication on a `Websites` card of whether a matching case study exists | Visitor interested in results has to hunt for it separately | Small "See the case study" link/badge on cards where the cross-relationship field is populated |
 
 ## "Looks Done But Isn't" Checklist
 
-- [ ] **Reduced-motion support:** Often verified on the first animated component only — verify via automated headless check across ALL 9 target components, not a manual spot-check on one
-- [ ] **Localized field writes:** Often assumed correct because the *localized* sibling field (title/richText) looks right — verify every touched field's `localized: true` status in config, and diff ES vs EN raw API values post-write
-- [ ] **Bulk sweep completeness:** Often assumed complete because the script "ran without errors" — verify against a doc-count/processed-id log, not exit code alone
-- [ ] **JSON-LD after copy rewrite:** Often assumed fine because the page "looks right" visually — verify via `seo-schema` validation and View Source, since escaping bugs are invisible in the rendered UI
-- [ ] **Animation bundle impact:** Often assumed fine because "it's just a small library" — verify via actual `next build` route JS size diff, not a vibe check
+- [ ] **Lighthouse scores:** Often missing a capture date — verify every `Websites` doc has a `lighthouseCapturedAt` (or equivalent) field populated, not just the 4 numeric scores.
+- [ ] **Screenshots:** Often captured once by hand and never routed through the Cloudinary optimization pipeline like other Media — verify screenshots are actual `Media` collection docs with Cloudinary-hosted derivatives, not raw local files or hotlinked external URLs.
+- [ ] **Client relationship:** Often modeled as required when it should be optional — verify at least one of the 6 seeded sites (a personal/agency site) has `client` left empty and the UI renders gracefully without a client name/logo shown.
+- [ ] **Cross-link to CaseStudies:** Often left unpopulated even where an obvious matching case study exists — verify each of the 6 sites was checked against the existing `CaseStudies` collection before publishing, and the relationship field set where a match exists.
+- [ ] **JSON-LD:** Often absent entirely on new content types added after the initial SEO-plugin rollout, or copy-pasted with the wrong schema.org type — verify with Google's Rich Results Test / Schema Markup Validator that the `Websites` detail page emits valid `CreativeWork` (not `SoftwareApplication`) structured data, and that the listing page emits `ItemList`.
+- [ ] **Bilingual fields:** Given this project's own documented history of non-localized fields breaking things 3+ times in v1.5 (`Header.navItems.url`, `Content.link.url`, `TestimonialsCarousel.title`), explicitly check every text field added to `Websites` (`challenges`, `highlights`, any labels) for `localized: true` where it should apply — this exact bug class has recurred repeatedly in this project.
 
 ## Recovery Strategies
 
 | Pitfall | Recovery Cost | Recovery Steps |
-|---------|---------------|----------------|
-| Column dropped before backfill (schema reshape gone wrong) | HIGH | Neon point-in-time restore to just before the migration applied (proven path, used in Phase 19); re-verify all content in both locales afterward, not just the one field that broke |
-| Non-localized field clobbered by locale write | LOW-MEDIUM | If the old value is still recoverable from the other locale's last-known-good write, restore it via a corrective non-destructive update script (as done for `Header.navItems` in Phase 21); if genuinely lost, restore from Neon PITR |
-| Partial-failure mid-sweep | LOW if resumable/logged (Pitfall 4 prevention in place) | Re-run the script; idempotent design means already-humanized docs are skipped and the remainder completes |
-| SEO regression from over-eager meta-field rewrite | MEDIUM | Restore locked meta fields from the pre-sweep snapshot export (Pitfall 5's prevention), re-verify against `KEYWORD-RESEARCH.md` |
-| CLS/Lighthouse regression from animation | LOW | Isolated to CSS/animation-trigger code, not data — revert the specific component's animation implementation, no DB involvement |
+|---------|-----------------|-------------------|
+| Stale Lighthouse scores discovered post-launch | LOW | Re-run Lighthouse for the affected site(s), update the 4 score fields + `capturedAt` via a normal content update (non-destructive, no migration needed) |
+| Wrong JSON-LD type shipped (e.g., `SoftwareApplication` used) | LOW-MEDIUM | Swap the type in the shared JSON-LD builder component; no schema/DB change needed since JSON-LD is rendered from existing fields, not stored as its own type |
+| `client` field made required by mistake, blocking seed of client-less sites | MEDIUM | Additive migration to relax `required: true` → `false` on an existing column is generally safe (loosening a constraint, not narrowing it) — but confirm with a generated migration reviewed before applying, per this project's Database Safety rule |
+| Duplicated/contradictory facts discovered between a `CaseStudies` doc and a `Websites` doc for the same site | LOW | Content-only fix: reconcile the two docs' overlapping fields (year, stack) and populate the cross-relationship field — no schema change |
 
 ## Pitfall-to-Phase Mapping
 
 | Pitfall | Prevention Phase | Verification |
-|---------|------------------|--------------|
-| Non-localized field clobbered by locale write | Content-humanization phase (pre-flight audit task, first task in phase) | Raw API diff ES vs EN post-write for every touched field |
-| Schema reshape drops data before backfill | Content-humanization phase (only if a reshape is needed) | Hand-read migration statement order; Juan's named approval before apply |
-| Id collision on shared non-localized arrays | Content-humanization phase (any array/block field touched) | Idempotency self-check: re-run script twice, diff must be empty |
-| Partial-failure mid-sweep | Content-humanization phase (harness-building task, before any content task) | Processed-id log count matches total doc count per collection |
-| SEO-critical strings humanized without keyword/length check | Content-humanization phase (scope-definition task, before sweep starts) | Diff `targetKeyword`/`meta.title`/`meta.description` pre vs. post sweep |
-| JSON-LD breaks from rewritten copy | Content-humanization phase (closing regression gate) | `seo-schema` validation re-run across all JSON-LD routes |
-| Client Component boundary leak | Animation phase (per-component task) | `next build` output — no server-only imports in client chunks; bundle size sane per component |
-| CLS from animated entrances | Animation phase (closing regression gate) | Lighthouse CLS specifically, baseline vs. recheck, all target pages |
-| Inconsistent `prefers-reduced-motion` coverage | Animation phase (shared-hook task before per-component work; verification task at close) | Automated headless check, reduced-motion emulated, across all 9 target components |
-| Hydration mismatch from client-only animation state | Animation phase (pattern applied per new component, reviewed against `HeroGrainGradient.tsx`) | No hydration warnings in console/devtools on any animated route |
-| Animation library bundle-size creep | Animation phase (library-selection task) | `next build` shared-chunk size diff before/after library adoption |
+|---------|--------------------|-----------------|
+| Stale Lighthouse scores presented as current | Schema/collection-design phase | `Websites` collection config includes a capture-date field; UI renders the date next to scores |
+| Screenshot capture legal/rate-limit risk | Content population phase | No automated/recurring screenshot job exists in code; screenshots are static Media/Cloudinary uploads with a documented one-time manual capture step |
+| `Websites`/`CaseStudies` content duplication or missed cross-link | Schema-design phase (field) + content-population phase (verification per site) | For each of the 6 sites, confirm whether a matching `CaseStudies` doc exists; if yes, cross-link populated and shared facts reconciled |
+| Wrong relationship cardinality (`client`, `caseStudy`) | Schema/collection-design phase | `client` and `caseStudy` fields are `hasMany: false` and `required: false`; at least one seeded doc has no client to prove optionality works end-to-end |
+| Missing/incorrect JSON-LD for new content type | Frontend pages phase (listing + detail templates) | `CreativeWork` JSON-LD validated via Rich Results Test / Schema Markup Validator on the live detail page; `ItemList` present on listing page |
 
 ## Sources
 
-- `.planning/PROJECT.md` — Milestone Anterior sections v1.2 through v1.5, Key Decisions table (Database Safety rule), Context section — HIGH confidence, primary source of every incident cited
-- `.planning/STATE.md` — Phase notes for Phase 16 (16-02 hydration fix), Phase 19 (CTA richText incident + Database Safety rule origin), Phase 21 (Header.navItems id collision), Phase 25 (TestimonialsCarousel.title non-localized bug, RelatedCaseStudyBlock depth bug, accessibility regression) — HIGH confidence
-- `/Users/juan/Documents/Codigo/Personal/juantech/juan-payload/CLAUDE.md` — Database Safety section (hard rule text, incident description) — HIGH confidence
-- `src/components/HeroGrainGradient.tsx` — direct source of the proven SSR-safe reduced-motion/hydration pattern (lines 142-191) and the shader bundle-size reasoning already applied once in this codebase — HIGH confidence
-- Direct grep of `src/collections`, `src/globals`, `src/blocks`, `src/payload.config.ts` for `localized: true` usage and JSON-LD-consuming routes — HIGH confidence, confirms the scope of fields/routes this milestone's pitfalls apply to
+- `.planning/PROJECT.md` (this project) — schema decisions already made for `CaseStudies`/`Clientes`/`Works` deprecation, the v1.9 milestone scope description, the recurring non-localized-field bug pattern from v1.5 — HIGH (primary source, direct project history)
+- [Is it legal to screenshot websites? — ScreenshotOne](https://screenshotone.com/blog/screenshots-and-law/) — MEDIUM (industry blog from a screenshot-API vendor, consistent with general ToS/copyright consensus, not a legal authority)
+- [Is it Legal to take the Screenshot of a Website? — CaptureKit](https://www.capturekit.dev/blog/legal-take-screenshot-website) — MEDIUM (same caveat as above)
+- [schema.org/CreativeWork](https://schema.org/CreativeWork), [schema.org/SoftwareApplication](https://schema.org/SoftwareApplication), [schema.org/Project](https://schema.org/Project) — HIGH (authoritative schema.org type definitions)
+- General knowledge of Lighthouse/PSI run-to-run variance and Payload relationship/join field patterns — MEDIUM (training data, not independently re-verified against Payload 3.85 docs in this session; recommend confirming `join` field availability against Context7/official Payload docs during the schema-design phase itself)
 
 ---
-*Pitfalls research for: v1.6 milestone — micro-animation retrofit + bulk DB content humanization on juan-payload*
-*Researched: 2026-07-13*
+*Pitfalls research for: Websites Portfolio Section (v1.9 milestone) — Payload/Next.js portfolio rebuild*
+*Researched: 2026-07-14*
