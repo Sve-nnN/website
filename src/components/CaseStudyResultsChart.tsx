@@ -173,7 +173,7 @@ export function CaseStudyResultsChart({
           width={40}
           tick={{ fontSize: 11 }}
         />
-        {hasRightAxis && (
+        {hasRightAxis ? (
           <YAxis
             yAxisId="right"
             orientation="right"
@@ -182,16 +182,16 @@ export function CaseStudyResultsChart({
             width={40}
             tick={{ fontSize: 11 }}
           />
-        )}
+        ) : null}
         <ChartTooltip content={<ChartTooltipContent />} />
         <Bar dataKey="beforeLeft" yAxisId="left" fill="var(--color-beforeLeft)" radius={4} />
         <Bar dataKey="afterLeft" yAxisId="left" fill="var(--color-afterLeft)" radius={4} />
-        {hasRightAxis && (
-          <>
-            <Bar dataKey="beforeRight" yAxisId="right" fill="var(--color-beforeRight)" radius={4} />
-            <Bar dataKey="afterRight" yAxisId="right" fill="var(--color-afterRight)" radius={4} />
-          </>
-        )}
+        {hasRightAxis ? (
+          <Bar dataKey="beforeRight" yAxisId="right" fill="var(--color-beforeRight)" radius={4} />
+        ) : null}
+        {hasRightAxis ? (
+          <Bar dataKey="afterRight" yAxisId="right" fill="var(--color-afterRight)" radius={4} />
+        ) : null}
       </BarChart>
     </ChartContainer>
   )
