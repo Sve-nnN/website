@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 31
 current_phase_name: 1/17 plans
 status: executing
-stopped_at: Completed 31-12-PLAN.md (Posts batch 11, ids 61-65)
-last_updated: "2026-07-17T05:07:13.228Z"
+stopped_at: Completed 31-05-PLAN.md
+last_updated: "2026-07-17T05:16:28.257Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 31 Wave 1 (31-01) complete
 progress:
   total_phases: 27
   completed_phases: 25
   total_plans: 112
-  completed_plans: 104
+  completed_plans: 105
 ---
 
 # Project State
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 31 — EXECUTING (Wave 1 of 4 complete)
-Plan: 14 of 17
+Plan: 15 of 17
 Status: 31-01 complete — foundation plan done, Wave 2 unblocked
 Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 
@@ -116,6 +116,7 @@ Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 | Phase 31 P10 | 90min | 1 tasks | 1 files |
 | Phase 31 P12 | 90min | 1 tasks | 1 files |
 | Phase 31 P02 | 45min | 1 tasks | 2 files |
+| Phase 31 P05 | 50min | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -234,6 +235,8 @@ Recent decisions affecting current work:
 - [Phase ?]: Batch 2 Posts (ids 10-14): reused/repaired a crashed prior agent's already-authored script instead of restarting; fixed missing en title+content on ids 12/14 (deeper locale-parity gap than the plan anticipated)
 - [Phase ?]: [Phase 31]: 31-12 (Posts batch 11, ids 61-65): recovered a crashed prior attempt — did not trust its 'all done' checkpoint, re-ran the idempotent script and an independent live-content cliché scan, found and fixed 11 residual AI-tell clichés ('es esencial'/'es fundamental'/'juega un papel crucial'/formulaic 'no solo...también/sino') the original authoring missed despite its own em-dash/voceo self-check passing; confirmed one apparent hit was a false positive inside an untouched table cell. Also fixed a same-batch concurrency accident where another agent's untracked batch-01 files got swept into this plan's commit (git rm --cached follow-up commit, files left intact on disk).
 - [Phase ?]: 31-02: recovered crashed checkpoint, fixed 69 silently-unrewritten AI-cliché paragraphs, hardened self-check with cliché gate
+- [Phase ?]: 31-05: Resumed a prior crashed agent's salvageable work (script + content JSON on disk, DB untouched) instead of restarting from scratch
+- [Phase ?]: 31-05: Fixed VOCEO_RE false positive (mir[aá] matched non-voceo 'mira') and ~35 leading-placeholder segment mismatches in authored content before writing to production
 
 ### Pending Todos
 
@@ -278,8 +281,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-17T05:07:13.218Z
-Stopped at: Completed 31-12-PLAN.md (Posts batch 11, ids 61-65)
+Last session: 2026-07-17T05:16:28.247Z
+Stopped at: Completed 31-05-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
