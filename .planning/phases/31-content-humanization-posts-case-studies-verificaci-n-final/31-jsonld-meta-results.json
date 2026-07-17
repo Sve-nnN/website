@@ -1,0 +1,1840 @@
+[
+  {
+    "path": "/",
+    "ok": true,
+    "problems": [],
+    "title": "Juan Carlos Angulo — Inicio",
+    "metaDescription": "Ingeniero de software y experto SEO.",
+    "jsonLdTypes": [
+      "Person"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en",
+    "ok": true,
+    "problems": [],
+    "title": "Juan Carlos Angulo — Home",
+    "metaDescription": "Software engineer and SEO expert.",
+    "jsonLdTypes": [
+      "Person"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/contact",
+    "ok": true,
+    "problems": [],
+    "title": "Contacto",
+    "metaDescription": "Contame sobre tu proyecto y te respondo en menos de 48 horas. Auditorías técnicas, desarrollo web y consultoría SEO, sin intermediarios.",
+    "jsonLdTypes": [],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/contact",
+    "ok": true,
+    "problems": [],
+    "title": "Contact",
+    "metaDescription": "Tell me about your project and I&#x27;ll reply within 48 hours. Technical audits, web development, and SEO consulting, no middlemen.",
+    "jsonLdTypes": [],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/privacy",
+    "ok": true,
+    "problems": [],
+    "title": "Política de Privacidad",
+    "metaDescription": "Cómo manejo los datos que me compartís por el formulario de contacto o durante un proyecto: qué recolecto, para qué y por cuánto tiempo.",
+    "jsonLdTypes": [],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/privacy",
+    "ok": true,
+    "problems": [],
+    "title": "Privacy Policy",
+    "metaDescription": "How I handle the data you share through the contact form or during a project: what I collect, why, and for how long.",
+    "jsonLdTypes": [],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/terms",
+    "ok": true,
+    "problems": [],
+    "title": "Términos de Servicio",
+    "metaDescription": "Términos de servicio de Juan Carlos Angulo: alcance del trabajo, condiciones de pago y responsabilidades para auditorías, desarrollo y consultoría.",
+    "jsonLdTypes": [],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/terms",
+    "ok": true,
+    "problems": [],
+    "title": "Terms of Service",
+    "metaDescription": "Terms of service for Juan Carlos Angulo&#x27;s work: scope, payment conditions, and responsibilities for audits, development, and consulting.",
+    "jsonLdTypes": [],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/servicios",
+    "ok": true,
+    "problems": [],
+    "title": "Servicios",
+    "metaDescription": "Auditorías técnicas SEO, desarrollo full-stack con Next.js y Payload, y consultoría de posicionamiento orgánico. Trabajo directo sobre el código.",
+    "jsonLdTypes": [
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/services",
+    "ok": true,
+    "problems": [],
+    "title": "Services",
+    "metaDescription": "Technical SEO audits, full-stack development with Next.js and Payload, and organic ranking consulting. I work directly on the code.",
+    "jsonLdTypes": [
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/servicios/seo-technical-audit",
+    "ok": true,
+    "problems": [],
+    "title": "Auditoría SEO Técnica",
+    "metaDescription": "Auditoría técnica SEO completa: rastreo, indexación, Core Web Vitals y datos estructurados, con un plan de corrección priorizado por impacto real.",
+    "jsonLdTypes": [
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/services/seo-technical-audit",
+    "ok": true,
+    "problems": [],
+    "title": "Technical SEO Audit",
+    "metaDescription": "Full technical SEO audit: crawling, indexation, Core Web Vitals, and structured data, with a fix plan prioritized by real impact.",
+    "jsonLdTypes": [
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/servicios/seo-consulting",
+    "ok": true,
+    "problems": [],
+    "title": "Consultoría SEO",
+    "metaDescription": "Consultoría SEO continua para equipos que necesitan alguien que entienda tanto el código como el posicionamiento, sin traducir entre agencia y desarrollo.",
+    "jsonLdTypes": [
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/services/seo-consulting",
+    "ok": true,
+    "problems": [],
+    "title": "SEO Consulting",
+    "metaDescription": "Ongoing SEO consulting for teams that need someone who understands both the code and the rankings, no translation layer between agency and dev.",
+    "jsonLdTypes": [
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/servicios/fullstack-development",
+    "ok": true,
+    "problems": [],
+    "title": "Desarrollo Full-Stack con SEO integrado",
+    "metaDescription": "Desarrollo full-stack con Next.js y Payload CMS, pensado desde el primer commit para que el sitio rinda bien y sea indexable sin parches después.",
+    "jsonLdTypes": [
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/services/fullstack-development",
+    "ok": true,
+    "problems": [],
+    "title": "Full-Stack Development with SEO Built In",
+    "metaDescription": "Full-stack development with Next.js and Payload CMS, built from the first commit to perform well and stay indexable without patches later.",
+    "jsonLdTypes": [
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/servicios/ai-seo-geo",
+    "ok": true,
+    "problems": [],
+    "title": "SEO para IA / GEO",
+    "metaDescription": "Optimización para que tu contenido sea citado por ChatGPT, Perplexity y las respuestas de IA de Google, además del ranking tradicional en buscadores.",
+    "jsonLdTypes": [
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/services/ai-seo-geo",
+    "ok": true,
+    "problems": [],
+    "title": "AI SEO / GEO",
+    "metaDescription": "Optimization so your content gets cited by ChatGPT, Perplexity, and Google AI answers, on top of traditional search rankings.",
+    "jsonLdTypes": [
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/seo-tecnico-madrid",
+    "ok": true,
+    "problems": [],
+    "title": "SEO Técnico en Madrid / España",
+    "metaDescription": "SEO técnico para negocios en Madrid: auditorías, SEO local y contenido que compite de verdad contra la competencia real de la ciudad.",
+    "jsonLdTypes": [],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/seo-tecnico-madrid",
+    "ok": true,
+    "problems": [],
+    "title": "Technical SEO in Madrid / Spain",
+    "metaDescription": "Technical SEO for businesses in Madrid: audits, local SEO, and content that actually competes against the city’s real competition.",
+    "jsonLdTypes": [],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/seo-tecnico-lima",
+    "ok": true,
+    "problems": [],
+    "title": "SEO Técnico en Lima",
+    "metaDescription": "SEO técnico para negocios en Lima: auditorías, SEO local y contenido que compite de verdad contra la competencia real de la ciudad.",
+    "jsonLdTypes": [],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/seo-tecnico-lima",
+    "ok": true,
+    "problems": [],
+    "title": "Technical SEO in Lima",
+    "metaDescription": "Technical SEO for businesses in Lima: audits, local SEO, and content that actually competes against the city’s real competition.",
+    "jsonLdTypes": [],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog",
+    "ok": true,
+    "problems": [],
+    "title": "Blog",
+    "metaDescription": "Artículos técnicos sobre SEO, rendimiento web y desarrollo full-stack, escritos desde la práctica diaria de auditorías y correcciones de código real.",
+    "jsonLdTypes": [],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog",
+    "ok": true,
+    "problems": [],
+    "title": "Blog",
+    "metaDescription": "Technical articles on SEO, web performance, and full-stack development, written from daily hands-on audits and real code fixes.",
+    "jsonLdTypes": [],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/case-studies",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Casos de éxito",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/case-studies",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Case Studies",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/algoritmos-estructuras-datos",
+    "ok": true,
+    "problems": [],
+    "title": "Algoritmos y estructuras de datos: Fundame...",
+    "metaDescription": "Los algoritmos y estructuras de datos son los cimientos de la programación eficiente. Un algoritmo define el proceso paso a paso, mientras que la estructura de datos organiza la información para optimizar recursos. Dominarlos es clave para construir software escalable, de alto rendimiento y robusto ante grandes volúmenes de datos.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/algoritmos-estructuras-datos",
+    "ok": true,
+    "problems": [],
+    "title": "Algorithms and Data Structures 2026: The Engineer&#x27;s Foundation",
+    "metaDescription": "Core algorithms and data structures are the building blocks of efficient software. Learn how to choose the right tools to optimize data processing and system response time in high-traffic applications.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/big-o-notation",
+    "ok": true,
+    "problems": [],
+    "title": "Notación Big O: Guía técnica de complejidad y escalabilidad",
+    "metaDescription": "La notación Big O es la métrica estándar para medir la eficiencia y escalabilidad de los algoritmos. Esta guía explica cómo el tiempo de ejecución y el uso de memoria crecen según el tamaño de la entrada (n), cubriendo desde O(1) hasta O(n!) con ejemplos prácticos en Python y comparativas de rendimiento real.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/big-o-notation",
+    "ok": true,
+    "problems": [],
+    "title": "Big O Notation 2026: Mastering Algorithmic Complexity",
+    "metaDescription": "Big O notation is the language of algorithm efficiency. This guide covers how to analyze time and space complexity, helping you build scalable and performant code for modern technical systems.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/complejidad-algoritmica",
+    "ok": true,
+    "problems": [],
+    "title": "Complejidad algorítmica: Guía técnica de rendim...",
+    "metaDescription": "La complejidad algorítmica cuantifica los recursos de tiempo y memoria que un algoritmo necesita para ejecutarse. Esta guía detalla cómo el análisis asintótico (Big O, Ω, Θ) permite predecir el rendimiento y la escalabilidad de tus aplicaciones, siendo una competencia crítica para ingenieros que buscan optimizar la experiencia de usuario y reducir costos de infraestructura.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/complejidad-algoritmica",
+    "ok": true,
+    "problems": [],
+    "title": "Algorithm Complexity 2026: Evaluating Performance Limits",
+    "metaDescription": "Predicting how your code scales is critical for large-scale systems. We go beyond Big O notation to explore practical performance bottlenecks and optimization strategies for 2026&quot;s technical landscape.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/sql-vs-nosql",
+    "ok": true,
+    "problems": [],
+    "title": "SQL vs NoSQL: Guía técnica para elegir la base de datos correcta",
+    "metaDescription": "Elegir entre SQL y NoSQL es una decisión arquitectónica crítica que afecta la escalabilidad y consistencia de tu aplicación. Esta comparativa técnica analiza las diferencias entre el modelo relacional (ACID) y los modelos flexibles NoSQL (BASE), explorando casos de uso reales desde sistemas financieros hasta big data y microservicios modernos.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/sql-vs-nosql",
+    "ok": true,
+    "problems": [],
+    "title": "SQL vs NoSQL 2026: Data Management Strategy",
+    "metaDescription": "The choice between relational and non-relational data is more important than ever. We compare SQL and NoSQL databases for 2026 use cases, analyzing consistency, scalability, and performance trade-offs.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/algoritmos-ordenamiento",
+    "ok": true,
+    "problems": [],
+    "title": "Algoritmos de ordenamiento: Guía técnica de eficiencia y optimización",
+    "metaDescription": "Los algoritmos de ordenamiento son herramientas esenciales para organizar datos de manera eficiente. Esta guía analiza métodos clásicos como Bubble y Selection Sort, junto a estrategias avanzadas de &quot;divide y vencerás&quot; como Quick y Merge Sort. Exploramos su complejidad temporal (Big O), estabilidad y criterios técnicos para elegir el algoritmo óptimo según el volumen de datos.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/algoritmos-ordenamiento",
+    "ok": true,
+    "problems": [],
+    "title": "Sorting Algorithms 2026: Efficiency in Data Organization",
+    "metaDescription": "Sorting is a fundamental operation in computer science. We analyze the best sorting algorithms for 2026, comparing their time and space complexity to help you choose the most efficient approach for your data sets.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/arboles-binarios",
+    "ok": true,
+    "problems": [],
+    "title": "Árboles binarios: Guía técnica de estructuras y algoritmos de búsqueda",
+    "metaDescription": "Los árboles binarios son estructuras de datos jerárquicas fundamentales para la optimización de búsquedas y organización de información. Esta guía explora desde conceptos básicos hasta tipos avanzados como BST, AVL y Árboles Rojinegros. Aprende a implementar recorridos DFS/BFS y técnicas de balanceo para garantizar un rendimiento logarítmico (O(log N)) en tus aplicaciones.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/arboles-binarios",
+    "ok": true,
+    "problems": [],
+    "title": "Binary Trees 2026: Hierarchical Data Mastery",
+    "metaDescription": "Binary trees are essential for efficient data retrieval. This guide covers the theory and implementation of binary trees in 2026, exploring their application in everything from file systems to high-performance search indices.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/diseno-bases-datos",
+    "ok": true,
+    "problems": [],
+    "title": "Diseño de bases de datos: Guía completa de arquitectura y normalización",
+    "metaDescription": "El diseño de bases de datos es el proceso estratégico de organizar información para garantizar integridad, escalabilidad y rendimiento. Esta guía explora desde el modelado entidad-relación y las reglas de normalización hasta las tendencias modernas como bases de datos NoSQL, arquitecturas en la nube (DBaaS) y el diseño específico para microservicios y aplicaciones de IA.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/diseno-bases-datos",
+    "ok": true,
+    "problems": [],
+    "title": "Database Design 2026: Keys for Modern Structure",
+    "metaDescription": "A database&#x27;s structure determines the application&#x27;s future. This guide outlines how to design scalable schemas in 2026, focusing on relationships, indexing strategies, and performance considerations for high-volume data.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/normalizacion-bases-datos",
+    "ok": true,
+    "problems": [],
+    "title": "Normalización de Bases de Datos: Guía técnica de formas normales e integ...",
+    "metaDescription": "La normalización de bases de datos es una técnica esencial para organizar datos, minimizar la redundancia y prevenir anomalías de actualización. Esta guía explica detalladamente las formas normales (1FN a BCNF), la gestión de dependencias funcionales y cómo equilibrar la integridad de los datos con el rendimiento de las consultas en sistemas modernos.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/normalizacion-bases-datos",
+    "ok": true,
+    "problems": [],
+    "title": "Database Normalization 2026: Integrity and Speed",
+    "metaDescription": "Normalization is the backbone of relational database design. Avoid data redundancy and maintain integrity by following standard normal forms, ensuring your data remains clean and fast in enterprise environments.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/programacion-dinamica",
+    "ok": true,
+    "problems": [],
+    "title": "Programación Dinámica: Guía técnica de optimizaci...",
+    "metaDescription": "La Programación Dinámica es una técnica avanzada de diseño algorítmico que optimiza la resolución de problemas complejos mediante la descomposición en subproblemas y el almacenamiento de sus resultados. Esta guía profundiza en los pilares de subestructura óptima y subproblemas superpuestos, comparando métodos de memoización y tabulación para maximizar la eficiencia en software de alto rendimiento.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/programacion-dinamica",
+    "ok": true,
+    "problems": [],
+    "title": "Dynamic Programming 2026: Efficiency in Complexity",
+    "metaDescription": "Dynamic programming is the key to solving complex overlapping problems. Discover the principles of memoization and tabulation to reduce algorithmic complexity and build highly efficient systems in 2026.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/guia-eeat",
+    "ok": true,
+    "problems": [],
+    "title": "E-E-A-T en SEO 2026: Guía para Dominar la Autoridad en la Era...",
+    "metaDescription": "El framework E-E-A-T (Experiencia, Expertise, Autoridad y Confianza) es el estándar de calidad supremo de Google en 2026. Para posicionar, no basta con  informar; debes demostrar autoría verificable, aportar &quot;Information Gain&quot;  mediante datos propios y consolidar señales técnicas que garanticen la  seguridad del usuario.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/guia-eeat",
+    "ok": true,
+    "problems": [],
+    "title": "E-E-A-T Guide 2026: Authority and Trust in the AI Era",
+    "metaDescription": "E-E-A-T is Google&#x27;s primary metric for content quality. In 2026, demonstrating real-world experience and verifiable authorship is critical to surviving AI filtering and ranking in competitive technical niches.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/enlaces-internos-guia",
+    "ok": true,
+    "problems": [],
+    "title": "Estrategia de Enlaces Internos 2026: Guía Maestra",
+    "metaDescription": "El enlazado interno es una herramienta de SEO subestimada pero poderosa. Descubre cómo pasar autoridad entre páginas, mejorar la rastreabilidad y aumentar el tiempo de permanencia mediante una arquitectura de enlaces lógica y semántica.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/enlaces-internos-guia",
+    "ok": true,
+    "problems": [],
+    "title": "Internal Linking Guide 2026: Building Topical Authority with Clusters",
+    "metaDescription": "Internal linking is the backbone of crawlability and topical authority. This guide explains how to implement a hub-and-spoke model, optimize anchor text for semantic relevance, and use internal links to signal hierarchy to search engines in 2026.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/estrategia-topic-clusters",
+    "ok": true,
+    "problems": [],
+    "title": "Estrategia de Topic Clusters 2026: Dominando la Autoridad Semántica",
+    "metaDescription": "Los topic clusters organizan tu web en islas de conocimiento. Esta guía te enseña a crear páginas pilar que centralizan la autoridad y satélites que cubren cada intención de búsqueda de forma exhaustiva.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/estrategia-topic-clusters",
+    "ok": true,
+    "problems": [],
+    "title": "Topic Clusters Strategy 2026: The Ultimate Guide to Topical Authority",
+    "metaDescription": "Topic clusters are the foundational structure of modern SEO. By grouping content around a central &quot;pillar&quot; topic and linking it to supporting &quot;satellite&quot; pages, you build a semantic map that search engines recognize as authority.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/guia-keyword-research",
+    "ok": true,
+    "problems": [],
+    "title": "Guía Maestra de Keyword Research 2026: Entidades y Clústeres",
+    "metaDescription": "El keyword research ha evolucionado hacia la comprensión de entidades. Esta guía explica cómo usar DinoRank y otras herramientas para identificar huecos de contenido y construir una arquitectura de información basada en la relevancia semántica.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/guia-keyword-research",
+    "ok": true,
+    "problems": [],
+    "title": "Keyword Research Guide 2026: From Search Volume to Entities",
+    "metaDescription": "Keyword research is no longer just about volume. This guide focuses on identifying semantic entities, understanding intent qualifiers, and building topic maps that cover the entire customer journey.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/redaccion-seo",
+    "ok": true,
+    "problems": [],
+    "title": "Redacción SEO 2026: Cómo escribir contenidos que rankean",
+    "metaDescription": "La redacción SEO hoy va más allá de repetir palabras clave. En 2026, Google prioriza la ganancia de información y la autoridad temática. Esta guía te enseña a estructurar tus artículos para maximizar el tiempo de permanencia y la relevancia.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/redaccion-seo",
+    "ok": true,
+    "problems": [],
+    "title": "SEO Copywriting 2026: Writing for AI Overviews and Humans",
+    "metaDescription": "SEO copywriting today requires balancing E-E-A-T principles with semantic optimization. This guide covers how to write for AI Overviews (SGE) while maintaining high conversion and engagement for human readers.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/experiencia-de-usuario",
+    "ok": true,
+    "problems": [],
+    "title": "Experiencia de usuario: Clave para el éxito del cliente",
+    "metaDescription": "La experiencia de usuario (UX) se refiere a la interacción entre usuarios y productos. Un buen diseño de UX mejora la satisfacción del cliente y la lealtad a la marca. Este artículo explora sus elementos clave y su impacto en el mercado actual.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/experiencia-de-usuario",
+    "ok": true,
+    "problems": [],
+    "title": "User Experience Explained: A Complete Guide to UX Concepts",
+    "metaDescription": "User experience (UX) shapes how people perceive and interact with digital products. This guide covers the core UX concepts and the practices that actually move customer satisfaction and brand loyalty.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/mejores-cursos-seo-espanol",
+    "ok": true,
+    "problems": [],
+    "title": "Mejores Cursos de SEO en Español 2026: Guía Comparativa",
+    "metaDescription": "La formación en SEO ha evolucionado hacia la especialización técnica y estratégica. Analizamos los cursos más actualizados del mercado hispano, desde fundamentos hasta SEO avanzado e IA aplicada al marketing.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/mejores-cursos-seo-espanol",
+    "ok": true,
+    "problems": [],
+    "title": "Mejores Cursos de SEO en Español 2026: Guía Comparativa",
+    "metaDescription": "La formación en SEO ha evolucionado hacia la especialización técnica y estratégica. Analizamos los cursos más actualizados del mercado hispano, desde fundamentos hasta SEO avanzado e IA aplicada al marketing.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/que-es-css",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "¿Qué es CSS? Todo lo que necesitas saber sobre Hojas de Estilo en Cascada",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/que-es-css",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "¿Qué es CSS? Todo lo que necesitas saber sobre Hojas de Estilo en Cascada",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/tablas-hash",
+    "ok": true,
+    "problems": [],
+    "title": "Tablas hash: Estructuras clave para un manejo eficiente de datos",
+    "metaDescription": "Las tablas hash son estructuras de datos que almacenan pares clave-valor y permiten búsqueda, inserción y eliminación en tiempo casi constante mediante una función hash. Esta guía cubre su funcionamiento, la gestión de colisiones y ejemplos prácticos de aplicación en sistemas informáticos reales.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/tablas-hash",
+    "ok": true,
+    "problems": [],
+    "title": "Tablas hash: Estructuras clave para un manejo eficiente de datos",
+    "metaDescription": "Las tablas hash son estructuras de datos que almacenan pares clave-valor y permiten búsqueda, inserción y eliminación en tiempo casi constante mediante una función hash. Esta guía cubre su funcionamiento, la gestión de colisiones y ejemplos prácticos de aplicación en sistemas informáticos reales.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/nextjs-seo-optimization",
+    "ok": true,
+    "problems": [],
+    "title": "Next.js SEO 2026: Optimizando App Router y Metadatos",
+    "metaDescription": "Next.js revoluciona el SEO en React. Descubre cómo configurar correctamente el API de metadatos, optimizar imágenes y asegurar una indexación perfecta en la versión 15 de Next.js para 2026.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/nextjs-seo-optimization",
+    "ok": true,
+    "problems": [],
+    "title": "Next.js SEO 2026: Optimizing App Router and Metadata",
+    "metaDescription": "Next.js provides powerful built-in SEO tools. This guide explains how to use the App Router&#x27;s metadata API, handle Server Components for better indexation, and optimize images and scripts to build modern, high-ranking applications in 2026.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/non-developers-guide",
+    "ok": true,
+    "problems": [],
+    "title": "SEO Técnico para No Desarrolladores 2026: Guía Sin Miedo",
+    "metaDescription": "No necesitas ser programador para dominar el SEO técnico. Explicamos de forma sencilla conceptos como la indexación, la velocidad de carga y el marcado de datos para que tomes el control de tu web.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/non-developers-guide",
+    "ok": true,
+    "problems": [],
+    "title": "Technical SEO for Non-Developers 2026: No Fear Guide",
+    "metaDescription": "Technical SEO doesn&#x27;t require a degree in computer science. This guide explains indexing, site structure, and speed metrics in plain language, empowering you to make strategic decisions for your web presence.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/tech-seo-guide",
+    "ok": true,
+    "problems": [],
+    "title": "Guía de SEO técnico para desarrolladores 2026: manual completo de rendimiento",
+    "metaDescription": "El SEO técnico es el cimiento de cualquier estrategia digital exitosa en 2026. Esta guía detalla cómo optimizar la infraestructura de tu sitio para maximizar la rastreabilidad, dominar las métricas Core Web Vitals (LCP, INP, CLS) e implementar semántica estructurada JSON-LD, asegurando que tu contenido sea procesable tanto por humanos como por sistemas de IA.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/tech-seo-guide",
+    "ok": true,
+    "problems": [],
+    "title": "Technical SEO Guide 2026: The Comprehensive Developer&#x27;s Handbook",
+    "metaDescription": "Technical SEO is no longer just about meta tags. In 2026, it&#x27;s about how your code interacts with AI crawlers, how your rendering strategy impacts performance, and how your data structures facilitate information extraction.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/web-performance-guide",
+    "ok": true,
+    "problems": [],
+    "title": "Guía de Rendimiento Web 2026: Optimizando WPO para SEO",
+    "metaDescription": "La velocidad de carga es un factor crítico de ranking y conversión. En 2026, nos enfocamos en el TTFB, la optimización de recursos críticos y el cumplimiento estricto de las Core Web Vitals para garantizar la mejor experiencia posible.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/web-performance-guide",
+    "ok": true,
+    "problems": [],
+    "title": "Web Performance Guide 2026: Technical Optimization for SEO",
+    "metaDescription": "Web performance is a fundamental ranking factor in 2026. This guide details how to optimize the critical rendering path, implement advanced caching strategies, and use resource hints (preload, preconnect) to significantly improve loading speed and user satisfaction.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/core-web-vitals-guide",
+    "ok": true,
+    "problems": [],
+    "title": "Guía de Core Web Vitals 2026: La Métrica de Oro del SEO",
+    "metaDescription": "Las Core Web Vitals son críticas para el ranking orgánico. Esta guía te enseña a identificar y corregir cuellos de botella técnicos para ofrecer una experiencia de página rápida, estable y responsive.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/core-web-vitals-guide",
+    "ok": true,
+    "problems": [],
+    "title": "Core Web Vitals Guide 2026: Optimizing LCP, CLS, and INP",
+    "metaDescription": "Core Web Vitals are direct ranking signals in Google&#x27;s algorithm. For 2026, we focus on minimizing layout shifts and optimizing interaction responsiveness to meet the new INP standards and provide a flawless user experience.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/robots-txt-best-practices",
+    "ok": true,
+    "problems": [],
+    "title": "Mejores Prácticas de Robots.txt 2026: Control de Rastreo Estratégico",
+    "metaDescription": "El archivo robots.txt es la primera instrucción que leen los buscadores. En 2026, su configuración es vital para optimizar el rastreo y asegurar que los bots consuman tu contenido más relevante primero.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/robots-txt-best-practices",
+    "ok": true,
+    "problems": [],
+    "title": "Robots.txt Best Practices 2026: Strategic Crawling Control",
+    "metaDescription": "The robots.txt file is the primary gateway for search engine bots. In 2026, it is critical to use strategic allow/disallow rules and provide clear sitemap paths to optimize your crawl budget and keep non-public sections private.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/schema-markup-guide",
+    "ok": true,
+    "problems": [],
+    "title": "Guía de Schema Markup 2026: Datos Estructurados para el Futuro",
+    "metaDescription": "Los datos estructurados ayudan a los buscadores a entender el contexto de tu contenido. En 2026, el Schema Markup es clave para aparecer en los resultados enriquecidos de la IA y mejorar el CTR mediante fragmentos visuales impactantes.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/schema-markup-guide",
+    "ok": true,
+    "problems": [],
+    "title": "Schema Markup Guide 2026: Mastering JSON-LD",
+    "metaDescription": "Schema markup is the vocabulary of the semantic web. This guide focuses on technical implementation using JSON-LD, ensuring your content is fully understood by AI search engines and optimized for rich results.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/ssr-vs-csr-seo",
+    "ok": true,
+    "problems": [],
+    "title": "SSR vs CSR para SEO: Guía técnica de estrategias de rend...",
+    "metaDescription": "La elección entre SSR, CSR y SSG define la capacidad de indexación y el rendimiento de tu sitio web. Esta guía analiza cómo el Server-Side Rendering y la Static Site Generation maximizan el descubrimiento de contenido por Googlebot, mientras que el Client-Side Rendering puede comprometer tu crawl budget en aplicaciones SPA modernas.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/ssr-vs-csr-seo",
+    "ok": true,
+    "problems": [],
+    "title": "SSR vs CSR for SEO 2026: The Definitive Ranking Guide",
+    "metaDescription": "The choice between SSR and CSR has profound implications for SEO and user experience. This guide analyzes how search engines crawl different rendering patterns and why a hybrid approach is often the best solution for modern web apps.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/xml-sitemap-automation",
+    "ok": true,
+    "problems": [],
+    "title": "Automatización de Sitemaps XML: Guía Técnica 2026",
+    "metaDescription": "Un sitemap XML bien gestionado es vital para el rastreo eficiente. Explicamos cómo automatizar su generación, cómo priorizar URLs críticas y cómo usar sitemaps dinámicos para optimizar el presupuesto de rastreo (Crawl Budget) en sitios grandes.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/xml-sitemap-automation",
+    "ok": true,
+    "problems": [],
+    "title": "Automating XML Sitemaps 2026: Mastering Technical SEO",
+    "metaDescription": "XML sitemaps are the roadmap for search engines. In 2026, manual sitemaps are obsolete. Learn how to automate the generation process to ensuring that 100% of your critical pages are indexed and refreshed instantly.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/headless-cms-seo",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Headless CMS SEO: guía práctica completa para 2026",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/headless-cms-seo",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Headless CMS SEO: Complete Guide for Better Search Visibility",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/topic-clusters-seo",
+    "ok": true,
+    "problems": [],
+    "title": "Topic clusters SEO: Mejora tu posicionamiento y organización de con...",
+    "metaDescription": "Un topic cluster organiza el contenido alrededor de un tema central, agrupando páginas relacionadas para mejorar el posicionamiento. Te muestro las bases de una estrategia de topic clusters que realmente sube la autoridad y visibilidad de tu sitio.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/topic-clusters-seo",
+    "ok": true,
+    "problems": [],
+    "title": "Topic Clusters for SEO: Optimizing Your Content Architecture",
+    "metaDescription": "Technical SEO and content strategy meet in topic clusters. Organizing your site into logical, hierarchical clusters improves crawl efficiency and helps search engines discover the semantic relationship between your pages.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/estrategia-de-contenidos",
+    "ok": true,
+    "problems": [],
+    "title": "Estrategia de Contenidos SEO 2026: Dominando la Intención de Búsqueda",
+    "metaDescription": "Una estrategia de contenidos moderna no se basa en volumen, sino en relevancia semántica. En 2026, el éxito depende de cubrir el mapa de entidades de tu nicho y satisfacer la intención del usuario con datos únicos y valor añadido.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/estrategia-de-contenidos",
+    "ok": true,
+    "problems": [],
+    "title": "Estrategia de Contenidos SEO 2026: Dominando la Intención de Búsqueda",
+    "metaDescription": "Una estrategia de contenidos moderna no se basa en volumen, sino en relevancia semántica. En 2026, el éxito depende de cubrir el mapa de entidades de tu nicho y satisfacer la intención del usuario con datos únicos y valor añadido.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/estrategia-seo",
+    "ok": true,
+    "problems": [],
+    "title": "Estrategia SEO Global 2026: Arquitectura, Contenido y Autoridad",
+    "metaDescription": "El SEO en 2026 es holístico. Esta guía detalla cómo integrar la optimización técnica, el desarrollo de topic clusters y la construcción de identidad de marca (E-E-A-T) para superar las actualizaciones de algoritmos de IA.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/estrategia-seo",
+    "ok": true,
+    "problems": [],
+    "title": "Estrategia SEO Global 2026: Arquitectura, Contenido y Autoridad",
+    "metaDescription": "El SEO en 2026 es holístico. Esta guía detalla cómo integrar la optimización técnica, el desarrollo de topic clusters y la construcción de identidad de marca (E-E-A-T) para superar las actualizaciones de algoritmos de IA.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/seo-off-page-guia",
+    "ok": true,
+    "problems": [],
+    "title": "Guía de SEO Off-Page 2026: Más allá del Link Building",
+    "metaDescription": "El SEO Off-Page en 2026 no es solo conseguir enlaces; se trata de construir una reputación de marca verificable. Explicamos cómo el Digital PR, las menciones sin enlace y la autoridad de nicho impactan en los rankings.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/seo-off-page-guia",
+    "ok": true,
+    "problems": [],
+    "title": "Guía de SEO Off-Page 2026: Más allá del Link Building",
+    "metaDescription": "El SEO Off-Page en 2026 no es solo conseguir enlaces; se trata de construir una reputación de marca verificable. Explicamos cómo el Digital PR, las menciones sin enlace y la autoridad de nicho impactan en los rankings.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/seo-copywriting",
+    "ok": true,
+    "problems": [],
+    "title": "Copywriting SEO 2026: El Arte de Escribir para el Usuario y Google",
+    "metaDescription": "La redacción SEO ha pasado de la densidad de palabras clave a la profundidad semántica. Esta guía enseña cómo estructurar textos que retengan al usuario, generen señales de satisfacción y cubran todas las entidades relevantes.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/seo-copywriting",
+    "ok": true,
+    "problems": [],
+    "title": "Copywriting SEO 2026: El Arte de Escribir para el Usuario y Google",
+    "metaDescription": "La redacción SEO ha pasado de la densidad de palabras clave a la profundidad semántica. Esta guía enseña cómo estructurar textos que retengan al usuario, generen señales de satisfacción y cubran todas las entidades relevantes.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/content-pillar",
+    "ok": true,
+    "problems": [],
+    "title": "Pilar de contenido SEO: Mejora tu estrategia de marketing digital",
+    "metaDescription": "El pilar de contenido SEO estructura y organiza la información dentro de tu estrategia de marketing digital, mejorando la navegación y la visibilidad en buscadores. Te explico los conceptos clave y los pasos para crear pilares que funcionen de verdad.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/content-pillar",
+    "ok": true,
+    "problems": [],
+    "title": "Building a Content Pillar 2026: The Core of Your Semantic SEO",
+    "metaDescription": "A content pillar is a comprehensive guide on a broad topic. In 2026, pillars serve as the semantic hub for your topic clusters, signaling to search engines that you have deep expertise and exhaustive coverage of a subject.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/pillar-page-seo",
+    "ok": true,
+    "problems": [],
+    "title": "Pillar Page SEO: La Clave para Organizar tu Contenido Web",
+    "metaDescription": "Las páginas pilares organizan y enlazan todo el contenido relacionado con un tema central, mejorando la navegación del usuario y la forma en que los buscadores entienden tu sitio. Te muestro cómo implementarlas para ganar autoridad temática.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/pillar-page-seo",
+    "ok": true,
+    "problems": [],
+    "title": "Pillar Page SEO 2026: Optimizing High-Authority Content",
+    "metaDescription": "SEO for pillar pages requires balancing broad keyword coverage with specific internal link signals. This guide covers how to structure your pillar page to capture high-volume head terms while supporting long-tail satellites.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/seo-copywriting-guide",
+    "ok": true,
+    "problems": [],
+    "title": "Guía de SEO Copywriting: Estrategias para Princ...",
+    "metaDescription": "El SEO copywriting es la habilidad que conecta contenido útil con visibilidad real en buscadores. En esta guía repaso los fundamentos para escribir textos que atraigan usuarios de verdad, sin perder de vista lo que Google espera ver.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/seo-copywriting-guide",
+    "ok": true,
+    "problems": [],
+    "title": "SEO Copywriting Guide 2026: Mastering Intent and Authority",
+    "metaDescription": "SEO copywriting in 2026 requires a deep understanding of semantic entities and user intent. This guide explains how to structure your content to satisfy Google&#x27;s E-E-A-T requirements while maintaining a clear, persuasive voice.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/data-structures",
+    "ok": true,
+    "problems": [],
+    "title": "Estructuras de Datos 2026: Fundamentos y Aplicaciones Reales",
+    "metaDescription": "Las estructuras de datos son el pilar de la eficiencia algorítmica. Descubre cómo el uso correcto de listas, colas, árboles y grafos puede optimizar drásticamente el rendimiento de tus aplicaciones y servicios web.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/data-structures",
+    "ok": true,
+    "problems": [],
+    "title": "Data Structures: An Overview and Their Applications",
+    "metaDescription": "Data structures are what let a program organize and manage information efficiently. This article walks through arrays, linked lists, trees, and graphs, and how the right choice can seriously boost your application&#x27;s performance.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/binary-search-tree",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Binary search tree: Guía completa para entender su funcionamiento",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/binary-search-tree",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Binary Search Tree: A Guide to In-Order Traversal",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/dynamic-programming",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Programación dinámica: guía práctica completa",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/dynamic-programming",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Dynamic Programming: A Practical Guide to Solving Complex Problems",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/graph-algorithms",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Graph algorithms: Claves para entender su importancia y aplicaciones",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/graph-algorithms",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Graph Algorithms Explained: Your Comprehensive Guide",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/heap-data-structure",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Heap Data Structure: guía práctica completa",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/heap-data-structure",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Heap Data Structure Explained: Types and Algorithms",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/merge-sort-python",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Merge Sort en Python: guía práctica completa para 2026",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/merge-sort-python",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Merge Sort Python: A Complete Guide to Implementation",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/queue-data-structure",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Queue Data Structure: Todo lo que Necesitas Saber",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/queue-data-structure",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Queue Data Structure: Core Concepts and Operations in Programming",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/quicksort-python",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Quicksort Python: Optimiza el Ordenamiento de Listas",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/quicksort-python",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Quicksort Python: An Informative Guide to Implementation and Optimi...",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/space-complexity",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Complejidad espacial: guía práctica completa para 2026",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/space-complexity",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Space Complexity Explained: An Informative Guide",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/time-complexity",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Complejidad temporal: guía práctica completa para 2026",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/time-complexity",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Time Complexity Explained: The Basics and Importance",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/tree-traversal",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Tree traversal: Guía práctica y aplicaciones en programación",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/tree-traversal",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Tree Traversal Techniques Explained: A Comprehensive Guide",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/astro-vs-nextjs",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Astro vs Next.js: ¿Cuál es el mejor framework para tu p...",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/astro-vs-nextjs",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Astro vs Next.js: Key Differences Explained",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/headless-cms-comparison",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Headless CMS Comparison: Las Mejores Opciones para 2026",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/headless-cms-comparison",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Headless CMS Comparison: Pros and Cons vs WordPress",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/nextjs-cms",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Next.js CMS: La Combinación Ideal para Tu Sitio Web",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/nextjs-cms",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Next.js CMS: Unlocking Modern Web Development",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/payload-cms-guide",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Payload CMS: guía práctica completa para 2026",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/payload-cms-guide",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Payload CMS: A Modern Solution for Content Management",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/keyword-research-guide",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Guía de Keyword Research: Estrategias Clave pa...",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/keyword-research-guide",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Keyword Research Guide: Discover Effective Strategies for Success",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/seo-content-strategy",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "SEO Content Strategy: Claves para Atraer Tráfico Orgánico",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/seo-content-strategy",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "SEO Content Strategy for Effective SaaS Growth",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/auditoria-seo",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Auditoria Seo: guia completa y estrategia practica",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/auditoria-seo",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "SEO Audit: A Complete Guide and Practical Strategy",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/nextjs-seo",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Next.js SEO: Mejora la Visibilidad de tu Sitio Web",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/nextjs-seo",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Next Js Seo: Next.js SEO Best Practices for Optimal Visibility",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/seo-on-page-guia",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Seo ON Page: guia completa y estrategia practica",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/seo-on-page-guia",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "On-Page SEO: A Complete Guide and Practical Strategy",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/structured-data-seo",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Datos estructurados SEO: guía completa para mejorar tu visibilidad",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/structured-data-seo",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Structured Data SEO: Everything You Need to Know to Improve Your Site",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/technical-seo-checklist",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Checklist de SEO técnico: guía práctica completa",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/technical-seo-checklist",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Technical SEO Checklist for 2026: Your Complete Guide",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/technical-seo-guide",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Guía de SEO técnico: fundamentos para desarrolladores",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/technical-seo-guide",
+    "ok": false,
+    "problems": [
+      "empty or missing meta description"
+    ],
+    "title": "Guía de SEO técnico: fundamentos para desarrolladores",
+    "metaDescription": null,
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/pilas-y-colas",
+    "ok": true,
+    "problems": [],
+    "title": "Pilas y Colas",
+    "metaDescription": "Explora las pilas y colas en Python, comprendiendo sus principios LIFO y FIFO. Aprende su importancia en el manejo y optimización de datos en programación.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/pilas-y-colas",
+    "ok": true,
+    "problems": [],
+    "title": "Stacks and Queues",
+    "metaDescription": "Discover the fundamentals of stacks and queues, their core operations, use cases, and how to implement them effectively in Python.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/recursividad",
+    "ok": true,
+    "problems": [],
+    "title": "Recursividad",
+    "metaDescription": "La recursividad es un principio esencial en programación que permite resolver problemas complejos dividiéndolos en subproblemas más simples. Aquí exploramos su definición, tipos y ejemplos en lenguajes como Python y C++.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/recursividad",
+    "ok": true,
+    "problems": [],
+    "title": "Recursion algorithms",
+    "metaDescription": "Explore recursion algorithms to improve problem-solving skills in programming. Learn key concepts, types, and practical applications with examples.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/hidratacion-web",
+    "ok": true,
+    "problems": [],
+    "title": "Hidratación Web",
+    "metaDescription": "La hidratación web transforma HTML estático en dinámico, mejorando la experiencia del usuario. Aprende su importancia para el desarrollo de aplicaciones interactivas.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/hidratacion-web",
+    "ok": true,
+    "problems": [],
+    "title": "Web Hydration SEO",
+    "metaDescription": "Web Hydration is essential for SEO, enhancing performance and crawlability while ensuring interactive user experiences. Learn to implement best practices effectively.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/react-19",
+    "ok": true,
+    "problems": [],
+    "title": "React 19",
+    "metaDescription": "React 19 transforma el desarrollo con mejoras en rendimiento y nuevas herramientas como el componente &lt;Activity /&gt;, optimizando la experiencia del usuario en aplicaciones dinámicas.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/react-19",
+    "ok": true,
+    "problems": [],
+    "title": "React 19 new features",
+    "metaDescription": "React 19 introduces exciting features like improved concurrency, automatic state batching, and new hooks to enhance development efficiency and responsiveness.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/canibalizacion-seo",
+    "ok": true,
+    "problems": [],
+    "title": "Canibalización SEO",
+    "metaDescription": "La canibalización SEO ocurre cuando varias páginas compiten por las mismas palabras clave. Aprende sus causas y cómo prevenir este problema para mejorar tu SEO.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/canibalizacion-seo",
+    "ok": true,
+    "problems": [],
+    "title": "SEO Cannibalization",
+    "metaDescription": "SEO cannibalization leads to keyword competition among pages, reducing visibility and frustrating users. Learn how to identify and resolve this issue effectively.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/guia-google-search-console",
+    "ok": true,
+    "problems": [],
+    "title": "Google Search Console",
+    "metaDescription": "Google Search Console es clave para optimizar tu sitio web. Aprende a utilizar sus herramientas para mejorar el rendimiento en los resultados de búsqueda de Google.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/guia-google-search-console",
+    "ok": true,
+    "problems": [],
+    "title": "Google Search Console Guide",
+    "metaDescription": "Discover how to optimize your website&#x27;s presence in Google search with our detailed guide on Google Search Console, covering key features and strategies.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/blog/javascript-seo",
+    "ok": true,
+    "problems": [],
+    "title": "Buenas prácticas de SEO para JavaScript",
+    "metaDescription": "Aprende las buenas prácticas de SEO para JavaScript: mejora la rastreabilidad, la velocidad de carga y asegurá que los buscadores indexen tu contenido dinámico.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/blog/javascript-seo",
+    "ok": true,
+    "problems": [],
+    "title": "JavaScript SEO Best Practices",
+    "metaDescription": "Learn key JavaScript SEO best practices to enhance your website&#x27;s crawlability, improve page speed, and ensure search engines index your content effectively.",
+    "jsonLdTypes": [
+      "Article"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/case-studies/migracion-ecommerce-nextjs-seo-tecnico",
+    "ok": true,
+    "problems": [],
+    "title": "Migración a Next.js sin perder tráfico orgánico",
+    "metaDescription": "Crecimiento de tráfico orgánico tras una migración técnica de e-commerce",
+    "jsonLdTypes": [
+      "CreativeWork",
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  },
+  {
+    "path": "/en/case-studies/migracion-ecommerce-nextjs-seo-tecnico",
+    "ok": true,
+    "problems": [],
+    "title": "Migrating to Next.js without losing organic traffic",
+    "metaDescription": "Organic traffic growth after a technical e-commerce migration",
+    "jsonLdTypes": [
+      "CreativeWork",
+      "BreadcrumbList"
+    ],
+    "jsonLdParseErrors": []
+  }
+]

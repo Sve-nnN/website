@@ -43,7 +43,68 @@ const ROUTES = [
   { path: '/en/seo-tecnico-madrid', expectedJsonLd: [] },
   { path: '/seo-tecnico-lima', expectedJsonLd: [] },
   { path: '/en/seo-tecnico-lima', expectedJsonLd: [] },
+  // Phase 31's 4 blog/case-studies INDEX routes — these are static listing
+  // pages, not doc-backed, so they never appear in /sitemap.xml (which only
+  // emits one <url> per Posts/CaseStudies document). Must be hardcoded here
+  // rather than relying on getDynamicBlogCaseStudyRoutes' sitemap parse.
+  { path: '/blog', expectedJsonLd: [] },
+  { path: '/en/blog', expectedJsonLd: [] },
+  { path: '/case-studies', expectedJsonLd: ['BreadcrumbList'] },
+  { path: '/en/case-studies', expectedJsonLd: ['BreadcrumbList'] },
 ]
+
+// Fetches the live /sitemap.xml and parses every <url> block's two
+// <xhtml:link hreflang="es|en"> alternates, filtering to blog/case-studies
+// routes (Phase 31's ~162 new routes: 72 posts + 7 case-studies, x2 locales,
+// plus the 4 index routes). expectedJsonLd assigned per the confirmed-live
+// table (see this script's header + 31-16-PLAN.md <interfaces>) — index
+// paths render no JsonLd, detail paths render exactly what each page.tsx
+// confirmed via source read during planning.
+function classifyBlogCaseStudyPath(path) {
+  const isBlogIndex = path === '/blog' || path === '/en/blog'
+  const isCaseStudiesIndex = path === '/case-studies' || path === '/en/case-studies'
+  const isBlogDetail = /^(\/en)?\/blog\/[^/]+$/.test(path) && !isBlogIndex
+  const isCaseStudiesDetail = /^(\/en)?\/case-studies\/[^/]+$/.test(path) && !isCaseStudiesIndex
+
+  if (isBlogIndex) return []
+  if (isCaseStudiesIndex) return ['BreadcrumbList']
+  if (isBlogDetail) return ['Article']
+  if (isCaseStudiesDetail) return ['CreativeWork', 'BreadcrumbList']
+  return null // not a blog/case-studies route
+}
+
+async function getDynamicBlogCaseStudyRoutes(baseUrl) {
+  const res = await fetch(`${baseUrl}/sitemap.xml`)
+  if (!res.ok) {
+    throw new Error(`GET ${baseUrl}/sitemap.xml returned ${res.status}`)
+  }
+  const xml = await res.text()
+
+  const urlBlocks = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1])
+  const routes = []
+  const seen = new Set()
+
+  for (const block of urlBlocks) {
+    const hreflangMatches = [
+      ...block.matchAll(/<xhtml:link\s+rel="alternate"\s+hreflang="(es|en)"\s+href="([^"]+)"/g),
+    ]
+    for (const [, , href] of hreflangMatches) {
+      let path
+      try {
+        path = new URL(href).pathname
+      } catch {
+        continue
+      }
+      const expectedJsonLd = classifyBlogCaseStudyPath(path)
+      if (expectedJsonLd === null) continue
+      if (seen.has(path)) continue
+      seen.add(path)
+      routes.push({ path, expectedJsonLd })
+    }
+  }
+
+  return routes
+}
 
 function parseArgs(argv) {
   const args = { baseUrl: 'http://localhost:3000', out: null, routes: null }
@@ -133,9 +194,18 @@ async function verifyUrl(baseUrl, route) {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2))
-  const targets = args.routes
-    ? args.routes.map((path) => ROUTES.find((r) => r.path === path) ?? { path, expectedJsonLd: [] })
-    : ROUTES
+
+  let targets
+  if (args.routes) {
+    targets = args.routes.map((path) => ROUTES.find((r) => r.path === path) ?? { path, expectedJsonLd: [] })
+  } else {
+    // Default full run: Phase 30's 22 hardcoded routes + Phase 31's ~162
+    // dynamically-discovered blog/case-studies routes (fetched live from
+    // /sitemap.xml, not hardcoded — see getDynamicBlogCaseStudyRoutes).
+    const dynamicRoutes = await getDynamicBlogCaseStudyRoutes(args.baseUrl)
+    console.log(`Discovered ${dynamicRoutes.length} blog/case-studies routes from ${args.baseUrl}/sitemap.xml`)
+    targets = [...ROUTES, ...dynamicRoutes]
+  }
 
   const results = []
   let hadFailure = false
