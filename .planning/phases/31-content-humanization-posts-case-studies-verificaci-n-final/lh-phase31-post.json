@@ -1,0 +1,92 @@
+{
+  "/": {
+    "performance": 85,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4238,
+    "cls": 0,
+    "tbtMs": 73
+  },
+  "/en": {
+    "performance": 85,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4244,
+    "cls": 0,
+    "tbtMs": 82
+  },
+  "/seo-tecnico-madrid": {
+    "performance": 88,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 3785,
+    "cls": 0,
+    "tbtMs": 66
+  },
+  "/en/seo-tecnico-madrid": {
+    "performance": 89,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 3794,
+    "cls": 0,
+    "tbtMs": 43
+  },
+  "/seo-tecnico-lima": {
+    "performance": 89,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 3786,
+    "cls": 0,
+    "tbtMs": 48
+  },
+  "/en/seo-tecnico-lima": {
+    "performance": 89,
+    "accessibility": 98,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 3782,
+    "cls": 0,
+    "tbtMs": 58
+  },
+  "/blog/tech-seo-guide": {
+    "performance": 84,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 3695,
+    "cls": 0.019,
+    "tbtMs": 29
+  },
+  "/en/blog/tech-seo-guide": {
+    "performance": 84,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 3690,
+    "cls": 0,
+    "tbtMs": 27
+  },
+  "/case-studies/migracion-ecommerce-nextjs-seo-tecnico": {
+    "performance": 79,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4371,
+    "cls": 0,
+    "tbtMs": 32
+  },
+  "/en/case-studies/migracion-ecommerce-nextjs-seo-tecnico": {
+    "performance": 79,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4366,
+    "cls": 0,
+    "tbtMs": 36
+  }
+}
