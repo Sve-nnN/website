@@ -803,7 +803,27 @@ Plans:
   4. Un barrido en vivo (curl, ambos locales) sobre todas las rutas tocadas por Track B más una validación de JSON-LD confirma cero structured data roto
   5. Un gate final de Lighthouse/CWV sobre las rutas representativas tocadas por ambos tracks (motion + contenido reescrito) no muestra regresión respecto al baseline pre-milestone
 
-**Plans**: TBD
+**Plans**: 17 plans (4 waves)
+
+Plans:
+
+- [ ] 31-01-PLAN.md — Baseline capture: .gitignore entry for posts-progress checkpoints, pre-sweep-phase31 content snapshot, fresh "before" Lighthouse for blog/case-studies routes
+- [ ] 31-02-PLAN.md — Humanize Posts batch 1 (ids 2,3,4,5,6,7,8,9)
+- [ ] 31-03-PLAN.md — Humanize Posts batch 2 (ids 10,11,12,13,14)
+- [ ] 31-04-PLAN.md — Humanize Posts batch 3 (ids 15,16,17,18,19,20)
+- [ ] 31-05-PLAN.md — Humanize Posts batch 4 (ids 21,22,23,24,25,26,27)
+- [ ] 31-06-PLAN.md — Humanize Posts batch 5 (ids 28,29,30,31,32)
+- [ ] 31-07-PLAN.md — Humanize Posts batch 6 (ids 33,34,35,36,37,38)
+- [ ] 31-08-PLAN.md — Humanize Posts batch 7 (ids 39,40,41,42,43,44)
+- [ ] 31-09-PLAN.md — Humanize Posts batch 8 (ids 45,46,47,48,49)
+- [ ] 31-10-PLAN.md — Humanize Posts batch 9 (ids 50,51,52,53,54, incl. tech-seo-guide)
+- [ ] 31-11-PLAN.md — Humanize Posts batch 10 (ids 55,56,57,58,59,60)
+- [ ] 31-12-PLAN.md — Humanize Posts batch 11 (ids 61,62,63,64,65)
+- [ ] 31-13-PLAN.md — Humanize Posts batch 12 (ids 66,67,68)
+- [ ] 31-14-PLAN.md — Humanize Posts batch 13 (ids 69,70,71,72,73) — last of 72 posts
+- [ ] 31-15-PLAN.md — Humanize CaseStudies clientContext/conclusion (7 docs, not challenge/solution)
+- [ ] 31-16-PLAN.md — Post-sweep snapshot + historical VOICE-04 diff + reindex-search + extended locale-parity/JSON-LD verification over all Track B routes
+- [ ] 31-17-PLAN.md — Final Lighthouse/CWV gate (both tracks) + Phase 31/milestone v1.6 close-out
 
 ### Phase 32: Regression Baseline
 
