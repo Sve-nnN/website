@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 31
 current_phase_name: 1/17 plans
 status: executing
-stopped_at: Completed 31-05-PLAN.md
-last_updated: "2026-07-17T05:16:28.257Z"
+stopped_at: Completed 31-16-PLAN.md
+last_updated: "2026-07-17T06:29:00.444Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 31 Wave 1 (31-01) complete
 progress:
   total_phases: 27
   completed_phases: 25
   total_plans: 112
-  completed_plans: 105
+  completed_plans: 106
 ---
 
 # Project State
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 31 — EXECUTING (Wave 1 of 4 complete)
-Plan: 15 of 17
+Plan: 16 of 17
 Status: 31-01 complete — foundation plan done, Wave 2 unblocked
 Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 
@@ -117,6 +117,7 @@ Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 | Phase 31 P12 | 90min | 1 tasks | 1 files |
 | Phase 31 P02 | 45min | 1 tasks | 2 files |
 | Phase 31 P05 | 50min | 1 tasks | 2 files |
+| Phase 31 P16 | 75min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -237,6 +238,7 @@ Recent decisions affecting current work:
 - [Phase ?]: 31-02: recovered crashed checkpoint, fixed 69 silently-unrewritten AI-cliché paragraphs, hardened self-check with cliché gate
 - [Phase ?]: 31-05: Resumed a prior crashed agent's salvageable work (script + content JSON on disk, DB untouched) instead of restarting from scratch
 - [Phase ?]: 31-05: Fixed VOCEO_RE false positive (mir[aá] matched non-voceo 'mira') and ~35 leading-placeholder segment mismatches in authored content before writing to production
+- [Phase ?]: [Phase 31]: 31-16: Fixed a real bug in isLocalizedPair() detection logic (Payload omits missing locale keys rather than nulling them) affecting both the new diff tool and verify-locale-parity.ts; found and fixed 6 excerpt-only gaps, Footer.dynamicColumns es-locale gap, 1 link-fusion bug, 59 residual AI-cliche fields, and 14 title-level locale mixups via a systematic sweep across all 72 posts + 7 case-studies (Juan's explicit request); deferred 8 posts' full-English-translation gap (Rule 4, same boundary as 31-02/31-11) and 12 pre-existing unpublished drafts (6 posts + 6 case-studies) as editorial decisions outside this plan's scope
 
 ### Pending Todos
 
@@ -258,6 +260,8 @@ None yet.
 - meta.description is empty on 20/22 Pages docs (all except Home) — pre-existing, confirmed unrelated to Phase 30's content rewrite, but flagged for a future scoped SEO content task
 - Posts 56 (tablas-hash), 57 (que-es-css), 58 (mejores-cursos-seo-espanol) have no EN locale content at all in production (confirmed pre-existing via 29-content-humanization-safety-net pre-sweep snapshot). Needs a dedicated translation-authoring plan, not a voice-rewrite.
 - Post 47 (xml-sitemap-automation) en locale is missing its article body — only a See Also links section exists. Pre-existing, out of scope for 31-09's voice rewrite; needs a dedicated content-authoring plan.
+- 8 posts (ids 9,35,36,37,38,56,57,58) have zero English content (title/excerpt/content all missing en, pre-existing since before Phase 30) — needs a dedicated translation-authoring plan if bilingual parity is required, out of Phase 31's voice-rewrite scope
+- 6 Posts + 6 CaseStudies are unpublished drafts (pre-existing since before Phase 30, listed by id/slug in 31-HISTORICAL-DIFF.md) — content already humanized, ready to publish whenever Juan decides
 
 ### Quick Tasks Completed
 
@@ -281,8 +285,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-17T05:16:28.247Z
-Stopped at: Completed 31-05-PLAN.md
+Last session: 2026-07-17T06:28:52.147Z
+Stopped at: Completed 31-16-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
