@@ -3,17 +3,17 @@ gsd_state_version: 1.0
 milestone: v1.6
 milestone_name: milestone
 current_phase: 31
-current_phase_name: 1/17 plans
-status: executing
-stopped_at: Completed 31-16-PLAN.md
-last_updated: "2026-07-17T06:29:00.444Z"
-last_activity: 2026-07-16
-last_activity_desc: Phase 31 Wave 1 (31-01) complete
+current_phase_name: 17/17 plans (complete)
+status: milestone_complete
+stopped_at: Completed 31-17-PLAN.md — Phase 31 and milestone v1.6 CERRADO
+last_updated: "2026-07-17T06:42:13.504Z"
+last_activity: 2026-07-17
+last_activity_desc: Phase 31 (17/17 plans) and milestone v1.6 (Phases 26-31, Track A + Track B) CERRADO
 progress:
   total_phases: 27
-  completed_phases: 25
+  completed_phases: 26
   total_plans: 112
-  completed_plans: 106
+  completed_plans: 107
 ---
 
 # Project State
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 31 — EXECUTING (Wave 1 of 4 complete)
-Plan: 16 of 17
+Plan: 17 of 17
 Status: 31-01 complete — foundation plan done, Wave 2 unblocked
 Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 
@@ -118,6 +118,7 @@ Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 | Phase 31 P02 | 45min | 1 tasks | 2 files |
 | Phase 31 P05 | 50min | 1 tasks | 2 files |
 | Phase 31 P16 | 75min | 3 tasks | 4 files |
+| Phase 31 P17 | 50min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -239,6 +240,8 @@ Recent decisions affecting current work:
 - [Phase ?]: 31-05: Resumed a prior crashed agent's salvageable work (script + content JSON on disk, DB untouched) instead of restarting from scratch
 - [Phase ?]: 31-05: Fixed VOCEO_RE false positive (mir[aá] matched non-voceo 'mira') and ~35 leading-placeholder segment mismatches in authored content before writing to production
 - [Phase ?]: [Phase 31]: 31-16: Fixed a real bug in isLocalizedPair() detection logic (Payload omits missing locale keys rather than nulling them) affecting both the new diff tool and verify-locale-parity.ts; found and fixed 6 excerpt-only gaps, Footer.dynamicColumns es-locale gap, 1 link-fusion bug, 59 residual AI-cliche fields, and 14 title-level locale mixups via a systematic sweep across all 72 posts + 7 case-studies (Juan's explicit request); deferred 8 posts' full-English-translation gap (Rule 4, same boundary as 31-02/31-11) and 12 pre-existing unpublished drafts (6 posts + 6 case-studies) as editorial decisions outside this plan's scope
+- [Phase ?]: Milestone v1.6 CERRADO 2026-07-17 (Phases 26-31, Track A + Track B, 20/20 requirements) tras gate final de Lighthouse/CWV PASS en 10 rutas representativas y verificación de las 5 success criteria de Phase 31 (31-VERIFICATION.md)
+- [Phase ?]: 3 gaps preexistentes documentados como follow-up no bloqueante al cierre de v1.6: 8 posts sin contenido en inglés (autoría de traducción pendiente), 6 posts + 6 case studies en borrador (decisión editorial de Juan), 50 rutas con meta.description vacío (gap SEO ya señalado por Phase 30)
 
 ### Pending Todos
 
@@ -285,13 +288,14 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-17T06:28:52.147Z
-Stopped at: Completed 31-16-PLAN.md
+Last session: 2026-07-17T06:42:13.494Z
+Stopped at: Completed 31-17-PLAN.md — Phase 31 and milestone v1.6 CERRADO
 Resume file: None
 
 ## Operator Next Steps
 
-- Phase 38 (Websites — Schema & Collection Design) plan 01 complete — 5/5 requirements (WEB-01..05) done. Confirm no further Phase 38 plans are needed, then run `/gsd:plan-phase 39` for Frontend Components & Routes.
-- Phase 37 (Case Studies Content Audit & Fix, v1.8) stays queued — CONTEXT.md/UI-SPEC.md already approved — resume with `/gsd:plan-phase 37` once v1.9 closes.
-- v1.6 Track B (Content Humanization, Phases 29-31) and Phase 6 (Deploy + Cutover) remain paused, untouched by v1.9, awaiting Juan's separate go-ahead.
+- **Milestone v1.6 CERRADO 2026-07-17** — Phases 26-31 complete (Track A motion/UI + Track B content humanization), 20/20 requirements verified, final Lighthouse/CWV gate PASS on all 10 representative routes. See `31-VERIFICATION.md`.
+- Milestones v1.2, v1.3, v1.4, v1.5, v1.6, v1.7, v1.8 (Phase 37), and v1.9 (Phases 38-40) are all CERRADO. Only Phase 6 (Deploy + Cutover) remains open, paused, awaiting Juan's go-ahead — no active milestone is currently in progress.
+- 3 non-blocking follow-up items flagged at v1.6 close for Juan's future decision (none block deploy or any other milestone): (1) 8 posts with zero English content — needs a dedicated translation-authoring plan; (2) 6 Posts + 6 Case Studies remain unpublished drafts — publishing is Juan's editorial call, content already humanized and ready; (3) 50 of 160 routes have empty `meta.description` — pre-existing SEO gap, already partially addressed for Pages, not yet for Posts/CaseStudies.
+- When ready to resume Phase 6 (Deploy + Cutover to Hostinger): `RESEND_API_KEY` in `.env` is still a placeholder (see Blockers/Concerns) and must be replaced with a real key before contact-form email delivery can be verified in production.
 - Optional cleanup (still deferred): archive `.planning/phases/32-*` through `36-*` into `.planning/milestones/v1.7-phases/` via `/gsd:cleanup` if/when Juan wants phase directories tidied up, matching the v1.4/v1.5 precedent.
