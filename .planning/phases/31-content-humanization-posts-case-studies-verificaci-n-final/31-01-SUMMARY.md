@@ -1,0 +1,132 @@
+---
+phase: 31-content-humanization-posts-case-studies-verificaci-n-final
+plan: 01
+subsystem: testing
+tags: [lighthouse, content-snapshot, gitignore, regression-baseline, payload-local-api]
+
+# Dependency graph
+requires:
+  - phase: 29-content-humanization-safety-net
+    provides: content-humanization-snapshot.ts script and pre-sweep-phase30 snapshot precedent
+  - phase: 32-regression-baseline
+    provides: lighthouse-mobile.mjs runner + build/start/teardown pattern for port-bound throwaway servers
+provides:
+  - .gitignore entry for posts-progress-batch-*.json (shared by all 13 Wave 2 posts-rewrite plans)
+  - pre-sweep-phase31 full-text content snapshot (all 9 collections + 3 globals, both locales) captured before any Wave 2 write
+  - lh-phase31-pre.json: fresh "before" Lighthouse mobile baseline for the 2 route types (blog, case-studies) never covered by Phase 32's baseline
+affects: [31-16-verification, 31-17-final-gate]
+
+# Tech tracking
+tech-stack:
+  added: []
+  patterns: ["throwaway production server on port 3046 for Lighthouse capture (build -> start -> capture -> kill -> confirm via lsof), reused from Phase 32"]
+
+key-files:
+  created:
+    - .planning/phases/29-content-humanization-safety-net/content-snapshots/pre-sweep-phase31-2026-07-17T03:57:58.546Z.json (gitignored, generated)
+    - .planning/phases/31-content-humanization-posts-case-studies-verificaci-n-final/lh-phase31-pre.json
+  modified:
+    - .gitignore
+
+key-decisions:
+  - "Used port 3046 (not 3000 or 3040) to avoid colliding with dev server convention or Phase 32's port 3040"
+  - "Reused the exact same slugs Phase 32/lighthouse-mobile.mjs already hardcode (tech-seo-guide, migracion-ecommerce-nextjs-seo-tecnico) rather than picking new ones, per plan instruction"
+
+patterns-established:
+  - "One shared .gitignore wildcard entry for a whole wave's per-plan checkpoint files, added upfront by the wave-1 foundation plan, so parallel Wave 2 plans never touch .gitignore themselves"
+
+requirements-completed: [VOICE-07]
+
+coverage:
+  - id: D1
+    description: "Pre-sweep full-text content snapshot (tag pre-sweep-phase31) captured before any Posts/CaseStudies content write"
+    requirement: VOICE-07
+    verification:
+      - kind: other
+        ref: "node --env-file=.env node_modules/.bin/tsx scripts/content-humanization-snapshot.ts --tag pre-sweep-phase31 (verified posts count=72, case-studies count=7)"
+        status: pass
+    human_judgment: false
+  - id: D2
+    description: "Fresh 'before' Lighthouse mobile baseline for 4 blog/case-studies routes (both locales), no errors"
+    requirement: VOICE-07
+    verification:
+      - kind: other
+        ref: "node -e verification script confirming 4 route entries, no error key, in lh-phase31-pre.json"
+        status: pass
+    human_judgment: false
+  - id: D3
+    description: ".gitignore updated with single posts-progress-batch wildcard entry for Wave 2 checkpoint files"
+    verification:
+      - kind: other
+        ref: "grep -c posts-progress-batch .gitignore == 1"
+        status: pass
+    human_judgment: false
+
+duration: 5min
+completed: 2026-07-17
+status: complete
+---
+
+# Phase 31 Plan 01: Pre-Sweep Content Snapshot + Fresh Lighthouse Baseline Summary
+
+**Captured pre-sweep-phase31 full-text content snapshot (72 posts, 7 case-studies, all 9 collections/3 globals) and a fresh before-Lighthouse mobile baseline for the 4 blog/case-studies routes Phase 32 never covered, plus the shared .gitignore entry for Wave 2's posts-rewrite checkpoint files.**
+
+## Performance
+
+- **Duration:** 5 min
+- **Started:** 2026-07-17T03:57:37Z
+- **Completed:** 2026-07-17T04:02:37Z
+- **Tasks:** 2
+- **Files modified:** 2 (1 gitignored artifact not counted)
+
+## Accomplishments
+- `.gitignore` now has one wildcard entry covering all 13 Wave 2 posts-rewrite checkpoint files, so none of those parallel plans need to touch `.gitignore` themselves
+- Full-text pre-sweep snapshot (tag `pre-sweep-phase31`) captured against production Neon Postgres via `payload.find`/`payload.findGlobal`, read-only, before any Wave 2 content write — 72 posts, 7 case-studies, matches plan's expected counts exactly
+- Fresh "before" Lighthouse mobile scores captured for the only 2 route types (blog, case-studies) with zero prior baseline anywhere in the repo — all 4 routes (2 slugs x 2 locales) scored cleanly with no errors
+
+## Task Commits
+
+Each task was committed atomically:
+
+1. **Task 1: .gitignore entry for posts-rewrite checkpoints + pre-sweep content snapshot** - `ed26aa8` (chore)
+2. **Task 2: Fresh "before" Lighthouse mobile capture for blog/case-studies routes** - `39db015` (feat)
+
+**Plan metadata:** (this commit, docs: complete plan)
+
+## Files Created/Modified
+- `.gitignore` - added `posts-progress-batch-*.json` wildcard entry (Phase 31 posts-rewrite checkpoints)
+- `.planning/phases/29-content-humanization-safety-net/content-snapshots/pre-sweep-phase31-2026-07-17T03:57:58.546Z.json` - full-text pre-sweep snapshot, gitignored, generated by existing script (unmodified)
+- `.planning/phases/31-content-humanization-posts-case-studies-verificaci-n-final/lh-phase31-pre.json` - Lighthouse mobile scores for 4 blog/case-studies routes (committed, not gitignored)
+
+## Decisions Made
+- Ran the production server on port 3046, distinct from the dev-server convention (3000) and Phase 32's own baseline port (3040), avoiding any port collision with concurrent work
+- Reused the exact same real content slugs the plan specified (`tech-seo-guide`, `migracion-ecommerce-nextjs-seo-tecnico`) instead of picking new ones — these are the script's own hardcoded default routes, confirmed live via curl (200) before the Lighthouse run
+
+## Deviations from Plan
+
+None - plan executed exactly as written. Both scripts (`content-humanization-snapshot.ts`, `lighthouse-mobile.mjs`) were run unmodified per the plan's explicit instruction not to touch their internals.
+
+## Issues Encountered
+
+`next start` printed a warning that `output: standalone` doesn't officially support `next start` (recommending `node .next/standalone/server.js` instead). Verified via curl that all 4 target routes returned 200 regardless, and Lighthouse completed cleanly against all 4 with real scores (no errors) — so the warning did not affect this capture's validity. This exactly matches the pattern Phase 32's baseline already used (`npx next start` directly), so no deviation from established precedent was needed.
+
+## User Setup Required
+
+None - no external service configuration required.
+
+## Next Phase Readiness
+- Both "before" reference artifacts Phase 31's closing verification (31-16) and final gate (31-17) depend on now exist: `pre-sweep-phase31-<timestamp>.json` (content diff baseline) and `lh-phase31-pre.json` (performance regression baseline for blog/case-studies)
+- Wave 2's 13 posts-rewrite batch plans can now proceed in parallel without any of them needing to edit `.gitignore`
+- No blockers
+
+---
+*Phase: 31-content-humanization-posts-case-studies-verificaci-n-final*
+*Completed: 2026-07-17*
+
+## Self-Check: PASSED
+
+- FOUND: .gitignore
+- FOUND: lh-phase31-pre.json
+- FOUND: content-snapshots/pre-sweep-phase31-2026-07-17T03:57:58.546Z.json
+- FOUND: commit ed26aa8
+- FOUND: commit 39db015

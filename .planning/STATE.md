@@ -2,17 +2,18 @@
 gsd_state_version: 1.0
 milestone: v1.6
 milestone_name: milestone
-current_phase: 30
-current_phase_name: 4/4 plans
-status: in_progress
-stopped_at: Completed 30-04-PLAN.md
-last_updated: "2026-07-17T03:20:00.000Z"
+current_phase: 31
+current_phase_name: 1/17 plans
+status: executing
+stopped_at: Completed 31-01-PLAN.md
+last_updated: "2026-07-17T04:04:41.742Z"
 last_activity: 2026-07-16
+last_activity_desc: Phase 31 Wave 1 (31-01) complete
 progress:
-  total_phases: 40
+  total_phases: 27
   completed_phases: 25
-  total_plans: 99
-  completed_plans: 94
+  total_plans: 112
+  completed_plans: 91
 ---
 
 # Project State
@@ -22,14 +23,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** v1.9 and v1.8 closed (Phases 38-40 and 37). v1.6 Track B (Content Humanization) resumed at Juan's explicit go-ahead (`--from 29`). Phase 29 (Safety Net) and Phase 30 (first content-rewrite tranche: globals, lean collections, core pages, services + geo) both COMPLETE — copy rewritten in Juan's real voice (calibrated against research/voice-sample-juan.md) in both locales, locale-parity verified (299 fields, zero asymmetries), JSON-LD/meta integrity verified live. Known pre-existing gap flagged (not caused by this phase, not fixed): meta.description empty on 20/22 touched pages, already empty in the pre-sweep snapshot — needs its own scoped decision from Juan. Ready for Phase 31 (Posts/Case Studies, formal VOICE-06/07 close + final milestone verification). Phase 6 (Deploy + Cutover) remains paused separately.
+**Current focus:** Phase 31 (Wave 1 done — pre-sweep snapshot + blog/case-studies Lighthouse baseline captured; Wave 2's 13 posts-rewrite plans ready to start)
 
 ## Current Position
 
-Phase: 30 — COMPLETE (4/4 plans)
-Plan: 04 of 4
-Status: Phase complete — Phase 31 (final content tranche) unblocked
-Last activity: 2026-07-16
+Phase: 31 — EXECUTING (Wave 1 of 4 complete)
+Plan: 01 of 17
+Status: 31-01 complete — foundation plan done, Wave 2 unblocked
+Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 
 ## Performance Metrics
 
@@ -101,6 +102,7 @@ Last activity: 2026-07-16
 | Plan | Duration | Tasks | Files |
 |------|----------|-------|-------|
 | Phase 30 P04 | 15min | 2 tasks | 2 files |
+| Phase 31 P01 | 5min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -204,6 +206,7 @@ Recent decisions affecting current work:
 - [Phase ?]: Fixed voceo-to-tuteo across Services/Geo ES copy (CLAUDE.md hard rule 'no voceo nunca' was being violated)
 - [Phase ?]: Locale-parity check implemented via generic {es,en}-shape detection over locale:'all' reads rather than a hardcoded per-block field allowlist — provably equivalent to and more complete than 29-FIELD-AUDIT.md's manual table
 - [Phase ?]: meta.description empty on 20/22 Phase 30 routes is a pre-existing, out-of-scope gap (confirmed unchanged before/after this phase) — surfaced to Juan, not auto-fixed
+- [Phase ?]: [Phase 31]: 31-01 (Wave 1 foundation): captured pre-sweep-phase31 full-text content snapshot (72 posts, 7 case-studies, all 9 collections + 3 globals) via unmodified content-humanization-snapshot.ts, before any Wave 2 Posts/CaseStudies write; captured lh-phase31-pre.json, the only fresh 'before' Lighthouse mobile baseline for blog/case-studies routes (Phase 32's baseline never covered these 2 route types) using a throwaway production server on port 3046, torn down cleanly after capture; added one shared .gitignore wildcard entry (posts-progress-batch-*.json) so all 13 Wave 2 posts-rewrite plans avoid a same-wave .gitignore conflict.
 
 ### Pending Todos
 
@@ -246,8 +249,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-17T03:13:48.397Z
-Stopped at: Completed 30-04-PLAN.md
+Last session: 2026-07-17T04:04:41.733Z
+Stopped at: Completed 31-01-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
