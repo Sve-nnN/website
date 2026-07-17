@@ -37,7 +37,15 @@ import { getPayload } from 'payload'
 
 import config from '../src/payload.config'
 
-const COLLECTIONS = ['pages', 'authors', 'testimonials', 'speaking-events', 'categories'] as const
+const COLLECTIONS = [
+  'pages',
+  'authors',
+  'testimonials',
+  'speaking-events',
+  'categories',
+  'posts',
+  'case-studies',
+] as const
 const GLOBALS = ['header', 'footer'] as const
 
 type LocalizedPair = { es: unknown; en: unknown }
@@ -52,10 +60,24 @@ const issues: Issue[] = []
 let passCount = 0
 let bothEmptyCount = 0
 
+// A localized field's raw shape from `locale: 'all'` is NOT always a clean
+// { es, en } pair — when a doc was authored/migrated with ONE locale never
+// populated at all, Payload omits that locale's key entirely (not `null`),
+// e.g. `{ es: "..." }` with no `en` key whatsoever. The original check here
+// required exactly 2 keys, which silently treated single-key nodes as "not
+// a localized field" and skipped them in walk() — meaning a doc entirely
+// missing one locale (e.g. Posts ids 9, 35-38, 56-58, confirmed during
+// Plan 31-16's diff pass) would NEVER be flagged as an asymmetric parity
+// failure, exactly the class of bug this script exists to catch. Fixed
+// (Plan 31-16, Rule 1) to accept any object whose keys are a non-empty
+// subset of { es, en } (1 or 2 keys) — a missing key is then correctly
+// treated as empty by isEmpty()/extractText(undefined) below, which
+// surfaces the real asymmetry.
 function isLocalizedPair(node: unknown): node is LocalizedPair {
   if (node === null || typeof node !== 'object' || Array.isArray(node)) return false
   const keys = Object.keys(node as Record<string, unknown>)
-  return keys.length === 2 && keys.includes('es') && keys.includes('en')
+  if (keys.length === 0 || keys.length > 2) return false
+  return keys.every((k) => k === 'es' || k === 'en')
 }
 
 // Collects all Lexical `text` leaf values (handles richText trees), or the
