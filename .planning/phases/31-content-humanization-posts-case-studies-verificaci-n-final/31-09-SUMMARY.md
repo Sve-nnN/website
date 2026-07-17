@@ -21,7 +21,8 @@ tech-stack:
 key-files:
   created:
     - scripts/humanize-posts-batch-08.ts
-  modified: []
+  modified:
+    - scripts/humanize-posts-batch-08.ts (post-completion QA patch, see Deviation 5)
 
 key-decisions:
   - "Left SEO-load-bearing H2 headings and short list-item/spec labels unchanged (not rewritten) to protect existing keyword targeting — voice rewrite focused on paragraph/listitem prose, per the site's core value that SEO must not regress"
@@ -137,10 +138,18 @@ status: complete
 - **Verification:** Live read-back after write confirms `content.es` for post 49 is genuine Spanish prose; self-check (em dash / voceo) passed on the new Spanish text.
 - **Committed in:** `174c2d5` (Task 1 commit)
 
+**5. [Rule 1 - Bug] Fixed 22 residual AI-cliche runs left as "preserve as-is" (`null`) during authoring**
+- **Found during:** A post-completion QA re-verification pass (this plan's execution history includes a mid-run interruption; the resuming session ran a full live scan for the task's explicitly named forbidden phrases before treating the plan as done, rather than trusting the checkpoint file alone)
+- **Issue:** The script's own automated self-check only tests for em dash and voceo markers — it never tested for the task's other named forbidden AI-cliche phrases ("es esencial", "es fundamental", "cabe destacar", "crucial", "leverage", "seamless", "robust", "han emergido como"). A live regex scan of all 5 posts' actual production content found 22 prose runs, across ids 45, 46, 47, and 48 (both locales), that had been left as `null` ("leave byte-identical") in the `REWRITES` table during original authoring but were not link-adjacent or keyword-heading cases the `null` convention exists for — they were simply unrewritten AI-sounding source prose that slipped through (e.g. id 46 es's opening paragraph: "...CMS headless han emergido como una solución eficaz. Este artículo explora...").
+- **Fix:** Authored voice-calibrated replacements for all 22 runs (same rules as the rest of the batch: tuteo only, zero em dash, facts/numbers/tool names preserved, mixed sentence rhythm), applied them via `payload.update` against the live locale content, then synced the same 22 values back into `scripts/humanize-posts-batch-08.ts`'s `REWRITES` table (replacing the stale `null` entries) so the checked-in script is the true source of record for what is now live — re-running the script against a fresh copy of these posts reproduces the corrected text, not the original cliche-laden prose.
+- **Files modified:** `scripts/humanize-posts-batch-08.ts` (22 `REWRITES` entries + a new header comment documenting the patch), production Neon `posts.content` for ids 45 (1 run), 46 (11 runs), 47 (3 runs), 48 (4 runs)
+- **Verification:** Live regex re-scan of all 5 posts' extracted plain text for all 8 named phrases returns zero matches (both locales); re-run of `humanize-posts-batch-08.ts` still reports `5/5 already done ... Zero em-dash/voceo findings ... Done.` (exit 0); block/table node structure untouched by construction (the patch script shares the same "never enter block/table nodes" tree-walk guard as the original rewrite).
+- **Committed in:** this commit (script-only follow-up; no separate task commit since this is a data-correction pass over an already-committed script, not a new task)
+
 ---
 
-**Total deviations:** 4 auto-fixed (1 blocking, 1 bug, 1 bug/pre-write-verification, 1 missing-critical)
-**Impact on plan:** All four were necessary for the script to run correctly or for the deliverable to actually meet the plan's intent (a working, correctly-targeted humanization of these 5 posts' real content). No scope creep — no content was added beyond translating/rephrasing what already existed.
+**Total deviations:** 5 auto-fixed (1 blocking, 2 bug, 1 missing-critical, 1 bug found in post-completion QA)
+**Impact on plan:** All five were necessary for the script to run correctly or for the deliverable to actually meet the plan's intent and its own hard rules (a working, correctly-targeted, genuinely cliche-free humanization of these 5 posts' real content, both locales). No scope creep — no content was added beyond translating/rephrasing what already existed, and only the 8 explicitly named forbidden phrases were the trigger for deviation 5 (broader AI-sounding phrasing outside that named list, e.g. "In this article, we will explore...", was left as-is per the plan's scope boundary).
 
 ## Known Stubs / Deferred Items
 

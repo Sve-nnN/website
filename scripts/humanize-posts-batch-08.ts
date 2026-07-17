@@ -45,6 +45,18 @@
  *     "Organization Schema") are conventionally kept in English in both
  *     locales and are left untouched (`null`).
  *
+ * POST-AUTHORING CLICHE PATCH: a resumed-execution QA pass found 22 runs
+ * (across ids 45, 46, 47, 48) that were left as `null` "preserve as-is"
+ * during the original authoring but still carried the named forbidden
+ * AI-cliche phrases (es fundamental, es esencial, crucial, han emergido
+ * como, leverage, seamless, robust). These were not adjacent-to-link or
+ * keyword-heading cases the null convention is meant for, they were
+ * simply unrewritten AI-sounding prose. Each was rewritten in place and
+ * synced into this REWRITES table so the checked-in script matches what
+ * is actually live in production. Re-running this script against a fresh
+ * copy of these posts (progress file deleted) reproduces the corrected
+ * text, not the original cliche-laden prose.
+ *
  * Run with: node --env-file=.env node_modules/.bin/tsx scripts/humanize-posts-batch-08.ts
  */
 import fs from "fs"
@@ -92,7 +104,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       "La gran ventaja de Next.js está en la modularidad: armas componentes reutilizables que ordenan el código y aceleran el desarrollo. El sistema de rutas automáticas y las API routes hacen que escalar o personalizar un portafolio sea simple, sin tener que montar un backend aparte. Y como soporta CSS y Sass de forma nativa, el diseño responsivo no requiere herramientas extra.",
       null,
       null,
-      null,
+      " (SSR) y generación de sitios estáticos (SSG). Esto significa que el contenido se arma en el servidor en lugar de depender del navegador, así que los tiempos de carga bajan. En un portafolio esto se traduce en imágenes y proyectos que cargan rápido, sin fricción para quien te está mirando. Y con sitios estáticos, el contenido queda disponible casi al instante, algo que pesa mucho a la hora de retener a alguien que entra a ver tu portafolio.",
       null,
       "Rendimiento y SEO van de la mano cuando construyes un portafolio, y Next.js resuelve los dos frentes. El renderizado del lado del servidor baja los tiempos de carga, lo que mejora la experiencia del usuario y también el posicionamiento. La optimización automática de imágenes y un buen manejo de enlaces internos terminan de cerrar el círculo: un portafolio bien armado con Next.js no solo se ve bien, también aparece cuando alguien busca tu trabajo. Las plantillas de Next.js para portfolios ayudan a arrancar más rápido, con ejemplos concretos de cómo aprovechar el framework.",
       null,
@@ -150,7 +162,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       "Put together, these features let you spend more time on design and less time fighting the framework, which is exactly why Next.js fits so well for a nextjs personal portfolio.",
       null,
       "Building your portfolio in Next.js pays off in a few concrete ways, mostly around visibility and performance. Here's what actually matters:",
-      null,
+      "Optimized Performance: prerendering and code-splitting keep load times fast, which matters for keeping visitors around and cutting bounce rates.",
       null,
       null,
       null,
@@ -162,7 +174,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       "A good number of developers have their Next.js personal portfolio projects up on GitHub, which is worth browsing before you start your own. A few worth checking:",
       null,
       null,
-      null,
+      "osamajavaid / portfolio: built with Next.js and Tailwind CSS, this portfolio uses modern design elements for a smoother user experience.",
       null,
       null,
       null,
@@ -190,7 +202,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       "Once the portfolio is built, deployment is the next step. Vercel and Netlify are both built around hosting Next.js apps, with automatic scaling and git-based continuous deployment out of the box. A few things worth doing for performance:",
       null,
       null,
-      null,
+      "Use API routes to handle backend functionality directly inside your Next.js app, so you don't need extra server infrastructure.",
       null,
       "Get these deployment details right and the Next.js personal portfolio doesn't just work, it feels fast to whoever's looking at it, which is usually the whole point.",
       null,
@@ -202,7 +214,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
   "46": {
     "es": [
       null,
-      null,
+      "Maximizar la visibilidad en línea es el objetivo, y los sistemas de gestión de contenido (CMS) headless se volvieron una solución sólida para lograrlo. Aquí reviso cómo optimizar tu contenido para buscadores con estrategias específicas para headless CMS, sobre todo en el contexto de headless CMS WordPress ",
       null,
       null,
       null,
@@ -218,19 +230,19 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       null,
       null,
       null,
+      "El renderizado es una pieza central en la arquitectura de un CMS headless. Con Next.js tienes tres métodos disponibles: Server-Side Rendering (",
+      null,
+      ". SSG, en cambio, genera las páginas estáticas en el momento de construir el sitio, lo que da tiempos de carga óptimos y mejor rendimiento. CSR genera el contenido en el cliente, y puede rendir peor en SEO si no manejas bien las prerenderizaciones. Elegir el método correcto según el tipo de contenido y las necesidades del negocio es lo que termina definiendo qué tan bien funciona tu SEO.",
+      null,
+      null,
+      " pesa mucho en un CMS headless, sobre todo cuando manejas muchas páginas. Cada vez que un buscador rastrea tu sitio usa recursos limitados, y eso puede afectar la indexación de páginas importantes. Una arquitectura clara y concisa le facilita a Googlebot priorizar las páginas críticas, lo que mejora tu visibilidad. Para esto conviene usar herramientas como el archivo ",
       null,
       null,
       null,
       null,
       null,
       null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
+      " son las métricas que muestran qué tan buena es la experiencia de quien visita tu sitio. En un headless CMS, optimizarlas pesa directamente en el posicionamiento. Tiempos de carga, interactividad y estabilidad visual impactan la satisfacción del usuario y, con eso, las tasas de conversión. Elegir frameworks eficientes y optimizar el contenido para que cargue rápido mejora tanto la experiencia general como el posicionamiento SEO. Ajustar imágenes, reducir scripts y optimizar recursos son pasos necesarios para cumplir con los estándares de Core Web Vitals y fortalecer la presencia online de un negocio.",
       null,
       null,
       "WordPress como backend y Next.js como front-end es una combinación que funciona bien en la práctica. WordPress en modo headless sigue aportando lo que siempre hizo bien, gestión de contenido, mientras Next.js se encarga de la experiencia de usuario y el SEO. WordPress queda conectado vía API REST o GraphQL, así que puedes crear y modificar contenido sin tocar la capa de presentación.",
@@ -239,7 +251,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       null,
       null,
       null,
-      null,
+      "El flujo de datos en esta arquitectura pasa por consultas API: Next.js trae el contenido de WordPress y lo presenta en el front-end. Esa sincronización mantiene la coherencia del contenido, sobre todo en entornos donde manejas varias versiones de una página o componentes reutilizables. Con el API bien estructurado, puedes implementar estrategias de caching para optimizar la ",
       null,
       null,
       "Trabajando con headless CMS WordPress y Next.js, la estructura de URLs y los metadatos no son un detalle menor. Las URLs deben ser limpias y descriptivas, con las palabras clave relevantes, sin volverse eternas. Los títulos y descripciones se pueden generar dinámicamente desde la API de WordPress, así cada página termina con sus propios metadatos, únicos, y eso ayuda a indexar y posicionar mejor.",
@@ -262,8 +274,8 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       "La automatización de contenido es otro terreno donde un headless CMS da ventaja. Meter herramientas de IA en la creación de contenido acelera la publicación, y bien usadas también mejoran la calidad del resultado. Pueden generar metadatos SEO automáticamente, ajustando títulos y descripciones según lo que se busca en ese momento, y sostener una producción constante de contenido fresco, que es lo que realmente mantiene competitivo a un sitio. Combinado con headless CMS WordPress Next.js, esto termina de maximizar la eficiencia de la estrategia SEO.",
       null,
       null,
-      null,
-      null,
+      "Para que un headless CMS rinda bien en SEO necesitas herramientas de monitoreo y analítica. Plataformas como Google Analytics y ",
+      " te ayudan a entender cómo interactúa la gente con el contenido y cómo lo indexa el buscador. Estas herramientas dan datos que sí importan: tasa de clics (CTR), posición en resultados, comportamiento del tráfico. También puedes sumar Ahrefs o SEMrush para auditorías de SEO, identificar enlaces entrantes y optimizar palabras clave. Revisar estos datos con regularidad te deja ajustar la estrategia de contenido y mejorar la estructura de URLs a medida que cambia el mercado.",
       null,
       "Las API son las que realmente le dan flexibilidad a un headless CMS. Con ellas optimizas contenido de forma dinámica, entregando lo relevante según cómo interactúa cada usuario. En la práctica eso significa personalizar por preferencias, ubicación o comportamiento histórico, lo que mejora la experiencia y puede empujar los rankings hacia arriba. Y como los cambios se aplican en tiempo real vía API, el contenido se mantiene alineado con las prácticas de SEO más recientes sin esperar un despliegue.",
       null,
@@ -273,7 +285,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       null,
       null,
       null,
-      null,
+      " pesa mucho, y es fácil de hacer con herramientas como el Rich Results Test de Google, que revisa que los datos sean correctos y cumplan con las pautas. Esto no solo ayuda al SEO, también mejora la tasa de clics porque el resultado se ve más atractivo en las SERPs.",
       null,
       "Un headless CMS trae ventajas reales, pero también sus propios problemas de SEO. Estos son los que más aparecen, y cómo resolverlos.",
       null,
@@ -313,7 +325,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       null,
       "A headless CMS is built to work across multiple channels without extra plumbing. A structured API handles the distribution, so a company can publish an article to its website, push a notification to its app, and update digital signage content, all from the same backend.",
       null,
-      null,
+      " and similar frameworks that pack solid features while staying flexible for developers. Pairing them with frameworks like Next.js improves site performance and SEO by enabling ",
       null,
       null,
       "Managing content dynamically also makes it easier to actually apply SEO best practices, because teams can adjust presentation and structure per channel without touching the backend. That's a big part of why headless CMS keeps showing up in modern content strategies as expectations around personalization go up.",
@@ -338,7 +350,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       null,
       null,
       null,
-      null,
+      "A well-optimized headless CMS handles image loading, cache management, and other performance improvements smoothly, helping websites meet and exceed ",
       null,
       null,
       "Technical SEO matters more, not less, once you're in headless territory. Traditional CMS platforms keep front-end and back-end tightly coupled; headless systems need their own technical strategy to perform well in search. Here's what actually matters for technical SEO in a headless CMS.",
@@ -393,14 +405,14 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
   },
   "47": {
     "es": [
-      null,
-      null,
+      "Automatizar la creación de sitemaps XML se volvió una herramienta clave para mejorar la visibilidad y el rendimiento ",
+      " de cualquier sitio web. Para optimizar el rastreo y la indexación conviene usar herramientas que simplifiquen este proceso sin sacrificar calidad.",
       "Aquí reviso las ventajas de automatizar sitemaps XML y cómo implementarlo bien, con foco en el impacto real sobre la arquitectura SEO y un método accesible para generarlos.",
       null,
       null,
       "Un sitemap XML es, en esencia, un archivo con la lista de URLs de tu sitio en un formato que el buscador entiende sin esfuerzo. Le dice a Google cómo están organizadas tus páginas, cómo se relacionan entre sí y cuál pesa más que cuál. También puede llevar metadatos por URL: fecha de última modificación, frecuencia de actualización, prioridad relativa. Sin sitemap, algunas URLs simplemente quedan fuera del radar del buscador y nunca se indexan. Por eso terminó siendo una pieza básica de cualquier estrategia SEO seria.",
       null,
-      null,
+      "El sitemap XML tiene un papel central en la arquitectura SEO de un sitio, por varias razones. Primero, le da a buscadores como Google y Bing una forma eficiente de encontrar y entender las distintas secciones del sitio. Eso pesa especialmente en sitios grandes o complejos, donde es fácil que algunas páginas queden fuera del radar por la estructura interna o por enlaces internos débiles. Una buena implementación de sitemap también mejora cómo los algoritmos de búsqueda entienden el contenido, lo que puede traducirse en mejor posicionamiento. Al facilitar la indexación de páginas nuevas o actualizadas, el sitemap hace que el contenido fresco se vuelva visible rápido para los usuarios, algo que pesa mucho en un entorno donde el ",
       null,
       null,
       "La automatización en la creación de sitemaps XML libera tiempo real de SEO. Con Octopus.do, esa tarea se simplifica bastante, así que los equipos de marketing y desarrollo pueden enfocarse en otras cosas mientras el sitio se mantiene bien indexado.",
@@ -495,7 +507,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       "With Client-Side Rendering (CSR), the browser takes over rendering after the initial page load, leaning heavily on JavaScript frameworks to update content dynamically without a full page reload. That's why CSR shows up so much in single-page apps, dashboards, and real-time collaboration tools, places where users expect a lot of interactivity and hate waiting on page refreshes.",
       null,
       "CSR is great for interactivity, but it comes with real SEO trade-offs. The main ones:",
-      null,
+      "Delayed Content Rendering: since content gets generated post-load via JavaScript, search bots can struggle to access key information unless it's fully rendered.",
       null,
       null,
       null,
@@ -506,7 +518,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       null,
       "SSR hands over a fully rendered HTML document on request, which makes crawling and indexing straightforward. All the critical information sits in that initial response. CSR struggles here: since content renders dynamically in the browser after load, search engines can miss essential data, and indexing suffers. For sites where SEO actually matters, that crawling efficiency alone tends to tip the decision toward SSR.",
       null,
-      null,
+      "Metadata, titles and descriptions included, matters a lot for search optimization. SSR makes those tags available right away in the HTML sent from the server, which means quick visibility and accurate representation in search results. That immediacy helps land rich snippets, which can boost click-through rates. CSR, on the other hand, can leave metadata inconsistent or delayed, since it usually depends on JavaScript execution in the browser. In the csr vs ssr seo comparison, timely access to ",
       null,
       null,
       "User experience drives engagement and overall site performance more than people give it credit for. SSR delivers content fast, which improves First Contentful Paint (FCP) and matches up well with Google's Core Web Vitals, both of which affect SEO ranking. CSR tends to introduce delays, since the browser has to execute scripts before anything renders, and that shows up in worse user experience metrics. Line them up side by side and SSR usually wins on performance, which matters for both retention and rankings.",
@@ -528,7 +540,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       "SSR pays off most for sites that need content delivered fast, both to users and to bots. Where it tends to shine:",
       null,
       null,
-      null,
+      "E-commerce Platforms: sites that need products visible right away can use SSR for better crawling and indexing.",
       null,
       null,
       "Going with SSR means budgeting for specific technical requirements up front. Worth evaluating before committing:",
@@ -536,7 +548,7 @@ const REWRITES: Record<number, Record<Locale, Array<string | null>>> = {
       null,
       null,
       null,
-      null,
+      "Content Management Systems: a solid CMS that can integrate SSR features matters for dynamic content management.",
       null,
       "SSR pays off especially well on certain kinds of sites. E-commerce, news, and content-heavy sites all show how SSR closes the gap between user experience and SEO. What it brings:",
       null,
