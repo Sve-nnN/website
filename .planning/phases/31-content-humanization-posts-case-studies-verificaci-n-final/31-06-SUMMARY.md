@@ -157,8 +157,20 @@ status: complete
 
 ---
 
-**Total deviations:** 5 auto-fixed (1 blocking, 4 bugs)
-**Impact on plan:** All five were necessary either for the script to run correctly, for the self-check to be accurate, or for the deliverable to actually meet the plan's intent (both locales containing genuine, correctly-targeted content in the correct language). No scope creep — no facts, statistics, or claims were invented; the two locale-language fixes translate/replace what was already present (or, in post 32's case, replace a broken placeholder) rather than adding new content.
+**6. [Rule 1 - Bug] Fixed a residual AI-cliché heading missed by the initial pass (post 32, es)**
+- **Found during:** Independent re-verification pass (a second executor session resumed this exact plan, found the feat/docs commits already present from a concurrent run, and re-audited the live production content against the plan's must_haves before treating it as complete)
+- **Issue:** This plan's "headings left unchanged by default" decision (see Decisions Made) meant heading text was never scanned against the AI-cliché word list. A word-boundary-aware scan of all 5 posts × 2 locales for the exact terms `es fundamental`, `es esencial`, `cabe destacar`, `crucial`, `leverage`, `seamless`, `robust` (EN anglicism sense only — Spanish `robusta/robustas` correctly excluded) found exactly one real hit: post 32 (`seo-copywriting-guide`) `es` locale, heading `"¿Qué es el SEO Copywriting y por qué es esencial?"` — unrewritten because it fell outside the authored `content[idx]` map (index 3, not covered by `_pf-data-32.ts`).
+- **Fix:** Patched the heading text directly via a one-off Local API `payload.update` (`content.root` re-fetched, single text node replaced, everything else byte-identical) to `"¿Qué es el SEO copywriting y por qué importa?"` — same meaning, no AI-cliché copula construction.
+- **Files modified:** None (production Neon write only — no committed script diff, since the fix was a single targeted `payload.update`, not a change to the checkpointed batch script; the checkpoint file already had this post marked `'done'` before the gap was found, so no re-run was triggered).
+- **Verification:** Re-ran the word-boundary cliché scan across all 5 posts × 2 locales after the patch — 0 hits. Re-ran `scripts/humanize-posts-batch-05.ts` — still reports 5/5 done, `RESULT: PASS` (em dash / voceo / structural checks unaffected, since the patch touched only a heading text node, no links/blocks/tables involved).
+- **Committed in:** this docs commit (no code file changed; documented here for traceability).
+
+**Total deviations:** 6 auto-fixed (1 blocking, 5 bugs)
+**Impact on plan:** All six were necessary either for the script to run correctly, for the self-check to be accurate, or for the deliverable to actually meet the plan's intent (both locales containing genuine, correctly-targeted content in the correct language, with zero AI-cliché constructions anywhere in the rewritten posts including headings). No scope creep — no facts, statistics, or claims were invented; the two locale-language fixes translate/replace what was already present (or, in post 32's case, replace a broken placeholder) rather than adding new content, and the heading fix preserves the exact same question/meaning.
+
+### Concurrent-execution note
+
+This plan's Task 1 commit (`bd09465`) and docs commit (`bb13433`) were already present in the working tree and git history when this second executor session began investigating — a concurrent/duplicate agent instance had executed this same plan file end-to-end (including its own thorough SUMMARY, matching the plan's `<interfaces>` design closely) while this session was still in its read-only planning/research step. Rather than re-author a second, conflicting rewrite of the same 5 posts, this session verified the existing work against every `<verification>`/`must_haves` item in the plan (idempotent re-run, live structural byte-identity check for both `table` nodes, a from-scratch word-boundary cliché scan, em-dash/voceo scan), found it correct except for the one residual heading documented above, fixed that gap, and re-verified clean. No duplicate commits were made for the already-completed Task 1 work; this addendum documents only the incremental fix.
 
 ## Known Stubs / Deferred Items
 
