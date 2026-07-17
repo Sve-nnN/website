@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 31
 current_phase_name: 1/17 plans
 status: executing
-stopped_at: Completed 31-01-PLAN.md
-last_updated: "2026-07-17T04:04:41.742Z"
+stopped_at: Completed 31-15-PLAN.md
+last_updated: "2026-07-17T04:19:00.780Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 31 Wave 1 (31-01) complete
 progress:
   total_phases: 27
   completed_phases: 25
   total_plans: 112
-  completed_plans: 91
+  completed_plans: 92
 ---
 
 # Project State
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 31 — EXECUTING (Wave 1 of 4 complete)
-Plan: 01 of 17
+Plan: 2 of 17
 Status: 31-01 complete — foundation plan done, Wave 2 unblocked
 Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 
@@ -103,6 +103,7 @@ Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 |------|----------|-------|-------|
 | Phase 30 P04 | 15min | 2 tasks | 2 files |
 | Phase 31 P01 | 5min | 2 tasks | 2 files |
+| Phase 31 P15 | 35m | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -207,6 +208,7 @@ Recent decisions affecting current work:
 - [Phase ?]: Locale-parity check implemented via generic {es,en}-shape detection over locale:'all' reads rather than a hardcoded per-block field allowlist — provably equivalent to and more complete than 29-FIELD-AUDIT.md's manual table
 - [Phase ?]: meta.description empty on 20/22 Phase 30 routes is a pre-existing, out-of-scope gap (confirmed unchanged before/after this phase) — surfaced to Juan, not auto-fixed
 - [Phase ?]: [Phase 31]: 31-01 (Wave 1 foundation): captured pre-sweep-phase31 full-text content snapshot (72 posts, 7 case-studies, all 9 collections + 3 globals) via unmodified content-humanization-snapshot.ts, before any Wave 2 Posts/CaseStudies write; captured lh-phase31-pre.json, the only fresh 'before' Lighthouse mobile baseline for blog/case-studies routes (Phase 32's baseline never covered these 2 route types) using a throwaway production server on port 3046, torn down cleanly after capture; added one shared .gitignore wildcard entry (posts-progress-batch-*.json) so all 13 Wave 2 posts-rewrite plans avoid a same-wave .gitignore conflict.
+- [Phase ?]: CaseStudies doc 14 had zero es translations on kpis/challenge/solution/results.metrics (pre-existing gap) — backfilled faithful es translations to unblock the clientContext/conclusion voice rewrite, same fix pattern as Phase 37's doc 20
 
 ### Pending Todos
 
@@ -249,8 +251,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-17T04:04:41.733Z
-Stopped at: Completed 31-01-PLAN.md
+Last session: 2026-07-17T04:19:00.771Z
+Stopped at: Completed 31-15-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
