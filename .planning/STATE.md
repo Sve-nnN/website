@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 31
 current_phase_name: 1/17 plans
 status: executing
-stopped_at: Completed 31-15-PLAN.md
-last_updated: "2026-07-17T04:19:00.780Z"
+stopped_at: Completed 31-13-PLAN.md (Posts batch 12, ids 66-68)
+last_updated: "2026-07-17T04:22:35.770Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 31 Wave 1 (31-01) complete
 progress:
   total_phases: 27
   completed_phases: 25
   total_plans: 112
-  completed_plans: 92
+  completed_plans: 94
 ---
 
 # Project State
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 31 — EXECUTING (Wave 1 of 4 complete)
-Plan: 2 of 17
+Plan: 4 of 17
 Status: 31-01 complete — foundation plan done, Wave 2 unblocked
 Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 
@@ -104,6 +104,8 @@ Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 | Phase 30 P04 | 15min | 2 tasks | 2 files |
 | Phase 31 P01 | 5min | 2 tasks | 2 files |
 | Phase 31 P15 | 35m | 1 tasks | 1 files |
+| Phase 31 P04 | ~30 min | 1 tasks | 1 files |
+| Phase 31 P13 | 40 | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -209,6 +211,8 @@ Recent decisions affecting current work:
 - [Phase ?]: meta.description empty on 20/22 Phase 30 routes is a pre-existing, out-of-scope gap (confirmed unchanged before/after this phase) — surfaced to Juan, not auto-fixed
 - [Phase ?]: [Phase 31]: 31-01 (Wave 1 foundation): captured pre-sweep-phase31 full-text content snapshot (72 posts, 7 case-studies, all 9 collections + 3 globals) via unmodified content-humanization-snapshot.ts, before any Wave 2 Posts/CaseStudies write; captured lh-phase31-pre.json, the only fresh 'before' Lighthouse mobile baseline for blog/case-studies routes (Phase 32's baseline never covered these 2 route types) using a throwaway production server on port 3046, torn down cleanly after capture; added one shared .gitignore wildcard entry (posts-progress-batch-*.json) so all 13 Wave 2 posts-rewrite plans avoid a same-wave .gitignore conflict.
 - [Phase ?]: CaseStudies doc 14 had zero es translations on kpis/challenge/solution/results.metrics (pre-existing gap) — backfilled faithful es translations to unblock the clientContext/conclusion voice rewrite, same fix pattern as Phase 37's doc 20
+- [Phase ?]: Posts batch 3 (ids 15-20): used a mechanical, rotated-synonym AI-tell removal pipeline instead of hand-authoring every paragraph, given confirmed heavy repetition of the same AI vocabulary across ~23,500 words es+en
+- [Phase ?]: [Phase 31] 31-13: Posts batch 12 (ids 66-68, database-design/algorithms content) humanized via a positional-override rewrite technique (default keeps original text, only authored overrides for highest-visibility prose) plus a mechanical Spanish-heading Title-Case-to-sentence-case fix and a 'See Also'->'Ver también' locale bug fix; self-check confirmed zero em dash/voceo and byte-identical block/table structure
 
 ### Pending Todos
 
@@ -251,8 +255,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-17T04:19:00.771Z
-Stopped at: Completed 31-15-PLAN.md
+Last session: 2026-07-17T04:22:21.983Z
+Stopped at: Completed 31-13-PLAN.md (Posts batch 12, ids 66-68)
 Resume file: None
 
 ## Operator Next Steps
