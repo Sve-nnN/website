@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 31
 current_phase_name: 1/17 plans
 status: executing
-stopped_at: Completed 31-11-PLAN.md
-last_updated: "2026-07-17T04:46:32.607Z"
+stopped_at: Completed 31-09-PLAN.md
+last_updated: "2026-07-17T04:50:35.086Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 31 Wave 1 (31-01) complete
 progress:
   total_phases: 27
   completed_phases: 25
   total_plans: 112
-  completed_plans: 98
+  completed_plans: 99
 ---
 
 # Project State
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 31 — EXECUTING (Wave 1 of 4 complete)
-Plan: 8 of 17
+Plan: 9 of 17
 Status: 31-01 complete — foundation plan done, Wave 2 unblocked
 Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 
@@ -110,6 +110,7 @@ Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 | Phase 31 P07 | 70min | 1 tasks | 1 files |
 | Phase 31 P08 | 55min | 1 tasks | 2 files |
 | Phase 31 P11 | 100min | 1 tasks | 3 files |
+| Phase 31 P09 | 75min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -221,6 +222,8 @@ Recent decisions affecting current work:
 - [Phase ?]: 31-07: Posts 35/36/37/38 have no live EN content (pre-existing gap) — rewrote ES only per phase scope, did not invent new translations
 - [Phase ?]: Fixed es-locale-in-English data bug on Posts ids 42/44 during batch-07 humanization (Rule 1 auto-fix)
 - [Phase ?]: 31-11: Posts 56/57/58 confirmed to have no EN content live (pre-existing gap, not introduced this batch) — flagged as blocker for a follow-up translation-authoring plan rather than invented
+- [Phase ?]: 31-09: run-grouped Lexical tree rewrite (consecutive text runs, not per-leaf) to survive SEO-keyword bold-insertion artifacts without breaking grammar
+- [Phase ?]: 31-09: post 49 (schema-markup-guide) es locale content was found entirely in English (pre-existing bug) — translated + humanized into real Spanish rather than left broken
 
 ### Pending Todos
 
@@ -241,6 +244,7 @@ None yet.
 - [Milestone v1.9, nota de ejecución dura para Phase 40] Juan quiere que se le pregunte el stack de CADA uno de los 6 sitios reales al momento de montarlos (una pregunta por sitio, no asumir todo de una vez) — completar solo con inferencia lo que no responda. Lighthouse y screenshots son captura manual puntual (una sola corrida por sitio), nunca live/recurrente — viola el límite arquitectónico explícito "sin SEO tooling en vivo" si se automatiza como re-audit programado.
 - meta.description is empty on 20/22 Pages docs (all except Home) — pre-existing, confirmed unrelated to Phase 30's content rewrite, but flagged for a future scoped SEO content task
 - Posts 56 (tablas-hash), 57 (que-es-css), 58 (mejores-cursos-seo-espanol) have no EN locale content at all in production (confirmed pre-existing via 29-content-humanization-safety-net pre-sweep snapshot). Needs a dedicated translation-authoring plan, not a voice-rewrite.
+- Post 47 (xml-sitemap-automation) en locale is missing its article body — only a See Also links section exists. Pre-existing, out of scope for 31-09's voice rewrite; needs a dedicated content-authoring plan.
 
 ### Quick Tasks Completed
 
@@ -264,8 +268,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-17T04:46:25.427Z
-Stopped at: Completed 31-11-PLAN.md
+Last session: 2026-07-17T04:50:35.074Z
+Stopped at: Completed 31-09-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
