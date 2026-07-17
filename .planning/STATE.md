@@ -2,17 +2,17 @@
 gsd_state_version: 1.0
 milestone: v1.6
 milestone_name: milestone
-current_phase: 29
+current_phase: 30
 current_phase_name: 4/4 plans
-status: verifying
+status: in_progress
 stopped_at: Completed 30-04-PLAN.md
-last_updated: "2026-07-17T03:13:48.406Z"
+last_updated: "2026-07-17T03:20:00.000Z"
 last_activity: 2026-07-16
 progress:
-  total_phases: 26
+  total_phases: 40
   completed_phases: 25
-  total_plans: 95
-  completed_plans: 90
+  total_plans: 99
+  completed_plans: 94
 ---
 
 # Project State
@@ -22,13 +22,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-09)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** v1.9 and v1.8 closed (Phases 38-40 and 37). v1.6 Track B (Content Humanization) resumed at Juan's explicit go-ahead (`--from 29`) — Phase 29 (Safety Net) COMPLETE: field audit, voice profile (grounded in research/voice-sample-juan.md, Juan's fixed real-voice reference), content snapshot script, and both blocking schema migrations (TestimonialsCarousel.title, CaseStudies.services[].service) approved directly by Juan and applied to production Neon. Ready for Phase 30 (first content-rewrite tranche). Phase 6 (Deploy + Cutover) remains paused separately.
+**Current focus:** v1.9 and v1.8 closed (Phases 38-40 and 37). v1.6 Track B (Content Humanization) resumed at Juan's explicit go-ahead (`--from 29`). Phase 29 (Safety Net) and Phase 30 (first content-rewrite tranche: globals, lean collections, core pages, services + geo) both COMPLETE — copy rewritten in Juan's real voice (calibrated against research/voice-sample-juan.md) in both locales, locale-parity verified (299 fields, zero asymmetries), JSON-LD/meta integrity verified live. Known pre-existing gap flagged (not caused by this phase, not fixed): meta.description empty on 20/22 touched pages, already empty in the pre-sweep snapshot — needs its own scoped decision from Juan. Ready for Phase 31 (Posts/Case Studies, formal VOICE-06/07 close + final milestone verification). Phase 6 (Deploy + Cutover) remains paused separately.
 
 ## Current Position
 
-Phase: 29 — COMPLETE (4/4 plans)
+Phase: 30 — COMPLETE (4/4 plans)
 Plan: 04 of 4
-Status: Phase complete — ready for verification
+Status: Phase complete — Phase 31 (final content tranche) unblocked
 Last activity: 2026-07-16
 
 ## Performance Metrics

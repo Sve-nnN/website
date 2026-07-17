@@ -65,7 +65,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 27: Micro-animation Library Adoption** - `motion` instalado vía LazyMotion, bundle-size verificado contra build real, hook `useReducedMotion()` compartido (Track A) (completed 2026-07-13)
 - [x] **Phase 28: Component Motion Rollout + Hero Variants + Blog Grids** - Hero listing/post-header/case-study-header diferenciados (CSS-only, scope minimal), grillas de blog pulidas con scroll-reveal/hover, gate CWV cerrado sobre lo atribuible a las animaciones — TTFB preexistente de /en/blog logueado como follow-up separado, no bloqueante (Track A, cierre) (completed 2026-07-13)
 - [x] **Phase 29: Content Humanization Safety Net** - Auditoría de campos localizados, snapshot completo, 2 fixes de schema aprobados por Juan, perfil de voz escrito (Track B, prerequisito duro)
-- [ ] **Phase 30: Content Humanization — Globals, Core Pages, Services & Geo** - Copy reescrito en la voz de Juan para el primer tramo, de menor riesgo (Track B)
+- [x] **Phase 30: Content Humanization — Globals, Core Pages, Services & Geo** - Copy reescrito en la voz de Juan para el primer tramo, de menor riesgo (Track B)
 - [ ] **Phase 31: Content Humanization — Posts & Case Studies + Verificación Final** - Copy de mayor volumen/visibilidad SEO reescrito, verificación final conjunta de ambos tracks (Track B, cierre de milestone)
 - [x] **Phase 32: Regression Baseline** - Baseline de Lighthouse/CWV + H1/JSON-LD capturado antes de tocar cualquier componente (v1.7) (completed 2026-07-14)
 - [x] **Phase 33: Local Landing Components** - Hero variant `local-landing` + block `LocalProofSection` construidos y registrados (v1.7) (completed 2026-07-14)
@@ -1006,7 +1006,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 27. Micro-animation Library Adoption | 1/1 | Complete   | 2026-07-13 |
 | 28. Component Motion Rollout + Hero Variants + Blog Grids | 4/4 | Complete   | 2026-07-13 |
 | 29. Content Humanization Safety Net | 4/4 | Complete    | 2026-07-14 |
-| 30. Content Humanization — Globals, Core Pages, Services & Geo | 4/4 | In Progress|  |
+| 30. Content Humanization — Globals, Core Pages, Services & Geo | 4/4 | Complete    | 2026-07-16 |
 | 31. Content Humanization — Posts & Case Studies + Verificación Final | 0/TBD | Not started | - |
 | 32. Regression Baseline | 1/1 | Complete | 2026-07-14 |
 | 33. Local Landing Components | 1/1 | Complete | 2026-07-14 |
