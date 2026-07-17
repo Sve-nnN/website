@@ -2,16 +2,17 @@
 gsd_state_version: 1.0
 milestone: v1.6
 milestone_name: milestone
+current_phase: 29
+current_phase_name: 4/4 plans
 status: verifying
-stopped_at: Completed 30-01-PLAN.md
-last_updated: "2026-07-14T21:07:11.909Z"
-last_activity: 2026-07-14
+stopped_at: Completed 30-04-PLAN.md
+last_updated: "2026-07-17T03:13:48.406Z"
+last_activity: 2026-07-16
 progress:
-  total_phases: 40
-  completed_phases: 24
+  total_phases: 26
+  completed_phases: 25
   total_plans: 95
   completed_plans: 90
-  percent: 60
 ---
 
 # Project State
@@ -28,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 Phase: 29 — COMPLETE (4/4 plans)
 Plan: 04 of 4
 Status: Phase complete — ready for verification
-Last activity: 2026-07-14
+Last activity: 2026-07-16
 
 ## Performance Metrics
 
@@ -95,6 +96,11 @@ Last activity: 2026-07-14
 | Phase 29 P02 | 25min | 2 tasks | 4 files |
 | Phase 30 P01 | 25min | 3 tasks | 3 files |
 | Phase 30 P02 | 35 | 3 tasks | 3 files |
+**Per-Plan Metrics:**
+
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
+| Phase 30 P04 | 15min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -196,6 +202,8 @@ Recent decisions affecting current work:
 - [Phase ?]: Legal pages (Privacy/Terms): only body prose rewritten, same section count/order/headings, no legal meaning/obligation changed
 - [Phase ?]: In-place block patching for pages.content.layout when live layout has grown beyond an earlier seed script's shape
 - [Phase ?]: Fixed voceo-to-tuteo across Services/Geo ES copy (CLAUDE.md hard rule 'no voceo nunca' was being violated)
+- [Phase ?]: Locale-parity check implemented via generic {es,en}-shape detection over locale:'all' reads rather than a hardcoded per-block field allowlist — provably equivalent to and more complete than 29-FIELD-AUDIT.md's manual table
+- [Phase ?]: meta.description empty on 20/22 Phase 30 routes is a pre-existing, out-of-scope gap (confirmed unchanged before/after this phase) — surfaced to Juan, not auto-fixed
 
 ### Pending Todos
 
@@ -214,6 +222,7 @@ None yet.
 - [v1.2 → v1.3 backlog, 2026-07-11] Juan pidió reestructurar URLs de blog (`/blog/categoria/slug` para posts, `/blog/categoria-slug` para listados de categoría) + agregar paginación al blog. Explícitamente diferido — cierra v1.2 (Home+Author, blog fuera de scope) primero. Cambio SEO-sensible: requiere estrategia de redirects 301 para no perder el resultado "0 URL deltas" ya verificado en Phase 4 (04-VERIFICATION.md). Candidato a nueva fase (v1.2 extendida o v1.3), no ejecutar ad-hoc.
 - ~~[Phase 15, 2026-07-11] Header global (main site nav) tiene el mismo bug de labels ES vacíos ya corregido en Footer durante 15-02~~ — RESUELTO antes del cierre de v1.2: `scripts/fix-header-navitems-es-labels.ts` corrigió `navItems[].link.label` en ES; confirmado en vivo por `.planning/v1.2-MILESTONE-AUDIT.md` ("Blog, Casos de éxito, Autores, Contacto" renderizan con texto ES correcto en `/`).
 - [Milestone v1.9, nota de ejecución dura para Phase 40] Juan quiere que se le pregunte el stack de CADA uno de los 6 sitios reales al momento de montarlos (una pregunta por sitio, no asumir todo de una vez) — completar solo con inferencia lo que no responda. Lighthouse y screenshots son captura manual puntual (una sola corrida por sitio), nunca live/recurrente — viola el límite arquitectónico explícito "sin SEO tooling en vivo" si se automatiza como re-audit programado.
+- meta.description is empty on 20/22 Pages docs (all except Home) — pre-existing, confirmed unrelated to Phase 30's content rewrite, but flagged for a future scoped SEO content task
 
 ### Quick Tasks Completed
 
@@ -237,8 +246,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-14T21:06:19.457Z
-Stopped at: Completed 30-01-PLAN.md
+Last session: 2026-07-17T03:13:48.397Z
+Stopped at: Completed 30-04-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

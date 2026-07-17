@@ -781,14 +781,14 @@ Plans:
   4. Una verificación de paridad de locale sobre todas las colecciones/globals tocados en este tramo no muestra ningún campo colapsado/pisado entre `es`/`en`
   5. El `BreadcrumbList`/`Person`/JSON-LD y los campos `meta.title`/`meta.description` de SEO siguen válidos e intactos en todas las páginas tocadas, verificado en vivo (curl/validación de schema)
 
-**Plans**: 4 plans (3 waves)
+**Plans**: 4/4 plans executed
 
 Plans:
 
 - [x] 30-01-PLAN.md — Pre-sweep snapshot + humanize Header/Footer globals (fix ctaButton.label + legalLinks[2] locale bugs) + lean collections (Authors/Testimonials/SpeakingEvents/Categories), Clientes confirmed no-op
 - [x] 30-02-PLAN.md — Humanize Home, Contact, Privacy, Terms pages (id-reuse discipline on nested content.layout blocks)
 - [x] 30-03-PLAN.md — Humanize Services index + 4 service landings + 2 geo-pages (reapplyIds/upsertPage pattern, update-only)
-- [ ] 30-04-PLAN.md — Post-sweep snapshot + locale-parity verification + live JSON-LD/meta verification (closes VOICE-07 part 1)
+- [x] 30-04-PLAN.md — Post-sweep snapshot + locale-parity verification + live JSON-LD/meta verification (closes VOICE-07 part 1)
 
 ### Phase 31: Content Humanization — Posts & Case Studies + Verificación Final
 
@@ -1006,7 +1006,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 27. Micro-animation Library Adoption | 1/1 | Complete   | 2026-07-13 |
 | 28. Component Motion Rollout + Hero Variants + Blog Grids | 4/4 | Complete   | 2026-07-13 |
 | 29. Content Humanization Safety Net | 4/4 | Complete    | 2026-07-14 |
-| 30. Content Humanization — Globals, Core Pages, Services & Geo | 3/4 | In Progress|  |
+| 30. Content Humanization — Globals, Core Pages, Services & Geo | 4/4 | In Progress|  |
 | 31. Content Humanization — Posts & Case Studies + Verificación Final | 0/TBD | Not started | - |
 | 32. Regression Baseline | 1/1 | Complete | 2026-07-14 |
 | 33. Local Landing Components | 1/1 | Complete | 2026-07-14 |
