@@ -116,3 +116,11 @@ None — no external service configuration required.
 ---
 *Phase: 31-content-humanization-posts-case-studies-verificaci-n-final*
 *Completed: 2026-07-17*
+
+## Self-Check: PASSED
+
+- FOUND: scripts/humanize-posts-batch-10.ts
+- FOUND: scripts/humanize-posts-batch-10-data.ts
+- FOUND: .planning/phases/31-content-humanization-posts-case-studies-verificaci-n-final/posts-progress-batch-10.json (gitignored checkpoint, all 6 ids `'done'`)
+- FOUND: commit 1ff2766 (feat) in `git log --oneline --all`
+- Re-run of `node --env-file=.env node_modules/.bin/tsx scripts/humanize-posts-batch-10.ts` confirms 6/6 already done, zero findings
