@@ -5,15 +5,15 @@ milestone_name: milestone
 current_phase: 31
 current_phase_name: 1/17 plans
 status: executing
-stopped_at: Completed 31-09-PLAN.md
-last_updated: "2026-07-17T04:50:35.086Z"
+stopped_at: Completed 31-03-PLAN.md (Posts batch 2, ids 10-14)
+last_updated: "2026-07-17T05:00:30.597Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 31 Wave 1 (31-01) complete
 progress:
   total_phases: 27
   completed_phases: 25
   total_plans: 112
-  completed_plans: 99
+  completed_plans: 101
 ---
 
 # Project State
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-07-09)
 ## Current Position
 
 Phase: 31 — EXECUTING (Wave 1 of 4 complete)
-Plan: 9 of 17
+Plan: 11 of 17
 Status: 31-01 complete — foundation plan done, Wave 2 unblocked
 Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 
@@ -111,6 +111,8 @@ Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
 | Phase 31 P08 | 55min | 1 tasks | 2 files |
 | Phase 31 P11 | 100min | 1 tasks | 3 files |
 | Phase 31 P09 | 75min | 1 tasks | 1 files |
+| Phase 31 P06 | 90min | 1 tasks | 6 files |
+| Phase 31 P03 | 50min | 1 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -224,6 +226,9 @@ Recent decisions affecting current work:
 - [Phase ?]: 31-11: Posts 56/57/58 confirmed to have no EN content live (pre-existing gap, not introduced this batch) — flagged as blocker for a follow-up translation-authoring plan rather than invented
 - [Phase ?]: 31-09: run-grouped Lexical tree rewrite (consecutive text runs, not per-leaf) to survive SEO-keyword bold-insertion artifacts without breaking grammar
 - [Phase ?]: 31-09: post 49 (schema-markup-guide) es locale content was found entirely in English (pre-existing bug) — translated + humanized into real Spanish rather than left broken
+- [Phase ?]: 31-06: block-level Lexical rewrite with ⟦L⟧ link markers instead of per-leaf text rewrite, to keep inline links positioned correctly inside fully re-authored sentences
+- [Phase ?]: 31-06: post 30 (binary-search-tree) en locale content was found entirely in Spanish, post 32 (seo-copywriting-guide) en locale mixed languages and contained a literal LLM refusal message baked into production content — both fixed as Rule 1 bugs within this plan's existing content-field rewrite scope
+- [Phase ?]: Batch 2 Posts (ids 10-14): reused/repaired a crashed prior agent's already-authored script instead of restarting; fixed missing en title+content on ids 12/14 (deeper locale-parity gap than the plan anticipated)
 
 ### Pending Todos
 
@@ -268,8 +273,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-17T04:50:35.074Z
-Stopped at: Completed 31-09-PLAN.md
+Last session: 2026-07-17T05:00:30.586Z
+Stopped at: Completed 31-03-PLAN.md (Posts batch 2, ids 10-14)
 Resume file: None
 
 ## Operator Next Steps

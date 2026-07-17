@@ -803,16 +803,16 @@ Plans:
   4. Un barrido en vivo (curl, ambos locales) sobre todas las rutas tocadas por Track B más una validación de JSON-LD confirma cero structured data roto
   5. Un gate final de Lighthouse/CWV sobre las rutas representativas tocadas por ambos tracks (motion + contenido reescrito) no muestra regresión respecto al baseline pre-milestone
 
-**Plans**: 9/17 plans executed
+**Plans**: 11/17 plans executed
 
 Plans:
 
 - [x] 31-01-PLAN.md — Baseline capture: .gitignore entry for posts-progress checkpoints, pre-sweep-phase31 content snapshot, fresh "before" Lighthouse for blog/case-studies routes
 - [ ] 31-02-PLAN.md — Humanize Posts batch 1 (ids 2,3,4,5,6,7,8,9)
-- [ ] 31-03-PLAN.md — Humanize Posts batch 2 (ids 10,11,12,13,14)
+- [x] 31-03-PLAN.md — Humanize Posts batch 2 (ids 10,11,12,13,14)
 - [x] 31-04-PLAN.md — Humanize Posts batch 3 (ids 15,16,17,18,19,20)
 - [ ] 31-05-PLAN.md — Humanize Posts batch 4 (ids 21,22,23,24,25,26,27)
-- [ ] 31-06-PLAN.md — Humanize Posts batch 5 (ids 28,29,30,31,32)
+- [x] 31-06-PLAN.md — Humanize Posts batch 5 (ids 28,29,30,31,32)
 - [x] 31-07-PLAN.md — Humanize Posts batch 6 (ids 33,34,35,36,37,38)
 - [x] 31-08-PLAN.md — Humanize Posts batch 7 (ids 39,40,41,42,43,44)
 - [x] 31-09-PLAN.md — Humanize Posts batch 8 (ids 45,46,47,48,49)
@@ -1027,7 +1027,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 28. Component Motion Rollout + Hero Variants + Blog Grids | 4/4 | Complete   | 2026-07-13 |
 | 29. Content Humanization Safety Net | 4/4 | Complete    | 2026-07-14 |
 | 30. Content Humanization — Globals, Core Pages, Services & Geo | 4/4 | Complete    | 2026-07-16 |
-| 31. Content Humanization — Posts & Case Studies + Verificación Final | 9/17 | In Progress|  |
+| 31. Content Humanization — Posts & Case Studies + Verificación Final | 11/17 | In Progress|  |
 | 32. Regression Baseline | 1/1 | Complete | 2026-07-14 |
 | 33. Local Landing Components | 1/1 | Complete | 2026-07-14 |
 | 34. Local Landing Application (Madrid/Lima) | 1/1 | Complete | 2026-07-14 |
