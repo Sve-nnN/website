@@ -40,6 +40,10 @@ scripts/.mobile-verify-screenshots/
 # Phase 11-03 Lighthouse — downloaded Chrome-for-Testing binary, not source code
 .lighthouse-chrome/
 
+# Phase 31 posts-rewrite resumable checkpoint logs (post id -> done) — one per
+# Wave 2 batch plan, regenerable execution-state scratch files, not source code
+.planning/phases/31-content-humanization-posts-case-studies-verificaci-n-final/posts-progress-batch-*.json
+
 # misc
 .DS_Store
 *.pem
