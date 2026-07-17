@@ -6,7 +6,7 @@ current_phase: 31
 current_phase_name: 1/17 plans
 status: executing
 stopped_at: Completed 31-11-PLAN.md
-last_updated: "2026-07-17T04:46:25.436Z"
+last_updated: "2026-07-17T04:46:32.607Z"
 last_activity: 2026-07-16
 last_activity_desc: Phase 31 Wave 1 (31-01) complete
 progress:
@@ -240,6 +240,7 @@ None yet.
 - ~~[Phase 15, 2026-07-11] Header global (main site nav) tiene el mismo bug de labels ES vacíos ya corregido en Footer durante 15-02~~ — RESUELTO antes del cierre de v1.2: `scripts/fix-header-navitems-es-labels.ts` corrigió `navItems[].link.label` en ES; confirmado en vivo por `.planning/v1.2-MILESTONE-AUDIT.md` ("Blog, Casos de éxito, Autores, Contacto" renderizan con texto ES correcto en `/`).
 - [Milestone v1.9, nota de ejecución dura para Phase 40] Juan quiere que se le pregunte el stack de CADA uno de los 6 sitios reales al momento de montarlos (una pregunta por sitio, no asumir todo de una vez) — completar solo con inferencia lo que no responda. Lighthouse y screenshots son captura manual puntual (una sola corrida por sitio), nunca live/recurrente — viola el límite arquitectónico explícito "sin SEO tooling en vivo" si se automatiza como re-audit programado.
 - meta.description is empty on 20/22 Pages docs (all except Home) — pre-existing, confirmed unrelated to Phase 30's content rewrite, but flagged for a future scoped SEO content task
+- Posts 56 (tablas-hash), 57 (que-es-css), 58 (mejores-cursos-seo-espanol) have no EN locale content at all in production (confirmed pre-existing via 29-content-humanization-safety-net pre-sweep snapshot). Needs a dedicated translation-authoring plan, not a voice-rewrite.
 
 ### Quick Tasks Completed
 
