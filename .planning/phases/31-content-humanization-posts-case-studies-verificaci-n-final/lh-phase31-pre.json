@@ -1,0 +1,38 @@
+{
+  "/blog/tech-seo-guide": {
+    "performance": 75,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4113,
+    "cls": 0,
+    "tbtMs": 159
+  },
+  "/en/blog/tech-seo-guide": {
+    "performance": 81,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 3598,
+    "cls": 0,
+    "tbtMs": 16
+  },
+  "/case-studies/migracion-ecommerce-nextjs-seo-tecnico": {
+    "performance": 77,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4919,
+    "cls": 0,
+    "tbtMs": 55
+  },
+  "/en/case-studies/migracion-ecommerce-nextjs-seo-tecnico": {
+    "performance": 75,
+    "accessibility": 96,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4435,
+    "cls": 0,
+    "tbtMs": 31
+  }
+}
