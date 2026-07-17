@@ -803,12 +803,12 @@ Plans:
   4. Un barrido en vivo (curl, ambos locales) sobre todas las rutas tocadas por Track B más una validación de JSON-LD confirma cero structured data roto
   5. Un gate final de Lighthouse/CWV sobre las rutas representativas tocadas por ambos tracks (motion + contenido reescrito) no muestra regresión respecto al baseline pre-milestone
 
-**Plans**: 12/17 plans executed
+**Plans**: 14/17 plans executed
 
 Plans:
 
 - [x] 31-01-PLAN.md — Baseline capture: .gitignore entry for posts-progress checkpoints, pre-sweep-phase31 content snapshot, fresh "before" Lighthouse for blog/case-studies routes
-- [ ] 31-02-PLAN.md — Humanize Posts batch 1 (ids 2,3,4,5,6,7,8,9)
+- [x] 31-02-PLAN.md — Humanize Posts batch 1 (ids 2,3,4,5,6,7,8,9)
 - [x] 31-03-PLAN.md — Humanize Posts batch 2 (ids 10,11,12,13,14)
 - [x] 31-04-PLAN.md — Humanize Posts batch 3 (ids 15,16,17,18,19,20)
 - [ ] 31-05-PLAN.md — Humanize Posts batch 4 (ids 21,22,23,24,25,26,27)
@@ -818,7 +818,7 @@ Plans:
 - [x] 31-09-PLAN.md — Humanize Posts batch 8 (ids 45,46,47,48,49)
 - [x] 31-10-PLAN.md — Humanize Posts batch 9 (ids 50,51,52,53,54, incl. tech-seo-guide)
 - [x] 31-11-PLAN.md — Humanize Posts batch 10 (ids 55,56,57,58,59,60)
-- [ ] 31-12-PLAN.md — Humanize Posts batch 11 (ids 61,62,63,64,65)
+- [x] 31-12-PLAN.md — Humanize Posts batch 11 (ids 61,62,63,64,65)
 - [x] 31-13-PLAN.md — Humanize Posts batch 12 (ids 66,67,68)
 - [x] 31-14-PLAN.md — Humanize Posts batch 13 (ids 69,70,71,72,73) — last of 72 posts
 - [x] 31-15-PLAN.md — Humanize CaseStudies clientContext/conclusion (7 docs, not challenge/solution)
@@ -1027,7 +1027,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 28. Component Motion Rollout + Hero Variants + Blog Grids | 4/4 | Complete   | 2026-07-13 |
 | 29. Content Humanization Safety Net | 4/4 | Complete    | 2026-07-14 |
 | 30. Content Humanization — Globals, Core Pages, Services & Geo | 4/4 | Complete    | 2026-07-16 |
-| 31. Content Humanization — Posts & Case Studies + Verificación Final | 12/17 | In Progress|  |
+| 31. Content Humanization — Posts & Case Studies + Verificación Final | 14/17 | In Progress|  |
 | 32. Regression Baseline | 1/1 | Complete | 2026-07-14 |
 | 33. Local Landing Components | 1/1 | Complete | 2026-07-14 |
 | 34. Local Landing Application (Madrid/Lima) | 1/1 | Complete | 2026-07-14 |
