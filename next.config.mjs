@@ -14,6 +14,11 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    // Un solo formato (evita duplicar transformaciones avif+webp) y cache
+    // largo: Cloudinary ya sirve la imagen optimizada, no hace falta
+    // retransformar/recachear seguido.
+    formats: ['image/webp'],
+    minimumCacheTTL: 2678400,
   },
 }
 
