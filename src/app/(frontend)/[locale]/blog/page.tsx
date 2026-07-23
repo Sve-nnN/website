@@ -4,6 +4,12 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 
+// Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
+// network access to shared-postgres -- force dynamic (request-time)
+// rendering here so `next build` never tries to query the DB during
+// static generation. See infra/apps/LESSONS-LEARNED.md.
+export const dynamic = 'force-dynamic'
+
 async function getBlogPage(locale: string) {
   const payload = await getPayload({ config })
   const { docs } = await payload.find({

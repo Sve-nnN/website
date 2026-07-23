@@ -3,6 +3,12 @@ import { getPayload } from 'payload'
 
 import config from '@payload-config'
 
+// Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
+// network access to shared-postgres -- force dynamic (request-time)
+// rendering here so `next build` never tries to query the DB during
+// static generation. See infra/apps/LESSONS-LEARNED.md.
+export const dynamic = 'force-dynamic'
+
 // Maps a redirects-collection relationTo slug to the public URL base segment
 // used to reconstruct a path from a referenced document's slug.
 const COLLECTION_BASE_PATH: Record<string, string> = {

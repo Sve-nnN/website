@@ -13,6 +13,12 @@ import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 
+// Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
+// network access to shared-postgres -- force dynamic (request-time)
+// rendering here so `next build` never tries to query the DB during
+// static generation. See infra/apps/LESSONS-LEARNED.md.
+export const dynamic = 'force-dynamic'
+
 const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://juancarlosangulo.com'
 
 // PERF (js-hoist-intl): `locale` is a runtime parameter, not a module

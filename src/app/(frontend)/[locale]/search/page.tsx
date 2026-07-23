@@ -7,6 +7,12 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 
+// Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
+// network access to shared-postgres -- force dynamic (request-time)
+// rendering here so `next build` never tries to query the DB during
+// static generation. See infra/apps/LESSONS-LEARNED.md.
+export const dynamic = 'force-dynamic'
+
 const MAX_QUERY_LENGTH = 200
 
 const copy = {

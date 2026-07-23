@@ -5,6 +5,12 @@ import config from '@payload-config'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { sendContactMessage } from '@/app/actions/contact'
 
+// Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
+// network access to shared-postgres -- force dynamic (request-time)
+// rendering here so `next build` never tries to query the DB during
+// static generation. See infra/apps/LESSONS-LEARNED.md.
+export const dynamic = 'force-dynamic'
+
 function contactFallbackTitle(locale: string) {
   return locale === 'es' ? 'Contacto' : 'Contact'
 }
