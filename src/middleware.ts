@@ -27,7 +27,15 @@ const intlMiddleware = createIntlMiddleware(routing)
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
-  const lookupUrl = new URL('/api/redirects-lookup', request.url)
+  // Same-process loopback, NOT `request.url`: behind Traefik (TLS-terminated
+  // reverse proxy), Next can reconstruct `request.url` as an `https://`
+  // origin pointing at the container's own internal address, and this fetch
+  // then tries a TLS handshake against a port that only ever speaks plain
+  // HTTP internally -- confirmed at runtime with
+  // `ERR_SSL_PACKET_LENGTH_TOO_LONG`. This is a same-origin call to this
+  // exact running instance regardless of the public-facing scheme/host, so
+  // loopback is both correct and avoids the proxy-header ambiguity entirely.
+  const lookupUrl = new URL('/api/redirects-lookup', `http://localhost:${process.env.PORT ?? 3000}`)
   lookupUrl.searchParams.set('from', pathname)
 
   const lookupResponse = await fetch(lookupUrl)
