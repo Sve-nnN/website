@@ -24,6 +24,7 @@ import * as migration_20260714_163429 from './20260714_163429';
 import * as migration_20260714_170202 from './20260714_170202';
 import * as migration_20260714_200158 from './20260714_200158';
 import * as migration_20260714_200220_phase29_casestudies_services_localized from './20260714_200220_phase29_casestudies_services_localized';
+import * as migration_20260725_155512_add_missing_media_columns from './20260725_155512_add_missing_media_columns';
 
 export const migrations = [
   {
@@ -155,5 +156,10 @@ export const migrations = [
     up: migration_20260714_200220_phase29_casestudies_services_localized.up,
     down: migration_20260714_200220_phase29_casestudies_services_localized.down,
     name: '20260714_200220_phase29_casestudies_services_localized'
+  },
+  {
+    up: migration_20260725_155512_add_missing_media_columns.up,
+    down: migration_20260725_155512_add_missing_media_columns.down,
+    name: '20260725_155512_add_missing_media_columns'
   },
 ];
