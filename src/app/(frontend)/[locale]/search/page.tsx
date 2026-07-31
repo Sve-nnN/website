@@ -6,6 +6,7 @@ import { Container } from '@/components/Container'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { buildOpenGraph } from '@/lib/og-image'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -46,7 +47,16 @@ function hrefFor(relationTo: string, slug: string) {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = copy[locale as 'es' | 'en'] ?? copy.es
-  return { title: t.title }
+  const title = t.title
+  return {
+    title,
+    openGraph: buildOpenGraph({
+      title,
+      url: locale === 'en' ? '/en/search' : '/search',
+      locale: locale as 'es' | 'en',
+      slug: 'search',
+    }),
+  }
 }
 
 export default async function SearchPage({

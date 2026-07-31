@@ -6,6 +6,7 @@ import { Container } from '@/components/Container'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { JsonLd } from '@/components/JsonLd'
 import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
+import { buildOpenGraph } from '@/lib/og-image'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -25,8 +26,15 @@ async function getCaseStudies(locale: string) {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
+  const title = locale === 'es' ? 'Casos de éxito' : 'Case Studies'
   return {
-    title: locale === 'es' ? 'Casos de éxito' : 'Case Studies',
+    title,
+    openGraph: buildOpenGraph({
+      title,
+      url: locale === 'en' ? '/en/case-studies' : '/case-studies',
+      locale: locale as 'es' | 'en',
+      slug: 'case-studies',
+    }),
   }
 }
 

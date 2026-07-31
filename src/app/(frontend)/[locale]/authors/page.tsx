@@ -5,6 +5,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { Container } from '@/components/Container'
 import { Badge } from '@/components/ui/badge'
+import { buildOpenGraph } from '@/lib/og-image'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -24,8 +25,15 @@ async function getAuthors(locale: string) {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
+  const title = locale === 'es' ? 'Autores' : 'Authors'
   return {
-    title: locale === 'es' ? 'Autores' : 'Authors',
+    title,
+    openGraph: buildOpenGraph({
+      title,
+      url: locale === 'en' ? '/en/authors' : '/authors',
+      locale: locale as 'es' | 'en',
+      slug: 'authors',
+    }),
   }
 }
 

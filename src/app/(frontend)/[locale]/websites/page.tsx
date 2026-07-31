@@ -6,6 +6,7 @@ import { Container } from '@/components/Container'
 import { WebsiteCard } from '@/components/WebsiteCard'
 import { JsonLd } from '@/components/JsonLd'
 import { buildWebsitesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
+import { buildOpenGraph } from '@/lib/og-image'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -25,8 +26,15 @@ async function getWebsites(locale: string) {
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
+  const title = locale === 'es' ? 'Sitios web' : 'Websites'
   return {
-    title: locale === 'es' ? 'Sitios web' : 'Websites',
+    title,
+    openGraph: buildOpenGraph({
+      title,
+      url: locale === 'en' ? '/en/websites' : '/websites',
+      locale: locale as 'es' | 'en',
+      slug: 'websites',
+    }),
   }
 }
 
