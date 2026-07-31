@@ -5,10 +5,10 @@ milestone_name: OG Image & Meta Tags Fix
 current_phase: 41
 current_phase_name: Not started
 status: milestone_planning
-stopped_at: "Completed 41-03-PLAN.md (Servicios/Services 4 routes + Author/Website detail + 4 no-doc listings wired to buildOpenGraph). All ~19 public generateMetadata now emit og:image -- Phase 41 code-complete. Live curl verification blocked by same Neon connectivity issue as 41-01/41-02 (WINDOWS.md id 3)."
-last_updated: "2026-07-31T23:06:24.899Z"
+stopped_at: "Code review (41-REVIEW.md, 0 critical/4 warning/2 info) applied and committed (3b8124c): WR-01 (surrogate-safe title truncation), WR-03 (deduped Servicios/Services generateMetadata into services-data.ts helpers), WR-04 (console.warn on silent-degrade path), IN-02 (cross-reference comments). Phase 41 code-complete + reviewed + fixed. BLOCKED on two independent issues before Phase 41 can formally verify/close: (1) Neon Postgres unreachable this session (ECONNRESET/timeout, WINDOWS.md ids 1-3) -- blocks live curl verification; (2) platform safety-classifier outage mid-session blocked `tsc --noEmit` from confirming the fix commit compiles clean (all edits manually inspected, no Agent/heavy-Bash available to double-check). Stopped autonomous run here to report both to Juan rather than guessing further."
+last_updated: "2026-07-31T23:45:00.000Z"
 last_activity: 2026-07-31
-last_activity_desc: "41-01-PLAN.md ejecutado (feat 41-01: og-image.ts + Home/layout/Post/CaseStudy wiring)"
+last_activity_desc: "Code review fixes for Phase 41 applied directly (Edit tool) and committed; tsc confirmation pending due to classifier outage"
 progress:
   total_phases: 28
   completed_phases: 27
