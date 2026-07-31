@@ -5,6 +5,7 @@ import config from '@payload-config'
 import { JsonLd } from '@/components/JsonLd'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { sendContactMessage } from '@/app/actions/contact'
+import { buildOpenGraph } from '@/lib/og-image'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -28,9 +29,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const doc = await getHomePage(locale)
   const meta = doc?.meta
 
+  const title = meta?.title ?? doc?.title ?? 'Juan Carlos Angulo'
+  const description = meta?.description ?? ''
+
   return {
-    title: meta?.title ?? doc?.title ?? 'Juan Carlos Angulo',
-    description: meta?.description ?? '',
+    title,
+    description,
+    openGraph: buildOpenGraph({
+      title,
+      description,
+      url: locale === 'en' ? '/en' : '/',
+      locale: locale as 'es' | 'en',
+      slug: 'home',
+      metaImage: meta?.image,
+    }),
   }
 }
 

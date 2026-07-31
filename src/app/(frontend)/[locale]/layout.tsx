@@ -17,6 +17,12 @@ import '../../globals.css'
 // (OG images, canonicals) is set here exactly once, sitewide.
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  // og:image-derived twitter:image is inherited automatically per Next's
+  // Metadata API — no separate twitter.images/twitter.creator declared here.
+  // twitter.creator omitted: Juan confirmed no Twitter/X account (41-CONTEXT.md).
+  twitter: {
+    card: 'summary_large_image',
+  },
 }
 
 export function generateStaticParams() {
