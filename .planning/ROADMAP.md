@@ -1005,7 +1005,13 @@ Plans:
   5. `openGraph.url` resuelve a una URL absoluta correcta por página (vía `metadataBase` ya seteado)
   6. Curl real de al menos 3 rutas de tipos distintos (home ES/EN, un post, un case study) muestra `og:image` apuntando a una URL Cloudinary válida (200, con el título correcto renderizado en la imagen)
 
-**Plans**: TBD
+**Plans**: 3 plans (2 waves)
+
+Plans:
+
+- [ ] 41-01-PLAN.md — Tracer: src/lib/og-image.ts (getCloudinaryOgWithTitle + buildOpenGraph) + Home end-to-end + sitewide twitter:card + Post/CaseStudy detail (heroImage branch)
+- [ ] 41-02-PLAN.md — Wire contact/privacy/terms/seo-tecnico-lima/seo-tecnico-madrid/blog listing (pages collection, no heroImage)
+- [ ] 41-03-PLAN.md — Wire Servicios/Services (4 routes) + Author/Website detail + 4 no-doc listings (case-studies/authors/websites/search)
 
 ### Phase 42: Meta Tags Completion
 
