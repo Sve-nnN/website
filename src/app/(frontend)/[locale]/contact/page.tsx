@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { sendContactMessage } from '@/app/actions/contact'
+import { buildOpenGraph } from '@/lib/og-image'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -31,9 +32,21 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const doc = await getContactPage(locale)
   const meta = doc?.meta
 
+  const title = meta?.title ?? doc?.title ?? contactFallbackTitle(locale)
+  const description = meta?.description ?? ''
+  const url = locale === 'en' ? '/en/contact' : '/contact'
+
   return {
-    title: meta?.title ?? doc?.title ?? contactFallbackTitle(locale),
-    description: meta?.description ?? '',
+    title,
+    description,
+    openGraph: buildOpenGraph({
+      title,
+      description,
+      url,
+      locale: locale as 'es' | 'en',
+      slug: 'contact',
+      metaImage: meta?.image,
+    }),
   }
 }
 

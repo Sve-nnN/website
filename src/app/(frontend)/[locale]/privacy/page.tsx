@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Container } from '@/components/Container'
+import { buildOpenGraph } from '@/lib/og-image'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -27,9 +28,21 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const doc = await getPage(locale)
   const meta = doc?.meta
 
+  const title = meta?.title ?? doc?.title ?? (locale === 'es' ? 'Política de Privacidad' : 'Privacy Policy')
+  const description = meta?.description ?? ''
+  const url = locale === 'en' ? '/en/privacy' : '/privacy'
+
   return {
-    title: meta?.title ?? doc?.title ?? (locale === 'es' ? 'Política de Privacidad' : 'Privacy Policy'),
-    description: meta?.description ?? '',
+    title,
+    description,
+    openGraph: buildOpenGraph({
+      title,
+      description,
+      url,
+      locale: locale as 'es' | 'en',
+      slug: 'privacy',
+      metaImage: meta?.image,
+    }),
   }
 }
 
