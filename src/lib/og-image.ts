@@ -26,7 +26,10 @@ export function getCloudinaryOgWithTitle(url: string, title: string): string {
   if (!url || !url.includes('cloudinary.com')) return url
 
   const uploadIndex = url.indexOf('/upload/')
-  if (uploadIndex === -1) return url
+  if (uploadIndex === -1) {
+    console.warn(`[og-image] Cloudinary URL missing /upload/ segment, skipping title overlay: ${url}`)
+    return url
+  }
 
   const baseUrl = url.substring(0, uploadIndex)
   const afterUpload = url.substring(uploadIndex + '/upload/'.length)
@@ -34,6 +37,7 @@ export function getCloudinaryOgWithTitle(url: string, title: string): string {
   // Strip existing transformation segments to isolate the raw public_id.
   // Transformation segments start with a 1-3 char prefix + underscore (w_, h_, l_, fl_…).
   // Version segments match /^v\d+$/. Everything else is the public_id start.
+  // Depends on heroImageFallback.ts's URL shape (f_auto,q_auto + .avif) — keep both in sync.
   const segments = afterUpload.split('/')
   let pidStart = 0
   for (let i = 0; i < segments.length; i++) {
@@ -55,7 +59,11 @@ export function getCloudinaryOgWithTitle(url: string, title: string): string {
   // Cloudinary decodes the URL once before parsing the transform, so a single
   // encode (`%2C`/`%2F`) decodes back to a raw separator and yields HTTP 400 —
   // they must be DOUBLE-encoded (`%252C`/`%252F`) to survive as literal text.
-  const truncated = title.length > 65 ? `${title.slice(0, 62)}...` : title
+  // Truncate on code points, not UTF-16 code units, so a supplementary-plane
+  // character (e.g. an emoji in an editorial title) never gets split into an
+  // unpaired surrogate — encodeURIComponent throws URIError on those.
+  const truncated =
+    title.length > 65 ? `${Array.from(title).slice(0, 62).join('')}...` : title
   const encodedTitle = encodeURIComponent(truncated)
     .replace(/%2C/g, '%252C')
     .replace(/%2F/g, '%252F')

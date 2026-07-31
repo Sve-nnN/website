@@ -1,10 +1,8 @@
 import { notFound } from 'next/navigation'
 
-import { getServicePage } from '@/lib/services-data'
+import { getServicePage, getServiceMetadata } from '@/lib/services-data'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
-import { buildServiceAlternates } from '@/lib/canonical'
-import { buildOpenGraph } from '@/lib/og-image'
 import { JsonLd } from '@/components/JsonLd'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
@@ -23,29 +21,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>
 }) {
   const { locale, slug } = await params
-  const doc = await getPage(locale, slug)
-
-  if (!doc) {
-    return {}
-  }
-
-  const title = doc.meta?.title ?? doc.title
-  const description = doc.meta?.description ?? ''
-
-  return {
-    title,
-    description,
-    alternates: buildServiceAlternates(locale as 'es' | 'en', { slug: doc.slug ?? slug }),
-    openGraph: buildOpenGraph({
-      title,
-      description,
-      url:
-        locale === 'es' ? `/servicios/${doc.slug ?? slug}` : `/en/services/${doc.slug ?? slug}`,
-      locale: locale as 'es' | 'en',
-      slug: doc.slug ?? slug,
-      metaImage: doc.meta?.image,
-    }),
-  }
+  return getServiceMetadata(locale as 'es' | 'en', slug)
 }
 
 export default async function ServicePage({

@@ -1,6 +1,8 @@
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
+import { buildServiceAlternates } from '@/lib/canonical'
+import { buildOpenGraph } from '@/lib/og-image'
 
 // Pure slug/URL logic (safe for Client Components) lives in service-slugs.ts
 // — re-exported here so existing importers of this module are unaffected.
@@ -30,6 +32,30 @@ export async function getServicesIndexPage(locale: 'es' | 'en') {
   return docs[0]
 }
 
+// Shared generateMetadata body for the Servicios index — called identically
+// from both physical route twins (/services + /servicios) so the OG-wiring
+// added in Phase 41 (41-REVIEW WR-03) can never drift between them.
+export async function getServicesIndexMetadata(locale: 'es' | 'en') {
+  const doc = await getServicesIndexPage(locale)
+
+  const title = doc?.meta?.title ?? doc?.title ?? (locale === 'es' ? 'Servicios' : 'Services')
+  const description = doc?.meta?.description ?? ''
+
+  return {
+    title,
+    description,
+    alternates: buildServiceAlternates(locale),
+    openGraph: buildOpenGraph({
+      title,
+      description,
+      url: locale === 'es' ? '/servicios' : '/en/services',
+      locale,
+      slug: 'servicios',
+      metaImage: doc?.meta?.image,
+    }),
+  }
+}
+
 export async function getServicePage(locale: 'es' | 'en', slug: string) {
   // Allowlist check BEFORE any DB query — keeps /services/[slug] and
   // /servicios/[slug] from ever querying the `pages` collection with an
@@ -51,4 +77,35 @@ export async function getServicePage(locale: 'es' | 'en', slug: string) {
     overrideAccess: false,
   })
   return docs[0]
+}
+
+// Shared generateMetadata body for a single service landing — called
+// identically from both physical route twins (/services/[slug] +
+// /servicios/[slug]) so the OG-wiring added in Phase 41 (41-REVIEW WR-03)
+// can never drift between them. Returns `{}` (empty metadata) when the doc
+// doesn't resolve, matching each route's existing not-found behavior.
+export async function getServiceMetadata(locale: 'es' | 'en', slug: string) {
+  const doc = await getServicePage(locale, slug)
+
+  if (!doc) {
+    return {}
+  }
+
+  const title = doc.meta?.title ?? doc.title
+  const description = doc.meta?.description ?? ''
+  const resolvedSlug = doc.slug ?? slug
+
+  return {
+    title,
+    description,
+    alternates: buildServiceAlternates(locale, { slug: resolvedSlug }),
+    openGraph: buildOpenGraph({
+      title,
+      description,
+      url: locale === 'es' ? `/servicios/${resolvedSlug}` : `/en/services/${resolvedSlug}`,
+      locale,
+      slug: resolvedSlug,
+      metaImage: doc.meta?.image,
+    }),
+  }
 }

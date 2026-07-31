@@ -8,6 +8,8 @@
  */
 
 const FALLBACK_POOL_SIZE = 53
+// URL shape (transform segment `f_auto,q_auto` + literal `.avif` extension) is
+// parsed by og-image.ts's transform-stripping heuristic — keep both in sync.
 const FALLBACK_BASE_URL = 'https://res.cloudinary.com/dmufha3qv/image/upload/f_auto,q_auto/portfolio'
 
 /**
