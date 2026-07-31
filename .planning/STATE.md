@@ -5,15 +5,15 @@ milestone_name: OG Image & Meta Tags Fix
 current_phase: 41
 current_phase_name: Not started
 status: milestone_planning
-stopped_at: Completed 41-02-PLAN.md (contact/privacy/terms/seo-tecnico-lima/seo-tecnico-madrid/blog wired to buildOpenGraph). Live curl verification blocked by same Neon connectivity issue as 41-01 (WINDOWS.md id 1/id 2) -- code complete, static checks pass.
-last_updated: "2026-07-31T22:57:37.235Z"
+stopped_at: "Completed 41-03-PLAN.md (Servicios/Services 4 routes + Author/Website detail + 4 no-doc listings wired to buildOpenGraph). All ~19 public generateMetadata now emit og:image -- Phase 41 code-complete. Live curl verification blocked by same Neon connectivity issue as 41-01/41-02 (WINDOWS.md id 3)."
+last_updated: "2026-07-31T23:06:24.899Z"
 last_activity: 2026-07-31
 last_activity_desc: "41-01-PLAN.md ejecutado (feat 41-01: og-image.ts + Home/layout/Post/CaseStudy wiring)"
 progress:
   total_phases: 28
-  completed_phases: 26
+  completed_phases: 27
   total_plans: 115
-  completed_plans: 109
+  completed_plans: 110
 ---
 
 # Project State
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-07-31)
 ## Current Position
 
 Phase: 41 — IN PROGRESS
-Plan: 2 of 03 complete
+Plan: 3 of 03 complete
 Status: 41-01 (tracer) ejecutado y commiteado — og-image.ts creado, Home + layout + Post/CaseStudy detail wireados. Verificación curl end-to-end en vivo bloqueada esta sesión por un problema de conectividad Neon Postgres (ver `.planning/WINDOWS.md` id 1) — mecanismo Cloudinary verificado en vivo de forma independiente (URL directa, HTTP 200, render visual correcto). Recomendado re-verificar con `npm run dev` + curl cuando la conexión a Neon esté estable.
 Last activity: 2026-07-31 — 41-01-PLAN.md ejecutado (feat 41-01: og-image.ts + Home/layout/Post/CaseStudy wiring)
 
@@ -121,6 +121,7 @@ Last activity: 2026-07-31 — 41-01-PLAN.md ejecutado (feat 41-01: og-image.ts +
 | Phase 31 P17 | 50min | 3 tasks | 5 files |
 | Phase 41 P01 | 55min | 2 tasks | 5 files |
 | Phase 41 P02 | 20min | 2 tasks | 6 files |
+| Phase 41 P03 | 25min | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -246,6 +247,7 @@ Recent decisions affecting current work:
 - [Phase ?]: 3 gaps preexistentes documentados como follow-up no bloqueante al cierre de v1.6: 8 posts sin contenido en inglés (autoría de traducción pendiente), 6 posts + 6 case studies en borrador (decisión editorial de Juan), 50 rutas con meta.description vacío (gap SEO ya señalado por Phase 30)
 - [Phase ?]: [Phase 41]: 41-01: ported getCloudinaryOgWithTitle verbatim from JuanPortfolio (og-scrim + Array-Bold.woff2 already live on shared Cloudinary account, zero new uploads); reused existing getFallbackHeroImage instead of re-porting fallbackImages.ts. Live curl verification of the rendered HTML (og:image/twitter:card meta tags) was blocked by a session-wide Neon Postgres ECONNRESET, isolated via a raw pg Client test to be independent of this plan's code (confirmed on both pooled and unpooled Neon endpoints, general internet/Cloudinary connectivity fine). The Cloudinary transform mechanism itself was independently verified live (direct URL curl, HTTP 200, correct visual render). Tracked as unrun-verify id 1 in .planning/WINDOWS.md — recommend re-running curl verification once Neon connectivity stabilizes.
 - [Phase ?]: [Phase 41]: 41-02: Horizontal expansion of the 41-01 tracer to 6 no-heroImage Pages-collection routes (contact/privacy/terms/seo-tecnico-lima/seo-tecnico-madrid/blog), each wired to buildOpenGraph with its own fixed slug fallback; zero new logic, zero deviations. Live curl verification blocked by the same session-wide Neon Postgres ECONNRESET as 41-01 (WINDOWS.md id 1) -- re-confirmed independently, logged as new WINDOWS.md id 2.
+- [Phase ?]: [Phase 41]: 41-03 wired the last ~10 of ~19 public generateMetadata functions (Servicios/Services 4 physical routes with fixed slug 'servicios' collapsing both index files to the same fallback image, Author/Website detail excluding avatar/screenshots from the OG chain per 41-CONTEXT.md, and the 4 no-doc listings falling straight to the per-slug fallback pool). Sitewide grep confirms all 19 routes now call buildOpenGraph -- Phase 41 code-complete. Live curl verification blocked a third time by the same Neon Postgres ECONNRESET as 41-01/41-02 (WINDOWS.md id 3).
 
 ### Pending Todos
 
@@ -292,8 +294,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-31T22:57:37.206Z
-Stopped at: Completed 41-02-PLAN.md (contact/privacy/terms/seo-tecnico-lima/seo-tecnico-madrid/blog wired to buildOpenGraph). Live curl verification blocked by same Neon connectivity issue as 41-01 (WINDOWS.md id 1/id 2) -- code complete, static checks pass.
+Last session: 2026-07-31T23:06:10.599Z
+Stopped at: Completed 41-03-PLAN.md (Servicios/Services 4 routes + Author/Website detail + 4 no-doc listings wired to buildOpenGraph). All ~19 public generateMetadata now emit og:image -- Phase 41 code-complete. Live curl verification blocked by same Neon connectivity issue as 41-01/41-02 (WINDOWS.md id 3).
 Resume file: None
 
 ## Operator Next Steps
