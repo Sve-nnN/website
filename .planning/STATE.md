@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.6
-milestone_name: milestone
-current_phase: 31
-current_phase_name: 17/17 plans (complete)
-status: milestone_complete
-stopped_at: Completed 31-17-PLAN.md — Phase 31 and milestone v1.6 CERRADO
-last_updated: "2026-07-17T06:42:13.504Z"
-last_activity: 2026-07-17
-last_activity_desc: Phase 31 (17/17 plans) and milestone v1.6 (Phases 26-31, Track A + Track B) CERRADO
+milestone: v2.0
+milestone_name: OG Image & Meta Tags Fix
+current_phase: 41
+current_phase_name: Not started
+status: milestone_planning
+stopped_at: Milestone v2.0 roadmap created (Phases 41-43) — awaiting /gsd-plan-phase 41
+last_updated: "2026-07-31T00:00:00.000Z"
+last_activity: 2026-07-31
+last_activity_desc: /gsd-new-milestone v2.0 — REQUIREMENTS.md/ROADMAP.md/PROJECT.md updated per opengraph.to audit
 progress:
-  total_phases: 27
-  completed_phases: 26
+  total_phases: 30
+  completed_phases: 27
   total_plans: 112
   completed_plans: 107
 ---
@@ -20,17 +20,17 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-07-09)
+See: .planning/PROJECT.md (updated 2026-07-31)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 31 (Wave 1 done — pre-sweep snapshot + blog/case-studies Lighthouse baseline captured; Wave 2's 13 posts-rewrite plans ready to start)
+**Current focus:** Milestone v2.0 — Phase 41 (OG Image Generation vía Cloudinary), primera fase, todavía no planificada
 
 ## Current Position
 
-Phase: 31 — EXECUTING (Wave 1 of 4 complete)
-Plan: 17 of 17
-Status: 31-01 complete — foundation plan done, Wave 2 unblocked
-Last activity: 2026-07-16 — Phase 31 Wave 1 (31-01) complete
+Phase: 41 — NOT STARTED
+Plan: -
+Status: Roadmap recién creado, listo para `/gsd-plan-phase 41`
+Last activity: 2026-07-31 — Milestone v2.0 abierto (REQUIREMENTS.md/ROADMAP.md/PROJECT.md actualizados)
 
 ## Performance Metrics
 
@@ -299,3 +299,4 @@ Resume file: None
 - 3 non-blocking follow-up items flagged at v1.6 close for Juan's future decision (none block deploy or any other milestone): (1) 8 posts with zero English content — needs a dedicated translation-authoring plan; (2) 6 Posts + 6 Case Studies remain unpublished drafts — publishing is Juan's editorial call, content already humanized and ready; (3) 50 of 160 routes have empty `meta.description` — pre-existing SEO gap, already partially addressed for Pages, not yet for Posts/CaseStudies.
 - When ready to resume Phase 6 (Deploy + Cutover to Hostinger): `RESEND_API_KEY` in `.env` is still a placeholder (see Blockers/Concerns) and must be replaced with a real key before contact-form email delivery can be verified in production.
 - Optional cleanup (still deferred): archive `.planning/phases/32-*` through `36-*` into `.planning/milestones/v1.7-phases/` via `/gsd:cleanup` if/when Juan wants phase directories tidied up, matching the v1.4/v1.5 precedent.
+- [Milestone v2.0]: Roadmap: 3 fases nuevas (41-43), continuando la numeración desde Phase 40. Origen: auditoría externa opengraph.to (score 17/100, sin og:image en ninguna página + 8 warnings). Juan confirmó por AskUserQuestion: (1) misma cuenta Cloudinary que JuanPortfolio — reusar `og-scrim`/`Array-Bold.woff2` ya subidos, no resubir; (2) alcance completo incluyendo performance (respuesta lenta 1.58s + HTML 271KB), no solo meta tags. Orden: Phase 41 (OG image dinámico, el error crítico) primero y sola porque toca el layout raíz por primera vez; Phase 42 (resto de meta tags) depende de 41 por tocar el mismo archivo; Phase 43 (performance) es independiente, puede correr en paralelo. Pendiente de verificar en Phase 41: que `og-scrim`/`Array-Bold.woff2` realmente existan en la cuenta Cloudinary de juan-payload (Juan dijo "misma cuenta" pero no se confirmó con un fetch real todavía).

@@ -20,6 +20,8 @@ Reconstrucción de plataforma: mismo contenido y páginas del sitio actual, pero
 
 **Milestone v1.8 — Case Studies Content Audit & Fix, creado 2026-07-14:** Juan verificó a mano en el admin los 6 case studies borrador (ids 15-20) y encontró bugs reales de contenido: "El reto"/"La solución" incompletos en uno o ambos locales, KPIs mostrados como números sueltos sin label explicativo, el doc 20 (despacho penal Pittsburgh) exponiendo datos reales de un cliente sin anonimizar (nombre, dominio, condado, conteo de reseñas), y `results.metrics` con muy pocas filas por caso (charts de 1-2 barras). 1 fase nueva (Phase 37), continuando la numeración desde Phase 36: corrige los 6 docs de punta a punta — contenido completo bilingüe, KPIs con label, doc 20 anonimizado, y `results.metrics` poblado con datos reales de Google Search Console (MCP `gsc-juan-*`) sin exponer branding del cliente. Nota de ejecución dura: un intento previo de correr scripts Local API (`npx payload run`) para leer/escribir en vivo falló en silencio en el shell de Juan (exit 0, sin salida) pese a funcionar en agentes previos del mismo hilo — el plan de esta fase debe preferir el servidor MCP `juan-payload` (`http://localhost:3000/api/mcp`, dev server debe estar levantado) para leer/escribir los docs en lugar de repetir ese camino roto; si igual se usa un script Local API, debe verificar primero que produce salida real antes de confiar en él. Cierra devolviendo el JSON crudo completo de los 6 docs corregidos (no un resumen) para que Juan lo verifique él mismo, ya que un intento anterior declaró "verificado" sin estarlo. Ver `.planning/REQUIREMENTS.md` sección "v1 Requirements" (milestone v1.8) para el detalle completo.
 
+**Milestone v2.0 — OG Image & Meta Tags Fix, creado 2026-07-31:** Auditoría externa (`opengraph.to/u/juan-tech.com`) encontró que el sitio nunca tuvo `og:image` (error crítico, score 17/100) más 8 warnings de meta tags/performance. `JuanPortfolio` (sitio de referencia) resuelve OG image con overlay de texto vía transforms de Cloudinary — no `next/og`/`ImageResponse` — reusando un asset `og-scrim` y la fuente `Array-Bold.woff2` ya subidos a la misma cuenta Cloudinary que usa juan-payload; se porta ese mismo patrón en vez de introducir un mecanismo nuevo. 3 fases nuevas (41-43), continuando la numeración desde Phase 40: generación dinámica de `og:image` + `og:url`/`twitter:card` (Phase 41, el error crítico); resto de meta tags — favicon, apple-touch-icon, theme-color, manifest, canonical sitewide (Phase 42, depende de 41 por tocar el mismo layout raíz); y performance — respuesta de servidor lenta (1.58s) y HTML pesado (271KB) (Phase 43, independiente, se puede paralelizar). Ver `.planning/REQUIREMENTS.md` sección "Milestone v2.0" para el detalle completo.
+
 **Milestone v1.9 — Websites Portfolio Section, creado 2026-07-14:** Juan tiene una colección de sitios web reales que construyó (no solo case studies con storytelling SEO) y hoy el sitio no tiene dónde mostrar ese trabajo técnico como portfolio de desarrollo, separado del ángulo de resultados/case study. 3 fases nuevas (38-40), continuando la numeración desde Phase 37 (queda en cola con CONTEXT.md/UI-SPEC.md aprobados, retoma después de v1.9): schema de la colección `Websites` (Phase 38, mismo patrón que `CaseStudies`, con relaciones opcionales a `Clientes`/`CaseStudies` y campo `lighthouseCapturedAt` obligatorio para que los scores nunca se presenten como en vivo); componentes/rutas de frontend (Phase 39, `WebsiteCard` compartido, `FeaturedWebsitesBlock`, extensión de `ArchiveBlock`, rutas `/websites`+`/websites/[slug]` con JSON-LD `CreativeWork`); y poblado de contenido real (Phase 40, 6 sitios reales — ariannalupi.com, aprendoclub.com, estylopia.com, drmanuelvargashidalgo.com, apturio.com, juan-tech.com — con stack confirmado interactivamente con Juan sitio por sitio, screenshots reales vía Playwright y Lighthouse real corrido una sola vez, no en vivo/recurrente). `Websites` y `CaseStudies` quedan separados a propósito (craft técnico vs. resultado de negocio), mismo principio que ya separa `Clientes` de `CaseStudies`. Ver `.planning/REQUIREMENTS.md` sección "Milestone v1.9" y `.planning/research/SUMMARY-v1.9.md` para el detalle completo.
 
 ## Phases
@@ -76,6 +78,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 38: Websites — Schema & Collection Design** - Colección `Websites` modelada, registrada y tipada, con relaciones opcionales a Clientes/CaseStudies y captura de fecha obligatoria para Lighthouse (completed 2026-07-14)
 - [x] **Phase 39: Websites — Frontend Components & Routes** - `WebsiteCard`, sección en Home, `ArchiveBlock` extendido, rutas de listado/detalle con JSON-LD `CreativeWork` y sitemap actualizado (completed 2026-07-14)
 - [x] **Phase 40: Websites — Content Population (Real Data Capture)** - 6 sitios reales poblados con stack confirmado por Juan, screenshots reales y Lighthouse real capturado una sola vez (completed 2026-07-14)
+- [ ] **Phase 41: OG Image Generation (Cloudinary)** - `og:image` dinámico por página vía Cloudinary + `og:url`/`twitter:card` correctos
+- [ ] **Phase 42: Meta Tags Completion** - favicon, apple-touch-icon, theme-color, manifest, canonical sitewide
+- [ ] **Phase 43: Performance (Response Time + HTML Size)** - respuesta de servidor <1.58s y HTML de home reducido de 271KB
 
 ## Phase Details
 
@@ -986,10 +991,57 @@ Plans:
 
 - [x] 40-01-PLAN.md — Seed script (write + run) capturing real screenshot/Lighthouse and upserting the 6 Websites docs, plus human-verify checkpoint
 
+### Phase 41: OG Image Generation (Cloudinary)
+
+**Goal**: Toda página pública del sitio devuelve un `og:image` real y dinámico (1200x630, título de la página visible en la imagen), generado vía transforms de Cloudinary igual que `JuanPortfolio` (overlay de texto sobre `og-scrim` + fuente `Array-Bold.woff2`, misma cuenta Cloudinary) — resuelve el único error crítico de la auditoría (score 17/100, "Pages without an og:image get significantly less engagement on social media").
+**Depends on**: Nothing (primera fase del milestone; continúa la numeración desde Phase 40)
+**Requirements**: OG-01, OG-02, OG-03, OG-04
+**Success Criteria** (what must be TRUE):
+
+  1. El asset `og-scrim` y la fuente `Array-Bold.woff2` existen en la cuenta Cloudinary de juan-payload (verificado en vivo, no asumido por "misma cuenta") — si no existen, quedan subidos como parte de esta fase
+  2. Un util portado (equivalente a `cloudinaryUrl.ts` + `generateMeta.ts` de JuanPortfolio) construye la URL de `og:image` a partir del título real + imagen de fondo (hero/`meta.image` si existe, fallback determinístico por slug si no)
+  3. `generateMetadata` de todas las rutas públicas (home, pages dinámicas, posts, case-studies, authors, services, websites, geo-pages, contact/privacy/terms/search, listados de blog/case-studies) usa este util para poblar `openGraph.images`
+  4. El layout raíz declara `twitter: { card: 'summary_large_image' }`; `twitter:image` se hereda de `openGraph.images` sin declaración separada
+  5. `openGraph.url` resuelve a una URL absoluta correcta por página (vía `metadataBase` ya seteado)
+  6. Curl real de al menos 3 rutas de tipos distintos (home ES/EN, un post, un case study) muestra `og:image` apuntando a una URL Cloudinary válida (200, con el título correcto renderizado en la imagen)
+
+**Plans**: TBD
+
+### Phase 42: Meta Tags Completion
+
+**Goal**: Los 7 warnings de meta tags restantes de la auditoría quedan resueltos sitewide — favicon, apple-touch-icon, theme-color, manifest PWA, y canonical correcto en cada tipo de ruta pública.
+**Depends on**: Phase 41 (mismo layout raíz ya tocado; evita dos passes sobre el mismo archivo)
+**Requirements**: META-01, META-02, META-03, META-04, META-05
+**Success Criteria** (what must be TRUE):
+
+  1. `favicon.ico` y `favicon.svg` existen en `public/` y están declarados en `metadata.icons.icon`
+  2. `metadata.icons.apple` declara un apple-touch-icon real
+  3. `metadata.themeColor` (o `<meta name="theme-color">` equivalente en Next 15) está declarado
+  4. Existe un `manifest.json`/`manifest.ts` servido (name, short_name, icons, theme_color, background_color, start_url) y enlazado desde el `<head>`
+  5. `alternates.canonical` está presente y es locale-aware en cada tipo de ruta pública (verificado con curl, no solo lectura de código)
+  6. Re-correr la auditoría de opengraph.to (o inspección manual equivalente de meta tags) confirma 0 warnings de estos 5 ítems
+
+**Plans**: TBD
+
+### Phase 43: Performance (Response Time + HTML Size)
+
+**Goal**: La respuesta del servidor y el peso del HTML de home mejoran de forma medible respecto al baseline de la auditoría (1.58s de respuesta, 271KB de HTML), sin violar la constraint de deploy standalone-Node del proyecto (sin ISR/edge nativos).
+**Depends on**: Nothing (independiente de 41/42, no toca metadata — puede correr en paralelo)
+**Requirements**: PERF-01, PERF-02
+**Success Criteria** (what must be TRUE):
+
+  1. Causa raíz de la respuesta lenta identificada (ej. query a Postgres por request sin cache en una ruta `force-dynamic`) y documentada antes de aplicar cualquier fix
+  2. Mitigación aplicada dentro de las constraints del proyecto (cache in-memory con invalidación vía `afterChange` hooks, ya es el patrón usado en el resto del sitio — no ISR/edge)
+  3. Medición real post-fix (no teórica) muestra mejora del tiempo de respuesta de home
+  4. Medición real (`curl | wc -c`) muestra el HTML de home reducido de forma significativa respecto a 271KB
+  5. Sin regresión de Lighthouse/CWV contra el baseline más reciente del proyecto (mismo gate ya usado en fases anteriores)
+
+**Plans**: TBD
+
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 → 32 → 33 → 34 → 35 → 36 → 37 → 38 → 39 → 40 (v1.1-v1.5 cerrados; v1.6 CERRADO [Phase 26-31 completas, Track A + Track B, 20/20 requirements] — Track A (motion/UI) cerrado 2026-07-13, Track B (humanización de contenido, retomada tras la pausa por v1.7) cerrado 2026-07-17 con gate final de Lighthouse/CWV PASS sobre las 10 rutas representativas de ambos tracks; v1.7 CERRADO [Phase 32-36 completas] — baseline de regresión → componentes nuevos de Local Landing → aplicación real a Madrid/Lima → polish pass de los 28 componentes restantes → gate de cierre (PASS, 6/6 rutas limpias); v1.8 [Phase 37, CERRADO] — fix de contenido/anonimización/datos GSC reales en los 6 case studies borrador ids 15-20 completo (4/4 planes); v1.9 [Phase 38-40, CERRADO] — schema `Websites` → componentes/rutas de frontend → poblado real de 6 sitios (stack confirmado con Juan, screenshots/Lighthouse capturados una sola vez); Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 → 32 → 33 → 34 → 35 → 36 → 37 → 38 → 39 → 40 → 41 → 42 → 43 (v1.1-v1.5 cerrados; v1.6 CERRADO [Phase 26-31 completas, Track A + Track B, 20/20 requirements] — Track A (motion/UI) cerrado 2026-07-13, Track B (humanización de contenido, retomada tras la pausa por v1.7) cerrado 2026-07-17 con gate final de Lighthouse/CWV PASS sobre las 10 rutas representativas de ambos tracks; v1.7 CERRADO [Phase 32-36 completas] — baseline de regresión → componentes nuevos de Local Landing → aplicación real a Madrid/Lima → polish pass de los 28 componentes restantes → gate de cierre (PASS, 6/6 rutas limpias); v1.8 [Phase 37, CERRADO] — fix de contenido/anonimización/datos GSC reales en los 6 case studies borrador ids 15-20 completo (4/4 planes); v1.9 [Phase 38-40, CERRADO] — schema `Websites` → componentes/rutas de frontend → poblado real de 6 sitios (stack confirmado con Juan, screenshots/Lighthouse capturados una sola vez); v2.0 [Phase 41-43, ACTIVO] — og:image dinámico vía Cloudinary → resto de meta tags (favicon/canonical/manifest/theme-color) → performance (respuesta de servidor + peso de HTML); Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -1037,4 +1089,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 38. Websites — Schema & Collection Design | 1/1 | Complete   | 2026-07-14 |
 | 39. Websites — Frontend Components & Routes | 4/4 | Complete   | 2026-07-14 |
 | 40. Websites — Content Population (Real Data Capture) | 1/1 | Complete   | 2026-07-14 |
+| 41. OG Image Generation (Cloudinary) | 0/TBD | Not started | - |
+| 42. Meta Tags Completion | 0/TBD | Not started | - |
+| 43. Performance (Response Time + HTML Size) | 0/TBD | Not started | - |
 </content>

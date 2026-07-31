@@ -121,3 +121,53 @@ Coverage: 11/11 v1.8 requirements mapped. No orphans, no duplicates.
 | WEB-16 | Phase 40 | Complete |
 
 Coverage: 16/16 v1.9 requirements mapped. No orphans, no duplicates.
+
+## Milestone v2.0 — OG Image & Meta Tags Fix — ACTIVO
+
+Auditoría externa (`opengraph.to/u/juan-tech.com`, 2026-07-31): score 17/100, 1 error crítico (sin `og:image` en ninguna página) + 8 warnings (`og:url`, `twitter:card`, canonical, `apple-touch-icon`, favicon, `theme-color`, manifest PWA, respuesta de servidor 1.58s, HTML de 271KB). El sitio nunca tuvo generación de OG image — a diferencia de `JuanPortfolio` (sitio de referencia), que resuelve esto con overlay de texto vía transforms de Cloudinary (no `next/og`/`ImageResponse`), reusando un asset `og-scrim` y la fuente `Array-Bold.woff2` ya subidos a Cloudinary. juan-payload usa la misma cuenta Cloudinary — se porta el mismo patrón.
+
+### v1 Requirements
+
+#### OG Image (Phase 41)
+
+- [ ] **OG-01**: `og:image` dinámico por página vía Cloudinary (overlay de texto sobre `og-scrim` + fuente `Array-Bold.woff2`, mismo enfoque que `cloudinaryUrl.ts`/`generateMeta.ts` de JuanPortfolio), 1200x630, con el título real de cada página visible en la imagen
+- [ ] **OG-02**: Fallback de imagen de fondo cuando la página no tiene `meta.image` (SEO plugin) ni hero image explícito — determinístico por slug, no una imagen genérica repetida en todo el sitio
+- [ ] **OG-03**: `og:url` absoluto y correcto por página (resuelto vía `metadataBase` + `openGraph.url`)
+- [ ] **OG-04**: `twitter:card: summary_large_image` declarado sitewide en el layout raíz; `twitter:image` heredado de `openGraph.images` (no se declara por separado)
+
+#### Meta Tags Restantes (Phase 42)
+
+- [ ] **META-01**: `alternates.canonical` presente y locale-aware en todas las rutas públicas (home, pages, posts, case-studies, authors, services, websites, geo-pages, contact/privacy/terms/search, listados de blog/case-studies)
+- [ ] **META-02**: `favicon.ico` + `favicon.svg` servidos desde `public/` y declarados en `metadata.icons`
+- [ ] **META-03**: `apple-touch-icon` declarado (`metadata.icons.apple`)
+- [ ] **META-04**: `theme-color` declarado
+- [ ] **META-05**: `manifest.json`/`manifest.ts` básico (name, short_name, icons, theme_color, background_color, start_url) servido y enlazado
+
+#### Performance (Phase 43)
+
+- [ ] **PERF-01**: Causa raíz de la respuesta de servidor lenta (1.58s en home) identificada y mitigada, respetando la constraint del proyecto (standalone Node en Hostinger, sin ISR/edge) — medición real post-fix, no solo teórica
+- [ ] **PERF-02**: Tamaño de HTML de home reducido de forma medible respecto al baseline de 271KB (`curl | wc -c`), sin romper contenido/hidratación
+
+### Out of Scope (v2.0)
+
+- Reauditoría automática o programada de OG/meta tags (viola el límite arquitectónico ya establecido: sin SEO tooling en vivo dentro de la app)
+- Optimización de performance de rutas fuera de home a menos que la causa raíz de PERF-01 resulte sitewide (ej. un query N+1 en un layout compartido) — el foco es home primero
+- Portar el pool completo de 53 imágenes fallback de JuanPortfolio si un fallback más simple (determinístico por slug, pool más chico) cumple igual el requirement
+
+### Traceability (v2.0)
+
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| OG-01 | Phase 41 | Pending |
+| OG-02 | Phase 41 | Pending |
+| OG-03 | Phase 41 | Pending |
+| OG-04 | Phase 41 | Pending |
+| META-01 | Phase 42 | Pending |
+| META-02 | Phase 42 | Pending |
+| META-03 | Phase 42 | Pending |
+| META-04 | Phase 42 | Pending |
+| META-05 | Phase 42 | Pending |
+| PERF-01 | Phase 43 | Pending |
+| PERF-02 | Phase 43 | Pending |
+
+Coverage: 11/11 v2.0 requirements mapped. No orphans, no duplicates.
