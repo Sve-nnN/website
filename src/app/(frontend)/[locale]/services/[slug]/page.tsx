@@ -4,6 +4,7 @@ import { getServicePage } from '@/lib/services-data'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { buildServiceAlternates } from '@/lib/canonical'
+import { buildOpenGraph } from '@/lib/og-image'
 import { JsonLd } from '@/components/JsonLd'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
@@ -28,10 +29,22 @@ export async function generateMetadata({
     return {}
   }
 
+  const title = doc.meta?.title ?? doc.title
+  const description = doc.meta?.description ?? ''
+
   return {
-    title: doc.meta?.title ?? doc.title,
-    description: doc.meta?.description ?? '',
+    title,
+    description,
     alternates: buildServiceAlternates(locale as 'es' | 'en', { slug: doc.slug ?? slug }),
+    openGraph: buildOpenGraph({
+      title,
+      description,
+      url:
+        locale === 'es' ? `/servicios/${doc.slug ?? slug}` : `/en/services/${doc.slug ?? slug}`,
+      locale: locale as 'es' | 'en',
+      slug: doc.slug ?? slug,
+      metaImage: doc.meta?.image,
+    }),
   }
 }
 
