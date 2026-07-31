@@ -1005,7 +1005,7 @@ Plans:
   5. `openGraph.url` resuelve a una URL absoluta correcta por página (vía `metadataBase` ya seteado)
   6. Curl real de al menos 3 rutas de tipos distintos (home ES/EN, un post, un case study) muestra `og:image` apuntando a una URL Cloudinary válida (200, con el título correcto renderizado en la imagen)
 
-**Plans**: 1/3 plans executed
+**Plans**: 2/3 plans executed
 
 Plans:
 **Wave 1**
@@ -1014,7 +1014,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 41-02-PLAN.md — Wire contact/privacy/terms/seo-tecnico-lima/seo-tecnico-madrid/blog listing (pages collection, no heroImage)
+- [x] 41-02-PLAN.md — Wire contact/privacy/terms/seo-tecnico-lima/seo-tecnico-madrid/blog listing (pages collection, no heroImage)
 - [ ] 41-03-PLAN.md — Wire Servicios/Services (4 routes) + Author/Website detail + 4 no-doc listings (case-studies/authors/websites/search)
 
 ### Phase 42: Meta Tags Completion
@@ -1099,7 +1099,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 38. Websites — Schema & Collection Design | 1/1 | Complete   | 2026-07-14 |
 | 39. Websites — Frontend Components & Routes | 4/4 | Complete   | 2026-07-14 |
 | 40. Websites — Content Population (Real Data Capture) | 1/1 | Complete   | 2026-07-14 |
-| 41. OG Image Generation (Cloudinary) | 1/3 | In Progress|  |
+| 41. OG Image Generation (Cloudinary) | 2/3 | In Progress|  |
 | 42. Meta Tags Completion | 0/TBD | Not started | - |
 | 43. Performance (Response Time + HTML Size) | 0/TBD | Not started | - |
 </content>
