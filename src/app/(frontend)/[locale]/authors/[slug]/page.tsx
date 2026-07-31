@@ -6,6 +6,7 @@ import { GraduationCap, Mic, ExternalLink } from 'lucide-react'
 
 import config from '@payload-config'
 import { JsonLd } from '@/components/JsonLd'
+import { buildOpenGraph } from '@/lib/og-image'
 import { Container } from '@/components/Container'
 import { AuthorCard } from '@/components/AuthorCard'
 import { PostCard } from '@/components/PostCard'
@@ -98,9 +99,20 @@ export async function generateMetadata({
 
   if (!doc) return {}
 
+  const title = doc.meta?.title ?? doc.name
+  const description = doc.meta?.description ?? doc.jobTitle ?? ''
+
   return {
-    title: doc.meta?.title ?? doc.name,
-    description: doc.meta?.description ?? doc.jobTitle ?? '',
+    title,
+    description,
+    openGraph: buildOpenGraph({
+      title,
+      description,
+      url: locale === 'en' ? `/en/authors/${slug}` : `/authors/${slug}`,
+      locale: locale as 'es' | 'en',
+      slug: doc.slug ?? slug,
+      metaImage: doc.meta?.image,
+    }),
   }
 }
 

@@ -9,6 +9,7 @@ import { JsonLd } from '@/components/JsonLd'
 import { Container } from '@/components/Container'
 import { Badge } from '@/components/ui/badge'
 import { buildWebsitesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
+import { buildOpenGraph } from '@/lib/og-image'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -41,10 +42,20 @@ export async function generateMetadata({
   }
 
   const meta = doc.meta
+  const title = meta?.title ?? doc.title
+  const description = meta?.description ?? doc.role ?? doc.industry ?? ''
 
   return {
-    title: meta?.title ?? doc.title,
-    description: meta?.description ?? doc.role ?? doc.industry ?? '',
+    title,
+    description,
+    openGraph: buildOpenGraph({
+      title,
+      description,
+      url: locale === 'en' ? `/en/websites/${slug}` : `/websites/${slug}`,
+      locale: locale as 'es' | 'en',
+      slug: doc.slug ?? slug,
+      metaImage: meta?.image,
+    }),
   }
 }
 
