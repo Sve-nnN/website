@@ -13,6 +13,7 @@ import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { RelatedPostsComponent } from '@/blocks/RelatedPosts/Component'
 import { TableOfContentsBlockComponent } from '@/blocks/TableOfContentsBlock/Component'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
+import { buildOpenGraph } from '@/lib/og-image'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -65,10 +66,21 @@ export async function generateMetadata({
   }
 
   const meta = doc.meta
+  const title = meta?.title ?? doc.title
+  const description = meta?.description ?? doc.excerpt ?? ''
 
   return {
-    title: meta?.title ?? doc.title,
-    description: meta?.description ?? doc.excerpt ?? '',
+    title,
+    description,
+    openGraph: buildOpenGraph({
+      title,
+      description,
+      url: locale === 'en' ? `/en/blog/${slug}` : `/blog/${slug}`,
+      locale: locale as 'es' | 'en',
+      slug,
+      metaImage: meta?.image,
+      heroImage: doc.heroImage,
+    }),
   }
 }
 

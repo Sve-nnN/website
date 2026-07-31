@@ -10,6 +10,7 @@ import { Container } from '@/components/Container'
 import { AuthorCard } from '@/components/AuthorCard'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
+import { buildOpenGraph } from '@/lib/og-image'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { CaseStudyResultsChart } from '@/components/CaseStudyResultsChart'
@@ -46,10 +47,21 @@ export async function generateMetadata({
   }
 
   const meta = doc.meta
+  const title = meta?.title ?? doc.title
+  const description = meta?.description ?? doc.heroSubtitle ?? ''
 
   return {
-    title: meta?.title ?? doc.title,
-    description: meta?.description ?? doc.heroSubtitle ?? '',
+    title,
+    description,
+    openGraph: buildOpenGraph({
+      title,
+      description,
+      url: locale === 'en' ? `/en/case-studies/${slug}` : `/case-studies/${slug}`,
+      locale: locale as 'es' | 'en',
+      slug,
+      metaImage: meta?.image,
+      heroImage: doc.heroImage,
+    }),
   }
 }
 
