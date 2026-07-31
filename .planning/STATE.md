@@ -5,15 +5,15 @@ milestone_name: OG Image & Meta Tags Fix
 current_phase: 41
 current_phase_name: Not started
 status: milestone_planning
-stopped_at: Milestone v2.0 roadmap created (Phases 41-43) — awaiting /gsd-plan-phase 41
-last_updated: "2026-07-31T00:00:00.000Z"
+stopped_at: "Completed 41-01-PLAN.md (tracer: og-image.ts + Home + layout twitter card + Post/CaseStudy detail wiring). Live curl verification blocked by Neon Postgres connectivity issue this session (see WINDOWS.md id 1) -- code complete, Cloudinary mechanism independently verified live."
+last_updated: "2026-07-31T22:48:38.253Z"
 last_activity: 2026-07-31
-last_activity_desc: /gsd-new-milestone v2.0 — REQUIREMENTS.md/ROADMAP.md/PROJECT.md updated per opengraph.to audit
+last_activity_desc: "41-01-PLAN.md ejecutado (feat 41-01: og-image.ts + Home/layout/Post/CaseStudy wiring)"
 progress:
-  total_phases: 30
-  completed_phases: 27
-  total_plans: 112
-  completed_plans: 107
+  total_phases: 28
+  completed_phases: 26
+  total_plans: 115
+  completed_plans: 108
 ---
 
 # Project State
@@ -23,14 +23,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-31)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Milestone v2.0 — Phase 41 (OG Image Generation vía Cloudinary), primera fase, todavía no planificada
+**Current focus:** Milestone v2.0 — Phase 41 (OG Image Generation vía Cloudinary), Plan 01 (tracer) ejecutado, Plans 02/03 pendientes
 
 ## Current Position
 
-Phase: 41 — NOT STARTED
-Plan: -
-Status: Roadmap recién creado, listo para `/gsd-plan-phase 41`
-Last activity: 2026-07-31 — Milestone v2.0 abierto (REQUIREMENTS.md/ROADMAP.md/PROJECT.md actualizados)
+Phase: 41 — IN PROGRESS
+Plan: 01 of 03 complete
+Status: 41-01 (tracer) ejecutado y commiteado — og-image.ts creado, Home + layout + Post/CaseStudy detail wireados. Verificación curl end-to-end en vivo bloqueada esta sesión por un problema de conectividad Neon Postgres (ver `.planning/WINDOWS.md` id 1) — mecanismo Cloudinary verificado en vivo de forma independiente (URL directa, HTTP 200, render visual correcto). Recomendado re-verificar con `npm run dev` + curl cuando la conexión a Neon esté estable.
+Last activity: 2026-07-31 — 41-01-PLAN.md ejecutado (feat 41-01: og-image.ts + Home/layout/Post/CaseStudy wiring)
 
 ## Performance Metrics
 
@@ -119,6 +119,7 @@ Last activity: 2026-07-31 — Milestone v2.0 abierto (REQUIREMENTS.md/ROADMAP.md
 | Phase 31 P05 | 50min | 1 tasks | 2 files |
 | Phase 31 P16 | 75min | 3 tasks | 4 files |
 | Phase 31 P17 | 50min | 3 tasks | 5 files |
+| Phase 41 P01 | 55min | 2 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -242,6 +243,7 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 31]: 31-16: Fixed a real bug in isLocalizedPair() detection logic (Payload omits missing locale keys rather than nulling them) affecting both the new diff tool and verify-locale-parity.ts; found and fixed 6 excerpt-only gaps, Footer.dynamicColumns es-locale gap, 1 link-fusion bug, 59 residual AI-cliche fields, and 14 title-level locale mixups via a systematic sweep across all 72 posts + 7 case-studies (Juan's explicit request); deferred 8 posts' full-English-translation gap (Rule 4, same boundary as 31-02/31-11) and 12 pre-existing unpublished drafts (6 posts + 6 case-studies) as editorial decisions outside this plan's scope
 - [Phase ?]: Milestone v1.6 CERRADO 2026-07-17 (Phases 26-31, Track A + Track B, 20/20 requirements) tras gate final de Lighthouse/CWV PASS en 10 rutas representativas y verificación de las 5 success criteria de Phase 31 (31-VERIFICATION.md)
 - [Phase ?]: 3 gaps preexistentes documentados como follow-up no bloqueante al cierre de v1.6: 8 posts sin contenido en inglés (autoría de traducción pendiente), 6 posts + 6 case studies en borrador (decisión editorial de Juan), 50 rutas con meta.description vacío (gap SEO ya señalado por Phase 30)
+- [Phase ?]: [Phase 41]: 41-01: ported getCloudinaryOgWithTitle verbatim from JuanPortfolio (og-scrim + Array-Bold.woff2 already live on shared Cloudinary account, zero new uploads); reused existing getFallbackHeroImage instead of re-porting fallbackImages.ts. Live curl verification of the rendered HTML (og:image/twitter:card meta tags) was blocked by a session-wide Neon Postgres ECONNRESET, isolated via a raw pg Client test to be independent of this plan's code (confirmed on both pooled and unpooled Neon endpoints, general internet/Cloudinary connectivity fine). The Cloudinary transform mechanism itself was independently verified live (direct URL curl, HTTP 200, correct visual render). Tracked as unrun-verify id 1 in .planning/WINDOWS.md — recommend re-running curl verification once Neon connectivity stabilizes.
 
 ### Pending Todos
 
@@ -288,8 +290,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-07-17T06:42:13.494Z
-Stopped at: Completed 31-17-PLAN.md — Phase 31 and milestone v1.6 CERRADO
+Last session: 2026-07-31T22:48:06.317Z
+Stopped at: Completed 41-01-PLAN.md (tracer: og-image.ts + Home + layout twitter card + Post/CaseStudy detail wiring). Live curl verification blocked by Neon Postgres connectivity issue this session (see WINDOWS.md id 1) -- code complete, Cloudinary mechanism independently verified live.
 Resume file: None
 
 ## Operator Next Steps

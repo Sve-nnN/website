@@ -130,10 +130,10 @@ Auditoría externa (`opengraph.to/u/juan-tech.com`, 2026-07-31): score 17/100, 1
 
 #### OG Image (Phase 41)
 
-- [ ] **OG-01**: `og:image` dinámico por página vía Cloudinary (overlay de texto sobre `og-scrim` + fuente `Array-Bold.woff2`, mismo enfoque que `cloudinaryUrl.ts`/`generateMeta.ts` de JuanPortfolio), 1200x630, con el título real de cada página visible en la imagen
-- [ ] **OG-02**: Fallback de imagen de fondo cuando la página no tiene `meta.image` (SEO plugin) ni hero image explícito — determinístico por slug, no una imagen genérica repetida en todo el sitio
-- [ ] **OG-03**: `og:url` absoluto y correcto por página (resuelto vía `metadataBase` + `openGraph.url`)
-- [ ] **OG-04**: `twitter:card: summary_large_image` declarado sitewide en el layout raíz; `twitter:image` heredado de `openGraph.images` (no se declara por separado)
+- [x] **OG-01**: `og:image` dinámico por página vía Cloudinary (overlay de texto sobre `og-scrim` + fuente `Array-Bold.woff2`, mismo enfoque que `cloudinaryUrl.ts`/`generateMeta.ts` de JuanPortfolio), 1200x630, con el título real de cada página visible en la imagen
+- [x] **OG-02**: Fallback de imagen de fondo cuando la página no tiene `meta.image` (SEO plugin) ni hero image explícito — determinístico por slug, no una imagen genérica repetida en todo el sitio
+- [x] **OG-03**: `og:url` absoluto y correcto por página (resuelto vía `metadataBase` + `openGraph.url`)
+- [x] **OG-04**: `twitter:card: summary_large_image` declarado sitewide en el layout raíz; `twitter:image` heredado de `openGraph.images` (no se declara por separado)
 
 #### Meta Tags Restantes (Phase 42)
 
