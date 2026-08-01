@@ -138,10 +138,10 @@ Auditoría externa (`opengraph.to/u/juan-tech.com`, 2026-07-31): score 17/100, 1
 #### Meta Tags Restantes (Phase 42)
 
 - [ ] **META-01**: `alternates.canonical` presente y locale-aware en todas las rutas públicas (home, pages, posts, case-studies, authors, services, websites, geo-pages, contact/privacy/terms/search, listados de blog/case-studies)
-- [ ] **META-02**: `favicon.ico` + `favicon.svg` servidos desde `public/` y declarados en `metadata.icons`
-- [ ] **META-03**: `apple-touch-icon` declarado (`metadata.icons.apple`)
-- [ ] **META-04**: `theme-color` declarado
-- [ ] **META-05**: `manifest.json`/`manifest.ts` básico (name, short_name, icons, theme_color, background_color, start_url) servido y enlazado
+- [x] **META-02**: `favicon.ico` + `favicon.svg` servidos desde `public/` y declarados en `metadata.icons`
+- [x] **META-03**: `apple-touch-icon` declarado (`metadata.icons.apple`)
+- [x] **META-04**: `theme-color` declarado
+- [x] **META-05**: `manifest.json`/`manifest.ts` básico (name, short_name, icons, theme_color, background_color, start_url) servido y enlazado
 
 #### Performance (Phase 43)
 
