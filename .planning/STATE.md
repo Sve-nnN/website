@@ -5,15 +5,15 @@ milestone_name: OG Image & Meta Tags Fix
 current_phase: 42
 current_phase_name: Meta Tags Completion
 status: in_progress
-stopped_at: Completed 42-01-PLAN.md
-last_updated: "2026-08-01T15:39:16.159Z"
+stopped_at: Completed 42-02-PLAN.md
+last_updated: "2026-08-01T15:44:40.008Z"
 last_activity: 2026-08-01
 last_activity_desc: "42-01-PLAN.md ejecutado (feat 42-01: favicon + apple-touch-icon + theme-color + site.webmanifest)"
 progress:
   total_phases: 29
   completed_phases: 27
   total_plans: 118
-  completed_plans: 111
+  completed_plans: 112
 ---
 
 # Project State
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-07-31)
 ## Current Position
 
 Phase: 42 — IN PROGRESS
-Plan: 1 of 3 complete
+Plan: 2 of 3 complete
 Status: 42-01 (tracer) ejecutado y commiteado — favicon/apple-touch-icon/theme-color/site.webmanifest wireados sitewide en layout.tsx. Los 7 assets estáticos nuevos verificados en vivo (200 + Content-Type correcto). Verificación del theme-color meta tag en el HTML renderizado de Home diferida a producción por el mismo problema de conectividad Neon de Phase 41 (`.planning/WINDOWS.md` ids 1-3) — no es un bug del código, es el entorno local. `tsc --noEmit` limpio.
 Last activity: 2026-08-01 — 42-01-PLAN.md ejecutado (feat 42-01: favicon + apple-touch-icon + theme-color + site.webmanifest)
 
@@ -123,6 +123,7 @@ Last activity: 2026-08-01 — 42-01-PLAN.md ejecutado (feat 42-01: favicon + app
 | Phase 41 P02 | 20min | 2 tasks | 6 files |
 | Phase 41 P03 | 25min | 3 tasks | 10 files |
 | Phase 42 P01 | 12min | 1 tasks | 9 files |
+| Phase 42 P02 | 7min | 2 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -250,6 +251,8 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 41]: 41-02: Horizontal expansion of the 41-01 tracer to 6 no-heroImage Pages-collection routes (contact/privacy/terms/seo-tecnico-lima/seo-tecnico-madrid/blog), each wired to buildOpenGraph with its own fixed slug fallback; zero new logic, zero deviations. Live curl verification blocked by the same session-wide Neon Postgres ECONNRESET as 41-01 (WINDOWS.md id 1) -- re-confirmed independently, logged as new WINDOWS.md id 2.
 - [Phase ?]: [Phase 41]: 41-03 wired the last ~10 of ~19 public generateMetadata functions (Servicios/Services 4 physical routes with fixed slug 'servicios' collapsing both index files to the same fallback image, Author/Website detail excluding avatar/screenshots from the OG chain per 41-CONTEXT.md, and the 4 no-doc listings falling straight to the per-slug fallback pool). Sitewide grep confirms all 19 routes now call buildOpenGraph -- Phase 41 code-complete. Live curl verification blocked a third time by the same Neon Postgres ECONNRESET as 41-01/41-02 (WINDOWS.md id 3).
 - [Phase ?]: Phase 42 Plan 01: reused real JuanPortfolio isotype verbatim; themeColor placed on dedicated Next.js 15 viewport export (not inside metadata)
+- [Phase ?]: buildAlternates kept as separate sibling function to buildServiceAlternates (structurally different 1:1 vs 4-to-2 path collapsing)
+- [Phase ?]: Live curl canonical verification blocked by known local Neon Postgres connectivity issue, deferred to production (same pattern as Phase 41/42-01)
 
 ### Pending Todos
 
@@ -296,8 +299,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-08-01T15:39:16.137Z
-Stopped at: Completed 42-01-PLAN.md
+Last session: 2026-08-01T15:44:39.985Z
+Stopped at: Completed 42-02-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
