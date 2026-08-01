@@ -1,5 +1,5 @@
 import type React from 'react'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
@@ -23,6 +23,22 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
   },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
+  manifest: '/site.webmanifest',
+}
+
+// themeColor lives on the dedicated `viewport` export, NOT inside `metadata`
+// — Next.js 15 requires this split; putting themeColor under `metadata`
+// silently does nothing.
+export const viewport: Viewport = {
+  themeColor: '#F7581E',
 }
 
 export function generateStaticParams() {
