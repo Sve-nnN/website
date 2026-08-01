@@ -7,6 +7,7 @@ import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { JsonLd } from '@/components/JsonLd'
 import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { buildOpenGraph } from '@/lib/og-image'
+import { buildAlternates } from '@/lib/canonical'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -35,6 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       locale: locale as 'es' | 'en',
       slug: 'case-studies',
     }),
+    alternates: buildAlternates(locale as 'es' | 'en', '/case-studies', '/en/case-studies'),
   }
 }
 

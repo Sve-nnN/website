@@ -7,6 +7,7 @@ import { WebsiteCard } from '@/components/WebsiteCard'
 import { JsonLd } from '@/components/JsonLd'
 import { buildWebsitesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { buildOpenGraph } from '@/lib/og-image'
+import { buildAlternates } from '@/lib/canonical'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -35,6 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       locale: locale as 'es' | 'en',
       slug: 'websites',
     }),
+    alternates: buildAlternates(locale as 'es' | 'en', '/websites', '/en/websites'),
   }
 }
 

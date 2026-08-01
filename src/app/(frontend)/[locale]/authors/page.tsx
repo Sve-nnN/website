@@ -6,6 +6,7 @@ import config from '@payload-config'
 import { Container } from '@/components/Container'
 import { Badge } from '@/components/ui/badge'
 import { buildOpenGraph } from '@/lib/og-image'
+import { buildAlternates } from '@/lib/canonical'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -34,6 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       locale: locale as 'es' | 'en',
       slug: 'authors',
     }),
+    alternates: buildAlternates(locale as 'es' | 'en', '/authors', '/en/authors'),
   }
 }
 

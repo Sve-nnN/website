@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { buildOpenGraph } from '@/lib/og-image'
+import { buildAlternates } from '@/lib/canonical'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -56,6 +57,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       locale: locale as 'es' | 'en',
       slug: 'search',
     }),
+    alternates: buildAlternates(locale as 'es' | 'en', '/search', '/en/search'),
   }
 }
 
