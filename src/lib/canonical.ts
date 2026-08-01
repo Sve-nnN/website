@@ -15,6 +15,11 @@ import { SITE_URL } from '@/lib/sitemap-data'
 
 export type Locale = 'es' | 'en'
 
+// Defensive trailing-slash strip (42-REVIEW WR-01): a misconfigured
+// NEXT_PUBLIC_SERVER_URL with a trailing slash would otherwise produce
+// double-slash canonical/hreflang URLs across all 19 wired routes.
+const BASE_URL = SITE_URL.replace(/\/$/, '')
+
 function esPathFor(current?: { slug: string }): string {
   return current ? `/servicios/${current.slug}` : '/servicios'
 }
@@ -38,11 +43,11 @@ export function buildServiceAlternates(
   const targetPath = locale === 'es' ? esPath : enPath
 
   return {
-    canonical: `${SITE_URL}${targetPath}`,
+    canonical: `${BASE_URL}${targetPath}`,
     languages: {
-      es: `${SITE_URL}${esPath}`,
-      en: `${SITE_URL}${enPath}`,
-      'x-default': `${SITE_URL}${esPath}`,
+      es: `${BASE_URL}${esPath}`,
+      en: `${BASE_URL}${enPath}`,
+      'x-default': `${BASE_URL}${esPath}`,
     },
   }
 }
@@ -61,11 +66,11 @@ export function buildAlternates(
   const targetPath = locale === 'es' ? esPath : enPath
 
   return {
-    canonical: `${SITE_URL}${targetPath}`,
+    canonical: `${BASE_URL}${targetPath}`,
     languages: {
-      es: `${SITE_URL}${esPath}`,
-      en: `${SITE_URL}${enPath}`,
-      'x-default': `${SITE_URL}${esPath}`,
+      es: `${BASE_URL}${esPath}`,
+      en: `${BASE_URL}${enPath}`,
+      'x-default': `${BASE_URL}${esPath}`,
     },
   }
 }
