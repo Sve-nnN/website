@@ -5,6 +5,7 @@ import config from '@payload-config'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Container } from '@/components/Container'
 import { buildOpenGraph } from '@/lib/og-image'
+import { buildAlternates } from '@/lib/canonical'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -43,6 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       slug: 'terms',
       metaImage: meta?.image,
     }),
+    alternates: buildAlternates(locale as 'es' | 'en', '/terms', '/en/terms'),
   }
 }
 

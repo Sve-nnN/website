@@ -6,6 +6,7 @@ import { JsonLd } from '@/components/JsonLd'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { sendContactMessage } from '@/app/actions/contact'
 import { buildOpenGraph } from '@/lib/og-image'
+import { buildAlternates } from '@/lib/canonical'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -43,6 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       slug: 'home',
       metaImage: meta?.image,
     }),
+    alternates: buildAlternates(locale as 'es' | 'en', '/', '/en'),
   }
 }
 

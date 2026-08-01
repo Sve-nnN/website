@@ -46,3 +46,26 @@ export function buildServiceAlternates(
     },
   }
 }
+
+/**
+ * Generic sitewide `alternates.canonical` + `alternates.languages` builder
+ * for routes with a plain 1:1 es/en path pair (unlike Servicios' 4-to-2
+ * collapsing handled by `buildServiceAlternates` above). `x-default` points
+ * at the `es` URL because `routing.ts` sets `defaultLocale: 'es'`.
+ */
+export function buildAlternates(
+  locale: Locale,
+  esPath: string,
+  enPath: string,
+): Metadata['alternates'] {
+  const targetPath = locale === 'es' ? esPath : enPath
+
+  return {
+    canonical: `${SITE_URL}${targetPath}`,
+    languages: {
+      es: `${SITE_URL}${esPath}`,
+      en: `${SITE_URL}${enPath}`,
+      'x-default': `${SITE_URL}${esPath}`,
+    },
+  }
+}
