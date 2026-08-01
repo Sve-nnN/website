@@ -1031,7 +1031,7 @@ Plans:
   5. `alternates.canonical` está presente y es locale-aware en cada tipo de ruta pública (verificado con curl, no solo lectura de código)
   6. Re-correr la auditoría de opengraph.to (o inspección manual equivalente de meta tags) confirma 0 warnings de estos 5 ítems
 
-**Plans**: 2/3 plans executed
+**Plans**: 3/3 plans executed
 
 Plans:
 **Wave 1**
@@ -1041,7 +1041,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 42-03-PLAN.md — canonical en las 4 rutas de detalle (post/case study/author/website) + 2 geo-pages + barrido final de verificación en vivo
+- [x] 42-03-PLAN.md — canonical en las 4 rutas de detalle (post/case study/author/website) + 2 geo-pages + barrido final de verificación en vivo
 
 ### Phase 43: Performance (Response Time + HTML Size)
 
@@ -1110,6 +1110,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 39. Websites — Frontend Components & Routes | 4/4 | Complete   | 2026-07-14 |
 | 40. Websites — Content Population (Real Data Capture) | 1/1 | Complete   | 2026-07-14 |
 | 41. OG Image Generation (Cloudinary) | 3/3 | In Progress|  |
-| 42. Meta Tags Completion | 2/3 | In Progress|  |
+| 42. Meta Tags Completion | 3/3 | In Progress|  |
 | 43. Performance (Response Time + HTML Size) | 0/TBD | Not started | - |
 </content>
