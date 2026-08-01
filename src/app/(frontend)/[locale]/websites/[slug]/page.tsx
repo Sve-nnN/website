@@ -10,6 +10,7 @@ import { Container } from '@/components/Container'
 import { Badge } from '@/components/ui/badge'
 import { buildWebsitesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { buildOpenGraph } from '@/lib/og-image'
+import { buildAlternates } from '@/lib/canonical'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -56,6 +57,7 @@ export async function generateMetadata({
       slug: doc.slug ?? slug,
       metaImage: meta?.image,
     }),
+    alternates: buildAlternates(locale as 'es' | 'en', `/websites/${slug}`, `/en/websites/${slug}`),
   }
 }
 

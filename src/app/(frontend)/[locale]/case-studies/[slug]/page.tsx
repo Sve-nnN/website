@@ -11,6 +11,7 @@ import { AuthorCard } from '@/components/AuthorCard'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { buildOpenGraph } from '@/lib/og-image'
+import { buildAlternates } from '@/lib/canonical'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { CaseStudyResultsChart } from '@/components/CaseStudyResultsChart'
@@ -62,6 +63,11 @@ export async function generateMetadata({
       metaImage: meta?.image,
       heroImage: doc.heroImage,
     }),
+    alternates: buildAlternates(
+      locale as 'es' | 'en',
+      `/case-studies/${slug}`,
+      `/en/case-studies/${slug}`,
+    ),
   }
 }
 

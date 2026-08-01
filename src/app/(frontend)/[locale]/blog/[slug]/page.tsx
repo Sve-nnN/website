@@ -14,6 +14,7 @@ import { RelatedPostsComponent } from '@/blocks/RelatedPosts/Component'
 import { TableOfContentsBlockComponent } from '@/blocks/TableOfContentsBlock/Component'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { buildOpenGraph } from '@/lib/og-image'
+import { buildAlternates } from '@/lib/canonical'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -81,6 +82,7 @@ export async function generateMetadata({
       metaImage: meta?.image,
       heroImage: doc.heroImage,
     }),
+    alternates: buildAlternates(locale as 'es' | 'en', `/blog/${slug}`, `/en/blog/${slug}`),
   }
 }
 
