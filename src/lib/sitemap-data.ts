@@ -1,7 +1,13 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-import { SERVICES_INDEX_SLUG, SERVICE_SLUGS } from '@/lib/services-data'
+// Import from service-slugs.ts directly (pure module, zero imports), NOT
+// from services-data.ts — that module now imports canonical.ts, which
+// imports SITE_URL from THIS file, so importing services-data.ts here would
+// close a circular-import loop (sitemap-data -> services-data -> canonical
+// -> sitemap-data) that broke production's webpack build with a TDZ
+// ReferenceError ("Cannot access 'k' before initialization") on /sitemap.xml.
+import { SERVICES_INDEX_SLUG, SERVICE_SLUGS } from '@/lib/service-slugs'
 
 function resolveSiteUrl(): string {
   const envUrl = process.env.NEXT_PUBLIC_SERVER_URL
