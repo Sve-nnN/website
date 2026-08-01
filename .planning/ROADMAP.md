@@ -1031,7 +1031,13 @@ Plans:
   5. `alternates.canonical` está presente y es locale-aware en cada tipo de ruta pública (verificado con curl, no solo lectura de código)
   6. Re-correr la auditoría de opengraph.to (o inspección manual equivalente de meta tags) confirma 0 warnings de estos 5 ítems
 
-**Plans**: TBD
+**Plans**: 3 plans (2 waves)
+
+Plans:
+
+- [ ] 42-01-PLAN.md — Favicon + apple-touch-icon + theme-color + manifest (tracer, generado + wireado en layout.tsx + curl-verificado en Home)
+- [ ] 42-02-PLAN.md — buildAlternates helper + canonical en Home/Contact/Privacy/Terms/Blog/Case Studies/Authors/Websites listing/Search (9 rutas)
+- [ ] 42-03-PLAN.md — canonical en las 4 rutas de detalle (post/case study/author/website) + 2 geo-pages + barrido final de verificación en vivo
 
 ### Phase 43: Performance (Response Time + HTML Size)
 
