@@ -1,10 +1,10 @@
 ---
 schema_version: 1
-open_count: 0
+open_count: 1
 waived_count: 0
 fixed_count: 4
-total_count: 4
-last_updated: 2026-08-01T21:53:51.219Z
+total_count: 5
+last_updated: 2026-08-02T16:24:04.304Z
 ---
 
 # Broken Windows Ledger
@@ -19,6 +19,7 @@ last_updated: 2026-08-01T21:53:51.219Z
 | 2 | 41 | unrun-verify | src/app/(frontend)/[locale]/contact/page.tsx |  | 41-02 <verify> (curl og:image on live dev server for contact/privacy/terms/seo-tecnico-lima/seo-tecnico-madrid/blog, both locales) could not be run end-to-end: same session-wide Neon Postgres ECONNRESET as WINDOWS id 1, confirmed again for this plan (2 fresh dev-server attempts, both timed out at 25-30s on the middleware redirects-lookup DB call). Static verification complete: tsc --noEmit clean, all 6 grep acceptance criteria pass (buildOpenGraph call + correct slug per route). Recommend Juan re-run once Neon connectivity is stable: npm run dev && for p in contact privacy terms seo-tecnico-lima seo-tecnico-madrid blog; do curl -s http://localhost:3000/$p \| grep og:image; done | fixed |  | 2026-07-31T22:56:05.631Z | 2026-08-01T15:13:22.043Z |
 | 3 | 41 | unrun-verify | src/app/(frontend)/[locale]/case-studies/page.tsx |  | 41-03 <verify> (curl og:image on live dev server for services/servicios (4 combos), authors/[slug], websites/[slug], case-studies/authors/websites/search listings) could not be run end-to-end: same session-wide Neon Postgres ECONNRESET as WINDOWS id 1/2, re-confirmed a third time (npm run dev, ECONNRESET on middleware redirects-lookup DB call within ~10s). Static verification complete: tsc --noEmit clean, all 10 grep acceptance criteria pass (buildOpenGraph call + correct slug/url per route). Sitewide grep confirms all ~19 public generateMetadata functions across 41-01/41-02/41-03 now call buildOpenGraph, zero missed. Recommend Juan re-run once Neon connectivity is stable: npm run dev && curl -s http://localhost:3000/servicios \| grep og:image (repeat for other 9 routes per plan verify block) | fixed |  | 2026-07-31T23:04:50.676Z | 2026-08-01T15:13:22.122Z |
 | 4 | 42 | unrun-verify | src/app/(frontend)/[locale]/blog/[slug]/page.tsx |  | 42-03 Task 3 live-curl sweep (canonical across all route types + favicon/manifest/theme-color regression check) could not be run end-to-end: same session-wide Neon Postgres connectivity blocker as WINDOWS ids 1-3 recurred despite being marked fixed -- npm run dev hung on the middleware /api/redirects-lookup DB call for 15s+ with no response (SSL-mode deprecation warning logged, no crash). Static verification complete instead: tsc --noEmit clean, all 6 grep buildAlternates( acceptance criteria pass, sitewide comm -23 gap-check shows zero unexpected gaps (only the 4 expected Servicios/Services files), and static grep confirms Plan 42-01's manifest/themeColor still present in layout.tsx. Recommend Juan re-run once Neon connectivity is stable: npm run dev && curl -s http://localhost:3000/seo-tecnico-lima \| grep canonical (repeat per Task 3 verify block). | fixed |  | 2026-08-01T15:48:35.727Z | 2026-08-01T21:53:51.219Z |
+| 5 | 42 | unmet-truth | .env |  | Home meta.description update confirmed written+published via Local API self-verify (payload.find overrideAccess:false, same read path as unauthenticated REST) on 2026-08-02, but production (https://juan-tech.com, Dokploy) still serves the OLD description with zero HTTP caching involved (cache-control: no-store, cache-bust query param has no effect). This means Juan's local .env DATABASE_URI and Dokploy's production DATABASE_URI likely point to DIFFERENT Neon databases/branches, contradicting CLAUDE.md's stated assumption of a single shared production DB. Needs Juan to compare the two connection strings in Dokploy env panel vs local .env. Until resolved, any Local-API script run locally may NOT be affecting what juan-tech.com actually serves -- Phase 41/42's earlier og:image/canonical fixes only worked because they are CODE changes (read fresh per request regardless of which DB), not content writes. | open |  | 2026-08-02T16:24:04.304Z |  |
 
 ````json
 [
@@ -69,6 +70,18 @@ last_updated: 2026-08-01T21:53:51.219Z
     "reason": "",
     "recorded_at": "2026-08-01T15:48:35.727Z",
     "resolved_at": "2026-08-01T21:53:51.219Z"
+  },
+  {
+    "id": 5,
+    "kind": "unmet-truth",
+    "phase": "42",
+    "file": ".env",
+    "line": null,
+    "description": "Home meta.description update confirmed written+published via Local API self-verify (payload.find overrideAccess:false, same read path as unauthenticated REST) on 2026-08-02, but production (https://juan-tech.com, Dokploy) still serves the OLD description with zero HTTP caching involved (cache-control: no-store, cache-bust query param has no effect). This means Juan's local .env DATABASE_URI and Dokploy's production DATABASE_URI likely point to DIFFERENT Neon databases/branches, contradicting CLAUDE.md's stated assumption of a single shared production DB. Needs Juan to compare the two connection strings in Dokploy env panel vs local .env. Until resolved, any Local-API script run locally may NOT be affecting what juan-tech.com actually serves -- Phase 41/42's earlier og:image/canonical fixes only worked because they are CODE changes (read fresh per request regardless of which DB), not content writes.",
+    "status": "open",
+    "reason": "",
+    "recorded_at": "2026-08-02T16:24:04.304Z",
+    "resolved_at": null
   }
 ]
 ````
