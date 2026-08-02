@@ -51,6 +51,11 @@ async function main() {
       collection: 'pages',
       id: homeDoc.id,
       locale,
+      // `pages` has versions.drafts enabled — without an explicit `draft:
+      // false`, the previous run of this script silently landed on a draft
+      // version instead of the published doc the frontend/REST API reads
+      // (confirmed live: og:tag stayed unchanged after "success").
+      draft: false,
       data: {
         meta: {
           description,
@@ -58,6 +63,28 @@ async function main() {
       },
     })
     console.log(`[${locale}] meta.description updated (${description.length} chars)`)
+  }
+
+  // Self-verify against the published doc (overrideAccess:false + no draft
+  // param = exactly what the unauthenticated REST/frontend read path sees)
+  // instead of trusting the update() call's return value blindly.
+  for (const locale of Object.keys(DESCRIPTIONS) as Array<keyof typeof DESCRIPTIONS>) {
+    const { docs } = await payload.find({
+      collection: 'pages',
+      where: { slug: { equals: 'home' } },
+      locale,
+      limit: 1,
+      overrideAccess: false,
+    })
+    const actual = docs[0]?.meta?.description
+    const expected = DESCRIPTIONS[locale]
+    if (actual !== expected) {
+      console.error(
+        `[${locale}] VERIFY FAILED — published doc reads "${actual}", expected "${expected}"`,
+      )
+      process.exit(1)
+    }
+    console.log(`[${locale}] verified on published doc: "${actual}"`)
   }
 
   console.log('Done.')
