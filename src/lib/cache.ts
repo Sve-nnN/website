@@ -142,7 +142,11 @@ export function getCachedArchive({
   relationTo: ArchiveRelationTo
   limit: number
   locale: Locale
-  categoryId?: string
+  // 43-02: Category.id is a numeric Payload id (see payload-types.ts), not a
+  // string -- typed as `number` to match the real caller (ArchiveBlock's
+  // `categoryFilter`) instead of silently mismatching the `where` equality
+  // check against the DB's integer column.
+  categoryId?: number
 }) {
   return unstable_cache(
     async () => {
@@ -152,6 +156,7 @@ export function getCachedArchive({
         return payload.find({
           collection: 'posts',
           where: categoryId ? { categories: { in: [categoryId] } } : undefined,
+          sort: '-publishedAt',
           locale,
           limit,
           overrideAccess: false,
@@ -162,6 +167,7 @@ export function getCachedArchive({
       if (relationTo === 'case-studies') {
         return payload.find({
           collection: 'case-studies',
+          sort: '-publishedAt',
           locale,
           limit,
           overrideAccess: false,
@@ -171,6 +177,7 @@ export function getCachedArchive({
 
       return payload.find({
         collection: 'websites',
+        sort: '-publishedAt',
         locale,
         limit,
         overrideAccess: false,
@@ -181,7 +188,7 @@ export function getCachedArchive({
       relationTo,
       locale,
       String(limit),
-      categoryId ?? 'none',
+      String(categoryId ?? 'none'),
     ],
     {
       tags: [

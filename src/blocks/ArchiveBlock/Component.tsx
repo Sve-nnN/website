@@ -9,6 +9,7 @@ import { PostCard } from '@/components/PostCard'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { WebsiteCard } from '@/components/WebsiteCard'
 import { ScrollReveal } from '@/components/ScrollReveal'
+import { getCachedArchive, type PostCardData, type CaseStudyCardData } from '@/lib/cache'
 import {
   Tabs,
   TabsList,
@@ -35,7 +36,7 @@ export async function ArchiveBlockComponent(props: ArchiveBlockComponentProps) {
   const payload = await getPayload({ config })
   const locale = (await getLocale()) as 'en' | 'es'
 
-  let docs: (Post | CaseStudy | Website)[] = []
+  let docs: (Post | CaseStudy | Website | PostCardData | CaseStudyCardData)[] = []
   let categories: Category[] = []
 
   if (mode === 'manual' && selectedDocs?.length) {
@@ -65,16 +66,15 @@ export async function ArchiveBlockComponent(props: ArchiveBlockComponentProps) {
       }
     }
 
-    const result = await payload.find({
-      collection: relationTo,
+    // 43-02: delegates to the shared 43-01 cache fetcher (select-scoped for
+    // posts/case-studies -- richText/results.metrics no longer serialize
+    // into this grid's RSC payload). categoryId is part of the cache key,
+    // so distinct category filters never share a cache entry (T-43-06).
+    const result = await getCachedArchive({
+      relationTo,
       limit: limit ?? 3,
-      sort: '-publishedAt',
       locale,
-      where: categoryFilter
-        ? {
-            categories: { in: [categoryFilter] },
-          }
-        : undefined,
+      categoryId: categoryFilter,
     })
 
     docs = result.docs
@@ -114,11 +114,11 @@ export async function ArchiveBlockComponent(props: ArchiveBlockComponentProps) {
             return (
               <ScrollReveal key={doc.id} priority={isAboveFold}>
                 {relationTo === 'posts' ? (
-                  <PostCard post={doc as Post} priority={isAboveFold} />
+                  <PostCard post={doc as PostCardData} priority={isAboveFold} />
                 ) : relationTo === 'websites' ? (
                   <WebsiteCard website={doc as Website} />
                 ) : (
-                  <CaseStudyCard caseStudy={doc as CaseStudy} />
+                  <CaseStudyCard caseStudy={doc as CaseStudyCardData} />
                 )}
               </ScrollReveal>
             )
