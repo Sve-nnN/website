@@ -3,6 +3,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { buildServiceAlternates } from '@/lib/canonical'
 import { buildOpenGraph } from '@/lib/og-image'
+import { getCachedPageBySlug } from '@/lib/cache'
 
 // Pure slug/URL logic (safe for Client Components) lives in service-slugs.ts
 // — re-exported here so existing importers of this module are unaffected.
@@ -16,20 +17,10 @@ export {
 import { SERVICES_INDEX_SLUG, isServiceSlug } from '@/lib/service-slugs'
 
 export async function getServicesIndexPage(locale: 'es' | 'en') {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'pages',
-    where: { slug: { equals: SERVICES_INDEX_SLUG } },
-    locale,
-    depth: 1,
-    limit: 1,
-    // SECURITY (24-REVIEW WR-02): Local API bypasses collection `access`
-    // rules by default. Without this, an unpublished draft would still be
-    // returned and rendered publicly (both on its own route and, since
-    // Phase 24, as a clickable card on Home) despite `read: authenticatedOrPublished`.
-    overrideAccess: false,
-  })
-  return docs[0]
+  // 43-02: delegates to the shared cache fetcher built in 43-01
+  // (`getCachedPageBySlug`) — preserves the exact `depth:1`/
+  // `overrideAccess:false` this query already had (Phase 24 WR-02).
+  return getCachedPageBySlug(SERVICES_INDEX_SLUG, locale, 1)
 }
 
 // Shared generateMetadata body for the Servicios index — called identically
