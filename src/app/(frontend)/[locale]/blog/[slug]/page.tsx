@@ -1,8 +1,6 @@
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
 
-import config from '@payload-config'
 import type { Author, Category, Post } from '@/payload-types'
 import { JsonLd } from '@/components/JsonLd'
 import { Container } from '@/components/Container'
@@ -15,6 +13,7 @@ import { TableOfContentsBlockComponent } from '@/blocks/TableOfContentsBlock/Com
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { getCachedPost } from '@/lib/cache'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -24,16 +23,8 @@ export const dynamic = 'force-dynamic'
 
 const WORDS_PER_MINUTE = 200
 
-async function getPost(locale: string, slug: string) {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'posts',
-    where: { slug: { equals: slug } },
-    locale: locale as 'es' | 'en',
-    depth: 1,
-    limit: 1,
-  })
-  return docs[0]
+function getPost(locale: string, slug: string) {
+  return getCachedPost(slug, locale as 'es' | 'en')
 }
 
 // Rough word-count-over-lexical-JSON estimate — no new dependency needed for
