@@ -167,7 +167,7 @@ Auditoría externa (`opengraph.to/u/juan-tech.com`, 2026-07-31): score 17/100, 1
 | META-03 | Phase 42 | Pending |
 | META-04 | Phase 42 | Pending |
 | META-05 | Phase 42 | Pending |
-| PERF-01 | Phase 43 | Pending |
-| PERF-02 | Phase 43 | Pending |
+| PERF-01 | Phase 43 | Done |
+| PERF-02 | Phase 43 | Done |
 
 Coverage: 11/11 v2.0 requirements mapped. No orphans, no duplicates.
