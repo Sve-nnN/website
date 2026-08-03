@@ -243,6 +243,11 @@ export function getCachedRedirectTarget(from: string): Promise<string | null> {
           const refDoc = await payload.findByID({
             collection: relationTo as 'pages' | 'posts' | 'case-studies' | 'authors' | 'categories',
             id,
+            // SECURITY (43-REVIEW WR-01): missing overrideAccess:false here
+            // let a redirect pointing at a draft doc leak that doc's slug
+            // through the resolved redirect target, same class of leak the
+            // rest of this file's fetchers already guard against.
+            overrideAccess: false,
           })
           const base = REDIRECT_COLLECTION_BASE_PATH[relationTo] ?? ''
           const refSlug = (refDoc as { slug?: string })?.slug
