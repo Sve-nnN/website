@@ -1,0 +1,200 @@
+// Cached data-fetch layer for Phase 43 (Performance: Response Time + HTML
+// Size). Wraps Payload's Local API (`getPayload().find`/`findGlobal`) in
+// Next 15's `unstable_cache` -- this is DATA caching, not ROUTE caching. All
+// routes stay `force-dynamic` (self-hosted Dokploy build has no DB access
+// during `next build`); `unstable_cache` only ever executes at request time,
+// so it does not reintroduce that constraint.
+//
+// This module is consumed ONLY by page.tsx/component files, never by
+// `collections/`/`globals/` (those import the config-free `./cache-tags`
+// instead), so importing `@payload-config` here does not create the import
+// cycle documented in cache-tags.ts.
+//
+// SECURITY (T-43-02): Payload's Local API defaults to `overrideAccess: true`,
+// which bypasses each collection's `read: authenticatedOrPublished` access
+// rule. Without an explicit `overrideAccess: false` on every fetcher below, a
+// draft doc could get cached by `unstable_cache` and served to ANY anonymous
+// visitor for up to 60s -- worse than the single-request leak already fixed
+// in Phase 24 (WR-02), because a cache hit amplifies it across visitors.
+// Every fetcher in this file passes `overrideAccess: false` explicitly, same
+// pattern as `src/lib/services-data.ts`.
+
+import { unstable_cache } from 'next/cache'
+import { getPayload } from 'payload'
+
+import config from '@payload-config'
+import type { Post, CaseStudy } from '@/payload-types'
+import { CACHE_TAGS, CACHE_TTL_SECONDS } from './cache-tags'
+
+export type Locale = 'es' | 'en'
+
+export type PostCardData = Pick<Post, 'id' | 'title' | 'slug' | 'excerpt' | 'heroImage'>
+export type CaseStudyCardData = Pick<
+  CaseStudy,
+  'id' | 'title' | 'slug' | 'sector' | 'heroMetric' | 'client'
+>
+
+// --- Pages (Home in this plan; also used by other page.tsx routes) ---
+
+export function getCachedPageBySlug(slug: string, locale: Locale, depth?: number) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'pages',
+        where: { slug: { equals: slug } },
+        locale,
+        limit: 1,
+        overrideAccess: false,
+        ...(depth !== undefined ? { depth } : {}),
+      })
+      return docs[0]
+    },
+    ['page', slug, locale, String(depth ?? 'default')],
+    { tags: [CACHE_TAGS.page(slug)], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+// --- Featured Content global (deduped: FeaturedPostsBlock +
+// FeaturedCaseStudiesBlock both call this instead of each doing their own
+// `payload.findGlobal` -- root cause #1 of 43-CONTEXT.md) ---
+
+export function getCachedFeaturedContent(locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      return payload.findGlobal({
+        slug: 'featured-content',
+        depth: 1,
+        locale,
+        overrideAccess: false,
+        populate: {
+          posts: { title: true, slug: true, excerpt: true, heroImage: true },
+          'case-studies': { title: true, slug: true, sector: true, heroMetric: true, client: true },
+        },
+      })
+    },
+    ['featured-content', locale],
+    {
+      tags: [CACHE_TAGS.featuredContent(), CACHE_TAGS.posts(), CACHE_TAGS.caseStudies()],
+      revalidate: CACHE_TTL_SECONDS,
+    },
+  )()
+}
+
+// --- Post / Case Study detail (not wired to any route in this plan --
+// ready for 43-02/43-03 to consume without touching this file again) ---
+
+export function getCachedPost(slug: string, locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'posts',
+        where: { slug: { equals: slug } },
+        locale,
+        depth: 1,
+        limit: 1,
+        overrideAccess: false,
+      })
+      return docs[0]
+    },
+    ['post', slug, locale],
+    { tags: [CACHE_TAGS.post(slug)], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+export function getCachedCaseStudy(slug: string, locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'case-studies',
+        where: { slug: { equals: slug } },
+        locale,
+        depth: 1,
+        limit: 1,
+        overrideAccess: false,
+      })
+      return docs[0]
+    },
+    ['case-study', slug, locale],
+    { tags: [CACHE_TAGS.caseStudy(slug)], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+// --- Archive listing (ArchiveBlock, used by Servicios/Blog listing routes
+// in 43-02) -- not wired to any component in this plan yet. Branches by
+// `relationTo` with 3 literal `payload.find` calls (one per collection)
+// instead of a single call with a dynamic `collection: relationTo`, because
+// Payload's generic `select` type doesn't correlate well against a union
+// `collection` type. `websites` doesn't get a `select` this phase -- not a
+// confirmed root cause per 43-CONTEXT.md. ---
+
+export type ArchiveRelationTo = 'posts' | 'case-studies' | 'websites'
+
+export function getCachedArchive({
+  relationTo,
+  limit,
+  locale,
+  categoryId,
+}: {
+  relationTo: ArchiveRelationTo
+  limit: number
+  locale: Locale
+  categoryId?: string
+}) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+
+      if (relationTo === 'posts') {
+        return payload.find({
+          collection: 'posts',
+          where: categoryId ? { categories: { in: [categoryId] } } : undefined,
+          locale,
+          limit,
+          overrideAccess: false,
+          select: { title: true, slug: true, excerpt: true, heroImage: true },
+        })
+      }
+
+      if (relationTo === 'case-studies') {
+        return payload.find({
+          collection: 'case-studies',
+          locale,
+          limit,
+          overrideAccess: false,
+          select: { title: true, slug: true, sector: true, heroMetric: true, client: true },
+        })
+      }
+
+      return payload.find({
+        collection: 'websites',
+        locale,
+        limit,
+        overrideAccess: false,
+      })
+    },
+    [
+      'archive',
+      relationTo,
+      locale,
+      String(limit),
+      categoryId ?? 'none',
+    ],
+    {
+      tags: [
+        relationTo === 'posts'
+          ? CACHE_TAGS.posts()
+          : relationTo === 'case-studies'
+            ? CACHE_TAGS.caseStudies()
+            : 'websites:all',
+      ],
+      revalidate: CACHE_TTL_SECONDS,
+    },
+  )()
+}
+
+// getCachedRedirectTarget (transversal redirects-lookup cache) is added in
+// Task 2 — see git history / 43-01-SUMMARY.md.

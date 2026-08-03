@@ -5,6 +5,7 @@ import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
 import { TestimonialSection } from '@/blocks/TestimonialSection/config'
+import { revalidateCaseStudiesCache, revalidateCaseStudiesCacheOnDelete } from '@/lib/cache-tags'
 
 export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
@@ -16,6 +17,13 @@ export const CaseStudies: CollectionConfig = {
     update: authenticated,
   },
   admin: { useAsTitle: 'title', defaultColumns: ['title', 'client', 'updatedAt'] },
+  // Phase 43 (43-01): invalidates case-studies:all + case-studies:<slug>
+  // unstable_cache tags (src/lib/cache.ts) — also covers
+  // getCachedFeaturedContent, tagged with case-studies:all.
+  hooks: {
+    afterChange: [revalidateCaseStudiesCache],
+    afterDelete: [revalidateCaseStudiesCacheOnDelete],
+  },
   versions: {
     drafts: { autosave: { interval: 100 }, schedulePublish: true },
     maxPerDoc: 50,

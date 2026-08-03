@@ -4,6 +4,7 @@ import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
 import { targetKeywordField } from '@/fields/targetKeyword'
+import { revalidatePagesCache, revalidatePagesCacheOnDelete } from '@/lib/cache-tags'
 
 import { Hero } from '@/blocks/Hero/config'
 import { Content } from '@/blocks/Content/config'
@@ -39,6 +40,13 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'updatedAt'],
+  },
+  // Phase 43 (43-01): invalidates the unstable_cache entry (src/lib/cache.ts
+  // getCachedPageBySlug) tagged pages:<slug> so edits/publishes reflect
+  // without waiting for the 60s TTL safety net.
+  hooks: {
+    afterChange: [revalidatePagesCache],
+    afterDelete: [revalidatePagesCacheOnDelete],
   },
   versions: {
     drafts: {

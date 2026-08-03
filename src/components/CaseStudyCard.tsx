@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
-import type { CaseStudy } from '@/payload-types'
+import type { CaseStudyCardData } from '@/lib/cache'
 
 import { Card, CardContent } from '@/components/ui/card'
 
-export function CaseStudyCard({ caseStudy }: { caseStudy: CaseStudy }) {
+export function CaseStudyCard({ caseStudy }: { caseStudy: CaseStudyCardData }) {
   const client = typeof caseStudy.client === 'object' ? caseStudy.client : null
 
   return (

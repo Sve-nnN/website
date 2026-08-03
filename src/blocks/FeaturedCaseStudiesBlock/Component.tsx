@@ -1,23 +1,23 @@
-import { getPayload } from 'payload'
 import { getLocale } from 'next-intl/server'
 
 import type { FeaturedCaseStudiesBlock as FeaturedCaseStudiesBlockProps, CaseStudy } from '@/payload-types'
 
-import config from '@/payload.config'
 import { Container } from '@/components/Container'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
+import { getCachedFeaturedContent } from '@/lib/cache'
 
 export async function FeaturedCaseStudiesBlockComponent(props: FeaturedCaseStudiesBlockProps) {
   const { title, limit } = props
-  const payload = await getPayload({ config })
   const locale = (await getLocale()) as 'en' | 'es'
 
-  const featuredContent = await payload.findGlobal({
-    slug: 'featured-content',
-    depth: 1,
-    locale,
-  })
+  // Phase 43 (43-01): deduped + cached — see FeaturedPostsBlock's comment,
+  // same fetcher, same cache entry (both blocks read the same global).
+  const featuredContent = await getCachedFeaturedContent(locale)
 
+  // Runtime data is scoped down by `populate` in getCachedFeaturedContent
+  // (title/slug/sector/heroMetric/client only) — `CaseStudy` here only
+  // satisfies the filter's type predicate against FeaturedContent's static
+  // field type; `CaseStudyCard` narrows further via `CaseStudyCardData`.
   const caseStudies = (featuredContent.featuredCaseStudies ?? [])
     .filter((cs): cs is CaseStudy => typeof cs === 'object')
     .slice(0, limit ?? 3)

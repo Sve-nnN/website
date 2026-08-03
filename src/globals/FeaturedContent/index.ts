@@ -1,5 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
+import { revalidateFeaturedContentCache } from '@/lib/cache-tags'
+
 export const FeaturedContent: GlobalConfig = {
   slug: 'featured-content',
   label: 'Featured Content',
@@ -7,6 +9,11 @@ export const FeaturedContent: GlobalConfig = {
     group: 'Site',
     description:
       'Manual curation of which posts/case studies appear in "featured" sections site-wide (Home, Blog listing) — not derived from recency alone.',
+  },
+  // Phase 43 (43-01): invalidates the featured-content unstable_cache tag
+  // (src/lib/cache.ts getCachedFeaturedContent). Globals have no afterDelete.
+  hooks: {
+    afterChange: [revalidateFeaturedContentCache],
   },
   fields: [
     {

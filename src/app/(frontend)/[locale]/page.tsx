@@ -1,12 +1,11 @@
-import { getPayload } from 'payload'
 import { notFound } from 'next/navigation'
 
-import config from '@payload-config'
 import { JsonLd } from '@/components/JsonLd'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { sendContactMessage } from '@/app/actions/contact'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { getCachedPageBySlug } from '@/lib/cache'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -14,15 +13,12 @@ import { buildAlternates } from '@/lib/canonical'
 // static generation. See infra/apps/LESSONS-LEARNED.md.
 export const dynamic = 'force-dynamic'
 
+// Phase 43 (43-01): wrapped in unstable_cache (src/lib/cache.ts) — same
+// query/signature as before, so generateMetadata + HomePage (which each call
+// this once per request) now share a request-scoped Data Cache entry instead
+// of both hitting Postgres directly.
 async function getHomePage(locale: string) {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'pages',
-    where: { slug: { equals: 'home' } },
-    locale: locale as 'es' | 'en',
-    limit: 1,
-  })
-  return docs[0]
+  return getCachedPageBySlug('home', locale as 'es' | 'en')
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {

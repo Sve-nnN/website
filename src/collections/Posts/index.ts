@@ -5,6 +5,7 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
+import { revalidatePostsCache, revalidatePostsCacheOnDelete } from '@/lib/cache-tags'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -17,6 +18,14 @@ export const Posts: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'author', 'updatedAt'],
+  },
+  // Phase 43 (43-01): invalidates posts:all + posts:<slug> unstable_cache
+  // tags (src/lib/cache.ts) — also covers getCachedFeaturedContent, which
+  // tags itself with posts:all so a Post edit refreshes Home's Featured
+  // section too.
+  hooks: {
+    afterChange: [revalidatePostsCache],
+    afterDelete: [revalidatePostsCacheOnDelete],
   },
   versions: {
     drafts: {

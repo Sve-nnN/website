@@ -1,24 +1,26 @@
-import { getPayload } from 'payload'
 import { getLocale } from 'next-intl/server'
 
 import type { FeaturedPostsBlock as FeaturedPostsBlockProps, Post } from '@/payload-types'
 
-import config from '@/payload.config'
 import { Container } from '@/components/Container'
 import { PostCard } from '@/components/PostCard'
 import { ScrollReveal } from '@/components/ScrollReveal'
+import { getCachedFeaturedContent } from '@/lib/cache'
 
 export async function FeaturedPostsBlockComponent(props: FeaturedPostsBlockProps) {
   const { title, limit } = props
-  const payload = await getPayload({ config })
   const locale = (await getLocale()) as 'en' | 'es'
 
-  const featuredContent = await payload.findGlobal({
-    slug: 'featured-content',
-    depth: 1,
-    locale,
-  })
+  // Phase 43 (43-01): deduped + cached — this and FeaturedCaseStudiesBlock
+  // both call the same unstable_cache-wrapped fetcher instead of each doing
+  // its own `payload.findGlobal` (root cause #1 of 43-CONTEXT.md).
+  const featuredContent = await getCachedFeaturedContent(locale)
 
+  // Runtime data is scoped down by `populate` in getCachedFeaturedContent
+  // (title/slug/excerpt/heroImage only) — the generated `Post` type is used
+  // here only to satisfy the filter's type predicate against
+  // FeaturedContent's static `(number | Post)[]` field type; `PostCard`
+  // below narrows further via `PostCardData` at its own prop boundary.
   const posts = (featuredContent.featuredPosts ?? [])
     .filter((p): p is Post => typeof p === 'object')
     .slice(0, limit ?? 3)

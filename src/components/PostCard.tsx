@@ -4,13 +4,13 @@ import * as m from 'motion/react-m'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import type { Post } from '@/payload-types'
+import type { PostCardData } from '@/lib/cache'
 
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { Card, CardContent } from '@/components/ui/card'
 
-export function PostCard({ post, priority = false }: { post: Post; priority?: boolean }) {
+export function PostCard({ post, priority = false }: { post: PostCardData; priority?: boolean }) {
   const reducedMotion = useReducedMotion()
   const heroImage = typeof post.heroImage === 'object' ? post.heroImage : null
   const imageUrl = heroImage?.url ?? getFallbackHeroImage(post.slug ?? String(post.id))
