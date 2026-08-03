@@ -196,5 +196,60 @@ export function getCachedArchive({
   )()
 }
 
-// getCachedRedirectTarget (transversal redirects-lookup cache) is added in
-// Task 2 — see git history / 43-01-SUMMARY.md.
+// --- Redirects lookup (transversal, runs on every request via middleware —
+// used by src/app/api/redirects-lookup/route.ts) ---
+
+const REDIRECT_COLLECTION_BASE_PATH: Record<string, string> = {
+  pages: '',
+  posts: 'blog',
+  'case-studies': 'case-studies',
+  authors: 'authors',
+  categories: 'categories',
+}
+
+export function getCachedRedirectTarget(from: string): Promise<string | null> {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'redirects',
+        where: { from: { equals: from } },
+        limit: 1,
+        overrideAccess: false,
+      })
+
+      const redirectDoc = docs[0]
+      let target: string | null = null
+
+      if (redirectDoc) {
+        // SECURITY (T-02-01, open-redirect mitigation): the redirect target is
+        // resolved EXCLUSIVELY from the admin-authored `redirects` collection
+        // doc (doc.to.url or a resolved refDoc.slug) — never from
+        // request-controlled input. `from` above is only ever used as an
+        // equality lookup key against admin-authored data, never echoed back
+        // as (or used to build) the redirect target itself.
+        if (redirectDoc.to?.type === 'custom') {
+          target = redirectDoc.to.url ?? null
+        } else if (redirectDoc.to?.type === 'reference' && redirectDoc.to.reference) {
+          const { relationTo, value } = redirectDoc.to.reference
+          const id = typeof value === 'object' && value !== null ? value.id : value
+          const refDoc = await payload.findByID({
+            collection: relationTo as 'pages' | 'posts' | 'case-studies' | 'authors' | 'categories',
+            id,
+          })
+          const base = REDIRECT_COLLECTION_BASE_PATH[relationTo] ?? ''
+          const refSlug = (refDoc as { slug?: string })?.slug
+
+          if (refSlug) {
+            target =
+              base === '' && refSlug === 'home' ? '/' : `/${[base, refSlug].filter(Boolean).join('/')}`
+          }
+        }
+      }
+
+      return target
+    },
+    ['redirect', from],
+    { tags: [CACHE_TAGS.redirects()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}

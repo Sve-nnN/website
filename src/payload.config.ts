@@ -13,6 +13,7 @@ import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
 import { cloudinaryAdapter } from './lib/cloudinary-adapter'
+import { revalidateRedirectsCache, revalidateRedirectsCacheOnDelete } from './lib/cache-tags'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -112,6 +113,15 @@ export default buildConfig({
     }),
     redirectsPlugin({
       collections: ['pages', 'posts', 'case-studies', 'categories', 'authors'],
+      // Phase 43 (43-01 Task 2): invalidates the `redirects` unstable_cache
+      // tag (src/lib/cache.ts getCachedRedirectTarget) on every admin
+      // create/update/delete of a redirect doc.
+      overrides: {
+        hooks: {
+          afterChange: [revalidateRedirectsCache],
+          afterDelete: [revalidateRedirectsCacheOnDelete],
+        },
+      },
     }),
     searchPlugin({
       collections: ['posts', 'case-studies', 'authors'],
