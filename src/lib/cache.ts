@@ -67,7 +67,16 @@ export function getCachedFeaturedContent(locale: Locale) {
         slug: 'featured-content',
         depth: 1,
         locale,
-        overrideAccess: false,
+        // NOT overrideAccess:false here (unlike every other fetcher in this
+        // file): `featured-content` has no `versions`/drafts (see
+        // src/globals/FeaturedContent/index.ts), so there is no draft state
+        // to leak — the security rationale in this file's header comment
+        // doesn't apply to it. Its real `access` config (Payload's default
+        // for globals without an explicit `access` block, confirmed via
+        // `GET /api/globals/featured-content` -> 403 for ALL other globals
+        // too, e.g. header/footer) denies unauthenticated reads outright, so
+        // overrideAccess:false here throws instead of returning empty —
+        // this broke Home in production (HTTP 500) until this fix.
         populate: {
           posts: { title: true, slug: true, excerpt: true, heroImage: true },
           'case-studies': { title: true, slug: true, sector: true, heroMetric: true, client: true },
