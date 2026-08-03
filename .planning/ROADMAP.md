@@ -1056,7 +1056,7 @@ Plans:
   4. Medición real (`curl | wc -c`) muestra el HTML de home reducido de forma significativa respecto a 271KB
   5. Sin regresión de Lighthouse/CWV contra el baseline más reciente del proyecto (mismo gate ya usado en fases anteriores)
 
-**Plans**: 1/3 plans executed
+**Plans**: 2/3 plans executed
 
 Plans:
 **Wave 1**
@@ -1065,7 +1065,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
-- [ ] 43-02-PLAN.md — Expansión: Servicios índice + Blog listing (shell + grid real de ArchiveBlock con select scoping)
+- [x] 43-02-PLAN.md — Expansión: Servicios índice + Blog listing (shell + grid real de ArchiveBlock con select scoping)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 
@@ -1124,5 +1124,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 40. Websites — Content Population (Real Data Capture) | 1/1 | Complete   | 2026-07-14 |
 | 41. OG Image Generation (Cloudinary) | 3/3 | In Progress|  |
 | 42. Meta Tags Completion | 3/3 | In Progress|  |
-| 43. Performance (Response Time + HTML Size) | 1/3 | In Progress|  |
+| 43. Performance (Response Time + HTML Size) | 2/3 | In Progress|  |
 </content>
