@@ -2,18 +2,18 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: OG Image & Meta Tags Fix
-current_phase: 42
-current_phase_name: Meta Tags Completion
-status: in_progress
-stopped_at: Completed 42-03-PLAN.md
-last_updated: "2026-08-01T15:49:42.819Z"
-last_activity: 2026-08-01
-last_activity_desc: "42-01-PLAN.md ejecutado (feat 42-01: favicon + apple-touch-icon + theme-color + site.webmanifest)"
+current_phase: 43
+current_phase_name: performance-response-time-html-size
+status: executing
+stopped_at: Completed 43-01-PLAN.md
+last_updated: "2026-08-03T01:27:27.063Z"
+last_activity: 2026-08-02
+last_activity_desc: Phase 43 execution started
 progress:
-  total_phases: 29
+  total_phases: 30
   completed_phases: 28
-  total_plans: 118
-  completed_plans: 113
+  total_plans: 121
+  completed_plans: 114
 ---
 
 # Project State
@@ -23,14 +23,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-31)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Milestone v2.0 — Phase 42 (Meta Tags Completion), Plan 01 (tracer) ejecutado, Plans 02/03 pendientes
+**Current focus:** Phase 43 — performance-response-time-html-size
 
 ## Current Position
 
-Phase: 42 — IN PROGRESS
-Plan: 3 of 3 complete
-Status: 42-01 (tracer) ejecutado y commiteado — favicon/apple-touch-icon/theme-color/site.webmanifest wireados sitewide en layout.tsx. Los 7 assets estáticos nuevos verificados en vivo (200 + Content-Type correcto). Verificación del theme-color meta tag en el HTML renderizado de Home diferida a producción por el mismo problema de conectividad Neon de Phase 41 (`.planning/WINDOWS.md` ids 1-3) — no es un bug del código, es el entorno local. `tsc --noEmit` limpio.
-Last activity: 2026-08-01 — 42-01-PLAN.md ejecutado (feat 42-01: favicon + apple-touch-icon + theme-color + site.webmanifest)
+Phase: 43 (performance-response-time-html-size) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-08-02 — Phase 43 execution started
 
 ## Performance Metrics
 
@@ -125,6 +125,7 @@ Last activity: 2026-08-01 — 42-01-PLAN.md ejecutado (feat 42-01: favicon + app
 | Phase 42 P01 | 12min | 1 tasks | 9 files |
 | Phase 42 P02 | 7min | 2 tasks | 10 files |
 | Phase 42 P03 | 8min | 3 tasks | 6 files |
+| Phase 43-performance-response-time-html-size P01 | 35min | 2 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -255,6 +256,9 @@ Recent decisions affecting current work:
 - [Phase ?]: buildAlternates kept as separate sibling function to buildServiceAlternates (structurally different 1:1 vs 4-to-2 path collapsing)
 - [Phase ?]: Live curl canonical verification blocked by known local Neon Postgres connectivity issue, deferred to production (same pattern as Phase 41/42-01)
 - [Phase ?]: 42-03: Reused Plan 42-02's buildAlternates helper unmodified to wire the last 6 gap routes (4 detail templates + 2 geo-pages); esPath/enPath always mirror each route's existing og:url slug expression so canonical and og:url can never diverge
+- [Phase ?]: [Phase 43]: 43-01: getCachedFeaturedContent uses populate (not select) because featuredPosts/featuredCaseStudies are relationship-populated docs reached via the FeaturedContent global, not the directly-queried collection
+- [Phase ?]: [Phase 43]: 43-01: FeaturedPostsBlock/FeaturedCaseStudiesBlock keep filtering with full Post/CaseStudy type predicates (TS2677 rejects a Pick-narrowed predicate) -- PostCard/CaseStudyCard still narrow correctly at their own prop boundary via structural typing
+- [Phase ?]: [Phase 43]: 43-01: getCachedPageBySlug now passes overrideAccess:false explicitly, closing a pre-existing gap where the original Home getHomePage had no overrideAccess handling at all
 
 ### Pending Todos
 
@@ -301,8 +305,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-08-01T15:49:42.803Z
-Stopped at: Completed 42-03-PLAN.md
+Last session: 2026-08-03T01:27:03.700Z
+Stopped at: Completed 43-01-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

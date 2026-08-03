@@ -145,8 +145,8 @@ Auditoría externa (`opengraph.to/u/juan-tech.com`, 2026-07-31): score 17/100, 1
 
 #### Performance (Phase 43)
 
-- [ ] **PERF-01**: Causa raíz de la respuesta de servidor lenta (1.58s en home) identificada y mitigada, respetando la constraint del proyecto (standalone Node en Hostinger, sin ISR/edge) — medición real post-fix, no solo teórica
-- [ ] **PERF-02**: Tamaño de HTML de home reducido de forma medible respecto al baseline de 271KB (`curl | wc -c`), sin romper contenido/hidratación
+- [x] **PERF-01**: Causa raíz de la respuesta de servidor lenta (1.58s en home) identificada y mitigada, respetando la constraint del proyecto (standalone Node en Hostinger, sin ISR/edge) — medición real post-fix, no solo teórica
+- [x] **PERF-02**: Tamaño de HTML de home reducido de forma medible respecto al baseline de 271KB (`curl | wc -c`), sin romper contenido/hidratación
 
 ### Out of Scope (v2.0)
 

@@ -1056,12 +1056,19 @@ Plans:
   4. Medición real (`curl | wc -c`) muestra el HTML de home reducido de forma significativa respecto a 271KB
   5. Sin regresión de Lighthouse/CWV contra el baseline más reciente del proyecto (mismo gate ya usado en fases anteriores)
 
-**Plans**: 3 plans (3 waves)
+**Plans**: 1/3 plans executed
 
 Plans:
+**Wave 1**
 
-- [ ] 43-01-PLAN.md — Tracer: cache infra (`src/lib/cache-tags.ts`/`cache.ts`) + Home end-to-end (dedup FeaturedPostsBlock/FeaturedCaseStudiesBlock, select/populate scoping, hooks de invalidación en Pages/Posts/CaseStudies/FeaturedContent) + cache transversal de `/api/redirects-lookup`
+- [x] 43-01-PLAN.md — Tracer: cache infra (`src/lib/cache-tags.ts`/`cache.ts`) + Home end-to-end (dedup FeaturedPostsBlock/FeaturedCaseStudiesBlock, select/populate scoping, hooks de invalidación en Pages/Posts/CaseStudies/FeaturedContent) + cache transversal de `/api/redirects-lookup`
+
+**Wave 2** *(blocked on Wave 1 completion)*
+
 - [ ] 43-02-PLAN.md — Expansión: Servicios índice + Blog listing (shell + grid real de ArchiveBlock con select scoping)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+
 - [ ] 43-03-PLAN.md — Expansión: Post detail + Case-study detail + verificación final (medición real de tiempo de respuesta/tamaño HTML de Home + gate de regresión Lighthouse/CWV contra baseline de Phase 36)
 
 ## Progress
@@ -1117,5 +1124,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 40. Websites — Content Population (Real Data Capture) | 1/1 | Complete   | 2026-07-14 |
 | 41. OG Image Generation (Cloudinary) | 3/3 | In Progress|  |
 | 42. Meta Tags Completion | 3/3 | In Progress|  |
-| 43. Performance (Response Time + HTML Size) | 0/3 | Not started | - |
+| 43. Performance (Response Time + HTML Size) | 1/3 | In Progress|  |
 </content>
