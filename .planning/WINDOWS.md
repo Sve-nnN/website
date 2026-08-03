@@ -1,10 +1,10 @@
 ---
 schema_version: 1
-open_count: 3
+open_count: 4
 waived_count: 0
 fixed_count: 4
-total_count: 7
-last_updated: 2026-08-03T01:39:35.297Z
+total_count: 8
+last_updated: 2026-08-03T01:46:03.075Z
 ---
 
 # Broken Windows Ledger
@@ -22,6 +22,7 @@ last_updated: 2026-08-03T01:39:35.297Z
 | 5 | 42 | unmet-truth | .env |  | Home meta.description update confirmed written+published via Local API self-verify (payload.find overrideAccess:false, same read path as unauthenticated REST) on 2026-08-02, but production (https://juan-tech.com, Dokploy) still serves the OLD description with zero HTTP caching involved (cache-control: no-store, cache-bust query param has no effect). This means Juan's local .env DATABASE_URI and Dokploy's production DATABASE_URI likely point to DIFFERENT Neon databases/branches, contradicting CLAUDE.md's stated assumption of a single shared production DB. Needs Juan to compare the two connection strings in Dokploy env panel vs local .env. Until resolved, any Local-API script run locally may NOT be affecting what juan-tech.com actually serves -- Phase 41/42's earlier og:image/canonical fixes only worked because they are CODE changes (read fresh per request regardless of which DB), not content writes. | open |  | 2026-08-02T16:24:04.304Z |  |
 | 6 | 43 | unrun-verify | .planning/phases/43-performance-response-time-html-size/43-01-SUMMARY.md |  | Live before/after Home response-time + HTML-size measurement (npm run start + curl timing/wc -c) blocked by intermittent local Neon ECONNRESET — deferred to production confirmation post-deploy | open |  | 2026-08-03T01:24:20.043Z |  |
 | 7 | 43 | unrun-verify | .planning/phases/43-performance-response-time-html-size/43-02-SUMMARY.md |  | Live before/after Servicios+Blog listing response-time/HTML-size measurement (npm run start / node .next/standalone/server.js + curl timing) blocked by same session-wide intermittent local Neon ECONNRESET as WINDOWS id 6 — deferred to production confirmation post-deploy | open |  | 2026-08-03T01:39:35.297Z |  |
+| 8 | 43 | unrun-verify | .planning/phases/43-performance-response-time-html-size/lh-phase43-post.json |  | Live curl timing/HTML-size + Lighthouse mobile comparison against lh-phase36-post.json could not run: local Neon Postgres connect fails with read ECONNRESET (same session-wide pattern as WINDOWS ids 1-4,6). Deferred to production confirmation post-deploy. | open |  | 2026-08-03T01:46:03.075Z |  |
 
 ````json
 [
@@ -107,6 +108,18 @@ last_updated: 2026-08-03T01:39:35.297Z
     "status": "open",
     "reason": "",
     "recorded_at": "2026-08-03T01:39:35.297Z",
+    "resolved_at": null
+  },
+  {
+    "id": 8,
+    "kind": "unrun-verify",
+    "phase": "43",
+    "file": ".planning/phases/43-performance-response-time-html-size/lh-phase43-post.json",
+    "line": null,
+    "description": "Live curl timing/HTML-size + Lighthouse mobile comparison against lh-phase36-post.json could not run: local Neon Postgres connect fails with read ECONNRESET (same session-wide pattern as WINDOWS ids 1-4,6). Deferred to production confirmation post-deploy.",
+    "status": "open",
+    "reason": "",
+    "recorded_at": "2026-08-03T01:46:03.075Z",
     "resolved_at": null
   }
 ]

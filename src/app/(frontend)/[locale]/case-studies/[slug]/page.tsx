@@ -1,9 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
 
-import config from '@payload-config'
 import type { Author } from '@/payload-types'
 import { JsonLd } from '@/components/JsonLd'
 import { Container } from '@/components/Container'
@@ -16,6 +14,7 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { CaseStudyResultsChart } from '@/components/CaseStudyResultsChart'
 import { Button } from '@/components/ui/button'
+import { getCachedCaseStudy } from '@/lib/cache'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -23,16 +22,8 @@ import { Button } from '@/components/ui/button'
 // static generation. See infra/apps/LESSONS-LEARNED.md.
 export const dynamic = 'force-dynamic'
 
-async function getCaseStudy(locale: string, slug: string) {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'case-studies',
-    where: { slug: { equals: slug } },
-    locale: locale as 'es' | 'en',
-    depth: 1,
-    limit: 1,
-  })
-  return docs[0]
+function getCaseStudy(locale: string, slug: string) {
+  return getCachedCaseStudy(slug, locale as 'es' | 'en')
 }
 
 export async function generateMetadata({
