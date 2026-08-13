@@ -2,7 +2,7 @@
 
 import { useSyncExternalStore } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import PlainLink from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { Container } from '@/components/Container'
@@ -18,6 +18,7 @@ import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/s
 import { Separator } from '@/components/ui/separator'
 import { Menu } from 'lucide-react'
 import { LocaleSwitcher } from '@/components/LocaleSwitcher'
+import { Link as LocaleLink, isPrefixableHref } from '@/i18n/navigation'
 import { routing } from '@/i18n/routing'
 import { cn } from '@/lib/utils'
 
@@ -114,6 +115,13 @@ export function SiteHeaderChrome({
 
   const currentPath = normalizePath(pathname)
 
+  // `ctaButton.href` is admin-authored on the Header global, so it gets the
+  // same guard `CMSLink` uses: an absolute URL, a bare fragment, or a path an
+  // editor already prefixed by hand must not be given a locale prefix.
+  // Resolved once so the desktop and mobile CTAs cannot drift apart.
+  const ctaHref = ctaButton?.href ?? '/contact'
+  const CtaLink = isPrefixableHref(ctaHref) ? LocaleLink : PlainLink
+
   const isActive = (item: NavItem) => {
     const url = item.link?.url
     if (!url) return false
@@ -146,14 +154,15 @@ export function SiteHeaderChrome({
     >
       <Container className="flex items-center justify-between py-4">
         {/* FIX (26-REVIEW WR-04): was hardcoded to `/` regardless of locale — on
-            EN pages that's the ES home, not `/en`. */}
-        <Link href={locale === 'en' ? '/en' : '/'} className="flex items-center gap-2">
+            EN pages that's the ES home, not `/en`. The hand-picked prefix is now
+            gone: the locale-aware Link derives it from the active locale. */}
+        <LocaleLink href="/" className="flex items-center gap-2">
           {logo?.url ? (
             <Image src={logo.url} alt={logo.alt ?? 'Logo'} width={40} height={40} />
           ) : (
             <span className="font-heading text-heading">Juan Carlos Angulo</span>
           )}
-        </Link>
+        </LocaleLink>
 
         {/* POLISH: the landmark had no accessible name, and the page exposes
             more than one nav (this, the breadcrumb trail, the footer), so a
@@ -198,7 +207,7 @@ export function SiteHeaderChrome({
 
           {ctaButton?.label && (
             <Button asChild>
-              <Link href={ctaButton.href ?? '/contact'}>{ctaButton.label}</Link>
+              <CtaLink href={ctaHref}>{ctaButton.label}</CtaLink>
             </Button>
           )}
         </nav>
@@ -249,7 +258,7 @@ export function SiteHeaderChrome({
                 <LocaleSwitcher currentLocale={locale} />
                 {ctaButton?.label && (
                   <Button asChild>
-                    <Link href={ctaButton.href ?? '/contact'}>{ctaButton.label}</Link>
+                    <CtaLink href={ctaHref}>{ctaButton.label}</CtaLink>
                   </Button>
                 )}
               </div>

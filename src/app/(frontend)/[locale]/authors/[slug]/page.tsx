@@ -1,6 +1,10 @@
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import Image from 'next/image'
+// Deliberately the PLAIN link, not the locale-aware `Link` from
+// `@/i18n/navigation`: the only `<Link>` on this page is an admin-authored
+// EXTERNAL speaking-event URL (`target="_blank"`), which must never be given a
+// locale prefix.
 import Link from 'next/link'
 import { GraduationCap, Mic, ExternalLink } from 'lucide-react'
 

@@ -1,8 +1,8 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { notFound, permanentRedirect } from 'next/navigation'
 
 import type { Author, Category, Post } from '@/payload-types'
+import { Link } from '@/i18n/navigation'
 import { JsonLd } from '@/components/JsonLd'
 import { Container } from '@/components/Container'
 import { Badge } from '@/components/ui/badge'

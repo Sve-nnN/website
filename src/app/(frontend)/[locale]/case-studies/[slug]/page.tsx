@@ -1,4 +1,8 @@
 import Image from 'next/image'
+// Deliberately the PLAIN link, not the locale-aware `Link` from
+// `@/i18n/navigation`: both link sites here are already locale-correct — one
+// breadcrumb url (prefixed by `src/lib/breadcrumbs.ts`) plus two CTAs that
+// build their own prefix from the `localePrefix` constant below.
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 

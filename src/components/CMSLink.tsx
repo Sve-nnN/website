@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react'
-import Link from 'next/link'
+import PlainLink from 'next/link'
 
 import { Button } from '@/components/ui/button'
+import { Link as LocaleLink, isPrefixableHref } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 
 interface CMSLinkProps {
@@ -41,23 +42,32 @@ export function CMSLink(props: CMSLinkProps) {
 
   const content = children ?? label
 
+  // These hrefs are admin-authored, so the guard picks the component ONCE for
+  // both render branches (they must never drift). It protects three real
+  // shapes an editor can type: an absolute external URL, a bare `#fragment`,
+  // and a path they already prefixed by hand (`/en/contact`) — none of which
+  // may be given a locale prefix. A `type === 'reference'` link always resolves
+  // to an internal unprefixed path, so references always take the
+  // locale-aware branch.
+  const LinkComponent = isPrefixableHref(href) ? LocaleLink : PlainLink
+
   if (appearance) {
     return (
       <Button asChild variant={appearance === 'outline' ? 'outline' : 'default'} className={className}>
-        <Link
+        <LinkComponent
           href={href}
           target={newTab ? '_blank' : undefined}
           rel={newTab ? 'noopener noreferrer' : undefined}
           aria-current={ariaCurrent}
         >
           {content}
-        </Link>
+        </LinkComponent>
       </Button>
     )
   }
 
   return (
-    <Link
+    <LinkComponent
       href={href}
       target={newTab ? '_blank' : undefined}
       rel={newTab ? 'noopener noreferrer' : undefined}
@@ -65,6 +75,6 @@ export function CMSLink(props: CMSLinkProps) {
       aria-current={ariaCurrent}
     >
       {content}
-    </Link>
+    </LinkComponent>
   )
 }

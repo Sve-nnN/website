@@ -1,7 +1,7 @@
-import Link from 'next/link'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
+import { Link } from '@/i18n/navigation'
 import { Container } from '@/components/Container'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'

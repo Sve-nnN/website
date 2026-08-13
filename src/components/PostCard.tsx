@@ -2,7 +2,8 @@
 
 import * as m from 'motion/react-m'
 import Image from 'next/image'
-import Link from 'next/link'
+
+import { Link } from '@/i18n/navigation'
 
 import type { PostCardData } from '@/lib/cache'
 

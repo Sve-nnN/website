@@ -1,5 +1,12 @@
 'use client'
 
+// Deliberately the PLAIN link, not the locale-aware `Link` from
+// `@/i18n/navigation`: this control is cross-locale by design. next-intl always
+// emits a locale prefix when an explicit `locale` prop is present, even under
+// `localePrefix: 'as-needed'` — switching to Spanish would render `/es/servicios`,
+// a non-canonical URL in the HTML plus a redirect hop, on a site whose whole
+// value proposition is SEO. The manual strip-and-rebuild below already produces
+// the correct canonical target.
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 

@@ -1,3 +1,7 @@
+// Deliberately the PLAIN link, not the locale-aware `Link` from
+// `@/i18n/navigation`: the only `<Link>` on this page renders a breadcrumb
+// url, which arrives already locale-prefixed from `src/lib/breadcrumbs.ts`.
+// The cards themselves link through `WebsiteCard`, which IS locale-aware.
 import Link from 'next/link'
 import { getPayload } from 'payload'
 

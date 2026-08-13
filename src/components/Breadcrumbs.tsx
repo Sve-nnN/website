@@ -1,3 +1,9 @@
+// Deliberately the PLAIN link, not the locale-aware `Link` from
+// `@/i18n/navigation`: trail urls arrive already locale-prefixed from
+// `src/lib/breadcrumbs.ts` (`homeHref()` returns `/en`, `sectionIndexHref()`
+// builds on it), so prefixing them again would stack a second locale segment.
+// The same array also feeds `buildBreadcrumbJsonLd()`, so changing its url
+// shape would corrupt the BreadcrumbList structured data.
 import Link from 'next/link'
 
 import type { BreadcrumbItem } from '@/lib/breadcrumbs'

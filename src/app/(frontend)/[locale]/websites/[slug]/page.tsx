@@ -5,6 +5,11 @@ import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import type { Website } from '@/payload-types'
+// Mixed file on purpose: the breadcrumb trail below arrives ALREADY
+// locale-prefixed from `src/lib/breadcrumbs.ts`, so it keeps the plain
+// `next/link` above; the related-case-study link takes an unprefixed path and
+// needs the locale-aware component.
+import { Link as LocaleLink } from '@/i18n/navigation'
 import { JsonLd } from '@/components/JsonLd'
 import { Container } from '@/components/Container'
 import { Badge } from '@/components/ui/badge'
@@ -129,6 +134,10 @@ export default async function WebsitePage({
                     {isLast ? (
                       <span aria-current="page">{crumb.label}</span>
                     ) : (
+                      // `crumb.url` arrives already locale-prefixed from
+                      // `buildWebsitesTrail`, so this stays on the plain
+                      // component — the locale-aware one would stack a second
+                      // locale segment on it.
                       <Link
                         href={crumb.url}
                         className="hover:text-secondary-foreground underline-offset-2 hover:underline"
@@ -238,12 +247,12 @@ export default async function WebsitePage({
 
         {relatedCaseStudy && (
           <section>
-            <Link
+            <LocaleLink
               href={`/case-studies/${relatedCaseStudy.slug}`}
               className="text-primary-text underline underline-offset-2"
             >
               {t.relatedCaseStudy}
-            </Link>
+            </LocaleLink>
           </section>
         )}
       </Container>

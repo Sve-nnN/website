@@ -1,4 +1,8 @@
 import Image from 'next/image'
+// Deliberately the PLAIN link, not the locale-aware `Link` from
+// `@/i18n/navigation`: the only `<Link>` here renders a breadcrumb url, already
+// locale-prefixed by `src/lib/breadcrumbs.ts`. The hero's CTA row goes through
+// `CMSLink`, which IS locale-aware.
 import Link from 'next/link'
 import { MapPin, CheckCircle2 } from 'lucide-react'
 

@@ -1,8 +1,8 @@
-import Link from 'next/link'
 import Image from 'next/image'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
+import { Link } from '@/i18n/navigation'
 import { Container } from '@/components/Container'
 import { Badge } from '@/components/ui/badge'
 import { buildOpenGraph } from '@/lib/og-image'

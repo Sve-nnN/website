@@ -55,9 +55,11 @@ export function blogPostPath(categorySlug: string, postSlug: string): string {
 /**
  * Prefixes a blog path with the locale segment. `es` is the default locale
  * (`routing.ts`) and therefore unprefixed; `en` gets `/en`. Use this for
- * metadata/canonical/sitemap URLs, which must be absolute and unambiguous —
- * in-page `<Link>` hrefs stay unprefixed and are resolved by the next-intl
- * middleware, matching what every other route in this app already does.
+ * absolute metadata/canonical/sitemap URLs, which must be unambiguous. In-page
+ * `<Link>` hrefs stay unprefixed on purpose and get their prefix at render time
+ * from the locale-aware `Link` in `@/i18n/navigation` — the middleware only
+ * rewrites INCOMING requests, never outgoing hrefs, and believing otherwise is
+ * what spread unprefixed `/en` links across the site in the first place.
  */
 export function localizeBlogPath(locale: Locale, path: string): string {
   return locale === 'en' ? `/en${path}` : path
