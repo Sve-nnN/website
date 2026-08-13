@@ -116,49 +116,60 @@ Diferidos. Reconocidos pero fuera de este roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BASE-01 | TBD | Pending |
-| BASE-02 | TBD | Pending |
-| BASE-03 | TBD | Pending |
-| DEC-01 | TBD | Pending |
-| DEC-02 | TBD | Pending |
-| DEC-03 | TBD | Pending |
-| DEC-04 | TBD | Pending |
-| DEC-05 | TBD | Pending |
-| LEG-01 | TBD | Pending |
-| LEG-02 | TBD | Pending |
-| LEG-03 | TBD | Pending |
-| LEG-04 | TBD | Pending |
-| AFF-01 | TBD | Pending |
-| AFF-02 | TBD | Pending |
-| AFF-03 | TBD | Pending |
-| AFF-04 | TBD | Pending |
-| AFF-05 | TBD | Pending |
-| AFF-06 | TBD | Pending |
-| GO-01 | TBD | Pending |
-| GO-02 | TBD | Pending |
-| GO-03 | TBD | Pending |
-| GO-04 | TBD | Pending |
-| STACK-01 | TBD | Pending |
-| STACK-02 | TBD | Pending |
-| STACK-03 | TBD | Pending |
-| STACK-04 | TBD | Pending |
-| STACK-05 | TBD | Pending |
-| STACK-06 | TBD | Pending |
-| INL-01 | TBD | Pending |
-| INL-02 | TBD | Pending |
-| MAIL-01 | TBD | Pending |
-| MAIL-02 | TBD | Pending |
-| MAIL-03 | TBD | Pending |
-| MAIL-04 | TBD | Pending |
-| MAIL-05 | TBD | Pending |
-| GATE-01 | TBD | Pending |
-| GATE-02 | TBD | Pending |
+| BASE-01 | Phase 44 | Pending |
+| BASE-02 | Phase 44 | Pending |
+| BASE-03 | Phase 44 | Pending |
+| DEC-01 | Phase 44 | Pending |
+| DEC-02 | Phase 44 | Pending |
+| DEC-03 | Phase 44 | Pending |
+| DEC-04 | Phase 44 | Pending |
+| DEC-05 | Phase 44 | Pending |
+| LEG-01 | Phase 45 | Pending |
+| LEG-02 | Phase 45 | Pending |
+| LEG-03 | Phase 45 | Pending |
+| LEG-04 | Phase 45 | Pending |
+| AFF-01 | Phase 45 | Pending |
+| AFF-02 | Phase 45 | Pending |
+| AFF-03 | Phase 45 | Pending |
+| AFF-04 | Phase 45 | Pending |
+| AFF-05 | Phase 45 | Pending |
+| AFF-06 | Phase 45 | Pending |
+| GO-01 | Phase 46 | Pending |
+| GO-02 | Phase 46 | Pending |
+| GO-03 | Phase 46 | Pending |
+| GO-04 | Phase 46 | Pending |
+| STACK-01 | Phase 47 | Pending |
+| STACK-02 | Phase 47 | Pending |
+| STACK-03 | Phase 47 | Pending |
+| STACK-04 | Phase 47 | Pending |
+| STACK-05 | Phase 47 | Pending |
+| STACK-06 | Phase 47 | Pending |
+| INL-01 | Phase 47 | Pending |
+| INL-02 | Phase 47 | Pending |
+| MAIL-01 | Phase 48 | Pending |
+| MAIL-02 | Phase 48 | Pending |
+| MAIL-03 | Phase 48 | Pending |
+| MAIL-04 | Phase 48 | Pending |
+| MAIL-05 | Phase 48 | Pending |
+| GATE-01 | Phase 49 | Pending |
+| GATE-02 | Phase 49 | Pending |
 
 **Coverage:**
 - v2.1 requirements: 37 total
-- Mapped to phases: 0 (se completa al crear el roadmap)
-- Unmapped: 37 ⚠️
+- Mapped to phases: 37 ✓
+- Unmapped: 0
+
+**Por fase:**
+
+| Phase | Requirements | Total |
+|-------|--------------|-------|
+| Phase 44 — Baseline de Regresión + Decisiones de Monetización | BASE-01..03, DEC-01..05 | 8 |
+| Phase 45 — Disclosure Legal + Esquema de Links de Afiliado | LEG-01..04, AFF-01..06 | 10 |
+| Phase 46 — Ruta /go + Fix de Middleware + Registro de Clics | GO-01..04 | 4 |
+| Phase 47 — Página de Stack + Links Inline en Contenido | STACK-01..06, INL-01, INL-02 | 8 |
+| Phase 48 — Captura de Email (Resend, env-gated) | MAIL-01..05 | 5 |
+| Phase 49 — Gate de Cierre de Monetización | GATE-01, GATE-02 | 2 |
 
 ---
 *Requirements defined: 2026-08-13*
-*Last updated: 2026-08-13 after milestone v2.1 definition*
+*Last updated: 2026-08-13 — roadmap v2.1 creado (Phases 44-49), 37/37 requirements mapeados*
