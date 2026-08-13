@@ -68,8 +68,21 @@ export default async function RootLayout({
       <body className="font-sans">
         <NextIntlClientProvider>
           <MotionProvider>
+            {/* POLISH: there was no bypass mechanism — measured 8 tab stops
+                between page load and the first focusable element inside the
+                content, repeated on every page. That is WCAG 2.4.1 (Bypass
+                Blocks), a level A criterion. The link is off-screen until it
+                takes focus, then lands as a normal ember button. */}
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:inline-flex focus:h-10 focus:items-center focus:rounded-md focus:bg-primary focus:px-4 focus:text-label focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-1 focus:ring-ring"
+            >
+              {locale === 'en' ? 'Skip to content' : 'Saltar al contenido'}
+            </a>
             <SiteHeader locale={locale} />
-            {children}
+            <div id="main-content" tabIndex={-1}>
+              {children}
+            </div>
             <SiteFooter locale={locale} />
           </MotionProvider>
         </NextIntlClientProvider>
