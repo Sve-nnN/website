@@ -1,14 +1,4 @@
-'use client'
-
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from 'recharts'
-
 import type { CaseStudy } from '@/payload-types'
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from '@/components/ui/chart'
 
 type Metric = NonNullable<NonNullable<CaseStudy['results']>['metrics']>[number]
 
@@ -19,7 +9,7 @@ type Metric = NonNullable<NonNullable<CaseStudy['results']>['metrics']>[number]
  * only bare "k"/"m" magnitude suffixes do). Returns null when nothing
  * numeric can be found (e.g. "—"), so the caller can skip that metric.
  */
-function parseLeadingNumber(raw: string | null | undefined): number | null {
+export function parseLeadingNumber(raw: string | null | undefined): number | null {
   if (!raw) return null
   const match = raw.match(/-?\d{1,3}(?:,\d{3})*(?:\.\d+)?|-?\d+(?:\.\d+)?/)
   if (!match || match.index === undefined) return null
@@ -34,101 +24,65 @@ function parseLeadingNumber(raw: string | null | undefined): number | null {
   return num
 }
 
-type ParsedRow = {
+/**
+ * Percentage change from `before` to `after`, rounded to a whole number.
+ * Returns null when the baseline is zero (no meaningful ratio) so the caller
+ * can omit the delta rather than print an infinity.
+ */
+export function percentChange(before: number, after: number): number | null {
+  if (before === 0) return null
+  return Math.round(((after - before) / Math.abs(before)) * 100)
+}
+
+type Row = {
   label: string
+  beforeRaw: string
+  afterRaw: string
   before: number
   after: number
 }
 
-type ChartRow = {
-  label: string
-  beforeLeft?: number
-  afterLeft?: number
-  beforeRight?: number
-  afterRight?: number
-}
-
-function buildChartRows(metrics: Metric[]): ParsedRow[] {
-  const rows: ParsedRow[] = []
+function buildRows(metrics: Metric[]): Row[] {
+  const rows: Row[] = []
   for (const metric of metrics) {
     const before = parseLeadingNumber(metric.before)
     const after = parseLeadingNumber(metric.after)
     if (before === null || after === null) continue
-    rows.push({ label: metric.label, before, after })
+    rows.push({
+      label: metric.label,
+      beforeRaw: metric.before ?? String(before),
+      afterRaw: metric.after ?? String(after),
+      before,
+      after,
+    })
   }
   return rows
 }
 
 /**
- * Buckets already-parsed rows by order-of-magnitude so wildly different
- * scales (e.g. position ~8 vs impressions ~30,000) don't get plotted on the
- * same linear Y-axis where the small-scale metric becomes invisible.
+ * Before/after comparison, one self-scaled pair of bars per metric.
  *
- * Algorithm (37-UI-SPEC.md Fix 2, authoritative):
- * 1. magnitude = max(|before|, |after|) per row, order = floor(log10(magnitude))
- *    (magnitude === 0 guarded to order 0, avoids -Infinity from log10(0)).
- * 2. Collect distinct orders across all rows, sorted ascending.
- * 3. If only 1 distinct order -> every row buckets `left`, no right axis.
- * 4. If 2+ distinct orders -> split at the largest gap between consecutive
- *    orders; orders at/below the split -> `left`, above -> `right`.
+ * REWRITE: the previous version plotted every metric as grouped recharts bars
+ * across a shared (and, when magnitudes differed, dual) Y axis. Measured on
+ * production, that chart did not represent its data at all — bars rendered
+ * between 0px and 5px tall inside a 232px plot area, where traffic
+ * (82,000 -> 138,000) should have filled almost the full height. The four
+ * partial series (`beforeLeft`/`afterLeft`/`beforeRight`/`afterRight`, each
+ * `undefined` on the rows belonging to the other axis) fed the axes a domain
+ * the bars were not drawn against.
+ *
+ * Rather than repair a dual-axis grouped chart — which is hard to read even
+ * when it works, since nothing tells the reader which bar belongs to which
+ * axis — each metric now gets its own scale. Three independent before/after
+ * comparisons are what the content actually is, so the mixed-scale problem
+ * stops existing instead of being mitigated.
+ *
+ * No recharts, no client component: two divs and a width percentage render
+ * this correctly on the server, which also drops a heavy charting bundle from
+ * a page whose whole argument is technical performance. Every value is real
+ * text in the DOM, so screen readers and search engines read the comparison
+ * without needing the bars; the bars themselves are decorative.
  */
-export function bucketRowsByMagnitude(
-  rows: ParsedRow[],
-): { rows: ChartRow[]; hasRightAxis: boolean } {
-  const orderOf = (row: ParsedRow): number => {
-    const magnitude = Math.max(Math.abs(row.before), Math.abs(row.after))
-    if (magnitude === 0) return 0
-    return Math.floor(Math.log10(magnitude))
-  }
-
-  const orders = rows.map(orderOf)
-  const distinctOrders = Array.from(new Set(orders)).sort((a, b) => a - b)
-
-  let splitOrder = Number.POSITIVE_INFINITY // every order <= splitOrder -> left
-  if (distinctOrders.length > 1) {
-    let largestGap = -Infinity
-    let gapSplit = distinctOrders[0]
-    for (let i = 1; i < distinctOrders.length; i++) {
-      const gap = distinctOrders[i] - distinctOrders[i - 1]
-      if (gap > largestGap) {
-        largestGap = gap
-        gapSplit = distinctOrders[i - 1]
-      }
-    }
-    splitOrder = gapSplit
-  }
-
-  const hasRightAxis = distinctOrders.length > 1
-
-  const chartRows: ChartRow[] = rows.map((row, i) => {
-    const isLeft = orders[i] <= splitOrder
-    return isLeft
-      ? { label: row.label, beforeLeft: row.before, afterLeft: row.after }
-      : { label: row.label, beforeRight: row.before, afterRight: row.after }
-  })
-
-  return { rows: chartRows, hasRightAxis }
-}
-
-const chartConfig = {
-  beforeLeft: {
-    label: 'Before',
-    color: 'var(--chart-2)',
-  },
-  afterLeft: {
-    label: 'After',
-    color: 'var(--chart-1)',
-  },
-  beforeRight: {
-    label: 'Before',
-    color: 'var(--chart-2)',
-  },
-  afterRight: {
-    label: 'After',
-    color: 'var(--chart-1)',
-  },
-} satisfies ChartConfig
-
 export function CaseStudyResultsChart({
   metrics,
   copy,
@@ -136,63 +90,76 @@ export function CaseStudyResultsChart({
   metrics: Metric[] | null | undefined
   copy: { before: string; after: string }
 }) {
-  const parsedRows = buildChartRows(metrics ?? [])
+  const rows = buildRows(metrics ?? [])
 
-  if (parsedRows.length === 0) {
+  if (rows.length === 0) {
     return null
   }
 
-  const { rows, hasRightAxis } = bucketRowsByMagnitude(parsedRows)
-
-  const config: ChartConfig = {
-    ...chartConfig,
-    beforeLeft: { ...chartConfig.beforeLeft, label: copy.before },
-    afterLeft: { ...chartConfig.afterLeft, label: copy.after },
-    beforeRight: { ...chartConfig.beforeRight, label: copy.before },
-    afterRight: { ...chartConfig.afterRight, label: copy.after },
-  }
-
   return (
-    <ChartContainer config={config} className="aspect-auto h-64 w-full sm:h-72">
-      <BarChart data={rows} margin={{ left: 8, right: 8, top: 8, bottom: 8 }}>
-        <CartesianGrid vertical={false} strokeDasharray="4 4" />
-        <XAxis
-          dataKey="label"
-          tickLine={false}
-          axisLine={false}
-          tickMargin={8}
-          tick={{ fontSize: 11 }}
-          interval={0}
-          height={40}
-        />
-        <YAxis
-          yAxisId="left"
-          orientation="left"
-          tickLine={false}
-          axisLine={false}
-          width={40}
-          tick={{ fontSize: 11 }}
-        />
-        {hasRightAxis ? (
-          <YAxis
-            yAxisId="right"
-            orientation="right"
-            tickLine={false}
-            axisLine={false}
-            width={40}
-            tick={{ fontSize: 11 }}
-          />
-        ) : null}
-        <ChartTooltip content={<ChartTooltipContent />} />
-        <Bar dataKey="beforeLeft" yAxisId="left" fill="var(--color-beforeLeft)" radius={4} />
-        <Bar dataKey="afterLeft" yAxisId="left" fill="var(--color-afterLeft)" radius={4} />
-        {hasRightAxis ? (
-          <Bar dataKey="beforeRight" yAxisId="right" fill="var(--color-beforeRight)" radius={4} />
-        ) : null}
-        {hasRightAxis ? (
-          <Bar dataKey="afterRight" yAxisId="right" fill="var(--color-afterRight)" radius={4} />
-        ) : null}
-      </BarChart>
-    </ChartContainer>
+    <ul className="space-y-8">
+      {rows.map((row, i) => {
+        // Each metric owns its scale: the larger of the two values is the
+        // full-width bar, so a 4.2s -> 1.6s improvement is as readable as an
+        // 82K -> 138K one. A floor of 2% keeps a near-zero value from
+        // rendering as an invisible sliver.
+        const peak = Math.max(row.before, row.after, 0)
+        const widthOf = (value: number) =>
+          peak === 0 ? 0 : Math.max(2, Math.round((value / peak) * 100))
+        const delta = percentChange(row.before, row.after)
+
+        return (
+          <li key={row.label + i}>
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <p className="text-label uppercase tracking-wide text-muted-foreground">
+                {row.label}
+              </p>
+              {delta !== null && (
+                // Deliberately uncoloured: whether a drop is good depends on
+                // the metric (a lower LCP is a win, lower traffic is not), and
+                // nothing in the data says which. The number states the change
+                // and lets the surrounding copy carry the meaning.
+                <p className="text-label text-muted-foreground tabular-nums">
+                  {delta > 0 ? '+' : ''}
+                  {delta}%
+                </p>
+              )}
+            </div>
+
+            <div className="mt-3 space-y-2">
+              <div className="flex items-center gap-3">
+                <span className="w-16 shrink-0 text-label text-muted-foreground">{copy.before}</span>
+                <div className="h-3 flex-1 overflow-hidden rounded-sm bg-muted" aria-hidden="true">
+                  {/* Solid, not tinted: at 40% opacity this bar measured
+                      ~1.6:1 against its own track and read as empty rail.
+                      Solid `muted-foreground` is ~3.9:1 on `muted`, which
+                      clears the 3:1 floor for a non-text graphic. */}
+                  <div
+                    className="h-full rounded-sm bg-muted-foreground"
+                    style={{ width: `${widthOf(row.before)}%` }}
+                  />
+                </div>
+                <span className="w-20 shrink-0 text-right text-body tabular-nums text-muted-foreground">
+                  {row.beforeRaw}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className="w-16 shrink-0 text-label text-muted-foreground">{copy.after}</span>
+                <div className="h-3 flex-1 overflow-hidden rounded-sm bg-muted" aria-hidden="true">
+                  <div
+                    className="h-full rounded-sm bg-primary"
+                    style={{ width: `${widthOf(row.after)}%` }}
+                  />
+                </div>
+                <span className="w-20 shrink-0 text-right font-heading text-body font-semibold tabular-nums text-primary-text">
+                  {row.afterRaw}
+                </span>
+              </div>
+            </div>
+          </li>
+        )
+      })}
+    </ul>
   )
 }

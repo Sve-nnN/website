@@ -134,18 +134,31 @@ export default async function CaseStudyPage({
 
   return (
     <main>
-      <section className="relative bg-secondary text-secondary-foreground">
-        <div className="relative aspect-[21/9] w-full opacity-40">
+      {/* POLISH: the hero used to be a 21/9 image band stacked ABOVE the text,
+          which measured 617px tall on a 1440x812 viewport and pushed the h1 to
+          y=782 — at the very bottom edge of the fold, and below it on any
+          shorter laptop. A case study has to lead with its headline and metric,
+          not with a decorative gradient. The image is now the hero's
+          background with the copy on top, which is the treatment the shared
+          Hero block's own `case-study-header` variant already uses; this page
+          was a one-off that drifted from it. */}
+      <section className="relative overflow-hidden bg-secondary text-secondary-foreground border-t-8 border-primary">
+        <div className="absolute inset-0" aria-hidden="true">
           <Image
             src={heroImageUrl}
-            alt={heroImage?.alt ?? doc.title}
+            alt=""
             fill
-            className="object-cover"
+            className="object-cover opacity-45"
             priority
             sizes="100vw"
           />
+          {/* Scrim: the hero images are wide-gamut abstract gradients, so a
+              flat tint alone left light passages under the copy. The vertical
+              ramp keeps the lower half — where the title, metric and
+              breadcrumb sit — reliably dark. */}
+          <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/75 to-secondary/40" />
         </div>
-        <Container className="py-8">
+        <Container className="relative z-10 py-14 md:py-20">
           <nav aria-label="Breadcrumb" className="mb-4">
             <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-secondary-foreground/70">
               {trail.map((crumb, i) => {
@@ -168,15 +181,35 @@ export default async function CaseStudyPage({
               })}
             </ol>
           </nav>
-          <div className="flex flex-wrap gap-4 text-label opacity-80">
-            {client?.name && <span>{client.name}</span>}
-            {doc.sector && <span>{doc.sector}</span>}
-            {doc.period && <span>{doc.period}</span>}
-          </div>
-          <h1 className="font-display text-display mt-2">{doc.title}</h1>
-          {doc.heroSubtitle && <p className="mt-2 text-body max-w-2xl">{doc.heroSubtitle}</p>}
+          {/* POLISH: these ran as bare spans separated only by a gap, so
+              "E-commerce" and "2025" read as two loose words rather than one
+              metadata line. Interpuncts are rendered from the array so no
+              separator is orphaned when a field is missing (the client name is
+              absent on every anonymised case study). */}
+          {[client?.name, doc.sector, doc.period].filter(Boolean).length > 0 && (
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label opacity-80">
+              {[client?.name, doc.sector, doc.period]
+                .filter((v): v is string => Boolean(v))
+                .map((value, i) => (
+                  <span key={value} className="flex items-center gap-x-2">
+                    {i > 0 && <span aria-hidden="true">·</span>}
+                    {value}
+                  </span>
+                ))}
+            </div>
+          )}
+          <h1 className="font-display text-display mt-3 tracking-tight text-balance">{doc.title}</h1>
+          {doc.heroSubtitle && (
+            <p className="mt-4 text-body max-w-[65ch] text-secondary-foreground/85">
+              {doc.heroSubtitle}
+            </p>
+          )}
+          {/* POLISH: the metric was also `text-display`, so two 56px elements
+              competed for the same moment and neither won. The headline is the
+              title; the metric is its proof, so it steps down one level and
+              keeps the ember, which reads at 4.9:1 on navy. */}
           {doc.heroMetric && (
-            <p className="mt-4 text-display font-display font-semibold text-primary tracking-tight tabular-nums">
+            <p className="mt-6 font-heading text-heading font-semibold text-primary tracking-tight tabular-nums">
               {doc.heroMetric}
             </p>
           )}
@@ -185,13 +218,31 @@ export default async function CaseStudyPage({
 
       {doc.kpis && doc.kpis.length > 0 && (
         <Container className="py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {/* POLISH: the grid was hard-coded to 4 columns, so a case study with
+              3 KPIs (the common count) left a dead cell on the right. The
+              column count now follows the actual number of KPIs. */}
+          <div
+            className={`grid grid-cols-2 gap-6 ${
+              doc.kpis.length === 3
+                ? 'md:grid-cols-3'
+                : doc.kpis.length <= 2
+                  ? 'md:grid-cols-2'
+                  : 'md:grid-cols-4'
+            }`}
+          >
             {doc.kpis.map((kpi, i) => (
-              <div key={kpi.id ?? i} className="rounded-lg bg-secondary text-secondary-foreground p-6 text-center">
-                <p className="text-display font-display font-semibold text-primary tracking-tight tabular-nums">
+              <div
+                key={kpi.id ?? i}
+                className="rounded-2xl bg-secondary text-secondary-foreground p-6 text-center"
+              >
+                {/* Array is the h1 voice, not a stat voice — these are labels
+                    with numbers, so they take Khand like every other non-title
+                    heading. It also drops the faux-bold synthesis, since Khand
+                    ships a real 600. */}
+                <p className="font-heading text-display font-semibold text-primary tracking-tight tabular-nums">
                   {kpi.value}
                 </p>
-                <p className="mt-1 text-label uppercase tracking-wide opacity-70">{kpi.label}</p>
+                <p className="mt-2 text-label uppercase tracking-wide opacity-70">{kpi.label}</p>
               </div>
             ))}
           </div>
@@ -212,7 +263,7 @@ export default async function CaseStudyPage({
         {doc.challenge && doc.challenge.length > 0 && (
           <section>
             <h2 className="font-heading text-heading mt-10 mb-4">{t.challenge}</h2>
-            <ul className="list-disc pl-6 space-y-2 text-body">
+            <ul className="list-disc pl-6 space-y-2 text-body max-w-[70ch]">
               {doc.challenge.map((item, i) => (
                 <li key={item.id ?? i}>{item.text}</li>
               ))}
@@ -225,11 +276,23 @@ export default async function CaseStudyPage({
             <h2 className="font-heading text-heading mt-10 mb-4">{t.solution}</h2>
             <ol className="space-y-4">
               {doc.solution.map((step, i) => (
+                // POLISH: the step number sat as a bare glyph in `text-primary`
+                // (3.15:1 on the light surface — it clears the 3:1 large-text
+                // floor at 28px, but only just). `text-primary-text` takes it
+                // to 4.61:1, and the tabular ring gives the sequence a shape
+                // instead of a floating digit hanging off the text block.
                 <li key={step.id ?? i} className="flex gap-4">
-                  <span className="font-heading text-heading text-primary">{i + 1}</span>
+                  <span
+                    aria-hidden="true"
+                    className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary/10 font-heading text-label font-semibold text-primary-text tabular-nums"
+                  >
+                    {i + 1}
+                  </span>
                   <div>
                     <p className="font-semibold text-body">{step.title}</p>
-                    <p className="text-body text-muted-foreground">{step.description}</p>
+                    <p className="mt-1 text-body text-muted-foreground max-w-[70ch]">
+                      {step.description}
+                    </p>
                   </div>
                 </li>
               ))}
@@ -249,25 +312,15 @@ export default async function CaseStudyPage({
                 {doc.results.periodBefore} → {doc.results.periodAfter}
               </p>
             )}
+            {/* The metric cards that used to sit under the chart are gone: the
+                rewritten chart carries the label, both values and the delta as
+                real text, so the cards repeated the same three facts in a
+                second layout. Nothing was dropped — the struck-through "before"
+                value they used to show is now a labelled bar. */}
             <CaseStudyResultsChart
               metrics={doc.results.metrics}
               copy={{ before: t.before, after: t.after }}
             />
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {doc.results.metrics.map((metric, i) => (
-                <div key={metric.id ?? i} className="rounded-lg border border-border p-4">
-                  <p className="text-label text-muted-foreground uppercase tracking-wide">
-                    {metric.label}
-                  </p>
-                  <div className="mt-2 flex items-baseline gap-2">
-                    <span className="text-body line-through opacity-60">{metric.before}</span>
-                    <span className="font-heading text-heading font-semibold text-primary tracking-tight tabular-nums">
-                      {metric.after}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
           </section>
         )}
 
