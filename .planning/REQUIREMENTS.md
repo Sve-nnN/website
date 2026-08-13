@@ -1,173 +1,164 @@
-# Requirements
+# Requirements: Milestone v2.1 — Monetización del Sitio (Research + Fundaciones)
 
-> Dos milestones activos en paralelo: v1.8 quedó en cola a mitad de Phase 37 (CONTEXT.md + UI-SPEC.md ya aprobados, falta plan/execute) cuando Juan pidió abrir v1.9 con prioridad. Se preserva la sección v1.8 completa para retomarla después — no se archivó porque no cerró.
+**Defined:** 2026-08-13
+**Core Value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en el contenido como en la ejecución técnica (rendimiento y SEO impecables). Si el rendimiento o el SEO fallan, el sitio no cumple su propósito.
 
-## Milestone v1.8 — Case Studies Content Audit & Fix (ids 15-20) — EN COLA
+**Nota de encuadre:** este milestone construye el mecanismo de monetización correctamente y barato, para que esté en su lugar cuando el tráfico crezca — no para generar ingresos significativos hoy. El research modeló Amazon en $2-$9/mes con 1.000 visitas a la página de stack. Los programas que sí pagan (DinoRANK 10% recurrente, Kinsta 10% vitalicio, DigitalOcean 10%/12 meses) valen 10-50x por conversión, y ninguno exige tráfico alto.
 
-### v1 Requirements
+## v2.1 Requirements
 
-#### Case Study Content Completeness
+### Baseline de Regresión
 
-- [x] **CASE-01**: Los 6 case studies borrador (ids 15-20) tienen "El reto" (`challenge`) y "La solución" (`solution`) completos y no vacíos en ambos locales (en/es)
-- [x] **CASE-02**: Cada KPI mostrado en un case study (tarjetas tipo "+83%"/"+71%"/"86,000"/"22.4M") tiene un label visible que explica qué mide (ningún número suelto sin contexto)
+- [ ] **BASE-01**: Existe un baseline de Lighthouse/CWV + H1 + JSON-LD + canonical/hreflang de las rutas críticas (Home, 4 landings de servicio, 2 geo, ambos locales) capturado **antes** de cualquier cambio renderizado, siguiendo el patrón REG-01/REG-02 de v1.7
+- [ ] **BASE-02**: Existe un snapshot de Search Console (impresiones, clics, posición media) de esas mismas rutas, para poder distinguir después "la monetización diluyó el clúster de servicios" de estacionalidad
+- [ ] **BASE-03**: El tráfico mensual real del sitio queda documentado con número, porque dos programas (Semrush, Hostinger afiliados) se gatean en ~1.000 visitas únicas y el modelo de ingresos se parametriza sobre ese valor
 
-#### Anonimización
+### Decisiones y Postulaciones
 
-- [x] **CASE-03**: Doc 20 (despacho penal Pittsburgh) no contiene nombre real del cliente, dominio real, condado real ni conteo de reseñas real — reemplazado por datos anonimizados consistentes con el resto de case studies
+- [ ] **DEC-01**: El estado real de la cuenta de Amazon Associates queda documentado junto con el plan de reactivación — la cuenta se cerró por no alcanzar las 3 ventas calificadas, y la reactivación exige el disclosure ya publicado
+- [ ] **DEC-02**: El modelo de ingresos queda escrito con la multiplicación explícita (tasa de Amazon 2,50% en componentes de PC, CTR de link, conversión de compra, ventana de cookie de 24h), no como una estimación vaga
+- [ ] **DEC-03**: La decisión de plataforma de pago queda registrada — Polar como merchant of record, motivada por que Stripe no opera en Perú y por que un vendedor establecido en Perú no tiene umbral de IVA europeo — con la cuenta abierta y cero código escrito en este milestone
+- [ ] **DEC-04**: Existe una lista priorizada de programas de afiliados con orden de postulación (DinoRANK → DigitalOcean → Kinsta), umbrales de aceptación, y la lista explícita de los que no tienen programa usable (Cloudflare, Cloudinary, Resend, Payload, Neon, Cursor, Claude, Ahrefs)
+- [ ] **DEC-05**: Quedan descartadas por escrito las mitigaciones equivocadas que la asesoría popular recomienda: subdominio de afiliados, `noindex` en páginas de ingresos, banner de cookies, y Amazon FBA
 
-#### Datos de Resultados
+### Legal y Disclosure
 
-- [x] **CASE-04**: `results.metrics` de cada uno de los 6 docs tiene suficientes filas reales (clics, impresiones, posición) para que el chart de antes/después no quede con 1-2 barras
-- [x] **CASE-06**: Los datos de `results.metrics` vienen de Google Search Console real (vía cualquier MCP `gsc-*` ya conectado y en vivo — no hace falta agregar propiedades nuevas) para las propiedades que respaldan cada case study — no números inventados — manteniendo el cliente anonimizado (sin branding/nombre/dominio real expuesto), y cada fila/valor de la tabla lleva su título/label visible indicando qué métrica es
+- [ ] **LEG-01**: Un componente de disclosure bilingüe se renderiza **antes** del primer link de afiliado en orden del DOM, con la copia en `messages/{es,en}.json` y no en contenido del CMS
+- [ ] **LEG-02**: La frase textual de Amazon ("As an Amazon Associate I earn from qualifying purchases." y su versión en español) aparece donde haya links de Amazon
+- [ ] **LEG-03**: `/privacy` queda actualizada cubriendo el formulario de email, Resend como encargado del tratamiento, retención de datos y proceso de baja
+- [ ] **LEG-04**: Queda escrita como restricción del milestone la prohibición de cualquier tracking que dispare consentimiento — sin GA4, sin píxeles, sin IDs de clic por usuario, sin `document.cookie`/`localStorage` en la ruta de afiliado
 
-#### Bugs de Página (encontrados por Juan en vivo, 2026-07-14)
+### Sistema de Links de Afiliado
 
-- [x] **CASE-07**: La tarjeta de autor (JU / Juan Carlos Angulo / Ingeniero de Software y Consultor SEO Técnico + bio) no se duplica en la página de detalle de case study — aparece una sola vez. Bio real a usar si falta contenido: "Soy Juan Carlos Angulo, Ingeniero de Software y Consultor SEO Técnico freelance con sede en Lima, Perú. A lo largo de más de cuatro años de experiencia profesional me he especializado en la intersección entre el desarrollo de software y la optimización para motores de búsqueda. Mi trabajo combina la auditoría técnica SEO —rastreo, indexabilidad, Core Web Vitals, Schema.org y datos estructurados— con el desarrollo full-stack utilizando Next.js y Payload CMS. Ayudo a empresas a mejorar su visibilidad orgánica mediante correcciones a nivel de código, sin intermediarios. Construyo y mantengo juan-tech.com, un blog técnico bilingüe orientado a desarrolladores y profesionales de tecnología en Latinoamérica y España."
-- [x] **CASE-08**: Los 6 case studies tienen JSON-LD Schema.org correcto y dinámico por doc (no hardcodeado/genérico) — datos reales de cada caso (autor, fechas, métricas, organización) reflejados en el schema, optimizado para rich results
-- [x] **CASE-09**: El chart de resultados no mezcla métricas de escalas muy distintas en el mismo eje (ej. posición ~8 vs impresiones ~30,000) — la métrica de escala chica no debe quedar invisible; usar eje secundario, normalización, o separar en charts distintos según corresponda
-- [x] **CASE-10**: Los charts de resultados se ven correctamente en mobile (sin overflow, labels ilegibles, ni barras cortadas)
-- [x] **CASE-11**: La estructura de la página de case study se revisa contra `https://ariannalupi.com/casos/ecommerce-vape/` como referencia — se identifican y agregan secciones/elementos que falten y tengan sentido para el modelo de datos actual (sin copiar contenido, solo estructura/inspiración)
+- [ ] **AFF-01**: Existe la colección `affiliate-links` con la matriz de localización campo por campo **congelada y aprobada antes de cargar cualquier contenido** — prosa localizada, identificadores y URLs no
+- [ ] **AFF-02**: Los destinos por mercado viven en un array NO localizado con clave `marketplace`, resueltos en render por una función pura `pickDestination()` en `src/lib/affiliate.ts`
+- [ ] **AFF-03**: El componente `AffiliateLink` emite `rel="sponsored nofollow noopener"` estructuralmente desde el código — nunca como campo editable en el CMS, nunca a criterio del editor
+- [ ] **AFF-04**: Los links de Amazon se renderizan directos y sin cloaking, con el `tag=` visible y sin `referrerPolicy` override, cumpliendo la prohibición textual de Redirecting Links de las Program Policies
+- [ ] **AFF-05**: Las lecturas pasan por un único `getCachedAffiliateLinks()` con `overrideAccess: false`, con cache tags y hooks de revalidación
+- [ ] **AFF-06**: La migración de esquema es puramente aditiva (`CREATE TABLE`/`ADD COLUMN`), leída antes de aplicarse contra la base real
 
-#### Verificación
+### Ruta de Redirección
 
-- [x] **CASE-05**: El agente que ejecuta el fix devuelve el JSON crudo completo de los 6 docs corregidos (no un resumen) para que Juan lo verifique él mismo antes de dar por cerrado el milestone
+- [ ] **GO-01**: `/go/[slug]` responde 302 en runtime Node con `no-store`, leyendo el destino exclusivamente del documento autorizado en el admin — nunca de un parámetro `?to=`
+- [ ] **GO-02**: El matcher de `src/middleware.ts` excluye `/go`, verificado por curl contra rutas control (`/`, `/en`, `/servicios`, `/en/services`, `/blog`) — sin este fix cada clic de afiliado devuelve 404
+- [ ] **GO-03**: `src/app/robots.ts` incluye `Disallow: /go`
+- [ ] **GO-04**: Los clics se registran en una tabla `affiliate-clicks` append-only escrita vía `after()` después de emitir el redirect, con descarte de bots y el throttle por IP ya usado en `contact.ts`
 
-### Out of Scope (v1.8)
+### Página de Stack
 
-- Publicar (`status: published`) los 6 case studies — este milestone solo corrige contenido, la decisión de publicar queda para Juan después de verificar
-- Case studies fuera del rango ids 15-20
-- Cambios de diseño/UI del chart de resultados (ya entregado en `fe5532c feat(case-studies): add before/after results chart via shadcn+recharts`) — solo se pobla de más datos reales
+- [ ] **STACK-01**: Existe un bloque `ToolStack` y la página `/stack` servida en ambos locales bajo un segmento único, sin tocar `sitemap-data.ts`, `canonical.ts` ni `breadcrumbs.ts`
+- [ ] **STACK-02**: Cada herramienta listada tiene al menos 100 palabras de experiencia propia y de primera mano en cada locale, sin copy de fabricante ni tablas de especificaciones
+- [ ] **STACK-03**: La página incluye un bloque "qué elegiría hoy si empezara de cero", ausente en las cinco páginas de referencia estudiadas
+- [ ] **STACK-04**: La página incluye al menos una recomendación destacada que no paga comisión y negativos honestos sobre las herramientas listadas
+- [ ] **STACK-05**: La página se enlaza desde el footer y la página de autor, y **no** desde el nav principal, para no diluir el clúster de servicios que ya rankea
+- [ ] **STACK-06**: Cada herramienta enlaza al case study o la página de servicio donde Juan la usó realmente, convirtiendo el riesgo de dilución en refuerzo del clúster
 
-### Traceability (v1.8)
+### Links Inline en Contenido
+
+- [ ] **INL-01**: Existe un inline block de afiliado usable dentro del rich text de Posts, emitiendo el mismo `rel` estructural y sin migración de esquema
+- [ ] **INL-02**: El disclosure se inyecta automáticamente en cualquier post que contenga links de afiliado, detectado por un escaneo puro del estado del editor y sin consulta extra
+
+### Captura de Email
+
+- [ ] **MAIL-01**: Existe un bloque de captura de email inline (nunca popup ni modal), resuelto con Server Action y sin JavaScript de cliente
+- [ ] **MAIL-02**: El doble opt-in está implementado en el propio sitio (Resend no lo trae), y Resend solo recibe direcciones ya confirmadas
+- [ ] **MAIL-03**: El lead magnet se entrega vía URL firmada de Cloudinary con expiración corta, no como archivo público
+- [ ] **MAIL-04**: El flujo está env-gated y degrada limpio sin `RESEND_API_KEY` real — el suscriptor se registra y el magnet se entrega aunque falte la credencial
+- [ ] **MAIL-05**: `secure-download.ts` y `download-token.ts` quedan como helpers separados, para que la tienda de v2.2 sea una adición y no una reescritura
+
+### Gate de Cierre
+
+- [ ] **GATE-01**: Paridad verificada contra el baseline: sin caída de más de 5 puntos de performance, sin cruce de banda de CWV, no más de 5 KB de JavaScript de cliente agregado, delta de CLS 0.00
+- [ ] **GATE-02**: Aserciones específicas del milestone: cero anchors a dominios de afiliado sin `sponsored`; el disclosure precede al primer anchor de afiliado en orden del DOM; ambos locales resuelven a un destino no vacío y distinto; grep confirma que todo `payload.find(` lleva `overrideAccess: false` o una exención documentada
+
+## v2.2 Requirements
+
+Diferidos. Reconocidos pero fuera de este roadmap.
+
+### Productos Digitales
+
+- **PROD-01**: Colección de productos digitales en Payload
+- **PROD-02**: Checkout vía Polar (hosted redirect, cero JS de cliente)
+- **PROD-03**: Route handler de webhook con verificación de firma e idempotencia
+- **PROD-04**: Registro de órdenes y entrega segura reutilizando los helpers de MAIL-05
+- **PROD-05**: Primer producto real — el research recomienda la implementación de referencia Next.js + Payload con SEO ($79-199) como la única genuinamente no copiable
+
+### Contenido Comercial
+
+- **CONT-01**: Keyword research de términos comerciales en ES y EN
+- **CONT-02**: Estructura de contenido de comparativas y reviews, con la profundidad que exige la política de afiliación fina de Google
+- **CONT-03**: Postulación a Semrush y Hostinger afiliados una vez confirmado el umbral de ~1.000 visitas mensuales
+
+### Amazon FBA
+
+- **FBA-01**: Evaluación de marca propia de accesorios con números reales (márgenes, capital, competencia) — negocio aparte, no una feature del sitio
+
+## Out of Scope
+
+| Feature | Razón |
+|---------|-------|
+| Amazon FBA | Es un negocio de inventario y logística con capital propio, no una feature de la web. Diferido a milestone futuro con evaluación propia |
+| Stripe (directo, Managed Payments, `plugin-stripe`, `plugin-ecommerce`) | Stripe no opera en Perú — verificado contra `stripe.com/global`, en LATAM solo Brasil y México |
+| Lemon Squeezy | SDK congelado desde 2024-11-05 y su camino declarado es converger a Stripe Managed Payments, que Perú no alcanza. Sería construir una integración que ya se sabe que hay que rehacer |
+| Gumroad | ~12,9% + $0,80 efectivo, peor integración y sin ventaja compensatoria |
+| GA4 / Google Tag Manager | El loader de GA4 pesa 419.047 bytes medidos. Contradice el presupuesto de performance y dispararía consentimiento |
+| Cualquier tracker de afiliados del lado del cliente | Mismo motivo, más el sesgo de ad-blockers en una audiencia de devs y SEOs |
+| Popups y modales de captura de email | Destrozan CLS/INP en un sitio que ya corre un shader WebGL en el hero |
+| Publicidad display, posts patrocinados de terceros | Patrón canónico de afiliación fina y de abuso de reputación del sitio |
+| Cloaking de links de Amazon vía `/go/` | Prohibido textualmente por las Program Policies de Amazon (2026-04-14). Sanción: terminación más pérdida de comisiones acumuladas |
+| Subdominio de afiliados o `noindex` en páginas de ingresos | La documentación de Google advierte que mover a subdominio "puede parecer un intento de eludir las políticas de spam". Sería contraproducente |
+| Banner de consentimiento de cookies | Se diseña para no necesitarlo nunca. Un 302 agregado y sin cookies queda fuera del art. 5(3) de ePrivacy |
+| Tablas de precios por herramienta, roundups de "las 25 mejores", ordenar por comisión | Patrones de afiliación fina que arrastran el sitio entero desde que HCU se fusionó con el core en marzo 2024 |
+| Checklist genérico de SEO como producto | Commoditizado a $0 — Aleyda Solis regala un equivalente sin gate |
+| `subscribers`, `affiliate-clicks`, `lead-magnets` en el mapa de colecciones de `mcpPlugin` | `subscribers` filtraría emails por MCP |
+
+## Traceability
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CASE-01 | Phase 37 | Complete |
-| CASE-02 | Phase 37 | Complete |
-| CASE-03 | Phase 37 | Complete |
-| CASE-04 | Phase 37 | Complete |
-| CASE-05 | Phase 37 | Complete |
-| CASE-06 | Phase 37 | Complete |
-| CASE-07 | Phase 37 | Complete |
-| CASE-08 | Phase 37 | Complete |
-| CASE-09 | Phase 37 | Complete |
-| CASE-10 | Phase 37 | Complete |
-| CASE-11 | Phase 37 | Complete |
+| BASE-01 | TBD | Pending |
+| BASE-02 | TBD | Pending |
+| BASE-03 | TBD | Pending |
+| DEC-01 | TBD | Pending |
+| DEC-02 | TBD | Pending |
+| DEC-03 | TBD | Pending |
+| DEC-04 | TBD | Pending |
+| DEC-05 | TBD | Pending |
+| LEG-01 | TBD | Pending |
+| LEG-02 | TBD | Pending |
+| LEG-03 | TBD | Pending |
+| LEG-04 | TBD | Pending |
+| AFF-01 | TBD | Pending |
+| AFF-02 | TBD | Pending |
+| AFF-03 | TBD | Pending |
+| AFF-04 | TBD | Pending |
+| AFF-05 | TBD | Pending |
+| AFF-06 | TBD | Pending |
+| GO-01 | TBD | Pending |
+| GO-02 | TBD | Pending |
+| GO-03 | TBD | Pending |
+| GO-04 | TBD | Pending |
+| STACK-01 | TBD | Pending |
+| STACK-02 | TBD | Pending |
+| STACK-03 | TBD | Pending |
+| STACK-04 | TBD | Pending |
+| STACK-05 | TBD | Pending |
+| STACK-06 | TBD | Pending |
+| INL-01 | TBD | Pending |
+| INL-02 | TBD | Pending |
+| MAIL-01 | TBD | Pending |
+| MAIL-02 | TBD | Pending |
+| MAIL-03 | TBD | Pending |
+| MAIL-04 | TBD | Pending |
+| MAIL-05 | TBD | Pending |
+| GATE-01 | TBD | Pending |
+| GATE-02 | TBD | Pending |
 
-Coverage: 11/11 v1.8 requirements mapped. No orphans, no duplicates.
+**Coverage:**
+- v2.1 requirements: 37 total
+- Mapped to phases: 0 (se completa al crear el roadmap)
+- Unmapped: 37 ⚠️
 
 ---
-
-## Milestone v1.9 — Websites Portfolio Section — ACTIVO
-
-### v1 Requirements
-
-#### Schema & Collection (Phase A)
-
-- [x] **WEB-01**: Colección nueva `Websites` en Payload, modelada sobre el mismo patrón que `CaseStudies` (título, slug, array de tags de stack, screenshots reales vía Media/Cloudinary, array `challenges` reusando el patrón de `CaseStudies.challenge`, año de lanzamiento, rol en el proyecto, industria/nicho, highlights técnicos)
-- [x] **WEB-02**: Scores de Lighthouse reales (performance/accessibility/best-practices/SEO) con campo `lighthouseCapturedAt` (fecha) obligatorio — los números nunca se presentan como si fueran en vivo
-- [x] **WEB-03**: Relación opcional `client` → `Clientes` (`hasMany: false`) — varios sitios (apturio.com, juan-tech.com) no tienen cliente externo y deben poder quedar sin este campo sin romper nada
-- [x] **WEB-04**: Relación opcional `relatedCaseStudy` → `case-studies` (`hasMany: false`, unidireccional, sin back-reference simétrico) para cruzar con el case study de resultados cuando exista
-- [x] **WEB-05**: `Websites` registrada en `payload.config.ts` y en `@payloadcms/plugin-seo` (`collections[]`); `payload generate:types` corrido después del schema
-
-#### Frontend & Rutas (Phase B)
-
-- [x] **WEB-06**: Componente `WebsiteCard` compartido entre el bloque de Home, `ArchiveBlock` y la página de listado
-- [x] **WEB-07**: Sección nueva en Home vía `FeaturedWebsitesBlock` + campo `featuredWebsites` en el global `FeaturedContent` — mismo patrón que `FeaturedCaseStudiesBlock`, nunca una sección hardcodeada
-- [x] **WEB-08**: `ArchiveBlock` extendido con opción `relationTo: 'websites'` (y en `selectedDocs.relationTo`) — no se crea un block nuevo, sigue la convención ya documentada en el código
-- [x] **WEB-09**: Rutas `/[locale]/websites` (listado) y `/[locale]/websites/[slug]` (detalle) espejando el patrón de `/case-studies`, con `buildWebsitesTrail()` (wrapper sobre `buildSectionTrail()` existente) para breadcrumbs
-- [x] **WEB-10**: JSON-LD tipo `CreativeWork` (no `SoftwareApplication`) en la página de detalle, validado conceptualmente contra Rich Results antes del cierre del milestone
-- [x] **WEB-11**: `src/lib/sitemap-data.ts` extendido para incluir las URLs de `/websites` y `/websites/[slug]`
-
-#### Poblado de Contenido Real (Phase C)
-
-- [x] **WEB-12**: 6 docs reales creados: ariannalupi.com, aprendoclub.com, estylopia.com, drmanuelvargashidalgo.com, apturio.com, juan-tech.com
-- [x] **WEB-13**: Stack de cada sitio confirmado interactivamente con Juan sitio por sitio (una pregunta por sitio) — lo que no confirme se infiere del código/contenido público del sitio
-- [x] **WEB-14**: Screenshot real de cada sitio (full-page, vía Playwright) capturado una sola vez y subido a Cloudinary por el pipeline de Media existente — nunca iframe en vivo ni fetch de captura en tiempo de request
-- [x] **WEB-15**: Lighthouse real corrido una sola vez contra la URL en vivo de cada sitio (cloná el patrón de `scripts/lighthouse-mobile.mjs`), con `lighthouseCapturedAt` seteado a la fecha real de esa corrida
-- [x] **WEB-16**: Relaciones a `Clientes`/`CaseStudies` pobladas donde exista match real (ej. si alguno de los 6 dominios ya es cliente en la colección `Clientes` o está detrás de un case study existente) — regla explícita antes de poblar: qué dato vive en `Websites` vs. en `CaseStudies` para el mismo sitio, sin duplicar ni contradecir
-
-### Future Requirements
-
-- Filtro/orden por stack o industria en el listado — no vale la pena con solo 6 entradas, revisar cuando pase de ~12-15
-- Integración en vivo/programada de Lighthouse (re-audit automático) — viola el límite arquitectónico explícito del proyecto de "sin SEO tooling en vivo"
-- Link a repo de GitHub por sitio
-
-### Out of Scope (v1.9)
-
-- Preview embebido en vivo (iframe) de los sitios — costo real de performance/seguridad, rechazado en research
-- Fusionar `Websites` con `CaseStudies` — son conceptos distintos a propósito (craft técnico vs. resultado de negocio), mismo principio que ya separa `Clientes` de `CaseStudies`
-- Re-captura automática o programada de Lighthouse/screenshots — es una captura manual puntual de los 6 sitios reales, no un sistema de monitoreo
-
-### Traceability (v1.9)
-
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| WEB-01 | Phase 38 | Complete |
-| WEB-02 | Phase 38 | Complete |
-| WEB-03 | Phase 38 | Complete |
-| WEB-04 | Phase 38 | Complete |
-| WEB-05 | Phase 38 | Complete |
-| WEB-06 | Phase 39 | Complete |
-| WEB-07 | Phase 39 | Complete |
-| WEB-08 | Phase 39 | Complete |
-| WEB-09 | Phase 39 | Complete |
-| WEB-10 | Phase 39 | Complete |
-| WEB-11 | Phase 39 | Complete |
-| WEB-12 | Phase 40 | Complete |
-| WEB-13 | Phase 40 | Complete |
-| WEB-14 | Phase 40 | Complete |
-| WEB-15 | Phase 40 | Complete |
-| WEB-16 | Phase 40 | Complete |
-
-Coverage: 16/16 v1.9 requirements mapped. No orphans, no duplicates.
-
-## Milestone v2.0 — OG Image & Meta Tags Fix — ACTIVO
-
-Auditoría externa (`opengraph.to/u/juan-tech.com`, 2026-07-31): score 17/100, 1 error crítico (sin `og:image` en ninguna página) + 8 warnings (`og:url`, `twitter:card`, canonical, `apple-touch-icon`, favicon, `theme-color`, manifest PWA, respuesta de servidor 1.58s, HTML de 271KB). El sitio nunca tuvo generación de OG image — a diferencia de `JuanPortfolio` (sitio de referencia), que resuelve esto con overlay de texto vía transforms de Cloudinary (no `next/og`/`ImageResponse`), reusando un asset `og-scrim` y la fuente `Array-Bold.woff2` ya subidos a Cloudinary. juan-payload usa la misma cuenta Cloudinary — se porta el mismo patrón.
-
-### v1 Requirements
-
-#### OG Image (Phase 41)
-
-- [x] **OG-01**: `og:image` dinámico por página vía Cloudinary (overlay de texto sobre `og-scrim` + fuente `Array-Bold.woff2`, mismo enfoque que `cloudinaryUrl.ts`/`generateMeta.ts` de JuanPortfolio), 1200x630, con el título real de cada página visible en la imagen
-- [x] **OG-02**: Fallback de imagen de fondo cuando la página no tiene `meta.image` (SEO plugin) ni hero image explícito — determinístico por slug, no una imagen genérica repetida en todo el sitio
-- [x] **OG-03**: `og:url` absoluto y correcto por página (resuelto vía `metadataBase` + `openGraph.url`)
-- [x] **OG-04**: `twitter:card: summary_large_image` declarado sitewide en el layout raíz; `twitter:image` heredado de `openGraph.images` (no se declara por separado)
-
-#### Meta Tags Restantes (Phase 42)
-
-- [x] **META-01**: `alternates.canonical` presente y locale-aware en todas las rutas públicas (home, pages, posts, case-studies, authors, services, websites, geo-pages, contact/privacy/terms/search, listados de blog/case-studies)
-- [x] **META-02**: `favicon.ico` + `favicon.svg` servidos desde `public/` y declarados en `metadata.icons`
-- [x] **META-03**: `apple-touch-icon` declarado (`metadata.icons.apple`)
-- [x] **META-04**: `theme-color` declarado
-- [x] **META-05**: `manifest.json`/`manifest.ts` básico (name, short_name, icons, theme_color, background_color, start_url) servido y enlazado
-
-#### Performance (Phase 43)
-
-- [x] **PERF-01**: Causa raíz de la respuesta de servidor lenta (1.58s en home) identificada y mitigada, respetando la constraint del proyecto (standalone Node en Hostinger, sin ISR/edge) — medición real post-fix, no solo teórica
-- [x] **PERF-02**: Tamaño de HTML de home reducido de forma medible respecto al baseline de 271KB (`curl | wc -c`), sin romper contenido/hidratación
-
-### Out of Scope (v2.0)
-
-- Reauditoría automática o programada de OG/meta tags (viola el límite arquitectónico ya establecido: sin SEO tooling en vivo dentro de la app)
-- Optimización de performance de rutas fuera de home a menos que la causa raíz de PERF-01 resulte sitewide (ej. un query N+1 en un layout compartido) — el foco es home primero
-- Portar el pool completo de 53 imágenes fallback de JuanPortfolio si un fallback más simple (determinístico por slug, pool más chico) cumple igual el requirement
-
-### Traceability (v2.0)
-
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| OG-01 | Phase 41 | Done |
-| OG-02 | Phase 41 | Done |
-| OG-03 | Phase 41 | Done |
-| OG-04 | Phase 41 | Done |
-| META-01 | Phase 42 | Done |
-| META-02 | Phase 42 | Pending |
-| META-03 | Phase 42 | Pending |
-| META-04 | Phase 42 | Pending |
-| META-05 | Phase 42 | Pending |
-| PERF-01 | Phase 43 | Done |
-| PERF-02 | Phase 43 | Done |
-
-Coverage: 11/11 v2.0 requirements mapped. No orphans, no duplicates.
+*Requirements defined: 2026-08-13*
+*Last updated: 2026-08-13 after milestone v2.1 definition*
