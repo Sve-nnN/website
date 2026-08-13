@@ -3,6 +3,26 @@
 @tailwind utilities;
 
 @layer base {
+  /* COLOR TOKEN FORMAT — read before editing any value below.
+     Every colour token is stored as SPACE-SEPARATED sRGB CHANNELS
+     ("247 88 30"), never as a hex/oklch/rgba literal, because
+     tailwind.config.ts wraps each one as `rgb(var(--token) / <alpha-value>)`.
+     That `<alpha-value>` placeholder is the only way Tailwind v3 can
+     synthesise an opacity variant of a theme colour.
+
+     Before this, the tokens were literals and the config referenced them as
+     bare `var(--token)` strings. Tailwind cannot inject alpha into a bare
+     var(), so it silently emitted NOTHING for every slash-opacity utility —
+     29 of them across 14 files, verified by compiling them in isolation. The
+     failures were invisible in review because the class stayed in the markup
+     and the element just rendered at full opacity: buttons had no hover
+     colour (`hover:bg-primary/90`), the round plates behind the feature icons
+     never existed (`bg-primary/10`), the Hero badge had no pill, and several
+     "dimmed" headings rendered at full strength.
+
+     So: channels only. A literal here re-breaks every slash utility at once.
+     Values below are the exact sRGB equivalents of the previous literals — at
+     alpha 1 nothing renders differently; only the 29 dead utilities woke up. */
   :root {
     /* UI-SPEC Color table: dominant/background, secondary/dark-surface, accent/primary, destructive */
     /* Phase 11 / UI-11: --primary, --primary-foreground, --muted-foreground,
@@ -10,14 +30,14 @@
        pass WCAG AA in the light theme (full-theme audit found these had
        never been contrast-checked). --primary-foreground now mirrors the
        .dark theme's already-verified dark-text-on-primary pattern. */
-    --background: #FAFAF7;
-    --foreground: #12141C;
-    --card: #FAFAF7;
-    --card-foreground: #12141C;
-    --popover: #FAFAF7;
-    --popover-foreground: #12141C;
-    --primary: #F7581E;
-    --primary-foreground: #12141C;
+    --background: 250 250 247; /* #FAFAF7 */
+    --foreground: 18 20 28; /* #12141C */
+    --card: 250 250 247; /* #FAFAF7 */
+    --card-foreground: 18 20 28; /* #12141C */
+    --popover: 250 250 247; /* #FAFAF7 */
+    --popover-foreground: 18 20 28; /* #12141C */
+    --primary: 247 88 30; /* #F7581E */
+    --primary-foreground: 18 20 28; /* #12141C */
     /* Phase 25 gap-closure: --primary (#F7581E) on light --card/--background
        (#FAFAF7) is only 3.15:1 — fails WCAG AA (4.5:1) for normal text and
        barely misses the 3:1 large-text floor once weight/size are accounted
@@ -28,31 +48,33 @@
        light backgrounds (ServiceScopeCard timeline value, CaseStudyCard hero
        metric). Dark mode's --primary already passes (6.42:1 on --card), so
        --primary-text mirrors it there unchanged. */
-    --primary-text: #D03D07;
-    --secondary: #12141C;
-    --secondary-foreground: #FAFAF7;
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.54 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: #DC2626;
-    --border: oklch(0.63 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
+    --primary-text: 208 61 7; /* #D03D07 */
+    --secondary: 18 20 28; /* #12141C */
+    --secondary-foreground: 250 250 247; /* #FAFAF7 */
+    /* The neutrals below were authored as oklch(L 0 0); these are their exact
+       sRGB equivalents (they land on Tailwind's own neutral scale). */
+    --muted: 245 245 245; /* was oklch(0.97 0 0) */
+    --muted-foreground: 111 111 111; /* was oklch(0.54 0 0) */
+    --accent: 245 245 245; /* was oklch(0.97 0 0) */
+    --accent-foreground: 23 23 23; /* was oklch(0.205 0 0) */
+    --destructive: 220 38 38; /* #DC2626 */
+    --border: 137 137 137; /* was oklch(0.63 0 0) */
+    --input: 229 229 229; /* was oklch(0.922 0 0) */
+    --ring: 161 161 161; /* was oklch(0.708 0 0) */
+    --chart-1: 212 212 212; /* was oklch(0.87 0 0) */
+    --chart-2: 115 115 115; /* was oklch(0.556 0 0) */
+    --chart-3: 82 82 82; /* was oklch(0.439 0 0) */
+    --chart-4: 64 64 64; /* was oklch(0.371 0 0) */
+    --chart-5: 38 38 38; /* was oklch(0.269 0 0) */
     --radius: 0.5rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    --sidebar: 250 250 250; /* was oklch(0.985 0 0) */
+    --sidebar-foreground: 10 10 10; /* was oklch(0.145 0 0) */
+    --sidebar-primary: 23 23 23; /* was oklch(0.205 0 0) */
+    --sidebar-primary-foreground: 250 250 250; /* was oklch(0.985 0 0) */
+    --sidebar-accent: 245 245 245; /* was oklch(0.97 0 0) */
+    --sidebar-accent-foreground: 23 23 23; /* was oklch(0.205 0 0) */
+    --sidebar-border: 229 229 229; /* was oklch(0.922 0 0) */
+    --sidebar-ring: 161 161 161; /* was oklch(0.708 0 0) */
 
     /* Elevation primitives (Phase 7 / D-01 / UI-01) */
     --shadow-color: 220 20% 10%;
@@ -71,40 +93,49 @@
   .dark {
     /* Phase 7 / D-03 / UI-03: ember/navy rebrand, derived from the light-mode
        hue family (navy #12141C, off-white #FAFAF7, ember #FF5B1F). */
-    --background: #12141C;
-    --foreground: #FAFAF7;
-    --card: #1B1E29;
-    --card-foreground: #FAFAF7;
-    --popover: #1B1E29;
-    --popover-foreground: #FAFAF7;
-    --primary: #FF7A45;
-    --primary-foreground: #12141C;
+    --background: 18 20 28; /* #12141C */
+    --foreground: 250 250 247; /* #FAFAF7 */
+    --card: 27 30 41; /* #1B1E29 */
+    --card-foreground: 250 250 247; /* #FAFAF7 */
+    --popover: 27 30 41; /* #1B1E29 */
+    --popover-foreground: 250 250 247; /* #FAFAF7 */
+    --primary: 255 122 69; /* #FF7A45 */
+    --primary-foreground: 18 20 28; /* #12141C */
     /* Dark-mode --primary already passes AA (6.42:1 on --card) — mirror it
        verbatim for --primary-text rather than introducing a second value. */
-    --primary-text: #FF7A45;
-    --secondary: #23283A;
-    --secondary-foreground: #FAFAF7;
-    --muted: #1F2230;
-    --muted-foreground: #A8ACBB;
-    --accent: #23283A;
-    --accent-foreground: #FAFAF7;
-    --destructive: #F87171;
-    --border: rgba(250, 250, 247, 0.35);
-    --input: rgba(250, 250, 247, 0.16);
-    --ring: rgba(255, 122, 69, 0.6);
-    --chart-1: #FF7A45;
-    --chart-2: #23283A;
-    --chart-3: #3A4159;
-    --chart-4: #5A6488;
-    --chart-5: #8890AC;
-    --sidebar: #1B1E29;
-    --sidebar-foreground: #FAFAF7;
-    --sidebar-primary: #FF7A45;
-    --sidebar-primary-foreground: #12141C;
-    --sidebar-accent: #23283A;
-    --sidebar-accent-foreground: #FAFAF7;
-    --sidebar-border: rgba(250, 250, 247, 0.35);
-    --sidebar-ring: rgba(255, 122, 69, 0.6)
+    --primary-text: 255 122 69; /* #FF7A45 */
+    --secondary: 35 40 58; /* #23283A */
+    --secondary-foreground: 250 250 247; /* #FAFAF7 */
+    --muted: 31 34 48; /* #1F2230 */
+    --muted-foreground: 168 172 187; /* #A8ACBB */
+    --accent: 35 40 58; /* #23283A */
+    --accent-foreground: 250 250 247; /* #FAFAF7 */
+    --destructive: 248 113 113; /* #F87171 */
+    /* ALPHA DROPPED — these five were authored as rgba() with baked-in alpha
+       (--border/--input/--sidebar-border on #FAFAF7 at .35/.16/.35, and
+       --ring/--sidebar-ring on #FF7A45 at .6). The channel format cannot carry
+       a token's own alpha: `<alpha-value>` is supplied by the utility and
+       defaults to 1, so these are now the opaque base colours. Dark mode is
+       not reachable in this codebase today (no next-themes, no toggle — see
+       the note in HeroGrainGradient.tsx), so nothing user-visible changes. If
+       dark mode is ever switched on, re-tune these five first: as written they
+       will read as hard, fully-opaque borders and rings. */
+    --border: 250 250 247; /* was rgba(250, 250, 247, 0.35) */
+    --input: 250 250 247; /* was rgba(250, 250, 247, 0.16) */
+    --ring: 255 122 69; /* was rgba(255, 122, 69, 0.6) */
+    --chart-1: 255 122 69; /* #FF7A45 */
+    --chart-2: 35 40 58; /* #23283A */
+    --chart-3: 58 65 89; /* #3A4159 */
+    --chart-4: 90 100 136; /* #5A6488 */
+    --chart-5: 136 144 172; /* #8890AC */
+    --sidebar: 27 30 41; /* #1B1E29 */
+    --sidebar-foreground: 250 250 247; /* #FAFAF7 */
+    --sidebar-primary: 255 122 69; /* #FF7A45 */
+    --sidebar-primary-foreground: 18 20 28; /* #12141C */
+    --sidebar-accent: 35 40 58; /* #23283A */
+    --sidebar-accent-foreground: 250 250 247; /* #FAFAF7 */
+    --sidebar-border: 250 250 247; /* was rgba(250, 250, 247, 0.35) */
+    --sidebar-ring: 255 122 69; /* was rgba(255, 122, 69, 0.6) */
   }
 }
 

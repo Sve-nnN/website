@@ -38,55 +38,67 @@ const config: Config = {
   			// Spacing scale (multiples of 4, per 05-UI-SPEC.md Spacing Scale table):
   			// xs=4px(p-1) sm=8px(p-2) md=16px(p-4) lg=24px(p-6) xl=32px(p-8) 2xl=48px(p-12) 3xl=64px(p-16)
   			// Use these Tailwind spacing utilities directly — no separate custom scale needed.
-  			background: 'var(--background)',
-  			foreground: 'var(--foreground)',
+  			//
+  			// EVERY colour MUST be `rgb(var(--token) / <alpha-value>)`, never a
+  			// bare `var(--token)`. Tailwind v3 can only synthesise an opacity
+  			// variant (`bg-primary/90`, `text-secondary-foreground/70`, ...) when
+  			// the colour is a function carrying the `<alpha-value>` placeholder;
+  			// against a bare var() it silently emits NO CSS AT ALL for that
+  			// utility. That is what these tokens used to be, which killed 29
+  			// slash-opacity utilities across 14 files — including every button
+  			// hover state — with no build error and no visible clue in the
+  			// markup. The matching contract lives in src/app/globals.css: the
+  			// tokens there are space-separated sRGB channels ("247 88 30"), not
+  			// hex/oklch/rgba literals. Change one side and you must change both.
+  			background: 'rgb(var(--background) / <alpha-value>)',
+  			foreground: 'rgb(var(--foreground) / <alpha-value>)',
   			card: {
-  				DEFAULT: 'var(--card)',
-  				foreground: 'var(--card-foreground)'
+  				DEFAULT: 'rgb(var(--card) / <alpha-value>)',
+  				foreground: 'rgb(var(--card-foreground) / <alpha-value>)'
   			},
   			popover: {
-  				DEFAULT: 'var(--popover)',
-  				foreground: 'var(--popover-foreground)'
+  				DEFAULT: 'rgb(var(--popover) / <alpha-value>)',
+  				foreground: 'rgb(var(--popover-foreground) / <alpha-value>)'
   			},
   			primary: {
-  				DEFAULT: 'var(--primary)',
-  				foreground: 'var(--primary-foreground)',
+  				DEFAULT: 'rgb(var(--primary) / <alpha-value>)',
+  				foreground: 'rgb(var(--primary-foreground) / <alpha-value>)',
   				// Phase 25 gap-closure: AA-safe emphasis-text variant of primary for
   				// use as a text color on light surfaces (see globals.css comment).
-  				text: 'var(--primary-text)'
+  				text: 'rgb(var(--primary-text) / <alpha-value>)'
   			},
   			secondary: {
-  				DEFAULT: 'var(--secondary)',
-  				foreground: 'var(--secondary-foreground)'
+  				DEFAULT: 'rgb(var(--secondary) / <alpha-value>)',
+  				foreground: 'rgb(var(--secondary-foreground) / <alpha-value>)'
   			},
   			muted: {
-  				DEFAULT: 'var(--muted)',
-  				foreground: 'var(--muted-foreground)'
+  				DEFAULT: 'rgb(var(--muted) / <alpha-value>)',
+  				foreground: 'rgb(var(--muted-foreground) / <alpha-value>)'
   			},
   			accent: {
-  				DEFAULT: 'var(--accent)',
-  				foreground: 'var(--accent-foreground)'
+  				DEFAULT: 'rgb(var(--accent) / <alpha-value>)',
+  				foreground: 'rgb(var(--accent-foreground) / <alpha-value>)'
   			},
-  			destructive: 'var(--destructive)',
-  			border: 'var(--border)',
-  			input: 'var(--input)',
-  			ring: 'var(--ring)',
+  			destructive: 'rgb(var(--destructive) / <alpha-value>)',
+  			border: 'rgb(var(--border) / <alpha-value>)',
+  			input: 'rgb(var(--input) / <alpha-value>)',
+  			ring: 'rgb(var(--ring) / <alpha-value>)',
   			chart: {
-  				'1': 'var(--chart-1)',
-  				'2': 'var(--chart-2)',
-  				'3': 'var(--chart-3)',
-  				'4': 'var(--chart-4)',
-  				'5': 'var(--chart-5)'
+  				'1': 'rgb(var(--chart-1) / <alpha-value>)',
+  				'2': 'rgb(var(--chart-2) / <alpha-value>)',
+  				'3': 'rgb(var(--chart-3) / <alpha-value>)',
+  				'4': 'rgb(var(--chart-4) / <alpha-value>)',
+  				'5': 'rgb(var(--chart-5) / <alpha-value>)'
   			},
   			sidebar: {
-  				DEFAULT: 'var(--sidebar)',
-  				foreground: 'var(--sidebar-foreground)',
-  				primary: 'var(--sidebar-primary)',
-  				'primary-foreground': 'var(--sidebar-primary-foreground)',
-  				accent: 'var(--sidebar-accent)',
-  				'accent-foreground': 'var(--sidebar-accent-foreground)',
-  				border: 'var(--sidebar-border)',
-  				ring: 'var(--sidebar-ring)'
+  				DEFAULT: 'rgb(var(--sidebar) / <alpha-value>)',
+  				foreground: 'rgb(var(--sidebar-foreground) / <alpha-value>)',
+  				primary: 'rgb(var(--sidebar-primary) / <alpha-value>)',
+  				'primary-foreground': 'rgb(var(--sidebar-primary-foreground) / <alpha-value>)',
+  				accent: 'rgb(var(--sidebar-accent) / <alpha-value>)',
+  				'accent-foreground': 'rgb(var(--sidebar-accent-foreground) / <alpha-value>)',
+  				border: 'rgb(var(--sidebar-border) / <alpha-value>)',
+  				ring: 'rgb(var(--sidebar-ring) / <alpha-value>)'
   			}
   		},
   		boxShadow: {
