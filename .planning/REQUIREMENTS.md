@@ -40,7 +40,7 @@
 ### Ruta de Redirección
 
 - [ ] **GO-01**: `/go/[slug]` responde 302 en runtime Node con `no-store`, leyendo el destino exclusivamente del documento autorizado en el admin — nunca de un parámetro `?to=`
-- [ ] **GO-02**: El matcher de `src/middleware.ts` excluye `/go`, verificado por curl contra rutas control (`/`, `/en`, `/servicios`, `/en/services`, `/blog`) — sin este fix cada clic de afiliado devuelve 404
+- [ ] **GO-02**: El matcher de `src/middleware.ts` excluye `/go` escrito como `go/` **con barra** (el lookahead matchea por prefijo, no por segmento: un `go` pelado se llevaría puestos `/gobierno`, `/golang-para-seo` y cualquier slug futuro que empiece con esas letras), verificado por curl contra rutas control (`/`, `/en`, `/servicios`, `/en/services`, `/blog`) más al menos un slug señuelo que empiece con "go" — sin este fix cada clic de afiliado devuelve 404
 - [ ] **GO-03**: `src/app/robots.ts` incluye `Disallow: /go`
 - [ ] **GO-04**: Los clics se registran en una tabla `affiliate-clicks` append-only escrita vía `after()` después de emitir el redirect, con descarte de bots y el throttle por IP ya usado en `contact.ts`
 

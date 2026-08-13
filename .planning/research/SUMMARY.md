@@ -69,8 +69,10 @@ export const config = { matcher: ['/', '/((?!api|admin|_next|_vercel|.*\\..*).*)
 `/go/notion` has no dot and is not `api`/`admin`/`_next`/`_vercel`, so it **is matched today** → a same-process loopback `fetch('/api/redirects-lookup')` (a Postgres round-trip on the deliberately **unpooled** Neon string) plus `createIntlMiddleware` rewriting to `/es/go/notion`, which does not exist. **Result: 404 on every affiliate click.** (This is also why `/sitemap.xml`, `/robots.txt`, `/llms.txt` work — they all contain a dot.) **Fix, one line:**
 
 ```ts
-export const config = { matcher: ['/', '/((?!api|admin|go|_next|_vercel|.*\\..*).*)'] }
+export const config = { matcher: ['/', '/((?!api|admin|go/|_next|_vercel|.*\\..*).*)'] }
 ```
+
+**Note the trailing slash on `go/` — it is load-bearing.** The negative lookahead is anchored immediately after the leading `/`, so it matches on **prefix, not segment**. A bare `go` would exclude every top-level path *beginning* with those two letters: `/gobierno`, `/golang-para-seo`, any future slug starting "go" would silently bypass `next-intl` locale handling *and* the redirects-collection lookup, since both live behind this same matcher. This is the identical trap that `isPrefixableHref` in `src/i18n/navigation.ts` guards against by splitting the first segment instead of using `startsWith`. `go/` is segment-precise. Side effect to decide deliberately rather than inherit: `go/` no longer matches a bare `/go` with no slug — choose 404 or a redirect, do not leave it incidental. The pre-existing `api` and `admin` entries carry the same latent prefix bug (`/apitools`, `/administracion`) — do **not** widen the Phase 46 diff to fix them, but log it as a follow-up.
 
 Plus `disallow: ['/admin', '/api', '/go']` in `src/app/robots.ts`. Do **not** rely on `noindex` as the primary control — robots.txt prevents Google ever seeing an `X-Robots-Tag`; the composing pair is `Disallow: /go` **plus** `rel="sponsored nofollow"` on every anchor. Highest-risk single change in the milestone: isolate it, curl-verify against `/`, `/en`, `/servicios`, `/en/services`, `/blog` (the Phase 19 habit), and ship it **before any UI emits a `/go/` href**.
 

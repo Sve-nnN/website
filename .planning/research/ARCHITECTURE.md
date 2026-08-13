@@ -265,7 +265,11 @@ This is also precisely why `/sitemap.xml`, `/robots.txt`, `/llms.txt` and `/site
 **Fix (one line, MODIFIED `src/middleware.ts`):**
 
 ```ts
-export const config = { matcher: ['/', '/((?!api|admin|go|_next|_vercel|.*\\..*).*)'] }
+export const config = { matcher: ['/', '/((?!api|admin|go/|_next|_vercel|.*\\..*).*)'] }
+// NOTA (corregido 2026-08-13): el trailing slash de `go/` es obligatorio. El lookahead
+// esta anclado justo despues de la barra inicial, asi que matchea por PREFIJO, no por
+// segmento: un `go` pelado excluiria /gobierno, /golang-para-seo y cualquier slug futuro
+// que empiece con esas dos letras, saltandose next-intl Y el lookup de redirects.
 ```
 
 *Rejected alternative:* mounting at `/api/go/[slug]`, which is already excluded. Rejected because a visitor-facing affiliate URL reading `/api/go/notion` is less obviously first-party (which matters for Amazon's "we must be able to determine the originating site" requirement), and because `/go/` is the conventional, human-legible shape that affiliate-compliance guidance describes.

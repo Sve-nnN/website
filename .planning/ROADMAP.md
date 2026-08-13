@@ -1125,6 +1125,14 @@ Plans:
 **Goal**: Un clic en un link de afiliado no-Amazon llega a destino — `/go/[slug]` devuelve 302 con `no-store` leyendo el destino exclusivamente del documento autorizado en el admin, el matcher del middleware deja de tragarse `/go`, robots.txt lo bloquea, y el clic queda registrado sin pesar en la respuesta.
 **Depends on**: Phase 45 (necesita el slug y el destino ya modelados en `affiliate-links`)
 **Requirements**: GO-01, GO-02, GO-03, GO-04
+**Constraint dura del matcher (no negociable)**: la exclusión se escribe `go/` **con barra**, no `go` pelado:
+
+```ts
+export const config = { matcher: ['/', '/((?!api|admin|go/|_next|_vercel|.*\\..*).*)'] }
+```
+
+El lookahead negativo está anclado inmediatamente después de la barra inicial, así que matchea por **prefijo, no por segmento**. Un `go` pelado excluiría todo path de primer nivel que *empiece* con esas dos letras — `/gobierno`, `/golang-para-seo`, cualquier slug futuro — dejándolos sin manejo de locale de next-intl y sin lookup de la colección de redirects, porque ambos viven detrás de este mismo matcher. Es el trap idéntico de `/en` vs `/entrevistas` contra el que `isPrefixableHref` (`src/i18n/navigation.ts`) se protege partiendo el primer segmento en vez de usar `startsWith` — leer ese comentario antes de escribir la línea. Efecto lateral a decidir a propósito, no por accidente: con `go/`, un `/go` pelado sin slug deja de matchear — definir si 404 o redirect. Las entradas preexistentes `api` y `admin` arrastran el mismo bug latente (`/apitools`, `/administracion`): **no** ampliar el diff de esta fase para arreglarlas, dejarlo como follow-up.
+
 **Rationale (fase propia y deliberadamente chica)**: el fix del matcher es una línea con radio de impacto sitewide — `/`, `/en`, `/servicios`, `/en/services` y `/blog` pasan todas por ese mismo matcher. El defecto está confirmado por dos investigadores que lo encontraron de forma independiente: hoy `/go/notion` no tiene punto y no es `api`/`admin`/`_next`/`_vercel`, así que **sí** entra al matcher, dispara un `fetch` loopback a `/api/redirects-lookup` contra la string unpooled de Neon, y `createIntlMiddleware` lo reescribe a `/es/go/notion`, que no existe → 404 en cada clic de afiliado. Por eso se verifica solo, con una matriz de curl contra rutas control, y se envía **antes** de que exista una sola UI que emita un href `/go/`. Nota de schema: la tabla `affiliate-clicks` se agrega con su propia migración puramente aditiva, leída antes de aplicarse; el boundary que protege Phase 45 es la matriz de localización de `affiliate-links` (irreversible sin reshape con pérdida), no la creación de tablas nuevas append-only.
 **Success Criteria** (what must be TRUE):
 
