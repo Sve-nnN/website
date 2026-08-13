@@ -28,6 +28,24 @@ export const SERVICE_SLUGS = [
 
 export type ServiceSlug = (typeof SERVICE_SLUGS)[number]
 
+/**
+ * Locale-correct href for a single service landing. Services are the one
+ * section whose URL segment genuinely differs by locale (`/servicios/<slug>`
+ * vs `/en/services/<slug>`), so this cannot be left to a generic locale
+ * prefix — the segment itself changes, not just the prefix.
+ *
+ * Lifted out of ServicesShowcase so the footer's Services column and the
+ * home page block build the same URL from one definition.
+ */
+export function buildServiceHref(locale: 'es' | 'en', slug: string): string {
+  return locale === 'es' ? `/servicios/${slug}` : `/en/services/${slug}`
+}
+
+/** Locale-correct href for the services index itself. */
+export function buildServicesIndexHref(locale: 'es' | 'en'): string {
+  return locale === 'es' ? '/servicios' : '/en/services'
+}
+
 export function isServiceSlug(slug: string): slug is ServiceSlug {
   return (SERVICE_SLUGS as readonly string[]).includes(slug)
 }

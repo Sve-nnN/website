@@ -7,6 +7,7 @@ import type { ServicesShowcaseBlock as ServicesShowcaseBlockProps } from '@/payl
 import { Container } from '@/components/Container'
 import { Card, CardContent } from '@/components/ui/card'
 import { SERVICE_SLUGS, getServicePage } from '@/lib/services-data'
+import { buildServiceHref } from '@/lib/service-slugs'
 
 // Hardcoded slug -> icon map, colocated here (not a new Payload field, per
 // 24-UI-SPEC.md's icon decision) — `SERVICE_SLUGS` is a fixed, compile-time-
@@ -22,9 +23,8 @@ const iconBySlug: Record<string, LucideIcon> = {
 // Same dual-segment locale convention as src/lib/canonical.ts/breadcrumbs.ts,
 // reimplemented locally (2 lines) rather than imported — those modules pull
 // in DB-touching dependencies not needed for a plain href string.
-function buildServiceHref(locale: 'es' | 'en', slug: string) {
-  return locale === 'es' ? `/servicios/${slug}` : `/en/services/${slug}`
-}
+// buildServiceHref now lives in @/lib/service-slugs so the footer's Services
+// column builds the same URL from the same definition.
 
 export async function ServicesShowcaseComponent(props: ServicesShowcaseBlockProps) {
   const { title } = props

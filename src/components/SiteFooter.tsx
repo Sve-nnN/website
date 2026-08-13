@@ -7,7 +7,10 @@ import config from '@/payload.config'
 import { Container } from '@/components/Container'
 import { Separator } from '@/components/ui/separator'
 import { SocialIcon, socialLabels } from '@/components/SocialIcon'
+import { Button } from '@/components/ui/button'
 import { blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
+import { buildServiceHref, buildServicesIndexHref } from '@/lib/service-slugs'
+import { SERVICE_SLUGS, getServicePage } from '@/lib/services-data'
 
 /**
  * POLISH: footer links measured 20–21px tall on production, under WCAG 2.2
@@ -24,6 +27,65 @@ interface DynamicColumnResult {
   id: string | null | undefined
   title?: string | null
   items: { id: number; label: string; href: string }[]
+}
+
+const closingCopy = {
+  es: {
+    tagline: 'Ingeniero de software y consultor SEO técnico. Lima, Perú.',
+    cta: 'Hablemos de tu proyecto',
+    servicesTitle: 'Servicios',
+    servicesIndex: 'Todos los servicios',
+    groupLabel: (title: string) => `Enlaces de ${title}`,
+    legalLabel: 'Enlaces legales',
+    socialLabel: 'Redes',
+  },
+  en: {
+    tagline: 'Software engineer and technical SEO consultant. Lima, Peru.',
+    cta: "Let's talk about your project",
+    servicesTitle: 'Services',
+    servicesIndex: 'All services',
+    groupLabel: (title: string) => `${title} links`,
+    legalLabel: 'Legal links',
+    socialLabel: 'Social',
+  },
+}
+
+/**
+ * The four service landings plus their index, built from SERVICE_SLUGS rather
+ * than from the CMS's footer columns.
+ *
+ * None of the commercial pages were in the footer: no services index, no
+ * service landing, no /websites. Ten of nineteen slots went to blog and case
+ * study titles. The footer is the only nav block present on all 194 URLs, so
+ * it was routing the visitor whose action defines the site's commercial
+ * success (PRODUCT.md) everywhere except to what they would hire. Deriving
+ * the column from the slug list means it cannot drift from the real routes.
+ */
+async function resolveServicesColumn(locale: 'en' | 'es'): Promise<DynamicColumnResult | null> {
+  const pages = await Promise.all(SERVICE_SLUGS.map((slug) => getServicePage(locale, slug)))
+
+  const items = pages.flatMap((page, i) =>
+    page
+      ? [
+          {
+            id: page.id,
+            label: page.title,
+            href: buildServiceHref(locale, SERVICE_SLUGS[i]),
+          },
+        ]
+      : [],
+  )
+
+  if (items.length === 0) return null
+
+  return {
+    id: 'services',
+    title: closingCopy[locale].servicesTitle,
+    items: [
+      ...items,
+      { id: -1, label: closingCopy[locale].servicesIndex, href: buildServicesIndexHref(locale) },
+    ],
+  }
 }
 
 async function resolveDynamicColumn(
@@ -88,20 +150,69 @@ export async function SiteFooter({ locale }: { locale: string }) {
     locale: typedLocale,
   })
 
-  const dynamicColumns = (
-    await Promise.all(
+  const [servicesColumn, dynamicColumns] = await Promise.all([
+    resolveServicesColumn(typedLocale),
+    Promise.all(
       (footer.dynamicColumns ?? []).map((entry) => resolveDynamicColumn(entry, typedLocale)),
-    )
-  ).filter((col): col is DynamicColumnResult => col !== null)
+    ).then((cols) => cols.filter((col): col is DynamicColumnResult => col !== null)),
+  ])
+
+  const t = closingCopy[typedLocale] ?? closingCopy.es
+  const contactHref = typedLocale === 'en' ? '/en/contact' : '/contact'
 
   return (
     // POLISH: mt-24 (96px) is not a step on the project's spacing scale
     // (4/8/16/24/32/48/64); mt-16 is the 64px top of that scale.
-    <footer className="bg-secondary text-secondary-foreground mt-16">
+    <footer
+      aria-label={typedLocale === 'en' ? 'Site footer' : 'Pie de página'}
+      className="bg-secondary text-secondary-foreground mt-16"
+    >
+      {/* CRITIQUE P1 — the footer had no ending. Zero ember elements across a
+          732px band, no name, no positioning, no next step: the visitor who
+          had read the whole page (the highest-intent moment on the site) was
+          handed a link list and "todos los derechos reservados". The header
+          spends an ember button on someone who has read nothing; this spends
+          one on someone who has read everything. That is the ≤10%-per-view
+          ember allowance going where DESIGN.md intends it. */}
+      <Container className="border-b border-border/20 py-12 md:py-16">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="font-heading text-heading tracking-tight">Juan Carlos Angulo</p>
+            <p className="mt-2 max-w-[45ch] text-body opacity-80">{t.tagline}</p>
+          </div>
+          <Button asChild className="w-full shrink-0 sm:w-auto">
+            <Link href={contactHref}>{t.cta}</Link>
+          </Button>
+        </div>
+      </Container>
+
       <Container className="py-12 md:py-16">
-        <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-2 md:grid-cols-4 gap-x-8">
+        {/* The Services column makes five groups, so the track count moves off
+            4 — otherwise the fifth wrapped alone onto a second row. */}
+        <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8">
+          {servicesColumn && (
+            <nav aria-label={t.groupLabel(servicesColumn.title ?? t.servicesTitle)}>
+              <h3 className="font-heading text-label mb-3 uppercase tracking-wide text-secondary-foreground/70">
+                {servicesColumn.title}
+              </h3>
+              <ul className="space-y-2">
+                {servicesColumn.items.map((item) => (
+                  <li key={item.id}>
+                    <Link href={item.href} className={footerLinkClass}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
+
+          {/* CRITIQUE — each group is now a labelled nav landmark. There were
+              zero <nav> elements inside the footer, so a screen-reader user
+              met 19 tab stops at the end of every page with nothing to skip
+              past and no name for any of the four groups. */}
           {footer.columns?.map((column, i) => (
-            <div key={column.id ?? i}>
+            <nav key={column.id ?? i} aria-label={t.groupLabel(column.title ?? '')}>
               {column.title && (
                 <h3 className="font-heading text-label mb-3 uppercase tracking-wide text-secondary-foreground/70">
                   {column.title}
@@ -116,11 +227,11 @@ export async function SiteFooter({ locale }: { locale: string }) {
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
           ))}
 
           {dynamicColumns.map((column) => (
-            <div key={column.id}>
+            <nav key={column.id} aria-label={t.groupLabel(column.title ?? '')}>
               {column.title && (
                 <h3 className="font-heading text-label mb-3 uppercase tracking-wide text-secondary-foreground/70">
                   {column.title}
@@ -129,23 +240,36 @@ export async function SiteFooter({ locale }: { locale: string }) {
               <ul className="space-y-2">
                 {column.items.map((item) => (
                   <li key={item.id}>
-                    <Link href={item.href} className={footerLinkClass}>
+                    {/* CRITIQUE P2 — case-study titles run to ~70 characters
+                        and wrapped to three lines inside a 252px column, so
+                        the feed columns were dense paragraphs while the static
+                        ones sat half empty. Clamped to two lines; the full
+                        title stays available as the link's title attribute. */}
+                    <Link
+                      href={item.href}
+                      title={item.label}
+                      className={`${footerLinkClass} line-clamp-2`}
+                    >
                       {item.label}
                     </Link>
                   </li>
                 ))}
               </ul>
-            </div>
+            </nav>
           ))}
         </div>
 
-        <Separator className="opacity-30 mt-12" />
+        {/* CRITIQUE P3 — the separator measured ~1.66:1 against the navy, under
+            the 3:1 a meaningful boundary needs, and it is the footer's only
+            structural division. The border token alone carries enough weight;
+            stacking a second opacity on top of it was what buried it. */}
+        <Separator className="mt-12" />
         <div className="flex flex-col gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
           {/* POLISH: the icons themselves were 20x20 with no padding, so the
               whole tap target was 20px — the clearest 2.5.8 failure in the
               footer, and an isolated control with no inline exception. The
               icon keeps its 20px optical size inside a 40px target. */}
-          <div className="flex gap-1">
+          <div className="flex gap-1" role="group" aria-label={t.socialLabel}>
             {footer.socialLinks?.map((social, i) => (
               <a
                 key={social.id ?? i}
@@ -160,17 +284,25 @@ export async function SiteFooter({ locale }: { locale: string }) {
             ))}
           </div>
 
-          <div className="flex flex-col gap-1 text-label opacity-80 sm:flex-row sm:gap-4">
+          {/* CRITIQUE P3 (my own bug, from the earlier polish pass): the 0.8
+              lived on this wrapper while `hover:opacity-100` sat on the child,
+              whose own opacity already computed to 1 — so the hover could
+              never fire and these three links were the only ones in the footer
+              with no pointer feedback. The dimming moves onto the links. */}
+          <nav
+            aria-label={t.legalLabel}
+            className="flex flex-col gap-1 text-label sm:flex-row sm:gap-4"
+          >
             {footer.legalLinks?.map((legal, i) => (
               <Link
                 key={legal.id ?? i}
                 href={legal.href}
-                className="inline-block py-1 transition-opacity duration-fast ease-out hover:opacity-100 focus-visible:outline-none focus-visible:rounded-sm focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus"
+                className="inline-block py-1 opacity-80 transition-opacity duration-fast ease-out hover:opacity-100 focus-visible:outline-none focus-visible:rounded-sm focus-visible:opacity-100 focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus"
               >
                 {legal.label}
               </Link>
             ))}
-          </div>
+          </nav>
         </div>
 
         {footer.copyrightText && (
