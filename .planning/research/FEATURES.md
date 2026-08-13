@@ -1,152 +1,412 @@
-# Feature Research
+# Feature Research — Monetization (v2.1)
 
-**Domain:** Developer/technical-consultant "work I've built" portfolio showcase (distinct from client-results case studies)
-**Researched:** 2026-07-14
-**Confidence:** MEDIUM (WebSearch-verified across multiple sources; no single authoritative spec exists for this pattern — it's a community convention, not a standard)
+**Domain:** Monetization layer for a technical practitioner's personal site (software engineer + technical SEO), bilingual EN/ES, low-to-moderate organic traffic
+**Researched:** 2026-08-13
+**Confidence:** MEDIUM overall — see the confidence legend below. Every affiliate row was fetched live against the vendor's own page on 2026-08-13.
 
-## Context: What This Is Distinct From
+> Scope note: this file covers ONLY the new monetization surface. Existing features (home, blog, case studies, author page, 4 service landings, 2 geo landings, websites portfolio, contact form, sitemap XSL/HTML, llms.txt) are treated as given and are referenced only as dependencies.
 
-Juan already has `CaseStudies` (challenge/solution/results/KPIs, sometimes anonymized — the *storytelling/results* angle) and `Clientes` (logo-only credibility strip). The gap he's naming is a **technical build showcase**: "I personally built this, here's the stack, here's the real Lighthouse score, here's a real screenshot." This is the developer-portfolio pattern (Brittany Chiang-style "Projects" grids, agency "Our Work" showcases), not the case-study pattern. The research below treats `Websites` as its own content type with its own conventions, cross-linked to `Clientes`/`CaseStudies` rather than duplicating their fields.
+---
+
+## Confidence Legend (read this before using the tables)
+
+The GSD `classify-confidence` seam rates every web-sourced provider (`webfetch`, `websearch`) as **LOW** at the provider level, because web content is not a curated registry. That tier is honest about the *channel*, but it flattens a real distinction that matters a lot for the affiliate table. So each row carries a second tag, the **source tier**:
+
+| Source tier | Meaning | How to treat it |
+|-------------|---------|-----------------|
+| **PRIMARY** | Fetched from the vendor's own page or legal terms on 2026-08-13, numbers quoted from that page | Safe to act on. Still re-confirm at signup — vendors change rates without notice. |
+| **PRIMARY-PARTIAL** | Vendor's own page fetched, but it does not publish the specific number (cookie window, threshold) | Act on what's quoted; treat missing fields as unknown, not as zero. |
+| **SECONDARY** | Only aggregator/listicle sources | Do NOT put in a plan as fact. Verify before applying. |
+| **ABSENCE-VERIFIED** | Checked vendor's own site/FAQ/partners page and found no program | Reliable enough to exclude from the roadmap. |
+
+Provider tier from the seam (`classify-confidence --provider webfetch --verified`) = LOW. Both tiers are reported so nothing is over-claimed.
+
+---
+
+## 1. The "My Stack / Tools I Use" Page
+
+### What the real examples actually do
+
+Five pages were fetched and read directly, not summarized from advice posts.
+
+| Example | Grouping | Per-item commentary | Affiliate links | Disclosure | Prices | Email capture |
+|---------|----------|---------------------|-----------------|------------|--------|---------------|
+| **Wes Bos** — `wesbos.com/uses` | 7 named sections (Editor + Terminal, Desktop Apps, Backup Strategy, Recording, Cameras and Lighting, Desk Setup, Other Gear) | Yes — every item has a "why" and often a switching story: *"Visual Studio Code is my current editor which I switched to in September 2017 after years of Sublime Text."* | Yes, mostly Amazon | Yes, at the top, in his own voice: *"Most of these links are amazon affiliate links, so I'll get philthy rich if you click them and buy something."* | Occasionally, as a credibility flex: *"I'm currently using Operator Mono for a font. Yes I paid the $200 for it. Yes I actually like it."* | No |
+| **Kent C. Dodds** — `kentcdodds.com/uses` | 11+ categories incl. Services, Tech, Editor, CLIs, Office, Smart Home & EV | Thin but present — one clause each: *"Playwright — I use this for E2E testing"*, *"Cursor — My preferred editor"*, *"Remix/React Router v7 — The best framework to build a web app"* | Yes — Amazon `tag=kentcdodds-20`, plus branded short links `kcd.im/fathom`, `kcd.im/cloudinary` | Yes, early: *"Full disclosure, many links on this site are affiliate links."* | No | No |
+| **Aleyda Solis** — `aleydasolis.com/en/search-engine-optimization/seo-tools/` | 4 job-to-be-done sections (Keyword Research, On Page Analysis, Link Building, Tracking & Analysis) | Yes, and framed by *use case*, not by feature list | **No** — plain outbound links | None (she isn't monetizing it) | Free/paid is flagged per tool ("completely free") but no prices | **Yes** — SEOFOMO newsletter block in header ("45,000+ fellow SEOs") and again in the footer |
+| **Aleyda Solis** — `/seo-for-web-migrations/` | Topic hub for one problem | Yes | No | n/a | All free, **no email gate** | Yes, newsletter block |
+| **uses.tech** directory | 930 listed `/uses` pages | n/a — it's an index | n/a | n/a | n/a | n/a |
+
+### Anatomy of the version that converts vs. the link dump
+
+What separates them, distilled from the above:
+
+1. **Grouped by job, not by vendor.** Aleyda's page groups by *what you're trying to do* (keyword research, on-page, tracking). Wes groups by *context* (editor, recording, desk). Neither groups alphabetically or by "SEO tools / dev tools" — a category label a buyer doesn't think in is a dead category.
+2. **A first-person switching story per item.** "I switched to X in 2017 after years of Y" is the single highest-signal sentence pattern on Wes's page. It proves use, gives a reason, and pre-empts "why not the alternative". Kent's one-clause version works too but is measurably thinner.
+3. **Honest negatives.** The one thing *none* of the studied pages does well, and the clearest opening for Juan: a "what I stopped using and why" line, or a "don't buy this if…" qualifier per tool. Pages that only praise read as paid.
+4. **Prices as a credibility device, not a spec sheet.** Wes mentioning he paid $200 for a font is not price info, it's proof of skin in the game. Publishing a full pricing table is a maintenance trap (see anti-features).
+5. **Disclosure in the author's own voice, placed before the first link.** Both monetized examples put it at the top, plainly worded, and neither hedges. Confidence in the disclosure reads as confidence in the recommendations.
+6. **A "what I'd pick if I were starting today" block.** Not present on any of the five pages. This is the strongest available differentiator: it converts because it answers the actual reader question ("what should *I* do") rather than the vanity question ("what do *you* use"), and it is the natural home for the highest-value affiliate links.
+7. **Screenshots are optional and mostly absent.** Wes has one desk photo; the rest have none. Do not build a screenshot pipeline for v1 — Cloudinary cost and CWV cost with no evidence of return.
+8. **The CTA is the practitioner, not the tool.** Aleyda's page CTA is her newsletter. Kent's is "share this page". Neither pushes a hard sell. For Juan the right terminal CTA is the audit/consulting service he already has landing pages for — the stack page is a competence demonstration first and an affiliate page second.
+
+**Anti-pattern observed in the wild:** every affiliate tool roundup is silently ordered by commission rate. Readers in a technical niche detect this instantly. Order by genuine preference and let a lower-paying or zero-paying tool win where it deserves to (Screaming Frog pays nothing and should still be recommended first where it's the right answer — that non-monetized recommendation is what makes the monetized ones believable).
+
+---
+
+## 2. Affiliate Programs — Live-Verified Table
+
+All rows checked **2026-08-13**. "Recurring" is the column that matters most: it's the difference between a one-time $50 and an annuity.
+
+### Verified as OPEN and applicable
+
+| Program | Commission | Recurring? | Cookie | Network | Accepts small sites? | Source tier | Checked URL |
+|---------|-----------|------------|--------|---------|---------------------|-------------|-------------|
+| **DinoRANK** | 40% of first month, then **10% on every renewal until the user cancels**. Annual plans: 10% at signup + 10% per renewal | **YES — until cancellation** | 15 days | In-house | Yes — explicitly targets consultants/SEOs, no traffic minimum stated | PRIMARY | `dinorank.com/afiliacion/` |
+| **Kinsta** | Up to **$500 one-time bounty** by plan **+ 10% lifetime monthly recurring** | **YES — lifetime** | 60 days, last-touch | In-house | Yes, but manual screening. Requires own domain in the dev/business niche **and an affiliate disclosure published on your site**. Auto-approves existing Kinsta customers. Rejects subdomains, thin content, coupon sites | PRIMARY | `kinsta.com/affiliates/` |
+| **DigitalOcean** | **10% of the referred user's monthly spend, every month for 12 months** | **YES — 12 months** | Not stated on DO's own page (third parties say 90d) | **CJ / Commission Junction** per DO's own page | Yes — *"Anyone can join"* stated verbatim | PRIMARY-PARTIAL | `digitalocean.com/affiliates` |
+| **SE Ranking** | 30% of subscription orders placed through the referral link | Terms do **not** contain a renewal/lifetime clause → treat as **first purchase**. (The "30% recurring lifetime" figure circulating on listicles is unverified) | **120 days**, last-click | In-house | Yes — a free SE Ranking account can join, no traffic minimum. No affiliate links in paid ads | PRIMARY | `seranking.com/affiliate-program.html`, `/legal/affiliate.html` |
+| **Semrush** | **$50–$450 per sale** by product + loyalty tier (Basic $50–300, Platinum $80–450) **+ $10 per trial activation** | **NO** — per-sale bounty | **120 days**, last-click | **Impact.com** | Conditional: needs **≥1,000 monthly unique visitors** or 1,000 organic followers, relevant marketing content, verified contact matching the domain | PRIMARY | `semrush.com/lp/affiliate-program/en/` |
+| **Hostinger (Affiliate)** | Starts at **40% revshare**, up to 60% on Horizons one-month plans | **NO** — *"No commission is granted for… renewals, or upgrades"* | **30 days**, overwritten by any later affiliate link | In-house | Conditional: needs blog/social/YouTube in IT or business with **≥1,000 traffic**; ~5 business day approval | PRIMARY | `hostinger.com/affiliates`, `/affiliates/faqs` |
+| **Hostinger (Referral)** — fallback | 20% of purchase price, up to **$450** first-referral bonus; referred user gets 20% off | No | n/a | In-house | **Yes — no traffic requirement.** Hostinger itself points sub-1,000-traffic sites here. Reward pays only after the referred user keeps the service **45+ days** | PRIMARY | `hostinger.com/referral-program` |
+| **Surfer SEO** | Tiered CPA: 75% / 100% / 125% of first **monthly** payment (0–10 / 11–50 / 51+ customers), or 15% / 20% / 25% on **yearly** | Not documented as recurring — commission is *"from user's first payment"* | Not published | **PartnerStack** | *"The competition is stiff"* — selective, requires demonstrated audience alignment | PRIMARY-PARTIAL | `surferseo.com/affiliate-program/` |
+| **Amazon Associates** (already active) | Fixed rate card: 4.00% "All Other Categories"; **2.50% PC & PC Components**; 4.00% Fashion/Electronics-adjacent; 3.00% Tools/Home/Headphones; 2.00% Televisions; 4.50% Physical Books | No | 24h (well-known; not restated on the rate card page) | Amazon | Already accepted | PRIMARY | `affiliate-program.amazon.com/help/node/topic/GRXPHT8U84RAYDXZ` |
+| **Vercel** | Not published. Legal terms say fees are **one-time unless the Program Guidelines say otherwise**, last-click model, no rate or window disclosed publicly | Stated one-time by default | Not published | **Dub Technologies** | Requires being of majority age, a Vercel account in good standing, tax docs, valid payment method | PRIMARY-PARTIAL | `vercel.com/legal/affiliate-marketing-terms` |
+
+### REJECTED — commonly recommended, not actually usable
+
+This list exists because a stale awesome-list would have put half of these in the roadmap.
+
+| Program | Status | Evidence |
+|---------|--------|----------|
+| **Ahrefs** | **DEAD.** `ahrefs.com/affiliate` returns **404**. Program closed; Ahrefs now negotiates individual sponsorship deals with a handful of top partners. Tim Soulo's own post gives the reason: ~3% of affiliates drove 90% of leads, plus billing-side technical debt | 404 on vendor URL + founder statement |
+| **Screaming Frog** | **NO PROGRAM.** Own FAQ has only a Resellers clause — *"Resellers can purchase an SEO Spider licence online on behalf of a client"* and *"We do not offer discounted rates for resellers."* No commission of any kind | `screamingfrog.co.uk/seo-spider/faq/` — ABSENCE-VERIFIED |
+| **Sitebulb** | **NO PUBLIC PROGRAM** findable on their own site (checked homepage nav/footer and site-scoped search). If wanted, it's an email-the-vendor question, not a signup | ABSENCE-VERIFIED |
+| **Cloudflare** | **NO PUBLISHER PROGRAM.** `cloudflare.com/partners` lists only PowerUP (Resell / Manage / Distribute / Consult), Technology Alliance, Global System Integrators, Service Providers — all business/agency partnerships. Aggregators claiming "20% recurring, 30-day cookie" contradict each other and the vendor page | ABSENCE-VERIFIED |
+| **Neon** | **NOT A GENERAL PROGRAM.** Referral is restricted to accepted open-source projects, paid via GitHub Sponsors. A content site does not qualify | ABSENCE-VERIFIED |
+| **Cloudinary** | **NO AFFILIATE.** Their own support states affiliation is not a supported partner type | ABSENCE-VERIFIED |
+| **Payload CMS** | **AGENCY PARTNER ONLY**, capped at roughly 30 agencies selected on real Payload work. No commission structure published. (Worth applying to for *lead flow*, which is a different business case — not affiliate revenue) | `payloadcms.com/become-a-partner` |
+| **Resend** | No affiliate/referral program found (`resend.com/partners` → 404) | ABSENCE-VERIFIED |
+| **Cursor** | **NO OFFICIAL PROGRAM.** Only an Ambassadors program (`cursor.com/ambassadors`, which explicitly prefers you not join other advocacy programs) and a plain user referral link. Community forum threads dated 2026 are still users *asking* for an affiliate program. Directory entries claiming "20% recurring" are community-maintained, not vendor-backed | ABSENCE-VERIFIED |
+| **Anthropic / Claude, OpenAI, GitHub Copilot** | **NO AFFILIATE PROGRAMS.** Nothing official found for any of them | ABSENCE-VERIFIED |
+| **DataForSEO** | `dataforseo.com/affiliate-program` → 404. No verifiable program | ABSENCE-VERIFIED |
+
+### Numbers you will see quoted that are WRONG
+
+- **"Semrush pays 40% recurring"** and **"Semrush pays 33% recurring for the first year"** — both stale, pre-2021. The live program is a per-sale bounty on Impact. This appears in current 2026-dated listicles, which is exactly why the vendor page is the only acceptable source.
+- **"SE Ranking: 30% recurring lifetime"** — repeated widely; SE Ranking's own legal terms contain no renewal clause. Unverified.
+- **"Cursor affiliate: 20% recurring"** — community directory entry, no vendor page.
+- **"Cloudflare affiliate: 20% recurring / $50–200 per referral"** — two aggregators, two different answers, zero vendor backing.
+
+### The strategic read
+
+Juan's genuinely-used stack maps poorly to affiliate revenue, and that's the most important finding here. **Cloudflare, Cloudinary, Resend, Payload, Neon, Cursor and Claude — the tools he actually builds on — pay nothing.** The programs that do pay are mostly one-off bounties gated behind a 1,000-visitor minimum he may not clear yet.
+
+Three programs are worth applying to first, in this order:
+
+1. **DinoRANK** — recurring until cancellation, no traffic gate, Spanish-market fit, and Juan has a *real* credential here (he ran a DinoRANK workshop in Lima). Highest authenticity-to-payout ratio on the list.
+2. **Kinsta** — the only sizeable recurring + big one-time bounty combo that a dev-niche site can qualify for. Note the hard prerequisite: **the affiliate disclosure must already be published on the site before applying.** That makes the disclosure component a *blocker*, not a nice-to-have.
+3. **DigitalOcean** — 12 months of 10% revshare and "anyone can join", so it's the lowest-friction acceptance on the list.
+
+Semrush and Hostinger-affiliate are **phase 2, gated on the 1,000-visitor threshold**. Until then, Hostinger's Referral program is the honest substitute (no traffic minimum) and Juan actually uses Hostinger, so it's a genuine recommendation.
+
+---
+
+## 3. Digital Products in This Niche
+
+### What the market actually looks like
+
+Live-checked price points for technical SEO digital products (Gumroad + Notion Marketplace, 2026-08-13):
+
+| Product type | Real live examples | Observed price band | Format |
+|--------------|-------------------|---------------------|--------|
+| Notion/Sheets audit checklist | "Notion Technical SEO Checklist Template", "DIY SEO Checklist", "Easy SEO Checklist" | **$0–$35** — heavily commoditized, many free | Notion duplicate link |
+| Deeper audit template | "Deep Site SEO Audit Template" ($35), "SEO Audit Report Template" | **$29–$49** | Notion / Sheets |
+| Roadmap / process product | "SEO Roadmap Notion Template" | **$19–$49** | Notion |
+
+The checklist tier is a race to zero. Notion Marketplace lists several technical SEO audit checklists for free, and Aleyda Solis gives away a full **URL-changes migration checklist as an open Google Sheet with no email gate at all**. A paid generic SEO checklist from Juan would be competing against a free asset from the most-cited technical SEO consultant in the Spanish-speaking world. That's an unwinnable fight and should be named as such.
+
+### What actually fits Juan's proven expertise
+
+The defensible products are the ones a competitor can't clone from a blog post, and where Juan can point at shipped work as proof:
+
+| Product | Why it's defensible for Juan | Realistic band | Effort |
+|---------|------------------------------|----------------|--------|
+| **Site migration blueprint** (runbook + pre/post validation sheet + rollback plan) | Migration is the highest-stakes, highest-regret technical SEO job, and Juan has done a real platform migration end-to-end (this very site: Mongo→Postgres, Next+Payload rebuild) with the artifacts to prove it | **$49–$99** | MEDIUM |
+| **Next.js + Payload SEO starter / reference implementation** | The single most differentiated asset. Almost nobody selling SEO products can ship code; almost nobody shipping Payload starters knows technical SEO. Sitemap XSL, hreflang, canonical across dual segments, JSON-LD builders, llms.txt — he has already solved all of these in production | **$79–$199** | HIGH |
+| **AEO/GEO readiness audit template** | Newest, least-commoditized category; he already has the GEO service landing and llms.txt shipped | **$29–$59** | LOW-MEDIUM |
+| **Schema/rich-results generator or pack** | Concrete, verifiable output; pairs naturally with the blog | **$19–$49** | MEDIUM |
+| Generic technical SEO checklist | — **do not build** — | commoditized to $0 | — |
+
+### What makes them convert
+
+- Proof of use on the seller's own site — Juan can literally say "this site runs it, go view-source". None of the Gumroad sellers can.
+- A free tier that is genuinely useful (the checklist) feeding a paid tier that is genuinely bigger (the runbook + the code).
+- Bundling with the service: the product is the down-market version of the audit service he already sells. It qualifies leads instead of cannibalizing them.
+
+**Roadmap position:** this whole section is correctly **deferred to v2.2** per the milestone framing. The research supports that deferral — it's the highest-effort, slowest-payback branch, and it depends on a payment platform decision plus an email list that doesn't exist yet.
+
+---
+
+## 4. Email / Lead Magnets
+
+### What works for a technical audience
+
+The competitor evidence is unusually clean here: **Aleyda Solis gives everything away with no email gate and still runs a ~45,000-subscriber newsletter (SEOFOMO)**, with signup blocks in the header and footer of resource pages. The gate is not what builds the list — the recurring value promise is. Her migration resources page hands over a Google Sheet, a SpeakerDeck deck, and a video guide, all ungated, with a newsletter block beside them.
+
+That is the pattern to copy, and it happens to be the one that costs Juan nothing in CWV.
+
+Lead magnets ranked by fit:
+
+1. **The migration validation sheet** (free version) — highest intent, matches a service he sells.
+2. **A "technical SEO for Next.js" cheat sheet** — matches his unique angle and the blog's actual readership.
+3. **The AEO/GEO readiness checklist** — newest topic, most shareable.
+4. Generic "SEO checklist" — lowest fit, highest competition.
+
+### Placement and realistic expectations
+
+Conversion benchmarks in this space come from marketing blogs, not primary research — treat all of these as **SECONDARY, directional only**:
+
+- Inline forms inside long-form content are reported at roughly 15–22% opt-in vs ~4–8% for exit-intent popups, with inline beating sidebar by 2–3x.
+- Delayed popups (20–50s) reported as converting better than immediate ones.
+
+Given the numbers are soft and the popup delta is negative anyway, the decision is easy: **inline capture blocks inside relevant posts and at the end of the stack page; no popups at all.** On a site with low-to-moderate traffic, the absolute subscriber delta from a popup is a few people per month, and the cost is a layout-shift risk on a site whose entire stated Core Value is impeccable performance.
+
+Anti-patterns to name explicitly:
+
+- **Any popup/modal or third-party email widget** — CLS/INP risk plus an external script, against a hard project constraint.
+- **Gating the good stuff.** Aleyda's ungated approach outperforms; gating a checklist on a low-traffic site converts a small number of readers into a smaller number of subscribers and a lot of bounces.
+- **A second email provider.** Resend is already integrated. Adding Kit/Beehiiv/Mailchimp adds a script, a vendor, a GDPR surface and a bill.
+- **Newsletter with no publishing cadence.** An empty list decays. If the cadence isn't committed to, capture emails for lead-magnet delivery only and say so on the form.
+
+---
+
+## 5. Content Formats That Monetize
+
+### Current Google reality (verified against Google's own docs, 2026-08-13)
+
+Three facts that change how this is planned, and all three contradict commonly-repeated advice:
+
+1. **The Helpful Content System is RETIRED as a separate system.** Google's own ranking systems guide lists it under retired systems: *"In March 2024, it evolved and became part of our core ranking systems."* There is no separate HCU to optimize for or recover from — it's core ranking now.
+2. **The Reviews system is still a live, separate system.** It *"aims to better reward high quality reviews, content that provides insightful analysis and original research, and is written by experts or enthusiasts who know the topic well."* This is the system that governs "X vs Y" and "best tools for Z" content, and its stated criteria — original research, first-hand expertise — are precisely Juan's advantage over affiliate content farms.
+3. **Affiliate links are explicitly fine.** Google's spam policies state verbatim: *"It's not a violation of our policies to have such links as long as they are qualified with a `rel="nofollow"` or `rel="sponsored"` attribute value."* The violation is **thin affiliation**: *"publishing content with product affiliate links where the product descriptions and reviews are copied directly from the original merchant without any original content or added value."*
+
+So the rule is simple and mechanical: **every affiliate link gets `rel="sponsored"`, and every affiliate page carries original first-hand material.** The first is an engineering requirement (enforce it in code, not in editorial discipline). The second is an editorial requirement.
+
+Also relevant: **site reputation abuse** applies to third-party content published to exploit a host's rankings. Juan writing his own content is not exposed to this — but it rules out ever selling guest-post slots or hosting sponsored third-party content on the domain.
+
+### Format ranking for this site
+
+| Format | Monetization fit | Google-risk | Fit with existing content |
+|--------|-----------------|-------------|---------------------------|
+| **Case study with a tooling callout** | HIGH — highest trust, lowest sleaze | Very low | Direct: the `CaseStudies` collection already exists and is the site's strongest asset |
+| **Deep tutorial with tool links** (e.g. "hreflang in Next.js + Payload") | HIGH | Very low | Direct: blog + the Next.js/Payload angle already claimed on Home |
+| **"X vs Y" comparison** (Sitebulb vs Screaming Frog, DinoRANK vs Semrush) | HIGH — but note the top-fit comparison subjects include tools with **no** program, so write it honestly and monetize only the side that pays | Medium — governed by the Reviews system; needs first-hand testing evidence | New format |
+| **"Best tools for Z" roundup** | MEDIUM | **Highest** — this is the format thin-affiliation targets | New format; only worth it with original testing |
+| **Stack / uses page** | MEDIUM-HIGH, and it's the durable evergreen | Low | New page |
+
+---
 
 ## Feature Landscape
 
-### Table Stakes (Users Expect These)
+### Table Stakes (required for this to work at all)
 
-Fields/sections visitors assume exist on any "projects built" showcase. Missing these makes it read as a résumé bullet list, not a portfolio.
+| Feature | Why Expected | Complexity | Notes / dependency on existing features |
+|---------|--------------|------------|------------------------------------------|
+| Affiliate disclosure block, bilingual, rendered above the first affiliate link | FTC/consumer expectation; **and a hard prerequisite of Kinsta's application** | LOW | New Payload block or a field on the page. Must be `localized: true` — v1.5 found 3+ real bugs from non-localized fields. Content must be written, not templated |
+| `rel="sponsored noopener"` + `target="_blank"` applied automatically to every affiliate link | Google's stated condition for affiliate links being policy-compliant | LOW | Enforce in the link-rendering component so an editor cannot forget it. Do NOT rely on editorial discipline |
+| A `Tools` collection (name, category, URL, affiliate URL, one-line verdict, personal take, free/paid flag, `usedSince`) | Every tool appears on the stack page, in comparisons, and in tutorials — retyping links guarantees drift | LOW-MEDIUM | New Payload collection. Localize the prose fields; keep URLs unlocalized but be deliberate about it |
+| Bilingual "Mi Stack / My Stack" page | Core deliverable of the milestone; must exist in both locales like everything else | MEDIUM | Reuses `Pages` + blocks pattern (same decision as the service landings — no new collection). Needs a new `ToolStack` block |
+| First-party click tracking via an internal redirect route (`/go/[slug]` → 302) | You cannot decide what to double down on without click data; and third-party trackers are barred by the performance constraint | LOW-MEDIUM | A Next.js route handler + a counter. **Zero client JS, zero CWV cost.** Caveat: check each program's terms on link cloaking — Amazon in particular restricts it, so Amazon links should stay direct |
+| Inline email capture block posting to Resend | Only way to build an owned audience; Resend already integrated | MEDIUM | New block + server action + Resend Audiences. No new vendor, no third-party script |
+| Cookie/consent handling for affiliate + analytics cookies | ES/EU traffic is an explicit target (Madrid landing) | MEDIUM | Coordinate with the legal research file; affiliate redirect links that set no first-party cookie keep this much simpler |
 
-| Feature | Why Expected | Complexity | Notes |
-|---------|--------------|------------|-------|
-| Live URL / link to the actual site | The entire point of a build showcase is "go look at it yourself" — no live link reads as unverifiable | LOW | Already planned (`liveUrl`). Should open in new tab, and ideally get a small "visit site ↗" affordance, not just a bare hyperlink. |
-| Real screenshot(s) of the site | Visitors judge design/craft visually before reading anything; text-only listings underperform | LOW–MEDIUM | Already planned. Recommend at least hero/above-fold + one more (mobile view or a key page) — a single screenshot feels thin for a dev-focused audience that will zoom into UI details. |
-| Tech stack tags | Recruiters/prospects scan for stack fit in seconds — "a tidy, honest stack section tells a visitor at a glance whether you fit" | LOW | Already planned (`stack` as tags). Render as visual badges (icons/pills), not a paragraph — scanability is the value, not prose. |
-| Short description of what was built / for whom | Bare links with no context force the visitor to reverse-engineer the site's purpose | LOW | Needs a `summary`/`description` field distinct from `challenges` — one or two sentences of "what it is," separate from the deeper technical narrative. |
-| Project title + client/brand name | Baseline identification — can't scan a grid of unlabeled screenshots | LOW | Site name as the entry title; optional client name shown even when the `Clientes` link isn't set (some sites won't have a formal client, e.g. Juan's own properties). |
-| Year / launch date | Visitors calibrate "is this current work or legacy" — an unlabeled older project reads as stale if mistaken for recent | LOW | Already planned (año de lanzamiento). Sort listing by this descending by default. |
-| Role on the project | Disambiguates "I designed and coded this end-to-end" vs. "I was the dev on someone else's design" — credibility depends on this being explicit | LOW | Already planned (rol). Keep as a small enum (e.g. Design+Dev+SEO / Dev only / Dev+SEO), rendered as a badge near the title. |
-| Grid/listing page with detail pages | Standard portfolio IA: overview grid → click into full detail. Users expect two clicks (grid → live demo), not one wall of text | LOW–MEDIUM | Matches what's already planned (listing + detail page), consistent with the existing `case-studies`/`posts` patterns in the codebase. |
-
-### Differentiators (Competitive Advantage)
-
-Not universal, but this is exactly where a technical-SEO-consultant-who-also-codes gets to stand out — most agency portfolios don't have real, verifiable performance data, and most solo-dev portfolios don't connect the build to a business outcome.
+### Differentiators (where Juan actually wins)
 
 | Feature | Value Proposition | Complexity | Notes |
 |---------|-------------------|------------|-------|
-| Real Lighthouse scores (Performance/Accessibility/Best Practices/SEO) | This is Juan's actual differentiator — almost no dev or SEO consultant portfolio publishes real, current Lighthouse numbers per project. A concrete, falsifiable performance claim is rare and credible | LOW–MEDIUM | Already planned. Render as 4 scored gauges/badges (matching the PageSpeed Insights UI convention visitors already recognize). **Caveat:** scores decay — add a `scoresCapturedAt` date field so stale numbers aren't presented as current. |
-| Technical highlights (SSR/ISR/headless/edge/etc.) | Speaks directly to the dev-hiring audience — "how" it was built, not just "what" — reinforces the engineering-expertise core value of the whole site | LOW | Already planned. Present as a short bullet list or tag row, separate from generic `stack` tags (stack = tools used, highlights = architectural decisions made). |
-| Challenges array (same pattern as CaseStudies.challenge) | Turns a static portfolio entry into a mini engineering narrative — "here's a real problem I solved," which is what technical hiring managers/prospects actually probe for | LOW (pattern reuse) | Already planned, reuses an existing schema pattern — low implementation risk since the array-field shape already exists in `CaseStudies`. |
-| Cross-link to `Clientes` (optional) | Lets a visitor go from "cool site" → "who's the client" → into the logo carousel/credibility context, without forcing every Website to have a formal client | LOW | Optional relationship, nullable — Juan's own properties (e.g. juan-tech.com) won't have a client. |
-| Cross-link to `CaseStudies` (optional) | The single highest-leverage differentiator: a visitor reading "I built this site" can jump directly to "and here's the measurable business result it produced" — bridges the technical-build story and the results story without merging the two collections | LOW–MEDIUM | This is the connective tissue Juan is implicitly asking for ("¿cómo lo hacen los demás?") — most agency sites either merge these into one bloated collection or never link them at all. Keeping them separate-but-linked is the differentiator. |
-| Industry/niche tag | Lets a visitor mentally filter ("has this person built for X industry before") — valuable for prospects self-qualifying | LOW | Already planned (industria/nicho). Don't over-engineer into a filterable UI for only 6 entries — a plain tag/badge is enough at this volume (see Anti-Features). |
-| Filterable/sortable listing (by stack or industry) | Agencies with dozens of projects use this to help prospects self-serve to relevant examples | MEDIUM | **Defer.** Valuable at scale (20+ entries), but with only 6 real websites at launch, client-side filtering adds engineering cost for zero practical benefit — a plain grid with visible tags already satisfies scanability. Revisit if the collection grows past ~12-15 entries. |
-| GitHub repo link | Standard on dev-portfolio sites when the codebase is open source or the code itself is worth showing | LOW | Optional field, likely null for most/all of Juan's 6 sites since these are client/personal production sites, not open-source demos. Include the field but don't force population. |
+| **"What I'd pick if I were starting today"** section on the stack page | Absent from all five studied examples. Answers the reader's real question and is the natural home for the best-paying links, without ordering the main list by commission | LOW | Pure copy. Highest return per unit of effort in this milestone |
+| **Honest negatives** — a "what I stopped using and why" line per tool, and at least one prominent zero-commission recommendation | The credibility mechanism that makes the paid recommendations believable to a technical audience. Screaming Frog pays nothing and should still be recommended where it's right | LOW | Copy only. Requires the discipline to leave money on the table on purpose |
+| **Lighthouse/CWV scores shown on the stack page itself** | Nobody else's stack page proves the author's competence while recommending tools. Ties monetization to the site's Core Value instead of fighting it | LOW-MEDIUM | The `Websites` collection (v1.9) already stores Lighthouse scores — the pattern and the data shape exist |
+| **Spanish-market angle** (DinoRANK, ES-language tooling) | English-language SEO affiliate content is saturated; Spanish technical-SEO tool content is not, and Juan has a real DinoRANK credential from the Lima workshop | LOW | Pairs with the `/seo-tecnico-lima` and `/seo-tecnico-madrid` landings that already exist |
+| **Cross-link stack ↔ case studies ↔ services** | Turns the stack page from a leaf into a hub that feeds the consulting funnel, which is worth more per visitor than any affiliate commission on this traffic level | LOW | Reuses the related-content pattern already built for service landings in v1.5 |
+| **Next.js + Payload SEO reference implementation** (paid, v2.2) | The genuinely uncopyable product — the intersection of shipping code and technical SEO is nearly empty | HIGH | Deferred. Depends on payment platform decision |
 
-### Anti-Features (Commonly Requested, Often Problematic)
+### Anti-Features
 
 | Feature | Why Requested | Why Problematic | Alternative |
-|---------|----------------|------------------|-------------|
-| Merging `Websites` into `CaseStudies` (one mega-collection) | Feels like less duplication, "why have two similar collections" | Conflates two different reader intents — "prove you get results" (case study) vs. "prove you can build well" (technical showcase). Forcing both into one schema either bloats every case study with irrelevant Lighthouse/stack fields, or bloats every website entry with results/KPI fields that don't apply (not every built site has a measurable business result, e.g. personal projects) | Keep them as separate collections with an optional bidirectional relationship field — exactly what's already planned. This mirrors the existing, already-validated decision to keep `Clientes` (logos) separate from `CaseStudies` (narrative). |
-| Live embedded iframe preview of each site instead of a static screenshot | Feels "more real" than a screenshot | Real performance/security cost: iframing arbitrary third-party sites can break (`X-Frame-Options`), tanks the showcase page's own Lighthouse score (a page about performance that itself loads slowly), and adds no real information over a well-chosen screenshot plus a live link | Static screenshot(s) (already planned) + the real `liveUrl` link for anyone who wants to click through and experience it live |
-| Auto-fetching live Lighthouse scores on every page load (real-time API call) | "Always up to date" sounds appealing | Violates the project's explicit "no live SEO tooling / dashboards" architectural boundary (CLAUDE.md Out of Scope), adds an external API dependency plus latency plus failure modes to a public page, and turns a marketing/portfolio field into a fragile integration | Capture Lighthouse scores manually/periodically as static editorial data (already the plan) with a `scoresCapturedAt` timestamp so the number's freshness is transparent, not silently stale |
-| Full case-study-style KPI/results section on every Website entry | Symmetry with CaseStudies feels tidy | Most personal/technical builds don't have attributable business KPIs (e.g., Juan's own juan-tech.com has no "client revenue lift" to report) — forcing the field either produces fake-feeling metrics or a lot of empty/N/A fields in admin | Leave results/KPI storytelling in `CaseStudies` where it belongs; `Websites` stays technical-build-focused. Use the optional `CaseStudies` relation to point to a KPI story when one legitimately exists for that site. |
-| Tag-based filter UI, star ratings, "featured" badges, testimonials-per-project, pricing-per-project | Common in generic portfolio-builder templates/plugins | Over-engineering for 6 launch entries; testimonials/pricing duplicate what `Clientes`/`Testimonials`/`Services` already do elsewhere on the site; adds admin surface and design work disproportionate to the content volume | Plain grid, visible metadata badges, and the optional cross-links already specified — resist adding filtering/rating UI until volume genuinely warrants it |
+|---------|---------------|-----------------|-------------|
+| Email popup / exit-intent modal | "Popups convert" | CLS/INP risk on a site whose entire Core Value is performance; inline forms are reported to outperform them anyway; on low traffic the absolute gain is a handful of subscribers | Inline capture block inside posts and at the end of the stack page |
+| Display ads (AdSense/Ezoic) | Passive income | Destroys CWV, destroys perceived seniority, and at this traffic level pays a rounding error. Directly contradicts the project's Core Value | Affiliate + services + products |
+| Third-party affiliate link manager (JS-based cloaker, e.g. a plugin that rewrites links client-side) | "Easier tracking" | External script, layout/INP cost, and a dependency on a vendor for something a route handler does in 20 lines | First-party `/go/[slug]` 302 route |
+| Cloaking Amazon links behind the redirect | Consistency with other links | Amazon Associates restricts link cloaking; a violation risks the account he already has | Keep Amazon links direct; cloak only programs that permit it |
+| A paid generic "technical SEO checklist" | Easy first product | Aleyda gives an equivalent away free with no gate; several are free on Notion Marketplace. Competing there damages positioning for no revenue | Free checklist as the lead magnet; sell the migration runbook and the code |
+| Gating the lead magnet behind a mandatory email | "Build the list" | The most-cited competitor in the niche proves the ungated model builds a bigger list. Gating on low traffic converts few and bounces many | Ungated asset + adjacent newsletter block |
+| A second email provider (Kit/Beehiiv/Mailchimp) | Better newsletter features | New vendor, new script, new GDPR surface, new bill — for a list of zero | Resend Audiences/Broadcasts, already in the stack |
+| A pricing table per tool on the stack page | "Readers want prices" | SaaS prices change constantly; a stale price is worse than no price and the maintenance never ends | Free/paid flag + a "roughly what tier I'm on" note; link out for current pricing |
+| "Best 25 SEO tools" mega-roundup | Ranks for commercial terms | This is the exact shape Google's thin-affiliation policy targets, and Juan can't have first-hand experience with 25 tools | 3-way comparisons of tools he has actually run, with real screenshots/data |
+| Selling guest posts / sponsored third-party posts | Fast money | Squarely inside Google's site reputation abuse policy | Own-voice sponsored content only, disclosed, or nothing |
+| Ordering the stack page by commission rate | Maximizes revenue per click | Technical readers detect it; it's also the single most-named failure mode of these pages | Order by genuine preference; disclose; include zero-commission picks |
+
+---
 
 ## Feature Dependencies
 
 ```
-Websites collection (schema)
-    └──requires──> Media collection + Cloudinary adapter (already exists)
-                       └──screenshots stored as Media relation/upload
+Affiliate disclosure block (bilingual)
+    └──BLOCKS──> Kinsta affiliate application (they require a published disclosure)
+    └──requires──> Payload localized field handling (v1.5 bug pattern)
 
-Websites.stack (tags)
-    └──enhances──> Websites listing scanability (badge rendering)
+Tools collection
+    └──feeds──> Stack page (ToolStack block)
+    └──feeds──> Comparison posts
+    └──feeds──> Tutorial inline tool callouts
 
-Websites.clienteRelation (optional)
-    └──requires──> Clientes collection (already exists)
+Stack page
+    └──requires──> Tools collection + disclosure block + /go redirect route
+    └──requires──> next-intl [locale] routing (exists)
+    └──requires──> plugin-seo meta on Pages (exists)
+    └──enhances──> Service landings (cross-link into the consulting funnel)
 
-Websites.caseStudyRelation (optional)
-    └──requires──> CaseStudies collection (already exists)
+/go/[slug] click tracking
+    └──requires──> Tools collection (slug source)
+    └──CONFLICTS──> Amazon Associates link-cloaking rules (exempt Amazon)
 
-Websites listing page + Home section
-    └──follows pattern of──> FeaturedCaseStudiesBlock / FeaturedContent global (already exists)
+Email capture block
+    └──requires──> Resend Audiences + a real RESEND_API_KEY
+    └──BLOCKED BY──> Phase 6 (RESEND_API_KEY is still a placeholder)
+    └──requires──> cookie/consent handling for ES/EU traffic
 
-Filterable/sortable listing UI ──deferred until──> collection grows past ~12-15 entries
+Digital products (v2.2)
+    └──requires──> payment platform decision (separate research file)
+    └──requires──> email list (from Email capture)
 
-Lighthouse scores (static fields)
-    └──conflicts with──> live SEO tooling / real-time API integration (explicitly Out of Scope per CLAUDE.md)
+Semrush + Hostinger affiliate acceptance
+    └──BLOCKED BY──> 1,000 monthly unique visitors threshold
 ```
 
 ### Dependency Notes
 
-- **Websites requires Media/Cloudinary:** screenshots must go through the same Cloudinary-backed upload path already built for the rest of the site — no new storage work needed, just new Media relations on the new collection.
-- **Websites.clienteRelation / caseStudyRelation are both optional, not required:** several of Juan's 6 real sites (his own properties) will have no formal client and possibly no linked case study. The schema must allow both relations to be null without breaking the detail page layout — the template needs conditional rendering, not required fields.
-- **Listing/Home pattern reuses FeaturedCaseStudiesBlock:** minimizes new UI patterns; Juan already has an established "featured X on Home + full listing + detail page" convention across Posts and CaseStudies — Websites should follow it exactly rather than invent a new IA.
-- **Lighthouse scores conflict with live tooling:** this is a hard architectural boundary already set for the whole rebuild (no GSCMetrics/dinorank-style live dashboards). Scores must be captured and stored as static editorial data at population time, not fetched live.
+- **Disclosure blocks Kinsta:** Kinsta's stated acceptance criteria include an affiliate disclosure already published on the applicant's site. Build and deploy the disclosure *before* applying, or the application is wasted.
+- **Email capture blocks on Phase 6:** `RESEND_API_KEY` is still a placeholder per PROJECT.md. Newsletter capture cannot be verified end-to-end until that's real. Build it behind an env gate (the same pattern already used for Cloudinary) so it degrades cleanly.
+- **Click tracking conflicts with Amazon:** exempt Amazon links from the redirect. Model this as a per-tool boolean (`cloakingAllowed`), not a global setting.
+- **Traffic threshold gates two programs:** Semrush and Hostinger-affiliate both require ~1,000 monthly visitors. Applying early risks a rejection that may be hard to reverse. Apply to DinoRANK / DigitalOcean / Kinsta first; hold the other two.
+
+---
 
 ## MVP Definition
 
-### Launch With (v1 — this milestone, v1.9)
+### Launch With (v2.1)
 
-- [ ] `Websites` collection: slug, `liveUrl`, `stack` (tags), `summary`/description, screenshots (Media, at least 1, ideally 2+), `challenges` (array), Lighthouse scores (4 metrics) + `scoresCapturedAt`, año de lanzamiento, rol, industria/nicho, technical highlights (tags/bullets), optional relation to `Clientes`, optional relation to `CaseStudies` — this is essentially what Juan already scoped; the research confirms every field is table-stakes-or-differentiator, none is scope creep
-- [ ] Listing page (`/websites` or `/proyectos`, dual-locale consistent with the `/servicios`+`/services` pattern) — why essential: no showcase without a browsable index
-- [ ] Detail page per site — why essential: this is where the technical narrative (challenges, stack, highlights, scores) actually lives; the grid alone can't carry that content
-- [ ] Home section (featured subset, following the `FeaturedCaseStudiesBlock` pattern) — why essential: Juan explicitly wants this visible on Home, matching how case studies/posts already surface
-- [ ] Populate with the 6 real sites, stack confirmed interactively per Juan's explicit instruction — why essential: stated requirement, and accuracy here is the whole credibility point of the feature
+- [ ] **Affiliate disclosure block, bilingual** — legally required, and a hard prerequisite for the Kinsta application
+- [ ] **`Tools` collection** — single source of truth; everything else reads from it
+- [ ] **Affiliate link component enforcing `rel="sponsored noopener"`** — makes Google-policy compliance structural rather than editorial
+- [ ] **`/go/[slug]` 302 redirect + click counter (Amazon exempt)** — first-party, zero client JS, zero CWV cost
+- [ ] **Bilingual Stack page** with grouped-by-job sections, per-tool first-person take, honest negatives, at least one zero-commission recommendation, a "what I'd pick starting today" block, and a terminal CTA to the existing services
+- [ ] **Applications submitted:** DinoRANK → DigitalOcean → Kinsta (in that order)
+- [ ] **Inline email capture block on Resend**, env-gated, no popup
 
-### Add After Validation (v1.x)
+### Add After Validation (v2.1.x)
 
-- [ ] GitHub repo link field population (where applicable/open-source) — trigger: only if/when a future site is open-sourced or a code sample is worth linking
-- [ ] Re-audit cadence for Lighthouse scores (quarterly manual refresh) — trigger: once scores are live and Juan wants to keep them from visibly aging
-- [ ] Cross-link surfacing on `CaseStudies` detail pages back to the related `Websites` entry (currently the relation could be one-directional in UI even if bidirectional in schema) — trigger: once both collections are populated and the reverse-link value is validated with real traffic/behavior
+- [ ] **First comparison post** using tools he genuinely runs — trigger: stack page live and indexed
+- [ ] **Free migration validation sheet** as an ungated lead magnet — trigger: email capture verified working
+- [ ] **Semrush + Hostinger affiliate applications** — trigger: 1,000 monthly unique visitors confirmed in GSC/analytics
+- [ ] **Lighthouse scores on the stack page** — trigger: stack page shipped, reuse the `Websites` data shape
 
-### Future Consideration (v2+)
+### Future Consideration (v2.2+)
 
-- [ ] Filterable/sortable listing UI by stack or industry — defer until the collection meaningfully exceeds ~12-15 entries; not worth the engineering cost for 6
-- [ ] Live embedded previews / interactive demos — explicitly avoided per Anti-Features, revisit only if a strong concrete use case emerges (unlikely)
-- [ ] Per-project testimonial or rating widget — defer indefinitely; duplicates existing `Testimonials`/`Clientes` mechanisms
+- [ ] **Site migration blueprint** ($49–99) — defer: needs a payment platform and an email list
+- [ ] **Next.js + Payload SEO reference implementation** ($79–199) — defer: highest effort, but the only truly uncopyable product
+- [ ] **AEO/GEO readiness template** — defer: cheapest of the three products, good v2.2 opener
+- [ ] **Surfer / other PartnerStack programs** — defer: selective acceptance, better odds with an established stack page as the application asset
+
+---
 
 ## Feature Prioritization Matrix
 
 | Feature | User Value | Implementation Cost | Priority |
-|---------|------------|---------------------|----------|
-| `Websites` collection core schema (liveUrl, stack, summary, screenshots) | HIGH | LOW | P1 |
-| Lighthouse scores + capture date | HIGH (Juan's real differentiator) | LOW | P1 |
-| Challenges array | HIGH | LOW | P1 |
-| Rol / año / industria fields | MEDIUM | LOW | P1 |
-| Optional Clientes/CaseStudies relations | HIGH (connective differentiator) | LOW–MEDIUM | P1 |
-| Listing + detail pages | HIGH | MEDIUM | P1 |
-| Home featured section | MEDIUM–HIGH | LOW (pattern reuse) | P1 |
-| GitHub repo link | LOW | LOW | P3 |
-| Filterable/sortable listing UI | LOW at current volume | MEDIUM | P3 |
-| Live/real-time Lighthouse integration | LOW (violates scope) | HIGH | Rejected |
-| Embedded iframe previews | LOW | MEDIUM–HIGH | Rejected |
+|---------|-----------|---------------------|----------|
+| Affiliate disclosure block (bilingual) | MEDIUM | LOW | **P1** (blocker for Kinsta) |
+| `rel="sponsored"` enforcement in the link component | HIGH (policy safety) | LOW | **P1** |
+| `Tools` collection | MEDIUM | LOW-MEDIUM | **P1** |
+| Stack page + `ToolStack` block | HIGH | MEDIUM | **P1** |
+| "What I'd pick starting today" block | HIGH | LOW | **P1** |
+| Honest negatives / zero-commission picks | HIGH (trust) | LOW | **P1** |
+| `/go/[slug]` click tracking | MEDIUM (decision data) | LOW-MEDIUM | **P1** |
+| Program applications (DinoRANK, DigitalOcean, Kinsta) | HIGH (the revenue itself) | LOW (admin work) | **P1** |
+| Inline email capture on Resend | HIGH | MEDIUM | **P2** (env-gated on Phase 6) |
+| Cross-links stack ↔ case studies ↔ services | HIGH (funnel value > affiliate value at this traffic) | LOW | **P2** |
+| Lighthouse scores on stack page | MEDIUM | LOW-MEDIUM | **P2** |
+| Comparison post format | HIGH | MEDIUM | **P2** |
+| Free migration sheet lead magnet | HIGH | LOW-MEDIUM | **P2** |
+| Migration blueprint (paid) | HIGH | MEDIUM | **P3** (v2.2) |
+| Next.js + Payload SEO starter (paid) | HIGH | HIGH | **P3** (v2.2) |
+| Display ads | LOW | LOW | **never** |
+| Popups | LOW | LOW | **never** |
 
-**Priority key:**
-- P1: Must have for launch
-- P2: Should have, add when possible
-- P3: Nice to have, future consideration
+---
 
 ## Competitor Feature Analysis
 
-| Feature | Solo-dev portfolios (e.g. Brittany Chiang-style) | Agency "Our Work" showcases | Our Approach |
-|---------|---------------------------------------------------|------------------------------|--------------|
-| Live link + screenshot | Standard, near-universal | Standard, often with case-study framing bundled in | Standard, kept lean (no bundling with results narrative) |
-| Real performance data (Lighthouse) | Rare — most solo-dev portfolios skip this entirely | Almost never published per-project | Included and made prominent — the actual gap in the market Juan is positioned to fill |
-| Tech stack tags | Standard | Sometimes present, often vague ("modern stack") | Explicit, specific tags per site — reinforces engineering-expertise core value |
-| Client/results tie-in | Rare (solo portfolios often don't have "clients") | Standard, but usually merged into one case-study format (no separation of build-showcase vs. results-story) | Deliberately separated: `Websites` = technical build proof, `CaseStudies` = results proof, linked but distinct — matches the earlier validated `Clientes` vs. `CaseStudies` split decision |
-| Filterable grid | Uncommon at small scale, common at agency scale (20+ projects) | Standard at agency scale | Deferred — 6 entries doesn't justify it yet |
+| Feature | Aleyda Solis | Wes Bos / Kent C. Dodds | Juan's approach |
+|---------|--------------|-------------------------|-----------------|
+| Tools page | Yes, grouped by job, **not monetized** | Yes, grouped by context, **Amazon + SaaS affiliate** | Grouped by job, monetized, with honest negatives — takes Aleyda's structure and Wes's monetization |
+| Disclosure | n/a | Top of page, plain, in the author's own voice | Same placement, bilingual, rendered from a block so it can't be forgotten |
+| Per-item commentary | Use-case framing | First-person switching stories | Both: use-case grouping + switching story + a "don't buy this if" |
+| Lead magnets | Ungated Sheets/decks/videos | None | Ungated, following the model that demonstrably built a 45k list |
+| Email capture | Header + footer newsletter blocks, no popup | None | Inline blocks, no popup |
+| Paid products | Free tooling + consultancy | Courses (their main business) | Deferred to v2.2; services stay the primary revenue |
+| Proof of technical competence on the page itself | No | No | **Lighthouse scores + view-source** — the open gap |
+
+---
 
 ## Sources
 
-- [12 Software Developer Portfolio Examples (2026)](https://sitesplaced.com/software-developer-portfolio-examples) — MEDIUM confidence
-- [Top 10 Tips to Evaluate Freelance Developer Portfolios](https://www.index.dev/blog/evaluate-freelance-developer-portfolio) — MEDIUM confidence
-- [Developer Portfolio Guide 2026 — Hakia](https://hakia.com/skills/building-portfolio/) — MEDIUM confidence
-- [Freelance portfolio that wins for software engineers in 2026 — Resumly](https://www.resumly.ai/blog/freelance-portfolio-that-wins-for-software-engineers-in-2026) — MEDIUM confidence
-- [SEO Case Studies, SEO Portfolio & SEO Pricing — Coalition Technologies](https://coalitiontechnologies.com/portfolio) — MEDIUM confidence
-- [SEO Portfolios: 15+ Well-Designed Examples (2026) — Sitebuilder Report](https://www.sitebuilderreport.com/inspiration/seo-portfolios) — MEDIUM confidence
-- [9 Best SEO Portfolio Examples — Jay Search](https://jaysearch.com/blog/seo-portfolio-examples) — MEDIUM confidence
-- [SEO Portfolio Guide: Build Skills, Case Studies & Proof of Success — AI for Marketings](https://aiformarketings.com/blog/seo-portfolio-guide/) — LOW-MEDIUM confidence (single-source claims about portfolio structure)
-- Existing project context: `.planning/PROJECT.md` — established `Clientes` vs. `CaseStudies` separation decision (HIGH confidence, internal source) — used as precedent for the `Websites` vs. `CaseStudies` split recommendation
+Fetched live on **2026-08-13**. Provider tier per the `classify-confidence` seam = LOW (web channel); source tier per row is noted above.
+
+**Vendor primary sources (PRIMARY / PRIMARY-PARTIAL):**
+- `https://www.semrush.com/lp/affiliate-program/en/`
+- `https://www.hostinger.com/affiliates` and `https://www.hostinger.com/affiliates/faqs`
+- `https://www.hostinger.com/referral-program`
+- `https://seranking.com/affiliate-program.html` and `https://seranking.com/legal/affiliate.html`
+- `https://dinorank.com/afiliacion/`
+- `https://surferseo.com/affiliate-program/`
+- `https://kinsta.com/affiliates/`
+- `https://www.digitalocean.com/affiliates`
+- `https://vercel.com/legal/affiliate-marketing-terms`
+- `https://affiliate-program.amazon.com/help/node/topic/GRXPHT8U84RAYDXZ` (rate card)
+
+**Absence verification:**
+- `https://ahrefs.com/affiliate` → **404**; Tim Soulo LinkedIn post on why the program was closed
+- `https://www.screamingfrog.co.uk/seo-spider/faq/` (Resellers clause only)
+- `https://www.cloudflare.com/partners/` (PowerUP / Technology Alliance / GSI / Service Providers only)
+- `https://sitebulb.com/` + site-scoped search (no program found)
+- `https://resend.com/partners` → **404**
+- `https://dataforseo.com/affiliate-program` → **404**
+- `https://payloadcms.com/become-a-partner` (agency program, ~30 agencies, no commission published)
+- `https://cursor.com/ambassadors`, Cursor community forum threads (2026, still requesting an affiliate program)
+- Cloudinary support community (affiliation not a supported partner type); Neon partner program (GitHub Sponsors, OSS projects only)
+
+**Google documentation:**
+- `https://developers.google.com/search/docs/essentials/spam-policies` (thin affiliation; `rel="nofollow"`/`rel="sponsored"` qualification; site reputation abuse)
+- `https://developers.google.com/search/docs/appearance/ranking-systems-guide` (Helpful Content System retired → core, March 2024; Reviews system still active)
+
+**Stack-page examples read directly:**
+- `https://wesbos.com/uses`
+- `https://kentcdodds.com/uses`
+- `https://www.aleydasolis.com/en/search-engine-optimization/seo-tools/`
+- `https://www.aleydasolis.com/en/search-engine-optimization/seo-for-web-migrations/`
+- `https://uses.tech/` (930 listed pages)
+
+**Digital product price points:**
+- Notion Marketplace technical SEO audit/checklist templates (several free)
+- Gumroad: "Deep Site SEO Audit Template" ($35), "SEO Roadmap Notion Template", "Notion Technical SEO Checklist Template", "DIY SEO Checklist"
+
+**SECONDARY (directional only, not to be planned against as fact):**
+- Lead-magnet and popup-vs-inline conversion benchmarks (marketing blogs, 2026-dated, no primary methodology published)
+- Aggregator claims contradicted by vendor pages: Semrush "33%/40% recurring", SE Ranking "recurring lifetime", Cursor "20% recurring", Cloudflare affiliate terms, DigitalOcean network (Impact vs CJ)
 
 ---
-*Feature research for: developer/technical-consultant portfolio "websites built" showcase*
-*Researched: 2026-07-14*
+*Feature research for: monetization of a technical practitioner's personal site*
+*Researched: 2026-08-13*
+*Supersedes: `.planning/research/FEATURES.md.v1.9` (Websites portfolio research, preserved)*

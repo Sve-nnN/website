@@ -1,568 +1,823 @@
 # Architecture Research
 
-**Domain:** Payload CMS 3.x + Next.js 15 portfolio site — greenfield rebuild replicating existing MongoDB content on PostgreSQL, self-hosted on Hostinger Node.js
-**Researched:** 2026-07-09
-**Confidence:** HIGH (patterns verified against two real production codebases — apturio and aprendoclub — plus current source-of-truth codebase JuanPortfolio; MEDIUM on Hostinger process-management specifics, verified via web search of current community guides)
+**Domain:** Monetization layer (affiliate links, "My Stack" page, email capture, deferred digital store) integrated into the existing Payload 3.85.2 + Next.js 15.4.11 bilingual codebase — milestone v2.1
+**Researched:** 2026-08-13
+**Confidence:** HIGH for every integration point (grounded in direct reads of `src/middleware.ts`, `src/payload.config.ts`, `src/lib/cache.ts`, `src/lib/cache-tags.ts`, `src/lib/sitemap-data.ts`, `src/lib/canonical.ts`, `src/lib/breadcrumbs.ts`, `src/lib/service-slugs.ts`, `src/collections/*`, `src/blocks/*`, `src/app/actions/contact.ts`, `src/migrations/*`, `package.json`). MEDIUM for two flagged items: Lexical relationship population depth, and Amazon Associates cloaking interpretation.
+
+> **Note on the previous file:** the pre-existing `.planning/research/ARCHITECTURE.md` (v1 foundational research, 2026-07-10) was copied to `.planning/research/ARCHITECTURE-v1.0.md` before this file was written. Nothing was lost.
+
+---
 
 ## Standard Architecture
 
 ### System Overview
 
 ```
-┌──────────────────────────────────────────────────────────────────────┐
-│                     Next.js 15 App Router (standalone)                │
-├──────────────────────────────────────────────────────────────────────┤
-│  ┌───────────────┐  ┌───────────────┐  ┌──────────────────────────┐  │
-│  │ [locale]/(fe)  │  │ (payload)/    │  │ next-intl middleware     │  │
-│  │ public routes  │  │ /admin panel  │  │ (locale prefix routing)  │  │
-│  └───────┬────────┘  └──────┬────────┘  └─────────────┬────────────┘  │
-│          │                  │                          │              │
-├──────────┴──────────────────┴──────────────────────────┴──────────────┤
-│                        Payload CMS Core (in-process)                  │
-│  Collections (Pages, Posts, Authors, CaseStudies, Categories, Media,  │
-│  Testimonials, Works/Clientes, Users) + Globals + Blocks + Plugins    │
-│  (seo, redirects, nested-docs) + Local API (used by RSC server comps) │
-├──────────────────────────────────────────────────────────────────────┤
-│                    Postgres Adapter (Drizzle, push:false)             │
-│  Schema owned by generated migrations — never live push in prod       │
-├────────────────┬───────────────────────────────┬──────────────────────┤
-│  PostgreSQL DB  │  Cloudinary (media storage)   │  Resend (email API)  │
-│  (Hostinger DB  │  via community/custom adapter │  contact form only   │
-│  or external)   │                                │                     │
-└────────────────┴───────────────────────────────┴──────────────────────┘
-
-           ▲ one-time / offline
-           │
-┌──────────┴──────────────────────────────────────────────────────────┐
-│         Migration script (Node, run locally/CI — NOT in app)         │
-│  MongoDB (JuanPortfolio, read-only) ──transform──▶ Postgres (new)    │
-│  Uses Payload Local API on BOTH sides (source + target configs)      │
-└────────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────┐
+│                        Payload Admin (schema layer)                         │
+│  NEW  src/collections/AffiliateLinks/index.ts   ← single source of truth    │
+│  NEW  src/collections/AffiliateClicks/index.ts  ← append-only event log     │
+│  NEW  src/collections/Subscribers/index.ts      ← opt-in state machine      │
+│  NEW  src/collections/LeadMagnets/index.ts      ← Cloudinary public_id refs │
+│  MOD  src/payload.config.ts                     ← register 4 collections    │
+├────────────────────────────────────────────────────────────────────────────┤
+│                    Cached data layer (Phase 43 pattern)                     │
+│  MOD  src/lib/cache.ts        getCachedAffiliateLinks(locale)  (1 query)    │
+│  MOD  src/lib/cache-tags.ts   CACHE_TAGS.affiliateLinks() + revalidate hook │
+│  NEW  src/lib/affiliate.ts    PURE: buildGoHref / hasAffiliateLinks         │
+├────────────────────────────────────────────────────────────────────────────┤
+│                          Block layer (rendering)                            │
+│  ┌────────────────────┐ ┌────────────────────┐ ┌────────────────────────┐   │
+│  │ NEW ToolStack      │ │ NEW EmailCapture   │ │ NEW AffiliateLinkInline│   │
+│  │ Pages block        │ │ Pages block        │ │ Lexical INLINE block   │   │
+│  │ (grid of tools)    │ │ (server-action fm) │ │ (zero migration)       │   │
+│  └────────────────────┘ └────────────────────┘ └────────────────────────┘   │
+│  MOD src/collections/Pages/index.ts   ← register ToolStack + EmailCapture   │
+│  MOD src/blocks/blockRegistry.tsx     ← map both blockTypes                 │
+│  MOD src/collections/Posts/index.ts   ← BlocksFeature({ inlineBlocks })     │
+│  MOD src/components/richTextBlockConverters.tsx ← inlineBlocks converter    │
+├────────────────────────────────────────────────────────────────────────────┤
+│                       Leaf components (zero client JS)                      │
+│  NEW src/components/AffiliateLink.tsx        <a rel="sponsored nofollow">   │
+│  NEW src/components/AffiliateDisclosure.tsx  FTC/EU disclosure banner       │
+├────────────────────────────────────────────────────────────────────────────┤
+│                          Route layer (App Router)                           │
+│  NEW  src/app/go/[slug]/route.ts                    302 + after() logging   │
+│         ↑ OUTSIDE [locale]. REQUIRES a middleware matcher change.           │
+│  NEW  src/app/(frontend)/[locale]/stack/page.tsx    single shared segment   │
+│  NEW  src/app/(frontend)/[locale]/newsletter/confirm/page.tsx  noindex      │
+│  NEW  src/app/actions/subscribe.ts                  contact.ts clone        │
+│  MOD  src/middleware.ts   matcher: add `go` to the negative lookahead       │
+│  MOD  src/app/robots.ts   disallow: ['/admin', '/api', '/go']               │
+├────────────────────────────────────────────────────────────────────────────┤
+│                          External integrations                              │
+│  Resend  (contacts.create — needs the raw `resend` SDK, NEW dependency)     │
+│  Cloudinary (private_download_url — `cloudinary@^2.10.0` ALREADY installed) │
+│  Affiliate networks (NO JS. Server-side 302 only. Zero third-party script.) │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Component Responsibilities
 
-| Component | Responsibility | Typical Implementation |
-|-----------|----------------|-------------------------|
-| Next.js App Router (public) | Renders `[locale]/...` routes as RSC, calls Payload Local API directly (same process, no HTTP round-trip) | `app/(frontend)/[locale]/...` |
-| Payload Admin | CMS editing UI, auth, live preview | `app/(payload)/admin/[[...segments]]/page.tsx` (Payload-generated) |
-| Payload Core Config | Single source of truth for collections/globals/blocks/plugins/access control | `src/payload.config.ts` |
-| Postgres Adapter | Schema definition + migration execution, connection pooling | `@payloadcms/db-postgres`, `migrationDir`, `push: false` in prod |
-| Media Storage Adapter | Offloads uploads to Cloudinary instead of local disk/S3 | Community plugin or custom Payload storage adapter (no official Cloudinary adapter exists — verify before Media phase) |
-| Migration Script | One-time ETL: read Mongo docs via old Payload Local API, transform shape, write via new Payload Local API against Postgres | Standalone Node script outside the Next.js app, run with `payload run` or `tsx` |
-| SEO Plugin | Injects tabbed `meta` fields (title/description/OG image), feeds sitemap/meta rendering | `@payloadcms/plugin-seo` on `pages`/`posts`/`case-studies` |
-| Sitemap Routes | Serve `sitemap.xml`, `sitemap-pages.xml`, etc. reading published docs via Local API | Next.js route handlers under `app/(frontend)/sitemap.xml/route.ts` or `next-sitemap` |
+| Component | Responsibility | Implementation |
+|-----------|----------------|----------------|
+| `affiliate-links` collection | Canonical record of every tool: name, slug, destination URL, program bookkeeping, localized copy | Payload collection, no drafts, `read: () => true` (matches `Testimonials`/`Clientes`) |
+| `src/lib/affiliate.ts` | Pure href builder + Lexical-scan helper. Zero Payload/DB imports so it is client-safe | Mirrors `src/lib/service-slugs.ts` (the precedent module written *specifically* to be importable from Client Components) |
+| `getCachedAffiliateLinks()` | The ONLY read path for tool data — stack page, blog inline links, and `/go` all share it | `unstable_cache` + `overrideAccess: false`, exactly the Phase 43 pattern in `src/lib/cache.ts` |
+| `/go/[slug]` route handler | Resolve slug → destination, 302, log the click post-response | Node route handler, `dynamic = 'force-dynamic'`, `after()` from `next/server` |
+| `affiliate-clicks` collection | Append-only click events (what converts, from which page) | INSERT-only; never an `UPDATE ... counter + 1` (see Anti-Pattern 3) |
+| `ToolStack` block | Renders curated groups of tools on any `pages` doc | Same shape as `ServicesShowcase`: one editable heading, all card data derived from the source of truth |
+| `AffiliateLinkInline` | Lexical inline block letting a blog post reference a tool | `BlocksFeature({ inlineBlocks: [...] })`; data lives inside the existing `jsonb` column → **no migration** |
+| `subscribers` collection | Owns the pending → confirmed → unsubscribed state machine and the confirm token | Payload is the state owner; Resend is the delivery list |
+| `lead-magnets` collection | Maps a magnet to a Cloudinary `authenticated` raw asset, per locale | Signed, expiring delivery URL minted server-side |
 
-## Recommended Project Structure
+---
 
-```
-src/
-├── app/
-│   ├── (frontend)/
-│   │   └── [locale]/           # next-intl-prefixed public routes
-│   │       ├── page.tsx        # home
-│   │       ├── blog/
-│   │       ├── case-studies/
-│   │       ├── authors/
-│   │       ├── contact/
-│   │       ├── privacy/, terms/, search/
-│   │       └── [slug]/         # generic Pages catch-all
-│   ├── (payload)/
-│   │   └── admin/[[...segments]]/  # Payload-generated admin
-│   └── api/                    # llms.txt, robots.txt, sitemap routes if not file-based
-├── collections/
-│   ├── Pages/
-│   ├── Posts/
-│   ├── Authors/
-│   ├── Categories/
-│   ├── CaseStudies/
-│   ├── Media/
-│   ├── Testimonials/
-│   ├── Works/ (or Clientes/ — pick ONE, current codebase has both, merge)
-│   └── Users/
-├── blocks/                     # minimal set, see Features/roadmap notes
-│   ├── Hero/
-│   ├── Content/
-│   ├── CallToAction/
-│   ├── FAQ/
-│   ├── ArchiveBlock/           # generic listing (posts/case-studies)
-│   ├── FeaturedGrid/           # consolidates FeaturedWorks/FeaturedBlog/FeaturedCaseStudies
-│   ├── TestimonialsCarousel/
-│   ├── ContactFormBlock/
-│   └── MediaBlock/
-├── globals/
-│   ├── Header/, Footer/
-│   ├── SiteSettings/
-│   └── Llms/                   # llms.txt / llms-full.txt content source
-├── i18n/                       # next-intl request config + routing
-├── scripts/
-│   └── migrate-from-mongo.ts   # ETL script, run offline
-├── access/                     # authenticated, authenticatedOrPublished
-├── fields/                     # slugField, shared field configs
-├── utilities/                  # generatePreviewPath, getURL, etc.
-└── payload.config.ts
-```
+## 1. Affiliate Link Data Model
 
-### Structure Rationale
+### Collection: `affiliate-links` (NEW — `src/collections/AffiliateLinks/index.ts`)
 
-- **`collections/` flat, one folder per content type:** matches both aprendoclub (lean) and current JuanPortfolio pattern — keep the folder-per-collection convention, just delete the tooling ones (see KEEP/DROP table below).
-- **`blocks/` consolidated to ~10-12 vs current ~35 folders:** current site has near-duplicate blocks (`FeaturedWorks`/`FeaturedBlog`/`FeaturedCaseStudies`/`FeaturedBlogPosts`/`FeaturedCaseStudies`/`LatestBlogPosts`/`LatestCaseStudies` are 7 blocks doing "show N items from a collection in a grid"). Consolidate into one generic `FeaturedGrid`/`ArchiveBlock` with a `relationTo` select field.
-- **`scripts/migrate-from-mongo.ts` lives outside `app/`:** it is a one-time operational tool, not part of the running application. Never import it in Next.js routes or bundle it into the standalone build.
-- **`i18n/` separate top-level folder:** next-intl needs its own request/routing config independent of Payload's `localization` block; keep them visually distinct even though both are "bilingual" concerns.
+One collection serves both surfaces. The "My Stack" page and an inline blog mention need identical data (slug, name, logo, destination, disclosure); duplicating them would guarantee drift.
 
-## Architectural Patterns
-
-### Pattern 1: Local API for both migration and rendering (no REST/GraphQL round-trip)
-
-**What:** Payload's Local API (`payload.find()`, `payload.create()`, etc.) runs in-process against whichever DB adapter is configured. Both the frontend RSC pages and the migration script use it directly — never hit the collection via HTTP.
-**When to use:** Always for server-rendered pages (avoids network hop + auth headaches) and for the migration script (source: instantiate a Payload instance pointed at Mongo + JuanPortfolio's actual `payload.config.ts`; target: instantiate a second Payload instance pointed at the new Postgres config).
-**Trade-offs:** Requires running two separate Payload configs side by side during migration (memory/complexity), but avoids re-implementing auth/validation and guarantees data goes through the same hooks/access-control the app itself uses.
-
-**Example:**
-```typescript
-// scripts/migrate-from-mongo.ts
-import { getPayload } from 'payload'
-import sourceConfig from '../../JuanPortfolio/src/payload.config' // old Mongo config, read-only
-import targetConfig from '../src/payload.config' // new Postgres config
-
-const source = await getPayload({ config: sourceConfig })
-const target = await getPayload({ config: targetConfig })
-
-const { docs: posts } = await source.find({ collection: 'posts', locale: 'all', limit: 0 })
-for (const post of posts) {
-  await target.create({ collection: 'posts', data: transformPost(post), locale: 'es' })
+```ts
+export const AffiliateLinks: CollectionConfig = {
+  slug: 'affiliate-links',
+  labels: { singular: 'Affiliate Link', plural: 'Affiliate Links' },
+  admin: { useAsTitle: 'name', group: 'Monetization',
+           defaultColumns: ['name', 'category', 'program', 'active'] },
+  access: {
+    // Same as Testimonials/Clientes (src/collections/Testimonials/index.ts:13):
+    // public reference data with no draft state, so there is no draft to leak.
+    read: () => true,
+    create: authenticated, update: authenticated, delete: authenticated,
+  },
+  hooks: { afterChange: [revalidateAffiliateLinksCache],
+           afterDelete: [revalidateAffiliateLinksCacheOnDelete] },
+  // NO `versions.drafts` — see rationale below.
+  fields: [ /* table below */ ],
 }
 ```
 
-### Pattern 2: Generic `ArchiveBlock`/relationship-driven grids instead of per-content-type "Featured X" blocks
+**No drafts, deliberately.** Drafts would double the table count (`_affiliate_links_v*` + `_locales` variants, see the `websites` migration for how much SQL that is) for a small reference collection that has no editorial workflow. A non-localized `active` checkbox covers "not ready yet". This also sidesteps the Phase 24 draft-leak bug class entirely: there is no draft state to leak.
 
-**What:** One block config with a `relationTo` (select: posts | case-studies | works) + `mode` (manual selection vs "latest N") + `limit` field, instead of 7 near-identical blocks.
-**When to use:** Any "show a grid of N items from collection Y" need — covers current `FeaturedWorks`, `FeaturedClients`, `FeaturedBlog`, `FeaturedBlogPosts`, `FeaturedCaseStudies`, `LatestBlogPosts`, `LatestCaseStudies`, `PostsGrid`, `CaseStudiesGrid`, `WorkCards`.
-**Trade-offs:** Slightly more complex block config (conditional fields based on `relationTo`) but collapses ~9 blocks into 1-2, which is the single biggest bloat reduction available in the page-builder layer.
+### Field-by-field localization decision
 
-### Pattern 3: Env-var-gated storage adapter (conditional plugin registration)
+The project's documented failure mode is **under-localization**: `Header.navItems.url`, `Content.link.url`, `TestimonialsCarousel.title`, `CaseStudies.services[].service`, `CallToAction.richText` all stored human-facing values in a shared, non-localized column and collapsed to last-write-wins. The rule that prevents recurrence:
 
-**What:** Register the Cloudinary/S3 storage plugin only when its required env vars are present; otherwise Payload falls back to local-disk uploads. Verified in both apturio (`hasS3` boolean gate) and current JuanPortfolio (`enabled: !!process.env.BLOB_READ_WRITE_TOKEN`).
-**When to use:** Always, for any external storage integration — makes local dev work without cloud credentials and makes prod config a pure env-var concern, not a code branch.
-**Trade-offs:** None significant; this is strictly better than hardcoding the adapter.
+> **A field is localized if and only if a human reads its value as prose. A field is NOT localized if its value is a machine identifier — unless the identifier itself genuinely differs per locale.**
 
-**Example:**
-```typescript
-const hasCloudinary = Boolean(process.env.CLOUDINARY_CLOUD_NAME && process.env.CLOUDINARY_API_KEY)
-// ...
-plugins: [...corePlugins, ...(hasCloudinary ? [cloudinaryStorage({ collections: { media: true } })] : [])]
+| Field | Type | `localized` | Reasoning |
+|-------|------|-------------|-----------|
+| `name` | text, required | **NO** | Proper noun. "Notion" is "Notion" in both locales. Localizing invites a half-filled EN value that only survives because `payload.config.ts` sets `fallback: true` — a silent trap, not a feature. |
+| `slug` | `slugField('name')` | **NO** | It is the `/go/{slug}` routing key and carries `unique: true` + `index: true`. Localizing it produces two slugs per doc, makes the unique index meaningless, and forces `/go/[slug]` (which has **no locale in scope**, see §2) to guess which one to resolve. Non-negotiable. |
+| `affiliateUrl` | text, required | **NO** — see below | The single most important decision in this section. |
+| `siteUrl` | text | **NO** | The tool's plain homepage, used for the "goes to notion.so" disclosure hint and as the fallback if `affiliateUrl` is ever emptied. Machine value. |
+| `logo` | upload → `media` | **NO** | A logo is a brand asset, identical in both locales. (`media.alt` IS localized — that lives on the Media doc, already correct.) |
+| `category` | select (enum) | **NO** | Stores a machine value (`hosting`, `seo-tools`, `dev`, `analytics`, `productivity`). **The human label is translated in `messages/{es,en}.json`, not in Payload.** This is the structural fix for the `CaseStudies.services[].service` bug: that field stored free-text human labels non-localized. Storing an enum + translating the label at render time is immune by construction — there is no per-locale value to forget to fill. |
+| `tagline` | textarea | **YES** | One-line human copy. Same class as `TestimonialsCarousel.title`. |
+| `whyIUseIt` | richText (lexical) | **YES** | Prose. Same class as `CallToAction.richText` (the Phase 19 Critical bug). |
+| `disclosureOverride` | textarea | **YES** | Optional per-tool disclosure copy. Prose. Default comes from `messages/*.json`. |
+| `program` | text | **NO** (+ field-level `read: authenticated`) | Internal bookkeeping ("Amazon Associates", "Impact"). Not public. |
+| `cookieWindowDays` | number | **NO** (+ field-level `read: authenticated`) | Internal. |
+| `commissionNote` | textarea | **NO** (+ field-level `read: authenticated`) | Internal. Commission terms must never reach the public API. |
+| `active` | checkbox, default `true` | **NO** | Boolean state. |
+
+**Field-level read access pattern:** the three internal fields use the exact mechanism already written in `src/fields/targetKeyword.ts` (`const authenticatedFieldRead: FieldAccess = ({ req: { user } }) => Boolean(user)`). That file exists *because* a field-level access leak was found and fixed in Phase 12 — reuse it verbatim rather than reinventing it.
+
+### The `affiliateUrl` localization question — resolved explicitly
+
+**Decision: `affiliateUrl` is NOT localized. If a program genuinely differs by region, add a non-localized `regionalUrls` array in a later, separate additive migration. Never localize it.**
+
+Three grounded reasons:
+
+1. **Wrong axis.** Payload localization is keyed to *content locale* (`es`/`en`, `payload.config.ts` lines 71-78). Affiliate program variance is *geographic* (amazon.es vs amazon.com vs amazon.com.mx), and locale ≠ geography. A Spanish-reading visitor in Miami would be sent to amazon.es and the commission would be lost. Localizing encodes a market split into a language field and is wrong even when it appears to work.
+2. **The redirect route has no locale.** `/go/[slug]` sits outside the `[locale]` tree (§2) — deliberately, so it is not a localized route. To read a localized field there, the handler would have to invent a locale value. `payload.config.ts` already carries a comment warning that its `defaultLocale` "MUST stay in sync with `src/i18n/routing.ts` — two independent defaultLocale settings that can silently drift". Introducing a *third* place that picks a default locale is exactly that hazard, in the one code path where a wrong answer costs money.
+3. **YAGNI, verifiably cheap to add later.** Adding a `regionalUrls` array later is `CREATE TABLE "affiliate_links_regional_urls"` — purely additive, no data touched. Localizing `affiliateUrl` later is the `DROP COLUMN`-with-backfill reshape that caused the Phase 19 data-loss incident (see `src/migrations/20260712_202954_phase19_calltoaction_localized.ts`). Pick the direction that keeps the destructive option off the table.
+
+If regional variance does appear, the shape is:
+
+```ts
+{ name: 'regionalUrls', type: 'array', /* NOT localized */
+  fields: [
+    { name: 'market', type: 'select', options: ['us','es','mx','pe','uk'] }, // NOT localized
+    { name: 'url',    type: 'text', required: true },                        // NOT localized
+  ] }
 ```
+…resolved by a single `pickDestination(doc, req)` function in `src/lib/affiliate.ts` that falls back to `affiliateUrl` when the array is empty. Ship the fallback path only.
+
+### How a Lexical rich-text link picks up an affiliate target
+
+**Recommended: a Lexical INLINE BLOCK, not a customized `LinkFeature`.**
+
+`LinkFeature({ fields })` can add a relationship field to the built-in link node, but the editor still types the visible text *and* an href, so the affiliate URL ends up duplicated in the body — the drift problem the collection exists to solve. An inline block stores only a reference.
+
+```ts
+// NEW src/blocks/AffiliateLinkInline/config.ts
+export const AffiliateLinkInline: Block = {
+  slug: 'affiliateLink',
+  interfaceName: 'AffiliateLinkInlineBlock',
+  labels: { singular: 'Affiliate Link', plural: 'Affiliate Links' },
+  fields: [
+    { name: 'tool',  type: 'relationship', relationTo: 'affiliate-links', required: true },
+    { name: 'label', type: 'text' }, // optional anchor-text override
+  ],
+}
+```
+
+```ts
+// MODIFIED src/collections/Posts/index.ts — `content` currently uses a bare lexicalEditor()
+editor: lexicalEditor({
+  features: ({ defaultFeatures }) => [
+    ...defaultFeatures,
+    BlocksFeature({ blocks: [], inlineBlocks: [AffiliateLinkInline] }),
+  ],
+}),
+```
+
+**Neither inline-block field is marked `localized`, and that is correct.** `posts.content` is already `localized: true` (`src/collections/Posts/index.ts:55`), so the entire serialized editor state is stored in a per-locale `jsonb` column. Everything nested inside it — including this block's `label` — is inherently per-locale. Marking a field inside a localized `richText` as `localized` is redundant. **The localization guarantee here comes from the parent field, not the block.** Practical consequence for the editor: the affiliate link must be inserted separately in the ES body and the EN body, exactly like every other piece of inline content today. That is expected, not a regression.
+
+**Rendering** (MODIFIED `src/components/richTextBlockConverters.tsx`):
+
+```tsx
+export const richTextConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
+  ...defaultConverters, ...defaultJSXConverters,
+  blocks: { 'code-block': ..., faq: ... },          // unchanged
+  inlineBlocks: {                                    // NEW key
+    affiliateLink: ({ node }) => <AffiliateLinkInlineNode {...node.fields} />,
+  },
+})
+```
+
+**Circular-import hazard — read this before editing that file.** Its header comment documents that `FAQComponent` is deliberately *not* imported because `FAQComponent → RichTextRenderer → richTextBlockConverters` is a cycle, and "that cycle is exactly the shape that already caused a production TDZ ReferenceError once" (see also the identical warning at the top of `src/lib/sitemap-data.ts`). Therefore: `src/components/AffiliateLink.tsx` must be a **leaf** — it may import `src/lib/affiliate.ts` (pure), `next/link` is not even needed (it is an external-bound anchor), and it must import nothing from `src/blocks/`.
+
+**Relationship population — MEDIUM confidence, verify in-phase.** `getCachedPost` uses `depth: 1`. Payload populates relationships inside Lexical nodes according to depth, but this has not been verified against 3.85.2 in this repo. **Design around the uncertainty:** the renderer should need only `slug` to build `/go/{slug}`, and it resolves the id through `getCachedAffiliateLinks(locale)` (already cached, already fetched by the same request on any page that also renders the stack, and cheap: one small query per 60s). That removes the depth dependency entirely. If the relationship *does* arrive populated, use it; if it arrives as a bare id, resolve through the map; if neither resolves, render the label as plain text — **never** emit `/go/undefined`.
+
+### Migration shape (purely additive — CREATE TABLE / CREATE TYPE only)
+
+Generated by `payload migrate:create`; read the SQL before applying. Expected DDL, modeled on the real `websites` migration (`src/migrations/20260714_163429.ts`) minus the `_v` version tables (no drafts):
+
+```sql
+CREATE TYPE "public"."enum_affiliate_links_category" AS ENUM('hosting','seo-tools','dev','analytics','productivity');
+
+CREATE TABLE "affiliate_links" (
+  "id" serial PRIMARY KEY NOT NULL,
+  "name" varchar,
+  "affiliate_url" varchar,
+  "site_url" varchar,
+  "logo_id" integer,
+  "category" "enum_affiliate_links_category",
+  "program" varchar,
+  "cookie_window_days" numeric,
+  "commission_note" varchar,
+  "active" boolean DEFAULT true,
+  "slug" varchar,
+  "updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+  "created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+);
+
+CREATE TABLE "affiliate_links_locales" (        -- the localized fields
+  "tagline" varchar,
+  "why_i_use_it" jsonb,
+  "disclosure_override" varchar,
+  "id" serial PRIMARY KEY NOT NULL,
+  "_locale" "_locales" NOT NULL,
+  "_parent_id" integer NOT NULL
+);
+
+ALTER TABLE "affiliate_links_locales"
+  ADD CONSTRAINT "..._parent_id_fk" FOREIGN KEY ("_parent_id")
+  REFERENCES "public"."affiliate_links"("id") ON DELETE cascade;
+ALTER TABLE "affiliate_links"
+  ADD CONSTRAINT "..._logo_id_media_id_fk" FOREIGN KEY ("logo_id")
+  REFERENCES "public"."media"("id") ON DELETE set null;
+CREATE UNIQUE INDEX "affiliate_links_locales_locale_parent_id_unique"
+  ON "affiliate_links_locales" USING btree ("_locale","_parent_id");
+CREATE UNIQUE INDEX "affiliate_links_slug_idx" ON "affiliate_links" USING btree ("slug");
+```
+
+**Additive-only checklist for this milestone (all four migrations):**
+- No `DROP COLUMN`, `DROP TABLE`, `TRUNCATE`, or type narrowing anywhere in `up()`.
+- No field gains or loses `localized: true` on an existing column. Every localized field in this milestone is **new**, so its `_locales` table is created empty — no backfill needed, and no approval-by-name gate triggered (per the relaxed Database Safety rule in `CLAUDE.md`).
+- The Lexical inline block adds **zero** DDL: its data lives inside the existing `posts_locales.content` `jsonb` column. Confirmed by the shape of `pages_blocks_call_to_action_locales.rich_text jsonb` in the real migrations, and by the fact that `code-block`/`faq` blocks already live inside post bodies with no tables of their own (`src/components/richTextBlockConverters.tsx` header comment).
+- The `ToolStack`/`EmailCapture` **Pages blocks** DO generate DDL: `pages_blocks_tool_stack`, `pages_blocks_tool_stack_locales`, `pages_blocks_tool_stack_groups(+_locales)`, plus `_pages_v_*` mirrors (Pages has drafts). All `CREATE TABLE`.
+
+---
+
+## 2. Link Cloaking / Redirect Route
+
+### Route location and the middleware blocker
+
+**File: `src/app/go/[slug]/route.ts` — outside `(frontend)/[locale]`, outside `(payload)`.**
+
+**BLOCKER (must be fixed in the same phase, verified by reading `src/middleware.ts`):**
+
+```ts
+export const config = { matcher: ['/', '/((?!api|admin|_next|_vercel|.*\\..*).*)'] }
+```
+
+`/go/notion` contains no dot and is not `api`/`admin`/`_next`/`_vercel`, so it **is matched today**. Two consequences, both fatal:
+
+1. Every click first performs the same-process loopback `fetch('/api/redirects-lookup')` — a DB round trip (cached, but still a hop) on a path that can never have a redirect doc.
+2. `createIntlMiddleware(routing)` with `localePrefix: 'as-needed'` rewrites the unprefixed path to the default locale → `/es/go/notion` → no such route exists (there is no catch-all under `[locale]`) → **404 on every affiliate click**.
+
+This is also precisely why `/sitemap.xml`, `/robots.txt`, `/llms.txt` and `/sitemap.html` work today: they all contain a dot and are excluded by `.*\..*`. `/go` has no dot.
+
+**Fix (one line, MODIFIED `src/middleware.ts`):**
+
+```ts
+export const config = { matcher: ['/', '/((?!api|admin|go|_next|_vercel|.*\\..*).*)'] }
+```
+
+*Rejected alternative:* mounting at `/api/go/[slug]`, which is already excluded. Rejected because a visitor-facing affiliate URL reading `/api/go/notion` is less obviously first-party (which matters for Amazon's "we must be able to determine the originating site" requirement), and because `/go/` is the conventional, human-legible shape that affiliate-compliance guidance describes.
+
+This one-line matcher edit is the highest-risk change in the milestone. Isolate it in its own phase and curl-verify it against a control route (`/`, `/en`, `/servicios`, `/en/services`, `/blog`) — the repo already has that habit: Phase 19 curl-verified 10 URL combinations.
+
+### Status code: 302, not 301
+
+| | Why |
+|---|---|
+| **302 Found — chosen** | Browsers do not persist it. Every click reaches the server, so (a) the click count does not silently under-report after the first visit, and (b) a changed destination (Amazon tag rotation, program switch, network migration) takes effect immediately for returning visitors. |
+| 301 rejected | Permanently cached by the browser. A returning visitor is redirected *by their own browser* to a stale affiliate URL forever, with no server hit and no way to fix it. For a monetized link this is a revenue bug, not a perf optimization. |
+| 307 rejected | Method-preserving; irrelevant for a GET-only link and non-idiomatic here. |
+| 308 (used by the redirects plugin path in middleware) | Correct for canonical URL moves, wrong here for the same reason as 301. Note the two mechanisms now use different codes on purpose. |
+
+```ts
+// src/app/go/[slug]/route.ts
+import { after, NextResponse, type NextRequest } from 'next/server'
+export const dynamic = 'force-dynamic'   // same reason as every other route here:
+                                          // the Dokploy/Nixpacks build container has no DB access
+
+export async function GET(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const links = await getCachedAffiliateLinks('es')      // slug/URL are non-localized → locale is arbitrary
+  const link = links.find((l) => l.slug === slug && l.active)
+
+  // SECURITY: the destination comes EXCLUSIVELY from the admin-authored doc,
+  // never from a query param. Same T-02-01 open-redirect rule already documented
+  // in getCachedRedirectTarget (src/lib/cache.ts). No `?to=` fallback, ever.
+  if (!link?.affiliateUrl) return new NextResponse('Not found', { status: 404 })
+
+  after(() => logClick({ link, req }))   // post-response, adds 0ms to the click
+
+  return NextResponse.redirect(link.affiliateUrl, {
+    status: 302,
+    headers: {
+      'Cache-Control': 'no-store, max-age=0',
+      'X-Robots-Tag': 'noindex, nofollow',
+    },
+  })
+}
+```
+
+`Cache-Control: no-store` matters: without it a proxy or the browser can cache even a 302 and the click stops being counted. `X-Robots-Tag` is belt-and-braces — a redirect response is not indexed anyway, but the header costs nothing and covers a crawler that follows the hop.
+
+`after` is confirmed available on this exact Next version: `node_modules/next/server.d.ts:16` → `export { after } from 'next/dist/server/after'` (Next 15.4.11; stable since 15.1, with explicit self-hosted-server support). It is the right primitive here precisely because this deploy is a long-lived Node process, not serverless.
+
+### Rendering side: `rel` and `target`
+
+```tsx
+// NEW src/components/AffiliateLink.tsx — leaf component, no block imports
+<a href={`/go/${slug}`} rel="sponsored nofollow noopener" target="_blank">{label}</a>
+```
+
+- **`rel="sponsored"` is required by Google.** Google Search Central's link-tagging guidance asks sites in affiliate programs to qualify those links with `rel="sponsored"`, manually or dynamically, and warns that failing to do so can trigger manual or algorithmic action. Multiple `rel` values may be combined.
+- **`noreferrer` must NOT be used.** `noreferrer` strips the `Referer` header. Amazon's Operating Agreement forbids obscuring the site from which the customer clicked through; deliberately stripping the referrer works against exactly that. Note that the existing `src/components/CMSLink.tsx` emits `rel="noopener noreferrer"` whenever `newTab` is set — **`AffiliateLink` must therefore be a separate component, not a `CMSLink` wrapper.** This is a real, easy-to-miss trap.
+- **`rel` is not an editable Payload field.** Making it editable invites an editor to remove `sponsored`. It is emitted unconditionally by the component.
+- **Honest caveat:** the href is *internal* (`/go/...`), so `rel="sponsored"` on it is a weak signal — it qualifies a link to your own domain. The signals that actually do the work are (a) the visible disclosure and (b) `Disallow: /go` in robots.txt. Emit `rel="sponsored"` anyway: it is the documented convention, it costs nothing, and it is what an auditor looks for.
+
+### robots / noindex treatment
+
+**MODIFIED `src/app/robots.ts`:**
+
+```ts
+disallow: ['/admin', '/api', '/go'],
+```
+
+Blocking `/go` stops Google spending crawl budget on non-content redirect URLs — the standard practice for cloaked affiliate paths. `/go/*` is never emitted into `sitemap.xml` (it is not a `pages` doc and is not in `SITEMAP_COLLECTIONS`), so nothing advertises it. `X-Robots-Tag: noindex` on the response covers a crawler that reaches it anyway.
+
+### Amazon Associates compliance (MEDIUM confidence — verify against the live agreement before publishing Amazon links)
+
+The Operating Agreement forbids cloaking/hiding/spoofing "the URL of your Site containing Special Links (including by use of Redirecting Links) … such that we cannot reasonably determine the site … from which a customer clicks through". Vendor/community reading (Geniuslink, Lasso) is that a **first-party `yoursite.com/go/x` 302 that preserves the Tracking ID and lands on Amazon is compliant**, while generic third-party shorteners that hide the destination are the risky pattern. Because this is a vendor/community interpretation of a contract rather than a first-party statement, the roadmap should flag "re-read the current Amazon Associates Operating Agreement section on Redirecting Links" as an explicit task in the phase that publishes the first Amazon link. Concrete design consequences already baked in: no `noreferrer`, no URL shortener, no stripping of query parameters from `affiliateUrl`, and visible disclosure on the page.
+
+### Coexistence with `@payloadcms/plugin-redirects`
+
+Once `go` is in the matcher lookahead, the two mechanisms cannot collide: the redirects plugin only fires from `src/middleware.ts`, which no longer runs on `/go`. **Invariant to document in code:** a `redirects` doc with `from: '/go/...'` would be dead configuration. A validate hook on the plugin's `from` field is more machinery than the risk deserves — a comment in `src/app/go/[slug]/route.ts` and in the phase notes is sufficient.
+
+### Click logging
+
+**Collection `affiliate-clicks` (NEW):** append-only events, not a counter.
+
+| Field | Type | Localized | Notes |
+|-------|------|-----------|-------|
+| `link` | relationship → `affiliate-links` | NO | id reference |
+| `slug` | text | NO | snapshot, so the row survives a rename/delete |
+| `path` | text | NO | referring page pathname (`/blog/seo/x`), from the `Referer` header |
+| `locale` | text | NO | a data attribute, not copy — localizing a locale field is nonsense |
+| `country` | text | NO | optional, from a proxy geo header if present |
+
+Access: `read: authenticated`, `create/update: () => false`, `delete: authenticated`. The route handler writes via the Local API with the default `overrideAccess: true`.
+
+> **This is the one place in the codebase where `overrideAccess: true` is correct, and it must carry a comment saying so** — every read path in `src/lib/cache.ts` carries the opposite invariant because of the Phase 24 draft leak. Here the writer is a server-trusted handler and the payload is not user-parameterized beyond a slug that was already resolved against admin-authored data.
+
+**Concurrency / write amplification on Neon:**
+
+`payload.config.ts` uses the **UNPOOLED direct** Neon connection string (its comment explains why: the `-pooler` string breaks `payload migrate` prepared statements). A direct connection has a low, hard ceiling, so every `after()` INSERT borrows from a small pg pool. At portfolio traffic (tens of clicks/day) this is a non-issue. The real risk is a crawler or uptime monitor hammering `/go/*`. Mitigations, in order of effectiveness and cost:
+
+1. `Disallow: /go` in robots.txt (already required above) — removes well-behaved crawlers.
+2. Skip logging when the User-Agent matches a bot pattern, or when `Sec-Fetch-Mode`/`Sec-Fetch-Dest` headers are absent (a real browser click always sends them). Pure header check, zero cost.
+3. Reuse the **existing** in-process throttle pattern from `src/app/actions/contact.ts` — a module-level `Map` keyed by IP. That file carries a long comment justifying module state for this deploy ("single persistent Node process on Hostinger … not serverless/edge"), including a note that `react-doctor`'s `server-no-mutable-module-state` warning is a known false positive here. Reuse the pattern *and* the comment; do not invent a new mechanism.
+
+**Why an events table and not `UPDATE affiliate_links SET clicks = clicks + 1`:** concurrent increments on one hot row serialize on a row-level lock, so the busiest link is the slowest one; INSERTs into an append-only table do not contend. The events table also answers "which post drives clicks", which a counter structurally cannot. Aggregation is `payload.count()` on demand — **do not build a dashboard** (that is exactly the "internal analytics tooling" the project's Out of Scope section rejects). If the table ever exceeds ~1M rows, add a monthly rollup; note the threshold so it is not a silent scaling trap.
+
+---
+
+## 3. "My Stack" Page
+
+### Recommendation: reuse `Pages` + a new `ToolStack` block. Do NOT create a page collection.
+
+The tools get their own collection (`affiliate-links`) because that is **data reused across surfaces**. The stack page is a **view** over that data, and views belong in the block system.
+
+Grounded justification:
+
+1. **Direct precedent, already marked ✓ Good in `.planning/PROJECT.md` Key Decisions:** *"Páginas de servicio (v1.4) reusan la colección `Pages` existente en vez de una colección `Services` nueva — son landings de marketing con la misma forma que cualquier doc de `Pages` (bloques Hero/Content/FAQ/CallToAction); una colección nueva hubiera significado migración + admin UI + plumbing duplicado sin beneficio funcional."* The stack page is the same shape: Hero + Content + the grid + CallToAction. Four of five blocks already exist.
+2. **Structural precedent for the block itself:** `src/blocks/ServicesShowcase/config.ts` has exactly one editable field (`title`), with all card content derived live from the source of truth. `ToolStack` is that pattern with a different source.
+3. A page collection would also drag in `@payloadcms/plugin-seo` registration, sitemap wiring, and a detail route — none of which the stack page needs.
+
+```ts
+// NEW src/blocks/ToolStack/config.ts
+export const ToolStack: Block = {
+  slug: 'toolStack',
+  interfaceName: 'ToolStackBlock',
+  fields: [
+    { name: 'title', type: 'text', localized: true },      // heading — prose
+    { name: 'intro', type: 'richText', localized: true },  // prose
+    { name: 'groups', type: 'array', fields: [
+        { name: 'heading', type: 'text', localized: true },              // prose → LOCALIZED
+        { name: 'tools', type: 'relationship', relationTo: 'affiliate-links',
+          hasMany: true },                                               // ids → NOT localized
+    ]},
+    { name: 'showDisclosure', type: 'checkbox', defaultValue: true },    // boolean → NOT localized
+  ],
+}
+```
+
+`groups[].tools` is a non-localized relationship array on purpose: a document reference is language-independent, and all of its human copy is localized *inside* the referenced doc. This is the structural inverse of the `CaseStudies.services[].service` bug (which stored human text in a shared array column). A curated array is preferred over "query all tools by category" because ordering is editorial — the first tool in each group is the one that converts.
+
+### Bilingual routing: single shared segment `/stack` (+ `/en/stack`)
+
+**Chosen: single shared segment. Rejected: dual segment (`/herramientas` + `/tools`).**
+
+The project has precedent for both. Services uses a dual segment; `case-studies`, `websites`, `authors`, `blog`, `contact`, `privacy`, `terms`, `seo-tecnico-lima`, `seo-tecnico-madrid` all use a single shared segment — and `src/lib/breadcrumbs.ts:44-48` explicitly documents that *only* Services genuinely differs. Reasons to stay in the majority here:
+
+1. **No keyword argument.** The dual segment existed because "servicios" and "services" are both real, high-volume, locale-distinct commercial queries. "Stack" is the same word in Spanish technical usage, and the audience is developers and SEOs. There is no second keyword to win.
+2. **The dual segment is expensive, and the codebase proves it.** It required: `buildServiceAlternates()` in `src/lib/canonical.ts` to collapse four physical URL combinations into two canonicals; `normalizeServiceHref()` in `src/lib/service-slugs.ts`; a `SERVICE_SEGMENTS` map in `src/lib/breadcrumbs.ts`; and a special-case branch in `src/lib/sitemap-data.ts:114-127`. Four modules, each a place a bug can hide.
+3. **`normalizeServiceHref()` exists *only* to paper over a non-localized-field bug.** Its own docblock says so: *"Content stored in Payload (Header.navItems.url, page card links) is not locale-aware — some of those fields are non-localized, so a single stored URL like `/services` renders on both locales verbatim unless corrected here."* Choosing a dual segment for `/stack` would recreate the exact `Header.navItems.url` bug fixed in Phase 21 the moment the nav link is added. **With a single segment, the stored href `/stack` is verbatim-correct in both locales** — next-intl's `as-needed` prefix serves it as ES, and the LocaleSwitcher's prefix produces `/en/stack`. Zero normalization needed. This is the strongest argument and it maps directly onto the documented bug history.
+4. **Zero changes to `src/lib/sitemap-data.ts` and `src/lib/canonical.ts`** (see §6). A dual segment would require editing both.
+
+Escape hatch, stated honestly: if later keyword research shows a Spanish segment is worth real traffic, the correct migration is a `redirects` doc plus a second route folder mirroring Services — additive, reversible. Do not pre-build it.
+
+**Route:** `src/app/(frontend)/[locale]/stack/page.tsx`, copying the shape of `src/app/(frontend)/[locale]/seo-tecnico-lima/page.tsx` verbatim: `export const dynamic = 'force-dynamic'`, fetch the `pages` doc with `slug: 'stack'`, `generateMetadata` using `buildOpenGraph(...)` + `buildAlternates(locale, '/stack', '/en/stack')`, render via `<RenderBlocks />`. **No breadcrumbs** — `/stack` is a top-level page like `/contact`, `/privacy`, `/terms`, none of which have a trail, so `src/lib/breadcrumbs.ts` is untouched.
+
+**Nav:** add a `/stack` item to the `header` global via the admin UI. `Header.navItems[].link.url` is not localized, and with a single segment that is now correct rather than a bug. No code change.
+
+---
+
+## 4. Email Capture Flow
+
+### End-to-end
+
+```
+[EmailCapture block on any Pages doc]  (Server Component, plain <form action={...}>)
+        ↓  FormData: email, locale, leadMagnetId, company_website (honeypot)
+[src/app/actions/subscribe.ts]  server action — clone of contact.ts
+        ├─ honeypot filled?            → silent success redirect, no write
+        ├─ per-IP rate limit (Map)     → ?subscribed=false
+        ├─ EMAIL_REGEX fail            → ?subscribed=false
+        ├─ upsert `subscribers` doc    status=pending, confirmToken=<32B hex>,
+        │                              confirmTokenExpiresAt=now+48h, locale, source
+        └─ payload.sendEmail(...)      confirmation email, locale-correct copy,
+                                       link → /{locale}/newsletter/confirm?token=…
+        ↓
+[src/app/(frontend)/[locale]/newsletter/confirm/page.tsx]   noindex, force-dynamic
+        ├─ token lookup + expiry check → invalid/expired screen (no leak of why)
+        ├─ subscribers.status = confirmed, confirmedAt = now
+        ├─ resend.contacts.create({ email, audienceId, unsubscribed:false })
+        │     → store resendContactId on the doc (idempotency)
+        └─ mint a 15-minute Cloudinary signed URL for the lead magnet, render
+          the download button + a copy of the link in a follow-up email
+```
+
+### Where state lives: **Payload owns the state machine, Resend owns the delivery list**
+
+Resend's contact model is `{ email, firstName, lastName, unsubscribed }` — it has nowhere to put a confirmation token, an expiry, a lead-magnet association, a source page, or the subscriber's locale. And there is **no built-in double opt-in in Resend**; the confirm step must be implemented by the app either way. So:
+
+- `subscribers` (Payload) is the source of truth for `pending | confirmed | unsubscribed`, the token, the locale and the acquisition source.
+- Resend receives the contact **only after confirmation**. Unconfirmed addresses never enter the sending list, which is what protects the sender reputation of a domain that also sends this site's transactional contact-form mail.
+- Unsubscribes flow the other way: Resend's unsubscribe link flips `unsubscribed: true` in Resend; a periodic reconciliation (or a Resend webhook, later) mirrors it onto the Payload doc. Divergence here is cosmetic, not harmful — the send list is the one that must be right, and Resend owns it.
+
+**Collection `subscribers` (NEW):** `email` (text, unique, index, NOT localized), `status` (select, NOT localized), `locale` (select `es|en`, **NOT localized** — it is a data attribute; a per-locale locale field is nonsense), `source` (text, NOT localized), `leadMagnet` (relationship, NOT localized), `confirmToken` (text, index, NOT localized), `confirmTokenExpiresAt` (date), `confirmedAt` (date), `resendContactId` (text). **No localized fields at all** — this collection stores no prose. All confirmation copy comes from `messages/{es,en}.json`, which is also what guarantees it can never be half-translated (the failure mode behind the documented bug history).
+
+Access: `read/create/update/delete: authenticated`. The server action writes through the Local API.
+
+> **MODIFIED `src/payload.config.ts` — do NOT add `subscribers`, `affiliate-clicks` or `lead-magnets` to the `mcpPlugin` collections map.** That map currently exposes 10 collections to any MCP client. Adding `subscribers` would expose subscriber email addresses over MCP. This needs to be an explicit instruction in the phase plan, because the natural instinct when registering a new collection is to add it everywhere the others appear.
+
+### Confirmation email transport
+
+Use `payload.sendEmail(...)` — the `resendAdapter` is already configured in `payload.config.ts` with `defaultFromAddress`/`defaultFromName`, and `src/app/actions/contact.ts` already uses exactly this call. **The raw `resend` SDK is still needed** for `contacts.create` (Audiences are not part of the email adapter). `resend` is **not** currently a direct dependency (`package.json` has only `@payloadcms/email-resend@3.85.2`) — adding `resend` is the milestone's one new runtime dependency. Env vars: `RESEND_AUDIENCE_ID` alongside the existing `RESEND_API_KEY` / `RESEND_FROM_EMAIL`. Follow the established env-gate pattern (`hasCloudinaryCreds` in `payload.config.ts`): if `RESEND_AUDIENCE_ID` is absent, still confirm the subscriber in Payload and still deliver the magnet — just skip the Resend contact call and log. Local dev must not require cloud credentials.
+
+### Confirm route: a **page** inside `[locale]`, not a route handler
+
+`src/app/(frontend)/[locale]/newsletter/confirm/page.tsx` with `?token=`. Rationale:
+
+- It renders a real bilingual screen inside the existing layout (header, footer, fonts, skip-link) instead of a bare redirect.
+- It stays inside the `[locale]` tree, so **no middleware matcher change is needed** — unlike `/go`. Only one route in this milestone gets to be outside the locale tree, and it is the one that genuinely has no locale.
+- `generateMetadata` must set `robots: { index: false, follow: false }`. It is not a `pages` doc, so it never enters `sitemap.xml` automatically, but it is reachable by URL.
+- `export const dynamic = 'force-dynamic'`, matching every other route in the repo.
+
+### Lead magnet delivery: Cloudinary `authenticated` raw asset + signed expiring URL
+
+**Collection `lead-magnets` (NEW) — deliberately NOT a Payload upload collection.**
+
+| Field | Type | Localized | Reasoning |
+|-------|------|-----------|-----------|
+| `title` | text | **YES** | Prose. |
+| `cloudinaryPublicId` | text | **YES** | **The second explicit localization exception.** The Spanish PDF and the English PDF are genuinely different files, so the identifier itself differs per locale. This is the same logic that makes `media.alt` localized. Not localizing it would ship an English checklist to Spanish subscribers. |
+| `fileFormat` | text (`pdf`) | NO | Machine value. |
+| `resourceType` | select (`raw`/`image`) | NO | Cloudinary parameter. |
+
+Delivery, generated server-side inside the confirm page:
+
+```ts
+// NEW src/lib/secure-download.ts
+cloudinary.utils.private_download_url(publicId, 'pdf', {
+  resource_type: 'raw',
+  type: 'authenticated',
+  expires_at: Math.floor(Date.now() / 1000) + 900,   // 15 minutes
+})
+```
+
+**Why this and not a Payload upload collection with access control:**
+
+1. `src/collections/Media/index.ts` sets `upload.mimeTypes: ['image/*']` — a PDF cannot go there without changing a shared collection.
+2. A second upload collection would need `cloudStoragePlugin` wired for it in `payload.config.ts`, and even then Payload's `access.read` governs **the document**, not the CDN object. The returned Cloudinary URL would remain publicly fetchable forever. That is security theater.
+3. Cloudinary `authenticated` delivery + `private_download_url` is the only mechanism that actually expires.
+4. **Zero new dependencies and an existing in-house precedent:** `cloudinary@^2.10.0` is already installed, and `src/lib/og-image.ts` documents that this account already stores `raw/authenticated Array-Bold.woff2`. The pattern is proven on this exact Cloudinary account.
+
+Accepted limitation: a signed URL can be shared within its 15-minute window. That is fine — a lead magnet is meant to be given away; the gate is the email address, not DRM.
+
+### Spam/bot protection with no heavy client script
+
+The site's core value is a zero-regression performance gate, so **no CAPTCHA**: hCaptcha/Turnstile/reCAPTCHA each add 20-60 KB plus a third-party connection on a page whose whole job is to load fast. The ladder that replaces it, in order:
+
+1. **Honeypot** — reuse the exact field name and off-screen technique already shipped in `ContactFormBlockComponent` (`company_website`, `absolute -left-[9999px]`, `tabIndex={-1}`, `autoComplete="off"`) and the exact server-side handling in `sendContactMessage` (silent success, never an error, so the bot learns nothing). Cost: 0 KB.
+2. **Per-IP rate limit** — the module-level `Map` in `src/app/actions/contact.ts`, with its existing justification comment carried over verbatim. Cost: 0 KB.
+3. **Double opt-in itself** — the strongest filter available. A bot-submitted address never confirms, so it never reaches Resend and never costs sender reputation.
+4. *(Optional, cheap)* a hidden render-timestamp field HMAC-signed with `PAYLOAD_SECRET`, rejecting submissions that arrive under ~2 seconds. Server-side verification only, no client script. Same HMAC helper the deferred store will need (`src/lib/download-token.ts`).
+
+---
+
+## 5. Digital Product Store — Design Only (defer to v2.2)
+
+### Minimal integration shape, if and when it happens
+
+| Piece | Shape | Notes |
+|-------|-------|-------|
+| `products` collection | `name` (NOT localized), `slug` (NOT localized), `description` richText (**LOCALIZED**), `priceCents` + `currency` (**NOT localized** — money is a market attribute, not copy; localizing it repeats the `affiliateUrl` axis error), `checkoutUrl` / `providerProductId` (NOT localized), `deliverable` → relationship to `lead-magnets` | The store is ~80% the lead-magnet delivery mechanism with a payment gate in front |
+| Checkout handoff | Hosted checkout page, linked with a plain `<a href={checkoutUrl}>` | 0 KB. No client SDK. |
+| Provider | Merchant-of-record (Lemon Squeezy / Polar / Gumroad) over Stripe-direct | MoR handles EU VAT and cross-border tax exposure for a Peru/Spain-facing seller, and the site never touches card data — no PCI surface on a self-hosted box, no Stripe.js weight against the performance gate |
+| Webhook | `src/app/api/webhooks/[provider]/route.ts` | Lives under `/api`, therefore **already excluded** by the middleware matcher and **already disallowed** in robots.ts. Zero routing work. `dynamic = 'force-dynamic'`. Verify the HMAC over the **raw** body: `await request.text()` first — never `request.json()` before verifying. |
+| `orders` collection | `providerOrderId` (unique — the idempotency key, since webhooks retry), `email`, `product`, `downloadToken`, `downloadExpiresAt`, `downloadCount`. `read: authenticated`. No localized fields. | |
+| Download delivery | `/{locale}/download?token=` page + `private_download_url` | **The same two helpers built in §4**, reused verbatim |
+
+### What is NOT worth building until there is a first product
+
+Explicitly: the `products` collection, the `orders` collection, the webhook route, the download-token flow, any admin sales view, refunds, coupons, VAT reporting, and any checkout UI. **None of it should ship in v2.1.** Every one of those is unfalsifiable until a real product exists — the price, the format, the fulfilment shape and even the provider choice all move once there is something to sell.
+
+**What IS worth doing now, at zero extra cost, so the store is later a small addition rather than a rebuild:**
+
+1. Put the Cloudinary signing logic in `src/lib/secure-download.ts` and the HMAC token mint/verify in `src/lib/download-token.ts` — **not inline in the newsletter confirm page**. Both are needed by the lead magnet anyway. With that boundary in place, the store phase becomes "add a webhook + an orders table", not "rebuild delivery".
+2. Choose the provider and open the account, so the decision is not re-litigated later. Write no code.
+
+---
+
+## 6. SEO / Performance Impact
+
+### Files that do NOT need to change (the payoff of the single-segment decision)
+
+- **`src/lib/sitemap-data.ts` — unchanged.** The generic branch (lines 139-145) computes `path = doc.slug` for any `pages` doc with `prefix === ''` and emits `${SITE_URL}/stack` + `${SITE_URL}/en/stack` with reciprocal alternates, automatically, the moment the `pages` doc with slug `stack` is published. A dual URL segment would have required a third special case next to `isServicesIndex`/`isServiceLanding`.
+- **`src/lib/canonical.ts` — unchanged.** `buildAlternates(locale, '/stack', '/en/stack')` is the existing generic 1:1 builder; it already emits `canonical` + `languages.es/en/x-default` (x-default → `es`, matching `routing.defaultLocale`). A dual segment would have needed a `buildServiceAlternates`-style 4-to-2 collapsing function.
+- **`src/lib/breadcrumbs.ts` — unchanged.** `/stack` is a top-level page like `/contact`/`/privacy`/`/terms`, none of which render a trail.
+
+### Sitemap hygiene (things that must NOT be added)
+
+`affiliate-links`, `affiliate-clicks`, `subscribers` and `lead-magnets` must **not** be added to `SITEMAP_COLLECTIONS` — none has a public URL. The typed union on `SitemapCollection['collection']` makes this a visible, deliberate choice rather than an omission. `/go/*` and `/{locale}/newsletter/confirm` never enter the sitemap; the confirm page additionally sets `robots: { index: false }` because it is reachable by URL.
+
+### Canonical / hreflang for the new page
+
+`/stack` ↔ `/en/stack` reciprocal, `x-default` → `/stack`, produced by `buildAlternates`. Correct by construction, no new logic.
+
+### Structured data opportunity
+
+The stack page can emit an `ItemList` of `SoftwareApplication` entries through the existing `src/components/JsonLd.tsx`. Cheap, and it feeds the AI/GEO surface that is literally one of Juan's four service lines (`ai-seo-geo`). Optional, high value-per-line.
+
+### Affiliate disclosure (legal + trust, and it is UI, not config)
+
+FTC and EU rules require a clear, conspicuous disclosure **above the first affiliate link**, not in the footer. Implementation:
+
+- `NEW src/components/AffiliateDisclosure.tsx`, rendered by `ToolStack` when `showDisclosure` is true.
+- For blog posts, injected automatically by the post template when the body contains at least one affiliate inline block. Detection is a pure function `hasAffiliateLinks(editorState)` in `src/lib/affiliate.ts` that scans the already-loaded Lexical JSON for `blockType === 'affiliateLink'` — **no extra query**.
+- Copy lives in `messages/es.json` / `messages/en.json`, never in Payload. A translation stored in code cannot be half-filled, which is the failure mode behind every bug in the documented history.
+
+### Performance gate
+
+**Zero new client JavaScript across the entire milestone.** Every new component is a Server Component: the stack grid is static markup, the email form is a plain `<form action={serverAction}>` (identical to `ContactFormBlockComponent`, which ships no client JS), the affiliate link is an `<a>`. Click tracking is server-side by construction — that is the single biggest performance advantage of this design over the conventional plugin approach.
+
+**Explicitly excluded:** Amazon OneLink, Skimlinks, Sovrn, any affiliate-network JS pixel, any client-side A/B tool, any additional consent platform.
+
+**New database work per request:**
+
+| Route | Extra queries | Mechanism |
+|-------|---------------|-----------|
+| `/stack`, `/en/stack` | 1 | `getCachedAffiliateLinks(locale)` — `unstable_cache`, tag `affiliate-links:all`, `revalidate: CACHE_TTL_SECONDS` (60), `overrideAccess: false`, invalidated by an `afterChange` hook |
+| Blog post with inline affiliate links | 0 | Same cached fetcher, deduped by `unstable_cache` within the request |
+| `/go/{slug}` | 0 reads on a cache hit | Same fetcher; 1 INSERT **after** the response via `after()` |
+| `/{locale}/newsletter/confirm` | 2 | Token lookup + status update. Not indexed, not on a hot path. |
+
+`src/lib/cache-tags.ts` gains `CACHE_TAGS.affiliateLinks()` plus `revalidateAffiliateLinksCache`/`OnDelete` hooks, following the Phase 43 pattern exactly. **That file must stay free of `payload`/`@payload-config` imports** — its header comment documents the `payload.config.ts → collections/* → cache-tags.ts → @payload-config` cycle it exists to avoid.
+
+**Regression gate:** the repo already has `lighthouse`, `chrome-launcher` and `playwright` in devDependencies and an established REG-01/REG-02 baseline-then-gate pattern from v1.7. Capture the baseline **before** the first phase that changes rendered pages (Phase C), add `/stack` in both locales to the measured route set, and keep the existing thresholds (no >5pt performance drop, no CWV band crossing, H1/JSON-LD byte-identical on untouched routes).
+
+---
 
 ## Data Flow
 
-### Migration Flow (Mongo → Postgres, one-time, offline)
+### Affiliate click
 
 ```
-JuanPortfolio (Mongo, read-only during migration)
-    ↓ Payload Local API (source config, unmodified)
-scripts/migrate-from-mongo.ts
-    ↓ transform (strip SEO-tooling relationships, remap block types,
-    ↓            remap Cloudinary/Blob media URLs, remap locale shape)
-    ↓ Payload Local API (target config, new Postgres schema)
-New Postgres DB (juan-payload)
+Visitor clicks <a href="/go/notion" rel="sponsored nofollow noopener" target="_blank">
+        ↓
+src/middleware.ts  — SKIPPED (matcher now excludes `go`; no redirects-lookup hop, no locale rewrite)
+        ↓
+src/app/go/[slug]/route.ts  (Node runtime, force-dynamic)
+        ├─ getCachedAffiliateLinks('es')  → unstable_cache hit, 0 DB reads
+        ├─ find slug, active? no → 404 (never an attacker-supplied fallback)
+        └─ NextResponse.redirect(link.affiliateUrl, 302,
+             { Cache-Control: no-store, X-Robots-Tag: noindex })
+        ↓ response already sent
+after(() => payload.create({ collection: 'affiliate-clicks', ... }))
+        ├─ bot UA / missing Sec-Fetch-* → skip
+        └─ per-IP throttle (module Map) → skip
 ```
 
-Key transform concerns to flag for roadmap:
-- **Media**: current site uses Vercel Blob; new site uses Cloudinary. Migration script must re-upload media binaries to Cloudinary (or bulk-import via Cloudinary's API) and rewrite `media` doc URLs — this is NOT a simple field copy.
-- **Block-type remapping**: since blocks are being consolidated (Pattern 2), the migration script must map old block types (e.g., `FeaturedBlogPosts`, `LatestBlogPosts`) to the new consolidated block shape, not copy 1:1.
-- **Relationship fields pointing at dropped collections** (`primaryKeyword`/`semanticKeywords` → `keyword-metrics`, GSC fields) must be dropped, not migrated.
-- **Localization**: current Mongo collections use Payload's native `localized: true` fields with `es` as `defaultLocale`. New site should preserve the same localization strategy (see Integration Points below) so migrated locale data maps 1:1 without a routing-model change.
-
-### Runtime Request Flow (post-migration, production)
+### Stack page render
 
 ```
-Browser → Next.js (standalone server.js) → [locale] middleware (next-intl)
-    ↓
-RSC page component → payload.find()/findByID() (Local API, in-process)
-    ↓
-Postgres (via Drizzle adapter, pooled connection)
-    ↓
-Rendered HTML (SSR) ← image URLs point to Cloudinary (no proxy needed)
+GET /stack  →  middleware (intl, as-needed prefix)  →  [locale]/stack/page.tsx
+     ├─ getCachedPageBySlug('stack', locale)     [existing fetcher, overrideAccess:false]
+     ├─ RenderBlocks(doc.content.layout)
+     │     └─ toolStack → ToolStackComponent (Server Component)
+     │            ├─ getCachedAffiliateLinks(locale)   [1 cached query]
+     │            ├─ <AffiliateDisclosure />           [copy from messages/*.json]
+     │            └─ <AffiliateLink slug=… />          [<a rel="sponsored nofollow noopener">]
+     └─ generateMetadata: buildOpenGraph + buildAlternates(locale,'/stack','/en/stack')
 ```
 
-Admin writes flow separately: `Browser → /admin UI → Payload REST (internal) → hooks (revalidate, redirects) → Postgres`, with `afterChange` hooks triggering `revalidatePath`/`revalidateTag` for the corresponding frontend route (pattern already present in JuanPortfolio's `revalidatePage`/`revalidateCaseStudy` hooks — keep this).
+### Email capture
 
-### Key Data Flows
+```
+<form action={subscribe}>  →  src/app/actions/subscribe.ts
+   honeypot → rate limit → regex → payload.create/update('subscribers', status:'pending')
+                                 → payload.sendEmail(confirmation, locale copy)
+   →  /{locale}/newsletter/confirm?token=…
+        → verify token + expiry → status:'confirmed'
+        → resend.contacts.create({ audienceId })        [env-gated]
+        → secure-download.ts → 15-min Cloudinary signed URL → render + email the link
+```
 
-1. **Content authoring:** Editor changes a doc in `/admin` → `afterChange` hook revalidates the corresponding Next.js path → next request re-renders fresh (no full rebuild needed, since deploy is a persistent Node server, not static export).
-2. **Migration (one-time):** Mongo → transform script → Postgres, run once per environment (dev, staging, prod), NOT part of the CI/CD deploy pipeline — a manual/scripted operational task.
-3. **Media:** New uploads go directly to Cloudinary via the storage adapter at write time; `.next/static` (Next.js's own JS/CSS bundle assets, unrelated to Payload media) is served by the Node process itself or by a reverse proxy — these are two independent asset pipelines that must not be conflated.
+---
 
-## Scaling Considerations
+## Architectural Patterns
 
-| Scale | Architecture Adjustments |
-|-------|---------------------------|
-| Personal portfolio (current target) | Single Node process, single Postgres instance, no queueing needed. This is the right scale for the whole build. |
-| Moderate traffic growth | Add Next.js response caching (`revalidate` intervals) and a CDN in front of Hostinger for static/image assets if Cloudinary alone isn't enough; consider PM2 cluster mode (multiple Node instances) behind the same reverse proxy. |
-| High traffic (unlikely for this project) | Not a realistic near-term concern — do not over-engineer for this. |
+### Pattern 1: Pure helper module, importable from anywhere
 
-### Scaling Priorities
+**What:** URL/slug logic lives in a zero-import module with no `payload`/`@payload-config` reference.
+**When:** any time both a Server Component and a Client Component (or `cache-tags.ts`) need the same derivation.
+**Precedent:** `src/lib/service-slugs.ts` was split out of `services-data.ts` for exactly this reason, and its header explains that importing the DB-touching module from a Client Component would pull the Payload server SDK into the client bundle. `src/lib/breadcrumbs.ts` and `src/lib/canonical.ts` follow the same rule.
+**Apply to:** `src/lib/affiliate.ts` (`buildGoHref`, `hasAffiliateLinks`, `pickDestination`).
 
-1. **First bottleneck (realistic):** Postgres connection pool exhaustion if Hostinger's managed Postgres has a low max-connections limit — mirror apturio's pattern of `pool: { max: 3-5 }` and verify Hostinger's plan limits before deploy (flagged as open constraint in PROJECT.md).
-2. **Second bottleneck (unlikely to matter):** Single Node process CPU-bound during SSR spikes — PM2 cluster mode is the standard mitigation if it ever becomes relevant.
+### Pattern 2: `unstable_cache` fetcher + tag invalidation hook
+
+**What:** every new read path gets a fetcher in `src/lib/cache.ts` with `overrideAccess: false`, a tag from `src/lib/cache-tags.ts`, and an `afterChange`/`afterDelete` hook on the collection.
+**Trade-off:** up to 60s staleness on the TTL safety net; the hooks make the normal case instant.
+**Non-negotiable:** `overrideAccess: false`. `src/lib/cache.ts`'s header documents that omitting it once let a draft doc get cached and served to anonymous visitors — "worse than the single-request leak already fixed in Phase 24, because a cache hit amplifies it across visitors".
+
+### Pattern 3: Block reads a source of truth; only the heading is editable
+
+**What:** `ServicesShowcase` exposes one `title` field and derives every card from `SERVICE_SLUGS` at render time.
+**Why:** content cannot drift from the source of truth, because there is no second copy.
+**Apply to:** `ToolStack` (curated group order is the one editorial input; all card content comes from `affiliate-links`).
+
+### Pattern 4: Server-action form with no client JS
+
+**What:** `<form action={serverAction}>` in a Server Component; state comes back through a `?param=` on redirect.
+**Precedent:** `ContactFormBlockComponent` + `sendContactMessage` — including the honeypot, the module-level rate limiter, and the `?sent=true|false` round trip.
+**Apply to:** `EmailCapture` + `subscribe.ts`, field-name-for-field-name.
+
+---
 
 ## Anti-Patterns
 
-### Anti-Pattern 1: Porting the SEO-tooling collections "just in case"
+### Anti-Pattern 1: Localizing a URL or a slug "just in case"
 
-**What people do:** Copy `AdBanners`, `BrokenLinks`, `GSCMetrics`, `KeywordMetrics`, `PageMetrics` into the new config because they exist in the source and "might be useful later."
-**Why it's wrong:** This is explicitly the clutter the rebuild exists to remove (per PROJECT.md Out of Scope). It also drags in dependent code: GSC dashboard components, `mcpPlugin` integration, `dinorank` cron jobs, keyword-scoring hooks on Pages/Posts — a whole parallel internal-tooling subsystem.
-**Do this instead:** Do not migrate these collections' data or config. If Juan wants SEO metrics dashboards later, that is a separate future project, not baked into the CMS content schema.
+**What people do:** mark `affiliateUrl`/`slug` as `localized: true` because the site is bilingual.
+**Why it's wrong:** it encodes a *market* split into a *language* field, and it makes `/go/[slug]` — which has no locale in scope — pick a default locale, adding a third independent `defaultLocale` to a codebase whose own config file warns about the two that already exist drifting. It also converts a future change from an additive `CREATE TABLE` into the `DROP COLUMN`-with-backfill reshape that caused the Phase 19 data-loss incident.
+**Do instead:** keep it non-localized; add a non-localized `regionalUrls` array if and when a program actually requires it.
 
-### Anti-Pattern 2: One block per "variation" of a content-grid
+### Anti-Pattern 2: Storing human labels in a shared non-localized column
 
-**What people do:** Add a new block type every time a grid needs a slightly different data source (Featured vs Latest, Posts vs Case Studies vs Works).
-**Why it's wrong:** Current codebase has 9+ blocks that are functionally "grid of N cards from collection X, optionally curated" — this is the single largest source of the "~25 blocks" bloat and increases both admin cognitive load and migration-script mapping complexity.
-**Do this instead:** One configurable `ArchiveBlock`/`FeaturedGrid` block with `relationTo`, `populateBy` (collection vs selection), and `limit` fields (Payload's own website template already ships this exact pattern via `ArchiveBlock` — current codebase already has this block, just underused).
+**What people do:** a free-text `category` or `groupHeading` without `localized: true`.
+**Why it's wrong:** last write wins and one language silently loses its copy — the exact `CaseStudies.services[].service`, `TestimonialsCarousel.title` and `CallToAction.richText` bugs.
+**Do instead:** either mark it `localized: true`, or (better, for a closed set) store an enum and translate the label in `messages/*.json`, which cannot be half-filled.
 
-### Anti-Pattern 3: Running the migration script inside the Next.js app or as an API route
+### Anti-Pattern 3: A click counter column
 
-**What people do:** Expose a `/api/migrate` route or run the ETL as part of `next build`/deploy.
-**Why it's wrong:** It's a one-time, stateful, potentially long-running operation with two DB connections (Mongo + Postgres) — bundling it into the production app risks accidental re-runs, bloats the standalone build, and couples deploy tooling to migration tooling.
-**Do this instead:** Standalone script run manually or via a one-off CI job (`payload run scripts/migrate-from-mongo.ts` or `tsx`), executed once per environment, never part of the app's request-handling code path.
+**What people do:** `UPDATE affiliate_links SET clicks = clicks + 1`.
+**Why it's wrong:** concurrent increments serialize on a row lock, so the most successful link becomes the slowest; and a scalar can never answer "which post drives clicks".
+**Do instead:** append-only `affiliate-clicks` INSERTs, written post-response through `after()`.
+
+### Anti-Pattern 4: Reusing `CMSLink` for affiliate links
+
+**What people do:** reach for the existing link component.
+**Why it's wrong:** `CMSLink` emits `rel="noopener noreferrer"` whenever `newTab` is set. `noreferrer` strips the `Referer` header, working directly against Amazon's requirement that it be able to determine the originating site — and it never emits `rel="sponsored"`, which Google requires.
+**Do instead:** a dedicated `AffiliateLink` leaf component that always emits `rel="sponsored nofollow noopener"` and never `noreferrer`.
+
+### Anti-Pattern 5: 301 on the affiliate redirect
+
+**What people do:** reach for "permanent" because the mapping feels permanent.
+**Why it's wrong:** the browser caches it forever; click counts under-report and a rotated affiliate tag can never reach a returning visitor.
+**Do instead:** 302 with `Cache-Control: no-store`.
+
+### Anti-Pattern 6: Registering every new collection everywhere the others appear
+
+**What people do:** add the new collections to `seoPlugin`, `searchPlugin` and `mcpPlugin` by reflex.
+**Why it's wrong:** `subscribers` in `mcpPlugin` exposes email addresses to any MCP client; `affiliate-links` in `seoPlugin` adds a meta tab to a collection with no public page; `affiliate-clicks` in `searchPlugin` indexes noise.
+**Do instead:** register the four new collections in `collections: [...]` only. Touch no plugin map.
+
+---
 
 ## Integration Points
 
-### External Services
+### New files
 
-| Service | Integration Pattern | Notes |
-|---------|----------------------|-------|
-| PostgreSQL (Hostinger-managed or external) | `@payloadcms/db-postgres`, `push: false` in prod, migrations committed to repo | Verify Hostinger Postgres connection-limit before finalizing pool `max` — flagged constraint in PROJECT.md |
-| Cloudinary | No official Payload storage adapter exists (verified: only official adapters are S3, Azure, GCS, Vercel Blob, uploadthing). Requires a community plugin (search npm for `payload-cloudinary` / `@payload-enchants/cloudinary`) or a small custom `StorageAdapter` implementing Payload's `generateURL`/`handleUpload`/`handleDelete` interface | **Flag for roadmap:** this needs a dedicated research/spike phase before committing — do not assume a drop-in adapter exists without verifying current npm state at build time |
-| Resend | `@payloadcms/email-resend`, already used in both JuanPortfolio and apturio | Direct config port, no changes needed |
-| next-intl | Locale-prefixed routing (`[locale]/...`) + UI string translations, layered on top of Payload's native field localization | Confirmed pattern: apturio uses BOTH next-intl (routing/UI copy) AND Payload `localization` (content fields) simultaneously — they are complementary, not competing, tools |
+| File | Purpose |
+|------|---------|
+| `src/collections/AffiliateLinks/index.ts` | Tool source of truth |
+| `src/collections/AffiliateClicks/index.ts` | Append-only click events |
+| `src/collections/Subscribers/index.ts` | Opt-in state machine |
+| `src/collections/LeadMagnets/index.ts` | Cloudinary public_id per locale |
+| `src/blocks/ToolStack/config.ts` + `Component.tsx` | Stack grid block |
+| `src/blocks/EmailCapture/config.ts` + `Component.tsx` | Capture form block |
+| `src/blocks/AffiliateLinkInline/config.ts` | Lexical inline block (no Component — rendered via converter) |
+| `src/components/AffiliateLink.tsx` | Leaf anchor, correct `rel` |
+| `src/components/AffiliateDisclosure.tsx` | FTC/EU disclosure |
+| `src/lib/affiliate.ts` | **Pure**: `buildGoHref`, `hasAffiliateLinks`, `pickDestination` |
+| `src/lib/secure-download.ts` | Cloudinary signed expiring URL |
+| `src/lib/download-token.ts` | HMAC mint/verify over `PAYLOAD_SECRET` |
+| `src/app/go/[slug]/route.ts` | 302 redirect + `after()` logging |
+| `src/app/actions/subscribe.ts` | Server action (clone of `contact.ts`) |
+| `src/app/(frontend)/[locale]/stack/page.tsx` | Stack page route |
+| `src/app/(frontend)/[locale]/newsletter/confirm/page.tsx` | Double opt-in confirm, `noindex` |
+| `src/migrations/<ts>_affiliate_links.ts` | Additive |
+| `src/migrations/<ts>_affiliate_clicks.ts` | Additive |
+| `src/migrations/<ts>_toolstack_emailcapture_blocks.ts` | Additive (Pages block tables + `_pages_v` mirrors) |
+| `src/migrations/<ts>_subscribers_lead_magnets.ts` | Additive |
 
-### Internal Boundaries
+### Modified files
 
-| Boundary | Communication | Notes |
-|----------|----------------|-------|
-| Frontend RSC pages ↔ Payload Core | Local API (in-process, no HTTP) | Never call Payload's own REST API from within the same Next.js process — adds latency for no benefit |
-| Admin UI ↔ Payload Core | Payload's internal REST/GraphQL (auto-generated) | Standard, no custom work needed |
-| Migration script ↔ Mongo source / Postgres target | Two independent Payload Local API instances, each with its own config | Source config should be the actual (unmodified) JuanPortfolio config imported read-only; do not hand-write a parallel Mongo schema — reuse the real one to guarantee field-shape fidelity |
-| Blocks ↔ Collections | `relationTo` fields inside block configs (e.g., `ArchiveBlock.relationTo: ['posts', 'case-studies']`) | Keep blocks collection-agnostic where possible to minimize duplication |
-| SEO plugin ↔ Sitemap routes | Both read the same `meta`/`publishedAt`/`slug` fields via Local API | Sitemap route handlers should query `_status: 'published'` docs only, same access pattern as `authenticatedOrPublished` |
+| File | Change | Risk |
+|------|--------|------|
+| **`src/middleware.ts`** | add `go` to the matcher negative lookahead | **HIGH — the milestone's critical change.** Without it every affiliate click 404s. Curl-verify `/`, `/en`, `/servicios`, `/en/services`, `/blog`, `/go/<slug>` after editing. |
+| `src/app/robots.ts` | `disallow: ['/admin', '/api', '/go']` | Low |
+| `src/payload.config.ts` | register 4 collections in `collections: [...]` **only** — no plugin maps | Medium (see Anti-Pattern 6) |
+| `src/collections/Pages/index.ts` | add `ToolStack`, `EmailCapture` to the `blocks` array | Low, additive |
+| `src/blocks/blockRegistry.tsx` | map `toolStack`, `emailCapture` | Low |
+| `src/collections/Posts/index.ts` | `content` editor: bare `lexicalEditor()` → `lexicalEditor({ features: … BlocksFeature({ inlineBlocks: [AffiliateLinkInline] }) })` | Medium — verify existing post bodies still render (`code-block`/`faq` nodes are unregistered blocks that already survive; adding a feature must not change that) |
+| `src/components/richTextBlockConverters.tsx` | add the `inlineBlocks` key | Medium — **respect the documented circular-import constraint**; the affiliate renderer must be a leaf |
+| `src/lib/cache.ts` | `getCachedAffiliateLinks(locale)` with `overrideAccess: false` | Low |
+| `src/lib/cache-tags.ts` | `CACHE_TAGS.affiliateLinks()` + revalidate hooks; **keep it free of `@payload-config`** | Low |
+| `messages/es.json`, `messages/en.json` | disclosure copy, stack UI strings, subscribe form + confirm strings, category labels | Low |
+| `package.json` | add `resend` (the only new runtime dependency) | Low |
+| `header` global (admin data, no code) | add the `/stack` nav item | Low — safe *because* of the single-segment decision |
 
----
+### External services
 
-## Collections: KEEP vs DROP (source of truth for roadmap Phase 1)
-
-| Collection (JuanPortfolio/Mongo) | Decision | Rationale |
-|---|---|---|
-| `Pages` | KEEP | Core content, page-builder driven |
-| `Posts` | KEEP | Blog content |
-| `Media` | KEEP (rewire storage adapter to Cloudinary) | Core, but swap Vercel Blob → Cloudinary |
-| `Categories` | KEEP | Used by Posts/CaseStudies taxonomy |
-| `Users` | KEEP (simplify — drop MCP-related fields/access if any) | Auth required for admin |
-| `Authors` | KEEP | Blog byline data, has listing page per PROJECT.md |
-| `Works` | MERGE with `Clientes` or KEEP as distinct — clarify during Phase 1: current site has both `Works` (portfolio projects) and `Clientes` (client logos); PROJECT.md refers to "Works/Clientes" as one concept. Recommend keeping as two collections (Works = case-study-adjacent project entries, Clientes = logo/testimonial-source entities) since aprendoclub models this exact split (`ClientesTrabajados` distinct from `TeamMembers`/`Testimonios`) | Needs a Phase 1 content-audit decision, not purely architectural |
-| `CaseStudies` | KEEP | Explicit requirement, has listing page |
-| `Testimonials` | KEEP | Explicit requirement |
-| `AdBanners` | **DROP** | Internal SEO-tooling clutter, explicit Out of Scope |
-| `KeywordMetrics` | **DROP** | Internal SEO-tooling clutter |
-| `PageMetrics` | **DROP** | Internal SEO-tooling clutter (Core Web Vitals dashboard) |
-| `GSCMetrics` | **DROP** | Internal SEO-tooling clutter (Search Console integration) |
-| `BrokenLinks` | **DROP** | Internal SEO-tooling clutter |
-
-## Plugins: KEEP vs DROP
-
-| Plugin (JuanPortfolio) | Decision | Rationale |
-|---|---|---|
-| `@payloadcms/plugin-seo` | KEEP | Explicit requirement, tabbed UI on Pages/Posts/CaseStudies |
-| `@payloadcms/db-postgres` (new) | ADD | Replaces `@payloadcms/db-mongodb` |
-| `@payloadcms/plugin-redirects` | KEEP (add — currently JuanPortfolio doesn't show it in this config snippet but aprendoclub/apturio both use it) | Needed for slug-change 301s, already has custom hook equivalent (`createRedirectOnSlugChange`) — plugin is cleaner |
-| `@payloadcms/email-resend` | KEEP | Explicit requirement, direct port |
-| Cloudinary storage adapter | ADD (needs research spike — no official adapter) | Replaces `@payloadcms/storage-vercel-blob` |
-| `@payloadcms/plugin-mcp` | **DROP** | Internal tooling, exposes collections (including the ones being dropped) via MCP server — not a public-site concern |
-| `@payloadcms/plugin-nested-docs` | Consider only if Pages need hierarchical URLs (aprendoclub includes it with empty `collections: []`, i.e., wired but unused) — likely **DROP** unless Phase 1 content audit shows nested page structure | Avoid speculative plugins |
-| `@payloadcms/plugin-form-builder` | **DROP per PROJECT.md** | Explicit Out of Scope — contact form uses simple custom logic + Resend instead |
-| Admin bar, dashboard-analytics | **DROP per PROJECT.md** | Explicit Out of Scope |
-| GSC dashboard components (`beforeDashboard`, `afterNavLinks`, custom views) | **DROP** | Tied to dropped `GSCMetrics`/`KeywordMetrics` collections |
-
-## Blocks: Minimal Set to Replicate Current Pages
-
-Current JuanPortfolio has ~35 block folders. Recommended consolidation to ~12-14 blocks that cover the same visual surface:
-
-| New block | Replaces / covers |
-|---|---|
-| `Hero` (variant field for home vs listing vs post/case-study header) | `HeroHome`, `ListingHero`, `PostArticleHeader`, `CaseStudyHeader`, `BlogArchiveHeader`, `PostHero` |
-| `Content` | `Content`, `Intro`, `AboutSection`, `AboutWithFeatures` |
-| `ArchiveBlock` / `FeaturedGrid` (relationTo + mode: latest/manual) | `ArchiveBlock`, `FeaturedWorks`, `FeaturedClients`, `FeaturedBlog`, `FeaturedBlogPosts`, `FeaturedCaseStudies`, `LatestBlogPosts`, `LatestCaseStudies`, `PostsGrid`, `CaseStudiesGrid`, `WorkCards` |
-| `CallToAction` | `CallToAction`, `SimpleCTA` |
-| `FAQ` | `FAQ` |
-| `TestimonialsCarousel` / `TestimonialSection` (keep as one, pick one name) | `TestimonialsCarousel`, `TestimonialSection` |
-| `ContactFormBlock` | `ContactFormBlock` |
-| `MediaBlock` | `MediaBlock`, `Banner` |
-| `Code` | `Code` (if technical blog posts need code samples — keep if Posts richtext uses it) |
-| `RelatedPosts` | `RelatedPosts`, `RelatedPostsBlock` |
-| `TableOfContentsBlock` | `TableOfContentsBlock` (if long-form posts need it) |
-| `ResultsSection` | Case-study-specific metrics section — keep if case studies show before/after numbers |
-| `Section` | Generic layout/nesting wrapper — keep if used for spacing/background control |
-
-**Drop entirely (no direct roadmap requirement):** `CalendlyEmbed` (unless Juan books calls from the site — confirm), `SidebarBanners`/`PostSidebar` (tied to dropped `AdBanners`), `Form` block (superseded by simple `ContactFormBlock`, since `plugin-form-builder` is out of scope).
-
-## Deployment Architecture (Hostinger Node.js hosting)
-
-- **Build command:** `payload migrate && payload generate:importmap && payload generate:types && next build` (verified pattern from apturio) — migrations run automatically at build/deploy time, before `next build`, ensuring schema is always in sync before the new server starts.
-- **`postbuild` step:** `cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/` — required because `output: 'standalone'` only traces JS dependencies, not static assets or the `public/` folder (confirmed pattern from apturio's `package.json`).
-- **Process management:** Hostinger's "Node.js Web App" hosting product does not natively use Passenger for Node (unlike its PHP hosting); for VPS/Cloud plans, PM2 is the community-standard process manager (`pm2 start .next/standalone/server.js --name juan-portfolio`) with PM2's `startup`/`save` for reboot persistence, and Nginx as reverse proxy from :80/:443 to the Node port. If using Hostinger's managed "Node.js Web App" panel feature specifically, it may run its own supervisor — confirm which Hostinger product tier is actually provisioned before finalizing (flagged as MEDIUM confidence — verify against Hostinger's current panel docs at deploy-planning time, not assumed here).
-- **Env vars:** `.env` file on the server (not committed) holding `DATABASE_URI`, `PAYLOAD_SECRET`, `CLOUDINARY_*`, `RESEND_API_KEY`, `NEXT_PUBLIC_SERVER_URL` — same pattern as both reference codebases (`.env.example` committed, `.env` gitignored).
-- **Static asset serving:** `.next/static` and `public/` are served by the Node process itself (Next.js standalone server handles this natively) — Cloudinary only serves user-uploaded Media collection assets, not the app's own JS/CSS/font bundles. These are two separate, non-overlapping asset pipelines; do not attempt to route `.next/static` through Cloudinary or a CDN unless a later performance phase specifically adds one in front of Nginx.
-- **Migrations at deploy time:** `payload migrate` (not `push: true`) must run as part of every deploy — this is why `push: false` is set in the Postgres adapter config in both reference codebases; schema changes are only ever applied via committed migration files, never via live introspection in production.
-
-## Sources
-
-- `/Users/juan/Documents/Codigo/Arianna/aprendoclub/aprendoclub/payload.config.ts` (lean collection/plugin reference, HIGH confidence — real production config)
-- `/Users/juan/Documents/Codigo/Arianna/apturio/website/src/payload.config.ts` and `package.json` (Postgres + standalone deploy pattern, S3/Cloudflare R2 conditional storage pattern, next-intl + Payload localization combined, HIGH confidence)
-- `/Users/juan/Documents/Codigo/Arianna/apturio/website/next.config.mjs` (standalone output config, HIGH confidence)
-- `/Users/juan/Documents/Codigo/Personal/juantech/JuanPortfolio/src/payload.config.ts` and `src/collections/*` (source of truth for what to keep/drop, HIGH confidence)
-- `/Users/juan/Documents/Codigo/Personal/juantech/juan-payload/.planning/PROJECT.md` (project constraints and requirements, HIGH confidence)
-- Web search: Hostinger Node.js/VPS Next.js deployment community guides (PM2 + Nginx reverse-proxy pattern) — MEDIUM confidence, verify against actual provisioned Hostinger product before deploy phase: [How To Deploy Your Next.js App On Hostinger VPS](https://medium.com/@muhammadrokon/how-to-deploy-your-next-js-app-on-hostinger-vps-quick-tips-f109d39680ba), [How to Deploy Next.js to Hostinger VPS - Complete Guide](https://ayyaztech.com/blog/how-to-deploy-nextjs-to-hostinger-vps-complete-guide-2025), [How to add a Node.js Web App in Hostinger (official support doc)](https://www.hostinger.com/support/how-to-deploy-a-nodejs-website-in-hostinger/)
-- Training-data knowledge of Payload CMS 3.x storage adapter API (official adapters list: S3, Azure, GCS, Vercel Blob, uploadthing — no official Cloudinary adapter) — LOW-MEDIUM confidence, flagged explicitly for a dedicated verification spike before the Media phase
+| Service | Integration | Gotchas |
+|---------|-------------|---------|
+| Resend | `payload.sendEmail` for transactional mail (already wired); raw `resend` SDK for `contacts.create` | No built-in double opt-in — the app owns the confirm step. Needs `RESEND_AUDIENCE_ID`. Env-gate it like `hasCloudinaryCreds` so local dev runs without credentials. Note `RESEND_API_KEY` is still a placeholder in this repo (Phase 6 blocker) — the flow must degrade gracefully, not throw. |
+| Cloudinary | `private_download_url` for lead magnets; `cloudinary@^2.10.0` already installed | Asset must be uploaded with `type: 'authenticated'`, `resource_type: 'raw'`. The account already hosts `raw/authenticated` assets (`src/lib/og-image.ts`). |
+| Affiliate networks | Server-side 302 only. No SDK, no pixel, no script. | Amazon: preserve the Tracking ID, do not strip the referrer, no third-party shortener. Re-read the Operating Agreement's Redirecting Links clause before publishing the first Amazon link. |
+| Neon Postgres | Existing direct (unpooled) connection | Click INSERTs go through the same small pool — mitigate with robots Disallow + bot-header filter + the existing module-Map throttle. |
 
 ---
-*Architecture research for: Payload CMS 3.x + Next.js 15 portfolio rebuild (Mongo→Postgres migration, Hostinger self-hosted)*
-*Researched: 2026-07-09*
-
----
-
-# Milestone v1.1 — UI/UX Polish Pass: Design-Token Architecture
-
-**Domain:** Design-token refinement for the now-existing Next.js App Router + Payload CMS + Tailwind + shadcn/ui site (visual polish milestone, no data-model changes)
-**Researched:** 2026-07-10
-**Confidence:** HIGH (grounded directly in this repo's current files as built through Phase 5, not generic best practice)
-
-## Current State (verified by direct inspection)
-
-Phase 5 is complete and the token layer already exists in the shadcn/ui-standard two-file split:
-
-| File | Role today |
-|------|------------|
-| `src/app/globals.css` | Semantic CSS custom properties in `:root` / `.dark` (shadcn defaults: `--background`, `--foreground`, `--card`, `--primary`, `--secondary`, `--muted`, `--accent`, `--destructive`, `--border`, `--input`, `--ring`, `--radius`, plus unused `--chart-*` / `--sidebar-*` sets shadcn scaffolds by default) |
-| `tailwind.config.ts` | Maps those CSS vars into Tailwind's `theme.extend.colors` (`background`, `foreground`, `primary`, etc.), plus a **hand-authored `fontSize` scale** (`body`/`label`/`heading`/`display`, with `clamp()` for the two display sizes) that encodes 05-UI-SPEC.md's "exactly 4 sizes" rule directly in Tailwind, and `borderRadius` mapped from `--radius` |
-| Component files (16 `src/blocks/*/Component.tsx`, `src/components/ui/*.tsx`, `src/components/SiteHeader.tsx` / `SiteFooter.tsx`) | Consume tokens **exclusively via Tailwind utility classes** in `className` strings (`bg-primary`, `text-foreground`, `font-display`) — confirmed zero CSS Modules anywhere in `src/` (`find src -iname "*.module.css"` → empty) |
-
-Two token categories from this milestone's own goal list are **not yet present** anywhere in the codebase and must be added, not just "refined":
-- **Elevation/shadow** — no `--shadow-*` vars, no `boxShadow` extension in `tailwind.config.ts`. Any shadow used today is Tailwind's un-themed default (`shadow-sm`, `shadow-md` from Tailwind core) or absent.
-- **Animation/motion timing** — `tailwindcss-animate` plugin is installed (drives shadcn's `Sheet`/`Tabs` open/close), but there are no custom `--motion-*` duration/easing tokens and no `transitionDuration` / `transitionTimingFunction` theme extension. Hover/transition timing in components today is whatever Tailwind's defaults are (`transition-colors` etc.), applied ad hoc.
-
-Color and typography and spacing are **already specified and locked** by `.planning/phases/05-frontend-pages/05-UI-SPEC.md` (editorial-tech direction: Inter/Fraunces, navy `#12141C`/off-white `#FAFAF7`/ember `#FF5B1F`, 4-size type budget, 4px-multiple spacing scale using Tailwind's built-in spacing utilities directly, no separate spacing token file). This milestone is a *refinement pass* on that spec's execution, not a redesign — do not reopen those decisions without cause.
-
-## Sibling Project Comparison (`auditor/apps/web/app/tokens.css`)
-
-The auditor project's `tokens.css` uses a **primitives → semantic** two-tier pattern inside a
-single file: raw color ramps (`--slate-100`...`--slate-950`, `--lime-300`...`--lime-700`),
-raw spacing/type/radius/z-index/motion scales, then a semantic layer (`--bg`, `--surface`,
-`--text`, `--accent`, `--shadow-sm`, `--motion-fast`) that references the primitives, with a
-`[data-theme="light"]` override block for its dark-first theme. Component CSS Modules in that
-project reference **only** the semantic layer, never a primitive or raw hex directly.
-
-**What transfers to this project and what doesn't:**
-
-| Auditor pattern | Transfers? | Why |
-|---|---|---|
-| Primitives → semantic two-tier naming discipline | **Yes — adopt the principle** | Prevents component code from hardcoding hex/oklch, keeps a single source of truth for re-theming |
-| A single `tokens.css` file, imported at the top of `globals.css` | **Yes — same shape fits here** | This project already has the equivalent split (`:root` blocks in `globals.css` + `tailwind.config.ts` mapping); it's cleaner to formalize it as one visually-scannable token block than to invent a new file |
-| Dark-first `[data-theme="light"]` override | **No — do not adopt** | This project is light-first (editorial-tech, off-white dominant per UI-SPEC) with no dark mode requirement in scope. Adding a second theme surface is new scope, not polish. `tailwind.config.ts` already has `darkMode: ['class']` wired for future use — leave the plumbing, don't build the theme now. |
-| Full primitive color *ramps* (11-step slate scale, 5-step lime scale) | **No — oversized for this palette** | UI-SPEC locks exactly 4 brand colors (dominant/secondary/accent/destructive) plus neutrals shadcn already provides via `oklch` grays. Building an 11-step ramp for a palette that intentionally uses 4 signal colors adds indirection with no consumer. Keep primitives to what's actually needed: shadow/motion primitives (which genuinely don't exist yet) — not a speculative color ramp. |
-| Component styling reads *only* semantic tokens via CSS Modules (`var(--surface)`) | **Partially — adopt the rule, not the mechanism** | This codebase has no CSS Modules and should not introduce one now (see Anti-Pattern below). The equivalent enforceable rule here is: components use Tailwind *utility classes* that are themselves backed by CSS vars (`shadow-md`, `duration-base`) — never inline `style={{ boxShadow: '...' }}` or arbitrary-value Tailwind (`shadow-[0_4px_12px_rgba(0,0,0,.1)]`) scattered across files. |
-| Motion tokens as CSS vars, safety-netted by a global `prefers-reduced-motion` rule | **Yes — adopt both** | This project has no `prefers-reduced-motion` handling today; worth adding alongside the new motion tokens since `tailwindcss-animate` already introduces enter/exit animation on shadcn components (`Sheet`, `Tabs`) that should respect it. |
-
-## Recommended Token Architecture (this milestone)
-
-### System Overview
-
-```
-┌───────────────────────────────────────────────────────────────────┐
-│  src/app/globals.css  — single source of truth, two @layer blocks  │
-├───────────────────────────────────────────────────────────────────┤
-│  @layer base { :root { ... } }                                     │
-│                                                                      │
-│   PRIMITIVES (new, theme-agnostic — additive only)                 │
-│    --shadow-color: 220 20% 10%        (HSL channel triplet)        │
-│    --motion-fast: 150ms  --motion-base: 250ms  --motion-slow: 400ms│
-│    --ease-out: cubic-bezier(0.22,1,0.36,1)                         │
-│    --ease-standard: cubic-bezier(0.4,0,0.2,1)                      │
-│                                                                      │
-│   SEMANTIC (existing shadcn vars, kept; elevation vars added)      │
-│    --background --foreground --card --primary --secondary          │
-│    --muted --accent --destructive --border --input --ring --radius │
-│    --shadow-sm / --shadow-md / --shadow-lg / --shadow-focus  (NEW)  │
-├───────────────────────────────────────────────────────────────────┤
-│  tailwind.config.ts  — theme.extend maps CSS vars → utilities      │
-│   colors: { background, primary, ... }         (unchanged, exists)│
-│   fontSize: { body, label, heading, display }   (unchanged, exists)│
-│   boxShadow: { sm, md, lg, focus }              (NEW — from vars)  │
-│   transitionDuration: { fast, base, slow }      (NEW — from vars)  │
-│   transitionTimingFunction: { out, standard }   (NEW — from vars)  │
-├───────────────────────────────────────────────────────────────────┤
-│  Consumption layer — Component.tsx files (16 blocks + ui/ + Site*) │
-│   className="shadow-md duration-base ease-out ..."                 │
-│   NEVER: inline hex, inline boxShadow style, arbitrary [] values   │
-│   NEVER: new props, new Payload field reads, new block registry    │
-│   entries — those are Phase 5 territory, out of scope here          │
-└───────────────────────────────────────────────────────────────────┘
-```
-
-### Component Responsibilities
-
-| Layer | Responsibility | Where it lives |
-|-------|-----------------|-----------------|
-| Primitives | Raw, reusable values with no semantic meaning yet (durations, easing curves, a shadow color channel) | New CSS custom properties added to the existing `:root` block in `src/app/globals.css` |
-| Semantic tokens | Named-by-purpose values components actually reference (`--shadow-md`, `--primary`) | Existing `:root`/`.dark` blocks in `globals.css`, extended with elevation vars; typography/color/spacing semantics stay as already locked by 05-UI-SPEC.md |
-| Tailwind theme mapping | Bridges CSS vars into utility-class names so components never write raw CSS | `tailwind.config.ts` `theme.extend` — extend `boxShadow`, `transitionDuration`, `transitionTimingFunction`; `colors`/`fontSize`/`borderRadius` extensions already exist, leave structurally as-is |
-| Consumption | Applies tokens visually via `className` | The 16 `src/blocks/*/Component.tsx` files, `src/components/ui/*.tsx` (shadcn primitives), `src/components/SiteHeader.tsx`, `src/components/SiteFooter.tsx` |
-
-## Integration Points (precise)
-
-| File | New or Modified | What changes |
-|------|------------------|---------------|
-| `src/app/globals.css` | **Modified** | Add elevation primitives + semantic `--shadow-sm/md/lg/focus` vars to `:root` (and `.dark` if/when dark mode is ever activated — not required this milestone since dark mode isn't in active scope). Add motion primitives (`--motion-fast/base/slow`, `--ease-out`, `--ease-standard`). Add a `@media (prefers-reduced-motion: reduce)` global safety rule (new — doesn't exist today). No color/typography var changes unless UI-SPEC values prove wrong in the visual audit — if so, that's a value tweak within the existing var names, not new architecture. |
-| `tailwind.config.ts` | **Modified** | Add `boxShadow: { sm, md, lg, focus }`, `transitionDuration: { fast, base, slow }`, `transitionTimingFunction: { out, standard }` to `theme.extend`, each referencing the new CSS vars (mirrors how `colors`/`borderRadius` already reference `var(--...)`). Do not touch `darkMode`, `content`, or `plugins` — no new Tailwind plugin needed for this milestone. |
-| `src/components/ui/*.tsx` (shadcn primitives: `button`, `card`, `badge`, `input`, `select`, `tabs`, `sheet`, `navigation-menu`, `separator`, `skeleton`, `textarea`, `avatar`) | **Modified in place** | Refine `cva()` variant classNames (already the pattern in `button.tsx`, `badge.tsx`, `sheet.tsx`, `navigation-menu.tsx`) to reference new shadow/motion utilities. No new variants added unless the visual audit specifically calls for a state that doesn't exist (e.g., an elevated card variant) — and even then, add via existing `cva()` variant maps, not new components. |
-| `src/blocks/*/Component.tsx` (16 files: Hero, Content, CallToAction, FAQ, MediaBlock, Code, Section, ArchiveBlock, TestimonialsCarousel, RelatedPosts, TableOfContentsBlock, ResultsSection, FeaturedPostsBlock, FeaturedCaseStudiesBlock, ClientLogosBlock, ContactFormBlock) | **Modified in place, one at a time** | `className` adjustments only — spacing rhythm (already-existing Tailwind spacing scale per UI-SPEC), typography class usage (already-existing `font-display`/`heading`/`body`/`label` classes), new shadow/motion utility classes where the audit calls for elevation or transition polish. **Do not touch `src/blocks/*/config.ts` files** — those define the Payload field schema and are explicitly out of scope. Do not change the props/interfaces these components receive from `RenderBlocks.tsx`. |
-| `src/blocks/RenderBlocks.tsx` | **Untouched** | The block-slug → component registry map is a data-wiring concern, not a visual one. No block is added, removed, or renamed by this milestone. |
-| `src/components/SiteHeader.tsx`, `src/components/SiteFooter.tsx` | **Modified in place** | Same rule as blocks — visual/className only. These read from the `Header`/`Footer` Payload globals (`src/globals/Header`, `src/globals/Footer`); the global field schemas are untouched. |
-| `src/globals/Header/*`, `src/globals/Footer/*` (Payload global config) | **Untouched** | Confirmed out of scope per milestone context — no new fields, no schema changes. |
-| Any `payload-types.ts`, migrations, collection/block `config.ts` | **Untouched** | This milestone touches zero Payload schema. If a visual pass reveals a genuinely missing field (e.g., an editor needs to toggle a new visual variant), that is a scope escalation to flag back to Juan, not something to quietly add. |
-
-## Architectural Patterns
-
-### Pattern 1: CSS-var-backed Tailwind theme extension (already established here, extend it)
-
-**What:** Every design-relevant value is a CSS custom property in `globals.css`; `tailwind.config.ts` re-exposes it as a themed utility (`bg-primary`, `shadow-md`, `duration-base`); components use only the utility class, never the raw var or a literal value.
-**When to use:** Any token that needs to be swappable without touching component code (which is every token in scope for this milestone).
-**Trade-offs:** Slightly more indirection than inline Tailwind values, but it's the existing convention (colors/typography/radius already work this way) — extending it for shadow/motion keeps the codebase internally consistent rather than introducing a second styling paradigm.
-
-**Example (shadow token, following the existing `--radius` → `borderRadius` precedent):**
-```css
-/* globals.css :root */
---shadow-sm: 0 1px 2px oklch(0 0 0 / 0.06);
---shadow-md: 0 4px 12px oklch(0 0 0 / 0.08);
---shadow-lg: 0 12px 32px oklch(0 0 0 / 0.12);
-```
-```ts
-// tailwind.config.ts theme.extend
-boxShadow: {
-  sm: 'var(--shadow-sm)',
-  md: 'var(--shadow-md)',
-  lg: 'var(--shadow-lg)',
-}
-```
-```tsx
-// src/blocks/ResultsSection/Component.tsx
-<div className="rounded-lg bg-card shadow-md">
-```
-
-### Pattern 2: Primitives → semantic naming discipline without a full ramp system
-
-**What:** Adopt the auditor project's naming *discipline* (raw value → purpose-named token → component) without importing its full color-ramp apparatus, since this project's palette is intentionally small (4 signal colors, UI-SPEC-locked) rather than a multi-shade system.
-**When to use:** For the two genuinely-missing categories this milestone must add — elevation and motion. Both need a primitive tier (raw duration/easing/shadow-color values) because they'll be reused across many unrelated components (cards, buttons, nav, form fields) and having one named source avoids each `Component.tsx` inventing its own `duration-200` vs `duration-300` inconsistently.
-**Trade-offs:** Slightly less "complete" than the sibling project's system, but avoids building unused indirection — a ramp with only one consumer (this palette) is architecture theater, not polish.
-
-### Pattern 3: Component.tsx as the sole styling touchpoint, config.ts as the sole schema touchpoint
-
-**What:** Within a block folder (`src/blocks/Hero/`), `Component.tsx` owns visual rendering and `config.ts` owns the Payload field schema. This milestone only ever edits the former.
-**When to use:** Always, for this milestone. It's the enforcement mechanism for the Phase 5 hard rule ("everything Payload-editable stays editable") — if a change requires touching `config.ts`, it has silently become a data-model change and must be flagged, not made.
-**Trade-offs:** None — this is a guardrail, not a design trade-off.
-
-## Data Flow
-
-### Token resolution flow (build + runtime)
-
-```
-globals.css :root (CSS vars)
-    ↓ (Tailwind reads at build time via theme.extend's var() references)
-tailwind.config.ts theme.extend (utility class generation)
-    ↓ (className string authored per component)
-Component.tsx (16 blocks + ui primitives + Site Header/Footer)
-    ↓ (rendered by RenderBlocks.tsx registry — unchanged)
-Browser (CSS var resolved at paint time, so runtime theme swaps — e.g.
-future dark mode — need no component code changes, only new :root/.dark values)
-```
-
-### Content flow (unchanged by this milestone — shown for contrast)
-
-```
-Payload collection/global (Postgres) → Local API / REST →
-page.tsx server component → RenderBlocks.tsx → Component.tsx props
-```
-The token-refinement work only touches the last box (`Component.tsx` styling); the arrow into
-it (props sourced from Payload) is untouched.
-
-## Anti-Patterns
-
-### Anti-Pattern 1: Introducing CSS Modules to mirror the auditor project literally
-
-**What people do:** Copy the auditor project's `*.module.css` + `tokens.css` file pair verbatim because "the sibling project does it this way."
-**Why it's wrong:** This project has zero CSS Modules today (verified) and is fully committed to the Tailwind-utility-class + shadcn convention, including `cva()` variant management in `src/components/ui/*.tsx`. Introducing a second styling mechanism mid-project for only the polish pass creates two parallel systems, doubles the places a future contributor must check for a given style, and provides no benefit the CSS-var + Tailwind-theme approach doesn't already give.
-**Do this instead:** Keep the primitives → semantic *principle*, express it entirely through `globals.css` vars + `tailwind.config.ts theme.extend`, consumed via Tailwind utility classes.
-
-### Anti-Pattern 2: Reopening color/typography/spacing decisions as part of "polish"
-
-**What people do:** Treat a visual audit as license to re-litigate the palette, font pairing, or type scale that 05-UI-SPEC.md already locked (editorial-tech, Inter+Fraunces, 4-size budget, navy/off-white/ember).
-**Why it's wrong:** Those are Phase 5 decisions already implemented and validated in the running site; re-deriving them mid-polish risks scope creep into a full redesign and contradicts "refined in place rather than replaced" from the milestone brief.
-**Do this instead:** Treat color/typography/spacing values as fixed inputs; this milestone's new architecture surface is specifically elevation + motion (genuinely absent) plus *execution* refinement (consistent application, missing hover/focus states, spacing rhythm gaps) of the existing tokens — not new token categories in those three areas.
-
-### Anti-Pattern 3: Editing `config.ts` "just to add a variant flag" for a visual pass
-
-**What people do:** Add a new Payload `select` field to a block's `config.ts` (e.g., "card style: flat / elevated") to let editors toggle a new visual treatment, because it feels more flexible.
-**Why it's wrong:** This milestone is explicitly CSS/component-visual only, per project instructions; new fields are a data-model change requiring migration + type regeneration + admin UI review, which is out of scope and risks destabilizing the Phase 5 schema baseline mid-polish.
-**Do this instead:** Pick one consistent visual treatment per component type as part of the audit and apply it uniformly via `className`. If Juan later wants editor-controlled visual variants, that's a new milestone request, not an implicit expansion of this one.
-
-### Anti-Pattern 4: Ad hoc arbitrary-value Tailwind classes for new shadow/motion values
-
-**What people do:** Reach for `shadow-[0_4px_12px_rgba(0,0,0,0.08)]` or `duration-[280ms]` inline in a single `Component.tsx` because it's faster than touching `tailwind.config.ts`.
-**Why it's wrong:** Defeats the entire point of a token layer — the next component that needs "the same" shadow will invent a slightly different arbitrary value, and there's no single place to adjust elevation intensity across the site later.
-**Do this instead:** Always add the value to `globals.css` + `tailwind.config.ts theme.extend` first (even a single new shadow tier), then reference it as a named utility (`shadow-md`).
-
-## Confirmation: Payload-Editability Hard Rule Is Unaffected
-
-Verified against the actual files this milestone will touch:
-- `RenderBlocks.tsx`'s `blockComponents` registry (16 entries) is untouched — no block added/removed/renamed.
-- Every `src/blocks/*/config.ts` (Payload field schema per block) is untouched — confirmed as an explicit non-goal above.
-- `src/globals/Header`, `src/globals/Footer` Payload global schemas are untouched.
-- No new collection, no new field, no new migration, no `payload generate:types` run is required by this milestone — the change surface is `globals.css`, `tailwind.config.ts`, and `className` strings inside existing `Component.tsx` files only.
-- Component prop interfaces (the shape of data each `Component.tsx` receives from Payload via `RenderBlocks.tsx`) are unchanged — a component that received `{ heading, subheading, ctaLabel }` before this milestone still receives exactly that after.
-
-This satisfies the milestone's non-negotiable constraint: "every visual section/component must
-be modeled as Payload-editable content... never hardcoded" remains true because *no content* is
-being touched — only how already-editable content is styled.
 
 ## Suggested Build Order
 
-1. **Foundation/token pass (do first, once):**
-   a. Extend `src/app/globals.css` `:root` with the new elevation primitives+semantics (`--shadow-sm/md/lg/focus`) and motion primitives (`--motion-fast/base/slow`, `--ease-out`, `--ease-standard`).
-   b. Add the global `@media (prefers-reduced-motion: reduce)` safety rule.
-   c. Extend `tailwind.config.ts theme.extend` with `boxShadow`, `transitionDuration`, `transitionTimingFunction` mapped to those vars.
-   d. Sanity-check the existing color/typography/spacing mappings against 05-UI-SPEC.md — confirm no drift has crept in since Phase 5 (e.g., `fontSize.display` clamp still matches spec), fix only if wrong, don't redesign.
-   e. Verify build (`next build` or `next dev`) picks up the new Tailwind utilities before touching any component.
+Each step states the dependency that forces its position.
 
-2. **Component-by-component pass (in this order, using the 16-block registry as the concrete checklist):**
-   - shadcn primitives first (`src/components/ui/button.tsx`, `card.tsx`, `badge.tsx`, `input.tsx`, `select.tsx`, `tabs.tsx`, `sheet.tsx`, `navigation-menu.tsx`, `separator.tsx`, `skeleton.tsx`, `textarea.tsx`, `avatar.tsx`) — these are the lowest-level primitives every block composes from; getting shadow/motion/spacing right here cascades benefit to every block automatically.
-   - `SiteHeader.tsx` / `SiteFooter.tsx` — global chrome visible on every page, high visual impact, low risk (no dynamic per-page content).
-   - `Hero/Component.tsx` — highest-visibility block (every page's first impression).
-   - `Section/Component.tsx`, `Content/Component.tsx` — generic layout primitives many pages compose with; fixing these has broad reach.
-   - `ArchiveBlock`, `FeaturedPostsBlock`, `FeaturedCaseStudiesBlock`, `RelatedPosts` — card-grid/listing patterns, likely to share the same elevation/spacing treatment (do these as a batch for consistency).
-   - `ResultsSection`, `TestimonialsCarousel`, `ClientLogosBlock` — case-study-specific, Juan's core differentiator content per PROJECT.md's case-study model; worth extra attention to KPI-card elevation and metric typography.
-   - `CallToAction`, `FAQ`, `ContactFormBlock`, `TableOfContentsBlock`, `Code`, `MediaBlock` — remaining lower-traffic or utility blocks, lowest risk, do last.
+**A. Affiliate data model + migration**
+`affiliate-links` collection, `getCachedAffiliateLinks`, `CACHE_TAGS.affiliateLinks`, `src/lib/affiliate.ts`, one additive migration. Nothing renders yet.
+*Forced first:* every other piece needs a slug to point at. Also the only phase touching schema on the production DB, so it stands alone where the migration SQL can be read in isolation.
 
-3. **Cross-cutting verification pass (after all components touched):**
-   - Grep for any remaining arbitrary-value Tailwind (`shadow-[`, `duration-[`, inline `style={{`) introduced accidentally during the pass — should be zero.
-   - Confirm `src/blocks/*/config.ts` and `payload-types.ts` have zero diffs (proves the hard rule held).
-   - Visual QA pass across both locales (`/en`, `/es`) since typography/spacing changes affect both equally but content length differs.
+**B. `/go` redirect + middleware/robots fix + click logging**
+`src/app/go/[slug]/route.ts`, the `src/middleware.ts` matcher edit, `robots.ts`, `affiliate-clicks` + its migration.
+*Forced after A:* needs slugs to resolve. *Forced before C:* if any UI ships `/go/` hrefs before the matcher is fixed, **every affiliate link on the site is a 404**. Isolating the matcher edit here means it can be curl-verified against control routes with no other change in flight.
+
+**B0. Regression baseline capture** — run before C, matching the REG-01 precedent of capturing Lighthouse/CWV + H1/JSON-LD before touching any rendered component.
+
+**C. `ToolStack` block + `/stack` page + nav + disclosure**
+Block config/component, migration for the block tables, the route, `AffiliateLink`, `AffiliateDisclosure`, `messages/*.json`.
+*Forced after A (data) and B (working hrefs).* First revenue surface; first phase that changes rendered output, hence B0 immediately before it.
+
+**D. Lexical inline affiliate link**
+`AffiliateLinkInline`, the `Posts` editor change, the converter change.
+*Could technically run right after B* — it has **zero migration**, so it blocks nothing and nothing blocks it. Placed after C on purpose: it is the riskier integration (the documented circular-import hazard in `richTextBlockConverters.tsx`, plus the unverified relationship-population-at-depth question), and because it has no schema impact it can slip a phase without stalling the milestone.
+
+**E. Email capture**
+`subscribers`, `lead-magnets`, `subscribe.ts`, the confirm page, `secure-download.ts`, `download-token.ts`, `EmailCapture` block, the `resend` dependency, migrations.
+*Independent of A-D — it could run in parallel.* Ordered last for two reasons: its blocking dependency is **content, not code** (Juan has to write the actual lead magnet, and `RESEND_API_KEY` is still a placeholder), and `secure-download.ts` is the piece the deferred store will reuse, so it benefits from being written after the affiliate work has settled the `src/lib` conventions.
+
+**Deferred — digital product store.** Not in v2.1. Choose the provider, open the account, write no code.
+
+---
+
+## Confidence Assessment
+
+| Area | Confidence | Basis |
+|------|------------|-------|
+| Middleware matcher blocker on `/go` | **HIGH** | Read `src/middleware.ts` directly; the `.*\..*` exclusion explains why the dotted routes work and `/go` would not |
+| Migration additivity (`CREATE TABLE` only) | **HIGH** | Modeled on the real `websites` migration; the Lexical-inline-block zero-DDL claim is confirmed by the `jsonb` shape in the CallToAction migration and by `code-block`/`faq` living in post bodies with no tables |
+| Localization decisions | **HIGH** | Each one is tied to a specific documented bug (`Header.navItems.url`, `Content.link.url`, `TestimonialsCarousel.title`, `CaseStudies.services[].service`, `CallToAction.richText`) and to the real field configs read in `src/collections/*` |
+| Single-segment `/stack` routing | **HIGH** | `sitemap-data.ts:139-145` and `canonical.ts` `buildAlternates` verified to handle it with zero changes; `breadcrumbs.ts:44-48` documents that only Services differs |
+| `after()` availability on Next 15.4.11 | **HIGH** | `node_modules/next/server.d.ts:16` exports it |
+| Cloudinary signed-URL delivery | **HIGH** | `cloudinary@^2.10.0` already a dependency; `src/lib/og-image.ts` documents existing `raw/authenticated` assets on this account |
+| Resend Contacts/Audiences API shape | **MEDIUM** | Context7-sourced official docs; verify `audienceId` casing against the installed SDK version at implementation time |
+| Lexical relationship population at `depth: 1` | **MEDIUM** | Not verified against 3.85.2 in this repo — design routes around it via `getCachedAffiliateLinks`, and verify in Phase D |
+| Amazon Associates cloaking interpretation | **MEDIUM** | Vendor/community reading of contract language, not a first-party statement — re-read the live agreement before publishing the first Amazon link |
+| `rel="sponsored"` requirement | **MEDIUM** | Google Search Central link-tagging guidance, retrieved via web search rather than a direct first-party fetch |
+
+---
 
 ## Sources
 
-- Direct repository inspection: `src/app/globals.css`, `tailwind.config.ts`, `src/blocks/RenderBlocks.tsx`, `src/blocks/*/Component.tsx` (16 files), `src/components/ui/*.tsx`, `src/components/SiteHeader.tsx`, `src/components/SiteFooter.tsx`, `src/globals/Header`, `src/globals/Footer` — HIGH confidence (read, not inferred)
-- `/Users/juan/Documents/Codigo/Personal/juantech/auditor/apps/web/app/tokens.css` — sibling reference project, read in full — HIGH confidence
-- `.planning/phases/05-frontend-pages/05-UI-SPEC.md` — locked design contract this milestone refines — HIGH confidence
-- `.planning/PROJECT.md` — milestone scope and constraints — HIGH confidence
+- Direct reads of this repository (HIGHEST confidence): `src/middleware.ts`, `src/payload.config.ts`, `src/lib/{cache,cache-tags,sitemap-data,canonical,breadcrumbs,service-slugs,og-image}.ts`, `src/collections/{Pages,Posts,Websites,Media,Testimonials,Clientes}/index.ts`, `src/fields/{slug,link,targetKeyword}.ts`, `src/blocks/{blockRegistry,RenderBlocks,ServicesShowcase,ContactFormBlock,Content}`, `src/components/{CMSLink,RichTextRenderer,richTextBlockConverters}.tsx`, `src/app/actions/contact.ts`, `src/app/api/redirects-lookup/route.ts`, `src/app/robots.ts`, `src/app/(frontend)/[locale]/{layout,seo-tecnico-lima,servicios,services}`, `src/migrations/*`, `package.json`, `next.config.mjs`, `.planning/PROJECT.md`
+- `node_modules/next/server.d.ts:16` — `after` export on Next 15.4.11 — HIGH
+- [Google Search Central: A reminder on qualifying links and our link spam update](https://developers.google.com/search/blog/2021/07/link-tagging-and-link-spam-update) — `rel="sponsored"` for affiliate links — MEDIUM
+- [Amazon Associates Program Participation Requirements](https://affiliate-program.amazon.com/help/operating/participation/) and [Geniuslink: Link Cloaking & Amazon Compliance](https://geniuslink.com/blog/link-cloaking-amazon/) / [Lasso: Can I Cloak Amazon Links?](https://support.getlasso.co/en/articles/3776391-can-i-cloak-amazon-links) — Redirecting Links clause and its practical reading — MEDIUM
+- [Resend docs: Create Contact / Update Contact / Audiences](https://resend.com/docs/api-reference/contacts/create-contact) via Context7 — MEDIUM
+- [Payload docs: Custom Features (BlocksFeature/inlineBlocks) and Converting JSX](https://payloadcms.com/docs/rich-text/custom-features) via Context7 — MEDIUM
+- [Cloudinary: Media Access Control and Authentication](https://cloudinary.com/documentation/control_access_to_media) — `private_download_url`, `expires_at`, authenticated raw assets — MEDIUM
+- [Next.js 15.1 release notes](https://nextjs.org/blog/next-15-1) — `after()` stabilization and self-hosted support — MEDIUM
 
 ---
-*Architecture research for: v1.1 UI/UX Polish Pass milestone (design-token layer refinement)*
-*Researched: 2026-07-10*
+*Architecture research for: monetization layer on an existing Payload 3 + Next.js 15 bilingual site (v2.1)*
+*Researched: 2026-08-13*
