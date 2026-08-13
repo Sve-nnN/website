@@ -15,7 +15,12 @@ export async function ServiceScopeCardComponent(props: ServiceScopeCardBlockProp
 
   return (
     <Container className="py-12">
-      <Card className="w-full max-w-2xl mx-auto">
+      {/* POLISH: the card was `mx-auto`, so on a service landing where every
+          other element starts at the container's left edge (measured: 22
+          elements at x=168), this one jumped to x=384 and broke the reading
+          column. It keeps its max-width — a spec sheet shouldn't run to full
+          measure — but now aligns with everything above and below it. */}
+      <Card className="w-full max-w-2xl">
         {/* POLISH (35, .pen ServiceScopeCard): .pen models 32px inner
             padding, matching AuthorCard's already-established `p-8`
             override on the same shared Card primitive — `p-6` (24px) was
