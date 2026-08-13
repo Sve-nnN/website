@@ -1,9 +1,16 @@
-import Link from 'next/link'
+// Mixed file on purpose. `PlainLink` is for hrefs that are ALREADY
+// locale-correct at the source (the Services column, whose URL segment is
+// itself translated), and it is the fallback the `isPrefixableHref` guard
+// picks for admin-authored values that must not be rewritten. `LocaleLink`
+// is for internal unprefixed paths — the post and case-study feeds, and the
+// closing CTA — which the middleware never rewrites on the way out.
+import PlainLink from 'next/link'
 import { getPayload } from 'payload'
 
 import type { Footer as FooterType, Post, CaseStudy } from '@/payload-types'
 
 import config from '@/payload.config'
+import { Link as LocaleLink, isPrefixableHref } from '@/i18n/navigation'
 import { Container } from '@/components/Container'
 import { Separator } from '@/components/ui/separator'
 import { SocialIcon, socialLabels } from '@/components/SocialIcon'
@@ -158,7 +165,6 @@ export async function SiteFooter({ locale }: { locale: string }) {
   ])
 
   const t = closingCopy[typedLocale] ?? closingCopy.es
-  const contactHref = typedLocale === 'en' ? '/en/contact' : '/contact'
 
   return (
     // POLISH: mt-24 (96px) is not a step on the project's spacing scale
@@ -181,7 +187,10 @@ export async function SiteFooter({ locale }: { locale: string }) {
             <p className="mt-2 max-w-[45ch] text-body opacity-80">{t.tagline}</p>
           </div>
           <Button asChild className="w-full shrink-0 sm:w-auto">
-            <Link href={contactHref}>{t.cta}</Link>
+            {/* Was `typedLocale === 'en' ? '/en/contact' : '/contact'`. The
+                locale-aware Link derives the prefix, so the hand-picked one is
+                gone — same output, one less place to keep in sync. */}
+            <LocaleLink href="/contact">{t.cta}</LocaleLink>
           </Button>
         </div>
       </Container>
@@ -195,12 +204,21 @@ export async function SiteFooter({ locale }: { locale: string }) {
               <h3 className="font-heading text-label mb-3 uppercase tracking-wide text-secondary-foreground/70">
                 {servicesColumn.title}
               </h3>
+              {/* Deliberately the PLAIN link: `buildServiceHref` /
+                  `buildServicesIndexHref` are already locale-correct at the
+                  source (`/servicios/<slug>` for es, `/en/services/<slug>` for
+                  en). Services are the one section whose URL SEGMENT is
+                  translated, not just prefixed, so a generic locale prefix
+                  cannot produce these URLs. Verified: the guard returns false
+                  for the en hrefs (they open with a locale segment); the es
+                  ones would be a no-op anyway, since es is the default locale
+                  and takes no prefix. */}
               <ul className="space-y-2">
                 {servicesColumn.items.map((item) => (
                   <li key={item.id}>
-                    <Link href={item.href} className={footerLinkClass}>
+                    <PlainLink href={item.href} className={footerLinkClass}>
                       {item.label}
-                    </Link>
+                    </PlainLink>
                   </li>
                 ))}
               </ul>
@@ -219,13 +237,20 @@ export async function SiteFooter({ locale }: { locale: string }) {
                 </h3>
               )}
               <ul className="space-y-2">
-                {column.links?.map((item, j) => (
-                  <li key={item.id ?? j}>
-                    <Link href={item.link.url ?? '#'} className={footerLinkClass}>
-                      {item.link.label}
-                    </Link>
-                  </li>
-                ))}
+                {column.links?.map((item, j) => {
+                  // Admin-authored, so it gets the same guard `CMSLink` uses:
+                  // an absolute URL, a bare `#fragment`, or a path an editor
+                  // already prefixed by hand must never be given a prefix.
+                  const href = item.link.url ?? '#'
+                  const ItemLink = isPrefixableHref(href) ? LocaleLink : PlainLink
+                  return (
+                    <li key={item.id ?? j}>
+                      <ItemLink href={href} className={footerLinkClass}>
+                        {item.link.label}
+                      </ItemLink>
+                    </li>
+                  )
+                })}
               </ul>
             </nav>
           ))}
@@ -245,13 +270,19 @@ export async function SiteFooter({ locale }: { locale: string }) {
                         the feed columns were dense paragraphs while the static
                         ones sat half empty. Clamped to two lines; the full
                         title stays available as the link's title attribute. */}
-                    <Link
+                    {/* These are the ORIGINAL defect: `blogPostPath(...)` and
+                        `/case-studies/<slug>` are unprefixed, which on an /en
+                        page IS the Spanish URL. Both sections live in a single
+                        route folder under `[locale]` (unlike services, whose
+                        segment is translated), so the locale-aware Link's
+                        generic prefix produces the right URL for both. */}
+                    <LocaleLink
                       href={item.href}
                       title={item.label}
                       className={`${footerLinkClass} line-clamp-2`}
                     >
                       {item.label}
-                    </Link>
+                    </LocaleLink>
                   </li>
                 ))}
               </ul>
@@ -293,15 +324,19 @@ export async function SiteFooter({ locale }: { locale: string }) {
             aria-label={t.legalLabel}
             className="flex flex-col gap-1 text-label sm:flex-row sm:gap-4"
           >
-            {footer.legalLinks?.map((legal, i) => (
-              <Link
-                key={legal.id ?? i}
-                href={legal.href}
-                className="inline-block py-1 opacity-80 transition-opacity duration-fast ease-out hover:opacity-100 focus-visible:outline-none focus-visible:rounded-sm focus-visible:opacity-100 focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus"
-              >
-                {legal.label}
-              </Link>
-            ))}
+            {footer.legalLinks?.map((legal, i) => {
+              // Admin-authored, same guard as the column links above.
+              const LegalLink = isPrefixableHref(legal.href) ? LocaleLink : PlainLink
+              return (
+                <LegalLink
+                  key={legal.id ?? i}
+                  href={legal.href}
+                  className="inline-block py-1 opacity-80 transition-opacity duration-fast ease-out hover:opacity-100 focus-visible:outline-none focus-visible:rounded-sm focus-visible:opacity-100 focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus"
+                >
+                  {legal.label}
+                </LegalLink>
+              )
+            })}
           </nav>
         </div>
 

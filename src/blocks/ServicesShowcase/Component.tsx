@@ -1,5 +1,12 @@
 import { getLocale, getTranslations } from 'next-intl/server'
 import { ArrowRight, Search, TrendingUp, Code, Sparkles, type LucideIcon } from 'lucide-react'
+// Deliberately the PLAIN link, not the locale-aware `Link` from
+// `@/i18n/navigation`: the only `<Link>` here takes `buildServiceHref(locale,
+// slug)`, which is already locale-correct at the source (`/servicios/<slug>`
+// for es, `/en/services/<slug>` for en). Services are the one section whose
+// URL SEGMENT is translated rather than merely prefixed, so a generic locale
+// prefix cannot produce these URLs — routing them through the locale-aware
+// Link would be a no-op at best.
 import Link from 'next/link'
 
 import type { ServicesShowcaseBlock as ServicesShowcaseBlockProps } from '@/payload-types'

@@ -71,16 +71,6 @@ const ANY_PREFIXED = new RegExp(
 // Scoping helpers
 // ---------------------------------------------------------------------------
 
-/**
- * Everything up to the LAST closing main tag: keeps the header (in scope — it
- * links through CMSLink, which is fixed) and the page's own main content, and
- * drops the footer, which is deferred work and still renders unprefixed hrefs.
- */
-function sliceBeforeFooter(html) {
-  const end = html.lastIndexOf('</main>')
-  return end === -1 ? html : html.slice(0, end)
-}
-
 /** Everything before the page's own main element — i.e. the site header. */
 function headerSlice(html) {
   const start = html.indexOf('<main')
@@ -173,14 +163,15 @@ for (const [path, { url, html }] of pages) {
   void path
 }
 
-// 2. Unprefixed-internal guard on each /en section page.
-//    `/en` (home) is excluded on purpose: it renders the deferred
-//    ServicesShowcase block, which still emits unprefixed hrefs until the
-//    follow-up lands.
-for (const path of EN_PAGES.filter((p) => p !== `/${EN}`)) {
+// 2. Unprefixed-internal guard on every /en page, WHOLE DOCUMENT — header,
+//    main and footer. The footer used to be sliced off here (it was deferred
+//    work held by another session) and `/en` was skipped entirely because the
+//    home page renders the ServicesShowcase block. Both are in scope now, so
+//    both are asserted.
+for (const path of EN_PAGES) {
   const page = pages.get(path)
   if (!page) continue
-  const scoped = stripLocaleSwitcher(sliceBeforeFooter(page.html))
+  const scoped = stripLocaleSwitcher(page.html)
   assertNone('no unprefixed section href', scoped, UNPREFIXED_SECTION, page.url)
 }
 
@@ -189,7 +180,7 @@ const blogPage = pages.get(`/${EN}/blog`)
 if (blogPage) {
   assertSome(
     'at least one prefixed blog href',
-    sliceBeforeFooter(blogPage.html),
+    blogPage.html,
     new RegExp(`href="/${EN}/blog/`, 'g'),
     blogPage.url,
   )
@@ -198,7 +189,7 @@ const casePage = pages.get(`/${EN}/case-studies`)
 if (casePage) {
   assertSome(
     'at least one prefixed case-study href',
-    sliceBeforeFooter(casePage.html),
+    casePage.html,
     new RegExp(`href="/${EN}/case-studies/`, 'g'),
     casePage.url,
   )
@@ -218,7 +209,8 @@ if (enHome) {
 for (const path of ES_CONTROLS) {
   const page = pages.get(path)
   if (!page) continue
-  const scoped = stripLocaleSwitcher(sliceBeforeFooter(page.html))
+  // Whole document, footer included — it is in scope now.
+  const scoped = stripLocaleSwitcher(page.html)
   assertNone('no locale prefix leaked into Spanish', scoped, ANY_PREFIXED, page.url)
   assertSome('Spanish section hrefs still unprefixed', scoped, UNPREFIXED_SECTION, page.url)
 }
