@@ -23,12 +23,16 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
-import type { Post, CaseStudy } from '@/payload-types'
+import type { Post, CaseStudy, Category } from '@/payload-types'
 import { CACHE_TAGS, CACHE_TTL_SECONDS } from './cache-tags'
+import { resolvePrimaryCategorySlug } from './blog-paths'
 
 export type Locale = 'es' | 'en'
 
-export type PostCardData = Pick<Post, 'id' | 'title' | 'slug' | 'excerpt' | 'heroImage'>
+export type PostCardData = Pick<
+  Post,
+  'id' | 'title' | 'slug' | 'excerpt' | 'heroImage' | 'categories'
+>
 export type CaseStudyCardData = Pick<
   CaseStudy,
   'id' | 'title' | 'slug' | 'sector' | 'heroMetric' | 'client'
@@ -78,7 +82,11 @@ export function getCachedFeaturedContent(locale: Locale) {
         // overrideAccess:false here throws instead of returning empty —
         // this broke Home in production (HTTP 500) until this fix.
         populate: {
-          posts: { title: true, slug: true, excerpt: true, heroImage: true },
+          // `categories` rides along so featured post cards can build their
+          // /blog/<category>/<slug> href. At depth 1 it arrives as bare ids,
+          // which `FeaturedPostsBlock` resolves through
+          // `getCachedPostCategoryMap`.
+          posts: { title: true, slug: true, excerpt: true, heroImage: true, categories: true },
           'case-studies': { title: true, slug: true, sector: true, heroMetric: true, client: true },
         },
       })
@@ -86,6 +94,68 @@ export function getCachedFeaturedContent(locale: Locale) {
     ['featured-content', locale],
     {
       tags: [CACHE_TAGS.featuredContent(), CACHE_TAGS.posts(), CACHE_TAGS.caseStudies()],
+      revalidate: CACHE_TTL_SECONDS,
+    },
+  )()
+}
+
+// --- Categories (blog URL structure: /blog/<category>/<post>) ---
+
+export type CategoryData = Pick<Category, 'id' | 'title' | 'slug' | 'description'>
+
+/**
+ * All categories for a locale. Small (5 docs) and read on every blog route —
+ * the category listing resolves its slug against this instead of querying by
+ * slug, so an unknown segment costs no extra round trip.
+ */
+export function getCachedCategories(locale: Locale): Promise<CategoryData[]> {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'categories',
+        locale,
+        limit: 100,
+        sort: 'title',
+        overrideAccess: false,
+        select: { title: true, slug: true, description: true },
+      })
+      return docs
+    },
+    ['categories', locale],
+    { tags: [CACHE_TAGS.categories()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+/**
+ * `postSlug -> categorySlug` for every published post. Backs two things that
+ * would otherwise need a per-item query: building `/blog/<category>/<slug>`
+ * links from contexts that only know a post slug (search results, footer),
+ * and 301ing legacy `/blog/<postSlug>` URLs to their new home.
+ */
+export function getCachedPostCategoryMap(locale: Locale): Promise<Record<string, string>> {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'posts',
+        locale,
+        limit: 0,
+        pagination: false,
+        overrideAccess: false,
+        select: { slug: true, categories: true },
+        populate: { categories: { slug: true } },
+      })
+
+      const map: Record<string, string> = {}
+      for (const doc of docs) {
+        if (doc.slug) map[doc.slug] = resolvePrimaryCategorySlug(doc.categories)
+      }
+      return map
+    },
+    ['post-category-map', locale],
+    {
+      tags: [CACHE_TAGS.posts(), CACHE_TAGS.categories()],
       revalidate: CACHE_TTL_SECONDS,
     },
   )()
@@ -169,7 +239,13 @@ export function getCachedArchive({
           locale,
           limit,
           overrideAccess: false,
-          select: { title: true, slug: true, excerpt: true, heroImage: true },
+          // `categories` is selected (and shaped down to just its slug by
+          // `populate`) because every post card links to
+          // /blog/<category>/<slug> — without it the card cannot build its
+          // own href. `populate` keeps the RSC payload small: only the
+          // related category's id+slug ship, not its whole document.
+          select: { title: true, slug: true, excerpt: true, heroImage: true, categories: true },
+          populate: { categories: { slug: true } },
         })
       }
 

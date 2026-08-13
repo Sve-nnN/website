@@ -20,7 +20,7 @@ import type {
   GlobalAfterChangeHook,
 } from 'payload'
 
-import type { Page, Post, CaseStudy } from '@/payload-types'
+import type { Page, Post, CaseStudy, Category } from '@/payload-types'
 
 export const CACHE_TTL_SECONDS = 60
 
@@ -30,6 +30,7 @@ export const CACHE_TAGS = {
   post: (slug: string) => `posts:${slug}`,
   caseStudies: () => 'case-studies:all',
   caseStudy: (slug: string) => `case-studies:${slug}`,
+  categories: () => 'categories:all',
   featuredContent: () => 'featured-content',
   redirects: () => 'redirects',
 }
@@ -73,6 +74,22 @@ export const revalidateCaseStudiesCacheOnDelete: CollectionAfterDeleteHook<CaseS
 }) => {
   revalidateTag(CACHE_TAGS.caseStudies())
   if (doc.slug) revalidateTag(CACHE_TAGS.caseStudy(doc.slug))
+  return doc
+}
+
+// --- Categories (a category's slug is a URL segment now — /blog/<category>/
+// <post> — so renaming one must invalidate the post caches too, otherwise
+// links keep pointing at the old segment until the 60s TTL lapses) ---
+
+export const revalidateCategoriesCache: CollectionAfterChangeHook<Category> = ({ doc }) => {
+  revalidateTag(CACHE_TAGS.categories())
+  revalidateTag(CACHE_TAGS.posts())
+  return doc
+}
+
+export const revalidateCategoriesCacheOnDelete: CollectionAfterDeleteHook<Category> = ({ doc }) => {
+  revalidateTag(CACHE_TAGS.categories())
+  revalidateTag(CACHE_TAGS.posts())
   return doc
 }
 

@@ -1,21 +1,24 @@
 import Link from 'next/link'
 import { getPayload } from 'payload'
-import { Link2, Code2, AtSign, Globe } from 'lucide-react'
 
 import type { Footer as FooterType, Post, CaseStudy } from '@/payload-types'
 
 import config from '@/payload.config'
 import { Container } from '@/components/Container'
 import { Separator } from '@/components/ui/separator'
+import { SocialIcon, socialLabels } from '@/components/SocialIcon'
+import { blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 
-// lucide-react ships no brand icons (Linkedin/Github/X removed) — same
-// generic substitutes used in ContactFormBlock's icon map (05-04).
-const socialIconMap = {
-  linkedin: Link2,
-  github: Code2,
-  x: AtSign,
-  website: Globe,
-}
+/**
+ * POLISH: footer links measured 20–21px tall on production, under WCAG 2.2
+ * AA's 24x24 minimum target size (2.5.8) — and these are navigation links in
+ * a list, not inline links inside a sentence, so the inline exception does
+ * not apply. `inline-block` + vertical padding lifts them past 24px without
+ * changing the visual rhythm. They also had no focus treatment at all; the
+ * ring matches the one the button and input primitives already use.
+ */
+const footerLinkClass =
+  'inline-block py-1 text-body opacity-90 transition-opacity duration-fast ease-out hover:opacity-100 focus-visible:outline-none focus-visible:rounded-sm focus-visible:opacity-100 focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus'
 
 interface DynamicColumnResult {
   id: string | null | undefined
@@ -43,7 +46,11 @@ async function resolveDynamicColumn(
     return {
       id: entry.id,
       title: entry.title,
-      items: docs.map((doc) => ({ id: doc.id, label: doc.title, href: `/blog/${doc.slug}` })),
+      items: docs.map((doc) => ({
+        id: doc.id,
+        label: doc.title,
+        href: blogPostPath(resolvePrimaryCategorySlug(doc.categories), doc.slug ?? ''),
+      })),
     }
   }
 
@@ -88,7 +95,9 @@ export async function SiteFooter({ locale }: { locale: string }) {
   ).filter((col): col is DynamicColumnResult => col !== null)
 
   return (
-    <footer className="bg-secondary text-secondary-foreground mt-24">
+    // POLISH: mt-24 (96px) is not a step on the project's spacing scale
+    // (4/8/16/24/32/48/64); mt-16 is the 64px top of that scale.
+    <footer className="bg-secondary text-secondary-foreground mt-16">
       <Container className="py-12 md:py-16">
         <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-2 md:grid-cols-4 gap-x-8">
           {footer.columns?.map((column, i) => (
@@ -101,7 +110,7 @@ export async function SiteFooter({ locale }: { locale: string }) {
               <ul className="space-y-2">
                 {column.links?.map((item, j) => (
                   <li key={item.id ?? j}>
-                    <Link href={item.link.url ?? '#'} className="text-body opacity-90 hover:opacity-100">
+                    <Link href={item.link.url ?? '#'} className={footerLinkClass}>
                       {item.link.label}
                     </Link>
                   </li>
@@ -120,7 +129,7 @@ export async function SiteFooter({ locale }: { locale: string }) {
               <ul className="space-y-2">
                 {column.items.map((item) => (
                   <li key={item.id}>
-                    <Link href={item.href} className="text-body opacity-90 hover:opacity-100">
+                    <Link href={item.href} className={footerLinkClass}>
                       {item.label}
                     </Link>
                   </li>
@@ -132,27 +141,32 @@ export async function SiteFooter({ locale }: { locale: string }) {
 
         <Separator className="opacity-30 mt-12" />
         <div className="flex flex-col gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex gap-4">
-            {footer.socialLinks?.map((social, i) => {
-              const Icon = socialIconMap[social.platform] ?? Globe
-              return (
-                <a
-                  key={social.id ?? i}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.platform}
-                  className="opacity-80 hover:opacity-100"
-                >
-                  <Icon className="size-5" />
-                </a>
-              )
-            })}
+          {/* POLISH: the icons themselves were 20x20 with no padding, so the
+              whole tap target was 20px — the clearest 2.5.8 failure in the
+              footer, and an isolated control with no inline exception. The
+              icon keeps its 20px optical size inside a 40px target. */}
+          <div className="flex gap-1">
+            {footer.socialLinks?.map((social, i) => (
+              <a
+                key={social.id ?? i}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={socialLabels[social.platform] ?? social.platform}
+                className="inline-flex size-10 items-center justify-center rounded-md opacity-80 transition-opacity duration-fast ease-out hover:opacity-100 focus-visible:outline-none focus-visible:opacity-100 focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus"
+              >
+                <SocialIcon platform={social.platform} className="size-5" />
+              </a>
+            ))}
           </div>
 
-          <div className="flex flex-col gap-2 text-label opacity-80 sm:flex-row sm:gap-4">
+          <div className="flex flex-col gap-1 text-label opacity-80 sm:flex-row sm:gap-4">
             {footer.legalLinks?.map((legal, i) => (
-              <Link key={legal.id ?? i} href={legal.href}>
+              <Link
+                key={legal.id ?? i}
+                href={legal.href}
+                className="inline-block py-1 transition-opacity duration-fast ease-out hover:opacity-100 focus-visible:outline-none focus-visible:rounded-sm focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus"
+              >
                 {legal.label}
               </Link>
             ))}

@@ -5,7 +5,8 @@ import type { FeaturedPostsBlock as FeaturedPostsBlockProps, Post } from '@/payl
 import { Container } from '@/components/Container'
 import { PostCard } from '@/components/PostCard'
 import { ScrollReveal } from '@/components/ScrollReveal'
-import { getCachedFeaturedContent } from '@/lib/cache'
+import { getCachedFeaturedContent, getCachedPostCategoryMap } from '@/lib/cache'
+import { blogPostPath, FALLBACK_CATEGORY_SLUG } from '@/lib/blog-paths'
 
 export async function FeaturedPostsBlockComponent(props: FeaturedPostsBlockProps) {
   const { title, limit } = props
@@ -14,7 +15,13 @@ export async function FeaturedPostsBlockComponent(props: FeaturedPostsBlockProps
   // Phase 43 (43-01): deduped + cached — this and FeaturedCaseStudiesBlock
   // both call the same unstable_cache-wrapped fetcher instead of each doing
   // its own `payload.findGlobal` (root cause #1 of 43-CONTEXT.md).
-  const featuredContent = await getCachedFeaturedContent(locale)
+  // The featured global is read at depth 1, so each post's `categories` come
+  // back as bare ids — not enough to build /blog/<category>/<slug>. The cached
+  // postSlug -> categorySlug map fills that in without a per-card query.
+  const [featuredContent, postCategories] = await Promise.all([
+    getCachedFeaturedContent(locale),
+    getCachedPostCategoryMap(locale),
+  ])
 
   // Runtime data is scoped down by `populate` in getCachedFeaturedContent
   // (title/slug/excerpt/heroImage only) — the generated `Post` type is used
@@ -38,7 +45,14 @@ export async function FeaturedPostsBlockComponent(props: FeaturedPostsBlockProps
           const isAboveFold = i < 3
           return (
             <ScrollReveal key={post.id} priority={isAboveFold}>
-              <PostCard post={post} priority={isAboveFold} />
+              <PostCard
+                post={post}
+                priority={isAboveFold}
+                href={blogPostPath(
+                  postCategories[post.slug ?? ''] ?? FALLBACK_CATEGORY_SLUG,
+                  post.slug ?? '',
+                )}
+              />
             </ScrollReveal>
           )
         })}

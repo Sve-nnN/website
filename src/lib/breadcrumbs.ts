@@ -31,12 +31,14 @@ function servicesIndexHref(locale: Locale): string {
   return `${home === '/' ? '' : home}/${servicesSegment(locale)}`
 }
 
-type Section = 'services' | 'case-studies' | 'websites'
+type Section = 'services' | 'case-studies' | 'websites' | 'authors' | 'blog'
 
 const SECTION_LABELS: Record<Section, Record<Locale, string>> = {
   services: { es: 'Servicios', en: 'Services' },
   'case-studies': { es: 'Casos de éxito', en: 'Case Studies' },
   websites: { es: 'Sitios web', en: 'Websites' },
+  authors: { es: 'Autores', en: 'Authors' },
+  blog: { es: 'Blog', en: 'Blog' },
 }
 
 // Case Studies and Websites routes are NOT locale-prefixed in their segment
@@ -48,6 +50,8 @@ const SECTION_SEGMENTS: Record<Section, Record<Locale, string>> = {
   services: { es: 'servicios', en: 'services' },
   'case-studies': { es: 'case-studies', en: 'case-studies' },
   websites: { es: 'websites', en: 'websites' },
+  authors: { es: 'authors', en: 'authors' },
+  blog: { es: 'blog', en: 'blog' },
 }
 
 function sectionIndexHref(locale: Locale, section: Section): string {
@@ -118,6 +122,56 @@ export function buildWebsitesTrail(
   current?: { slug: string; title: string },
 ): BreadcrumbItem[] {
   return buildSectionTrail(locale, 'websites', current)
+}
+
+/**
+ * Builds the breadcrumb trail for the Authors index page (2 levels) or an
+ * individual author profile (3 levels, when `current` is provided). Sibling to
+ * the trails above, sharing the same internal `buildSectionTrail()`.
+ *
+ * POLISH: the author profile previously hand-rolled its own `BreadcrumbList`
+ * JSON-LD inline, with hardcoded labels and URLs and no visible trail to match
+ * it. Routing it through here gives the page the same single source of truth
+ * the other sections already use.
+ */
+export function buildAuthorsTrail(
+  locale: Locale,
+  current?: { slug: string; title: string },
+): BreadcrumbItem[] {
+  return buildSectionTrail(locale, 'authors', current)
+}
+
+/**
+ * Builds the breadcrumb trail for the blog: index (2 levels), a category
+ * listing (3 levels), or a post inside its category (4 levels).
+ *
+ * The blog is the one section with a nested URL shape
+ * (/blog/<category>/<post>, see `src/lib/blog-paths.ts`), so it does not go
+ * through `buildSectionTrail()` — that helper only models the flat
+ * section/slug pattern the other four sections share.
+ */
+export function buildBlogTrail(
+  locale: Locale,
+  category?: { slug: string; title: string },
+  post?: { slug: string; title: string },
+): BreadcrumbItem[] {
+  const blogHref = sectionIndexHref(locale, 'blog')
+
+  const trail: BreadcrumbItem[] = [
+    { label: LABELS[locale].home, url: homeHref(locale) },
+    { label: SECTION_LABELS.blog[locale], url: blogHref },
+  ]
+
+  if (!category) return trail
+
+  const categoryHref = `${blogHref}/${category.slug}`
+  trail.push({ label: category.title, url: categoryHref })
+
+  if (post) {
+    trail.push({ label: post.title, url: `${categoryHref}/${post.slug}` })
+  }
+
+  return trail
 }
 
 /**

@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { getCachedPostCategoryMap } from '@/lib/cache'
+import { blogIndexPath, blogPostPath } from '@/lib/blog-paths'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -38,8 +40,15 @@ const copy = {
   },
 }
 
-function hrefFor(relationTo: string, slug: string) {
-  if (relationTo === 'posts') return `/blog/${slug}`
+// Posts live at /blog/<category>/<slug>, but the search index only stores the
+// post slug — `postCategories` is the cached postSlug -> categorySlug map the
+// page resolves them through. A post missing from the map (indexed but since
+// unpublished) falls back to the blog index rather than a dead URL.
+function hrefFor(relationTo: string, slug: string, postCategories: Record<string, string>) {
+  if (relationTo === 'posts') {
+    const categorySlug = postCategories[slug]
+    return categorySlug ? blogPostPath(categorySlug, slug) : blogIndexPath()
+  }
   if (relationTo === 'case-studies') return `/case-studies/${slug}`
   if (relationTo === 'authors') return `/authors/${slug}`
   return '#'
@@ -77,10 +86,14 @@ export default async function SearchPage({
 
   let results: Awaited<ReturnType<typeof runSearch>> = []
   let searchFailed = false
+  let postCategories: Record<string, string> = {}
 
   if (query) {
     try {
-      results = await runSearch(query, locale)
+      ;[results, postCategories] = await Promise.all([
+        runSearch(query, locale),
+        getCachedPostCategoryMap(locale as 'es' | 'en'),
+      ])
     } catch (err) {
       console.error('Search backend failure:', err)
       searchFailed = true
@@ -115,7 +128,7 @@ export default async function SearchPage({
             {results.map((result) => (
               <Link
                 key={result.id}
-                href={hrefFor(result.doc.relationTo, result.slug ?? '')}
+                href={hrefFor(result.doc.relationTo, result.slug ?? '', postCategories)}
                 className="block rounded-lg border border-border p-4 hover:shadow-md transition-shadow"
               >
                 <div className="flex items-center gap-2">

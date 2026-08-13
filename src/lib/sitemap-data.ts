@@ -8,6 +8,12 @@ import config from '@payload-config'
 // -> sitemap-data) that broke production's webpack build with a TDZ
 // ReferenceError ("Cannot access 'k' before initialization") on /sitemap.xml.
 import { SERVICES_INDEX_SLUG, SERVICE_SLUGS } from '@/lib/service-slugs'
+import {
+  blogCategoryPath,
+  blogPostPath,
+  resolvePrimaryCategorySlug,
+  type CategoryRef,
+} from '@/lib/blog-paths'
 
 function resolveSiteUrl(): string {
   const envUrl = process.env.NEXT_PUBLIC_SERVER_URL
@@ -37,11 +43,15 @@ type SitemapCollection = {
   group: SitemapEntry['group']
 }
 
-// `categories` is deliberately NOT listed: there is no `/[locale]/categories/[slug]`
-// route in the app, so every category URL this used to emit (10 of them, both
-// locales) was a hard 404 advertised to Google from our own sitemap. Category
-// browsing lives on the blog listing instead (`/blog?category=<slug>`), and
+// `categories` is deliberately NOT listed here: there is no `/categories`
+// section (every URL it used to emit was a hard 404 advertised to Google from
+// our own sitemap). Categories are part of the blog now and are emitted as
+// `/blog/<category>` by `getCategorySitemapEntries()` below, while
 // `next.config.mjs` 301-redirects the legacy `/categories/<slug>` URLs there.
+//
+// `posts` stays in this table for the doc fetch, but its URL is NOT built by
+// the generic `prefix/slug` branch — posts live at `/blog/<category>/<slug>`,
+// so the loop special-cases them the same way service pages are special-cased.
 const SITEMAP_COLLECTIONS: SitemapCollection[] = [
   { collection: 'pages', prefix: '', hasDrafts: true, group: 'pages' },
   { collection: 'posts', prefix: 'blog', hasDrafts: true, group: 'blog' },
@@ -115,6 +125,17 @@ export async function getSitemapEntries(): Promise<SitemapEntry[]> {
         } else if (isServiceLanding) {
           esUrl = `${SITE_URL}/servicios/${doc.slug}`
           enUrl = `${SITE_URL}/en/services/${doc.slug}`
+        } else if (collection === 'posts') {
+          // Posts are nested under their category: /blog/<category>/<slug>
+          // (see src/lib/blog-paths.ts). Category slugs are NOT localized, so
+          // both locales share the same segment.
+          const path = blogPostPath(
+            resolvePrimaryCategorySlug((doc as { categories?: CategoryRef[] }).categories),
+            doc.slug as string,
+          )
+
+          esUrl = `${SITE_URL}${path}`
+          enUrl = `${SITE_URL}/en${path}`
         } else {
           const path =
             prefix === '' ? (doc.slug !== 'home' ? doc.slug : '') : `${prefix}/${doc.slug}`
@@ -147,5 +168,51 @@ export async function getSitemapEntries(): Promise<SitemapEntry[]> {
     }),
   )
 
-  return entriesByCollection.flat()
+  const categoryEntries = await getCategorySitemapEntries(payload)
+
+  return [...entriesByCollection.flat(), ...categoryEntries]
+}
+
+/**
+ * Category listings (`/blog/<category>`). They are real, indexable pages with
+ * their own title and description, so they belong in the sitemap — but under
+ * the `blog` group, not a `categories` section, because `/categories` does not
+ * exist (see the note on SITEMAP_COLLECTIONS).
+ *
+ * Categories have no draft state, and their `slug` is not localized, so both
+ * locale variants share one segment.
+ */
+async function getCategorySitemapEntries(
+  payload: Awaited<ReturnType<typeof getPayload>>,
+): Promise<SitemapEntry[]> {
+  const { docs } = await payload.find({
+    collection: 'categories',
+    limit: 0,
+    locale: 'all',
+  })
+
+  return docs.flatMap((doc) => {
+    if (!doc.slug) return []
+
+    const path = blogCategoryPath(doc.slug)
+    const esUrl = `${SITE_URL}${path}`
+    const enUrl = `${SITE_URL}/en${path}`
+    const alternates = { es: esUrl, en: enUrl }
+
+    return (
+      [
+        { locale: 'es', url: esUrl },
+        { locale: 'en', url: enUrl },
+      ] satisfies Array<{ locale: SitemapLocale; url: string }>
+    ).map(
+      ({ locale, url }) =>
+        ({
+          url,
+          locale,
+          lastModified: doc.updatedAt,
+          group: 'blog',
+          alternates,
+        }) satisfies SitemapEntry,
+    )
+  })
 }

@@ -23,11 +23,12 @@ const nextConfig = {
   async redirects() {
     return [
       // `/categories/<slug>` never had a route — the sitemap used to advertise
-      // 10 of these (both locales) straight into a 404. Category browsing is
-      // the blog listing's `?category=<slug>` filter (see ArchiveBlock), so
-      // point the legacy URLs there permanently instead of dropping them.
-      { source: '/categories/:slug', destination: '/blog?category=:slug', permanent: true },
-      { source: '/en/categories/:slug', destination: '/en/blog?category=:slug', permanent: true },
+      // 10 of these (both locales) straight into a 404. Categories now live
+      // under the blog as real folders (`/blog/<category>`, see
+      // src/lib/blog-paths.ts) and there is deliberately no `/categories`
+      // section, so the legacy URLs redirect there permanently.
+      { source: '/categories/:slug', destination: '/blog/:slug', permanent: true },
+      { source: '/en/categories/:slug', destination: '/en/blog/:slug', permanent: true },
       { source: '/categories', destination: '/blog', permanent: true },
       { source: '/en/categories', destination: '/en/blog', permanent: true },
     ]

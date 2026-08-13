@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '@/access/authenticated'
 import { slugField } from '@/fields/slug'
+import {
+  revalidateCategoriesCache,
+  revalidateCategoriesCacheOnDelete,
+} from '@/lib/cache-tags'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -24,6 +28,10 @@ export const Categories: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
+  },
+  hooks: {
+    afterChange: [revalidateCategoriesCache],
+    afterDelete: [revalidateCategoriesCacheOnDelete],
   },
   fields: [
     {

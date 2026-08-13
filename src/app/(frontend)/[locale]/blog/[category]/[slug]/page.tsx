@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import { notFound } from 'next/navigation'
+import Link from 'next/link'
+import { notFound, permanentRedirect } from 'next/navigation'
 
 import type { Author, Category, Post } from '@/payload-types'
 import { JsonLd } from '@/components/JsonLd'
@@ -13,7 +14,9 @@ import { TableOfContentsBlockComponent } from '@/blocks/TableOfContentsBlock/Com
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { getCachedPost } from '@/lib/cache'
+import { blogCategoryPath, blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -48,7 +51,7 @@ function estimateReadingTime(content: Post['content']): number {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string; slug: string }>
+  params: Promise<{ locale: string; category: string; slug: string }>
 }) {
   const { locale, slug } = await params
   const doc = await getPost(locale, slug)
@@ -56,6 +59,11 @@ export async function generateMetadata({
   if (!doc) {
     return {}
   }
+
+  // Metadata always describes the CANONICAL path, never the requested one —
+  // a request on a non-primary category segment is about to be redirected
+  // anyway (see the guard in the page component below).
+  const path = blogPostPath(resolvePrimaryCategorySlug(doc.categories), slug)
 
   const meta = doc.meta
   const title = meta?.title ?? doc.title
@@ -67,37 +75,57 @@ export async function generateMetadata({
     openGraph: buildOpenGraph({
       title,
       description,
-      url: locale === 'en' ? `/en/blog/${slug}` : `/blog/${slug}`,
+      url: locale === 'en' ? `/en${path}` : path,
       locale: locale as 'es' | 'en',
       slug,
       metaImage: meta?.image,
       heroImage: doc.heroImage,
     }),
-    alternates: buildAlternates(locale as 'es' | 'en', `/blog/${slug}`, `/en/blog/${slug}`),
+    alternates: buildAlternates(locale as 'es' | 'en', path, `/en${path}`),
   }
 }
 
 export default async function PostPage({
   params,
 }: {
-  params: Promise<{ locale: string; slug: string }>
+  params: Promise<{ locale: string; category: string; slug: string }>
 }) {
-  const { locale, slug } = await params
+  const { locale, category, slug } = await params
   const doc = await getPost(locale, slug)
 
   if (!doc) {
     notFound()
   }
 
+  const primaryCategorySlug = resolvePrimaryCategorySlug(doc.categories)
+
+  // One post, one indexable URL. A post reached through any other category
+  // segment (a stale link, a multi-category post, or a hand-typed path)
+  // 308s to the canonical one instead of rendering duplicate content.
+  if (category !== primaryCategorySlug) {
+    permanentRedirect(
+      locale === 'en'
+        ? `/en${blogPostPath(primaryCategorySlug, slug)}`
+        : blogPostPath(primaryCategorySlug, slug),
+    )
+  }
+
   const author = typeof doc.author === 'object' ? (doc.author as Author) : undefined
   const categories = (doc.categories ?? []).filter(
-    (c): c is Category => typeof c === 'object',
+    (c): c is Category => typeof c === 'object' && c !== null,
   )
 
   const heroImage = typeof doc.heroImage === 'object' ? doc.heroImage : null
   const heroImageUrl = heroImage?.url ?? getFallbackHeroImage(doc.slug ?? String(doc.id))
 
   const readingTimeMinutes = estimateReadingTime(doc.content)
+
+  const primaryCategory = categories[0]
+  const trail = buildBlogTrail(
+    locale as 'es' | 'en',
+    { slug: primaryCategorySlug, title: primaryCategory?.title ?? primaryCategorySlug },
+    { slug: doc.slug ?? slug, title: doc.title },
+  )
 
   const articleData = {
     '@context': 'https://schema.org',
@@ -106,6 +134,7 @@ export default async function PostPage({
     description: doc.excerpt,
     datePublished: doc.publishedAt,
     author: { '@type': 'Person', name: author?.name },
+    articleSection: primaryCategory?.title ?? primaryCategorySlug,
   }
 
   return (
@@ -124,9 +153,9 @@ export default async function PostPage({
         <Container className="py-8">
           <div className="flex flex-wrap gap-2 mb-4">
             {categories.map((cat) => (
-              <Badge key={cat.id} variant="secondary">
-                {cat.title}
-              </Badge>
+              <Link key={cat.id} href={blogCategoryPath(cat.slug ?? primaryCategorySlug)}>
+                <Badge variant="secondary">{cat.title}</Badge>
+              </Link>
             ))}
           </div>
           <h1 className="font-display text-display tracking-tight">{doc.title}</h1>
@@ -174,6 +203,7 @@ export default async function PostPage({
       />
 
       <JsonLd data={articleData} />
+      <JsonLd data={buildBreadcrumbJsonLd(trail)} />
     </main>
   )
 }

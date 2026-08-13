@@ -10,11 +10,7 @@ import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { WebsiteCard } from '@/components/WebsiteCard'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import { getCachedArchive, type PostCardData, type CaseStudyCardData } from '@/lib/cache'
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs'
+import { BlogCategoryTabs } from '@/components/BlogCategoryTabs'
 
 interface ArchiveBlockComponentProps extends ArchiveBlockProps {
   // Server-rendered category filter reads this from the page's own searchParams;
@@ -82,21 +78,8 @@ export async function ArchiveBlockComponent(props: ArchiveBlockComponentProps) {
 
   return (
     <Container className="py-12">
-      {relationTo === 'posts' && enableCategoryFilter && categories.length > 0 && (
-        <Tabs value={activeCategory ?? 'all'} className="mb-8">
-          <div className="overflow-x-auto">
-            <TabsList className="w-max">
-              <TabsTrigger value="all" asChild>
-                <a href="?">All</a>
-              </TabsTrigger>
-              {categories.map((cat) => (
-                <TabsTrigger key={cat.id} value={cat.slug ?? String(cat.id)} asChild>
-                  <a href={`?category=${cat.slug}`}>{cat.title}</a>
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </div>
-        </Tabs>
+      {relationTo === 'posts' && enableCategoryFilter && (
+        <BlogCategoryTabs locale={locale} categories={categories} activeSlug={activeCategory} />
       )}
       {docs.length === 0 ? (
         <div className="text-center py-16">
