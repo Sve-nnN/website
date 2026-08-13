@@ -95,7 +95,33 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 
 Phase 37 tiene CONTEXT.md y UI-SPEC.md (ambos aprobados) pero aún no plan-phase/execute-phase. Queda en pausa mientras corre v1.9 — retomar con `/gsd:plan-phase 37` cuando v1.9 cierre. Detalle completo del scope más abajo, sección "Milestone Anterior".
 
-## Current Milestone: v1.9 Websites Portfolio Section
+## Current Milestone: v2.1 Monetización del Sitio — Research + Fundaciones
+
+**Goal:** Convertir juan-tech.com de portfolio/blog en un activo que además genera ingresos — empezando por una fase de research que decide qué vías de monetización valen la pena para el perfil real de Juan (dev + SEO técnico), y construyendo después solo las de mayor retorno sobre esfuerzo.
+
+**Target features:**
+- **Research en 4 dimensiones** (fase 1, insumo de todo lo demás):
+  - Programas de afiliados reales aplicables al perfil dev + SEO técnico, con comisiones/cookie window/requisitos de aceptación verificados en vivo — filtrados por cuáles aceptan un sitio de tráfico bajo/medio y cuáles exigen audiencia grande
+  - Modelos de producto digital (checklists, blueprints, plantillas) + comparativa de plataforma de cobro (Stripe, Lemon Squeezy, Gumroad, Polar) con criterio merchant-of-record / IVA / esfuerzo de integración en Payload
+  - Arquitectura de captura de email sobre Resend (Audiences/Broadcasts, doble opt-in, entrega de lead magnet) — sin proveedor nuevo
+  - Requisitos legales y de SEO: disclosure obligatorio de afiliación, `rel="sponsored"`/`nofollow`, políticas de Amazon Associates, GDPR/cookies
+- **Entregable de decisión:** recomendación priorizada por ROI vs esfuerzo, que determina qué se construye en este milestone y qué se difiere a v2.2
+- **Construcción de lo priorizado:** página "Mi Stack / Herramientas que uso" bilingüe con links de afiliado; sistema reutilizable de enlace de afiliado (rel correcto, tracking de clics, disclosure automático en la página); captura de email con Resend
+- **Diferido con plan escrito:** tienda de productos digitales (decisión de plataforma tomada, implementación en v2.2 salvo que el research la marque como top ROI) y contenido comercial (keyword research de términos comerciales + estructura de comparativas/reviews, no producción masiva de artículos)
+
+**Contexto clave:**
+- Amazon FBA (marca propia) queda explícitamente fuera de scope — es un negocio aparte con inventario y capital, no una feature del sitio; se evaluará en un milestone futuro
+- Amazon Associates ya está activa; el resto de programas se postula desde cero
+- Newsletter sobre Resend (ya integrado en el proyecto), sin sumar un proveedor más
+- Todo el contenido nuevo bilingüe EN/ES, misma constraint del proyecto
+- Cero regresión de performance/SEO — es el core value del sitio; scripts de tracking y widgets de terceros se evalúan por peso antes de entrar
+- No se tocan: Phase 6 (Deploy + Cutover), v1.6 Track B (Content Humanization), Phase 37 (Case Studies Content Audit)
+
+## Milestone Anterior: v2.0 OG Image & Meta Tags Fix (Phases 41-43)
+
+Auditoría externa (`opengraph.to/u/juan-tech.com`, score 17/100) encontró que el sitio nunca tuvo `og:image`, favicon/apple-touch-icon, theme-color, manifest ni canonical consistente. 3 fases: generación de OG image vía transforms de Cloudinary (Phase 41, reusando el asset `og-scrim` y la fuente `Array-Bold.woff2` ya subidos por `JuanPortfolio`), completado de meta tags (Phase 42) y performance de response time + tamaño de HTML (Phase 43).
+
+## Milestone Anterior: v1.9 Websites Portfolio Section (Phases 38-40)
 
 **Goal:** Juan tiene una colección de sitios web reales que construyó (no solo case studies con storytelling SEO) — el sitio hoy no tiene dónde mostrar ese trabajo técnico como portfolio de desarrollo, separado del ángulo de resultados/case study.
 
@@ -165,4 +191,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-07-14 — milestone v1.9 (Websites Portfolio Section) iniciado; v1.8 (Case Studies Content Audit & Fix) queda en cola con Phase 37 a mitad de camino (CONTEXT.md + UI-SPEC.md aprobados, falta plan/execute); pausados sin tocar: v1.6 Track B (Content Humanization, fases 29-31) y Phase 6 Deploy + Cutover*
+*Last updated: 2026-08-13 — milestone v2.1 (Monetización del Sitio — Research + Fundaciones) iniciado, continuando la numeración de fases desde Phase 43 (v2.0, cerrada); pausados sin tocar: v1.6 Track B (Content Humanization, fases 29-31), Phase 37 (Case Studies Content Audit) y Phase 6 Deploy + Cutover*

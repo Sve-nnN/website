@@ -1,19 +1,16 @@
 ---
 gsd_state_version: 1.0
-milestone: v2.0
-milestone_name: OG Image & Meta Tags Fix
-current_phase: 43
-current_phase_name: performance-response-time-html-size
-status: verifying
-stopped_at: Completed 43-03-PLAN.md (last plan of Phase 43)
-last_updated: "2026-08-03T01:47:55.617Z"
-last_activity: 2026-08-02
-last_activity_desc: Phase 43 execution started
+milestone: v2.1
+milestone_name: Monetizacion del Sitio - Research + Fundaciones
+status: planning
+last_updated: "2026-08-13T21:23:05.581Z"
+last_activity: 2026-08-13
 progress:
-  total_phases: 30
-  completed_phases: 29
-  total_plans: 121
-  completed_plans: 116
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -27,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-31)
 
 ## Current Position
 
-Phase: 43 (performance-response-time-html-size) — EXECUTING
-Plan: 3 of 3
-Status: Phase complete — ready for verification
-Last activity: 2026-08-13 — Completed quick task 260813-fix-prod-404-500-routes (code fixes committed; draft-publish script still pending a run with DB access)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-08-13 — Milestone v2.1 started
 
 ## Performance Metrics
 
