@@ -27,12 +27,22 @@ export function AboutSectionComponent(props: AboutSectionBlockProps) {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
         <div className={photoDoc?.url ? 'md:col-span-7' : 'md:col-span-12'}>
           {eyebrow && (
-            <p className="text-label uppercase tracking-wide text-primary mb-2">{eyebrow}</p>
+            // POLISH: `text-primary` (#F7581E) on the light `--background`
+            // measures 3.15:1 — below WCAG AA's 4.5:1 for 14px/600 text, which
+            // is not "large text" under either the size (24px) or the
+            // bold-size (18.66px) threshold. `text-primary-text` (#D03D07) is
+            // the same-hue AA-safe variant the system already ships for
+            // exactly this case (see globals.css --primary-text).
+            <p className="text-label uppercase tracking-wide text-primary-text mb-2">{eyebrow}</p>
           )}
           <h2 className="font-heading text-heading">{title}</h2>
+          {/* POLISH: without a photo this column spans the full 12 tracks, so
+              body copy ran to ~138ch at 1440px — roughly double the 65–75ch
+              reading measure. Capped per paragraph so the photo layout (which
+              already constrains width via md:col-span-7) is unaffected. */}
           <div className="mt-4 space-y-4">
             {paragraphs?.map((paragraph, i) => (
-              <p key={paragraph.id ?? i} className="text-body text-muted-foreground">
+              <p key={paragraph.id ?? i} className="text-body text-muted-foreground max-w-[70ch]">
                 {paragraph.text}
               </p>
             ))}

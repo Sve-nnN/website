@@ -59,11 +59,15 @@ export function ContactFormBlockComponent(props: ContactFormComponentProps) {
     <Container id="contact" className="py-12 md:py-16">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
-          {eyebrow && <p className="text-label text-primary">{eyebrow}</p>}
+          {/* POLISH: AA contrast — `text-primary` (#F7581E) is 3.15:1 on the
+              light background; `text-primary-text` (#D03D07) is 4.61:1. */}
+          {eyebrow && <p className="text-label text-primary-text">{eyebrow}</p>}
           <h2 className="font-heading text-heading mt-1">{title}</h2>
           {description && <p className="mt-3 text-body text-muted-foreground">{description}</p>}
 
-          {sent === 'true' && <p className="mt-4 text-body text-primary">{successMessage}</p>}
+          {/* Success state carries task-critical information, so it needs the
+              AA-safe variant even more than the eyebrow does. */}
+          {sent === 'true' && <p className="mt-4 text-body text-primary-text">{successMessage}</p>}
           {sent === 'false' && <p className="mt-4 text-body text-destructive">{errorMessage}</p>}
 
           <form action={onSubmit} className="mt-8 space-y-4">
