@@ -1,0 +1,403 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-13T00:00:00.000Z",
+  "title": "Design System: Juan Carlos Angulo — juan-tech.com",
+  "extensions": {
+    "colorMeta": {
+      "ember": {
+        "role": "primary",
+        "displayName": "Signal Ember",
+        "canonical": "#F7581E",
+        "darkValue": "#FF7A45",
+        "tonalRamp": [
+          "#2B0C02",
+          "#4C1604",
+          "#6E2006",
+          "#902B08",
+          "#B2360A",
+          "#D03D07",
+          "#F7581E",
+          "#FFB08A"
+        ]
+      },
+      "ember-text": {
+        "role": "primary",
+        "displayName": "Ember Text",
+        "canonical": "#D03D07",
+        "darkValue": "#FF7A45",
+        "tonalRamp": [
+          "#240A01",
+          "#411203",
+          "#5E1B04",
+          "#7B2305",
+          "#992C06",
+          "#B63407",
+          "#D03D07",
+          "#F79A6E"
+        ]
+      },
+      "navy-ink": {
+        "role": "secondary",
+        "displayName": "Navy Ink",
+        "canonical": "#12141C",
+        "tonalRamp": [
+          "#07080B",
+          "#0C0E13",
+          "#12141C",
+          "#1B1E29",
+          "#23283A",
+          "#3A4159",
+          "#5A6488",
+          "#8890AC"
+        ]
+      },
+      "navy-surface": {
+        "role": "secondary",
+        "displayName": "Navy Surface",
+        "canonical": "#1B1E29",
+        "tonalRamp": [
+          "#0A0B10",
+          "#101219",
+          "#1B1E29",
+          "#23283A",
+          "#2E3449",
+          "#3A4159",
+          "#5A6488",
+          "#8890AC"
+        ]
+      },
+      "navy-raised": {
+        "role": "secondary",
+        "displayName": "Navy Raised",
+        "canonical": "#23283A",
+        "tonalRamp": [
+          "#0B0D13",
+          "#12141C",
+          "#1B1E29",
+          "#23283A",
+          "#3A4159",
+          "#4B5470",
+          "#5A6488",
+          "#8890AC"
+        ]
+      },
+      "near-black": {
+        "role": "secondary",
+        "displayName": "Near Black",
+        "canonical": "#0A0A0F",
+        "tonalRamp": [
+          "#000000",
+          "#050508",
+          "#0A0A0F",
+          "#12141C",
+          "#1B1E29",
+          "#23283A",
+          "#3A4159",
+          "#5A6488"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "#FAFAF7",
+        "tonalRamp": [
+          "#2A2A26",
+          "#45453F",
+          "#61615A",
+          "#7E7E76",
+          "#9C9C94",
+          "#BFBFB8",
+          "#E3E3DE",
+          "#FAFAF7"
+        ]
+      },
+      "quiet-ink": {
+        "role": "neutral",
+        "displayName": "Quiet Ink",
+        "canonical": "oklch(0.54 0 0)",
+        "darkValue": "#A8ACBB",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.25 0 0)",
+          "oklch(0.35 0 0)",
+          "oklch(0.45 0 0)",
+          "oklch(0.54 0 0)",
+          "oklch(0.68 0 0)",
+          "oklch(0.82 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(0.63 0 0)",
+        "darkValue": "rgba(250, 250, 247, 0.35)",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.27 0 0)",
+          "oklch(0.39 0 0)",
+          "oklch(0.51 0 0)",
+          "oklch(0.63 0 0)",
+          "oklch(0.75 0 0)",
+          "oklch(0.86 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      },
+      "alarm": {
+        "role": "tertiary",
+        "displayName": "Alarm",
+        "canonical": "#DC2626",
+        "darkValue": "#F87171",
+        "tonalRamp": [
+          "#270707",
+          "#450C0C",
+          "#631111",
+          "#811616",
+          "#9F1B1B",
+          "#DC2626",
+          "#F87171",
+          "#FECACA"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display — Array",
+        "purpose": "El h1 de una pieza que se presenta a sí misma: el hero de home y el titular de cada página de detalle (case study, post, website). No baja a títulos de sección, de card ni a subtítulos. Deuda conocida: solo hay peso 400 instalado y el token pide 600, así que el navegador sintetiza el bold."
+      },
+      "headline": {
+        "displayName": "Headline — Khand",
+        "purpose": "Toda la jerarquía de títulos fuera del hero de home: heroes de plantilla, títulos de sección y de card, nombre en el header."
+      },
+      "body": {
+        "displayName": "Body — Geist Sans",
+        "purpose": "Prosa, descripciones y rich text. Medida de lectura objetivo 65–75ch."
+      },
+      "label": {
+        "displayName": "Label — Geist Sans 600",
+        "purpose": "Navegación, botones, badges, metadatos y etiquetas de KPI."
+      },
+      "mono": {
+        "displayName": "Mono — Geist Mono",
+        "purpose": "Bloques de código y valores técnicos donde el ancho fijo aporta lectura."
+      }
+    },
+    "shadows": [
+      {
+        "name": "asentamiento",
+        "value": "0 1px 2px 0 hsl(220 20% 10% / 0.05)",
+        "purpose": "Estado de reposo de cards, botones e inputs. Casi imperceptible a propósito."
+      },
+      {
+        "name": "respuesta",
+        "value": "0 4px 6px -1px hsl(220 20% 10% / 0.1), 0 2px 4px -2px hsl(220 20% 10% / 0.1)",
+        "purpose": "Hover de cualquier superficie interactiva."
+      },
+      {
+        "name": "flotante",
+        "value": "0 10px 15px -3px hsl(220 20% 10% / 0.1), 0 4px 6px -4px hsl(220 20% 10% / 0.1)",
+        "purpose": "Elementos que se despegan del documento: sheets, popovers, dropdowns."
+      },
+      {
+        "name": "foco",
+        "value": "0 0 0 3px rgba(255, 91, 31, 0.45)",
+        "purpose": "Anillo de foco en brasa translúcida. Acompaña al ring de 1px, nunca lo reemplaza."
+      }
+    ],
+    "motion": [
+      {
+        "name": "motion-fast",
+        "value": "150ms",
+        "purpose": "Respuesta a estado: hover y foco de botones, inputs y badges."
+      },
+      {
+        "name": "motion-base",
+        "value": "250ms",
+        "purpose": "Transiciones de sombra en cards y cambios de superficie."
+      },
+      {
+        "name": "motion-slow",
+        "value": "400ms",
+        "purpose": "Entradas de scroll reveal y transiciones de mayor recorrido."
+      },
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Curva por defecto para feedback táctil: llega rápido y frena suave."
+      },
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Curva neutral para transiciones de superficie y sombra."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "container-max",
+        "value": "1152px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "CTA principal. Uno por viewport — es el gasto de brasa más caro del sistema.",
+      "html": "<button class=\"ds-btn-primary\">Hablemos de tu proyecto</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 8px 16px; background: #F7581E; color: #12141C; font-family: 'Geist Sans', system-ui, sans-serif; font-size: 14px; font-weight: 500; line-height: 1.4; white-space: nowrap; border: none; border-radius: 6px; box-shadow: 0 1px 2px 0 hsl(220 20% 10% / 0.05); transition: color 150ms cubic-bezier(0.22,1,0.36,1), background-color 150ms cubic-bezier(0.22,1,0.36,1), box-shadow 150ms cubic-bezier(0.22,1,0.36,1), transform 150ms cubic-bezier(0.22,1,0.36,1); cursor: pointer; } .ds-btn-primary:hover { background: rgba(247, 88, 30, 0.9); box-shadow: 0 4px 6px -1px hsl(220 20% 10% / 0.1), 0 2px 4px -2px hsl(220 20% 10% / 0.1); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255, 91, 31, 0.45); } .ds-btn-primary:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Acción secundaria en banda clara. Navy sólido, sin brasa.",
+      "html": "<button class=\"ds-btn-secondary\">Ver case studies</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 8px 16px; background: #12141C; color: #FAFAF7; font-family: 'Geist Sans', system-ui, sans-serif; font-size: 14px; font-weight: 500; border: none; border-radius: 6px; box-shadow: 0 1px 2px 0 hsl(220 20% 10% / 0.05); transition: background-color 150ms cubic-bezier(0.22,1,0.36,1), transform 150ms cubic-bezier(0.22,1,0.36,1); cursor: pointer; } .ds-btn-secondary:hover { background: rgba(18, 20, 28, 0.8); } .ds-btn-secondary:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255, 91, 31, 0.45); } .ds-btn-secondary:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Acción terciaria y botón de icono del menú mobile. Borde visible, fondo de página.",
+      "html": "<button class=\"ds-btn-outline\">Leer el artículo</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 36px; padding: 8px 16px; background: #FAFAF7; color: #12141C; font-family: 'Geist Sans', system-ui, sans-serif; font-size: 14px; font-weight: 500; border: 1px solid oklch(0.922 0 0); border-radius: 6px; box-shadow: 0 1px 2px 0 hsl(220 20% 10% / 0.05); transition: background-color 150ms cubic-bezier(0.22,1,0.36,1), transform 150ms cubic-bezier(0.22,1,0.36,1); cursor: pointer; } .ds-btn-outline:hover { background: oklch(0.97 0 0); color: oklch(0.205 0 0); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255, 91, 31, 0.45); } .ds-btn-outline:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Badge",
+      "kind": "chip",
+      "refersTo": "badge-default",
+      "description": "Etiqueta de dato: ciudad en landings locales, categoría en listados. Radio de 4px, más filoso que los botones a propósito.",
+      "html": "<span class=\"ds-badge\">SEO técnico</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; padding: 2px 10px; background: #F7581E; color: #12141C; font-family: 'Geist Sans', system-ui, sans-serif; font-size: 12px; font-weight: 600; line-height: 1.4; border: 1px solid transparent; border-radius: 4px; box-shadow: 0 1px 2px 0 hsl(220 20% 10% / 0.05); transition: background-color 150ms cubic-bezier(0.22,1,0.36,1); } .ds-badge:hover { background: rgba(247, 88, 30, 0.8); }"
+    },
+    {
+      "name": "Content Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Superficie de contenido: post, case study, website, testimonio. En tema claro el borde es lo único que la separa del fondo.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-title\">Auditoría técnica SEO</div><p class=\"ds-card-body\">Rastreo, indexabilidad, Core Web Vitals y datos estructurados, corregidos en el código.</p></div>",
+      "css": ".ds-card { padding: 24px; background: #FAFAF7; color: #12141C; border: 1px solid oklch(0.63 0 0); border-radius: 16px; box-shadow: 0 1px 2px 0 hsl(220 20% 10% / 0.05); transition: box-shadow 250ms cubic-bezier(0.4,0,0.2,1); } .ds-card:hover { box-shadow: 0 4px 6px -1px hsl(220 20% 10% / 0.1), 0 2px 4px -2px hsl(220 20% 10% / 0.1); } .ds-card-title { font-family: Khand, 'Arial Narrow', system-ui, sans-serif; font-size: 1.75rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; margin-bottom: 8px; } .ds-card-body { font-family: 'Geist Sans', system-ui, sans-serif; font-size: 16px; line-height: 1.5; color: oklch(0.54 0 0); margin: 0; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Campo del formulario de contacto. 16px en mobile para evitar el zoom automático de iOS, 14px desde md.",
+      "html": "<input class=\"ds-input\" type=\"email\" placeholder=\"tu@empresa.com\" aria-label=\"Email\" />",
+      "css": ".ds-input { display: flex; width: 100%; height: 36px; padding: 4px 12px; background: transparent; color: #12141C; font-family: 'Geist Sans', system-ui, sans-serif; font-size: 16px; border: 1px solid oklch(0.922 0 0); border-radius: 6px; box-shadow: 0 1px 2px 0 hsl(220 20% 10% / 0.05); transition: color 150ms cubic-bezier(0.22,1,0.36,1), box-shadow 150ms cubic-bezier(0.22,1,0.36,1); } .ds-input::placeholder { color: oklch(0.54 0 0); } .ds-input:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(255, 91, 31, 0.45); } .ds-input:disabled { cursor: not-allowed; opacity: 0.5; } @media (min-width: 768px) { .ds-input { font-size: 14px; } }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Banda navy sticky con el nombre en Khand y los enlaces en label. Colapsa a Sheet lateral por debajo de 768px.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-nav-brand\">Juan Carlos Angulo</span><div class=\"ds-nav-links\"><a class=\"ds-nav-link\" href=\"#\">Servicios</a><a class=\"ds-nav-link ds-nav-link-active\" href=\"#\">Case studies</a><a class=\"ds-nav-link\" href=\"#\">Blog</a></div></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 16px 24px; background: #12141C; color: #FAFAF7; } .ds-nav-brand { font-family: Khand, 'Arial Narrow', system-ui, sans-serif; font-size: 1.75rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; } .ds-nav-links { display: flex; align-items: center; gap: 32px; } .ds-nav-link { font-family: 'Geist Sans', system-ui, sans-serif; font-size: 14px; font-weight: 600; line-height: 1.4; color: rgba(250, 250, 247, 0.75); text-decoration: none; transition: color 150ms cubic-bezier(0.22,1,0.36,1); } .ds-nav-link:hover { color: #FAFAF7; } .ds-nav-link:focus-visible { outline: none; border-radius: 4px; box-shadow: 0 0 0 3px rgba(255, 91, 31, 0.45); } .ds-nav-link-active { color: #FF7A45; }"
+    },
+    {
+      "name": "KPI Metric",
+      "kind": "custom",
+      "refersTo": "card",
+      "description": "Tarjeta de resultado de case study. La métrica va en ember-text porque es texto sobre superficie clara; el label debajo siempre existe (ningún número suelto sin contexto).",
+      "html": "<div class=\"ds-kpi\"><div class=\"ds-kpi-value\">+83%</div><div class=\"ds-kpi-label\">Clics orgánicos, 6 meses</div></div>",
+      "css": ".ds-kpi { padding: 24px; background: #FAFAF7; border: 1px solid oklch(0.63 0 0); border-radius: 16px; box-shadow: 0 1px 2px 0 hsl(220 20% 10% / 0.05); transition: box-shadow 250ms cubic-bezier(0.4,0,0.2,1); } .ds-kpi:hover { box-shadow: 0 4px 6px -1px hsl(220 20% 10% / 0.1), 0 2px 4px -2px hsl(220 20% 10% / 0.1); } .ds-kpi-value { font-family: Khand, 'Arial Narrow', system-ui, sans-serif; font-size: 2.25rem; font-weight: 600; line-height: 1.05; letter-spacing: -0.025em; color: #D03D07; } .ds-kpi-label { margin-top: 4px; font-family: 'Geist Sans', system-ui, sans-serif; font-size: 14px; font-weight: 600; line-height: 1.4; color: oklch(0.54 0 0); }"
+    },
+    {
+      "name": "Listing Hero",
+      "kind": "custom",
+      "refersTo": "button-primary",
+      "description": "Cabecera de plantilla de listado: banda navy con subrayado de brasa de 4px. El borde inferior funciona como marca de sección, no como borde.",
+      "html": "<header class=\"ds-hero-listing\"><h1 class=\"ds-hero-title\">Case studies</h1><p class=\"ds-hero-sub\">Resultados medidos en Search Console, con el cliente anonimizado.</p></header>",
+      "css": ".ds-hero-listing { padding: 40px 24px; background: #12141C; color: #FAFAF7; border-bottom: 4px solid #F7581E; } .ds-hero-title { margin: 0; font-family: Khand, 'Arial Narrow', system-ui, sans-serif; font-size: 1.75rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; } .ds-hero-sub { margin: 8px 0 0; font-family: 'Geist Sans', system-ui, sans-serif; font-size: 16px; line-height: 1.5; color: rgba(250, 250, 247, 0.75); max-width: 65ch; } @media (min-width: 768px) { .ds-hero-listing { padding: 56px 24px; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Console at Night",
+    "overview": "El sistema trabaja sobre una superficie de navy casi negro (#12141C), del mismo modo que un ingeniero trabaja sobre una consola a las dos de la mañana: fondo apagado, atención sostenida, y una sola señal cálida que se enciende cuando algo importa. La brasa (#F7581E en claro, #FF7A45 en oscuro) es esa señal. No decora la pantalla: la marca. Todo lo demás — texto, superficies, bordes — se mantiene en la familia navy/papel para que la brasa nunca compita con nada.\n\nLa densidad es la de una herramienta, no la de una landing. Contenedor de 1152px máximo, ritmo vertical constante de 48px que sube a 64px en desktop, tipografía de cuatro tamaños y nada más. La geometría es contenida: radio base de 8px, cards de 16px, badges de 4px porque leen más filosos que los botones a propósito. El movimiento es corto y con propósito: 150ms para respuesta a estado, curva cubic-bezier(0.22, 1, 0.36, 1) que llega rápido y frena suave, y un active:scale(0.98) en botones que hace que la interfaz responda al dedo antes de responder al servidor.\n\nEl sitio es el portafolio de alguien que corrige SEO a nivel de código, así que la ejecución visual tiene que sostener ese argumento sin declararlo. Eso descarta tres mundos completos: la plantilla de agencia SEO, la landing SaaS genérica y el portfolio de dev con dark mode neón. Los tres son ruido que dice \"sé de esto\" en vez de mostrarlo.",
+    "keyCharacteristics": [
+      "Navy casi negro como superficie de trabajo, papel cálido (#FAFAF7) como respiro de lectura",
+      "Una sola señal de color, usada con avaricia",
+      "Cuatro tamaños tipográficos. No hay un quinto",
+      "Superficies planas en reposo; la sombra es feedback, no adorno",
+      "Contraste verificado contra WCAG AA en cada par de tokens, no asumido",
+      "Movimiento corto, con freno suave, y desactivable por prefers-reduced-motion"
+    ],
+    "rules": [
+      {
+        "name": "The One Signal Rule",
+        "body": "La brasa ocupa ≤10% de cualquier pantalla. Un CTA primario por vista, una métrica destacada por tarjeta, un borde de acento por hero. Si dos elementos de la brasa compiten en el mismo viewport, uno de los dos está mal asignado. Su rareza es lo que la vuelve señal.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ember-Never-Reads Rule",
+        "body": "ember (#F7581E) nunca se usa como color de texto sobre superficie clara: da 3.15:1 y falla AA. Para texto de énfasis sobre claro existe ember-text (#D03D07). Un text-primary sobre bg-background en tema claro es un bug de contraste, no una decisión estética.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Temperature Rule",
+        "body": "La paleta tiene exactamente dos temperaturas: navy frío y brasa cálida. No entran terceros hues. Un verde de \"éxito\" o un azul de \"info\" romperían el sistema; el estado se comunica con jerarquía y copy, no con un color nuevo.",
+        "section": "colors"
+      },
+      {
+        "name": "The Four Sizes Rule",
+        "body": "El sistema tiene exactamente cuatro tamaños: display, heading, body, label. Cada uno viene con su line-height y su weight pegados en el token. Un text-2xl suelto o un text-[19px] arbitrario está saliéndose del sistema; si un nivel de jerarquía nuevo hace falta de verdad, se agrega al token, no a la clase.",
+        "section": "typography"
+      },
+      {
+        "name": "The Array Is For Titles Rule",
+        "body": "Array marca el h1 de una pieza que se presenta a sí misma: el hero de home y el titular de cada página de detalle. Nunca baja a un título de sección, a un título de card ni a un subtítulo — ahí manda Khand. La escasez es de nivel, no de página: un solo Array por vista.",
+        "section": "typography"
+      },
+      {
+        "name": "The Faux-Bold Debt",
+        "body": "Array-Regular.woff2 es el único peso instalado (400), pero el token display pide 600 — el navegador está sintetizando el bold. Es deuda visual conocida: al tocar el display, o se instala un peso real de Array o se baja el token a 400. No se resuelve engordando el tracking.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Container Rule",
+        "body": "Ninguna sección define su propio ancho máximo ni su propio padding horizontal. Si algo necesita sangrar a ancho completo (un fondo, un shader), el fondo se va full-bleed pero el contenido sigue viviendo dentro del Container.",
+        "section": "layout"
+      },
+      {
+        "name": "The Shadow-Is-Feedback Rule",
+        "body": "Una superficie sube de sombra únicamente por interacción del visitante (hover, foco) o porque flota de verdad sobre el resto del documento (sheet, popover). Una card que ya nace en shadow-lg está gritando sin que nadie la haya tocado.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Radius Ladder Rule",
+        "body": "El radio comunica escala: cuanto más grande la superficie, más grande la esquina. Un badge con radio de card, o una card con radio de botón, rompe la lectura de jerarquía. No existen radios fuera de la escalera 4 / 6 / 8 / 16 / full.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "Do reservar la brasa para una sola decisión por viewport — el CTA primario, la métrica clave o el borde de acento, nunca los tres a la vez.",
+      "Do usar text-primary-text (#D03D07) cuando la brasa tiene que ser texto sobre fondo claro, y bg-primary con text-primary-foreground cuando tiene que ser fondo.",
+      "Do pasar todo contenido nuevo por Container, y dejar que solo los fondos sangren a ancho completo.",
+      "Do mantener el ritmo vertical en py-12 md:py-16 para secciones de contenido; los heroes son la única excepción y ya tienen su tabla de variantes.",
+      "Do componer con los cuatro tamaños tipográficos existentes. Si ninguno encaja, la respuesta es revisar la jerarquía, no inventar un tamaño.",
+      "Do verificar contraste real contra AA antes de introducir cualquier par de color nuevo. Este sistema ya tuvo dos rondas de corrección de contraste (Phase 11 y Phase 25); la deuda se paga una sola vez.",
+      "Do dejar el borde de 1px en las cards de tema claro: sin él la superficie desaparece contra el fondo.",
+      "Do respetar prefers-reduced-motion en cualquier animación nueva. Ya existe una red de seguridad global en globals.css; no la sortees con !important."
+    ],
+    "donts": [
+      "Don't usar ember (#F7581E) como color de texto sobre superficie clara. Da 3.15:1 y falla AA.",
+      "Don't introducir un tercer hue. No hay verde de éxito ni azul de información en este sistema: el estado se comunica con jerarquía y copy.",
+      "Don't usar Array por debajo del h1: ni en títulos de sección, ni de card, ni en subtítulos.",
+      "Don't dar sombra pronunciada a algo que nadie está tocando. La sombra en reposo es shadow-sm y nada más.",
+      "Don't inventar radios fuera de la escalera 4 / 6 / 8 / 16 / full. En particular, rounded-xl (12px) es el default sin token de Tailwind y no pertenece a este sistema.",
+      "Don't poner gradientes morados, mockups de stock, badges de certificación o contadores de vanidad: es el lenguaje de la plantilla de agencia SEO, la anti-referencia más cercana y más peligrosa.",
+      "Don't caer en el hero centrado con blob más tres tarjetas de feature con icono más logos en gris. Esa es la landing SaaS genérica.",
+      "Don't simular una terminal, texto verde fosforescente, glitch o animación de tipeo. Este sitio demuestra ingeniería con ejecución, no con cosplay.",
+      "Don't agregar utilidades de Tailwind dentro de src/blocks/** asumiendo que compilan sin verificar el content glob — ya hubo un bug real de purga silenciosa por esto."
+    ]
+  }
+}
