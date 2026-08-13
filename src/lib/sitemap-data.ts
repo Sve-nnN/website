@@ -31,18 +31,22 @@ function resolveSiteUrl(): string {
 export const SITE_URL = resolveSiteUrl()
 
 type SitemapCollection = {
-  collection: 'pages' | 'posts' | 'case-studies' | 'authors' | 'categories' | 'websites'
+  collection: 'pages' | 'posts' | 'case-studies' | 'authors' | 'websites'
   prefix: string
   hasDrafts: boolean
   group: SitemapEntry['group']
 }
 
+// `categories` is deliberately NOT listed: there is no `/[locale]/categories/[slug]`
+// route in the app, so every category URL this used to emit (10 of them, both
+// locales) was a hard 404 advertised to Google from our own sitemap. Category
+// browsing lives on the blog listing instead (`/blog?category=<slug>`), and
+// `next.config.mjs` 301-redirects the legacy `/categories/<slug>` URLs there.
 const SITEMAP_COLLECTIONS: SitemapCollection[] = [
   { collection: 'pages', prefix: '', hasDrafts: true, group: 'pages' },
   { collection: 'posts', prefix: 'blog', hasDrafts: true, group: 'blog' },
   { collection: 'case-studies', prefix: 'case-studies', hasDrafts: true, group: 'case-studies' },
   { collection: 'authors', prefix: 'authors', hasDrafts: false, group: 'authors' },
-  { collection: 'categories', prefix: 'categories', hasDrafts: false, group: 'categories' },
   { collection: 'websites', prefix: 'websites', hasDrafts: true, group: 'websites' },
 ]
 
@@ -52,7 +56,7 @@ export type SitemapEntry = {
   url: string
   locale: SitemapLocale
   lastModified: string | Date
-  group: 'pages' | 'blog' | 'case-studies' | 'authors' | 'categories' | 'websites'
+  group: 'pages' | 'blog' | 'case-studies' | 'authors' | 'websites'
   alternates: { es: string; en: string }
 }
 
@@ -77,7 +81,6 @@ export const SITEMAP_GROUP_LABELS: Record<SitemapGroup, string> = {
   blog: 'Blog',
   'case-studies': 'Case Studies',
   authors: 'Authors',
-  categories: 'Categories',
   websites: 'Websites',
 }
 
