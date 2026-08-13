@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { getLocale } from 'next-intl/server'
-import { Link2, Code2, AtSign, Globe } from 'lucide-react'
 
 import type { Author } from '@/payload-types'
 
@@ -8,15 +7,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
 import { Prose } from '@/components/Prose'
-
-// Same generic icon substitutes as SiteFooter/ContactFormBlock — lucide-react
-// ships no brand icons.
-const socialIconMap = {
-  linkedin: Link2,
-  github: Code2,
-  x: AtSign,
-  website: Globe,
-}
+import { SocialIcon, socialLabels } from '@/components/SocialIcon'
 
 /**
  * Expanded E-E-A-T card — CONTEXT.md's explicit competitive differentiator
@@ -87,21 +78,24 @@ export async function AuthorCard({
 
       {author.socialLinks && author.socialLinks.length > 0 && (
         <div className="mt-4 flex gap-3">
-          {author.socialLinks.map((social, i) => {
-            const Icon = socialIconMap[social.platform] ?? Globe
-            return (
-              <a
-                key={social.id ?? i}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.platform}
-                className="text-muted-foreground transition-colors duration-fast hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus"
-              >
-                <Icon className="size-5" />
-              </a>
-            )
-          })}
+          {/* POLISH: measured 20x20px on production — under WCAG 2.2 AA's
+              24x24 target minimum (2.5.8) for an isolated control. The icon
+              keeps its 20px optical size inside a 40px target. Icons and
+              labels now come from the shared SocialIcon module, so this row
+              shows the same brand marks the footer does instead of the old
+              chain-link/angle-bracket stand-ins. */}
+          {author.socialLinks.map((social, i) => (
+            <a
+              key={social.id ?? i}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={socialLabels[social.platform] ?? social.platform}
+              className="inline-flex size-10 items-center justify-center rounded-md text-muted-foreground transition-colors duration-fast ease-out hover:text-primary-text focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus"
+            >
+              <SocialIcon platform={social.platform} className="size-5" />
+            </a>
+          ))}
         </div>
       )}
     </Card>

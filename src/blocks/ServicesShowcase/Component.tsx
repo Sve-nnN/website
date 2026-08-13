@@ -49,9 +49,12 @@ export async function ServicesShowcaseComponent(props: ServicesShowcaseBlockProp
             <Link
               key={page.id}
               href={buildServiceHref(locale, page.slug ?? '')}
-              className="group block"
+              className="group block h-full"
             >
-              <Card>
+              {/* POLISH: h-full on the link + card so cards in the same grid
+                  row share a bottom edge regardless of title/description
+                  length, instead of each sizing to its own content. */}
+              <Card className="h-full">
                 <CardContent className="p-6">
                   <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/10">
                     <Icon className="size-5 text-primary" />
@@ -62,7 +65,9 @@ export async function ServicesShowcaseComponent(props: ServicesShowcaseBlockProp
                       {page.meta.description}
                     </p>
                   )}
-                  <div className="mt-4 flex items-center gap-1 text-label text-primary">
+                  {/* POLISH: AA contrast — see AboutSection eyebrow note.
+                      #F7581E on the light card is 3.15:1; #D03D07 is 4.61:1. */}
+                  <div className="mt-4 flex items-center gap-1 text-label text-primary-text">
                     <span>{t('cta')}</span>
                     <ArrowRight className="size-4 transition-transform duration-fast ease-standard group-hover:translate-x-1" />
                   </div>
