@@ -33,8 +33,22 @@ export function LocaleSwitcher({ currentLocale }: { currentLocale: string }) {
   // `/en/services`. Correct known Services dual-segment paths; no-op otherwise.
   const target = normalizeServiceHref(rawTarget, otherLocale as 'es' | 'en')
 
+  // POLISH: measured 19x20px on production — under WCAG 2.2 AA's 24x24
+  // minimum target size (2.5.8), and it is an isolated control, so the inline
+  // exception does not apply. The accessible name was also just the raw code
+  // ("en"), which a screen reader announces as a two-letter word with no hint
+  // that it switches language.
+  const label = otherLocale === 'en' ? 'English' : 'Español'
+  const switchTo = currentLocale === 'en' ? `Switch to ${label}` : `Cambiar a ${label}`
+
   return (
-    <Link href={target || '/'} className="text-label uppercase" hrefLang={otherLocale}>
+    <Link
+      href={target || '/'}
+      hrefLang={otherLocale}
+      aria-label={switchTo}
+      title={switchTo}
+      className="inline-flex min-h-9 min-w-9 items-center justify-center rounded-md px-2 text-label uppercase transition-colors duration-fast ease-out hover:text-primary focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus"
+    >
       {otherLocale}
     </Link>
   )

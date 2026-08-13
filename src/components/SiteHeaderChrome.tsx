@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useSyncExternalStore } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -47,6 +47,33 @@ type Logo = {
 
 const SCROLL_THRESHOLD = 8
 
+/**
+ * POLISH: the scrolled state was tracked with `useState` + a `useEffect`
+ * scroll listener, and measured on production it never engaged — after
+ * scrolling 600px the header's class list still carried the idle value, so
+ * the whole mechanism was inert. `useSyncExternalStore` is the same fix this
+ * codebase already applied in HeroGrainGradient for an equivalent problem: it
+ * reads the real value during render (with an explicit server snapshot)
+ * rather than depending on an effect having run and a state update having
+ * landed.
+ */
+function subscribeToScroll(callback: () => void) {
+  window.addEventListener('scroll', callback, { passive: true })
+  window.addEventListener('resize', callback, { passive: true })
+  return () => {
+    window.removeEventListener('scroll', callback)
+    window.removeEventListener('resize', callback)
+  }
+}
+
+function getScrolledSnapshot() {
+  return window.scrollY > SCROLL_THRESHOLD
+}
+
+function getServerScrolledSnapshot() {
+  return false
+}
+
 /** Strips a known locale prefix and any trailing slash, so route comparisons
  * are locale-agnostic and slash-agnostic (e.g. `/en/services/` -> `/services`). */
 function normalizePath(path: string): string {
@@ -78,17 +105,12 @@ export function SiteHeaderChrome({
   logo: Logo
   locale: string
 }) {
-  const [scrolled, setScrolled] = useState(false)
+  const scrolled = useSyncExternalStore(
+    subscribeToScroll,
+    getScrolledSnapshot,
+    getServerScrolledSnapshot,
+  )
   const pathname = usePathname()
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > SCROLL_THRESHOLD)
-    }
-    handleScroll()
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   const currentPath = normalizePath(pathname)
 
@@ -101,7 +123,7 @@ export function SiteHeaderChrome({
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 text-secondary-foreground border-b border-border/20 transition-[background-color,box-shadow] duration-base ease-standard',
+        'sticky top-0 z-50 text-secondary-foreground transition-[border-color,box-shadow] duration-base ease-standard',
         // FIX (live bug reported by Juan, 2026-07-13): `bg-secondary/95` -
         // Tailwind's opacity slash-modifier doesn't work against a CSS
         // custom property defined as a plain hex string (`--secondary:
@@ -110,7 +132,16 @@ export function SiteHeaderChrome({
         // white nav text with nothing behind it. Solid bg-secondary (same
         // as the idle state) at both scroll states — the shadow/blur still
         // differentiate the scrolled state.
-        scrolled ? 'bg-secondary shadow-lg' : 'bg-secondary shadow-md',
+        // POLISH: both states used to be `bg-secondary` with only shadow-md vs
+        // shadow-lg between them — a difference nobody can see on a navy band,
+        // for a state that never engaged anyway. The header now sits flat and
+        // borderless while the page is at rest and gains a hairline plus a
+        // real shadow once content scrolls under it, which is what the
+        // system's own rule asks for: depth is a response, not decoration.
+        'bg-secondary',
+        scrolled
+          ? 'border-b border-border/20 shadow-lg'
+          : 'border-b border-transparent shadow-none',
       )}
     >
       <Container className="flex items-center justify-between py-4">
@@ -124,9 +155,20 @@ export function SiteHeaderChrome({
           )}
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8">
+        {/* POLISH: the landmark had no accessible name, and the page exposes
+            more than one nav (this, the breadcrumb trail, the footer), so a
+            screen-reader user got an unlabelled list of "navigation" regions. */}
+        <nav
+          aria-label={locale === 'en' ? 'Main' : 'Principal'}
+          className="hidden md:flex items-center gap-8"
+        >
           <NavigationMenu>
-            <NavigationMenuList>
+            {/* POLISH: NavigationMenuList's own default is `space-x-1`, i.e. 4px
+                between items — measured 4px on production. With Khand's
+                condensed letterforms "Casos de éxito Autores Contacto" read as
+                one run-on string instead of four destinations. 24px separates
+                them without stretching the group past the CTA. */}
+            <NavigationMenuList className="space-x-0 gap-6">
               {navItems.map((item, i) => {
                 const active = isActive(item)
                 return (
@@ -168,8 +210,13 @@ export function SiteHeaderChrome({
             </Button>
           </SheetTrigger>
           <SheetContent>
-            <SheetTitle className="sr-only">Navigation menu</SheetTitle>
-            <nav className="flex flex-col mt-8">
+            <SheetTitle className="sr-only">
+              {locale === 'en' ? 'Navigation menu' : 'Menú de navegación'}
+            </SheetTitle>
+            <nav
+              aria-label={locale === 'en' ? 'Main' : 'Principal'}
+              className="flex flex-col mt-8"
+            >
               <div className="flex flex-col gap-1">
                 {navItems.map((item, i) => {
                   const active = isActive(item)
@@ -181,8 +228,15 @@ export function SiteHeaderChrome({
                       className={cn(
                         // FIX (26-REVIEW WR-01): see desktop nav comment above — same
                         // twMerge-dedup requirement applies to the mobile Sheet nav.
-                        'font-heading rounded-md px-3 py-3 min-h-11 flex items-center border-b-2 border-transparent no-underline text-foreground hover:border-primary hover:bg-muted focus-visible:border-primary focus-visible:bg-muted transition-colors duration-fast ease-out text-body',
-                        active && 'border-primary text-primary',
+                        // POLISH: the active state was a 2px bottom border on a
+                        // 6px-rounded row with a background — the straight rule
+                        // cut across the rounded corners. In a stacked sheet a
+                        // filled row already reads as "you are here", so the
+                        // state is carried by surface and text colour instead.
+                        // `primary-text` (4.61:1), not `primary` (3.15:1),
+                        // because this sits on the light sheet surface.
+                        'font-heading rounded-md px-3 py-3 min-h-11 flex items-center no-underline text-foreground hover:bg-muted focus-visible:outline-none focus-visible:bg-muted focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus transition-colors duration-fast ease-out text-body',
+                        active && 'bg-muted text-primary-text font-semibold',
                       )}
                     />
                   )
