@@ -9,6 +9,8 @@ import { JsonLd } from '@/components/JsonLd'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { Container } from '@/components/Container'
+import { Breadcrumbs } from '@/components/Breadcrumbs'
+import { buildAuthorsTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { AuthorCard } from '@/components/AuthorCard'
 import { PostCard } from '@/components/PostCard'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
@@ -122,8 +124,9 @@ const copy = {
   es: {
     posts: 'Artículos',
     caseStudies: 'Casos de éxito',
-    home: 'Inicio',
-    authors: 'Autores',
+    // `home`/`authors` used to live here purely to label the hand-rolled
+    // breadcrumb JSON-LD. Those labels now come from lib/breadcrumbs.ts, and
+    // keeping a second copy here would be an invitation to let the two drift.
     expertise: 'Áreas de especialización',
     education: 'Educación y Certificaciones',
     experience: 'Experiencia',
@@ -136,8 +139,6 @@ const copy = {
   en: {
     posts: 'Posts',
     caseStudies: 'Case Studies',
-    home: 'Home',
-    authors: 'Authors',
     expertise: 'Expertise',
     education: 'Education & Certifications',
     experience: 'Experience',
@@ -205,19 +206,19 @@ export default async function AuthorProfilePage({
       : {}),
   }
 
-  const breadcrumbData = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: t.home, item: SITE_URL },
-      { '@type': 'ListItem', position: 2, name: t.authors, item: `${SITE_URL}/authors` },
-      { '@type': 'ListItem', position: 3, name: doc.name, item: `${SITE_URL}/authors/${doc.slug}` },
-    ],
-  }
+  // POLISH: this used to be a hand-rolled BreadcrumbList with hardcoded
+  // labels and URLs — and, more importantly, no visible counterpart anywhere
+  // on the page. Now both the markup and the rendered trail come from the same
+  // array, through the same helper every other section already uses.
+  const trail = buildAuthorsTrail(locale as 'es' | 'en', {
+    slug: doc.slug ?? slug,
+    title: doc.name,
+  })
 
   return (
     <main>
       <Container className="py-16">
+        <Breadcrumbs trail={trail} className="mb-8" />
         <AuthorCard author={doc} asPageHeading />
 
         {doc.expertise && doc.expertise.length > 0 && (
@@ -280,18 +281,27 @@ export default async function AuthorProfilePage({
                   const dateRange = formatDateRange(item.startDate, item.endDate, locale, t.present)
 
                   return (
+                    // POLISH: the date line only rendered when a date existed,
+                    // so on an entry without one the dot lined up with the role
+                    // instead of the date — measured on production, entry 1's
+                    // dot sat beside an <h3> while entries 2 and 3 sat beside a
+                    // <p>, and the reading order flipped between items. The
+                    // slot is now always present; when there is no date it is
+                    // simply empty, and every dot lines up with the same thing.
                     <li key={item.id ?? i} className="relative">
                       <span
                         aria-hidden
                         className="absolute -left-8 top-1 size-3.5 rounded-full border-2 border-background bg-primary"
                       />
-                      {dateRange && (
-                        <p className="text-label text-muted-foreground">{dateRange}</p>
-                      )}
+                      <p className="min-h-5 text-label text-muted-foreground">
+                        {dateRange || ' '}
+                      </p>
                       <h3 className="font-heading text-body font-semibold">{item.role}</h3>
                       <p className="text-body text-muted-foreground">{item.company}</p>
                       {item.description && (
-                        <p className="mt-2 text-body text-muted-foreground">{item.description}</p>
+                        <p className="mt-2 text-body text-muted-foreground max-w-[70ch]">
+                          {item.description}
+                        </p>
                       )}
                     </li>
                   )
@@ -350,7 +360,9 @@ export default async function AuthorProfilePage({
                           href={event.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="mt-3 inline-flex items-center gap-1 text-label text-primary hover:underline"
+                          // POLISH: `text-primary` is 3.15:1 on the light card
+                          // at 14px — below AA. `text-primary-text` is 4.61:1.
+                          className="mt-3 inline-flex min-h-6 items-center gap-1 rounded-sm text-label text-primary-text hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus"
                         >
                           {t.watchLink}
                           <ExternalLink className="size-3.5" />
@@ -388,7 +400,7 @@ export default async function AuthorProfilePage({
       </Container>
 
       <JsonLd data={personData} />
-      <JsonLd data={breadcrumbData} />
+      <JsonLd data={buildBreadcrumbJsonLd(trail)} />
     </main>
   )
 }
