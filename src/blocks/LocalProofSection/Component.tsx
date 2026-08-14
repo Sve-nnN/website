@@ -2,14 +2,28 @@ import type { LocalProofSectionBlock as LocalProofSectionBlockProps } from '@/pa
 
 import { Container } from '@/components/Container'
 import { Card, CardContent } from '@/components/ui/card'
+import { isPlaceholder, withoutPlaceholders } from '@/lib/placeholder'
 
 export function LocalProofSectionComponent(props: LocalProofSectionBlockProps) {
-  const { stats, testimonial } = props
+  // The seeded stats and testimonial were never replaced with real figures, so
+  // production rendered "[PLACEHOLDER] Reemplazar con dato real (clientes en
+  // Espana)" under a big zero, and a testimonial card quoting its own TODO.
+  // Both are filtered out here rather than trusted from the CMS.
+  const stats = withoutPlaceholders(props.stats, ['value', 'label'])
+  const testimonial = isPlaceholder(props.testimonial?.quote) ? undefined : props.testimonial
+
+  // With nothing real left the block would still paint its 4rem of vertical
+  // padding, leaving an unexplained gap between the hero and whatever follows.
+  // Render nothing instead. Lima keeps its one genuine stat (the 2025 DinoRANK
+  // workshop) so only Madrid takes this path today.
+  if (stats.length === 0 && !testimonial?.quote) {
+    return null
+  }
 
   return (
     <Container className="py-16">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-        {stats?.map((stat, i) => (
+        {stats.map((stat, i) => (
           <div key={stat.id ?? i} className="text-center sm:text-left">
             <p className="text-display font-display font-semibold text-primary tracking-tight tabular-nums">
               {stat.value}
