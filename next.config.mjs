@@ -31,6 +31,34 @@ const nextConfig = {
       { source: '/en/categories/:slug', destination: '/en/blog/:slug', permanent: true },
       { source: '/categories', destination: '/blog', permanent: true },
       { source: '/en/categories', destination: '/en/blog', permanent: true },
+
+      // `/blog/payloadcms-tutorial` is a leftover seed fixture that never got
+      // published (see the docblock in scripts/publish-draft-content.ts), but
+      // Google indexed it anyway: over the 90 days to 2026-08-14 it drew 84
+      // impressions and 3 clicks at average position 17.26, all landing on a
+      // 404. It is the only legacy blog URL without a redirect — every other
+      // one (`/blog/tablas-hash`, `/blog/nextjs-seo`, ...) already 308s to its
+      // categorised home.
+      //
+      // Target is the published post covering the same subject
+      // (`/blog/development/payload-cms-guide`, live in both locales), NOT the
+      // draft fixture: publishing seed content to satisfy a redirect would put
+      // unreviewed text in front of the traffic that is already arriving.
+      //
+      // This lives here rather than in the `redirects` collection because the
+      // Neon instance is unreachable from a dev machine (TCP connects, the
+      // Postgres handshake resets), and because the `/categories` cleanup
+      // above already set the precedent for legacy-URL redirects in code.
+      {
+        source: '/blog/payloadcms-tutorial',
+        destination: '/blog/development/payload-cms-guide',
+        permanent: true,
+      },
+      {
+        source: '/en/blog/payloadcms-tutorial',
+        destination: '/en/blog/development/payload-cms-guide',
+        permanent: true,
+      },
     ]
   },
 }
