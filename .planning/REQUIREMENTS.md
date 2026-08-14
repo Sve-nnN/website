@@ -116,43 +116,43 @@ Diferidos. Reconocidos pero fuera de este roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BASE-01 | Phase 44 | Pending |
-| BASE-02 | Phase 44 | Pending |
-| BASE-03 | Phase 44 | Pending |
+| BASE-01 | Phase 45 | Pending |
+| BASE-02 | Phase 45 | Pending |
+| BASE-03 | Phase 45 | Pending |
 | DEC-01 | Phase 44 | Pending |
 | DEC-02 | Phase 44 | Pending |
 | DEC-03 | Phase 44 | Pending |
 | DEC-04 | Phase 44 | Pending |
 | DEC-05 | Phase 44 | Pending |
-| LEG-01 | Phase 45 | Pending |
-| LEG-02 | Phase 45 | Pending |
-| LEG-03 | Phase 45 | Pending |
-| LEG-04 | Phase 45 | Pending |
-| AFF-01 | Phase 45 | Pending |
-| AFF-02 | Phase 45 | Pending |
-| AFF-03 | Phase 45 | Pending |
-| AFF-04 | Phase 45 | Pending |
-| AFF-05 | Phase 45 | Pending |
-| AFF-06 | Phase 45 | Pending |
-| GO-01 | Phase 46 | Pending |
-| GO-02 | Phase 46 | Pending |
-| GO-03 | Phase 46 | Pending |
-| GO-04 | Phase 46 | Pending |
-| STACK-01 | Phase 47 | Pending |
-| STACK-02 | Phase 47 | Pending |
-| STACK-03 | Phase 47 | Pending |
-| STACK-04 | Phase 47 | Pending |
-| STACK-05 | Phase 47 | Pending |
-| STACK-06 | Phase 47 | Pending |
-| INL-01 | Phase 47 | Pending |
-| INL-02 | Phase 47 | Pending |
-| MAIL-01 | Phase 48 | Pending |
-| MAIL-02 | Phase 48 | Pending |
-| MAIL-03 | Phase 48 | Pending |
-| MAIL-04 | Phase 48 | Pending |
-| MAIL-05 | Phase 48 | Pending |
-| GATE-01 | Phase 49 | Pending |
-| GATE-02 | Phase 49 | Pending |
+| LEG-01 | Phase 46 | Pending |
+| LEG-02 | Phase 46 | Pending |
+| LEG-03 | Phase 46 | Pending |
+| LEG-04 | Phase 46 | Pending |
+| AFF-01 | Phase 46 | Pending |
+| AFF-02 | Phase 46 | Pending |
+| AFF-03 | Phase 46 | Pending |
+| AFF-04 | Phase 46 | Pending |
+| AFF-05 | Phase 46 | Pending |
+| AFF-06 | Phase 46 | Pending |
+| GO-01 | Phase 47 | Pending |
+| GO-02 | Phase 47 | Pending |
+| GO-03 | Phase 47 | Pending |
+| GO-04 | Phase 47 | Pending |
+| STACK-01 | Phase 48 | Pending |
+| STACK-02 | Phase 48 | Pending |
+| STACK-03 | Phase 48 | Pending |
+| STACK-04 | Phase 48 | Pending |
+| STACK-05 | Phase 48 | Pending |
+| STACK-06 | Phase 48 | Pending |
+| INL-01 | Phase 48 | Pending |
+| INL-02 | Phase 48 | Pending |
+| MAIL-01 | Phase 49 | Pending |
+| MAIL-02 | Phase 49 | Pending |
+| MAIL-03 | Phase 49 | Pending |
+| MAIL-04 | Phase 49 | Pending |
+| MAIL-05 | Phase 49 | Pending |
+| GATE-01 | Phase 50 | Pending |
+| GATE-02 | Phase 50 | Pending |
 
 **Coverage:**
 - v2.1 requirements: 37 total
@@ -163,13 +163,20 @@ Diferidos. Reconocidos pero fuera de este roadmap.
 
 | Phase | Requirements | Total |
 |-------|--------------|-------|
-| Phase 44 — Baseline de Regresión + Decisiones de Monetización | BASE-01..03, DEC-01..05 | 8 |
-| Phase 45 — Disclosure Legal + Esquema de Links de Afiliado | LEG-01..04, AFF-01..06 | 10 |
-| Phase 46 — Ruta /go + Fix de Middleware + Registro de Clics | GO-01..04 | 4 |
-| Phase 47 — Página de Stack + Links Inline en Contenido | STACK-01..06, INL-01, INL-02 | 8 |
-| Phase 48 — Captura de Email (Resend, env-gated) | MAIL-01..05 | 5 |
-| Phase 49 — Gate de Cierre de Monetización | GATE-01, GATE-02 | 2 |
+| Phase 44 — Decisiones de Monetización | DEC-01..05 | 5 |
+| Phase 45 — Baseline de Regresión ⚠️ BLOQUEADA | BASE-01..03 | 3 |
+| Phase 46 — Disclosure Legal + Esquema de Links de Afiliado | LEG-01..04, AFF-01..06 | 10 |
+| Phase 47 — Ruta /go + Fix de Middleware + Registro de Clics | GO-01..04 | 4 |
+| Phase 48 — Página de Stack + Links Inline en Contenido | STACK-01..06, INL-01, INL-02 | 8 |
+| Phase 49 — Captura de Email (Resend, env-gated) | MAIL-01..05 | 5 |
+| Phase 50 — Gate de Cierre de Monetización | GATE-01, GATE-02 | 2 |
+
+**⚠️ Phase 45 bloqueada por infraestructura (2026-08-13):** los 3 requirements BASE no se pueden ejecutar hasta que se resuelvan dos dependencias externas — (a) Neon caído (`read ECONNRESET` en endpoint directo y `-pooler`, "TCP 5432 unreachable" registrado desde antes de este milestone), sin el cual no renderiza ninguna página y no hay Lighthouse posible; (b) juan-tech.com no está dado de alta como proyecto en Ahrefs, la única vía a Search Console disponible en sesión — alternativa: Juan pega los números de GSC a mano.
+
+**Es un gate duro, no un ítem posponible.** El valor entero del baseline es ser una medición *previa*: si corre después de que las Phases 46-49 cambiaron el sitio, ya no mide nada y la Phase 50 se queda sin contra qué comparar. Ninguna fase que cambie un byte renderizado puede empezar antes de que Phase 45 cierre. Si Neon sigue caído cuando Phase 44 termine, el milestone se detiene ahí a propósito.
+
+**Efecto sobre DEC-02:** el modelo de ingresos se escribe paramétrico sobre `V` (tráfico mensual), con los tramos ya calculados para V=1.000 y V=10.000. `V` se reemplaza por el número real en Phase 45 sin rehacer el documento.
 
 ---
 *Requirements defined: 2026-08-13*
-*Last updated: 2026-08-13 — roadmap v2.1 creado (Phases 44-49), 37/37 requirements mapeados*
+*Last updated: 2026-08-13 — roadmap reestructurado: decisiones (Phase 44) separadas del baseline (Phase 45, bloqueada por Neon + GSC); fases posteriores renumeradas 46-50; 37/37 requirements mapeados*
