@@ -25,7 +25,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
-const BASE = (process.env.VERIFY_BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '')
+const BASE = (process.env.VERIFY_BASE_URL ?? 'http://localhost:3001').replace(/\/$/, '')
 
 // ---------------------------------------------------------------------------
 // Locale list — read from routing.ts so this script and the middleware can
@@ -66,6 +66,18 @@ const ANY_PREFIXED = new RegExp(
   `href="/(?:${PREFIXED_LOCALES.join('|')})(?=[/"?#])`,
   'g',
 )
+/**
+ * `href="/"` — a link to the bare site root, which IS the Spanish home URL.
+ * Deliberately its own constant: `UNPREFIXED_SECTION` above only matches the
+ * named content sections, so a root href matched nothing at all. That gap is
+ * exactly how the `/en` breadcrumb "Home" link kept pointing at the Spanish
+ * home page through a whole sitewide sweep.
+ */
+const BARE_ROOT_HREF = /href="\/"/g
+/** `href="/services…"` — the English services segment with no locale in front. */
+const UNPREFIXED_EN_SERVICES = /href="\/services(?=[/"?#])/g
+/** `href="/servicios…"` — the Spanish services segment, unprefixed. */
+const UNPREFIXED_ES_SERVICES = /href="\/servicios(?=[/"?#])/g
 
 // ---------------------------------------------------------------------------
 // Scoping helpers
@@ -87,6 +99,24 @@ function headerSlice(html) {
 function stripLocaleSwitcher(html) {
   const anchors = new RegExp(`<a\\b[^>]*hreflang="(?:${localeAlt})"[^>]*>.*?</a>`, 'gis')
   return html.replace(anchors, '')
+}
+
+/**
+ * Concatenation of every breadcrumb `<nav>` on the page. Scoping is required,
+ * not cosmetic: the header logo legitimately renders a root href on Spanish
+ * pages and the locale switcher does the same on English ones, so asserting
+ * root-href absence document-wide would false-fail on both.
+ *
+ * `aria-label="Breadcrumb"` is the marker because BOTH renderers emit it —
+ * `src/blocks/Hero/Component.tsx` (CMS-authored crumb urls, the leaky one) and
+ * `src/components/Breadcrumbs.tsx` plus the inline trails in the websites and
+ * case-study routes (helper-built urls from `src/lib/breadcrumbs.ts`). One
+ * helper therefore covers both sources. `<nav>` never nests, so a non-greedy
+ * match to the first `</nav>` is exact.
+ */
+function breadcrumbSlice(html) {
+  const navs = [...html.matchAll(/<nav\b[^>]*aria-label="Breadcrumb"[^>]*>.*?<\/nav>/gis)]
+  return navs.map((m) => m[0]).join('\n')
 }
 
 // ---------------------------------------------------------------------------
@@ -213,6 +243,61 @@ for (const path of ES_CONTROLS) {
   const scoped = stripLocaleSwitcher(page.html)
   assertNone('no locale prefix leaked into Spanish', scoped, ANY_PREFIXED, page.url)
   assertSome('Spanish section hrefs still unprefixed', scoped, UNPREFIXED_SECTION, page.url)
+}
+
+// 6. Breadcrumb trails, scoped to their own <nav>. The trail is the one place
+//    where a link to the BARE SITE ROOT is meaningful, and the root href is the
+//    shape assertion 2 structurally cannot see (it only knows the named content
+//    sections). `Hero.breadcrumbs` is a CMS array whose `label` is localized
+//    and whose `url` is not, so one url value is shared by both locales — an
+//    English reader clicking "Home" landed on the Spanish home page.
+let breadcrumbPagesSeen = 0
+
+for (const path of EN_PAGES) {
+  const page = pages.get(path)
+  if (!page) continue
+  const crumbs = breadcrumbSlice(page.html)
+  if (!crumbs) continue
+  breadcrumbPagesSeen++
+  const label = `${page.url} (breadcrumb)`
+  assertNone('breadcrumb has no link to the bare site root', crumbs, BARE_ROOT_HREF, label)
+  assertNone('breadcrumb has no unprefixed section href', crumbs, UNPREFIXED_SECTION, label)
+  // Positive half: absence must never be able to pass on its own.
+  assertSome('breadcrumb has a locale-prefixed href', crumbs, ANY_PREFIXED, label)
+}
+
+for (const path of ES_CONTROLS) {
+  const page = pages.get(path)
+  if (!page) continue
+  const crumbs = breadcrumbSlice(page.html)
+  if (!crumbs) continue
+  breadcrumbPagesSeen++
+  const label = `${page.url} (breadcrumb)`
+  // No-regression half — the Spanish trail must keep pointing at the root.
+  assertSome('Spanish breadcrumb still links the bare site root', crumbs, BARE_ROOT_HREF, label)
+  assertNone('no locale prefix leaked into Spanish breadcrumb', crumbs, ANY_PREFIXED, label)
+}
+
+// Coverage guard: an assertion that silently matches nothing is worse than no
+// assertion at all — this suite already fails a non-200 fetch for the same
+// reason.
+if (breadcrumbPagesSeen === 0) {
+  fail('breadcrumb coverage', 'no fetched page rendered a <nav aria-label="Breadcrumb">')
+} else {
+  pass(`breadcrumb coverage — ${breadcrumbPagesSeen} page(s) inspected`)
+}
+
+// 7. Services-segment latch. The services URL segment is itself translated
+//    (`/servicios` vs `/services`), so an unprefixed English segment or a
+//    Spanish segment surfacing on an /en page both mean the reader was handed
+//    the wrong locale. Both hold on production today — this locks the good
+//    state rather than fixing a live defect.
+for (const [path, page] of pages) {
+  const scoped = stripLocaleSwitcher(page.html)
+  assertNone('no unprefixed English services href', scoped, UNPREFIXED_EN_SERVICES, page.url)
+  if (EN_PAGES.includes(path)) {
+    assertNone('no Spanish services href on an /en page', scoped, UNPREFIXED_ES_SERVICES, page.url)
+  }
 }
 
 console.log(`\n${passed} passed, ${failed} failed`)
