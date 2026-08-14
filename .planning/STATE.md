@@ -6,7 +6,7 @@ status: planning
 last_updated: "2026-08-13T22:05:03.000Z"
 last_activity: 2026-08-13
 progress:
-  total_phases: 6
+  total_phases: 7
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -24,9 +24,9 @@ See: .planning/PROJECT.md (updated 2026-07-31)
 
 ## Current Position
 
-Phase: 44 — Baseline de Regresión + Decisiones de Monetización (not started)
+Phase: 44 — Decisiones de Monetización (not started)
 Plan: —
-Status: Roadmap v2.1 creado (Phases 44-49, 37/37 requirements mapeados) — listo para `/gsd:plan-phase 44`
+Status: Roadmap v2.1 reestructurado (Phases 44-50, 37/37 requirements mapeados) — listo para `/gsd:plan-phase 44`. Phase 45 (Baseline de Regresión) queda BLOQUEADA por Neon caído + juan-tech.com sin proyecto en Ahrefs, y es gate duro: ninguna fase que renderice (46-49) puede empezar antes de que cierre
 Last activity: 2026-08-13 — Quick task 260813-o0n completado: `Link` locale-aware en todo el sitio (los links internos en `/en` ya no caen al español). Verificación HTTP en vivo pendiente por Neon caído
 
 ## Performance Metrics
