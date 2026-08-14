@@ -1,9 +1,19 @@
 import Image from 'next/image'
-// Deliberately the PLAIN link, not the locale-aware `Link` from
-// `@/i18n/navigation`: the only `<Link>` here renders a breadcrumb url, already
-// locale-prefixed by `src/lib/breadcrumbs.ts`. The hero's CTA row goes through
-// `CMSLink`, which IS locale-aware.
-import Link from 'next/link'
+// Mixed file on purpose, and the reason is the breadcrumb trail: `crumb.url` is
+// admin-authored, so its shape is unknown at render time. It arrives from TWO
+// different sources. (1) The CMS array field `Hero.breadcrumbs` — see
+// `src/blocks/Hero/config.ts`, where `label` is `localized: true` but `url` is
+// NOT, so both locales share one url value and an unprefixed `/` renders as a
+// Spanish link on an `/en` page. (2) A `blockProps` override from the four
+// Services pages, which pass a trail built by `src/lib/breadcrumbs.ts` — those
+// urls already carry the locale segment. The old comment here claimed only (2)
+// existed, which is how the `/en/blog` leak survived a sitewide sweep.
+//
+// So the component is picked per crumb by `isPrefixableHref`, the same guard
+// `CMSLink` and `SiteFooter` use: `LocaleLink` prefixes bare internal paths,
+// `PlainLink` renders anything already prefixed, external or non-http verbatim.
+// The hero's CTA row goes through `CMSLink`, which is locale-aware already.
+import PlainLink from 'next/link'
 import { MapPin, CheckCircle2 } from 'lucide-react'
 
 import type { HeroBlock as HeroBlockProps } from '@/payload-types'
@@ -11,6 +21,7 @@ import type { HeroBlock as HeroBlockProps } from '@/payload-types'
 import { Container } from '@/components/Container'
 import { CMSLink } from '@/components/CMSLink'
 import { HeroGrainGradient } from '@/components/HeroGrainGradient'
+import { Link as LocaleLink, isPrefixableHref } from '@/i18n/navigation'
 
 /**
  * Renders per `variant`: `home` uses the Display-size title over the
@@ -127,15 +138,17 @@ export function HeroComponent(props: HeroBlockProps) {
             <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-secondary-foreground/70">
               {breadcrumbs.map((crumb, i) => {
                 const isLast = i === breadcrumbs.length - 1
+                const CrumbLink =
+                  crumb.url && isPrefixableHref(crumb.url) ? LocaleLink : PlainLink
                 return (
                   <li key={crumb.id ?? crumb.url} className="flex items-center gap-x-2">
                     {i > 0 && <span aria-hidden="true">/</span>}
                     {isLast || !crumb.url ? (
                       <span aria-current={isLast ? 'page' : undefined}>{crumb.label}</span>
                     ) : (
-                      <Link href={crumb.url} className="hover:text-secondary-foreground underline-offset-2 hover:underline">
+                      <CrumbLink href={crumb.url} className="hover:text-secondary-foreground underline-offset-2 hover:underline">
                         {crumb.label}
-                      </Link>
+                      </CrumbLink>
                     )}
                   </li>
                 )

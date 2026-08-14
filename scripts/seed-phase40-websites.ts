@@ -419,6 +419,14 @@ async function upsertWebsite(
       collection: 'websites',
       id: docId,
       locale,
+      // `draft: false` is required, not cosmetic. `websites` runs drafts with
+      // autosave, so an update that omits it lands on a draft version and
+      // silently un-publishes a doc the `create` above published — the same
+      // root cause that stranded /blog and 6 of 7 case studies in production
+      // (see .planning/quick/260813-fix-prod-404-500-routes, RC-2). The docs
+      // stay in the DB and vanish from the site, which reads as "the feature
+      // was never built" rather than as a bug.
+      draft: false,
       data: {
         title: site.titleByLocale[locale],
         role: site.roleByLocale[locale],
