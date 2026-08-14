@@ -81,48 +81,51 @@ v01() {
 
 # ── SEO-02: hreflang de servicios ────────────────────────────────────────────
 v02() {
-  hdr 2 "Hreflang de la plantilla de servicios"
+  hdr 2 "Hreflang: el <head> manda, el header HTTP no contradice"
+  c_info "CORREGIDO 2026-08-14: el <head> SIEMPRE estuvo bien. Next emite hrefLang"
+  c_info "en camelCase y el grep original lo buscaba en minuscula, de ahi el falso"
+  c_info "diagnostico. El unico defecto real era el header Link de next-intl."
 
-  # el hreflang="en" de /servicios debe apuntar al slug traducido
-  if hreflang_of /servicios | grep -q 'en/services'; then
-    c_pass "/servicios declara hreflang=en -> /en/services"
-  else
-    c_fail "/servicios sigue apuntando a /en/servicios (slug sin traducir)"
-    hreflang_of /servicios | sed 's/^/          /'
-  fi
-  CHECKS=$((CHECKS + 1))
-
-  if hreflang_of /en/services | grep -qE 'juan-tech\.com/servicios'; then
-    c_pass "/en/services declara hreflang=es -> /servicios"
-  else
-    c_fail "/en/services sigue apuntando a /services"
-    hreflang_of /en/services | sed 's/^/          /'
-  fi
-  CHECKS=$((CHECKS + 1))
-
-  if hreflang_of /servicios/seo-consulting | grep -q 'en/services/seo-consulting'; then
-    c_pass "sub-slug /servicios/seo-consulting reciproco"
-  else
-    c_fail "sub-slug /servicios/seo-consulting sigue roto"
-  fi
-  CHECKS=$((CHECKS + 1))
-
-  # hreflang tambien en el <head>, no solo en el header HTTP
-  n=$(fetch /servicios | count '<link rel="alternate" hreflang=')
-  check_num "hreflang presente en el <head> de /servicios" "$n" ge 2
-
-  # URLs fantasma: no deben responder 200
-  for u in /services /en/servicios; do
-    s=$(status "$u")
-    if [ "$s" != "200" ]; then c_pass "URL fantasma $u ya no responde 200 (= $s)"
-    else c_fail "URL fantasma $u sigue respondiendo 200"; fi
-    CHECKS=$((CHECKS + 1))
+  # 1. el <head> es la anotacion primaria y debe estar completa en toda plantilla
+  for u in / /servicios /servicios/seo-consulting /en/services /blog \
+           /blog/tech-seo/nextjs-seo /case-studies/immigration-law-atlanta-seo \
+           /seo-tecnico-madrid /websites /authors/juan-carlos-angulo; do
+    n=$(fetch "$u" | count '<link rel="alternate" hreflang=')
+    check "3 alternates en el <head> de $u" "$n" "3"
   done
 
-  # regresion: lo que hoy funciona debe seguir funcionando
-  for u in / /blog/seo /case-studies/immigration-law-atlanta-seo; do
-    n=$(hreflang_of "$u" | wc -l | tr -d ' ')
-    check_num "regresion: $u conserva su hreflang" "$n" ge 3
+  # 2. el <head> de servicios apunta al slug traducido, no al prefijado
+  h=$(fetch /servicios | grep -oiE '<link rel="alternate"[^>]*>')
+  if echo "$h" | grep -q 'juan-tech.com/en/services"'; then
+    c_pass "el <head> de /servicios apunta a /en/services"
+  else
+    c_fail "el <head> de /servicios NO apunta a /en/services"
+    echo "$h" | sed 's/^/          /'
+  fi
+  CHECKS=$((CHECKS + 1))
+
+  # 3. el header HTTP ya no debe traer alternates que contradigan al <head>
+  n=$(hreflang_of /servicios | wc -l | tr -d ' ')
+  check "sin alternates en el header Link de /servicios" "$n" "0"
+
+  n=$(hreflang_of /en/services | wc -l | tr -d ' ')
+  check "sin alternates en el header Link de /en/services" "$n" "0"
+
+  # 4. regresion: borrar los alternates no debe llevarse puesto el preload
+  #    de fuentes, que viaja en el mismo header Link
+  n=$(headers / | grep -i '^link:' | tr ',' '\n' | count 'rel=preload')
+  check_num "el preload de fuentes sobrevive en el header Link" "$n" ge 1
+
+  # 5. las URLs con slug cruzado canonicalizan a la real (diseno deliberado,
+  #    ver src/lib/canonical.ts). NO son un defecto: se verifica que sigan asi.
+  for pair in "/services:juan-tech.com/servicios" "/en/servicios:juan-tech.com/en/services"; do
+    u="${pair%%:*}"; want="${pair##*:}"
+    if fetch "$u" | grep -oE '<link rel="canonical"[^>]*>' | grep -q "$want\""; then
+      c_pass "$u canonicaliza a $want"
+    else
+      c_fail "$u dejo de canonicalizar a $want"
+    fi
+    CHECKS=$((CHECKS + 1))
   done
 }
 
