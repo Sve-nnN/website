@@ -17,13 +17,7 @@ const nextConfig = {
     // Un solo formato (evita duplicar transformaciones avif+webp) y cache
     // largo: Cloudinary ya sirve la imagen optimizada, no hace falta
     // retransformar/recachear seguido.
-    // AVIF first, WebP as the fallback for anything that cannot decode it.
-    // Next picks the first entry the request's `Accept` header allows, so a
-    // modern browser gets AVIF and everything else still gets WebP exactly as
-    // before. Measured on 2026-08-14: `/_next/image` was answering with
-    // `content-type: image/webp` even when the browser offered AVIF, because
-    // this array listed WebP alone.
-    formats: ['image/avif', 'image/webp'],
+    formats: ['image/webp'],
     minimumCacheTTL: 2678400,
   },
   async redirects() {
