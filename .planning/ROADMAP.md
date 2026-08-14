@@ -1185,6 +1185,30 @@ El lookahead negativo está anclado inmediatamente después de la barra inicial,
 **Plans**: TBD
 **UI hint**: yes
 
+### Phase 48.5: Auditor Destacado
+
+**Goal**: `auditor.juan-tech.com` — herramienta propia de Juan, en producción y con usuarios reales — deja de estar escondida y pasa a ser prueba visible de pericia en el sitio principal: sección propia en Home, enlaces desde las landings de servicio donde es relevante, y desde la página de stack.
+**Depends on**: Phase 45 (baseline capturado antes del primer cambio renderizado) y Phase 48 (la página de stack debe existir para poder enlazarla desde ahí). Es independiente de toda la infraestructura de afiliados — no necesita la colección, ni `/go/`, ni el disclosure, porque **no es un link de afiliado sino producto propio**.
+**Requirements**: FEAT-01, FEAT-02, FEAT-03, FEAT-04, FEAT-05
+**Rationale (fase decimal, agregada 2026-08-13)**: se numera 48.5 y no 49 para no renumerar por tercera vez las fases de este milestone — el proyecto ya tiene precedente de fases decimales insertadas a mitad de milestone (10.5, 10.6, 10.7, 10.8 en v1.1). Se agrega a v2.1 porque destacar la herramienta es trabajo de contenido y enlaces del mismo tipo que la Phase 48, y porque el retorno es estrictamente mejor que el de los afiliados: 100% del valor queda en casa, ningún programa tiene que aceptar a Juan, y una herramienta propia funcionando demuestra el core value del proyecto de una forma que una lista de links no puede.
+**Constraints duras**:
+
+  - **No se cobra en v2.1.** Monetizar el auditor es v2.2, y el propio repo lo tiene previsto (`packages/quota/src/canRunAudit.ts`: *"Free-tier limits (v1, no billing — see PRD deferred: PAY in v2)"*, con `FREE_WEEKLY_LIMIT = 1` y `FREE_URL_LIMIT = 500` ya implementados como frontera de plan)
+  - **Sin `rel="sponsored"`** en estos enlaces: es producto propio, no afiliación. Aplicarle el tratamiento de afiliado sería incorrecto y además se leería como tal
+  - Cero JavaScript de cliente agregado — mismo presupuesto que el resto del milestone
+  - La copy dice la verdad sobre el plan gratuito (1 auditoría por semana por email verificado), no lo esconde
+
+**Success Criteria** (what must be TRUE):
+
+  1. Home renderiza una sección del auditor en ambos locales, con CTA a `auditor.juan-tech.com`, construida sobre el patrón de bloque ya establecido por `ServicesShowcase` — verificado por curl sobre el HTML renderizado
+  2. La sección expone datos concretos y verificables contra el repo del auditor (29 checks, 5 categorías, hasta 500 URLs, CWV vía PageSpeed Insights), no adjetivos de marketing
+  3. La landing de Auditoría SEO Técnica y la página de stack enlazan al auditor en ambos locales
+  4. Ningún enlace al auditor lleva `rel="sponsored"`; canonical y hreflang de las páginas tocadas quedan idénticos al baseline; el JavaScript de cliente agregado es 0 KB
+  5. Toda la copy nueva existe en EN y ES, pasada por humanizer, y declara el límite del plan gratuito
+
+**Plans**: TBD
+**UI hint**: yes
+
 ### Phase 49: Captura de Email (Resend, env-gated)
 
 **Goal**: Un visitante puede dejar su email en un bloque inline (nunca popup ni modal), confirmarlo por un doble opt-in implementado en el propio sitio, y recibir el lead magnet por una URL firmada que caduca — sin JavaScript de cliente y degradando limpio mientras `RESEND_API_KEY` siga siendo un placeholder.
@@ -1220,7 +1244,7 @@ El lookahead negativo está anclado inmediatamente después de la barra inicial,
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 → 32 → 33 → 34 → 35 → 36 → 37 → 38 → 39 → 40 → 41 → 42 → 43 → 44 → 45 → 46 → 47 → 48 → 49 → 50 (v1.1-v1.5 cerrados; v1.6 CERRADO [Phase 26-31 completas, Track A + Track B, 20/20 requirements] — Track A (motion/UI) cerrado 2026-07-13, Track B (humanización de contenido, retomada tras la pausa por v1.7) cerrado 2026-07-17 con gate final de Lighthouse/CWV PASS sobre las 10 rutas representativas de ambos tracks; v1.7 CERRADO [Phase 32-36 completas] — baseline de regresión → componentes nuevos de Local Landing → aplicación real a Madrid/Lima → polish pass de los 28 componentes restantes → gate de cierre (PASS, 6/6 rutas limpias); v1.8 [Phase 37, CERRADO] — fix de contenido/anonimización/datos GSC reales en los 6 case studies borrador ids 15-20 completo (4/4 planes); v1.9 [Phase 38-40, CERRADO] — schema `Websites` → componentes/rutas de frontend → poblado real de 6 sitios (stack confirmado con Juan, screenshots/Lighthouse capturados una sola vez); v2.0 [Phase 41-43, ACTIVO] — og:image dinámico vía Cloudinary → resto de meta tags (favicon/canonical/manifest/theme-color) → performance (respuesta de servidor + peso de HTML); v2.1 [Phase 44-50, ACTIVO] — decisiones de monetización (paramétricas, sin dependencias externas) → baseline de regresión [BLOQUEADA: Neon caído + juan-tech.com sin proyecto en Ahrefs; gate duro, ninguna fase que renderice puede empezar antes] → disclosure legal + esquema de `affiliate-links` (única migración de schema) → ruta `/go` + fix del matcher de middleware + registro de clics → página de stack + links inline en posts → captura de email env-gated → gate de cierre contra el baseline de Phase 45; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 10.5 → 10.6 → 10.7 → 10.8 → 11 → 12 → 13 → 14 → 15 → 16 → 17 → 18 → 19 → 20 → 21 → 22 → 23 → 24 → 25 → 26 → 27 → 28 → 29 → 30 → 31 → 32 → 33 → 34 → 35 → 36 → 37 → 38 → 39 → 40 → 41 → 42 → 43 → 44 → 45 → 46 → 47 → 48 → 48.5 → 49 → 50 (v1.1-v1.5 cerrados; v1.6 CERRADO [Phase 26-31 completas, Track A + Track B, 20/20 requirements] — Track A (motion/UI) cerrado 2026-07-13, Track B (humanización de contenido, retomada tras la pausa por v1.7) cerrado 2026-07-17 con gate final de Lighthouse/CWV PASS sobre las 10 rutas representativas de ambos tracks; v1.7 CERRADO [Phase 32-36 completas] — baseline de regresión → componentes nuevos de Local Landing → aplicación real a Madrid/Lima → polish pass de los 28 componentes restantes → gate de cierre (PASS, 6/6 rutas limpias); v1.8 [Phase 37, CERRADO] — fix de contenido/anonimización/datos GSC reales en los 6 case studies borrador ids 15-20 completo (4/4 planes); v1.9 [Phase 38-40, CERRADO] — schema `Websites` → componentes/rutas de frontend → poblado real de 6 sitios (stack confirmado con Juan, screenshots/Lighthouse capturados una sola vez); v2.0 [Phase 41-43, ACTIVO] — og:image dinámico vía Cloudinary → resto de meta tags (favicon/canonical/manifest/theme-color) → performance (respuesta de servidor + peso de HTML); v2.1 [Phase 44-50, ACTIVO] — decisiones de monetización (paramétricas, sin dependencias externas) → baseline de regresión [BLOQUEADA: Neon caído + juan-tech.com sin proyecto en Ahrefs; gate duro, ninguna fase que renderice puede empezar antes] → disclosure legal + esquema de `affiliate-links` (única migración de schema) → ruta `/go` + fix del matcher de middleware + registro de clics → página de stack + links inline en posts → captura de email env-gated → gate de cierre contra el baseline de Phase 45; Phase 6 en pausa, único ítem abierto aparte, retoma con el visto bueno de Juan)
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
@@ -1276,6 +1300,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 46. Disclosure Legal + Esquema de Links de Afiliado | 0/TBD | Not started | - |
 | 47. Ruta /go + Fix de Middleware + Registro de Clics | 0/TBD | Not started | - |
 | 48. Página de Stack + Links Inline en Contenido | 0/TBD | Not started | - |
+| 48.5. Auditor Destacado | 0/TBD | Not started | - |
 | 49. Captura de Email (Resend, env-gated) | 0/TBD | Not started | - |
 | 50. Gate de Cierre de Monetización | 0/TBD | Not started | - |
 </content>
