@@ -34,13 +34,19 @@ import config from '../src/payload.config'
 
 const LOCALES = ['es', 'en'] as const
 
-type TargetCollection = 'pages' | 'case-studies' | 'posts'
+type TargetCollection = 'pages' | 'case-studies' | 'posts' | 'websites'
 
 const INCLUDE_POSTS = process.argv.includes('--include-posts')
 
+// `websites` is in the default set: the Phase 40 seed creates each doc with
+// `_status: 'published'` but its two follow-up per-locale `payload.update()`
+// calls omit `draft: false`, and the collection runs drafts WITH autosave —
+// the same RC-2 shape that stranded /blog and the case studies. Every website
+// doc is reachable from /websites and from the Home block, and the collection
+// is in SITEMAP_COLLECTIONS, so a stranded draft is publicly visible as a gap.
 const TARGETS: TargetCollection[] = INCLUDE_POSTS
-  ? ['pages', 'case-studies', 'posts']
-  : ['pages', 'case-studies']
+  ? ['pages', 'case-studies', 'websites', 'posts']
+  : ['pages', 'case-studies', 'websites']
 
 async function publishCollection(
   payload: Awaited<ReturnType<typeof getPayload>>,
