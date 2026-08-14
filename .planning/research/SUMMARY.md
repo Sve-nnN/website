@@ -129,7 +129,7 @@ PITFALLS.md's EMAIL-first case is right about *value* and wrong about *feasibili
 
 ### Gaps to Address
 
-- **Amazon account status / 180-day clock** — "already active" is ambiguous; Amazon does not reinstate rejected IDs. *First action of DECIDE. If the clock is live, STACK-PAGE becomes deadline-driven.*
+- ~~**Amazon account status / 180-day clock**~~ — **RESUELTO 2026-08-13 (Phase 44).** Juan reaplicó y la cuenta está creada: ID `juantech02-20`, alta 2026-08-13, **el reloj de 180 días corre y vence el 2027-02-09**. El requisito es **3 ventas calificadas**, no un monto. La condición que iba a invertir el orden se cumplió, pero **las fases no se reordenan**: el orden actual ya le da a STACK-PAGE todo el margen disponible, y adelantarla exigiría saltear el baseline o el disclosure, gates más caros que este plazo. Detalle en `.planning/phases/44-decisiones-de-monetizaci-n/DECISIONS.md`.
 - **Juan's real current traffic** — Semrush and Hostinger-affiliate gate at ~1,000 monthly uniques, and the revenue model is parameterized on `V`. Nobody has stated the number. *Pull from Search Console during BASELINE.*
 - **Juan's tax residency / entity status** — Peru-only is assumed and makes Polar the only viable MoR. A Spanish/EU entity reopens Stripe *technically*, but MoR still wins on tax grounds. *One direct question in DECIDE; a confirmation, not a blocker.*
 - **`RESEND_API_KEY` is still a placeholder** — the credential already blocking Phase 6; EMAIL depends on it entirely. *Build behind the existing env-gate pattern (`hasCloudinaryCreds`) so local dev degrades cleanly — still confirm the subscriber and deliver the magnet when `RESEND_AUDIENCE_ID` is absent — and get a real key before EMAIL starts.*

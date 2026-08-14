@@ -15,7 +15,7 @@
 
 ### Decisiones y Postulaciones
 
-- [ ] **DEC-01**: El estado real de la cuenta de Amazon Associates queda documentado junto con el plan de reactivación — la cuenta se cerró por no alcanzar las 3 ventas calificadas, y la reactivación exige el disclosure ya publicado
+- [x] **DEC-01**: El estado real de la cuenta de Amazon Associates queda documentado junto con su deadline — la cuenta anterior se cerró por no alcanzar las 3 ventas calificadas; Juan **ya reaplicó el 2026-08-13** (ID `juantech02-20`) y el reloj de 180 días **corre hasta el 2027-02-09**, con el disclosure publicado como prerequisito para usar links
 - [ ] **DEC-02**: El modelo de ingresos queda escrito con la multiplicación explícita (tasa de Amazon 2,50% en componentes de PC, CTR de link, conversión de compra, ventana de cookie de 24h), no como una estimación vaga
 - [ ] **DEC-03**: La decisión de plataforma de pago queda registrada — Polar como merchant of record, motivada por que Stripe no opera en Perú y por que un vendedor establecido en Perú no tiene umbral de IVA europeo — con la cuenta abierta y cero código escrito en este milestone
 - [ ] **DEC-04**: Existe una lista priorizada de programas de afiliados con orden de postulación (DinoRANK → DigitalOcean → Kinsta), umbrales de aceptación, y la lista explícita de los que no tienen programa usable (Cloudflare, Cloudinary, Resend, Payload, Neon, Cursor, Claude, Ahrefs)
