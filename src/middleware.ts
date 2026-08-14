@@ -47,7 +47,48 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  return intlMiddleware(request)
+  return stripIntlAlternateLinks(intlMiddleware(request))
+}
+
+// next-intl's middleware advertises hreflang alternates in an HTTP `Link`
+// header, derived purely from `routing.localePrefix` — it prefixes the current
+// pathname with `/en` and calls that the English URL. That guess is right for
+// every template whose slug is identical in both languages (blog, case-studies,
+// websites, authors, the local landings) and WRONG for the only template with a
+// translated slug: `/servicios` <-> `/en/services`.
+//
+// On `/servicios` it advertised `hreflang="en" -> /en/servicios`. That URL does
+// resolve (both route folders exist under `[locale]`), but its canonical points
+// at `/en/services`. So the header sent Google to a page that declares itself
+// non-canonical, contradicting the `<head>` annotation on the very same
+// response.
+//
+// The `<head>` is already the complete and correct source: every route builds
+// its alternates through `buildAlternates`/`buildServiceAlternates` in
+// src/lib/canonical.ts, verified emitting all three `hrefLang` links across 12
+// templates in production. Teaching next-intl the slug map (`routing.pathnames`)
+// would also work, but it would add a second source of truth for the same fact
+// and put the localized-slug table in two places. Deleting the header leaves one
+// annotation, which is what Google reads anyway.
+//
+// Scoped to `Link` entries carrying `rel="alternate"`: any other `Link` value
+// (preload hints, for instance) is preserved.
+function stripIntlAlternateLinks(response: NextResponse): NextResponse {
+  const link = response.headers.get('link')
+  if (!link) return response
+
+  const kept = link
+    .split(/,\s*(?=<)/)
+    .filter((entry) => !/rel="?alternate"?/i.test(entry))
+    .join(', ')
+
+  if (kept) {
+    response.headers.set('link', kept)
+  } else {
+    response.headers.delete('link')
+  }
+
+  return response
 }
 
 export const config = { matcher: ['/', '/((?!api|admin|_next|_vercel|.*\\..*).*)'] }
