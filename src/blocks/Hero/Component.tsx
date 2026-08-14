@@ -20,6 +20,7 @@ import type { HeroBlock as HeroBlockProps } from '@/payload-types'
 
 import { Container } from '@/components/Container'
 import { CMSLink } from '@/components/CMSLink'
+import { omitPlaceholder } from '@/lib/placeholder'
 import { HeroGrainGradient } from '@/components/HeroGrainGradient'
 import { Link as LocaleLink, isPrefixableHref } from '@/i18n/navigation'
 
@@ -176,7 +177,7 @@ export function HeroComponent(props: HeroBlockProps) {
         {subtitle && (
           <p className="mt-6 text-body max-w-2xl text-secondary-foreground/80">{subtitle}</p>
         )}
-        {isLocalLanding && inlineStat && (
+        {isLocalLanding && omitPlaceholder(inlineStat) && (
           <div className="mt-4 flex items-center gap-2 text-body">
             <CheckCircle2 className="size-5 text-primary" />
             <span>{inlineStat}</span>
