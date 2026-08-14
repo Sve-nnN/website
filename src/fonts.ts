@@ -1,5 +1,5 @@
 import localFont from 'next/font/local'
-import { Khand, Geist, Geist_Mono } from 'next/font/google'
+import { Khand, Geist } from 'next/font/google'
 
 export const array = localFont({
   src: [
@@ -42,17 +42,16 @@ export const geistSans = Geist({
   display: 'swap',
 })
 
-// Mono is NOT preloaded. It is real — Tailwind's preflight maps
-// `code, kbd, pre, samp` to `--font-geist-mono`, and the cs-fundamentals posts
-// do carry code blocks (big-o-notation alone has 6 `<pre>` and 12 `<code>`), so
-// deleting it would break their typography. But it is worth nothing on the home
-// page, the services pages or the case studies, which contain no code at all,
-// and its 71.3 KB were competing for bandwidth against the font the LCP waits
-// on. Without preload it still downloads via @font-face wherever a code block
-// exists, just without a high-priority hint on the pages that never need it.
-export const geistMono = Geist_Mono({
-  subsets: ['latin'],
-  variable: '--font-geist-mono',
-  display: 'swap',
-  preload: false,
-})
+// There is deliberately no monospace webfont here.
+//
+// GeistMono was 71.3 KB with no unicode-range, preloaded on every route
+// including the ones without a single line of code. The first instinct was to
+// drop the preload and keep the file; the better answer is not to ship one at
+// all. `theme.fontFamily.mono` in tailwind.config.ts now names the platform
+// monospace stack — SF Mono on macOS, Consolas on Windows, DejaVu Sans Mono on
+// Linux — which costs zero bytes and is already resident. GitHub, Stack
+// Overflow and MDN all render code the same way.
+//
+// The tradeoff is that a code block does not look byte-identical across
+// operating systems. Inside a `<pre>`, on a blog read by developers, that is
+// not a cost worth 71.3 KB on the critical path.
