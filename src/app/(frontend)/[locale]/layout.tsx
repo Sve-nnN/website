@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 
-import { array, khand, geistSans, geistMono } from '@/fonts'
+import { array, khand, geistSans } from '@/fonts'
 import { routing } from '@/i18n/routing'
 import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
@@ -63,7 +63,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${array.variable} ${khand.variable} ${geistSans.variable} ${geistMono.variable}`}
+      className={`${array.variable} ${khand.variable} ${geistSans.variable}`}
     >
       <body className="font-sans">
         <NextIntlClientProvider>

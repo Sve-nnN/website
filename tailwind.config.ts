@@ -20,7 +20,22 @@ const config: Config = {
   			sans: ['var(--font-geist-sans)'],
   			display: ['var(--font-array)'],
   			heading: ['var(--font-khand)'],
-  			mono: ['var(--font-geist-mono)']
+  			// Sin webfont: los bloques de codigo usan la mono del sistema.
+  			// GeistMono pesaba 71,3 KB sin unicode-range y se descargaba en
+  			// todo post con <pre>/<code>, para una diferencia que nadie nota
+  			// dentro de un bloque de codigo. Esta cadena da SF Mono en macOS,
+  			// Consolas en Windows y DejaVu Sans Mono en Linux, ya instaladas.
+  			// Es lo mismo que hacen GitHub, Stack Overflow y MDN.
+  			mono: [
+  				'ui-monospace',
+  				'SFMono-Regular',
+  				'Menlo',
+  				'Monaco',
+  				'Consolas',
+  				'"Liberation Mono"',
+  				'"Courier New"',
+  				'monospace',
+  			]
   		},
   		fontSize: {
   			// UI-SPEC Typography table — 4 sizes only, each pinned to its line-height.
