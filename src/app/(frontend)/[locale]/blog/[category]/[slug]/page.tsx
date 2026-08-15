@@ -15,6 +15,7 @@ import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
+import { SITE_URL } from '@/lib/sitemap-data'
 import { getCachedPost } from '@/lib/cache'
 import { blogCategoryPath, blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 
@@ -127,13 +128,38 @@ export default async function PostPage({
     { slug: doc.slug ?? slug, title: doc.title },
   )
 
+  // SEO-09. Every key below names a real Payload source. Anything without one is
+  // omitted rather than filled in — fabricated structured data is a Google
+  // Structured Data Guidelines violation, not a cosmetic gap. That is why there
+  // is no `publisher.logo` here: the repo has no real logo asset to point at.
+  //
+  // `mainEntityOfPage` and `image` must be absolute, so they go through
+  // SITE_URL. `heroImageUrl` can already be absolute (Cloudinary) or a root
+  // path (local/fallback), hence the conditional.
+  const articleUrl = `${SITE_URL}${
+    locale === 'en'
+      ? `/en${blogPostPath(primaryCategorySlug, doc.slug ?? slug)}`
+      : blogPostPath(primaryCategorySlug, doc.slug ?? slug)
+  }`
+  const articleImage = heroImageUrl.startsWith('http')
+    ? heroImageUrl
+    : `${SITE_URL}${heroImageUrl}`
+
   const articleData = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: doc.title,
-    description: doc.excerpt,
+    // Previously emitted `""` on ES and `null` on EN. Omit instead.
+    ...(doc.excerpt ? { description: doc.excerpt } : {}),
     datePublished: doc.publishedAt,
-    author: { '@type': 'Person', name: author?.name },
+    // Real Payload timestamp — deliberately NOT a copy of datePublished, which
+    // would assert a modification date the CMS never recorded.
+    ...(doc.updatedAt ? { dateModified: doc.updatedAt } : {}),
+    ...(author?.name ? { author: { '@type': 'Person', name: author.name } } : {}),
+    // Personal portfolio, not an organisation: the publisher IS the person.
+    publisher: { '@type': 'Person', name: 'Juan Carlos Angulo', url: SITE_URL },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
+    image: articleImage,
     articleSection: primaryCategory?.title ?? primaryCategorySlug,
   }
 
