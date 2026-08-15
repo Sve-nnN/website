@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { getServicePage, getServiceMetadata } from '@/lib/services-data'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
+import { buildServiceJsonLd } from '@/lib/service-schema'
 import { JsonLd } from '@/components/JsonLd'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
@@ -40,6 +41,14 @@ export default async function ServicePage({
 
   return (
     <main>
+      <JsonLd
+        data={buildServiceJsonLd(
+          locale as 'es' | 'en',
+          doc.slug ?? slug,
+          doc.title,
+          doc.meta?.description,
+        )}
+      />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
       <RenderBlocks
         blocks={doc.content?.layout ?? []}
