@@ -8,7 +8,7 @@
  * contra suposiciones.
  *
  * Run:
- *   node --env-file=.env node_modules/.bin/tsx scripts/neon/00-report.ts
+ *   node --env-file=.env node_modules/.bin/tsx scripts/db/00-report.ts
  */
 import { getPayload } from 'payload'
 

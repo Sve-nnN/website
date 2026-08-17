@@ -11,7 +11,7 @@
  * Este script deja de lado la teoría y muestra las dos cosas lado a lado.
  *
  * Run:
- *   node --env-file=.env node_modules/.bin/tsx scripts/neon/03-verify-live.ts
+ *   node --env-file=.env node_modules/.bin/tsx scripts/db/03-verify-live.ts
  */
 import { getPayload } from 'payload'
 

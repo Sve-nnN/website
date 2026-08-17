@@ -177,7 +177,7 @@ There is no separate dev/staging database. `DATABASE_URI` in `.env` points at th
 Antes de escribir contenido o correr migraciones, **confirmá contra qué base estás**:
 
 ```bash
-node --env-file=.env node_modules/.bin/tsx scripts/neon/04-which-database.ts
+node --env-file=.env node_modules/.bin/tsx scripts/db/04-which-database.ts
 ```
 
 Imprime host, puerto y nombre de base (nunca usuario ni contraseña) y compara valores testigo contra lo que sirve producción. Si el host no es el de Dokploy, parás: lo que escribas no va a llegar al sitio, y peor, se va a verificar como exitoso.

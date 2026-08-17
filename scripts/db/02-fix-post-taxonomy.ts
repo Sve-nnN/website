@@ -13,8 +13,8 @@
  *
  * DRY-RUN POR DEFECTO.
  *
- *   node --env-file=.env node_modules/.bin/tsx scripts/neon/02-fix-post-taxonomy.ts
- *   node --env-file=.env node_modules/.bin/tsx scripts/neon/02-fix-post-taxonomy.ts --apply
+ *   node --env-file=.env node_modules/.bin/tsx scripts/db/02-fix-post-taxonomy.ts
+ *   node --env-file=.env node_modules/.bin/tsx scripts/db/02-fix-post-taxonomy.ts --apply
  *
  * El mapeo de abajo está VACÍO a propósito. No sé qué categoría le corresponde
  * a cada post huérfano ni cuál es el título EN correcto, y adivinarlo sería

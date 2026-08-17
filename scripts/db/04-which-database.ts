@@ -22,7 +22,7 @@
  * tiene configurada la app en Dokploy.
  *
  * Run:
- *   node --env-file=.env node_modules/.bin/tsx scripts/neon/04-which-database.ts
+ *   node --env-file=.env node_modules/.bin/tsx scripts/db/04-which-database.ts
  */
 import { getPayload } from 'payload'
 
