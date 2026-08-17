@@ -170,7 +170,17 @@ Do not make direct repo edits outside a GSD workflow unless the user explicitly 
 
 ## Database Safety (manual — not GSD-managed, do not overwrite)
 
-There is no separate dev/staging database. `DATABASE_URI` in `.env` points at the real Neon Postgres used in production. Any `payload migrate` run here writes to real data — there is no sandbox to catch a mistake before it lands.
+There is no separate dev/staging database. `DATABASE_URI` in `.env` points at the production Postgres, which lives **in Dokploy**. Any `payload migrate` run here writes to real data — there is no sandbox to catch a mistake before it lands.
+
+**Corrección (2026-08-17):** hasta esta fecha esta sección decía que `.env` apuntaba a "the real Neon Postgres used in production". Era falso y costó una tarde. El `.env` local seguía apuntando a una Neon vieja (`ep-hidden-heart-atc1vys8...neondb`) que ya no servía el sitio. Cuatro escrituras de contenido se aplicaron y **se auto-verificaron OK** contra esa base, mientras producción seguía sirviendo los valores viejos. Se persiguió caché durante un buen rato antes de descartarla (`cache-control: no-store`, cache-buster sin efecto, páginas `force-dynamic`, TTL de 60s ya vencido) y llegar a la causa real.
+
+Antes de escribir contenido o correr migraciones, **confirmá contra qué base estás**:
+
+```bash
+node --env-file=.env node_modules/.bin/tsx scripts/neon/04-which-database.ts
+```
+
+Imprime host, puerto y nombre de base (nunca usuario ni contraseña) y compara valores testigo contra lo que sirve producción. Si el host no es el de Dokploy, parás: lo que escribas no va a llegar al sitio, y peor, se va a verificar como exitoso.
 
 **Hard rule (updated 2026-07-12 — Juan: "no me preguntes por confirmaciones, solo hazlo si necesitas eliminar algo"):** additive/non-destructive migrations (`CREATE TABLE`, `ADD COLUMN`, new indexes) and normal content writes (`create`/`update` via Local API, seed scripts) do NOT need to pause for confirmation anymore — just do them and report what happened. Confirmation is required only before anything destructive: `DROP COLUMN`, `DROP TABLE`, `TRUNCATE`, a `delete` operation, or a field reshape that could lose existing data (e.g. localizing a field) — those still need Juan reading the migration SQL and approving by name before it runs.
 
