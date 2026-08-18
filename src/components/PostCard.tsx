@@ -46,7 +46,17 @@ export function PostCard({
           >
             <Image
               src={imageUrl}
-              alt={heroImage?.alt ?? post.title}
+              // The whole card is one <Link> wrapping this image and the <h3>
+              // below it, so the link's accessible name already carries the
+              // post title. Falling back to `post.title` here made a screen
+              // reader announce the same sentence twice per card, which axe
+              // flags as `image-redundant-alt` across six listing routes.
+              //
+              // An alt authored in the CMS that says something different is
+              // still worth reading, so it is kept. Anything else — missing, or
+              // a copy of the title — makes the image decorative in this
+              // context, and an empty alt is the correct way to say so.
+              alt={heroImage?.alt && heroImage.alt !== post.title ? heroImage.alt : ''}
               fill
               className="object-cover"
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
