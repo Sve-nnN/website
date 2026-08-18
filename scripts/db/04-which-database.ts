@@ -1,5 +1,6 @@
 /**
- * READ-ONLY. Identifica CONTRA QUÉ BASE está escribiendo tu `.env`.
+ * READ-ONLY. Identifica CONTRA QUÉ BASE está escribiendo tu `.env`, y compara
+ * un puñado de valores testigo contra lo que sirve producción EN VIVO.
  *
  * No imprime usuario ni contraseña, solo host, puerto y nombre de base, más
  * unos pocos valores testigo. Es seguro pegar la salida en el chat.
@@ -12,14 +13,20 @@
  *   - un cache-buster (`/?cb=<random>`) sigue devolviendo lo viejo
  *   - las páginas son `force-dynamic` y el `unstable_cache` tiene TTL de 60s,
  *     y pasaron minutos
- *   - `/blog/general/tablas-hash` sigue devolviendo 200 y
- *     `/blog/cs-fundamentals/tablas-hash` redirige, o sea producción sigue
+ *   - `/blog/general/tablas-hash` seguía devolviendo 200 y
+ *     `/blog/cs-fundamentals/tablas-hash` redirigía, o sea producción seguía
  *     viendo ese post SIN categoría, después de que la escritura se verificó
  *
- * La hipótesis que queda es que este `.env` apunta a una base distinta de la
- * que usa el contenedor de producción. Este script imprime lo necesario para
- * confirmarlo o descartarlo comparando contra la variable DATABASE_URI que
- * tiene configurada la app en Dokploy.
+ * La hipótesis que quedaba era que este `.env` apuntaba a una base distinta
+ * de la que usa el contenedor de producción. Se confirmó: era una Neon
+ * abandonada.
+ *
+ * CORRECCIÓN (2026-08-18): la primera versión de este script imprimía "lo que
+ * sirve producción" como texto fijo, congelado el día del incidente. Otra
+ * sesión lo detectó — esas líneas describían el estado de esa fecha, no una
+ * comprobación en vivo, y alguien podría haberlas leído como estado actual
+ * sin volver a mirar el sitio real. Ahora hace el fetch de verdad contra
+ * `VERIFY_BASE_URL` (default producción) cada vez que corre.
  *
  * Run:
  *   node --env-file=.env node_modules/.bin/tsx scripts/db/04-which-database.ts
@@ -27,6 +34,8 @@
 import { getPayload } from 'payload'
 
 import config from '../../src/payload.config'
+
+const LIVE_BASE = process.env.VERIFY_BASE_URL ?? 'https://juan-tech.com'
 
 function safeTarget(uri: string | undefined): string {
   if (!uri) return '(DATABASE_URI no definida)'
@@ -55,8 +64,14 @@ async function main() {
     overrideAccess: false,
   })
   const cats = ((th.docs[0] as any)?.categories ?? []).map((c: any) => c?.slug ?? c)
-  console.log(`  posts/tablas-hash categorías: ${JSON.stringify(cats)}`)
-  console.log(`    -> producción se comporta como si fuera []  (sirve /blog/general/tablas-hash)`)
+  const catSlug = cats[0] ?? 'general'
+  console.log(`  posts/tablas-hash categorías (base): ${JSON.stringify(cats)}`)
+  const liveRouteStatus = await fetch(`${LIVE_BASE}/blog/${catSlug}/tablas-hash`, {
+    redirect: 'manual',
+  }).then((r) => r.status)
+  console.log(
+    `    -> producción EN VIVO ahora mismo: /blog/${catSlug}/tablas-hash responde ${liveRouteStatus} ${liveRouteStatus === 200 ? 'OK' : '<-- no es 200'}`,
+  )
 
   const ns = await payload.find({
     collection: 'posts',
@@ -65,8 +80,13 @@ async function main() {
     limit: 1,
     overrideAccess: false,
   })
-  console.log(`  posts/nextjs-seo [en] título: ${(ns.docs[0] as any)?.title}`)
-  console.log(`    -> producción sirve: "Next Js Seo: Next.js SEO Best Practices for Optimal Visibility"`)
+  const dbNsTitle = (ns.docs[0] as any)?.title
+  console.log(`  posts/nextjs-seo [en] título (base): ${dbNsTitle}`)
+  const liveNsHtml = await fetch(`${LIVE_BASE}/en/blog/tech-seo/nextjs-seo`).then((r) => r.text())
+  const liveNsH1 = liveNsHtml.match(/<h1[^>]*>(.*?)<\/h1>/)?.[1]?.replace(/<[^>]*>/g, '')
+  console.log(
+    `    -> producción EN VIVO ahora mismo, H1: "${liveNsH1 ?? '(no encontrado)'}" ${liveNsH1 === dbNsTitle ? 'OK' : '<-- no coincide con la base'}`,
+  )
 
   const home = await payload.find({
     collection: 'pages',
@@ -75,8 +95,13 @@ async function main() {
     limit: 1,
     overrideAccess: false,
   })
-  console.log(`  pages/home [es] meta.title: ${(home.docs[0] as any)?.meta?.title}`)
-  console.log(`    -> producción sirve: "Juan Carlos Angulo — Inicio"`)
+  const dbHomeTitle = (home.docs[0] as any)?.meta?.title
+  console.log(`  pages/home [es] meta.title (base): ${dbHomeTitle}`)
+  const liveHomeHtml = await fetch(`${LIVE_BASE}/`).then((r) => r.text())
+  const liveHomeTitle = liveHomeHtml.match(/<title>([^<]*)<\/title>/)?.[1]
+  console.log(
+    `    -> producción EN VIVO ahora mismo, <title>: "${liveHomeTitle ?? '(no encontrado)'}" ${liveHomeTitle === dbHomeTitle ? 'OK' : '<-- no coincide con la base'}`,
+  )
 
   const counts: Record<string, number> = {}
   for (const c of ['pages', 'posts', 'case-studies', 'authors', 'websites', 'categories'] as const) {
