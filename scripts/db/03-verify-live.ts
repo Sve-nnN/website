@@ -45,6 +45,24 @@ function pick(html: string, re: RegExp): string {
   return m ? m[1] : '(no encontrado)'
 }
 
+/**
+ * El HTML servido escapa el `content="..."` del meta tag (Next.js: `'` ->
+ * `&#x27;`, `&` -> `&amp;`, etc.), así que comparar el string crudo de la base
+ * contra el HTML servido con `===` da falso "desincronizado" en cualquier
+ * description con apóstrofo. Confirmado en vivo el 2026-08-17: Home EN pasó a
+ * `title OK` pero `desc DESINCRONIZADO` solo por el `'` de "I'm a software...".
+ * Decodifica las entidades comunes antes de comparar.
+ */
+function decodeHtmlEntities(s: string): string {
+  return s
+    .replace(/&amp;/g, '&')
+    .replace(/&#x27;/g, "'")
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+}
+
 async function main() {
   const payload = await getPayload({ config })
   let mismatches = 0
@@ -60,8 +78,8 @@ async function main() {
     const d = docs[0] as any
 
     const html = await fetch(`${BASE}${t.url}`).then((r) => r.text())
-    const liveTitle = pick(html, /<title>([^<]*)<\/title>/)
-    const liveDesc = pick(html, /<meta name="description" content="([^"]*)"/)
+    const liveTitle = decodeHtmlEntities(pick(html, /<title>([^<]*)<\/title>/))
+    const liveDesc = decodeHtmlEntities(pick(html, /<meta name="description" content="([^"]*)"/))
 
     // El <title> del documento puede llevar sufijo de plantilla, así que se
     // compara por inclusión y no por igualdad estricta.
