@@ -1,5 +1,8 @@
+import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import config from '@payload-config'
+
+import { CACHE_TAGS } from '@/lib/cache-tags'
 
 // Import from service-slugs.ts directly (pure module, zero imports), NOT
 // from services-data.ts — that module now imports canonical.ts, which
@@ -94,19 +97,62 @@ export const SITEMAP_GROUP_LABELS: Record<SitemapGroup, string> = {
   websites: 'Websites',
 }
 
+// Cached at the module level rather than through src/lib/cache.ts's fetchers
+// on purpose: this file already imports `@payload-config` directly (see the
+// header comment on the circular-import break this file exists to avoid), and
+// `cache.ts` is the module that owns that dependency for page/component code.
+// Wrapping here keeps this file's import graph exactly as it already was.
+//
+// `getSitemapEntries` used to run its 5 collection queries in `Promise.all`
+// PLUS a 6th sequential one for categories -- up to 6 simultaneous find()
+// calls against `DATABASE_URI`, which is the direct (unpooled) connection
+// string (required so `payload migrate` gets real prepared statements; see
+// payload.config.ts). Measured against production on 2026-08-15:
+// `/sitemap.xml` and `/sitemap.html` were both serving 500s with an empty
+// urlset, the fallback the route already had wired for exactly this failure
+// mode. Sequencing the collection queries and caching the whole result cuts
+// both the peak connection count and how often this path runs at all.
+const getCachedSitemapEntries = unstable_cache(
+  fetchSitemapEntries,
+  ['sitemap-entries'],
+  {
+    // Only `posts`, `case-studies` and `categories` have a collection-wide tag
+    // that anything actually calls `revalidateTag` on (see cache-tags.ts).
+    // `Pages` only revalidates per-slug (`pages:<slug>`), and Authors/Websites
+    // have no cache-tag hooks at all — including `CACHE_TAGS.page('*')` or an
+    // invented `authors:all`/`websites:all` here would look like real
+    // invalidation coverage while doing nothing, since Next's cache tags are
+    // exact-string matches, not globs. Freshness for a new Page/Author/Website
+    // showing up in the sitemap rests entirely on the `revalidate` below.
+    tags: [CACHE_TAGS.posts(), CACHE_TAGS.caseStudies(), CACHE_TAGS.categories()],
+    // Longer than the 60s TTL the rest of the cache layer uses: the sitemap is
+    // read by crawlers on their own schedule, not by a visitor waiting on a
+    // page load, so a slightly stale listing costs nothing while a failed
+    // request under DB pressure costs the whole file. A new Page/Author/
+    // Website is live on its own URL immediately either way — this only
+    // delays how soon the sitemap ADVERTISES it, by at most 15 minutes.
+    revalidate: 900,
+  },
+)
+
 export async function getSitemapEntries(): Promise<SitemapEntry[]> {
+  return getCachedSitemapEntries()
+}
+
+async function fetchSitemapEntries(): Promise<SitemapEntry[]> {
   const payload = await getPayload({ config })
 
-  const entriesByCollection = await Promise.all(
-    SITEMAP_COLLECTIONS.map(async ({ collection, prefix, hasDrafts, group }) => {
-      const result = await payload.find({
-        collection,
-        limit: 0,
-        locale: 'all',
-        ...(hasDrafts ? { where: { _status: { equals: 'published' } } } : {}),
-      })
+  const entriesByCollection: SitemapEntry[][] = []
+  for (const { collection, prefix, hasDrafts, group } of SITEMAP_COLLECTIONS) {
+    const result = await payload.find({
+      collection,
+      limit: 0,
+      locale: 'all',
+      ...(hasDrafts ? { where: { _status: { equals: 'published' } } } : {}),
+    })
 
-      return result.docs.flatMap((doc) => {
+    entriesByCollection.push(
+      result.docs.flatMap((doc) => {
         // Service pages (index + 4 individual landings) live under
         // /servicios(/slug) (es) and /en/services(/slug) (en) — distinct
         // URL segments per locale, not the generic same-segment path this
@@ -164,9 +210,9 @@ export async function getSitemapEntries(): Promise<SitemapEntry[]> {
               alternates,
             }) satisfies SitemapEntry,
         )
-      })
-    }),
-  )
+      }),
+    )
+  }
 
   const categoryEntries = await getCategorySitemapEntries(payload)
 
