@@ -57,8 +57,8 @@ export function AuditOfferBlockComponent(props: AuditOfferBlockProps) {
 
             {includes && includes.length > 0 && (
               <ul className="mt-8 flex flex-col gap-3">
-                {includes.map((row, i) => (
-                  <li key={row.id ?? i} className="flex items-start gap-3 text-body">
+                {includes.map((row) => (
+                  <li key={row.id ?? row.item} className="flex items-start gap-3 text-body">
                     <Check
                       className="mt-1 size-4 shrink-0 text-primary"
                       aria-hidden="true"
@@ -100,8 +100,8 @@ export function AuditOfferBlockComponent(props: AuditOfferBlockProps) {
               action, and on desktop it simply runs under both columns. */}
           {links && links.length > 0 && (
             <div className="flex flex-wrap gap-4 md:col-span-2">
-              {links.map((row, i) => (
-                <CMSLink key={row.id ?? i} {...row.link} />
+              {links.map((row) => (
+                <CMSLink key={row.id ?? row.link?.label} {...row.link} />
               ))}
             </div>
           )}

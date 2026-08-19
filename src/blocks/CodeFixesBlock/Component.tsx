@@ -48,7 +48,7 @@ export function CodeFixesBlockComponent(props: CodeFixesBlockProps) {
         <div className="mt-10 flex flex-col gap-10 md:mt-14 md:gap-14">
           {fixes.map((fix, i) => (
             <article
-              key={fix.id ?? i}
+              key={fix.id ?? `${fix.filePath}-${fix.commitSha}`}
               className={
                 i > 0 ? 'border-t border-secondary-foreground/15 pt-10 md:pt-14' : undefined
               }
