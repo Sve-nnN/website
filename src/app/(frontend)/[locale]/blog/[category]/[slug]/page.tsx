@@ -1,10 +1,10 @@
-import Image from 'next/image'
 import { notFound, permanentRedirect } from 'next/navigation'
 
 import type { Author, Category, Post } from '@/payload-types'
 import { Link } from '@/i18n/navigation'
 import { JsonLd } from '@/components/JsonLd'
 import { Container } from '@/components/Container'
+import { PageHero } from '@/components/PageHero'
 import { Badge } from '@/components/ui/badge'
 import { AuthorByline } from '@/components/AuthorByline'
 import { AuthorCard } from '@/components/AuthorCard'
@@ -139,29 +139,22 @@ export default async function PostPage({
 
   return (
     <main>
-      <section className="relative">
-        <div className="relative aspect-[21/9] w-full">
-          <Image
-            src={heroImageUrl}
-            alt={heroImage?.alt ?? doc.title}
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
-          />
-        </div>
-        <Container className="py-8">
-          <div className="flex flex-wrap gap-2 mb-4">
-            {categories.map((cat) => (
-              <Link key={cat.id} href={blogCategoryPath(cat.slug ?? primaryCategorySlug)}>
-                <Badge variant="secondary">{cat.title}</Badge>
-              </Link>
-            ))}
-          </div>
-          <h1 className="font-display text-display tracking-tight">{doc.title}</h1>
-          <div className="mt-6 flex flex-wrap items-center gap-6">
-            {author && <AuthorByline author={author} />}
-            <div className="text-label text-muted-foreground">
+      {/* POLISH: the hero used to stack a 21/9 image band ABOVE the copy, the
+          same shape a case study already moved away from — on a 1440x812
+          viewport it ate the whole fold and pushed the h1 below it. The image
+          is now the hero's scrimmed background and the page renders the shared
+          `detail` template, so post, case study and website heroes finally
+          agree. The category chips moved out of the slot above the title
+          (where they read as a kicker) into the metadata row. */}
+      <PageHero
+        variant="detail"
+        trail={trail}
+        title={doc.title}
+        image={{ url: heroImageUrl, alt: heroImage?.alt ?? doc.title }}
+        metaSlot={
+          <>
+            {author && <AuthorByline author={author} tone="dark" />}
+            <div className="text-label text-secondary-foreground/80">
               {doc.publishedAt && (
                 <time dateTime={doc.publishedAt}>
                   {new Date(doc.publishedAt).toLocaleDateString(locale)}
@@ -170,9 +163,18 @@ export default async function PostPage({
               {' · '}
               {readingTimeMinutes} {locale === 'es' ? 'min de lectura' : 'min read'}
             </div>
-          </div>
-        </Container>
-      </section>
+            {categories.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {categories.map((cat) => (
+                  <Link key={cat.id} href={blogCategoryPath(cat.slug ?? primaryCategorySlug)}>
+                    <Badge variant="onDark">{cat.title}</Badge>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </>
+        }
+      />
 
       <Container className="py-8 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_16rem] gap-12">
         <article>

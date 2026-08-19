@@ -4,6 +4,9 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { Link } from '@/i18n/navigation'
 import { Container } from '@/components/Container'
+import { PageHero } from '@/components/PageHero'
+import { JsonLd } from '@/components/JsonLd'
+import { buildAuthorsTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { Badge } from '@/components/ui/badge'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
@@ -42,13 +45,18 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function AuthorsListPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const authors = await getAuthors(locale)
+  const trail = buildAuthorsTrail(locale as 'es' | 'en')
 
   return (
     <main>
-      <Container className="py-16">
-        <h1 className="font-display text-display">{locale === 'es' ? 'Autores' : 'Authors'}</h1>
+      <PageHero
+        variant="index"
+        trail={trail}
+        title={locale === 'es' ? 'Autores' : 'Authors'}
+      />
 
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <Container className="py-12 md:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {authors.map((author) => {
             const avatar = typeof author.avatar === 'object' ? author.avatar : null
             const firstCredential = author.credentials?.[0]
@@ -80,6 +88,7 @@ export default async function AuthorsListPage({ params }: { params: Promise<{ lo
           })}
         </div>
       </Container>
+      <JsonLd data={buildBreadcrumbJsonLd(trail)} />
     </main>
   )
 }
