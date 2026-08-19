@@ -139,9 +139,12 @@ export function HeroComponent(props: HeroBlockProps) {
 
           {/* The portrait comes AFTER the copy in source order so the h1 is
               the first thing on a phone, where the two columns collapse into
-              one and a leading image would push the headline out of the fold.
-              Ordered visually first only from `md` up, where there is room
-              for both.
+              one. It shipped with `order-first`, which did the exact opposite
+              of what this comment claimed: measured on a 390px viewport the
+              photo took the whole first screen and pushed the headline below
+              the fold. No order override — DOM order is already right in both
+              directions, since the grid puts the second child in the right-hand
+              column from `md` up.
 
               Why a face at all: of fifteen competitor home pages analysed,
               almost none show one, including the ones written by people who
@@ -149,7 +152,7 @@ export function HeroComponent(props: HeroBlockProps) {
               put on its page, and this whole site argues that one person does
               the audit and the code. */}
           {portrait?.url && (
-            <div className="order-first md:order-none">
+            <div>
               <Image
                 src={portrait.url}
                 alt={portrait.alt ?? title ?? ''}
