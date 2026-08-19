@@ -23,16 +23,27 @@ export function ClientLogo({
   src,
   alt,
   name,
+  featured = false,
 }: {
   src: string
   alt: string
   name: string
+  featured?: boolean
 }) {
   const [failed, setFailed] = useState(false)
 
   if (failed) {
+    // The fallback has to carry the same weight as the cell it replaces.
+    // Miami Herald is a featured client with no working logo, and at the
+    // default body size it read smaller than the logos beside it — the wall
+    // said "this one matters less", which is the opposite of what marking it
+    // featured means.
     return (
-      <span className="font-heading text-body leading-tight text-center text-muted-foreground">
+      <span
+        className={`font-heading leading-tight text-center text-muted-foreground ${
+          featured ? 'text-heading' : 'text-body'
+        }`}
+      >
         {name}
       </span>
     )

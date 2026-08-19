@@ -58,5 +58,27 @@ export const Clientes: CollectionConfig = {
           'Tipo de trabajo hecho para este cliente. Agrupa el muro de logos en la portada.',
       },
     },
+    /**
+     * Marca los clientes que un desconocido reconoce de entrada.
+     *
+     * Un muro donde los 28 logos pesan lo mismo desperdicia a los pocos que
+     * hacen el trabajo pesado: un visitante que no sabe quién es Juan no
+     * evalúa 28 marcas, engancha con la que ya conoce y a partir de ahí lee el
+     * resto. Los destacados salen primero y en celda más grande dentro de su
+     * grupo. La jerarquía la da el tamaño y nunca el color, porque el sistema
+     * tiene exactamente dos temperaturas y la brasa está reservada para la
+     * decisión de la página.
+     *
+     * Pocos, o deja de ser jerarquía: cuatro o cinco como máximo.
+     */
+    {
+      name: 'featured',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        description:
+          'Cliente reconocible: se muestra primero y más grande dentro de su grupo. Usalo con avaricia, cuatro o cinco a lo sumo.',
+      },
+    },
   ],
 }

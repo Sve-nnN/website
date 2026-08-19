@@ -675,6 +675,10 @@ export interface Cliente {
    * Tipo de trabajo hecho para este cliente. Agrupa el muro de logos en la portada.
    */
   workType?: ('seo' | 'desarrollo' | 'optimizacion') | null;
+  /**
+   * Cliente reconocible: se muestra primero y más grande dentro de su grupo. Usalo con avaricia, cuatro o cinco a lo sumo.
+   */
+  featured?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2604,6 +2608,7 @@ export interface ClientesSelect<T extends boolean = true> {
   logo?: T;
   websiteUrl?: T;
   workType?: T;
+  featured?: T;
   updatedAt?: T;
   createdAt?: T;
 }

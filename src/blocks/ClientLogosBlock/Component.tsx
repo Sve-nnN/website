@@ -32,14 +32,25 @@ function LogoCell({ client }: { client: Cliente }) {
   const logo = typeof client.logo === 'object' ? client.logo : null
   if (!logo?.url) return null
 
+  // Featured clients get a taller cell, which is the whole mechanism: a
+  // stranger does not evaluate 28 brands, they catch on the one they already
+  // know and read outward from it. Size carries the hierarchy on purpose —
+  // colour would mean a second signal competing with the page's one decision.
+  const cellHeight = client.featured ? 'h-16 md:h-20 max-w-[200px]' : 'h-12 max-w-[140px]'
+
   const image = (
     // POLISH (kept from the ungrouped version): normalizing on height alone
     // let each logo take whatever width its artwork implied — measured 48px
     // to 140px across one row, so wordmarks shouted and square marks
     // vanished. A fixed cell with `object-contain` gives every client the
     // same optical footprint.
-    <div className="flex h-12 w-full max-w-[140px] items-center justify-center">
-      <ClientLogo src={logo.url} alt={logo.alt ?? client.name} name={client.name} />
+    <div className={`flex w-full items-center justify-center ${cellHeight}`}>
+      <ClientLogo
+        src={logo.url}
+        alt={logo.alt ?? client.name}
+        name={client.name}
+        featured={Boolean(client.featured)}
+      />
     </div>
   )
 
@@ -86,6 +97,14 @@ export async function ClientLogosBlockComponent(
   const groups = Object.entries(grouped)
     .filter(([, members]) => members.length > 0)
     .sort((a, b) => b[1].length - a[1].length)
+    // Featured first inside each group, so the recognisable names open the row
+    // instead of landing wherever the collection happened to order them.
+    .map(([key, members]) => {
+      const sorted = [...members].sort(
+        (a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)),
+      )
+      return [key, sorted] as const
+    })
 
   return (
     <Container className="py-12 md:py-16">
@@ -103,7 +122,7 @@ export async function ClientLogosBlockComponent(
               <span aria-hidden="true" className="h-px flex-1 bg-border" />
             </h3>
 
-            <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-6 gap-y-8 justify-items-center">
+            <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 items-center gap-x-6 gap-y-8 justify-items-center">
               {members.map((client) => (
                 <LogoCell key={client.id} client={client} />
               ))}
