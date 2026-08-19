@@ -74,10 +74,10 @@ const COPY = {
   es: {
     logosTitle: 'Con quiénes trabajé',
     fixes: {
-      title: 'Este sitio es el caso de estudio',
+      title: 'Errores reales, con el commit que los corrige',
       intro:
-        'El código que escribo dentro del repositorio de un cliente no es mío para publicarlo, así que muestro el de acá. Este sitio corre sobre Next.js y Payload, el repositorio es público, y cada arreglo que sigue tiene su commit para que lo abras y lo leas por tu cuenta.',
-      repoLabel: 'Ver el repositorio',
+        'Cada uno de estos problemas estaba en este mismo sitio, y abajo está el cambio exacto que lo resolvió. El repositorio es público, así que podés abrir el commit y leerlo completo, no solo el pedazo que elegí mostrar.',
+      repoLabel: 'Ver el repositorio completo',
       items: [
         {
           symptom: 'Google recibía dos anotaciones de hreflang que se contradecían',
@@ -136,10 +136,10 @@ const COPY = {
   en: {
     logosTitle: 'Who I have worked with',
     fixes: {
-      title: 'This site is the case study',
+      title: 'Real bugs, with the commit that fixes them',
       intro:
-        'The code I write inside a client repository is not mine to publish, so I show the code from here instead. This site runs on Next.js and Payload, the repository is public, and every fix below links to its commit so you can open it and read it yourself.',
-      repoLabel: 'Open the repository',
+        'Every one of these was a problem on this site, and below each is the exact change that resolved it. The repository is public, so you can open the commit and read the whole thing, not just the part I chose to show.',
+      repoLabel: 'See the full repository',
       items: [
         {
           symptom: 'Google was getting two hreflang annotations that contradicted each other',
@@ -298,9 +298,22 @@ async function main() {
     const logos = byType('clientLogosBlock')
     const contact = byType('contactFormBlock')
 
+    // Reuse the existing layout whenever the new blocks are already in it, on
+    // BOTH passes. Rebuilding from scratch on the first locale would hand
+    // Payload block objects with no `id`, which it reads as new blocks — it
+    // would replace the rows and wipe the other locale's values, the exact
+    // bug this script hit the first time it ran. So a copy edit now updates
+    // in place instead of rebuilding, and the script can be re-run safely
+    // every time the wording changes.
+    const alreadyComposed =
+      current.some((b) => b.blockType === 'codeFixesBlock') &&
+      current.some((b) => b.blockType === 'auditOfferBlock')
+
     const layout = savedLayout
       ? applyLocaleCopy(savedLayout, copy)
-      : [
+      : alreadyComposed
+        ? applyLocaleCopy(current, copy)
+        : [
       // 1. Hero, kept exactly as it is apart from the portrait Juan uploads
       //    in the admin. Its copy is already in his voice and the brief did
       //    not ask to replace it.
