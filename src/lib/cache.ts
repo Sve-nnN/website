@@ -172,7 +172,13 @@ export function getCachedPost(slug: string, locale: Locale) {
         collection: 'posts',
         where: { slug: { equals: slug } },
         locale,
-        depth: 1,
+        // depth 2, not 1: at depth 1 `author` arrives populated but
+        // `author.avatar` is still a bare id, so `AuthorByline` and
+        // `AuthorCard` both fell through to their initials fallback and the
+        // post pages showed an empty circle where the photo belongs. The
+        // avatar lives one relationship deeper than the author, so the author
+        // being populated is not enough.
+        depth: 2,
         limit: 1,
         overrideAccess: false,
       })
@@ -191,7 +197,9 @@ export function getCachedCaseStudy(slug: string, locale: Locale) {
         collection: 'case-studies',
         where: { slug: { equals: slug } },
         locale,
-        depth: 1,
+        // Same reason as posts above: this page renders an AuthorCard, whose
+        // avatar sits a relationship deeper than the author itself.
+        depth: 2,
         limit: 1,
         overrideAccess: false,
       })
