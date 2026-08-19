@@ -254,6 +254,8 @@ export interface Page {
       | ServiceScopeCardBlock
       | RelatedCaseStudyBlockBlock
       | LocalProofSectionBlock
+      | CodeFixesBlock
+      | AuditOfferBlock
     )[];
   };
   slug?: string | null;
@@ -669,6 +671,10 @@ export interface Cliente {
   name: string;
   logo: number | Media;
   websiteUrl?: string | null;
+  /**
+   * Tipo de trabajo hecho para este cliente. Agrupa el muro de logos en la portada.
+   */
+  workType?: ('seo' | 'desarrollo' | 'optimizacion') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1216,6 +1222,131 @@ export interface LocalProofSectionBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'localProofSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CodeFixesBlock".
+ */
+export interface CodeFixesBlock {
+  /**
+   * Ej: "Este sitio es el caso de estudio".
+   */
+  title: string;
+  /**
+   * Una o dos frases. Por qué se muestran los fixes de este repo y no los de un cliente.
+   */
+  intro?: string | null;
+  /**
+   * URL del repositorio público. Es lo que vuelve verificable todo el bloque: sin esto, el código es una captura que hay que creer.
+   */
+  repoUrl?: string | null;
+  /**
+   * Texto del enlace al repo. Ej: "Ver el repositorio".
+   */
+  repoLabel?: string | null;
+  /**
+   * Dos o tres. Cada uno tiene que ser un commit real de este repo — el código pegado acá debe ser el que está en ese commit.
+   */
+  fixes?:
+    | {
+        /**
+         * Qué estaba roto, en lenguaje de síntoma, no de solución. Ej: "Google recibía dos hreflang que se contradecían".
+         */
+        symptom: string;
+        /**
+         * La causa técnica real, en una o dos frases. Es la parte que ningún competidor cuenta y la razón de ser del bloque.
+         */
+        cause?: string | null;
+        /**
+         * Ruta del archivo, tal cual está en el repo.
+         */
+        filePath: string;
+        language?: ('ts' | 'tsx' | 'js' | 'json' | 'sql' | 'html' | 'bash') | null;
+        /**
+         * El fragmento del cambio. Cortá al mínimo legible: entre 5 y 25 líneas. Nadie lee un diff de 200 en una portada.
+         */
+        code: string;
+        /**
+         * URL del commit en GitHub.
+         */
+        commitUrl?: string | null;
+        /**
+         * SHA corto, 7 caracteres.
+         */
+        commitSha?: string | null;
+        /**
+         * Qué cambió después, si es medible. Dejalo vacío antes que estimar: un dato que falta se queda faltando.
+         */
+        outcome?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'codeFixesBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuditOfferBlock".
+ */
+export interface AuditOfferBlock {
+  title: string;
+  description?: string | null;
+  /**
+   * El precio, tal cual se muestra. Ej: "600 USD". Editable desde acá justamente para poder subirlo sin tocar código.
+   */
+  price?: string | null;
+  /**
+   * Qué es ese precio. Ej: "Auditoría SEO técnica completa".
+   */
+  priceCaption?: string | null;
+  /**
+   * La mecánica del crédito: el importe se descuenta al contratar la implementación. Es lo que saca el riesgo de la decisión, así que va visible, no en letra chica.
+   */
+  creditNote?: string | null;
+  /**
+   * Qué incluye la auditoría. Concreto y verificable: el visitante está por pagar, y lo vago es lo que hace dudar.
+   */
+  includes?:
+    | {
+        item: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Plazo de entrega. Ej: "Entrega en 10 días hábiles".
+   */
+  deliveryNote?: string | null;
+  /**
+   * El CTA. Uno solo en primario: la portada pide una única acción.
+   */
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'auditOfferBlock';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1824,6 +1955,8 @@ export interface PagesSelect<T extends boolean = true> {
               serviceScopeCard?: T | ServiceScopeCardBlockSelect<T>;
               relatedCaseStudyBlock?: T | RelatedCaseStudyBlockBlockSelect<T>;
               localProofSection?: T | LocalProofSectionBlockSelect<T>;
+              codeFixesBlock?: T | CodeFixesBlockSelect<T>;
+              auditOfferBlock?: T | AuditOfferBlockSelect<T>;
             };
       };
   slug?: T;
@@ -2206,6 +2339,66 @@ export interface LocalProofSectionBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CodeFixesBlock_select".
+ */
+export interface CodeFixesBlockSelect<T extends boolean = true> {
+  title?: T;
+  intro?: T;
+  repoUrl?: T;
+  repoLabel?: T;
+  fixes?:
+    | T
+    | {
+        symptom?: T;
+        cause?: T;
+        filePath?: T;
+        language?: T;
+        code?: T;
+        commitUrl?: T;
+        commitSha?: T;
+        outcome?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuditOfferBlock_select".
+ */
+export interface AuditOfferBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  price?: T;
+  priceCaption?: T;
+  creditNote?: T;
+  includes?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  deliveryNote?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -2410,6 +2603,7 @@ export interface ClientesSelect<T extends boolean = true> {
   name?: T;
   logo?: T;
   websiteUrl?: T;
+  workType?: T;
   updatedAt?: T;
   createdAt?: T;
 }

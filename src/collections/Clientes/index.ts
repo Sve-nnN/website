@@ -32,5 +32,31 @@ export const Clientes: CollectionConfig = {
       name: 'websiteUrl',
       type: 'text',
     },
+    /**
+     * What kind of work was done for this client. Deliberately three coarse
+     * buckets and nothing finer: Juan has permission to show all 28 logos but
+     * cannot say what he did for each one, so this is the most the wall can
+     * honestly claim.
+     *
+     * It is still worth claiming. An ungrouped logo wall is the category's
+     * most copied habit — every competitor has one and none of them says
+     * anything with it. Grouping by type of work turns the same authorised
+     * logos into an actual statement: that this is not a person who only does
+     * one thing.
+     */
+    {
+      name: 'workType',
+      type: 'select',
+      defaultValue: 'seo',
+      options: [
+        { label: 'SEO', value: 'seo' },
+        { label: 'Desarrollo', value: 'desarrollo' },
+        { label: 'Optimización', value: 'optimizacion' },
+      ],
+      admin: {
+        description:
+          'Tipo de trabajo hecho para este cliente. Agrupa el muro de logos en la portada.',
+      },
+    },
   ],
 }
