@@ -66,9 +66,9 @@ export function HeroComponent(props: HeroBlockProps) {
         variant={templateVariant}
         title={title ?? ''}
         subtitle={subtitle}
-        trail={(breadcrumbs ?? [])
-          .filter((crumb) => Boolean(crumb.label))
-          .map((crumb) => ({ label: crumb.label, url: crumb.url ?? '' }))}
+        trail={(breadcrumbs ?? []).flatMap((crumb) =>
+          crumb.label ? [{ label: crumb.label, url: crumb.url ?? '' }] : [],
+        )}
         image={image?.url ? { url: image.url, alt: image.alt } : null}
       >
         {ctaRow}

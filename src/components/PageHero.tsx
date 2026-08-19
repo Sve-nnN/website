@@ -96,7 +96,7 @@ function HeroBreadcrumbs({ trail }: { trail: BreadcrumbItem[] }) {
           const isLast = i === trail.length - 1
           const CrumbLink = crumb.url && isPrefixableHref(crumb.url) ? LocaleLink : PlainLink
           return (
-            <li key={crumb.url || `${crumb.label}-${i}`} className="flex items-center gap-x-2">
+            <li key={`${crumb.url}|${crumb.label}`} className="flex items-center gap-x-2">
               {i > 0 && <span aria-hidden="true">/</span>}
               {isLast || !crumb.url ? (
                 <span aria-current={isLast ? 'page' : undefined}>{crumb.label}</span>
