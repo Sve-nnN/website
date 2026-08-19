@@ -27,6 +27,14 @@ export const badgeVariants = cva(
         destructive:
           "border-transparent bg-destructive text-primary-foreground shadow-sm hover:bg-destructive/80",
         outline: "text-foreground",
+        // The chip that survives the navy hero band. `secondary` is navy on
+        // navy there — it renders, it is simply invisible — and `default`
+        // would spend the ember on a category label, which the One Signal
+        // Rule reserves for the page's single decision. This is a tinted
+        // outline of the band's own foreground: 1px border at 30%, a 10% wash
+        // behind it, paper text at full strength (14.6:1 on #12141C).
+        onDark:
+          "border-secondary-foreground/30 bg-secondary-foreground/10 text-secondary-foreground hover:bg-secondary-foreground/20",
       },
     },
     defaultVariants: {

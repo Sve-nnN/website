@@ -4,6 +4,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Container } from '@/components/Container'
+import { PageHero } from '@/components/PageHero'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 
@@ -58,8 +59,9 @@ export default async function PrivacyPage({ params }: { params: Promise<{ locale
 
   return (
     <main>
-      <Container className="py-16 max-w-3xl">
-        <h1 className="font-display text-display mb-8">{doc.title}</h1>
+      <PageHero variant="index" title={doc.title} />
+
+      <Container className="py-12 md:py-16 max-w-3xl">
         <RenderBlocks blocks={doc.content?.layout ?? []} />
       </Container>
     </main>

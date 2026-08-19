@@ -1,6 +1,7 @@
 import { notFound, permanentRedirect } from 'next/navigation'
 
 import { Container } from '@/components/Container'
+import { PageHero } from '@/components/PageHero'
 import { PostCard } from '@/components/PostCard'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import { BlogCategoryTabs } from '@/components/BlogCategoryTabs'
@@ -123,14 +124,14 @@ export default async function BlogCategoryPage({
 
   return (
     <main>
-      <Container className="py-16">
-        <h1 className="font-display text-display tracking-tight">{category.title}</h1>
-        {category.description && (
-          <p className="mt-4 max-w-2xl text-body text-muted-foreground">{category.description}</p>
-        )}
-      </Container>
+      <PageHero
+        variant="index"
+        trail={trail}
+        title={category.title}
+        subtitle={category.description}
+      />
 
-      <Container className="pb-12">
+      <Container className="py-12 md:py-16">
         <BlogCategoryTabs locale={locale} categories={categories} activeSlug={categorySlug} />
 
         {docs.length === 0 ? (

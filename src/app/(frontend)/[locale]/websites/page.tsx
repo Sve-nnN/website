@@ -1,12 +1,8 @@
-// Deliberately the PLAIN link, not the locale-aware `Link` from
-// `@/i18n/navigation`: the only `<Link>` on this page renders a breadcrumb
-// url, which arrives already locale-prefixed from `src/lib/breadcrumbs.ts`.
-// The cards themselves link through `WebsiteCard`, which IS locale-aware.
-import Link from 'next/link'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import { Container } from '@/components/Container'
+import { PageHero } from '@/components/PageHero'
 import { WebsiteCard } from '@/components/WebsiteCard'
 import { JsonLd } from '@/components/JsonLd'
 import { buildWebsitesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
@@ -55,35 +51,15 @@ export default async function WebsitesListPage({
 
   return (
     <main>
-      <Container className="py-16">
-        <nav aria-label="Breadcrumb" className="mb-4">
-          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
-            {trail.map((crumb, i) => {
-              const isLast = i === trail.length - 1
-              return (
-                <li key={crumb.url} className="flex items-center gap-x-2">
-                  {i > 0 && <span aria-hidden="true">/</span>}
-                  {isLast ? (
-                    <span aria-current="page">{crumb.label}</span>
-                  ) : (
-                    <Link
-                      href={crumb.url}
-                      className="hover:text-foreground underline-offset-2 hover:underline"
-                    >
-                      {crumb.label}
-                    </Link>
-                  )}
-                </li>
-              )
-            })}
-          </ol>
-        </nav>
-        <h1 className="font-display text-display">
-          {locale === 'es' ? 'Sitios web' : 'Websites'}
-        </h1>
+      <PageHero
+        variant="index"
+        trail={trail}
+        title={locale === 'es' ? 'Sitios web' : 'Websites'}
+      />
 
+      <Container className="py-12 md:py-16">
         {websites.length === 0 ? (
-          <div className="mt-12 text-center py-16">
+          <div className="text-center py-16">
             <p className="font-heading text-heading">
               {locale === 'es' ? 'Próximamente' : 'Coming soon'}
             </p>
@@ -94,7 +70,7 @@ export default async function WebsitesListPage({
             </p>
           </div>
         ) : (
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {websites.map((w) => (
               <WebsiteCard key={w.id} website={w} />
             ))}
