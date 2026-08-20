@@ -20,6 +20,7 @@ import { PostCard } from '@/components/PostCard'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
+import { buildSitePerson, SITE_PERSON_SLUG } from '@/lib/person'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -27,7 +28,7 @@ import { Card } from '@/components/ui/card'
 // static generation. See infra/apps/LESSONS-LEARNED.md.
 export const dynamic = 'force-dynamic'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://juancarlosangulo.com'
+const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://juan-tech.com'
 
 // PERF (js-hoist-intl): `locale` is a runtime parameter, not a module
 // constant, so a single top-level formatter can't be hoisted. Memoize per
@@ -190,25 +191,38 @@ export default async function AuthorProfilePage({
     }),
   ])
 
-  const personData = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: doc.name,
-    jobTitle: doc.jobTitle,
-    url: `${SITE_URL}/authors/${doc.slug}`,
-    ...(doc.socialLinks?.length ? { sameAs: doc.socialLinks.map((s) => s.url) } : {}),
-    ...(doc.expertise?.length ? { knowsAbout: doc.expertise.map((e) => e.topic) } : {}),
-    ...(doc.education?.length
-      ? {
-          hasCredential: doc.education.map((ed) => ({
-            '@type': 'EducationalOccupationalCredential',
-            name: ed.degree,
-            recognizedBy: { '@type': 'Organization', name: ed.institution },
-            ...(ed.endDate ? { datePublished: ed.endDate } : {}),
-          })),
-        }
-      : {}),
-  }
+  // SEO-03: el dueno del sitio se emite desde src/lib/person.ts, con el @id
+  // canonico que tambien usa la home, para que sean un solo nodo y no dos
+  // representaciones sueltas de la misma persona. Ese modulo tambien es el que
+  // deja de afirmar una credencial con fecha futura: una carrera en curso sale
+  // como `alumniOf`, no como titulo obtenido.
+  //
+  // Cualquier OTRO autor sigue armando su nodo aca: no tiene @id de sitio
+  // porque no es la entidad del dominio.
+  const isSitePerson = doc.slug === SITE_PERSON_SLUG
+  const personData = isSitePerson
+    ? await buildSitePerson(locale as 'es' | 'en')
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: doc.name,
+        jobTitle: doc.jobTitle,
+        url: `${SITE_URL}/authors/${doc.slug}`,
+        ...(doc.socialLinks?.length ? { sameAs: doc.socialLinks.map((s) => s.url) } : {}),
+        ...(doc.expertise?.length ? { knowsAbout: doc.expertise.map((e) => e.topic) } : {}),
+        ...(doc.education?.length
+          ? {
+              hasCredential: doc.education
+                .filter((ed) => ed.endDate && new Date(ed.endDate).getTime() <= Date.now())
+                .map((ed) => ({
+                  '@type': 'EducationalOccupationalCredential',
+                  name: ed.degree,
+                  recognizedBy: { '@type': 'Organization', name: ed.institution },
+                  datePublished: ed.endDate,
+                })),
+            }
+          : {}),
+      }
 
   // POLISH: this used to be a hand-rolled BreadcrumbList with hardcoded
   // labels and URLs — and, more importantly, no visible counterpart anywhere

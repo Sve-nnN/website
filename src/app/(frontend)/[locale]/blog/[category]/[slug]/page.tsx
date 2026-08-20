@@ -25,6 +25,7 @@ import { RailOffer } from '@/components/RailOffer'
 import { ReadingProgress } from '@/components/ReadingProgress'
 import { BlogClosing } from '@/components/BlogClosing'
 import { blogCategoryPath, blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
+import { personRef, SITE_PERSON_SLUG } from '@/lib/person'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -150,7 +151,18 @@ export default async function PostPage({
     // Real Payload timestamp — deliberately NOT a copy of datePublished, which
     // would assert a modification date the CMS never recorded.
     ...(doc.updatedAt ? { dateModified: doc.updatedAt } : {}),
-    ...(author?.name ? { author: { '@type': 'Person', name: author.name } } : {}),
+    // SEO-03.3: cuando el autor es el dueno del sitio, el Article referencia
+    // el @id canonico en vez de repetir un Person suelto. Asi cada articulo
+    // suma al mismo nodo de entidad en lugar de crear uno nuevo por pagina.
+    ...(author?.name
+      ? {
+          author: {
+            '@type': 'Person',
+            name: author.name,
+            ...(author.slug === SITE_PERSON_SLUG ? personRef : {}),
+          },
+        }
+      : {}),
     // Personal portfolio, not an organisation: the publisher IS the person.
     publisher: { '@type': 'Person', name: 'Juan Carlos Angulo', url: SITE_URL },
     mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
