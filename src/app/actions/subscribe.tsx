@@ -56,6 +56,28 @@ async function isRateLimited(): Promise<boolean> {
   return false
 }
 
+/**
+ * Host público desde el que se arma el enlace de confirmación. Mismo criterio
+ * que `src/lib/public-origin.ts`, que resuelve lo mismo para las redirecciones
+ * de las rutas de confirmación y baja.
+ */
+async function resolveSiteUrl(): Promise<string | null> {
+  const headerList = await headers()
+  const forwardedHost = headerList.get('x-forwarded-host') ?? headerList.get('host')
+  const forwardedProto = headerList.get('x-forwarded-proto')?.split(',')[0]?.trim()
+
+  if (forwardedHost && !/localhost|127\.0\.0\.1/.test(forwardedHost)) {
+    return `${forwardedProto || 'https'}://${forwardedHost.split(',')[0].trim()}`
+  }
+
+  const configured = process.env.NEXT_PUBLIC_SERVER_URL?.trim()
+
+  if (configured) return configured.replace(/\/$/, '')
+
+  // Sin proxy y sin variable: dev local. El host crudo alcanza.
+  return forwardedHost ? `http://${forwardedHost}` : null
+}
+
 const SUBJECT = {
   es: 'Confirma tu correo para recibir el blog',
   en: 'Confirm your email to get the blog',
@@ -75,12 +97,15 @@ export async function subscribeAction(
 
   if (!EMAIL_PATTERN.test(email)) return { status: 'invalid' }
 
-  // Sin URL pública no se puede armar el enlace de confirmación, y mandar un
-  // correo con un enlace roto es peor que no mandarlo.
-  const siteUrl = process.env.NEXT_PUBLIC_SERVER_URL
+  // El enlace del correo se arma con el host que el proxy dice que pidió el
+  // visitante, NO con `NEXT_PUBLIC_SERVER_URL`: esa variable vale
+  // `http://localhost:3000` en el entorno de desarrollo y, si queda así en
+  // producción, cada correo sale con un enlace a ninguna parte. La variable
+  // queda como respaldo, y solo si apunta a un dominio real.
+  const siteUrl = await resolveSiteUrl()
 
   if (!siteUrl) {
-    console.error('NEXT_PUBLIC_SERVER_URL no está seteada — no se puede armar el enlace de confirmación.')
+    console.error('No hay host público para armar el enlace de confirmación.')
     return { status: 'unconfigured' }
   }
 

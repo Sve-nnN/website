@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
+import { publicOrigin } from '@/lib/public-origin'
 
 // Local API + driver de Postgres: runtime Node, nunca Edge.
 export const runtime = 'nodejs'
@@ -23,7 +24,10 @@ export const dynamic = 'force-dynamic'
  */
 export async function GET(request: NextRequest) {
   const token = request.nextUrl.searchParams.get('token')
-  const home = new URL('/', request.nextUrl.origin)
+  // Detrás del proxy, `request.nextUrl.origin` es el puerto interno del
+  // contenedor. Ver src/lib/public-origin.ts.
+  const origin = publicOrigin(request)
+  const home = new URL('/', origin)
 
   if (!token) return NextResponse.redirect(home)
 
@@ -52,7 +56,7 @@ export async function GET(request: NextRequest) {
 
     const target = new URL(
       subscriber?.locale === 'en' ? '/en/blog' : '/blog',
-      request.nextUrl.origin,
+      origin,
     )
     target.searchParams.set('newsletter', reactivable ? 'confirmed' : 'invalid')
 
