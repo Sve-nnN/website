@@ -69,6 +69,26 @@ headers() { curl -sSI --max-time 30 "${SITE}${1}"; }
 
 hreflang_of() { headers "$1" | grep -i '^link:' | tr ',' '\n' | grep -i 'hreflang'; }
 
+# has <texto> <patron>  — subcadena literal, SIN pipe.
+#
+# `echo "$html" | grep -q 'x'` es una trampa con `set -o pipefail`: grep -q sale
+# al primer match, echo se queda escribiendo en un pipe cerrado, recibe EPIPE, y
+# el pipeline devuelve el status de echo. O sea que un patron que aparece TEMPRANO
+# en un HTML de 500 KB da FAIL y el mismo patron al final da PASS. Costo un rato
+# de diagnostico falso en el issue #9 el 2026-08-20: "el Article no incluye
+# image" cuando la image estaba ahi. La comparacion de patron de bash no abre
+# ningun pipe.
+has() { case "$1" in *"$2"*) return 0 ;; *) return 1 ;; esac; }
+
+# has_i <texto> <patron>  — igual que has(), sin distinguir mayusculas.
+has_i() {
+  # ${var,,} necesita bash 4; macOS trae bash 3.2, asi que se baja con tr.
+  local hay needle
+  hay=$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')
+  needle=$(printf '%s' "$2" | tr '[:upper:]' '[:lower:]')
+  case "$hay" in *"$needle"*) return 0 ;; *) return 1 ;; esac
+}
+
 # ── SEO-01: placeholders en landings locales ─────────────────────────────────
 v01() {
   hdr 1 "Texto [PLACEHOLDER] en las 4 landings locales"
@@ -96,7 +116,7 @@ v02() {
 
   # 2. el <head> de servicios apunta al slug traducido, no al prefijado
   h=$(fetch /servicios | grep -oiE '<link rel="alternate"[^>]*>')
-  if echo "$h" | grep -q 'juan-tech.com/en/services"'; then
+  if has "$h" 'juan-tech.com/en/services"'; then
     c_pass "el <head> de /servicios apunta a /en/services"
   else
     c_fail "el <head> de /servicios NO apunta a /en/services"
@@ -207,7 +227,7 @@ v06() {
 
   # el HTML debe poder cachearse
   cc=$(headers / | grep -i '^cache-control:' | tr -d '\r')
-  if echo "$cc" | grep -qi 'no-store'; then
+  if has_i "$cc" 'no-store'; then
     c_fail "el HTML sigue con no-store ($cc)"
   else
     c_pass "el HTML ya no manda no-store ($cc)"
@@ -274,11 +294,15 @@ v09() {
 
   types_of() { fetch "$1" | grep -o '"@type":"[A-Za-z]*"' | sed 's/.*:"//;s/"//' | sort -u | tr '\n' ' '; }
 
-  for pair in "/servicios:Service" "/servicios/seo-consulting:Service" \
-              "/blog:BreadcrumbList" "/en/services:Service"; do
+  # El indice de servicios emite ItemList, no Service: lista cuatro ofertas, o
+  # sea que no ES un servicio, y cada entrada apunta al landing que si lleva su
+  # Service. Desvio deliberado del texto del issue, documentado en la quick
+  # 260815-ngy; el baseline se corrige aca para que no pida schema incorrecto.
+  for pair in "/servicios:ItemList" "/servicios/seo-consulting:Service" \
+              "/blog:BreadcrumbList" "/en/services:ItemList"; do
     u="${pair%%:*}"; want="${pair##*:}"
     got=$(types_of "$u")
-    if echo "$got" | grep -q "$want"; then
+    if has "$got" "$want"; then
       c_pass "$u emite $want"
     else
       c_fail "$u no emite $want (tiene: ${got:-nada})"
@@ -289,7 +313,7 @@ v09() {
   # Article con image y dateModified
   a=$(fetch /blog/tech-seo/nextjs-seo)
   for prop in '"image"' '"dateModified"'; do
-    if echo "$a" | grep -q "$prop"; then c_pass "el Article incluye $prop"
+    if has "$a" "$prop"; then c_pass "el Article incluye $prop"
     else c_fail "el Article no incluye $prop"; fi
     CHECKS=$((CHECKS + 1))
   done
@@ -316,7 +340,7 @@ v10() {
     orphan=0
     body=$(fetch "$u")
     for id in $ids; do
-      echo "$body" | grep -q "id=\"$id\"" || orphan=$((orphan + 1))
+      has "$body" "id=\"$id\"" || orphan=$((orphan + 1))
     done
     check "sin aria-controls huerfano en $u" "$orphan" "0"
   done
@@ -338,7 +362,7 @@ v11() {
 
   h=$(headers /)
   for want in 'strict-transport-security' 'x-content-type-options'; do
-    if echo "$h" | grep -qi "^$want"; then c_pass "header $want presente"
+    if has_i "$h" "$want:"; then c_pass "header $want presente"
     else c_fail "header $want ausente"; fi
     CHECKS=$((CHECKS + 1))
   done

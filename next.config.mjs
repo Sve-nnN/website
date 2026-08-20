@@ -20,6 +20,36 @@ const nextConfig = {
     formats: ['image/webp'],
     minimumCacheTTL: 2678400,
   },
+  // SEO-11.3: ninguna respuesta traia headers de seguridad. El sitio redirige
+  // HTTP -> HTTPS sin HSTS, o sea que la primera visita queda expuesta a un
+  // downgrade. No es factor de ranking; se arregla porque el sitio vende
+  // auditorias tecnicas y esto es lo primero que un cliente mira.
+  //
+  // Deliberadamente SIN Content-Security-Policy: el admin de Payload inyecta
+  // estilos y scripts inline propios, y una CSP escrita a ciegas lo rompe.
+  // Eso necesita su propia medicion, no una linea mas en esta lista.
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          // 2 anios, con subdominios y preload: el dominio ya sirve todo por
+          // HTTPS a traves de Traefik.
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload',
+          },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          // `strict-origin-when-cross-origin` es el default de los navegadores
+          // modernos; declararlo lo vuelve explicito para los que no lo aplican.
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          // SAMEORIGIN y no DENY: el admin de Payload usa iframes de mismo
+          // origen para las vistas de preview.
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+        ],
+      },
+    ]
+  },
   async redirects() {
     return [
       // `/categories/<slug>` never had a route — the sitemap used to advertise

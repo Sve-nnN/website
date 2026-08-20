@@ -55,6 +55,10 @@ export function ContactFormBlockComponent(props: ContactFormComponentProps) {
     ? `Algo salió mal al enviar tu mensaje. Intenta de nuevo${contactEmail ? `, o escribe directamente a ${contactEmail}` : ''}.`
     : `Something went wrong sending your message. Please try again${contactEmail ? `, or email ${contactEmail} directly` : ''}.`
 
+  const fieldLabels = isEs
+    ? { name: 'Nombre', email: 'Correo electrónico', message: 'Mensaje' }
+    : { name: 'Name', email: 'Email', message: 'Message' }
+
   return (
     <Container id="contact" className="py-12 md:py-16">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -78,9 +82,29 @@ export function ContactFormBlockComponent(props: ContactFormComponentProps) {
               <label htmlFor="company_website">Company website</label>
               <input type="text" id="company_website" name="company_website" tabIndex={-1} autoComplete="off" />
             </div>
-            <Input name="name" placeholder="Name" required />
-            <Input name="email" type="email" placeholder="Email" required />
-            <Textarea name="message" placeholder="Message" required rows={5} />
+            {/* SEO-11.4: los tres campos estaban rotulados en ingles en las dos
+                versiones del sitio, y el rotulo era un `placeholder`, que
+                desaparece al escribir y no lo lee todo lector de pantalla como
+                nombre accesible. Ahora cada campo lleva su `<label>` visible
+                asociado por `htmlFor`/`id`, en el idioma de la pagina. */}
+            <div className="space-y-1">
+              <label htmlFor="contact-name" className="block text-label">
+                {fieldLabels.name}
+              </label>
+              <Input id="contact-name" name="name" autoComplete="name" required />
+            </div>
+            <div className="space-y-1">
+              <label htmlFor="contact-email" className="block text-label">
+                {fieldLabels.email}
+              </label>
+              <Input id="contact-email" name="email" type="email" autoComplete="email" required />
+            </div>
+            <div className="space-y-1">
+              <label htmlFor="contact-message" className="block text-label">
+                {fieldLabels.message}
+              </label>
+              <Textarea id="contact-message" name="message" required rows={5} />
+            </div>
             <Button type="submit">{submitLabel}</Button>
           </form>
         </div>

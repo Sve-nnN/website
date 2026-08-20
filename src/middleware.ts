@@ -27,6 +27,17 @@ const intlMiddleware = createIntlMiddleware(routing)
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
+  // SEO-11.5: con `localePrefix: 'as-needed'`, next-intl saca el prefijo del
+  // locale por defecto con un 307. La regla no es temporal — `/es/...` no va a
+  // volver a existir mientras el espanol sea el idioma sin prefijo — y un 307
+  // le dice a Google justamente lo contrario. Se responde 308 antes de que el
+  // middleware de next-intl vea la request.
+  if (pathname === '/es' || pathname.startsWith('/es/')) {
+    const url = request.nextUrl.clone()
+    url.pathname = pathname.slice('/es'.length) || '/'
+    return NextResponse.redirect(url, 308)
+  }
+
   // Same-process loopback, NOT `request.url`: behind Traefik (TLS-terminated
   // reverse proxy), Next can reconstruct `request.url` as an `https://`
   // origin pointing at the container's own internal address, and this fetch
