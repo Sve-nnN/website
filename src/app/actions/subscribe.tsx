@@ -2,9 +2,11 @@
 
 import { randomBytes } from 'crypto'
 import { headers } from 'next/headers'
+import { render } from '@react-email/render'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
+import { ConfirmSubscription } from '@/emails/ConfirmSubscription'
 
 /**
  * Alta al correo del blog, con doble opt-in real.
@@ -54,28 +56,9 @@ async function isRateLimited(): Promise<boolean> {
   return false
 }
 
-const COPY = {
-  es: {
-    subject: 'Confirma tu correo para recibir el blog',
-    intro: 'Alguien, probablemente tú, pidió recibir los artículos nuevos de juan-tech.com.',
-    action: 'Confirmar mi correo',
-    ignore: 'Si no fuiste tú, ignora este mensaje y no pasa nada: sin confirmar, el correo no se guarda como activo.',
-  },
-  en: {
-    subject: 'Confirm your email to get the blog',
-    intro: 'Someone, most likely you, asked to receive new articles from juan-tech.com.',
-    action: 'Confirm my email',
-    ignore: 'If it was not you, ignore this message. Without confirming, the address is never activated.',
-  },
-}
-
-function escapeHtml(input: string): string {
-  return input
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
+const SUBJECT = {
+  es: 'Confirma tu correo para recibir el blog',
+  en: 'Confirm your email to get the blog',
 }
 
 export async function subscribeAction(
@@ -134,13 +117,18 @@ export async function subscribeAction(
       })
     }
 
-    const t = COPY[locale]
     const confirmUrl = `${siteUrl.replace(/\/$/, '')}/api/newsletter/confirm?token=${token}`
+    const template = <ConfirmSubscription confirmUrl={confirmUrl} locale={locale} />
 
+    // La versión en texto plano sale de la MISMA plantilla, no de un string
+    // aparte: dos copias del mismo correo divergen a la primera edición, y el
+    // texto plano es lo que ven los clientes que bloquean HTML y varios filtros
+    // de spam. Un correo sin `text` puntúa peor.
     await payload.sendEmail({
       to: email,
-      subject: t.subject,
-      html: `<p>${escapeHtml(t.intro)}</p><p><a href="${confirmUrl}">${escapeHtml(t.action)}</a></p><p>${escapeHtml(t.ignore)}</p>`,
+      subject: SUBJECT[locale],
+      html: await render(template),
+      text: await render(template, { plainText: true }),
     })
 
     return { status: 'success' }

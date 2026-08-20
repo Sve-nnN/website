@@ -37,7 +37,12 @@ export async function GET(request: NextRequest) {
 
     const subscriber = docs[0]
 
-    if (subscriber && subscriber.status !== 'unsubscribed') {
+    // Quien ya se dio de baja no vuelve a entrar por un enlace viejo: eso sería
+    // reactivar a alguien que pidió irse. Su clic tampoco puede responder
+    // "confirmado", así que cae en el mismo aviso que un enlace vencido.
+    const reactivable = Boolean(subscriber) && subscriber.status !== 'unsubscribed'
+
+    if (subscriber && reactivable) {
       await payload.update({
         collection: 'subscribers',
         id: subscriber.id,
@@ -49,7 +54,7 @@ export async function GET(request: NextRequest) {
       subscriber?.locale === 'en' ? '/en/blog' : '/blog',
       request.nextUrl.origin,
     )
-    target.searchParams.set('newsletter', subscriber ? 'confirmed' : 'invalid')
+    target.searchParams.set('newsletter', reactivable ? 'confirmed' : 'invalid')
 
     return NextResponse.redirect(target)
   } catch (err) {
