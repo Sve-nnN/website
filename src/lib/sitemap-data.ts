@@ -30,11 +30,11 @@ function resolveSiteUrl(): string {
   }
 
   console.warn(
-    '[sitemap-data] NEXT_PUBLIC_SERVER_URL is not set — falling back to https://juancarlosangulo.com. ' +
+    '[sitemap-data] NEXT_PUBLIC_SERVER_URL is not set — falling back to https://juan-tech.com. ' +
       'This fallback is intended for local development only; set the env var before deploying.',
   )
 
-  return 'https://juancarlosangulo.com'
+  return 'https://juan-tech.com'
 }
 
 export const SITE_URL = resolveSiteUrl()

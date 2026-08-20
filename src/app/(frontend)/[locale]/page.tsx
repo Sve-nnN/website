@@ -6,6 +6,7 @@ import { sendContactMessage } from '@/app/actions/contact'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { getCachedPageBySlug } from '@/lib/cache'
+import { buildSitePerson } from '@/lib/person'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -52,13 +53,12 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     notFound()
   }
 
-  const personData = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Juan Carlos Angulo',
-    jobTitle: locale === 'es' ? 'Ingeniero de Software y Experto SEO' : 'Software Engineer & SEO Expert',
-    url: process.env.NEXT_PUBLIC_SERVER_URL || 'https://juancarlosangulo.com',
-  }
+  // SEO-03.3: la home emitia un Person de cuatro propiedades mientras
+  // /authors/juan-carlos-angulo emitia el completo. Dos nodos sueltos para la
+  // misma persona, en un nombre que ya colisiona con otras personas reales en
+  // los resultados. Ahora las dos paginas emiten el MISMO nodo, con el @id
+  // canonico de src/lib/person.ts.
+  const personData = await buildSitePerson(locale as 'es' | 'en')
 
   return (
     <main>

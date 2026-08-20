@@ -168,7 +168,9 @@ v03() {
   check "sin credenciales con fecha futura" "$future" "0"
 
   # Person de la home con sameAs
-  if fetch / | grep -q '"sameAs"'; then
+  # mismo pipefail/EPIPE que se arreglo en el resto del archivo: sin has(),
+  # un sameAs que aparece temprano en la home daria FAIL con el nodo presente.
+  if has "$(fetch /)" '"sameAs"'; then
     c_pass "el Person de la home incluye sameAs"
   else
     c_fail "el Person de la home sigue sin sameAs"

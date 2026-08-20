@@ -20,6 +20,7 @@ import { SITE_URL } from '@/lib/sitemap-data'
 import { CaseStudyResultsChart } from '@/components/CaseStudyResultsChart'
 import { Button } from '@/components/ui/button'
 import { getCachedCaseStudy } from '@/lib/cache'
+import { personRef, SITE_PERSON_SLUG } from '@/lib/person'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -136,7 +137,15 @@ export default async function CaseStudyPage({
           description: doc.heroSubtitle,
         }
       : {}),
-    ...(author ? { author: { '@type': 'Person', name: author.name } } : {}),
+    ...(author
+      ? {
+          author: {
+            '@type': 'Person',
+            name: author.name,
+            ...(author.slug === SITE_PERSON_SLUG ? personRef : {}),
+          },
+        }
+      : {}),
     // The issue asks for `datePublished`, but the CaseStudies collection has no
     // `publishedAt` field — verified, it does not exist. The only dates that
     // exist are the CMS row timestamps below, and passing `createdAt` off as an

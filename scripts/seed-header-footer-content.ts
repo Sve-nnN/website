@@ -89,7 +89,7 @@ async function run() {
     data: {
       columns: footerColumnsEs,
       dynamicColumns: dynamicColumnsEs,
-      socialLinks: [{ platform: 'linkedin' as const, url: 'https://linkedin.com/in/juancarlosangulo' }],
+      socialLinks: [{ platform: 'linkedin' as const, url: 'https://linkedin.com/in/juancangulo' }],
       legalLinks: legalLinksEs,
       copyrightText: `© ${new Date().getFullYear()} Juan Carlos Angulo. Todos los derechos reservados.`,
     },
@@ -100,7 +100,7 @@ async function run() {
     data: {
       columns: footerColumnsEn,
       dynamicColumns: dynamicColumnsEn,
-      socialLinks: [{ platform: 'linkedin' as const, url: 'https://linkedin.com/in/juancarlosangulo' }],
+      socialLinks: [{ platform: 'linkedin' as const, url: 'https://linkedin.com/in/juancangulo' }],
       legalLinks: legalLinksEn,
       copyrightText: `© ${new Date().getFullYear()} Juan Carlos Angulo. All rights reserved.`,
     },
