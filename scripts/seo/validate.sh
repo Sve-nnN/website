@@ -273,7 +273,7 @@ v08() {
   hdr 8 "Meta descriptions"
   c_info "baseline: 15 rutas sin meta description, home con 37 caracteres"
   for p in /blog/cs-fundamentals/dynamic-programming /blog/cs-fundamentals/graph-algorithms \
-           /blog/cs-fundamentals/que-es-css /blog/cs-fundamentals/space-complexity \
+           /blog/development/que-es-css /blog/cs-fundamentals/space-complexity \
            /blog/cs-fundamentals/tree-traversal /blog/development /blog/development/astro-vs-nextjs \
            /blog/development/headless-cms-comparison /blog/development/nextjs-cms \
            /blog/development/payload-cms-guide /blog/general /blog/seo/keyword-research-guide \
