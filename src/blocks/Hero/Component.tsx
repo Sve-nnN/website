@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { MapPin, CheckCircle2 } from 'lucide-react'
 
 import type { HeroBlock as HeroBlockProps } from '@/payload-types'
@@ -50,6 +51,9 @@ export function HeroComponent(props: HeroBlockProps) {
 
   const isHome = variant === 'home'
   const isLocalLanding = variant === 'local-landing'
+  // `media` is the background image on the detail templates; on the home hero
+  // it is the portrait instead, since that hero's background is the shader.
+  const portrait = isHome ? image : null
 
   const ctaRow = links && links.length > 0 && (
     <div className="mt-8 flex flex-wrap gap-4">
@@ -104,23 +108,63 @@ export function HeroComponent(props: HeroBlockProps) {
         </svg>
       )}
       <Container className="relative z-10">
-        {isLocalLanding && cityName && (
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-secondary-foreground/10 px-4 py-1.5 text-label">
-            <MapPin className="size-4 text-primary" />
-            <span>{cityName}</span>
+        <div
+          className={
+            portrait
+              ? 'grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-16'
+              : undefined
+          }
+        >
+          <div>
+            {isLocalLanding && cityName && (
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-secondary-foreground/10 px-4 py-1.5 text-label">
+                <MapPin className="size-4 text-primary" />
+                <span>{cityName}</span>
+              </div>
+            )}
+            {title && (
+              <h1 className="font-display text-display tracking-tight text-balance">{title}</h1>
+            )}
+            {subtitle && (
+              <p className="mt-6 text-body max-w-2xl text-secondary-foreground/80">{subtitle}</p>
+            )}
+            {isLocalLanding && omitPlaceholder(inlineStat) && (
+              <div className="mt-4 flex items-center gap-2 text-body">
+                <CheckCircle2 className="size-5 text-primary" />
+                <span>{inlineStat}</span>
+              </div>
+            )}
+            {ctaRow}
           </div>
-        )}
-        {title && <h1 className="font-display text-display tracking-tight text-balance">{title}</h1>}
-        {subtitle && (
-          <p className="mt-6 text-body max-w-2xl text-secondary-foreground/80">{subtitle}</p>
-        )}
-        {isLocalLanding && omitPlaceholder(inlineStat) && (
-          <div className="mt-4 flex items-center gap-2 text-body">
-            <CheckCircle2 className="size-5 text-primary" />
-            <span>{inlineStat}</span>
-          </div>
-        )}
-        {ctaRow}
+
+          {/* The portrait comes AFTER the copy in source order so the h1 is
+              the first thing on a phone, where the two columns collapse into
+              one. It shipped with `order-first`, which did the exact opposite
+              of what this comment claimed: measured on a 390px viewport the
+              photo took the whole first screen and pushed the headline below
+              the fold. No order override — DOM order is already right in both
+              directions, since the grid puts the second child in the right-hand
+              column from `md` up.
+
+              Why a face at all: of fifteen competitor home pages analysed,
+              almost none show one, including the ones written by people who
+              actually program. A photo is the single thing an agency cannot
+              put on its page, and this whole site argues that one person does
+              the audit and the code. */}
+          {portrait?.url && (
+            <div>
+              <Image
+                src={portrait.url}
+                alt={portrait.alt ?? title ?? ''}
+                width={520}
+                height={650}
+                priority
+                sizes="(min-width: 768px) 22rem, 60vw"
+                className="w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object-cover"
+              />
+            </div>
+          )}
+        </div>
       </Container>
     </section>
   )

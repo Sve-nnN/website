@@ -76,6 +76,7 @@ export interface Config {
     categories: Category;
     'case-studies': CaseStudy;
     testimonials: Testimonial;
+    subscribers: Subscriber;
     clientes: Cliente;
     'speaking-events': SpeakingEvent;
     websites: Website;
@@ -98,6 +99,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     clientes: ClientesSelect<false> | ClientesSelect<true>;
     'speaking-events': SpeakingEventsSelect<false> | SpeakingEventsSelect<true>;
     websites: WebsitesSelect<false> | WebsitesSelect<true>;
@@ -119,12 +121,14 @@ export interface Config {
     header: Header;
     footer: Footer;
     'featured-content': FeaturedContent;
+    'blog-promo': BlogPromo;
   };
   globalsSelect: {
     llms: LlmsSelect<false> | LlmsSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     'featured-content': FeaturedContentSelect<false> | FeaturedContentSelect<true>;
+    'blog-promo': BlogPromoSelect<false> | BlogPromoSelect<true>;
   };
   locale: 'es' | 'en';
   widgets: {
@@ -254,6 +258,10 @@ export interface Page {
       | ServiceScopeCardBlock
       | RelatedCaseStudyBlockBlock
       | LocalProofSectionBlock
+      | CodeFixesBlock
+      | AuditOfferBlock
+      | BlogCategoryRowsBlock
+      | NewsletterBlockType
     )[];
   };
   slug?: string | null;
@@ -669,6 +677,14 @@ export interface Cliente {
   name: string;
   logo: number | Media;
   websiteUrl?: string | null;
+  /**
+   * Tipo de trabajo hecho para este cliente. Agrupa el muro de logos en la portada.
+   */
+  workType?: ('seo' | 'desarrollo' | 'optimizacion') | null;
+  /**
+   * Cliente reconocible: se muestra primero y más grande dentro de su grupo. Usalo con avaricia, cuatro o cinco a lo sumo.
+   */
+  featured?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1219,6 +1235,177 @@ export interface LocalProofSectionBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CodeFixesBlock".
+ */
+export interface CodeFixesBlock {
+  /**
+   * Ej: "Este sitio es el caso de estudio".
+   */
+  title: string;
+  /**
+   * Una o dos frases. Por qué se muestran los fixes de este repo y no los de un cliente.
+   */
+  intro?: string | null;
+  /**
+   * URL del repositorio público. Es lo que vuelve verificable todo el bloque: sin esto, el código es una captura que hay que creer.
+   */
+  repoUrl?: string | null;
+  /**
+   * Texto del enlace al repo. Ej: "Ver el repositorio".
+   */
+  repoLabel?: string | null;
+  /**
+   * Dos o tres. Cada uno tiene que ser un commit real de este repo — el código pegado acá debe ser el que está en ese commit.
+   */
+  fixes?:
+    | {
+        /**
+         * Qué estaba roto, en lenguaje de síntoma, no de solución. Ej: "Google recibía dos hreflang que se contradecían".
+         */
+        symptom: string;
+        /**
+         * La causa técnica real, en una o dos frases. Es la parte que ningún competidor cuenta y la razón de ser del bloque.
+         */
+        cause?: string | null;
+        /**
+         * Ruta del archivo, tal cual está en el repo.
+         */
+        filePath: string;
+        language?: ('ts' | 'tsx' | 'js' | 'json' | 'sql' | 'html' | 'bash') | null;
+        /**
+         * El fragmento del cambio. Cortá al mínimo legible: entre 5 y 25 líneas. Nadie lee un diff de 200 en una portada.
+         */
+        code: string;
+        /**
+         * URL del commit en GitHub.
+         */
+        commitUrl?: string | null;
+        /**
+         * SHA corto, 7 caracteres.
+         */
+        commitSha?: string | null;
+        /**
+         * Qué cambió después, si es medible. Dejalo vacío antes que estimar: un dato que falta se queda faltando.
+         */
+        outcome?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'codeFixesBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuditOfferBlock".
+ */
+export interface AuditOfferBlock {
+  title: string;
+  description?: string | null;
+  /**
+   * El precio, tal cual se muestra. Ej: "600 USD". Editable desde acá justamente para poder subirlo sin tocar código.
+   */
+  price?: string | null;
+  /**
+   * Qué es ese precio. Ej: "Auditoría SEO técnica completa".
+   */
+  priceCaption?: string | null;
+  /**
+   * La mecánica del crédito: el importe se descuenta al contratar la implementación. Es lo que saca el riesgo de la decisión, así que va visible, no en letra chica.
+   */
+  creditNote?: string | null;
+  /**
+   * Qué incluye la auditoría. Concreto y verificable: el visitante está por pagar, y lo vago es lo que hace dudar.
+   */
+  includes?:
+    | {
+        item: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Plazo de entrega. Ej: "Entrega en 10 días hábiles".
+   */
+  deliveryNote?: string | null;
+  /**
+   * El CTA. Uno solo en primario: la portada pide una única acción.
+   */
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'auditOfferBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogCategoryRowsBlock".
+ */
+export interface BlogCategoryRowsBlock {
+  /**
+   * Cuántos artículos muestra cada fila. 3 llena una fila del grid en escritorio; 6 llena dos y alarga bastante la página.
+   */
+  postsPerCategory?: number | null;
+  /**
+   * Orden de las filas. Vacío = todas las categorías con artículos, alfabéticas. Una categoría que no esté en esta lista no aparece en el índice, pero su página sigue existiendo.
+   */
+  categoryOrder?:
+    | {
+        category: number | Category;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Texto del enlace que abre la categoría completa.
+   */
+  viewAllLabel?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'blogCategoryRows';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NewsletterBlockType".
+ */
+export interface NewsletterBlockType {
+  title: string;
+  description?: string | null;
+  /**
+   * Label visible del campo. No es un placeholder.
+   */
+  emailLabel?: string | null;
+  submitLabel?: string | null;
+  /**
+   * Qué se hace con el correo y cómo se da de baja. Se muestra debajo del formulario, antes de enviar, no después.
+   */
+  consentText?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'newsletterBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -1228,6 +1415,36 @@ export interface Testimonial {
   company: string;
   testimonial: string;
   avatar?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Altas al correo del blog. El alta pública entra por el formulario del sitio, no por acá.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers".
+ */
+export interface Subscriber {
+  id: number;
+  email: string;
+  /**
+   * Solo `confirmed` recibe correos. `pending` dejó el correo pero no hizo clic en el enlace de confirmación.
+   */
+  status: 'pending' | 'confirmed' | 'unsubscribed';
+  /**
+   * Idioma en el que se dio de alta. Define en qué idioma se le escribe.
+   */
+  locale?: ('es' | 'en') | null;
+  /**
+   * Ruta desde donde se suscribió. Sirve para saber qué contenido trae altas.
+   */
+  source?: string | null;
+  /**
+   * Token de confirmación y de baja. Se genera en el alta y no se vuelve a mostrar en ningún correo salvo en sus enlaces.
+   */
+  token?: string | null;
+  confirmedAt?: string | null;
+  unsubscribedAt?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1518,6 +1735,16 @@ export interface PayloadMcpApiKey {
      */
     update?: boolean | null;
   };
+  blogPromo?: {
+    /**
+     * Allow clients to find blog-promo global.
+     */
+    find?: boolean | null;
+    /**
+     * Allow clients to update blog-promo global.
+     */
+    update?: boolean | null;
+  };
   updatedAt: string;
   createdAt: string;
   enableAPIKey?: boolean | null;
@@ -1674,6 +1901,10 @@ export interface PayloadLockedDocument {
         value: number | Testimonial;
       } | null)
     | ({
+        relationTo: 'subscribers';
+        value: number | Subscriber;
+      } | null)
+    | ({
         relationTo: 'clientes';
         value: number | Cliente;
       } | null)
@@ -1824,6 +2055,10 @@ export interface PagesSelect<T extends boolean = true> {
               serviceScopeCard?: T | ServiceScopeCardBlockSelect<T>;
               relatedCaseStudyBlock?: T | RelatedCaseStudyBlockBlockSelect<T>;
               localProofSection?: T | LocalProofSectionBlockSelect<T>;
+              codeFixesBlock?: T | CodeFixesBlockSelect<T>;
+              auditOfferBlock?: T | AuditOfferBlockSelect<T>;
+              blogCategoryRows?: T | BlogCategoryRowsBlockSelect<T>;
+              newsletterBlock?: T | NewsletterBlockTypeSelect<T>;
             };
       };
   slug?: T;
@@ -2206,6 +2441,95 @@ export interface LocalProofSectionBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CodeFixesBlock_select".
+ */
+export interface CodeFixesBlockSelect<T extends boolean = true> {
+  title?: T;
+  intro?: T;
+  repoUrl?: T;
+  repoLabel?: T;
+  fixes?:
+    | T
+    | {
+        symptom?: T;
+        cause?: T;
+        filePath?: T;
+        language?: T;
+        code?: T;
+        commitUrl?: T;
+        commitSha?: T;
+        outcome?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuditOfferBlock_select".
+ */
+export interface AuditOfferBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  price?: T;
+  priceCaption?: T;
+  creditNote?: T;
+  includes?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  deliveryNote?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BlogCategoryRowsBlock_select".
+ */
+export interface BlogCategoryRowsBlockSelect<T extends boolean = true> {
+  postsPerCategory?: T;
+  categoryOrder?:
+    | T
+    | {
+        category?: T;
+        id?: T;
+      };
+  viewAllLabel?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NewsletterBlockType_select".
+ */
+export interface NewsletterBlockTypeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  emailLabel?: T;
+  submitLabel?: T;
+  consentText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -2404,12 +2728,29 @@ export interface TestimonialsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers_select".
+ */
+export interface SubscribersSelect<T extends boolean = true> {
+  email?: T;
+  status?: T;
+  locale?: T;
+  source?: T;
+  token?: T;
+  confirmedAt?: T;
+  unsubscribedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "clientes_select".
  */
 export interface ClientesSelect<T extends boolean = true> {
   name?: T;
   logo?: T;
   websiteUrl?: T;
+  workType?: T;
+  featured?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2631,6 +2972,12 @@ export interface PayloadMcpApiKeysSelect<T extends boolean = true> {
         find?: T;
         update?: T;
       };
+  blogPromo?:
+    | T
+    | {
+        find?: T;
+        update?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   enableAPIKey?: T;
@@ -2844,6 +3191,102 @@ export interface FeaturedContent {
   createdAt?: string | null;
 }
 /**
+ * Oferta inline dentro del artículo y banda de cierre del blog. Se usa en /blog, en las categorías y en cada post.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-promo".
+ */
+export interface BlogPromo {
+  id: number;
+  /**
+   * Quien lee SEO Técnico y quien lee Estrategia SEO no tienen el mismo problema ni el mismo stack, así que el mismo texto no le habla a los dos. Cada campo que dejes vacío cae al texto general de arriba, así que solo hace falta escribir lo que de verdad cambia.
+   */
+  byCategory?:
+    | {
+        /**
+         * Una fila por categoría. Dos filas para la misma categoría: gana la primera.
+         */
+        category: number | Category;
+        inline?: {
+          title?: string | null;
+          text?: string | null;
+          linkLabel?: string | null;
+          linkUrl?: string | null;
+        };
+        rail?: {
+          title?: string | null;
+          body?: string | null;
+          linkLabel?: string | null;
+          linkUrl?: string | null;
+        };
+        /**
+         * Los puntos son todo o nada: si cargás uno, reemplazan la lista completa del texto general en vez de mezclarse con ella.
+         */
+        closing?: {
+          heading?: string | null;
+          body?: string | null;
+          points?:
+            | {
+                item: string;
+                id?: string | null;
+              }[]
+            | null;
+          primaryLabel?: string | null;
+          primaryUrl?: string | null;
+          secondaryLabel?: string | null;
+          secondaryUrl?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Se inserta después de la primera sección del post, cerca del 40% del cuerpo. Una sola frase: el lector está leyendo, no comprando.
+   */
+  inline?: {
+    title?: string | null;
+    /**
+     * Vacío = no se muestra la oferta inline en ningún post.
+     */
+    text?: string | null;
+    linkLabel?: string | null;
+    /**
+     * Ruta interna sin prefijo de idioma, por ejemplo /contacto.
+     */
+    linkUrl?: string | null;
+  };
+  /**
+   * Va debajo de la tabla de contenidos, en la columna derecha del post. Solo escritorio: en mobile la columna se apila y ahí ya están la oferta inline y la banda de cierre.
+   */
+  rail?: {
+    /**
+     * Vacío = no se muestra la tarjeta lateral.
+     */
+    title?: string | null;
+    body?: string | null;
+    linkLabel?: string | null;
+    linkUrl?: string | null;
+  };
+  /**
+   * Último bloque de /blog, de cada categoría y de cada post.
+   */
+  closing?: {
+    heading?: string | null;
+    body?: string | null;
+    points?:
+      | {
+          item: string;
+          id?: string | null;
+        }[]
+      | null;
+    primaryLabel?: string | null;
+    primaryUrl?: string | null;
+    secondaryLabel?: string | null;
+    secondaryUrl?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "llms_select".
  */
@@ -2944,6 +3387,85 @@ export interface FeaturedContentSelect<T extends boolean = true> {
   featuredPosts?: T;
   featuredCaseStudies?: T;
   featuredWebsites?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-promo_select".
+ */
+export interface BlogPromoSelect<T extends boolean = true> {
+  byCategory?:
+    | T
+    | {
+        category?: T;
+        inline?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              linkLabel?: T;
+              linkUrl?: T;
+            };
+        rail?:
+          | T
+          | {
+              title?: T;
+              body?: T;
+              linkLabel?: T;
+              linkUrl?: T;
+            };
+        closing?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              points?:
+                | T
+                | {
+                    item?: T;
+                    id?: T;
+                  };
+              primaryLabel?: T;
+              primaryUrl?: T;
+              secondaryLabel?: T;
+              secondaryUrl?: T;
+            };
+        id?: T;
+      };
+  inline?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        linkLabel?: T;
+        linkUrl?: T;
+      };
+  rail?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        linkLabel?: T;
+        linkUrl?: T;
+      };
+  closing?:
+    | T
+    | {
+        heading?: T;
+        body?: T;
+        points?:
+          | T
+          | {
+              item?: T;
+              id?: T;
+            };
+        primaryLabel?: T;
+        primaryUrl?: T;
+        secondaryLabel?: T;
+        secondaryUrl?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

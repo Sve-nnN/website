@@ -55,6 +55,7 @@ export const CACHE_TAGS = {
   caseStudy: (slug: string) => `case-studies:${slug}`,
   categories: () => 'categories:all',
   featuredContent: () => 'featured-content',
+  blogPromo: () => 'blog-promo',
   redirects: () => 'redirects',
 }
 
@@ -120,6 +121,15 @@ export const revalidateCategoriesCacheOnDelete: CollectionAfterDeleteHook<Catego
 
 export const revalidateFeaturedContentCache: GlobalAfterChangeHook = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.featuredContent())
+  return doc
+}
+
+// --- Blog Promo (global — la oferta inline y la banda de cierre del blog
+// aparecen en /blog, en cada categoría y en cada post, así que un cambio acá
+// tiene que invalidar también los caches de posts y categorías) ---
+
+export const revalidateBlogPromoCache: GlobalAfterChangeHook = ({ doc }) => {
+  safeRevalidateTag(CACHE_TAGS.blogPromo())
   return doc
 }
 

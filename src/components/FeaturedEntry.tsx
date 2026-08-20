@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 
@@ -19,6 +20,10 @@ type FeaturedPostProps = BaseProps & {
   kind: 'post'
   excerpt?: string | null
   publishedAt?: string | null
+  /** Ya formateado y localizado por el llamador (src/lib/reading-time.ts). */
+  readingTime?: string | null
+  /** Nombre de la categoría primaria, para que el destacado diga de qué trata. */
+  category?: string | null
   // Posts live at /blog/<category>/<slug>, so the caller resolves the path
   // through `blog-paths.ts` and passes it in — same contract PostCard uses.
   href: string
@@ -80,6 +85,23 @@ export function FeaturedEntry(props: FeaturedEntryProps) {
   const imageUrl = image?.url ?? getFallbackHeroImage(slug)
 
   const isCase = props.kind === 'case-study'
+
+  // Fila de metadatos, armada como lista para que los interpuntos salgan del
+  // orden real y no queden huérfanos cuando falta un dato.
+  const meta: { key: string; node: ReactNode }[] = []
+  if (isCase) {
+    if (props.sector) meta.push({ key: 'sector', node: props.sector })
+  } else {
+    if (props.category) meta.push({ key: 'category', node: props.category })
+    if (props.publishedAt) {
+      meta.push({
+        key: 'date',
+        node: <time dateTime={props.publishedAt}>{formatDate(props.publishedAt, locale)}</time>,
+      })
+    }
+    if (props.readingTime) meta.push({ key: 'reading', node: props.readingTime })
+  }
+
   const href = isCase ? `/case-studies/${slug}` : props.href
   const badge = isCase ? t.latestCase : t.latestPost
   const cta = isCase ? t.readCase : t.readPost
@@ -128,11 +150,16 @@ export function FeaturedEntry(props: FeaturedEntryProps) {
 
             {/* Metadata sits under the title, not above it, so the entry leads
                 with what it is about rather than with a label. */}
+            {/* Los interpuntos se renderizan desde el array para que ninguno
+                quede huérfano cuando falta un dato: un post puede no tener
+                categoría, y el caso de estudio no tiene fecha en esta fila. */}
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label opacity-70">
-              {isCase && props.sector && <span>{props.sector}</span>}
-              {!isCase && props.publishedAt && (
-                <time dateTime={props.publishedAt}>{formatDate(props.publishedAt, locale)}</time>
-              )}
+              {meta.map((entry, i) => (
+                <span key={entry.key} className="flex items-center gap-x-2">
+                  {i > 0 && <span aria-hidden="true">·</span>}
+                  {entry.node}
+                </span>
+              ))}
             </div>
 
             <span className="inline-flex items-center gap-1 text-label text-primary">

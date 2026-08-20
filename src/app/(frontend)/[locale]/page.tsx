@@ -65,6 +65,11 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <RenderBlocks
         blocks={doc.content?.layout ?? []}
         blockProps={{
+          // The logo wall labels its groups (SEO / Desarrollo / Optimización)
+          // and those labels are UI strings, not content, so they don't come
+          // from Payload's localized fields — the block needs to know which
+          // locale it is rendering in.
+          clientLogosBlock: { locale },
           contactFormBlock: {
             onSubmit: sendContactMessage,
             locale,

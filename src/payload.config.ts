@@ -23,6 +23,7 @@ import { Authors } from './collections/Authors'
 import { Categories } from './collections/Categories'
 import { CaseStudies } from './collections/CaseStudies'
 import { Testimonials } from './collections/Testimonials'
+import { Subscribers } from './collections/Subscribers'
 import { Clientes } from './collections/Clientes'
 import { SpeakingEvents } from './collections/SpeakingEvents'
 import { Websites } from './collections/Websites'
@@ -30,6 +31,7 @@ import { Llms } from './globals/Llms'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
 import { FeaturedContent } from './globals/FeaturedContent'
+import { BlogPromo } from './globals/BlogPromo'
 import { beforeSyncWithSearch } from './search/beforeSync'
 import { searchFields } from './search/fieldOverrides'
 
@@ -101,11 +103,15 @@ export default buildConfig({
     Categories,
     CaseStudies,
     Testimonials,
+    // Fuera de seoPlugin, redirectsPlugin, searchPlugin y mcpPlugin a propósito:
+    // son correos de terceros, no contenido. Ninguna herramienta que exponga o
+    // indexe documentos debería poder tocarlos.
+    Subscribers,
     Clientes,
     SpeakingEvents,
     Websites,
   ],
-  globals: [Llms, Header, Footer, FeaturedContent],
+  globals: [Llms, Header, Footer, FeaturedContent, BlogPromo],
   plugins: [
     seoPlugin({
       collections: ['pages', 'posts', 'case-studies', 'authors', 'websites'],
@@ -184,6 +190,7 @@ export default buildConfig({
         header: { enabled: { find: true, update: true } },
         footer: { enabled: { find: true, update: true } },
         'featured-content': { enabled: { find: true, update: true } },
+        'blog-promo': { enabled: { find: true, update: true } },
       },
     }),
   ],

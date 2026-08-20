@@ -95,6 +95,7 @@ const config: Config = {
   				foreground: 'rgb(var(--accent-foreground) / <alpha-value>)'
   			},
   			destructive: 'rgb(var(--destructive) / <alpha-value>)',
+  			'destructive-lift': 'rgb(var(--destructive-lift) / <alpha-value>)',
   			border: 'rgb(var(--border) / <alpha-value>)',
   			input: 'rgb(var(--input) / <alpha-value>)',
   			ring: 'rgb(var(--ring) / <alpha-value>)',
