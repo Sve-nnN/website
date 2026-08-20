@@ -46,7 +46,14 @@ export async function GET(request: NextRequest) {
       await payload.update({
         collection: 'subscribers',
         id: subscriber.id,
-        data: { status: 'confirmed', confirmedAt: new Date().toISOString() },
+        // `unsubscribedAt` se limpia: dejarlo puesto describe a un suscriptor
+        // activo con fecha de baja, que es una contradicción en la ficha del
+        // admin y lo primero que confunde a quien mira la lista.
+        data: {
+          status: 'confirmed',
+          confirmedAt: new Date().toISOString(),
+          unsubscribedAt: null,
+        },
       })
     }
 

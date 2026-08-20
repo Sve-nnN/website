@@ -108,7 +108,16 @@ export async function subscribeAction(
       await payload.update({
         collection: 'subscribers',
         id: current.id,
-        data: { status: 'pending', token, locale, source: source || current.source },
+        // Un alta nueva sobre alguien que se había dado de baja arranca de cero:
+        // las fechas viejas describen un ciclo anterior que ya terminó.
+        data: {
+          status: 'pending',
+          token,
+          locale,
+          source: source || current.source,
+          confirmedAt: null,
+          unsubscribedAt: null,
+        },
       })
     } else {
       await payload.create({
