@@ -215,8 +215,41 @@ async function fetchSitemapEntries(): Promise<SitemapEntry[]> {
   }
 
   const categoryEntries = await getCategorySitemapEntries(payload)
+  const collectionEntries = entriesByCollection.flat()
 
-  return [...entriesByCollection.flat(), ...categoryEntries]
+  return [
+    ...collectionEntries,
+    ...categoryEntries,
+    ...getWebsitesHubEntries(collectionEntries),
+  ]
+}
+
+/**
+ * SEO-11.1: `/websites` responde 200 y esta indexada, pero nunca estuvo en el
+ * sitemap. No es un doc de `pages` como `/blog` o `/servicios` — es una ruta
+ * escrita a mano que lista la coleccion `websites`, asi que ninguna query de
+ * `SITEMAP_COLLECTIONS` la podia emitir. El sitemap listaba las 6 hijas y se
+ * saltaba el hub.
+ *
+ * `lastModified` sale del hijo modificado mas recientemente, que es lo que de
+ * verdad cambia el contenido del hub. Si no hay ninguno publicado, el hub
+ * queda fuera del sitemap: una pagina de indice vacia no merece que la
+ * anunciemos.
+ */
+function getWebsitesHubEntries(entries: SitemapEntry[]): SitemapEntry[] {
+  const children = entries.filter((entry) => entry.group === 'websites')
+  if (children.length === 0) return []
+
+  const lastModified = children
+    .map((entry) => new Date(entry.lastModified).getTime())
+    .reduce((newest, current) => (current > newest ? current : newest), 0)
+
+  const alternates = { es: `${SITE_URL}/websites`, en: `${SITE_URL}/en/websites` }
+
+  return [
+    { url: alternates.es, locale: 'es', lastModified: new Date(lastModified), group: 'websites', alternates },
+    { url: alternates.en, locale: 'en', lastModified: new Date(lastModified), group: 'websites', alternates },
+  ]
 }
 
 /**
