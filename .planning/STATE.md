@@ -3,7 +3,7 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 status: planning
-last_updated: "2026-08-20T16:10:00.000Z"
+last_updated: "2026-08-20T18:45:00.000Z"
 last_activity: 2026-08-20
 progress:
   total_phases: 8
@@ -27,7 +27,8 @@ See: .planning/PROJECT.md (updated 2026-07-31)
 Phase: 44 — Decisiones de Monetización (not started)
 Plan: —
 Status: Roadmap v2.1 reestructurado (Phases 44-50, 37/37 requirements mapeados) — listo para `/gsd:plan-phase 44`. Phase 45 (Baseline de Regresión) queda BLOQUEADA por Neon caído + juan-tech.com sin proyecto en Ahrefs, y es gate duro: ninguna fase que renderice (46-49) puede empezar antes de que cierre
-Last activity: 2026-08-20 — Quick task 260820-blg completado: rediseño del blog (filas por categoría, CRO por audiencia, alta al correo con doble opt-in) + recategorización de 4 posts con sus 301. Datos y migraciones ya aplicados en producción; falta desplegar el código
+Last activity: 2026-08-20 — Quick task 260820-seo-09-11: issues #9 (structured data) y #11 (higiene tecnica) cerrados con validacion en vivo, 8/8 y 6/6. De paso se arreglo un FAIL falso del validador (`echo | grep -q` bajo pipefail devuelve el status de echo, que come EPIPE). Auditoria SEO: cerrados #1 #2 #4 #9 #11; abiertos #3 #5 #6 #7 #8 #10
+Previa: Quick task 260820-blg completado: rediseño del blog (filas por categoría, CRO por audiencia, alta al correo con doble opt-in) + recategorización de 4 posts con sus 301. Datos, migraciones y código ya en producción (el código entró a master con la PR #22 y salió en el deploy del 2026-08-20)
 
 ## Performance Metrics
 
