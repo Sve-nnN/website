@@ -16,6 +16,7 @@ import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
+import { SITE_URL } from '@/lib/sitemap-data'
 import { CaseStudyResultsChart } from '@/components/CaseStudyResultsChart'
 import { Button } from '@/components/ui/button'
 import { getCachedCaseStudy } from '@/lib/cache'
@@ -115,13 +116,32 @@ export default async function CaseStudyPage({
 
   const localePrefix = locale === 'es' ? '' : '/en'
 
+  // SEO-09 items 4 and 5. `about` was a bare string where schema.org expects a
+  // Thing. `image`, `url` and `datePublished` were missing outright. Empty
+  // values are omitted rather than emitted as "" or null.
+  const caseStudyUrl = `${SITE_URL}${localePrefix}/case-studies/${doc.slug ?? slug}`
+  const caseStudyImage = heroImageUrl.startsWith('http')
+    ? heroImageUrl
+    : `${SITE_URL}${heroImageUrl}`
+
   const creativeWorkData = {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
     name: doc.title,
-    about: doc.heroSubtitle,
-    description: doc.heroSubtitle,
+    url: caseStudyUrl,
+    image: caseStudyImage,
+    ...(doc.heroSubtitle
+      ? {
+          about: { '@type': 'Thing', name: doc.heroSubtitle },
+          description: doc.heroSubtitle,
+        }
+      : {}),
     ...(author ? { author: { '@type': 'Person', name: author.name } } : {}),
+    // The issue asks for `datePublished`, but the CaseStudies collection has no
+    // `publishedAt` field — verified, it does not exist. The only dates that
+    // exist are the CMS row timestamps below, and passing `createdAt` off as an
+    // editorial publication date would assert something the CMS never recorded.
+    // So the key is omitted. That part of the issue needs a schema field first.
     dateCreated: doc.createdAt,
     dateModified: doc.updatedAt,
     ...(client?.name ? { creator: { '@type': 'Organization', name: client.name } } : {}),

@@ -9,8 +9,10 @@ import { BlogClosing } from '@/components/BlogClosing'
 import { estimateReadingTime, readingTimeLabel } from '@/lib/reading-time'
 import { blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { JsonLd } from '@/components/JsonLd'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { getCachedPageBySlug } from '@/lib/cache'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
@@ -99,6 +101,13 @@ export default async function BlogPage({
   const before = hasGrid ? layout.slice(0, gridIndex) : layout
   const after = hasGrid ? layout.slice(gridIndex) : []
 
+  // SEO-09: the blog index was the one section page emitting no structured data
+  // at all. It is also the only one that never called a trail builder — the same
+  // gap that let the /en breadcrumb leak Spanish URLs in quick task 260814-lzz.
+  // `buildBlogTrail` returns locale-correct URLs, so this needs no locale
+  // handling of its own; /blog/[category] already does exactly this at :122.
+  const trail = buildBlogTrail(locale as 'es' | 'en')
+
   // El destacado ya ocupa su propia pantalla arriba; repetirlo dentro de la
   // fila de su categoría sería el mismo artículo dos veces en un scroll.
   const sharedProps = {
@@ -112,6 +121,7 @@ export default async function BlogPage({
 
   return (
     <main>
+      <JsonLd data={buildBreadcrumbJsonLd(trail)} />
       <RenderBlocks blocks={before} sharedProps={sharedProps} />
 
       {latest && (
