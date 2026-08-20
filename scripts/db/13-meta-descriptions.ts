@@ -24,6 +24,8 @@ import config from '../../src/payload.config'
 
 const APPLY = process.argv.includes('--apply')
 
+const SKIPPED: string[] = []
+
 const MIN = 120
 const MAX = 155
 
@@ -132,10 +134,16 @@ async function main() {
     console.log(`\n=== posts [${locale}] ===`)
 
     for (const [slug, copy] of Object.entries(POSTS)) {
+      // `fallbackLocale: false` importa: sin eso, un post sin traducir devuelve
+      // el texto en español y parece que la fila EN existe. Payload valida los
+      // campos requeridos (title, content) al escribir, así que un update sobre
+      // una fila EN vacía revienta con ValidationError en vez de escribir solo
+      // la meta. Pasó con `space-complexity` (id 57) el 2026-08-20.
       const { docs } = await payload.find({
         collection: 'posts',
         where: { slug: { equals: slug } },
         locale,
+        fallbackLocale: false,
         limit: 1,
       })
       const doc = docs[0]
@@ -143,6 +151,15 @@ async function main() {
       if (!doc) {
         console.log(`  FALTA  ${slug} (no existe en la coleccion)`)
         process.exitCode = 1
+        continue
+      }
+
+      // Un post sin título en este idioma no está traducido. Escribirle una
+      // meta description en inglés sería rotular una página que sigue en
+      // español: eso es el issue #7, no este.
+      if (!doc.title) {
+        console.log(`  SALTEADO  ${slug} (sin traduccion ${locale}; es del issue #7)`)
+        SKIPPED.push(`${locale} ${slug}`)
         continue
       }
 
@@ -200,10 +217,13 @@ async function main() {
   console.log('\n--- verificacion ---')
   for (const locale of ['es', 'en'] as const) {
     for (const [slug, copy] of Object.entries(POSTS)) {
+      if (SKIPPED.includes(`${locale} ${slug}`)) continue
+
       const { docs } = await payload.find({
         collection: 'posts',
         where: { slug: { equals: slug } },
         locale,
+        fallbackLocale: false,
         limit: 1,
       })
       const written = docs[0]?.meta?.description ?? ''
@@ -213,7 +233,16 @@ async function main() {
       }
     }
   }
-  console.log(process.exitCode ? '  hay diferencias, mirar arriba' : '  las 30 descripciones quedaron escritas')
+  console.log(
+    process.exitCode
+      ? '  hay diferencias, mirar arriba'
+      : `  escritas ${30 - SKIPPED.length} de 30 descripciones`,
+  )
+
+  if (SKIPPED.length) {
+    console.log('\n--- salteadas por falta de traduccion (issue #7) ---')
+    for (const entry of SKIPPED) console.log(`  ${entry}`)
+  }
 }
 
 main()
