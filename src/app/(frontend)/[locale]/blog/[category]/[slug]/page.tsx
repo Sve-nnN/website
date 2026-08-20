@@ -15,7 +15,14 @@ import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
-import { getCachedPost } from '@/lib/cache'
+import { getCachedPost, getCachedBlogPromo } from '@/lib/cache'
+import { estimateReadingTime, readingTimeLabel } from '@/lib/reading-time'
+import { splitContentForOffer } from '@/lib/lexical-split'
+import { resolveBlogPromo } from '@/lib/blog-promo'
+import { InlineOffer } from '@/components/InlineOffer'
+import { RailOffer } from '@/components/RailOffer'
+import { ReadingProgress } from '@/components/ReadingProgress'
+import { BlogClosing } from '@/components/BlogClosing'
 import { blogCategoryPath, blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
@@ -24,28 +31,8 @@ import { blogCategoryPath, blogPostPath, resolvePrimaryCategorySlug } from '@/li
 // static generation. See infra/apps/LESSONS-LEARNED.md.
 export const dynamic = 'force-dynamic'
 
-const WORDS_PER_MINUTE = 200
-
 function getPost(locale: string, slug: string) {
   return getCachedPost(slug, locale as 'es' | 'en')
-}
-
-// Rough word-count-over-lexical-JSON estimate — no new dependency needed for
-// a plain-text extraction; recursively sums `text` node content.
-function extractPlainText(node: unknown): string {
-  if (!node || typeof node !== 'object') return ''
-  const n = node as { text?: string; children?: unknown[] }
-  let text = n.text ?? ''
-  if (Array.isArray(n.children)) {
-    text += n.children.map(extractPlainText).join(' ')
-  }
-  return text
-}
-
-function estimateReadingTime(content: Post['content']): number {
-  const plainText = extractPlainText(content?.root)
-  const wordCount = plainText.trim().split(/\s+/).filter(Boolean).length
-  return Math.max(1, Math.round(wordCount / WORDS_PER_MINUTE))
 }
 
 export async function generateMetadata({
@@ -121,6 +108,14 @@ export default async function PostPage({
   const readingTimeMinutes = estimateReadingTime(doc.content)
 
   const primaryCategory = categories[0]
+
+  // Los textos de conversión se resuelven contra la categoría primaria: es la
+  // que define la URL del post y también el problema con el que llegó el lector.
+  const promo = resolveBlogPromo(
+    await getCachedBlogPromo(locale as 'es' | 'en'),
+    primaryCategory?.id,
+  )
+  const body = splitContentForOffer(doc.content)
   const trail = buildBlogTrail(
     locale as 'es' | 'en',
     { slug: primaryCategorySlug, title: primaryCategory?.title ?? primaryCategorySlug },
@@ -161,7 +156,7 @@ export default async function PostPage({
                 </time>
               )}
               {' · '}
-              {readingTimeMinutes} {locale === 'es' ? 'min de lectura' : 'min read'}
+              {readingTimeLabel(readingTimeMinutes, locale as 'es' | 'en')}
             </div>
             {categories.length > 0 && (
               <div className="flex flex-wrap gap-2">
@@ -176,17 +171,47 @@ export default async function PostPage({
         }
       />
 
+      {/* Mide el artículo, no la página: ver ReadingProgress. Va acá y no
+          dentro del Container para poder ocupar el ancho completo. */}
+      <ReadingProgress targetId="post-body" />
+
       <Container className="py-8 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_16rem] gap-12">
-        <article>
-          <RichTextRenderer data={doc.content} />
+        {/* Las dos mitades viven dentro del MISMO <article>: la tabla de
+            contenidos lee `article h2` del DOM, así que partirlo en dos
+            elementos le escondería la mitad de los encabezados. */}
+        <article id="post-body">
+          <RichTextRenderer data={body.before} />
+          {body.after && (
+            <>
+              <InlineOffer
+                title={promo.inline.title}
+                text={promo.inline.text}
+                linkLabel={promo.inline.linkLabel}
+                linkUrl={promo.inline.linkUrl}
+              />
+              <RichTextRenderer data={body.after} />
+            </>
+          )}
         </article>
-        <TableOfContentsBlockComponent
-          blockType="tableOfContentsBlock"
-          title={locale === 'es' ? 'Tabla de contenidos' : 'Table of contents'}
-          position="right"
-          sticky
-          minHeadingLevel="2"
-        />
+        {/* La columna derecha es ahora un riel: índice arriba, oferta debajo.
+            El sticky vive acá y no en el índice, para que ambos suban y bajen
+            como una sola pieza; el bloque del índice se renderiza sin su
+            propio sticky para no anidar dos contextos que compiten. */}
+        <aside className="order-first flex flex-col md:order-last md:sticky md:top-24 md:self-start">
+          <TableOfContentsBlockComponent
+            blockType="tableOfContentsBlock"
+            title={locale === 'es' ? 'Tabla de contenidos' : 'Table of contents'}
+            position="left"
+            sticky={false}
+            minHeadingLevel="2"
+          />
+          <RailOffer
+            title={promo.rail.title}
+            body={promo.rail.body}
+            linkLabel={promo.rail.linkLabel}
+            linkUrl={promo.rail.linkUrl}
+          />
+        </aside>
       </Container>
 
       {author && (
@@ -203,6 +228,10 @@ export default async function PostPage({
         currentPostId={doc.id}
         currentCategoryIds={categories.map((c) => c.id)}
       />
+
+      {/* Escalera de cierre: autor, relacionados, y recién ahí el pedido. El
+          lector ya recibió el artículo completo antes de que se le pida algo. */}
+      <BlogClosing locale={locale as 'es' | 'en'} categoryId={primaryCategory?.id} />
 
       <JsonLd data={articleData} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />

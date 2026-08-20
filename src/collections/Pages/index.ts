@@ -25,6 +25,8 @@ import { FeaturedWebsitesBlock } from '@/blocks/FeaturedWebsitesBlock/config'
 import { ClientLogosBlock } from '@/blocks/ClientLogosBlock/config'
 import { CodeFixesBlock } from '@/blocks/CodeFixesBlock/config'
 import { AuditOfferBlock } from '@/blocks/AuditOfferBlock/config'
+import { BlogCategoryRows } from '@/blocks/BlogCategoryRows/config'
+import { NewsletterBlock } from '@/blocks/NewsletterBlock/config'
 import { AboutSection } from '@/blocks/AboutSection/config'
 import { ServicesShowcase } from '@/blocks/ServicesShowcase/config'
 import { ServiceScopeCard } from '@/blocks/ServiceScopeCard/config'
@@ -103,6 +105,8 @@ export const Pages: CollectionConfig = {
             LocalProofSection,
             CodeFixesBlock,
             AuditOfferBlock,
+            BlogCategoryRows,
+            NewsletterBlock,
           ],
         },
       ],

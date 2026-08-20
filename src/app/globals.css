@@ -58,6 +58,12 @@
     --accent: 245 245 245; /* was oklch(0.97 0 0) */
     --accent-foreground: 23 23 23; /* was oklch(0.205 0 0) */
     --destructive: 220 38 38; /* #DC2626 */
+    /* Variante clara del error, para texto de error sobre las bandas navy
+       (DESIGN.md la nombra `alarm-lift`). #DC2626 sobre #12141C mide 3.8:1 y
+       no pasa AA para texto de cuerpo; #F87171 mide 6.7:1. Mismo criterio que
+       --primary-text, que existe por la razón inversa: brasa legible sobre
+       claro. */
+    --destructive-lift: 248 113 113; /* #F87171 */
     --border: 137 137 137; /* was oklch(0.63 0 0) */
     --input: 229 229 229; /* was oklch(0.922 0 0) */
     --ring: 161 161 161; /* was oklch(0.708 0 0) */

@@ -27,6 +27,10 @@ import * as migration_20260714_200220_phase29_casestudies_services_localized fro
 import * as migration_20260725_155512_add_missing_media_columns from './20260725_155512_add_missing_media_columns';
 import * as migration_20260819_195425_home_code_fixes_audit_offer from './20260819_195425_home_code_fixes_audit_offer';
 import * as migration_20260819_204307_clientes_featured from './20260819_204307_clientes_featured';
+import * as migration_20260820_000041_blog_promo_and_category_rows from './20260820_000041_blog_promo_and_category_rows';
+import * as migration_20260820_001837_blog_promo_inline_title_and_rail from './20260820_001837_blog_promo_inline_title_and_rail';
+import * as migration_20260820_153557_blog_promo_by_category from './20260820_153557_blog_promo_by_category';
+import * as migration_20260820_155934_subscribers_collection from './20260820_155934_subscribers_collection';
 
 export const migrations = [
   {
@@ -172,6 +176,26 @@ export const migrations = [
   {
     up: migration_20260819_204307_clientes_featured.up,
     down: migration_20260819_204307_clientes_featured.down,
-    name: '20260819_204307_clientes_featured'
+    name: '20260819_204307_clientes_featured',
+  },
+  {
+    up: migration_20260820_000041_blog_promo_and_category_rows.up,
+    down: migration_20260820_000041_blog_promo_and_category_rows.down,
+    name: '20260820_000041_blog_promo_and_category_rows',
+  },
+  {
+    up: migration_20260820_001837_blog_promo_inline_title_and_rail.up,
+    down: migration_20260820_001837_blog_promo_inline_title_and_rail.down,
+    name: '20260820_001837_blog_promo_inline_title_and_rail',
+  },
+  {
+    up: migration_20260820_153557_blog_promo_by_category.up,
+    down: migration_20260820_153557_blog_promo_by_category.down,
+    name: '20260820_153557_blog_promo_by_category',
+  },
+  {
+    up: migration_20260820_155934_subscribers_collection.up,
+    down: migration_20260820_155934_subscribers_collection.down,
+    name: '20260820_155934_subscribers_collection'
   },
 ];

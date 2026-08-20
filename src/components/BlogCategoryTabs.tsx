@@ -1,4 +1,9 @@
-import { blogCategoryPath, blogIndexPath, localizeBlogPath } from '@/lib/blog-paths'
+import {
+  blogCategoryPath,
+  blogIndexPath,
+  localizeBlogPath,
+  FALLBACK_CATEGORY_SLUG,
+} from '@/lib/blog-paths'
 
 type TabCategory = { id: number; slug?: string | null; title: string }
 
@@ -36,13 +41,17 @@ export function BlogCategoryTabs({
   categories: TabCategory[]
   activeSlug?: string
 }) {
-  if (categories.length === 0) return null
+  // `general` es el segmento de reserva para posts sin categoría, no un tema
+  // del blog. Ofrecerlo como pestaña manda al visitante a una lista vacía.
+  const listable = categories.filter((cat) => cat.slug !== FALLBACK_CATEGORY_SLUG)
+
+  if (listable.length === 0) return null
 
   const active = activeSlug ?? 'all'
 
   const items = [
     { key: 'all', href: localizeBlogPath(locale, blogIndexPath()), label: locale === 'en' ? 'All' : 'Todas' },
-    ...categories.map((cat) => {
+    ...listable.map((cat) => {
       const slug = cat.slug ?? String(cat.id)
       return { key: slug, href: localizeBlogPath(locale, blogCategoryPath(slug)), label: cat.title }
     }),

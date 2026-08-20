@@ -31,7 +31,7 @@ export type Locale = 'es' | 'en'
 
 export type PostCardData = Pick<
   Post,
-  'id' | 'title' | 'slug' | 'excerpt' | 'heroImage' | 'categories'
+  'id' | 'title' | 'slug' | 'excerpt' | 'heroImage' | 'categories' | 'publishedAt'
 >
 export type CaseStudyCardData = Pick<
   CaseStudy,
@@ -96,6 +96,20 @@ export function getCachedFeaturedContent(locale: Locale) {
       tags: [CACHE_TAGS.featuredContent(), CACHE_TAGS.posts(), CACHE_TAGS.caseStudies()],
       revalidate: CACHE_TTL_SECONDS,
     },
+  )()
+}
+
+// --- Blog Promo global (oferta inline + banda de cierre, leído por /blog,
+// por cada categoría y por cada post) ---
+
+export function getCachedBlogPromo(locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      return payload.findGlobal({ slug: 'blog-promo', locale, overrideAccess: false })
+    },
+    ['blog-promo', locale],
+    { tags: [CACHE_TAGS.blogPromo()], revalidate: CACHE_TTL_SECONDS },
   )()
 }
 
@@ -247,13 +261,26 @@ export function getCachedArchive({
           locale,
           limit,
           overrideAccess: false,
-          // `categories` is selected (and shaped down to just its slug by
-          // `populate`) because every post card links to
-          // /blog/<category>/<slug> — without it the card cannot build its
-          // own href. `populate` keeps the RSC payload small: only the
-          // related category's id+slug ship, not its whole document.
-          select: { title: true, slug: true, excerpt: true, heroImage: true, categories: true },
-          populate: { categories: { slug: true } },
+          // `categories` is selected (and shaped down by `populate`) because
+          // every post card links to /blog/<category>/<slug> — without it the
+          // card cannot build its own href. `populate` keeps the RSC payload
+          // small: only the related category's id+slug+title ship, not its
+          // whole document. `title` rides along for the card's metadata row,
+          // which names the category instead of only linking to it.
+          //
+          // `publishedAt` is selected for that same row. `content` is NOT:
+          // the reading-time estimate needs the whole Lexical tree, and
+          // shipping 66 post bodies into a listing's RSC payload is exactly
+          // what this select exists to prevent (see src/lib/reading-time.ts).
+          select: {
+            title: true,
+            slug: true,
+            excerpt: true,
+            heroImage: true,
+            categories: true,
+            publishedAt: true,
+          },
+          populate: { categories: { slug: true, title: true } },
         })
       }
 
