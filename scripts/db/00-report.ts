@@ -8,7 +8,7 @@
  * contra suposiciones.
  *
  * Run:
- *   node --env-file=.env node_modules/.bin/tsx scripts/neon/00-report.ts
+ *   node --env-file=.env node_modules/.bin/tsx scripts/db/00-report.ts
  */
 import { getPayload } from 'payload'
 
@@ -30,15 +30,16 @@ async function main() {
   console.log('BLOQUE 1 — Páginas: meta.title / meta.description / targetKeyword')
   console.log('='.repeat(72))
 
-  const PAGE_SLUGS = [
-    'home',
-    'servicios',
-    'blog',
-    'seo-technical-audit',
-    'seo-consulting',
-    'fullstack-development',
-    'ai-seo-geo',
-  ]
+  // La corrida del 2026-08-17 buscó 'servicios' y 'blog' y no los encontró:
+  // esos slugs no existen en la colección. En vez de adivinar, se listan TODOS
+  // los slugs reales primero y después se detallan uno por uno.
+  const { docs: allPages } = await payload.find({
+    collection: 'pages',
+    limit: 200,
+    overrideAccess: false,
+  })
+  const PAGE_SLUGS = (allPages as any[]).map((d) => d.slug).filter(Boolean)
+  console.log(`\n  Slugs reales en \`pages\` (${PAGE_SLUGS.length}): ${PAGE_SLUGS.join(', ')}`)
 
   for (const slug of PAGE_SLUGS) {
     for (const locale of LOCALES) {

@@ -1,8 +1,19 @@
 ---
 quick_id: 260814-publish-stranded-websites
-status: code_complete_run_pending
+status: verified_live
 date: 2026-08-14
+verified_date: 2026-08-18
 ---
+
+## Verificación en vivo (2026-08-18)
+
+Neon/producción alcanzable vía túnel SSH + relay (ver memoria `reference_prod_db_access`).
+Barrido completo del sitemap de producción: 194/194 URLs en 200. `/websites` lista los
+6 sitios; cada `/websites/[slug]` responde 200 en ambos locales. El bug de RC-2
+(`/blog` + case studies) del ticket 260813 también verificado resuelto en el mismo
+barrido — no hizo falta correr `publish-draft-content.ts` manualmente, ya estaba
+resuelto en producción (probablemente vía el fix de `safeRevalidateTag` + redeploy
+posterior).
 
 # Summary — websites atascados en borrador
 

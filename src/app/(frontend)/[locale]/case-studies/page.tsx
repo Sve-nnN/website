@@ -2,7 +2,7 @@ import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import { Container } from '@/components/Container'
-import { Breadcrumbs } from '@/components/Breadcrumbs'
+import { PageHero } from '@/components/PageHero'
 import { CaseStudyCard } from '@/components/CaseStudyCard'
 import { FeaturedEntry } from '@/components/FeaturedEntry'
 import { JsonLd } from '@/components/JsonLd'
@@ -57,23 +57,20 @@ export default async function CaseStudiesListPage({
 
   return (
     <main>
-      <Container className="py-16">
-        {/* POLISH: this trail was hand-rolled inline (with `text-sm` instead of
-            the `text-label` token, and no focus styles on its links) while the
-            author profile grew its own copy. Both now render through the shared
-            Breadcrumbs component over the same trail array. */}
-        <Breadcrumbs trail={trail} className="mb-4" />
-        <h1 className="font-display text-display tracking-tight">
-          {locale === 'es' ? 'Casos de éxito' : 'Case Studies'}
-        </h1>
-        <p className="mt-4 max-w-[65ch] text-body text-muted-foreground">
-          {locale === 'es'
+      <PageHero
+        variant="index"
+        trail={trail}
+        title={locale === 'es' ? 'Casos de éxito' : 'Case Studies'}
+        subtitle={
+          locale === 'es'
             ? 'Cada caso muestra qué estaba fallando, qué corregí en el código y qué cambió después. Los números salen de Search Console, los clientes van anonimizados.'
-            : 'Every case shows what was failing, what I fixed in the code and what changed afterwards. The numbers come from Search Console, the clients stay anonymous.'}
-        </p>
+            : 'Every case shows what was failing, what I fixed in the code and what changed afterwards. The numbers come from Search Console, the clients stay anonymous.'
+        }
+      />
 
+      <Container className="py-12 md:py-16">
         {caseStudies.length === 0 ? (
-          <div className="mt-12 text-center py-16">
+          <div className="text-center py-16">
             <p className="font-heading text-heading">
               {locale === 'es' ? 'Próximamente' : 'Coming soon'}
             </p>
@@ -90,7 +87,6 @@ export default async function CaseStudiesListPage({
             <FeaturedEntry
               kind="case-study"
               locale={locale as 'es' | 'en'}
-              className="mt-12"
               title={featured.title}
               slug={featured.slug ?? String(featured.id)}
               heroImage={featured.heroImage}

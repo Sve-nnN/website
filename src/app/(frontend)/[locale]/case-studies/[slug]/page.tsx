@@ -1,4 +1,3 @@
-import Image from 'next/image'
 // Deliberately the PLAIN link, not the locale-aware `Link` from
 // `@/i18n/navigation`: both link sites here are already locale-correct — one
 // breadcrumb url (prefixed by `src/lib/breadcrumbs.ts`) plus two CTAs that
@@ -9,6 +8,7 @@ import { notFound } from 'next/navigation'
 import type { Author } from '@/payload-types'
 import { JsonLd } from '@/components/JsonLd'
 import { Container } from '@/components/Container'
+import { PageHero } from '@/components/PageHero'
 import { AuthorCard } from '@/components/AuthorCard'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
@@ -158,87 +158,15 @@ export default async function CaseStudyPage({
 
   return (
     <main>
-      {/* POLISH: the hero used to be a 21/9 image band stacked ABOVE the text,
-          which measured 617px tall on a 1440x812 viewport and pushed the h1 to
-          y=782 — at the very bottom edge of the fold, and below it on any
-          shorter laptop. A case study has to lead with its headline and metric,
-          not with a decorative gradient. The image is now the hero's
-          background with the copy on top, which is the treatment the shared
-          Hero block's own `case-study-header` variant already uses; this page
-          was a one-off that drifted from it. */}
-      <section className="relative overflow-hidden bg-secondary text-secondary-foreground border-t-8 border-primary">
-        <div className="absolute inset-0" aria-hidden="true">
-          <Image
-            src={heroImageUrl}
-            alt=""
-            fill
-            className="object-cover opacity-45"
-            priority
-            sizes="100vw"
-          />
-          {/* Scrim: the hero images are wide-gamut abstract gradients, so a
-              flat tint alone left light passages under the copy. The vertical
-              ramp keeps the lower half — where the title, metric and
-              breadcrumb sit — reliably dark. */}
-          <div className="absolute inset-0 bg-gradient-to-t from-secondary via-secondary/75 to-secondary/40" />
-        </div>
-        <Container className="relative z-10 py-14 md:py-20">
-          <nav aria-label="Breadcrumb" className="mb-4">
-            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-secondary-foreground/70">
-              {trail.map((crumb, i) => {
-                const isLast = i === trail.length - 1
-                return (
-                  <li key={crumb.url} className="flex items-center gap-x-2">
-                    {i > 0 && <span aria-hidden="true">/</span>}
-                    {isLast ? (
-                      <span aria-current="page">{crumb.label}</span>
-                    ) : (
-                      <Link
-                        href={crumb.url}
-                        className="hover:text-secondary-foreground underline-offset-2 hover:underline"
-                      >
-                        {crumb.label}
-                      </Link>
-                    )}
-                  </li>
-                )
-              })}
-            </ol>
-          </nav>
-          {/* POLISH: these ran as bare spans separated only by a gap, so
-              "E-commerce" and "2025" read as two loose words rather than one
-              metadata line. Interpuncts are rendered from the array so no
-              separator is orphaned when a field is missing (the client name is
-              absent on every anonymised case study). */}
-          {[client?.name, doc.sector, doc.period].filter(Boolean).length > 0 && (
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-label opacity-80">
-              {[client?.name, doc.sector, doc.period]
-                .filter((v): v is string => Boolean(v))
-                .map((value, i) => (
-                  <span key={value} className="flex items-center gap-x-2">
-                    {i > 0 && <span aria-hidden="true">·</span>}
-                    {value}
-                  </span>
-                ))}
-            </div>
-          )}
-          <h1 className="font-display text-display mt-3 tracking-tight text-balance">{doc.title}</h1>
-          {doc.heroSubtitle && (
-            <p className="mt-4 text-body max-w-[65ch] text-secondary-foreground/85">
-              {doc.heroSubtitle}
-            </p>
-          )}
-          {/* POLISH: the metric was also `text-display`, so two 56px elements
-              competed for the same moment and neither won. The headline is the
-              title; the metric is its proof, so it steps down one level and
-              keeps the ember, which reads at 4.9:1 on navy. */}
-          {doc.heroMetric && (
-            <p className="mt-6 font-heading text-heading font-semibold text-primary tracking-tight tabular-nums">
-              {doc.heroMetric}
-            </p>
-          )}
-        </Container>
-      </section>
+      <PageHero
+        variant="detail"
+        trail={trail}
+        title={doc.title}
+        subtitle={doc.heroSubtitle}
+        metric={doc.heroMetric}
+        meta={[client?.name, doc.sector, doc.period]}
+        image={{ url: heroImageUrl, alt: heroImage?.alt ?? doc.title }}
+      />
 
       {doc.kpis && doc.kpis.length > 0 && (
         <Container className="py-12">

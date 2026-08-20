@@ -13,8 +13,8 @@
  *
  * DRY-RUN POR DEFECTO.
  *
- *   node --env-file=.env node_modules/.bin/tsx scripts/neon/02-fix-post-taxonomy.ts
- *   node --env-file=.env node_modules/.bin/tsx scripts/neon/02-fix-post-taxonomy.ts --apply
+ *   node --env-file=.env node_modules/.bin/tsx scripts/db/02-fix-post-taxonomy.ts
+ *   node --env-file=.env node_modules/.bin/tsx scripts/db/02-fix-post-taxonomy.ts --apply
  *
  * El mapeo de abajo está VACÍO a propósito. No sé qué categoría le corresponde
  * a cada post huérfano ni cuál es el título EN correcto, y adivinarlo sería
@@ -30,14 +30,29 @@ import config from '../../src/payload.config'
 
 const APPLY = process.argv.includes('--apply')
 
-/** slug del post -> slug de la categoría que debe quedar como primaria. */
+/**
+ * slug del post -> slug de la categoría que debe quedar como primaria.
+ *
+ * Del bloque 4 del reporte del 2026-08-17: 66 posts publicados, exactamente 1
+ * sin categoría. `tablas-hash` (id=56) va a "Ciencias de la Computación"
+ * (cs-fundamentals, id=4), que es donde ya viven `pilas-y-colas` y
+ * `recursividad`. La URL pasa de /blog/general/tablas-hash a
+ * /blog/cs-fundamentals/tablas-hash.
+ */
 const CATEGORIA_POR_POST: Record<string, string> = {
-  // 'tablas-hash': 'cs-fundamentals',
+  'tablas-hash': 'cs-fundamentals',
 }
 
-/** slug del post -> título EN corregido (se escribe solo en locale `en`). */
+/**
+ * slug del post -> título EN corregido (se escribe solo en locale `en`).
+ *
+ * Del bloque 5: un solo caso. "Next Js Seo: Next.js SEO Best Practices for
+ * Optimal Visibility" lleva el slug convertido a título como prefijo, y el
+ * prefijo ya está contenido en la parte de la derecha. Se saca el prefijo y
+ * queda el título real, que es el que va al `headline` del Article (SEO-09).
+ */
 const TITULO_EN_POR_POST: Record<string, string> = {
-  // 'next-js-seo': 'Next.js SEO Best Practices for Optimal Visibility',
+  'nextjs-seo': 'Next.js SEO Best Practices for Optimal Visibility',
 }
 
 async function main() {

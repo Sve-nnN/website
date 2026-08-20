@@ -12,6 +12,7 @@ import type { Website } from '@/payload-types'
 import { Link as LocaleLink } from '@/i18n/navigation'
 import { JsonLd } from '@/components/JsonLd'
 import { Container } from '@/components/Container'
+import { PageHero } from '@/components/PageHero'
 import { Badge } from '@/components/ui/badge'
 import { buildWebsitesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { buildOpenGraph } from '@/lib/og-image'
@@ -122,43 +123,13 @@ export default async function WebsitePage({
 
   return (
     <main>
-      <section className="relative bg-secondary text-secondary-foreground">
-        <Container className="py-8">
-          <nav aria-label="Breadcrumb" className="mb-4">
-            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-secondary-foreground/70">
-              {trail.map((crumb, i) => {
-                const isLast = i === trail.length - 1
-                return (
-                  <li key={crumb.url} className="flex items-center gap-x-2">
-                    {i > 0 && <span aria-hidden="true">/</span>}
-                    {isLast ? (
-                      <span aria-current="page">{crumb.label}</span>
-                    ) : (
-                      // `crumb.url` arrives already locale-prefixed from
-                      // `buildWebsitesTrail`, so this stays on the plain
-                      // component — the locale-aware one would stack a second
-                      // locale segment on it.
-                      <Link
-                        href={crumb.url}
-                        className="hover:text-secondary-foreground underline-offset-2 hover:underline"
-                      >
-                        {crumb.label}
-                      </Link>
-                    )}
-                  </li>
-                )
-              })}
-            </ol>
-          </nav>
-          <div className="flex flex-wrap gap-4 text-label opacity-80">
-            {client?.name && <span>{client.name}</span>}
-            {doc.industry && <span>{doc.industry}</span>}
-            {doc.year && <span>{doc.year}</span>}
-          </div>
-          <h1 className="font-display text-display mt-2">{doc.title}</h1>
-          {doc.role && <p className="mt-2 text-body max-w-2xl">{doc.role}</p>}
-        </Container>
-      </section>
+      <PageHero
+        variant="detail"
+        trail={trail}
+        title={doc.title}
+        subtitle={doc.role}
+        meta={[client?.name, doc.industry, doc.year ? String(doc.year) : null]}
+      />
 
       <Container className="py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">

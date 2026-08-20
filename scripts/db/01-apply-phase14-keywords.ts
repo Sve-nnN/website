@@ -6,8 +6,8 @@
  *
  * DRY-RUN POR DEFECTO. No escribe nada hasta que le pases `--apply`.
  *
- *   node --env-file=.env node_modules/.bin/tsx scripts/neon/01-apply-phase14-keywords.ts
- *   node --env-file=.env node_modules/.bin/tsx scripts/neon/01-apply-phase14-keywords.ts --apply
+ *   node --env-file=.env node_modules/.bin/tsx scripts/db/01-apply-phase14-keywords.ts
+ *   node --env-file=.env node_modules/.bin/tsx scripts/db/01-apply-phase14-keywords.ts --apply
  *
  * Dos precauciones aprendidas de d1855df, donde una corrida "exitosa" aterrizó
  * en un draft y producción nunca cambió:

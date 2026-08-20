@@ -2,8 +2,11 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
+import type { Category } from '@/payload-types'
 import { Container } from '@/components/Container'
 import { FeaturedEntry } from '@/components/FeaturedEntry'
+import { BlogClosing } from '@/components/BlogClosing'
+import { estimateReadingTime, readingTimeLabel } from '@/lib/reading-time'
 import { blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { JsonLd } from '@/components/JsonLd'
@@ -70,9 +73,9 @@ export default async function BlogPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ category?: string }>
+  searchParams: Promise<{ category?: string; newsletter?: string }>
 }) {
-  const [{ locale }, { category }] = await Promise.all([params, searchParams])
+  const [{ locale }, { category, newsletter }] = await Promise.all([params, searchParams])
   const doc = await getBlogPage(locale)
 
   if (!doc) {
@@ -85,7 +88,9 @@ export default async function BlogPage({
   // the layout is split at the archive block rather than rendered in one pass.
   // Looking the block up by type (instead of assuming it is last) keeps this
   // correct if the page gains another block in the admin.
-  const gridIndex = layout.findIndex((block) => block.blockType === 'archiveBlock')
+  const gridIndex = layout.findIndex(
+    (block) => block.blockType === 'archiveBlock' || block.blockType === 'blogCategoryRows',
+  )
   const hasGrid = gridIndex !== -1
 
   // With a category filter active, a global "latest post" would sit above a
@@ -103,10 +108,21 @@ export default async function BlogPage({
   // handling of its own; /blog/[category] already does exactly this at :122.
   const trail = buildBlogTrail(locale as 'es' | 'en')
 
+  // El destacado ya ocupa su propia pantalla arriba; repetirlo dentro de la
+  // fila de su categoría sería el mismo artículo dos veces en un scroll.
+  const sharedProps = {
+    activeCategory: category,
+    excludePostIds: latest ? [latest.id] : [],
+    // Los enlaces de confirmación y de baja del correo vuelven acá con
+    // `?newsletter=`; el bloque de alta lo lee para mostrar el acuse en vez
+    // del formulario.
+    newsletterState: newsletter,
+  }
+
   return (
     <main>
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-      <RenderBlocks blocks={before} sharedProps={{ activeCategory: category }} />
+      <RenderBlocks blocks={before} sharedProps={sharedProps} />
 
       {latest && (
         <Container className="pt-12">
@@ -119,11 +135,22 @@ export default async function BlogPage({
             heroImage={latest.heroImage}
             excerpt={latest.excerpt}
             publishedAt={latest.publishedAt}
+            readingTime={readingTimeLabel(
+              estimateReadingTime(latest.content),
+              locale as 'es' | 'en',
+            )}
+            category={
+              latest.categories?.find(
+                (c): c is Category => typeof c === 'object' && c !== null,
+              )?.title
+            }
           />
         </Container>
       )}
 
-      <RenderBlocks blocks={after} sharedProps={{ activeCategory: category }} />
+      <RenderBlocks blocks={after} sharedProps={sharedProps} />
+
+      <BlogClosing locale={locale as 'es' | 'en'} />
     </main>
   )
 }

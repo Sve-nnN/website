@@ -24,6 +24,29 @@ import type { Page, Post, CaseStudy, Category } from '@/payload-types'
 
 export const CACHE_TTL_SECONDS = 60
 
+/**
+ * `revalidateTag` only works inside a Next request/render context. A standalone
+ * script (`tsx scripts/...`) writing through the Local API runs the same
+ * `afterChange` hooks, and there Next throws:
+ *
+ *   Invariant: static generation store missing in revalidateTag pages:home
+ *
+ * That threw AFTER the row was already written, so the script died mid-run
+ * reporting failure on a write that had actually landed — the worst of both.
+ * Confirmed 2026-08-17 running scripts/neon/01-apply-phase14-keywords.ts.
+ *
+ * Outside a request there is no Next cache to invalidate, so skipping is the
+ * correct behaviour, not a workaround. The server process keeps invalidating
+ * normally; a script write falls back to the 60s TTL above.
+ */
+function safeRevalidateTag(tag: string): void {
+  try {
+    revalidateTag(tag)
+  } catch {
+    // No request context (standalone script / CLI). Nothing to invalidate.
+  }
+}
+
 export const CACHE_TAGS = {
   page: (slug: string) => `pages:${slug}`,
   posts: () => 'posts:all',
@@ -32,48 +55,49 @@ export const CACHE_TAGS = {
   caseStudy: (slug: string) => `case-studies:${slug}`,
   categories: () => 'categories:all',
   featuredContent: () => 'featured-content',
+  blogPromo: () => 'blog-promo',
   redirects: () => 'redirects',
 }
 
 // --- Pages ---
 
 export const revalidatePagesCache: CollectionAfterChangeHook<Page> = ({ doc }) => {
-  if (doc.slug) revalidateTag(CACHE_TAGS.page(doc.slug))
+  if (doc.slug) safeRevalidateTag(CACHE_TAGS.page(doc.slug))
   return doc
 }
 
 export const revalidatePagesCacheOnDelete: CollectionAfterDeleteHook<Page> = ({ doc }) => {
-  if (doc.slug) revalidateTag(CACHE_TAGS.page(doc.slug))
+  if (doc.slug) safeRevalidateTag(CACHE_TAGS.page(doc.slug))
   return doc
 }
 
 // --- Posts ---
 
 export const revalidatePostsCache: CollectionAfterChangeHook<Post> = ({ doc }) => {
-  revalidateTag(CACHE_TAGS.posts())
-  if (doc.slug) revalidateTag(CACHE_TAGS.post(doc.slug))
+  safeRevalidateTag(CACHE_TAGS.posts())
+  if (doc.slug) safeRevalidateTag(CACHE_TAGS.post(doc.slug))
   return doc
 }
 
 export const revalidatePostsCacheOnDelete: CollectionAfterDeleteHook<Post> = ({ doc }) => {
-  revalidateTag(CACHE_TAGS.posts())
-  if (doc.slug) revalidateTag(CACHE_TAGS.post(doc.slug))
+  safeRevalidateTag(CACHE_TAGS.posts())
+  if (doc.slug) safeRevalidateTag(CACHE_TAGS.post(doc.slug))
   return doc
 }
 
 // --- Case Studies ---
 
 export const revalidateCaseStudiesCache: CollectionAfterChangeHook<CaseStudy> = ({ doc }) => {
-  revalidateTag(CACHE_TAGS.caseStudies())
-  if (doc.slug) revalidateTag(CACHE_TAGS.caseStudy(doc.slug))
+  safeRevalidateTag(CACHE_TAGS.caseStudies())
+  if (doc.slug) safeRevalidateTag(CACHE_TAGS.caseStudy(doc.slug))
   return doc
 }
 
 export const revalidateCaseStudiesCacheOnDelete: CollectionAfterDeleteHook<CaseStudy> = ({
   doc,
 }) => {
-  revalidateTag(CACHE_TAGS.caseStudies())
-  if (doc.slug) revalidateTag(CACHE_TAGS.caseStudy(doc.slug))
+  safeRevalidateTag(CACHE_TAGS.caseStudies())
+  if (doc.slug) safeRevalidateTag(CACHE_TAGS.caseStudy(doc.slug))
   return doc
 }
 
@@ -82,21 +106,30 @@ export const revalidateCaseStudiesCacheOnDelete: CollectionAfterDeleteHook<CaseS
 // links keep pointing at the old segment until the 60s TTL lapses) ---
 
 export const revalidateCategoriesCache: CollectionAfterChangeHook<Category> = ({ doc }) => {
-  revalidateTag(CACHE_TAGS.categories())
-  revalidateTag(CACHE_TAGS.posts())
+  safeRevalidateTag(CACHE_TAGS.categories())
+  safeRevalidateTag(CACHE_TAGS.posts())
   return doc
 }
 
 export const revalidateCategoriesCacheOnDelete: CollectionAfterDeleteHook<Category> = ({ doc }) => {
-  revalidateTag(CACHE_TAGS.categories())
-  revalidateTag(CACHE_TAGS.posts())
+  safeRevalidateTag(CACHE_TAGS.categories())
+  safeRevalidateTag(CACHE_TAGS.posts())
   return doc
 }
 
 // --- Featured Content (global — no afterDelete for globals) ---
 
 export const revalidateFeaturedContentCache: GlobalAfterChangeHook = ({ doc }) => {
-  revalidateTag(CACHE_TAGS.featuredContent())
+  safeRevalidateTag(CACHE_TAGS.featuredContent())
+  return doc
+}
+
+// --- Blog Promo (global — la oferta inline y la banda de cierre del blog
+// aparecen en /blog, en cada categoría y en cada post, así que un cambio acá
+// tiene que invalidar también los caches de posts y categorías) ---
+
+export const revalidateBlogPromoCache: GlobalAfterChangeHook = ({ doc }) => {
+  safeRevalidateTag(CACHE_TAGS.blogPromo())
   return doc
 }
 
@@ -104,11 +137,11 @@ export const revalidateFeaturedContentCache: GlobalAfterChangeHook = ({ doc }) =
 // `overrides.hooks` in payload.config.ts — Task 2) ---
 
 export const revalidateRedirectsCache: CollectionAfterChangeHook = ({ doc }) => {
-  revalidateTag(CACHE_TAGS.redirects())
+  safeRevalidateTag(CACHE_TAGS.redirects())
   return doc
 }
 
 export const revalidateRedirectsCacheOnDelete: CollectionAfterDeleteHook = ({ doc }) => {
-  revalidateTag(CACHE_TAGS.redirects())
+  safeRevalidateTag(CACHE_TAGS.redirects())
   return doc
 }

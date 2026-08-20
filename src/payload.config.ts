@@ -23,6 +23,7 @@ import { Authors } from './collections/Authors'
 import { Categories } from './collections/Categories'
 import { CaseStudies } from './collections/CaseStudies'
 import { Testimonials } from './collections/Testimonials'
+import { Subscribers } from './collections/Subscribers'
 import { Clientes } from './collections/Clientes'
 import { SpeakingEvents } from './collections/SpeakingEvents'
 import { Websites } from './collections/Websites'
@@ -30,6 +31,7 @@ import { Llms } from './globals/Llms'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
 import { FeaturedContent } from './globals/FeaturedContent'
+import { BlogPromo } from './globals/BlogPromo'
 import { beforeSyncWithSearch } from './search/beforeSync'
 import { searchFields } from './search/fieldOverrides'
 
@@ -51,10 +53,26 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || '',
   db: postgresAdapter({
     pool: {
-      // Neon UNPOOLED/direct connection string required here — the pooled
-      // (-pooler) string breaks payload migrate:create/migrate prepared
-      // statements (RESEARCH.md Pitfall 1).
+      // Direct (unpooled) connection string required here — the pooled
+      // variant breaks payload migrate:create/migrate prepared statements
+      // (RESEARCH.md Pitfall 1). Production points this at the `juantech` DB
+      // on the shared-postgres container the VPS runs for every tenant app
+      // (see infra/db/ in the hosting repo), not at a dedicated instance —
+      // being a conservative neighbour on `max` matters here, not just for
+      // this app's own sake.
       connectionString: process.env.DATABASE_URI,
+      // node-postgres defaults to max:10 with no connectionTimeoutMillis, so
+      // a starved pool hangs a request rather than failing it fast. Set
+      // explicitly rather than trusting the default: `getSitemapEntries`
+      // alone used to open up to 6 connections at once (5 collection queries
+      // in a `Promise.all` plus one more for categories — now serialized, see
+      // src/lib/sitemap-data.ts), and that was enough on its own to starve
+      // this pool while it fanned out. `/sitemap.xml` and `/sitemap.html`
+      // both served a 500 with an empty urlset on 2026-08-15 — the route's
+      // own fallback for exactly this failure, working as designed, just
+      // triggered by a self-inflicted cause.
+      max: 5,
+      connectionTimeoutMillis: 5000,
     },
     // Producción: las migraciones son la única fuente de cambios de schema.
     // Nunca auto-push en ningún entorno. Correr `payload migrate:create` tras
@@ -85,11 +103,15 @@ export default buildConfig({
     Categories,
     CaseStudies,
     Testimonials,
+    // Fuera de seoPlugin, redirectsPlugin, searchPlugin y mcpPlugin a propósito:
+    // son correos de terceros, no contenido. Ninguna herramienta que exponga o
+    // indexe documentos debería poder tocarlos.
+    Subscribers,
     Clientes,
     SpeakingEvents,
     Websites,
   ],
-  globals: [Llms, Header, Footer, FeaturedContent],
+  globals: [Llms, Header, Footer, FeaturedContent, BlogPromo],
   plugins: [
     seoPlugin({
       collections: ['pages', 'posts', 'case-studies', 'authors', 'websites'],
@@ -168,6 +190,7 @@ export default buildConfig({
         header: { enabled: { find: true, update: true } },
         footer: { enabled: { find: true, update: true } },
         'featured-content': { enabled: { find: true, update: true } },
+        'blog-promo': { enabled: { find: true, update: true } },
       },
     }),
   ],

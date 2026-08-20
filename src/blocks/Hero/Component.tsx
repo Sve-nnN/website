@@ -1,68 +1,36 @@
 import Image from 'next/image'
-// Mixed file on purpose, and the reason is the breadcrumb trail: `crumb.url` is
-// admin-authored, so its shape is unknown at render time. It arrives from TWO
-// different sources. (1) The CMS array field `Hero.breadcrumbs` — see
-// `src/blocks/Hero/config.ts`, where `label` is `localized: true` but `url` is
-// NOT, so both locales share one url value and an unprefixed `/` renders as a
-// Spanish link on an `/en` page. (2) A `blockProps` override from the four
-// Services pages, which pass a trail built by `src/lib/breadcrumbs.ts` — those
-// urls already carry the locale segment. The old comment here claimed only (2)
-// existed, which is how the `/en/blog` leak survived a sitewide sweep.
-//
-// So the component is picked per crumb by `isPrefixableHref`, the same guard
-// `CMSLink` and `SiteFooter` use: `LocaleLink` prefixes bare internal paths,
-// `PlainLink` renders anything already prefixed, external or non-http verbatim.
-// The hero's CTA row goes through `CMSLink`, which is locale-aware already.
-import PlainLink from 'next/link'
 import { MapPin, CheckCircle2 } from 'lucide-react'
 
 import type { HeroBlock as HeroBlockProps } from '@/payload-types'
 
 import { Container } from '@/components/Container'
 import { CMSLink } from '@/components/CMSLink'
+import { PageHero, type PageHeroVariant } from '@/components/PageHero'
 import { omitPlaceholder } from '@/lib/placeholder'
 import { HeroGrainGradient } from '@/components/HeroGrainGradient'
-import { Link as LocaleLink, isPrefixableHref } from '@/i18n/navigation'
 
 /**
- * Renders per `variant`: `home` uses the Display-size title over the
- * secondary/navy background (UI-SPEC hero treatment); listing/post-header/
- * case-study-header use smaller Heading-size treatments. Hero image
- * per-slug deterministic fallback (for posts specifically) is applied by the
- * calling page (05-05/05-08), not here — this component only renders
- * `media` when present.
+ * Two heroes live here and only two: `home`, whose grain shader is a signature
+ * of that one surface, and `local-landing`, whose city badge, inline stat and
+ * decorative ring are signatures of the Lima/Madrid pages. Both are rendered
+ * below.
  *
- * `links` (10.8, UI-22): optional CTA buttons, reusing the shared
- * link()/linkGroup() field factory + CMSLink renderer already used by
- * CallToAction (src/blocks/CallToAction). `breadcrumbs` (10.8, UI-23):
- * optional label+url trail, only exposed on the `listing` variant in the
- * schema, rendered as a plain <nav> above the title.
+ * Every other variant is template furniture shared with the eleven
+ * code-rendered pages, so it delegates to `PageHero` (see the note at the top
+ * of `src/components/PageHero.tsx` for why): `listing` maps to the `index`
+ * template, `post-header` and `case-study-header` to `detail`. Before this,
+ * the block carried its own `variantStyles` table and the pages carried
+ * theirs, which is how a CMS-driven blog index and a code-driven case-studies
+ * index ended up looking like two different sites.
  *
- * Non-home variants (`listing`/`post-header`/`case-study-header`) are
- * differentiated via `variantStyles` below (padding scale, overlay opacity,
- * accent border) — CSS-only, no new schema fields (28-02, UIPOL-03).
+ * The breadcrumb trail and the CTA row are locale-aware inside `PageHero` and
+ * `CMSLink` respectively — `crumb.url` is admin-authored and NOT localized in
+ * `config.ts`, so it needs the `isPrefixableHref` guard `PageHero` applies.
  */
-const variantStyles: Record<
-  NonNullable<HeroBlockProps['variant']>,
-  { padding: string; overlayOpacity: string | null; border: string }
-> = {
-  home: { padding: 'py-16 md:py-24', overlayOpacity: null, border: '' },
-  listing: { padding: 'py-10 md:py-14', overlayOpacity: null, border: 'border-b-4 border-primary' },
-  'post-header': {
-    padding: 'py-12 md:py-16',
-    overlayOpacity: 'opacity-30',
-    border: 'border-t-4 border-primary',
-  },
-  'case-study-header': {
-    padding: 'py-14 md:py-20',
-    overlayOpacity: 'opacity-45',
-    border: 'border-t-8 border-primary',
-  },
-  'local-landing': {
-    padding: 'py-16 md:py-24',
-    overlayOpacity: null,
-    border: '',
-  },
+const TEMPLATE_VARIANT: Record<string, PageHeroVariant> = {
+  listing: 'index',
+  'post-header': 'detail',
+  'case-study-header': 'detail',
 }
 
 export function HeroComponent(props: HeroBlockProps) {
@@ -82,18 +50,38 @@ export function HeroComponent(props: HeroBlockProps) {
   const image = typeof media === 'object' ? media : null
 
   const isHome = variant === 'home'
-  const isListing = variant === 'listing'
   const isLocalLanding = variant === 'local-landing'
-  const styles = variantStyles[variant]
+  // `media` is the background image on the detail templates; on the home hero
+  // it is the portrait instead, since that hero's background is the shader.
+  const portrait = isHome ? image : null
+
+  const ctaRow = links && links.length > 0 && (
+    <div className="mt-8 flex flex-wrap gap-4">
+      {links.map((row, i) => (
+        <CMSLink key={row.id ?? i} {...row.link} />
+      ))}
+    </div>
+  )
+
+  if (!isHome && !isLocalLanding) {
+    const templateVariant = TEMPLATE_VARIANT[variant] ?? 'index'
+    return (
+      <PageHero
+        variant={templateVariant}
+        title={title ?? ''}
+        subtitle={subtitle}
+        trail={(breadcrumbs ?? []).flatMap((crumb) =>
+          crumb.label ? [{ label: crumb.label, url: crumb.url ?? '' }] : [],
+        )}
+        image={image?.url ? { url: image.url, alt: image.alt } : null}
+      >
+        {ctaRow}
+      </PageHero>
+    )
+  }
 
   return (
-    <section
-      className={
-        isHome || isLocalLanding
-          ? 'relative bg-secondary text-secondary-foreground py-16 md:py-24 overflow-hidden'
-          : `relative bg-secondary text-secondary-foreground ${styles.padding} ${styles.border}`
-      }
-    >
+    <section className="relative bg-secondary text-secondary-foreground py-16 md:py-24 overflow-hidden">
       {isHome && <HeroGrainGradient />}
       {isLocalLanding && (
         <svg
@@ -103,9 +91,7 @@ export function HeroComponent(props: HeroBlockProps) {
           }`}
           style={{
             opacity: ringOpacity ?? 0.25,
-            transform: ringFlipX
-              ? 'translateY(-50%) scaleX(-1)'
-              : 'translateY(-50%)',
+            transform: ringFlipX ? 'translateY(-50%) scaleX(-1)' : 'translateY(-50%)',
           }}
           viewBox="0 0 400 400"
           fill="none"
@@ -121,75 +107,64 @@ export function HeroComponent(props: HeroBlockProps) {
           />
         </svg>
       )}
-      {!isHome && !isListing && image?.url && styles.overlayOpacity && (
-        <div className={`absolute inset-0 ${styles.overlayOpacity}`}>
-          <Image
-            src={image.url}
-            alt={image.alt ?? ''}
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
-          />
-        </div>
-      )}
       <Container className="relative z-10">
-        {isListing && breadcrumbs && breadcrumbs.length > 0 && (
-          <nav aria-label="Breadcrumb" className="mb-4">
-            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-secondary-foreground/70">
-              {breadcrumbs.map((crumb, i) => {
-                const isLast = i === breadcrumbs.length - 1
-                const CrumbLink =
-                  crumb.url && isPrefixableHref(crumb.url) ? LocaleLink : PlainLink
-                return (
-                  <li key={crumb.id ?? crumb.url} className="flex items-center gap-x-2">
-                    {i > 0 && <span aria-hidden="true">/</span>}
-                    {isLast || !crumb.url ? (
-                      <span aria-current={isLast ? 'page' : undefined}>{crumb.label}</span>
-                    ) : (
-                      <CrumbLink href={crumb.url} className="hover:text-secondary-foreground underline-offset-2 hover:underline">
-                        {crumb.label}
-                      </CrumbLink>
-                    )}
-                  </li>
-                )
-              })}
-            </ol>
-          </nav>
-        )}
-        {isLocalLanding && cityName && (
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-secondary-foreground/10 px-4 py-1.5 text-label">
-            <MapPin className="size-4 text-primary" />
-            <span>{cityName}</span>
+        <div
+          className={
+            portrait
+              ? 'grid items-center gap-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-16'
+              : undefined
+          }
+        >
+          <div>
+            {isLocalLanding && cityName && (
+              <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-secondary-foreground/10 px-4 py-1.5 text-label">
+                <MapPin className="size-4 text-primary" />
+                <span>{cityName}</span>
+              </div>
+            )}
+            {title && (
+              <h1 className="font-display text-display tracking-tight text-balance">{title}</h1>
+            )}
+            {subtitle && (
+              <p className="mt-6 text-body max-w-2xl text-secondary-foreground/80">{subtitle}</p>
+            )}
+            {isLocalLanding && omitPlaceholder(inlineStat) && (
+              <div className="mt-4 flex items-center gap-2 text-body">
+                <CheckCircle2 className="size-5 text-primary" />
+                <span>{inlineStat}</span>
+              </div>
+            )}
+            {ctaRow}
           </div>
-        )}
-        {title && (
-          <h1
-            className={
-              isHome
-                ? 'font-display text-display tracking-tight'
-                : 'font-heading text-heading tracking-tight'
-            }
-          >
-            {title}
-          </h1>
-        )}
-        {subtitle && (
-          <p className="mt-6 text-body max-w-2xl text-secondary-foreground/80">{subtitle}</p>
-        )}
-        {isLocalLanding && omitPlaceholder(inlineStat) && (
-          <div className="mt-4 flex items-center gap-2 text-body">
-            <CheckCircle2 className="size-5 text-primary" />
-            <span>{inlineStat}</span>
-          </div>
-        )}
-        {links && links.length > 0 && (
-          <div className="mt-8 flex flex-wrap gap-4">
-            {links.map((row, i) => (
-              <CMSLink key={row.id ?? i} {...row.link} />
-            ))}
-          </div>
-        )}
+
+          {/* The portrait comes AFTER the copy in source order so the h1 is
+              the first thing on a phone, where the two columns collapse into
+              one. It shipped with `order-first`, which did the exact opposite
+              of what this comment claimed: measured on a 390px viewport the
+              photo took the whole first screen and pushed the headline below
+              the fold. No order override — DOM order is already right in both
+              directions, since the grid puts the second child in the right-hand
+              column from `md` up.
+
+              Why a face at all: of fifteen competitor home pages analysed,
+              almost none show one, including the ones written by people who
+              actually program. A photo is the single thing an agency cannot
+              put on its page, and this whole site argues that one person does
+              the audit and the code. */}
+          {portrait?.url && (
+            <div>
+              <Image
+                src={portrait.url}
+                alt={portrait.alt ?? title ?? ''}
+                width={520}
+                height={650}
+                priority
+                sizes="(min-width: 768px) 22rem, 60vw"
+                className="w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object-cover"
+              />
+            </div>
+          )}
+        </div>
       </Container>
     </section>
   )

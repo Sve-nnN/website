@@ -1,10 +1,10 @@
-import Image from 'next/image'
 import { notFound, permanentRedirect } from 'next/navigation'
 
 import type { Author, Category, Post } from '@/payload-types'
 import { Link } from '@/i18n/navigation'
 import { JsonLd } from '@/components/JsonLd'
 import { Container } from '@/components/Container'
+import { PageHero } from '@/components/PageHero'
 import { Badge } from '@/components/ui/badge'
 import { AuthorByline } from '@/components/AuthorByline'
 import { AuthorCard } from '@/components/AuthorCard'
@@ -16,7 +16,14 @@ import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { SITE_URL } from '@/lib/sitemap-data'
-import { getCachedPost } from '@/lib/cache'
+import { getCachedPost, getCachedBlogPromo } from '@/lib/cache'
+import { estimateReadingTime, readingTimeLabel } from '@/lib/reading-time'
+import { splitContentForOffer } from '@/lib/lexical-split'
+import { resolveBlogPromo } from '@/lib/blog-promo'
+import { InlineOffer } from '@/components/InlineOffer'
+import { RailOffer } from '@/components/RailOffer'
+import { ReadingProgress } from '@/components/ReadingProgress'
+import { BlogClosing } from '@/components/BlogClosing'
 import { blogCategoryPath, blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
@@ -25,28 +32,8 @@ import { blogCategoryPath, blogPostPath, resolvePrimaryCategorySlug } from '@/li
 // static generation. See infra/apps/LESSONS-LEARNED.md.
 export const dynamic = 'force-dynamic'
 
-const WORDS_PER_MINUTE = 200
-
 function getPost(locale: string, slug: string) {
   return getCachedPost(slug, locale as 'es' | 'en')
-}
-
-// Rough word-count-over-lexical-JSON estimate — no new dependency needed for
-// a plain-text extraction; recursively sums `text` node content.
-function extractPlainText(node: unknown): string {
-  if (!node || typeof node !== 'object') return ''
-  const n = node as { text?: string; children?: unknown[] }
-  let text = n.text ?? ''
-  if (Array.isArray(n.children)) {
-    text += n.children.map(extractPlainText).join(' ')
-  }
-  return text
-}
-
-function estimateReadingTime(content: Post['content']): number {
-  const plainText = extractPlainText(content?.root)
-  const wordCount = plainText.trim().split(/\s+/).filter(Boolean).length
-  return Math.max(1, Math.round(wordCount / WORDS_PER_MINUTE))
 }
 
 export async function generateMetadata({
@@ -122,6 +109,14 @@ export default async function PostPage({
   const readingTimeMinutes = estimateReadingTime(doc.content)
 
   const primaryCategory = categories[0]
+
+  // Los textos de conversión se resuelven contra la categoría primaria: es la
+  // que define la URL del post y también el problema con el que llegó el lector.
+  const promo = resolveBlogPromo(
+    await getCachedBlogPromo(locale as 'es' | 'en'),
+    primaryCategory?.id,
+  )
+  const body = splitContentForOffer(doc.content)
   const trail = buildBlogTrail(
     locale as 'es' | 'en',
     { slug: primaryCategorySlug, title: primaryCategory?.title ?? primaryCategorySlug },
@@ -165,52 +160,84 @@ export default async function PostPage({
 
   return (
     <main>
-      <section className="relative">
-        <div className="relative aspect-[21/9] w-full">
-          <Image
-            src={heroImageUrl}
-            alt={heroImage?.alt ?? doc.title}
-            fill
-            className="object-cover"
-            priority
-            sizes="100vw"
-          />
-        </div>
-        <Container className="py-8">
-          <div className="flex flex-wrap gap-2 mb-4">
-            {categories.map((cat) => (
-              <Link key={cat.id} href={blogCategoryPath(cat.slug ?? primaryCategorySlug)}>
-                <Badge variant="secondary">{cat.title}</Badge>
-              </Link>
-            ))}
-          </div>
-          <h1 className="font-display text-display tracking-tight">{doc.title}</h1>
-          <div className="mt-6 flex flex-wrap items-center gap-6">
-            {author && <AuthorByline author={author} />}
-            <div className="text-label text-muted-foreground">
+      {/* POLISH: the hero used to stack a 21/9 image band ABOVE the copy, the
+          same shape a case study already moved away from — on a 1440x812
+          viewport it ate the whole fold and pushed the h1 below it. The image
+          is now the hero's scrimmed background and the page renders the shared
+          `detail` template, so post, case study and website heroes finally
+          agree. The category chips moved out of the slot above the title
+          (where they read as a kicker) into the metadata row. */}
+      <PageHero
+        variant="detail"
+        trail={trail}
+        title={doc.title}
+        image={{ url: heroImageUrl, alt: heroImage?.alt ?? doc.title }}
+        metaSlot={
+          <>
+            {author && <AuthorByline author={author} tone="dark" />}
+            <div className="text-label text-secondary-foreground/80">
               {doc.publishedAt && (
                 <time dateTime={doc.publishedAt}>
                   {new Date(doc.publishedAt).toLocaleDateString(locale)}
                 </time>
               )}
               {' · '}
-              {readingTimeMinutes} {locale === 'es' ? 'min de lectura' : 'min read'}
+              {readingTimeLabel(readingTimeMinutes, locale as 'es' | 'en')}
             </div>
-          </div>
-        </Container>
-      </section>
+            {categories.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {categories.map((cat) => (
+                  <Link key={cat.id} href={blogCategoryPath(cat.slug ?? primaryCategorySlug)}>
+                    <Badge variant="onDark">{cat.title}</Badge>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </>
+        }
+      />
+
+      {/* Mide el artículo, no la página: ver ReadingProgress. Va acá y no
+          dentro del Container para poder ocupar el ancho completo. */}
+      <ReadingProgress targetId="post-body" />
 
       <Container className="py-8 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_16rem] gap-12">
-        <article>
-          <RichTextRenderer data={doc.content} />
+        {/* Las dos mitades viven dentro del MISMO <article>: la tabla de
+            contenidos lee `article h2` del DOM, así que partirlo en dos
+            elementos le escondería la mitad de los encabezados. */}
+        <article id="post-body">
+          <RichTextRenderer data={body.before} />
+          {body.after && (
+            <>
+              <InlineOffer
+                title={promo.inline.title}
+                text={promo.inline.text}
+                linkLabel={promo.inline.linkLabel}
+                linkUrl={promo.inline.linkUrl}
+              />
+              <RichTextRenderer data={body.after} />
+            </>
+          )}
         </article>
-        <TableOfContentsBlockComponent
-          blockType="tableOfContentsBlock"
-          title={locale === 'es' ? 'Tabla de contenidos' : 'Table of contents'}
-          position="right"
-          sticky
-          minHeadingLevel="2"
-        />
+        {/* La columna derecha es ahora un riel: índice arriba, oferta debajo.
+            El sticky vive acá y no en el índice, para que ambos suban y bajen
+            como una sola pieza; el bloque del índice se renderiza sin su
+            propio sticky para no anidar dos contextos que compiten. */}
+        <aside className="order-first flex flex-col md:order-last md:sticky md:top-24 md:self-start">
+          <TableOfContentsBlockComponent
+            blockType="tableOfContentsBlock"
+            title={locale === 'es' ? 'Tabla de contenidos' : 'Table of contents'}
+            position="left"
+            sticky={false}
+            minHeadingLevel="2"
+          />
+          <RailOffer
+            title={promo.rail.title}
+            body={promo.rail.body}
+            linkLabel={promo.rail.linkLabel}
+            linkUrl={promo.rail.linkUrl}
+          />
+        </aside>
       </Container>
 
       {author && (
@@ -227,6 +254,10 @@ export default async function PostPage({
         currentPostId={doc.id}
         currentCategoryIds={categories.map((c) => c.id)}
       />
+
+      {/* Escalera de cierre: autor, relacionados, y recién ahí el pedido. El
+          lector ya recibió el artículo completo antes de que se le pida algo. */}
+      <BlogClosing locale={locale as 'es' | 'en'} categoryId={primaryCategory?.id} />
 
       <JsonLd data={articleData} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />

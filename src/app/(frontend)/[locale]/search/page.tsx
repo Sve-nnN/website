@@ -3,6 +3,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { Link } from '@/i18n/navigation'
 import { Container } from '@/components/Container'
+import { PageHero } from '@/components/PageHero'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -102,10 +103,10 @@ export default async function SearchPage({
 
   return (
     <main>
-      <Container className="py-16">
-        <h1 className="font-display text-display">{t.title}</h1>
+      <PageHero variant="index" title={t.title} />
 
-        <form className="mt-8 flex gap-2 max-w-xl" action="" method="get">
+      <Container className="py-12 md:py-16">
+        <form className="flex gap-2 max-w-xl" action="" method="get">
           <Input type="search" name="q" defaultValue={query} placeholder={t.placeholder} />
           <Button type="submit">{t.submit}</Button>
         </form>
