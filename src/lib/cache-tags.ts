@@ -13,7 +13,7 @@
 // `revalidateTag` calls below, wired into each collection/global's
 // `afterChange`/`afterDelete` hooks in Task 1/2.
 
-import { revalidateTag } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import type {
   CollectionAfterChangeHook,
   CollectionAfterDeleteHook,
@@ -47,6 +47,30 @@ function safeRevalidateTag(tag: string): void {
   }
 }
 
+/**
+ * Invalida la cache de RUTA, que es distinta de la de datos.
+ *
+ * Desde SEO-06 las paginas publicas son ISR (`revalidate = 60` con
+ * `generateStaticParams` vacio): Next guarda el HTML renderizado y lo sirve sin
+ * volver a ejecutar el componente. `revalidateTag` limpia los fetchers de
+ * src/lib/cache.ts, pero NO ese HTML — sin esto, publicar en el admin no se
+ * veria hasta que venciera el TTL de 60 s.
+ *
+ * Es a proposito un martillo: `'/'` con `'layout'` alcanza TODAS las rutas bajo
+ * el layout raiz. Mapear cada doc a su URL exacta significaria repetir aca la
+ * logica de blog-paths, los slugs traducidos de servicios y los dos idiomas, y
+ * cada vez que un mapeo quedara mal la pagina se serviria vieja sin que nadie
+ * lo note. El costo real de pasarse de invalidacion es un render de ~1 s en la
+ * primera visita despues de publicar, en un sitio con el trafico de este.
+ */
+function safeRevalidateAllPaths(): void {
+  try {
+    revalidatePath('/', 'layout')
+  } catch {
+    // Igual que arriba: sin contexto de request no hay nada que invalidar.
+  }
+}
+
 export const CACHE_TAGS = {
   page: (slug: string) => `pages:${slug}`,
   posts: () => 'posts:all',
@@ -63,11 +87,13 @@ export const CACHE_TAGS = {
 
 export const revalidatePagesCache: CollectionAfterChangeHook<Page> = ({ doc }) => {
   if (doc.slug) safeRevalidateTag(CACHE_TAGS.page(doc.slug))
+  safeRevalidateAllPaths()
   return doc
 }
 
 export const revalidatePagesCacheOnDelete: CollectionAfterDeleteHook<Page> = ({ doc }) => {
   if (doc.slug) safeRevalidateTag(CACHE_TAGS.page(doc.slug))
+  safeRevalidateAllPaths()
   return doc
 }
 
@@ -76,12 +102,14 @@ export const revalidatePagesCacheOnDelete: CollectionAfterDeleteHook<Page> = ({ 
 export const revalidatePostsCache: CollectionAfterChangeHook<Post> = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.posts())
   if (doc.slug) safeRevalidateTag(CACHE_TAGS.post(doc.slug))
+  safeRevalidateAllPaths()
   return doc
 }
 
 export const revalidatePostsCacheOnDelete: CollectionAfterDeleteHook<Post> = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.posts())
   if (doc.slug) safeRevalidateTag(CACHE_TAGS.post(doc.slug))
+  safeRevalidateAllPaths()
   return doc
 }
 
@@ -90,6 +118,7 @@ export const revalidatePostsCacheOnDelete: CollectionAfterDeleteHook<Post> = ({ 
 export const revalidateCaseStudiesCache: CollectionAfterChangeHook<CaseStudy> = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.caseStudies())
   if (doc.slug) safeRevalidateTag(CACHE_TAGS.caseStudy(doc.slug))
+  safeRevalidateAllPaths()
   return doc
 }
 
@@ -98,6 +127,7 @@ export const revalidateCaseStudiesCacheOnDelete: CollectionAfterDeleteHook<CaseS
 }) => {
   safeRevalidateTag(CACHE_TAGS.caseStudies())
   if (doc.slug) safeRevalidateTag(CACHE_TAGS.caseStudy(doc.slug))
+  safeRevalidateAllPaths()
   return doc
 }
 
@@ -108,12 +138,14 @@ export const revalidateCaseStudiesCacheOnDelete: CollectionAfterDeleteHook<CaseS
 export const revalidateCategoriesCache: CollectionAfterChangeHook<Category> = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.categories())
   safeRevalidateTag(CACHE_TAGS.posts())
+  safeRevalidateAllPaths()
   return doc
 }
 
 export const revalidateCategoriesCacheOnDelete: CollectionAfterDeleteHook<Category> = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.categories())
   safeRevalidateTag(CACHE_TAGS.posts())
+  safeRevalidateAllPaths()
   return doc
 }
 
@@ -121,6 +153,7 @@ export const revalidateCategoriesCacheOnDelete: CollectionAfterDeleteHook<Catego
 
 export const revalidateFeaturedContentCache: GlobalAfterChangeHook = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.featuredContent())
+  safeRevalidateAllPaths()
   return doc
 }
 
@@ -130,6 +163,7 @@ export const revalidateFeaturedContentCache: GlobalAfterChangeHook = ({ doc }) =
 
 export const revalidateBlogPromoCache: GlobalAfterChangeHook = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.blogPromo())
+  safeRevalidateAllPaths()
   return doc
 }
 
@@ -138,10 +172,12 @@ export const revalidateBlogPromoCache: GlobalAfterChangeHook = ({ doc }) => {
 
 export const revalidateRedirectsCache: CollectionAfterChangeHook = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.redirects())
+  safeRevalidateAllPaths()
   return doc
 }
 
 export const revalidateRedirectsCacheOnDelete: CollectionAfterDeleteHook = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.redirects())
+  safeRevalidateAllPaths()
   return doc
 }

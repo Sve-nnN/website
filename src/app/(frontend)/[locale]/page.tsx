@@ -8,11 +8,26 @@ import { buildAlternates } from '@/lib/canonical'
 import { getCachedPageBySlug } from '@/lib/cache'
 import { buildSitePerson } from '@/lib/person'
 
-// Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
-// network access to shared-postgres -- force dynamic (request-time)
-// rendering here so `next build` never tries to query the DB during
-// static generation. See infra/apps/LESSONS-LEARNED.md.
-export const dynamic = 'force-dynamic'
+// SEO-06: la home servia `cache-control: no-store` y re-ejecutaba el SSR
+// entero en cada request -- 1,2 s de render sobre un TTFB de 2,1 s, medido el
+// 2026-08-20. Eso venia de `force-dynamic`, que estaba por una razon real: el
+// build de Dokploy corre en un contenedor sin red hacia shared-postgres, asi
+// que cualquier prerender en `next build` falla.
+//
+// ISR resuelve las dos cosas a la vez: `generateStaticParams` devuelve una
+// lista VACIA, o sea que el build no renderiza ni una ruta y nunca toca la
+// base; `dynamicParams` (true por defecto) deja que cada locale se renderice
+// en la primera visita y quede en la cache incremental, y de ahi salen las
+// siguientes hasta que algo la invalide.
+//
+// La frescura no depende del TTL: los hooks de contenido llaman
+// `revalidatePath` (src/lib/cache-tags.ts), asi que publicar en el admin
+// actualiza la pagina sin esperar. El TTL es la red de seguridad.
+export const revalidate = 60
+
+export function generateStaticParams(): Array<{ locale: string }> {
+  return []
+}
 
 // Phase 43 (43-01): wrapped in unstable_cache (src/lib/cache.ts) — same
 // query/signature as before, so generateMetadata + HomePage (which each call
