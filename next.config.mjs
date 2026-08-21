@@ -14,10 +14,14 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    // Un solo formato (evita duplicar transformaciones avif+webp) y cache
-    // largo: Cloudinary ya sirve la imagen optimizada, no hace falta
-    // retransformar/recachear seguido.
-    formats: ['image/webp'],
+    // AVIF primero, WebP de respaldo (SEO-06.3). Antes servia solo WebP para no
+    // duplicar transformaciones, pero el navegador ya pide AVIF en el `Accept`
+    // y no lo recibia: 15-25% de peso de mas en cada imagen. La duplicacion es
+    // una variante mas en cache por imagen, con `minimumCacheTTL` de 31 dias,
+    // asi que se paga una vez.
+    //
+    // El orden importa: Next elige el PRIMERO que el navegador acepte.
+    formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 2678400,
   },
   // SEO-11.3: ninguna respuesta traia headers de seguridad. El sitio redirige
