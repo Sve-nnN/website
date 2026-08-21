@@ -14,7 +14,8 @@
     "viewAll": "View all"
   },
   "servicesShowcase": {
-    "cta": "Explore service"
+    "cta": "Explore service",
+    "sectionHeading": "Services"
   },
   "serviceScopeCard": {
     "title": "Service scope",

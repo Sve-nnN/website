@@ -201,9 +201,9 @@ export async function SiteFooter({ locale }: { locale: string }) {
         <div className="grid grid-cols-1 gap-y-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-8">
           {servicesColumn && (
             <nav aria-label={t.groupLabel(servicesColumn.title ?? t.servicesTitle)}>
-              <h3 className="font-heading text-label mb-3 uppercase tracking-wide text-secondary-foreground/70">
+              <h2 className="font-heading text-label mb-3 uppercase tracking-wide text-secondary-foreground/70">
                 {servicesColumn.title}
-              </h3>
+              </h2>
               {/* Deliberately the PLAIN link: `buildServiceHref` /
                   `buildServicesIndexHref` are already locale-correct at the
                   source (`/servicios/<slug>` for es, `/en/services/<slug>` for
@@ -232,9 +232,9 @@ export async function SiteFooter({ locale }: { locale: string }) {
           {footer.columns?.map((column, i) => (
             <nav key={column.id ?? i} aria-label={t.groupLabel(column.title ?? '')}>
               {column.title && (
-                <h3 className="font-heading text-label mb-3 uppercase tracking-wide text-secondary-foreground/70">
+                <h2 className="font-heading text-label mb-3 uppercase tracking-wide text-secondary-foreground/70">
                   {column.title}
-                </h3>
+                </h2>
               )}
               <ul className="space-y-2">
                 {column.links?.map((item, j) => {
@@ -258,9 +258,9 @@ export async function SiteFooter({ locale }: { locale: string }) {
           {dynamicColumns.map((column) => (
             <nav key={column.id} aria-label={t.groupLabel(column.title ?? '')}>
               {column.title && (
-                <h3 className="font-heading text-label mb-3 uppercase tracking-wide text-secondary-foreground/70">
+                <h2 className="font-heading text-label mb-3 uppercase tracking-wide text-secondary-foreground/70">
                   {column.title}
-                </h3>
+                </h2>
               )}
               <ul className="space-y-2">
                 {column.items.map((item) => (

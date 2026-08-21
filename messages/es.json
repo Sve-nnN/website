@@ -14,7 +14,8 @@
     "viewAll": "Ver todos"
   },
   "servicesShowcase": {
-    "cta": "Explorar servicio"
+    "cta": "Explorar servicio",
+    "sectionHeading": "Servicios"
   },
   "serviceScopeCard": {
     "title": "Alcance de este servicio",

@@ -48,11 +48,13 @@ const COPY = {
   es: {
     emptyHeading: 'Todavía no hay artículos en esta categoría',
     emptyBody: 'Explora el resto del blog mientras tanto.',
+    listingHeading: 'Artículos de esta categoría',
     count: (n: number) => (n === 1 ? '1 artículo' : `${n} artículos`),
   },
   en: {
     emptyHeading: 'No posts in this category yet',
     emptyBody: 'Browse the rest of the blog in the meantime.',
+    listingHeading: 'Posts in this category',
     count: (n: number) => (n === 1 ? '1 post' : `${n} posts`),
   },
 }
@@ -162,7 +164,14 @@ export default async function BlogCategoryPage({
             <p className="mt-2 text-body text-muted-foreground">{t.emptyBody}</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <>
+            {/* SEO-10.2: cada tarjeta lleva su titulo en h3 y arriba solo
+                estaba la h1 de la categoria, o sea que la pagina saltaba un
+                nivel. La grilla ES una seccion, lo que le faltaba era el
+                encabezado: va oculto porque el titulo de la pagina ya dice de
+                que categoria se trata y repetirlo en pantalla seria ruido. */}
+            <h2 className="sr-only">{t.listingHeading}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {docs.map((doc, i) => {
               // Same above-the-fold rule as ArchiveBlock: the first row must
               // not be SSR-hidden behind ScrollReveal's opacity:0 nor
@@ -176,9 +185,10 @@ export default async function BlogCategoryPage({
                     href={blogPostPath(resolvePrimaryCategorySlug(doc.categories), doc.slug ?? '')}
                   />
                 </ScrollReveal>
-              )
-            })}
-          </div>
+                )
+              })}
+            </div>
+          </>
         )}
       </Container>
 

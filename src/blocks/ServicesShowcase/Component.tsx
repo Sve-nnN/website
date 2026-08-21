@@ -48,7 +48,15 @@ export async function ServicesShowcaseComponent(props: ServicesShowcaseBlockProp
 
   return (
     <Container className="py-12">
-      {title && <h2 className="font-heading text-heading mb-6">{title}</h2>}
+      {/* SEO-10.2: sin `title` el bloque saltaba de la h1 de la pagina a las h3
+          de cada tarjeta. El encabezado de seccion existe igual, solo que sin
+          copy que mostrar: va visualmente oculto en vez de ausente, que es lo
+          que un lector de pantalla necesita para no perder el nivel. */}
+      {title ? (
+        <h2 className="font-heading text-heading mb-6">{title}</h2>
+      ) : (
+        <h2 className="sr-only">{t('sectionHeading')}</h2>
+      )}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {pages.map((page) => {
           const Icon = iconBySlug[page.slug ?? ''] ?? Code
