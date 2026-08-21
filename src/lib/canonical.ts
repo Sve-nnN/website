@@ -62,6 +62,16 @@ export function buildAlternates(
   locale: Locale,
   esPath: string,
   enPath: string,
+  options?: {
+    /**
+     * SEO-07: deja de anunciar la variante inglesa. Se usa en los posts cuya
+     * traduccion esta incompleta y por eso van con `noindex`: anunciar por
+     * hreflang una URL que le pedimos a Google que no indexe es una
+     * contradiccion dentro de la misma respuesta, del mismo tipo que el
+     * hreflang roto del issue #2.
+     */
+    omitEn?: boolean
+  },
 ): Metadata['alternates'] {
   const targetPath = locale === 'es' ? esPath : enPath
 
@@ -69,7 +79,7 @@ export function buildAlternates(
     canonical: `${BASE_URL}${targetPath}`,
     languages: {
       es: `${BASE_URL}${esPath}`,
-      en: `${BASE_URL}${enPath}`,
+      ...(options?.omitEn ? {} : { en: `${BASE_URL}${enPath}` }),
       'x-default': `${BASE_URL}${esPath}`,
     },
   }
