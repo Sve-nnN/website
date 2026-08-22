@@ -26,6 +26,7 @@ import { ReadingProgress } from '@/components/ReadingProgress'
 import { BlogClosing } from '@/components/BlogClosing'
 import { blogCategoryPath, blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 import { personRef, SITE_PERSON_SLUG } from '@/lib/person'
+import { EN_TRANSLATION_INCOMPLETE, isEnTranslationIncomplete } from '@/lib/translation-gaps'
 
 // SEO-06: estas rutas servian `cache-control: no-store` y re-ejecutaban el SSR
 // completo en cada request. Venia de `force-dynamic`, que estaba por una razon
@@ -84,7 +85,20 @@ export async function generateMetadata({
       metaImage: meta?.image,
       heroImage: doc.heroImage,
     }),
-    alternates: buildAlternates(locale as 'es' | 'en', path, `/en${path}`),
+    alternates: buildAlternates(locale as 'es' | 'en', path, `/en${path}`, {
+      omitEn: EN_TRANSLATION_INCOMPLETE.has(slug),
+    }),
+    // SEO-07: la version inglesa de estos posts tiene menos de la mitad del
+    // contenido del español, y en un caso ni siquiera existe (sirve el español
+    // por fallback). Indexarlas le muestra a Google paginas delgadas bajo
+    // /en que compiten con el original sin aportar nada.
+    //
+    // `follow` se mantiene: los enlaces internos de la pagina siguen valiendo,
+    // lo que no queremos es la pagina en el indice. Sale de la lista sola
+    // cuando se completa la traduccion (src/lib/translation-gaps.ts).
+    ...(isEnTranslationIncomplete(locale, slug)
+      ? { robots: { index: false, follow: true } }
+      : {}),
   }
 }
 

@@ -11,6 +11,7 @@ import { CACHE_TAGS } from '@/lib/cache-tags'
 // -> sitemap-data) that broke production's webpack build with a TDZ
 // ReferenceError ("Cannot access 'k' before initialization") on /sitemap.xml.
 import { SERVICES_INDEX_SLUG, SERVICE_SLUGS } from '@/lib/service-slugs'
+import { EN_TRANSLATION_INCOMPLETE } from '@/lib/translation-gaps'
 import {
   blogCategoryPath,
   blogPostPath,
@@ -192,13 +193,23 @@ async function fetchSitemapEntries(): Promise<SitemapEntry[]> {
 
         const alternates = { es: esUrl, en: enUrl }
 
+        // SEO-07: los posts con la traduccion inglesa incompleta van con
+        // `noindex` en /en (src/lib/translation-gaps.ts). Anunciar en el
+        // sitemap una URL que le pedimos a Google que no indexe es pedirle que
+        // gaste rastreo en una pagina que le dijimos que ignore.
+        const enIsNoindex =
+          collection === 'posts' &&
+          EN_TRANSLATION_INCOMPLETE.has((doc as { slug?: string }).slug ?? '')
+
         // Emit one <url> entry per locale (not one per doc) so each language
         // variant is independently indexable, per Google's hreflang sitemap
         // guidance — each entry carries the full reciprocal set of alternates.
-        const locales: Array<{ locale: SitemapLocale; url: string }> = [
-          { locale: 'es', url: esUrl },
-          { locale: 'en', url: enUrl },
-        ]
+        const locales: Array<{ locale: SitemapLocale; url: string }> = enIsNoindex
+          ? [{ locale: 'es', url: esUrl }]
+          : [
+              { locale: 'es', url: esUrl },
+              { locale: 'en', url: enUrl },
+            ]
 
         return locales.map(
           ({ locale, url }) =>

@@ -220,8 +220,13 @@ v06() {
   c_info "baseline home: perf 46, LCP 7,9s, TTFB 3,82s, preload de fuentes 188,4 KB"
 
   # peso total de las fuentes precargadas
+  #
+  # Se lee del HTML y no del header `Link`: desde que las paginas salen de la
+  # cache ISR (SEO-06) Next ya no emite los preloads como header, los deja en
+  # el <head>. Midiendo el header, este check daba 0 bytes y pasaba por vacio,
+  # que es la peor forma de pasar.
   total=0
-  for f in $(headers / | tr ',' '\n' | grep -oE '/_next/static/media/[A-Za-z0-9._-]*\.woff2' | sort -u); do
+  for f in $(fetch / | grep -oE '/_next/static/media/[A-Za-z0-9._-]*\.woff2' | sort -u); do
     sz=$(curl -sS -o /dev/null -w '%{size_download}' --max-time 30 "${SITE}${f}")
     total=$((total + sz))
   done
