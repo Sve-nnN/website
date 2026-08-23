@@ -14,7 +14,7 @@
  * en algún lado, no se toca: ahí el H3 es correcto.
  *
  * Visualmente los encabezados van a verse más grandes, porque el estilo va
- * atado al nivel. Es un cambio visible, chico y en dos páginas.
+ * atado al nivel. Es un cambio visible, chico y en tres páginas.
  *
  *   node --env-file=.env node_modules/.bin/tsx scripts/db/14-fix-heading-levels.ts
  *   node --env-file=.env node_modules/.bin/tsx scripts/db/14-fix-heading-levels.ts --apply
@@ -25,7 +25,15 @@ import config from '../../src/payload.config'
 
 const APPLY = process.argv.includes('--apply')
 
-const SLUGS = ['seo-tecnico-madrid', 'seo-tecnico-lima']
+// El indice de servicios entra por la misma razon que las dos landings
+// locales: sus tarjetas se escribieron como H3 dentro del rich text, y arriba
+// solo esta la h1 de la pagina. Verificado en el HTML servido tras el deploy,
+// los `<h3>` salen de `payload-richtext` y no de ningun componente.
+//
+// El slug del documento es `services` aunque la URL en español sea
+// /servicios: es la unica plantilla con el segmento traducido
+// (SERVICES_INDEX_SLUG en src/lib/service-slugs.ts).
+const SLUGS = ['services', 'seo-tecnico-madrid', 'seo-tecnico-lima']
 
 type LexicalNode = { type?: string; tag?: string; children?: LexicalNode[] }
 
