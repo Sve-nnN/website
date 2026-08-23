@@ -90,6 +90,101 @@ function FaqBlockNode({ title, faqs }: FaqBlockNodeFields) {
   )
 }
 
+/**
+ * Tabla con fila de encabezado, aunque el dato no la declare.
+ *
+ * El conversor oficial decide `<th>` contra `<td>` leyendo `node.headerState`.
+ * En las tablas que vinieron de la migración ese campo es `undefined` (se ve en
+ * el HTML servido como `lexical-table-cell-header-undefined`), así que TODAS
+ * las celdas salían `<td>` y ocho artículos fallaban el audit `td-has-header`:
+ * una tabla sin encabezados es, para un lector de pantalla, una grilla de
+ * valores sueltos sin decir de qué son.
+ *
+ * La regla: si NINGUNA celda de la tabla declara `headerState`, la primera fila
+ * se trata como encabezado. Si alguna lo declara, se respeta el dato y esto no
+ * hace nada. En artículos técnicos la primera fila es el encabezado
+ * prácticamente siempre, y la alternativa de hoy no es "sin suposición", es
+ * "ningún encabezado", que ya sabemos que está mal.
+ *
+ * `scope="col"` es lo que convierte el `<th>` en algo útil: sin él, un lector
+ * de pantalla sabe que la celda es encabezado pero no de qué columna.
+ */
+type TableCellNode = {
+  headerState?: number
+  colSpan?: number
+  rowSpan?: number
+  backgroundColor?: string | null
+  children?: unknown[]
+}
+
+type TableRowNode = { children?: TableCellNode[] }
+
+type TableNode = { children?: TableRowNode[] }
+
+function tableDeclaresHeaders(node: TableNode): boolean {
+  return (node.children ?? []).some((row) =>
+    (row.children ?? []).some((cell) => typeof cell.headerState === 'number' && cell.headerState > 0),
+  )
+}
+
+const CELL_STYLE = { border: '1px solid #ccc', padding: '8px' } as const
+
+function TableFromNode({
+  node,
+  nodesToJSX,
+}: {
+  node: TableNode
+  nodesToJSX: (args: { nodes: unknown[] }) => React.ReactNode
+}) {
+  const rows = node.children ?? []
+  const declaresHeaders = tableDeclaresHeaders(node)
+
+  const renderRow = (row: TableRowNode, rowIndex: number) => {
+    const isHeaderRow = !declaresHeaders && rowIndex === 0
+
+    return (
+      <tr key={rowIndex} className="lexical-table-row">
+        {(row.children ?? []).map((cell, cellIndex) => {
+          const isHeaderCell = isHeaderRow || (cell.headerState ?? 0) > 0
+          const Cell = isHeaderCell ? 'th' : 'td'
+
+          return (
+            <Cell
+              key={cellIndex}
+              className="lexical-table-cell"
+              scope={isHeaderCell ? 'col' : undefined}
+              colSpan={cell.colSpan && cell.colSpan > 1 ? cell.colSpan : undefined}
+              rowSpan={cell.rowSpan && cell.rowSpan > 1 ? cell.rowSpan : undefined}
+              style={{ ...CELL_STYLE, backgroundColor: cell.backgroundColor || undefined }}
+            >
+              {nodesToJSX({ nodes: (cell.children ?? []) as unknown[] })}
+            </Cell>
+          )
+        })}
+      </tr>
+    )
+  }
+
+  const [firstRow, ...restRows] = rows
+
+  return (
+    // `overflow-x-auto`: una tabla de cinco columnas en un telefono desborda
+    // el ancho de la pagina entera si no scrollea dentro de su propio marco.
+    <div className="lexical-table-container my-6 overflow-x-auto">
+      <table className="lexical-table" style={{ borderCollapse: 'collapse' }}>
+        {!declaresHeaders && firstRow ? (
+          <>
+            <thead>{renderRow(firstRow, 0)}</thead>
+            <tbody>{restRows.map((row, i) => renderRow(row, i + 1))}</tbody>
+          </>
+        ) : (
+          <tbody>{rows.map(renderRow)}</tbody>
+        )}
+      </table>
+    </div>
+  )
+}
+
 export const richTextConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...defaultJSXConverters,
@@ -99,4 +194,7 @@ export const richTextConverters: JSXConvertersFunction = ({ defaultConverters })
     ),
     faq: ({ node }: { node: { fields: FaqBlockNodeFields } }) => <FaqBlockNode {...node.fields} />,
   },
+  table: ({ node, nodesToJSX }) => (
+    <TableFromNode node={node as TableNode} nodesToJSX={nodesToJSX as never} />
+  ),
 })
