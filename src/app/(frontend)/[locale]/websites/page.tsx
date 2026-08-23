@@ -42,10 +42,19 @@ async function getWebsites(locale: string) {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const title = locale === 'es' ? 'Sitios web' : 'Websites'
+  // El hub no es un doc de `pages`, asi que no tiene de donde sacar una
+  // description del CMS: se quedaba sin `<meta name="description">` del todo.
+  // Detectado en la corrida de unlighthouse del 2026-08-22.
+  const description =
+    locale === 'es'
+      ? 'Sitios que construí de punta a punta: qué resolvía cada uno, con qué stack se hizo y cómo quedó el rendimiento y el SEO técnico.'
+      : 'Sites I built end to end: what each one had to solve, the stack behind it, and where its performance and technical SEO landed.'
   return {
     title,
+    description,
     openGraph: buildOpenGraph({
       title,
+      description,
       url: locale === 'en' ? '/en/websites' : '/websites',
       locale: locale as 'es' | 'en',
       slug: 'websites',
@@ -84,11 +93,18 @@ export default async function WebsitesListPage({
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {websites.map((w) => (
-              <WebsiteCard key={w.id} website={w} />
-            ))}
-          </div>
+          <>
+            {/* SEO-10.2: cada tarjeta lleva su titulo en h3 bajo la h1 de la
+                pagina, sin nivel intermedio. El encabezado de la grilla existe,
+                solo que el titulo de la pagina ya lo dice y repetirlo en
+                pantalla seria ruido. */}
+            <h2 className="sr-only">{locale === 'es' ? 'Sitios web' : 'Websites'}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {websites.map((w) => (
+                <WebsiteCard key={w.id} website={w} />
+              ))}
+            </div>
+          </>
         )}
       </Container>
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
