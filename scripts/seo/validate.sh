@@ -198,11 +198,24 @@ v04() {
 # ── SEO-05: canibalizacion ───────────────────────────────────────────────────
 v05() {
   hdr 5 "Consolidacion de grupos canibalizados"
-  c_info "AJUSTAR esta lista segun cual URL gane en cada grupo tras revisar GSC"
+  c_info "ganadoras decididas con GSC, 6 meses (2026-02-22 a 2026-08-22):"
+  c_info "  topic clusters   -> topic-clusters-seo        (320 impresiones contra 0)"
+  c_info "  pillar page      -> pillar-page-seo           (305 contra 0)"
+  c_info "  next.js SEO      -> nextjs-seo                (131 y 1 clic, contra 37)"
+  c_info "  keyword research -> guia-keyword-research     (posicion 19,9 contra 41,2)"
+  c_info "  guia SEO tecnico -> technical-seo-guide       (sin señal: decide el contenido)"
+  c_info "  copywriting      -> redaccion-seo             (sin señal: decide el contenido)"
+  c_info "  estrategia cont. -> estrategia-de-contenidos  (sin señal: decide el contenido)"
   c_info "el efecto real se mide a 8-12 semanas con el conteo de keywords organicas"
-  for u in /blog/seo/seo-copywriting-guide /blog/seo/seo-content-strategy \
-           /blog/seo/topic-clusters-seo /blog/tech-seo/tech-seo-guide \
-           /blog/seo/content-pillar /blog/seo/keyword-research-guide \
+
+  # OJO: `topic-clusters-seo` estaba en la lista original como perdedora. GSC
+  # dijo lo contrario y gano ella, asi que la que redirige es
+  # `estrategia-topic-clusters`. Ese es exactamente el error que el issue
+  # advertia: consolidar hacia la URL equivocada tira la señal que ya existe.
+  for u in /blog/seo/seo-copywriting /blog/seo/seo-copywriting-guide \
+           /blog/seo/seo-content-strategy /blog/seo/estrategia-topic-clusters \
+           /blog/tech-seo/tech-seo-guide /blog/seo/content-pillar \
+           /blog/seo/keyword-research-guide \
            /blog/tech-seo/nextjs-seo-optimization; do
     s=$(status "$u")
     if [ "$s" = "301" ] || [ "$s" = "308" ]; then
@@ -211,6 +224,14 @@ v05() {
       c_fail "$u sigue viva sin redirect (= $s)"
     fi
     CHECKS=$((CHECKS + 1))
+  done
+
+  c_info "regresion: las ganadoras tienen que seguir respondiendo 200"
+  for u in /blog/seo/redaccion-seo /blog/seo/estrategia-de-contenidos \
+           /blog/seo/topic-clusters-seo /blog/tech-seo/technical-seo-guide \
+           /blog/seo/pillar-page-seo /blog/seo/guia-keyword-research \
+           /blog/tech-seo/nextjs-seo; do
+    check "$u sigue viva" "$(status "$u")" "200"
   done
 }
 
