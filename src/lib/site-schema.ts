@@ -116,5 +116,46 @@ export function buildProfessionalService(locale: Locale): Record<string, unknown
   }
 }
 
+/**
+ * El servicio de una landing de SEO local (issue #42).
+ *
+ * Las cuatro landings no tenían NINGÚN dato estructurado, ni siquiera
+ * BreadcrumbList, cuando el resto del sitio sí lo tiene. Y son justo las
+ * páginas que más ganan con `Service` + `areaServed`, porque lo que se pregunta
+ * en esas búsquedas es quién presta este servicio en esta ciudad.
+ *
+ * `provider` sí corresponde acá: en `Service` es la propiedad correcta para
+ * apuntar a quién lo presta, al revés de lo que pasaba en el nodo del negocio.
+ * Referencia el `@id` del `ProfessionalService` en vez de repetirlo, así la
+ * landing suma al mismo nodo en vez de crear un negocio nuevo por ciudad.
+ *
+ * `serviceType` es texto libre, y el que va es el que la página realmente
+ * ofrece, no una categoría inventada para llenar el campo.
+ */
+export function buildLocalService(params: {
+  locale: Locale
+  city: string
+  country: string
+  name: string
+  description?: string
+  url: string
+}): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${params.url}#service`,
+    name: params.name,
+    ...(params.description ? { description: params.description } : {}),
+    serviceType: params.locale === 'es' ? 'SEO técnico' : 'Technical SEO',
+    provider: { '@id': BUSINESS_ID },
+    url: params.url,
+    areaServed: {
+      '@type': 'City',
+      name: params.city,
+      containedInPlace: { '@type': 'Country', name: params.country },
+    },
+  }
+}
+
 /** El `@id` de la persona, reexportado para no importar dos módulos por lo mismo. */
 export { PERSON_ID }
