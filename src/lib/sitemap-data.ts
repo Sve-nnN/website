@@ -231,35 +231,51 @@ async function fetchSitemapEntries(): Promise<SitemapEntry[]> {
   return [
     ...collectionEntries,
     ...categoryEntries,
-    ...getWebsitesHubEntries(collectionEntries),
+    ...getHubEntries(collectionEntries, 'websites', '/websites', '/en/websites'),
+    ...getHubEntries(collectionEntries, 'case-studies', '/case-studies', '/en/case-studies'),
+    ...getHubEntries(collectionEntries, 'authors', '/authors', '/en/authors'),
   ]
 }
 
 /**
- * SEO-11.1: `/websites` responde 200 y esta indexada, pero nunca estuvo en el
- * sitemap. No es un doc de `pages` como `/blog` o `/servicios` — es una ruta
- * escrita a mano que lista la coleccion `websites`, asi que ninguna query de
- * `SITEMAP_COLLECTIONS` la podia emitir. El sitemap listaba las 6 hijas y se
- * saltaba el hub.
+ * Paginas indice que listan una coleccion (`/websites`, `/case-studies`,
+ * `/authors`). Responden 200 y tienen canonical propio, pero NO son docs de
+ * `pages` como `/blog` o `/servicios` — son rutas escritas a mano, asi que
+ * ninguna query de `SITEMAP_COLLECTIONS` las puede emitir. El sitemap listaba
+ * las hijas y se saltaba el hub.
+ *
+ * SEO-11.1 arreglo `/websites`. SEO-41 encontro que faltaban dos mas, y son
+ * justamente las paginas indice MAS enlazadas del sitio despues de la home:
+ * `/case-studies` con 263 enlaces internos (226 en `/en`) y `/authors` con 181
+ * (159 en `/en`).
+ *
+ * Google encontro `/case-studies` igual, por enlaces: la inspeccion de URL la
+ * da como "Enviada e indexada". Que este indexada sin estar enviada no es un
+ * empate — significa que dependemos de que el rastreo la redescubra en vez de
+ * anunciarle cuando cambia.
  *
  * `lastModified` sale del hijo modificado mas recientemente, que es lo que de
- * verdad cambia el contenido del hub. Si no hay ninguno publicado, el hub
- * queda fuera del sitemap: una pagina de indice vacia no merece que la
- * anunciemos.
+ * verdad cambia el contenido del hub. Si no hay ninguno publicado, el hub queda
+ * fuera del sitemap: una pagina de indice vacia no merece que la anunciemos.
  */
-function getWebsitesHubEntries(entries: SitemapEntry[]): SitemapEntry[] {
-  const children = entries.filter((entry) => entry.group === 'websites')
+function getHubEntries(
+  entries: SitemapEntry[],
+  group: SitemapGroup,
+  esPath: string,
+  enPath: string,
+): SitemapEntry[] {
+  const children = entries.filter((entry) => entry.group === group)
   if (children.length === 0) return []
 
   const lastModified = children
     .map((entry) => new Date(entry.lastModified).getTime())
     .reduce((newest, current) => (current > newest ? current : newest), 0)
 
-  const alternates = { es: `${SITE_URL}/websites`, en: `${SITE_URL}/en/websites` }
+  const alternates = { es: `${SITE_URL}${esPath}`, en: `${SITE_URL}${enPath}` }
 
   return [
-    { url: alternates.es, locale: 'es', lastModified: new Date(lastModified), group: 'websites', alternates },
-    { url: alternates.en, locale: 'en', lastModified: new Date(lastModified), group: 'websites', alternates },
+    { url: alternates.es, locale: 'es', lastModified: new Date(lastModified), group, alternates },
+    { url: alternates.en, locale: 'en', lastModified: new Date(lastModified), group, alternates },
   ]
 }
 
