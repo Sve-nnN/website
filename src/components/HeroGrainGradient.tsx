@@ -29,6 +29,9 @@ import type { HeroGrainGradientVariant } from './HeroGrainGradientShader'
  * entra con un fundido de 700 ms encima. El resultado final es idéntico al de
  * antes; lo único que cambia es cuándo aparece la animación.
  *
+ * En pantallas táctiles el shader no se carga en absoluto: ver el comentario
+ * del `matchMedia` más abajo, con los números de PageSpeed que llevaron a eso.
+ *
  * La primera versión de este diferido usaba `{ timeout: 3000 }` y esperaba
  * solo al viewport. No alcanzaba: el hero está en pantalla desde el primer
  * frame, así que el observer disparaba durante la carga, y el `timeout` es una
@@ -69,12 +72,29 @@ export function HeroGrainGradient({ variant = 'default' }: HeroGrainGradientProp
     const node = containerRef.current
     if (!node) return
 
+    const view = window
+
     // `prefers-reduced-motion` ya está respetado adentro del shader (velocidad
     // 0), pero si el usuario pidió menos movimiento tampoco tiene sentido
     // pagar la descarga y la compilación de un shader que va a quedar quieto.
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
-    const view = window
+    // Solo en pantallas de escritorio. Medido con PageSpeed Insights, que corre
+    // en servidores de Google con la CPU limitada de un movil de gama media:
+    // el shader costaba 27,8 s de bloqueo del hilo principal, y 13,1 s despues
+    // de diferirlo bien. No es un problema de CUANDO corre sino de CUANTO
+    // cuesta, y eso no se agenda a ningun lado.
+    //
+    // En un telefono el grano y el movimiento del degradado casi no se
+    // aprecian, asi que el respaldo CSS —mismos hex, misma direccion de luz—
+    // entrega el mismo hero por una fraccion del costo. En escritorio, donde
+    // hay CPU de sobra y la animacion si luce, no cambia nada.
+    //
+    // `pointer: fine` ademas de ancho: una tablet de 1024px con dedo tiene el
+    // mismo presupuesto de CPU que un telefono, y un portatil angosto con
+    // mouse no lo tiene.
+    if (!view.matchMedia('(min-width: 1024px) and (pointer: fine)').matches) return
+
     // `in window` estrecharia el tipo a never en la rama else, de ahi la
     // comprobacion por typeof y no por `in`.
     const supportsIdleCallback = typeof view.requestIdleCallback === 'function'
