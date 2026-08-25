@@ -18,6 +18,8 @@ import { Button } from '@/components/ui/button'
 import { blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 import { buildServiceHref, buildServicesIndexHref } from '@/lib/service-slugs'
 import { SERVICE_SLUGS, getServicePage } from '@/lib/services-data'
+import { LOCAL_LANDINGS, buildLocalLandingHref } from '@/lib/local-landing-slugs'
+import { getLocalLandingPage } from '@/lib/local-landing-data'
 
 /**
  * POLISH: footer links measured 20–21px tall on production, under WCAG 2.2
@@ -69,7 +71,10 @@ const closingCopy = {
  * the column from the slug list means it cannot drift from the real routes.
  */
 async function resolveServicesColumn(locale: 'en' | 'es'): Promise<DynamicColumnResult | null> {
-  const pages = await Promise.all(SERVICE_SLUGS.map((slug) => getServicePage(locale, slug)))
+  const [pages, localPages] = await Promise.all([
+    Promise.all(SERVICE_SLUGS.map((slug) => getServicePage(locale, slug))),
+    Promise.all(LOCAL_LANDINGS.map((landing) => getLocalLandingPage(locale, landing.slug))),
+  ])
 
   const items = pages.flatMap((page, i) =>
     page
@@ -83,7 +88,34 @@ async function resolveServicesColumn(locale: 'en' | 'es'): Promise<DynamicColumn
       : [],
   )
 
-  if (items.length === 0) return null
+  // SEO-42: las dos landings de SEO local recibian UN enlace interno cada una
+  // en todo el sitio. Con eso Google las trata como periferia:
+  // `/seo-tecnico-madrid` figuraba en Search Console como "URL desconocida para
+  // Google", nunca rastreada, mientras `/seo-tecnico-lima` si habia entrado y
+  // ya estaba en posicion media 7,8 con cero refuerzo. Misma plantilla, mismo
+  // enlazado: una entro y la otra no.
+  //
+  // Van dentro de la columna de Servicios y no en una propia porque la grilla
+  // es de cinco y una sexta columna se envuelve sola (ver el comentario del
+  // grid mas abajo). Ademas encajan: son paginas de servicio segmentadas por
+  // ciudad, no otra seccion.
+  //
+  // Derivadas de LOCAL_LANDINGS, no de las columnas del CMS, por el mismo
+  // motivo que las de servicios: una lista en codigo no puede desincronizarse
+  // de las rutas reales.
+  const localItems = localPages.flatMap((page, i) =>
+    page
+      ? [
+          {
+            id: page.id,
+            label: page.title,
+            href: buildLocalLandingHref(locale, LOCAL_LANDINGS[i].slug),
+          },
+        ]
+      : [],
+  )
+
+  if (items.length === 0 && localItems.length === 0) return null
 
   return {
     id: 'services',
@@ -91,6 +123,7 @@ async function resolveServicesColumn(locale: 'en' | 'es'): Promise<DynamicColumn
     items: [
       ...items,
       { id: -1, label: closingCopy[locale].servicesIndex, href: buildServicesIndexHref(locale) },
+      ...localItems,
     ],
   }
 }
