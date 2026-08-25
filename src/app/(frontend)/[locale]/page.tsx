@@ -7,6 +7,7 @@ import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { getCachedPageBySlug } from '@/lib/cache'
 import { buildSitePerson } from '@/lib/person'
+import { buildWebSite, buildProfessionalService } from '@/lib/site-schema'
 
 // SEO-06: la home servia `cache-control: no-store` y re-ejecutaba el SSR
 // entero en cada request -- 1,2 s de render sobre un TTFB de 2,1 s, medido el
@@ -75,6 +76,13 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   // canonico de src/lib/person.ts.
   const personData = await buildSitePerson(locale as 'es' | 'en')
 
+  // SEO-48: la home emitia SOLO el Person. Faltaban las dos entidades que
+  // describen al sitio y al negocio, sin las cuales "juan-tech.com" no esta
+  // declarado en ningun lado como publicacion ni como quien presta servicios.
+  // Los tres nodos comparten @id y se referencian entre si (src/lib/site-schema.ts).
+  const websiteData = buildWebSite(locale as 'es' | 'en')
+  const businessData = buildProfessionalService(locale as 'es' | 'en')
+
   return (
     <main>
       <RenderBlocks
@@ -93,6 +101,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         }}
       />
       <JsonLd data={personData} />
+      <JsonLd data={websiteData} />
+      <JsonLd data={businessData} />
     </main>
   )
 }

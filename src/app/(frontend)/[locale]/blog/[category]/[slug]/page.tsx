@@ -26,6 +26,7 @@ import { ReadingProgress } from '@/components/ReadingProgress'
 import { BlogClosing } from '@/components/BlogClosing'
 import { blogCategoryPath, blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 import { personRef, SITE_PERSON_SLUG } from '@/lib/person'
+import { websiteRef } from '@/lib/site-schema'
 import { EN_TRANSLATION_INCOMPLETE, isEnTranslationIncomplete } from '@/lib/translation-gaps'
 
 // SEO-06: estas rutas servian `cache-control: no-store` y re-ejecutaban el SSR
@@ -204,6 +205,12 @@ export default async function PostPage({
     mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
     image: articleImage,
     articleSection: primaryCategory?.title ?? primaryCategorySlug,
+    // SEO-48: ninguno de los 105 Article declaraba `inLanguage`. En un sitio
+    // bilingue donde cada articulo existe en dos URLs emparejadas por hreflang,
+    // es la senal de desambiguacion mas barata que hay: sin ella, lo unico que
+    // dice en que idioma esta el contenido es el `<html lang>`.
+    inLanguage: locale === 'en' ? 'en' : 'es',
+    isPartOf: websiteRef,
   }
 
   return (
