@@ -1,15 +1,18 @@
 ---
 quick_id: 260823-seo-perf-a11y
 status: complete
-issues: [3, 6, 7, 8, 10]
-prs: [25, 26, 27, 28, 29, 30, 31]
-date: 2026-08-23
+issues: [3, 5, 6, 7, 8, 10]
+prs: [25, 26, 27, 28, 29, 30, 31, 32, 33, 34]
+date: 2026-08-25
 ---
 
 # Quick 260823 — Auditoría SEO: identidad, rendimiento, traducciones y accesibilidad
 
-Continuación de `260820-seo-09-11`. Cerrados en esta tanda: **#3** (crítico) y
-**#8**. Avanzados con medición y sin cerrar: **#6**, **#7**, **#10**.
+Continuación de `260820-seo-09-11`. Cerrados en esta tanda: **#3** (crítico),
+**#5**, **#6**, **#8** y **#10**. Queda abierto solo **#7**, que es trabajo de
+contenido: ~31.400 palabras de traducción.
+
+La auditoría queda en **10 de 11 cerrados**.
 
 ## #3 — Identidad y E-E-A-T (cerrado, 6/6 en vivo)
 
@@ -43,32 +46,63 @@ español por fallback. Escribirle una meta en inglés la rotularía como traduci
 muestreado no vio, más `/websites`, que al ser ruta escrita a mano no tenía
 ningún campo del CMS del que caer.
 
-## #6 — Rendimiento (4 de 5 criterios)
+## #6 — Rendimiento (cerrado, los 5 criterios)
 
-Dos causas en serie, y la segunda solo se vio cuando la primera dejó de tapar.
+Tres causas en serie. Cada una tapaba a la siguiente, así que ninguna se veía
+hasta resolver la anterior.
 
 **ISR.** El HTML servía `no-store` y re-ejecutaba el SSR entero. Venía de
 `force-dynamic`, que estaba por una razón real: el build de Dokploy no tiene red
 hacia Postgres. `generateStaticParams` devolviendo lista vacía cumple las dos
-condiciones: el build no renderiza nada y cada URL se cachea en la primera
-visita. Verificado en el prerender-manifest, no en la tabla del build, que marca
-`●` en rutas que no prerenderiza.
+condiciones. Verificado en el prerender-manifest, no en la tabla del build, que
+marca `●` en rutas que no prerenderiza. TTFB 3,82 s → 0,12 s.
 
-**El shader del hero.** Con el servidor ya resuelto, la home seguía en 44.
-Bloqueando solo el chunk de `@paper-design/shaders-react`: 44 → 82 y TBT 2090 ms
-→ 50 ms. Se difiere a idle + viewport, con un degradado CSS de los mismos hex
-mientras tanto. El diseño llega igual, un segundo más tarde.
+**El shader del hero.** Con el servidor resuelto, la home seguía en 44. PSI midió
+su costo real en móvil: **27,8 s de bloqueo del hilo principal**. Diferirlo bien
+lo bajó a 13,1 s, que sigue siendo inutilizable — partir a la mitad un número
+inutilizable deja un número inutilizable. El problema no era *cuándo* corría
+sino *cuánto costaba*, y el costo no se agenda. Decisión de Juan: shader solo en
+escritorio, degradado CSS en táctiles. TBT 13.100 ms → **156 ms**.
 
-| | Baseline | Ahora |
+**La herramienta de medición.** Lighthouse local daba 39, 67, 69 y 87 para la
+misma página el mismo día. Llegué a reportar una "mediana de TBT de 70 ms" que
+con más muestras no se sostenía: la dispersión del instrumento era mayor que el
+efecto a medir. `scripts/seo/pagespeed.py` mide desde hardware de Google y
+reporta mínimo y máximo junto a la mediana.
+
+| | Baseline | Final |
 |---|---|---|
-| Performance mediana del sitio | 74,5 | **95** |
-| Home TTFB | 3,82 s | ~0,45 s |
-| Home TBT | 620 ms | ~70 ms |
-| Home LCP | 7,9 s | 5,3 s |
+| Performance home | 46 | **94** |
+| LCP | 7,9 s | **2,63 s** |
+| TBT | 620 ms | **156 ms** |
+| TTFB | 3,82 s | **0,12 s** |
 
-Falta el LCP bajo 4 s. Ya no es el servidor ni el hilo principal: es el peso del
-documento más la latencia. Y todas estas mediciones salen de una laptop en Perú
-contra un VPS en Alemania: cinco corridas seguidas dieron 82, 62, 72, 76 y 74.
+`/servicios` 100, `/blog` 95, `/blog/tech-seo/nextjs-seo` 95. CrUX todavía no
+tiene muestra suficiente, así que son números de laboratorio.
+
+## #5 — Canibalización (cerrado, 15/15)
+
+Desbloqueado cuando entró el acceso a Search Console por MCP. Seis meses de
+datos decidieron cada ganadora, y **en tres de los siete grupos contradijeron a
+la intuición**: gana la URL con impresiones, que es la que tiene *menos* enlaces
+internos.
+
+`topic-clusters-seo` figuraba como PERDEDORA en la lista tentativa del issue,
+con 320 impresiones contra 0 de la otra. Consolidar hacia la otra habría tirado
+la única señal real del grupo — exactamente el error contra el que el issue
+advertía al hacer de GSC un prerrequisito duro.
+
+Nada se borró: cada perdedora quedó en borrador con su documento completo
+guardado en `research/canibalizacion/` antes de tocar la base.
+
+Los 17-24 enlaces internos que el crawler contaba hacia las perdedoras salían de
+los bloques de artículos relacionados, que dejan de listar un borrador solos.
+Enlace escrito a mano había **uno**. Esa autoridad interna era automática, no
+editorial, y por eso valía menos de lo que parecía.
+
+**Pendiente:** la fusión editorial. `estrategia-topic-clusters` tiene 3518
+palabras que hoy no ve nadie. Concatenar por script deja encabezados repetidos y
+párrafos que se contradicen.
 
 ## #7 — Traducciones (medido y contenido, no cerrado)
 
@@ -82,15 +116,19 @@ Decisión de Juan: cortar el sangrado primero. Los 11 peores salen del índice
 inglés (`noindex, follow`, sin hreflang `en`, fuera del sitemap). Los 17 entre
 50% y 80% quedan indexados: son artículos completos con menos desarrollo.
 
-## #10 — Accesibilidad (4 de 7 rutas)
+## #10 — Accesibilidad (cerrado, 9/9 rutas)
 
 Dos de los tres items ya estaban resueltos. El tercero tenía cuatro causas, y la
 que más costó ver fue el footer: sus encabezados de columna eran h3, así que
 rompía el orden en toda página sin h2 propio en el cuerpo.
 
-Hallazgo nuevo de la corrida completa: 8 posts con tablas sin `<th>`. El
-conversor oficial lee `node.headerState`, que en las tablas migradas es
-`undefined`.
+Las tres últimas rutas se resolvieron con datos, no con código: los h3 estaban
+escritos así en el rich text. `scripts/db/14-fix-heading-levels.ts` sube los H3 a
+H2 solo cuando el campo no tiene ningún H2, así que la jerarquía relativa queda
+intacta.
+
+Hallazgo de la corrida completa: 8 posts con tablas sin `<th>`. El conversor
+oficial lee `node.headerState`, que en las tablas migradas es `undefined`.
 
 ## Errores de método que costaron tiempo
 
@@ -112,8 +150,14 @@ conversor oficial lee `node.headerState`, que en las tablas migradas es
 
 | Qué | Quién |
 |---|---|
-| `scripts/db/14-fix-heading-levels.ts` y `15-meta-descriptions-ronda-2.ts` | Juan corre el túnel |
+| #7: las ~31.400 palabras de traducción | por tandas, priorizando por impresiones |
+| La fusión editorial de los 7 grupos consolidados | a mano, con el texto en `research/canibalizacion/` |
 | Resubir `miamiherald-logo` y `ariannalupi` a Cloudinary (404) | Juan |
-| #5 canibalización | bloqueado: juan-tech.com no tiene proyecto en Ahrefs, no hay datos de GSC |
-| #7: las ~31.400 palabras de traducción | por tandas |
-| #6: LCP bajo 4 s | falta reducir peso de documento en `/` y `/blog` |
+
+## Nota operativa
+
+El túnel a la base se cayó tres veces en la sesión, cada vez con un error
+distinto: `ECONNRESET` a mitad de corrida, `ECONNREFUSED` con nada escuchando, y
+timeout de handshake. El relay `socat` no sobrevive mucho rato ocioso. Si esto
+sigue, conviene que los scripts de contenido corran desde el VPS, donde
+`shared-postgres` resuelve por nombre y no hay dos saltos que se caigan.
