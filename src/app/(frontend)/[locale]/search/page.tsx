@@ -61,6 +61,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const title = t.title
   return {
     title,
+    // SEO-46: las paginas de resultados de busqueda interna son el caso de
+    // manual de lo que Google pide no indexar. `/search` y `/en/search` se
+    // servian 200 sin `noindex` y con 169 enlaces internos entre las dos.
+    //
+    // Google ya lo habia resuelto por su cuenta: la inspeccion de URL las da
+    // como "Rastreada, actualmente sin indexar" desde el 18 de junio de 2026.
+    // O sea que el costo real hoy es rastreo gastado, no basura en el indice.
+    // Se declara igual, porque depender de que el buscador adivine bien no es
+    // lo mismo que decirselo.
+    //
+    // `follow: true` a proposito: los enlaces de la pagina de resultados
+    // siguen sirviendo para descubrimiento, lo que no queremos es la pagina en
+    // si. Es la combinacion que recomienda Google para resultados internos.
+    robots: { index: false, follow: true },
     openGraph: buildOpenGraph({
       title,
       url: locale === 'en' ? '/en/search' : '/search',

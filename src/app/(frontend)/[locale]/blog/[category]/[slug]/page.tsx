@@ -84,6 +84,14 @@ export async function generateMetadata({
       slug,
       metaImage: meta?.image,
       heroImage: doc.heroImage,
+      // SEO-47: mismos valores que ya emite el JSON-LD de Article mas abajo en
+      // esta pagina, para no abrir una segunda fuente de verdad.
+      article: {
+        publishedTime: doc.publishedAt ?? undefined,
+        modifiedTime: doc.updatedAt ?? undefined,
+        authors: ['Juan Carlos Angulo'],
+        section: resolvePrimaryCategorySlug(doc.categories),
+      },
     }),
     alternates: buildAlternates(locale as 'es' | 'en', path, `/en${path}`, {
       omitEn: EN_TRANSLATION_INCOMPLETE.has(slug),
