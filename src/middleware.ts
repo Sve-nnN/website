@@ -102,4 +102,45 @@ function stripIntlAlternateLinks(response: NextResponse): NextResponse {
   return response
 }
 
-export const config = { matcher: ['/', '/((?!api|admin|_next|_vercel|.*\\..*).*)'] }
+// SEO-39: el matcher de arriba excluia `.*\..*`, o sea CUALQUIER ruta con un
+// punto. Eso es el boilerplate de next-intl y esta pensado para no reescribir
+// assets estaticos, pero tiene un efecto colateral caro: `/index.html` se
+// saltea el middleware, llega al App Router sin prefijo de locale y matchea
+// `[locale]/page.tsx` con locale = "index.html". El layout de
+// (frontend)/[locale] valida con `hasLocale` y llama a `notFound()`, pero ese
+// layout ES la raiz de su arbol (no hay src/app/layout.tsx encima), asi que
+// Next no tiene donde renderizar el 404 y devuelve 500.
+//
+// Medido en produccion antes del fix:
+//   /index.html /foo.php /image.png /a.b /sitemap_index.xml  -> 500
+//   /wp-admin /robots /pagina-inexistente                    -> 404 (pasan por middleware)
+//   /xx/index.html                                           -> 404 (2 segmentos, ni llega al layout)
+//
+// Un 5xx en `/sitemap_index.xml` no es un 404 mas: es de las primeras URLs que
+// prueba cualquier rastreador, y repetido hace que Google baje el crawl rate
+// del dominio entero.
+//
+// El fix invierte la regla: en vez de excluir todo lo que tenga un punto, se
+// excluye la lista finita y conocida de rutas que de verdad no deben pasar por
+// next-intl. Todo lo demas entra al middleware, next-intl lo reescribe al
+// locale por defecto (`/index.html` -> `/es/index.html`), quedan dos segmentos,
+// no matchea ninguna ruta y Next responde 404 limpio.
+//
+// La lista cubre, y tiene que seguir cubriendo:
+//   - public/            favicon.ico, favicon.svg, favicon-32x32.png,
+//                        apple-touch-icon.png, icon-192.png, icon-512.png,
+//                        site.webmanifest, sitemap.xsl
+//   - route handlers     robots.txt (robots.ts), sitemap.xml, sitemap.html,
+//                        llms.txt, llms-full.txt
+//   - .well-known        desafios ACME y afines que el proxy pueda delegar aca
+//
+// Si se agrega un archivo a public/ o una ruta con punto en src/app, va aca.
+// El costo de pasar rutas con punto por el middleware es una lectura de
+// `redirects`, que ya viene cacheada con unstable_cache (src/lib/cache.ts), y
+// a cambio permite redirigir URLs legacy con extension como `/sitemap_index.xml`.
+export const config = {
+  matcher: [
+    '/',
+    '/((?!api|admin|_next|_vercel|\\.well-known|robots\\.txt|sitemap\\.xml|sitemap\\.xsl|sitemap\\.html|llms\\.txt|llms-full\\.txt|site\\.webmanifest|favicon\\.ico|favicon\\.svg|favicon-32x32\\.png|apple-touch-icon\\.png|icon-192\\.png|icon-512\\.png).*)',
+  ],
+}
