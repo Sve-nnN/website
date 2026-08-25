@@ -185,9 +185,53 @@ function TableFromNode({
   )
 }
 
+/**
+ * SEO-44: baja a `h2` los `h1` que vienen dentro del cuerpo del artículo.
+ *
+ * El layout del post ya emite el `h1` de la página, el del hero, con sus clases
+ * `font-display text-display`. Dieciocho artículos traían además un `h1` en el
+ * richText, así que la página servía DOS h1. Medido en el HTML del 2026-08-25:
+ *
+ *   <h1 class="font-display text-display ...">Notación Big O: Guía técnica...
+ *   <h1>Notación Big O: Entendiendo la Complejidad Algorítmica</h1>
+ *
+ * Los dos dicen casi lo mismo, porque el del cuerpo es el título del artículo
+ * repetido, no un encabezado de sección. Eso vino de la migración: el cuerpo
+ * original incluía su propio titular y el layout le agregó otro encima.
+ *
+ * Acá se corrige la estructura, que es lo que puede arreglar el código sin
+ * tocar contenido publicado: el encabezado pasa a `h2` y la página queda con un
+ * solo `h1`. Efectos visibles, los dos buscados:
+ *
+ *   - Cambia de tamaño: `[&_h1]` es `text-display` y `[&_h2]` es `text-heading`
+ *     (ver Prose.tsx). Queda igual que el resto de los encabezados del artículo.
+ *   - Aparece en el índice: el TOC selecciona `h2, h3`, así que ese encabezado
+ *     hoy es invisible para el índice del artículo.
+ *
+ * Lo que esto NO arregla: que el texto siga repitiendo el título. Sacarlo es
+ * borrar contenido de 18 posts publicados y esa decisión es editorial, no
+ * técnica. Queda anotado en el issue.
+ */
+type HeadingNode = { tag?: string; children?: unknown[] }
+
+const HEADING_DEMOTION: Record<string, string> = { h1: 'h2' }
+
+/** Etiqueta final de un heading del cuerpo, ya degradada si hace falta. */
+function headingTag(node: HeadingNode): 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' {
+  const tag = node.tag ?? 'h2'
+  return (HEADING_DEMOTION[tag] ?? tag) as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+}
+
 export const richTextConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...defaultJSXConverters,
+  heading: ({ node, nodesToJSX }) => {
+    // Sin componente intermedio a proposito: este archivo ya declara varios
+    // (react-doctor/no-multi-component-file) y separarlos pelearia con el
+    // motivo por el que estan todos aca, explicado en el docblock de arriba.
+    const Tag = headingTag(node as HeadingNode)
+    return <Tag>{nodesToJSX({ nodes: node.children ?? [] })}</Tag>
+  },
   blocks: {
     'code-block': ({ node }: { node: { fields: CodeBlockNodeFields } }) => (
       <CodeBlockNode {...node.fields} />
