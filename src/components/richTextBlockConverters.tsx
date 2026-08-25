@@ -216,25 +216,22 @@ type HeadingNode = { tag?: string; children?: unknown[] }
 
 const HEADING_DEMOTION: Record<string, string> = { h1: 'h2' }
 
-function HeadingFromNode({
-  node,
-  nodesToJSX,
-}: {
-  node: HeadingNode
-  nodesToJSX: (args: { nodes: unknown[] }) => React.ReactNode
-}) {
+/** Etiqueta final de un heading del cuerpo, ya degradada si hace falta. */
+function headingTag(node: HeadingNode): 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' {
   const tag = node.tag ?? 'h2'
-  const Tag = (HEADING_DEMOTION[tag] ?? tag) as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-
-  return <Tag>{nodesToJSX({ nodes: node.children ?? [] })}</Tag>
+  return (HEADING_DEMOTION[tag] ?? tag) as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }
 
 export const richTextConverters: JSXConvertersFunction = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...defaultJSXConverters,
-  heading: ({ node, nodesToJSX }) => (
-    <HeadingFromNode node={node as HeadingNode} nodesToJSX={nodesToJSX as never} />
-  ),
+  heading: ({ node, nodesToJSX }) => {
+    // Sin componente intermedio a proposito: este archivo ya declara varios
+    // (react-doctor/no-multi-component-file) y separarlos pelearia con el
+    // motivo por el que estan todos aca, explicado en el docblock de arriba.
+    const Tag = headingTag(node as HeadingNode)
+    return <Tag>{nodesToJSX({ nodes: node.children ?? [] })}</Tag>
+  },
   blocks: {
     'code-block': ({ node }: { node: { fields: CodeBlockNodeFields } }) => (
       <CodeBlockNode {...node.fields} />
