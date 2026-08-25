@@ -6,6 +6,10 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { sendContactMessage } from '@/app/actions/contact'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { JsonLd } from '@/components/JsonLd'
+import { SITE_URL } from '@/lib/sitemap-data'
+import { personRef } from '@/lib/person'
+import { websiteRef, BUSINESS_ID } from '@/lib/site-schema'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
 // network access to shared-postgres -- force dynamic (request-time)
@@ -70,8 +74,29 @@ export default async function ContactPage({
     (block) => block.blockType === 'hero' && 'title' in block && block.title,
   )
 
+  // SEO-48: /contact era una de las diez paginas sin ningun dato estructurado.
+  // `ContactPage` es lo que dice que esta URL ES el canal de contacto de la
+  // entidad, en vez de una pagina mas que casualmente tiene un formulario.
+  //
+  // Sin `email` ni `telephone` en el nodo: el correo vive en una env var y no
+  // se publica en el HTML a proposito, y telefono no hay. Se declara la
+  // relacion con la entidad, que es lo que si es cierto.
+  const contactPath = locale === 'en' ? '/en/contact' : '/contact'
+  const contactPageData = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': `${SITE_URL}${contactPath}#contactpage`,
+    url: `${SITE_URL}${contactPath}`,
+    name: doc.meta?.title ?? doc.title ?? contactFallbackTitle(locale),
+    inLanguage: locale === 'en' ? 'en' : 'es',
+    isPartOf: websiteRef,
+    about: { '@id': BUSINESS_ID },
+    mainEntity: personRef,
+  }
+
   return (
     <main>
+      <JsonLd data={contactPageData} />
       {!hasHeroTitle && (
         <h1 className="sr-only">
           {doc.meta?.title ?? doc.title ?? contactFallbackTitle(locale)}
