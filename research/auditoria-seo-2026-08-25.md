@@ -4,7 +4,7 @@
 **Alcance:** 169 URLs del sitemap, rastreadas y parseadas una por una
 **Datos usados:** crawl propio, PageSpeed Insights API (12 corridas), Search Console (`sc-domain:juan-tech.com`, propiedad de dominio, 28 días contra los 28 anteriores)
 
-**Puntaje global: 68 / 100**
+**Puntaje global: 69 / 100**
 
 | Categoría | Peso | Puntaje |
 |---|---|---|
@@ -14,7 +14,7 @@
 | Datos estructurados | 10% | 70 |
 | Rendimiento | 10% | 95 |
 | Preparación para buscadores con IA | 10% | 78 |
-| Imágenes | 5% | 40 |
+| Imágenes | 5% | 55 |
 
 La base técnica del sitio está bien construida: canonical autorreferencial en las 169 URLs, hreflang completo con x-default en todas, HSTS con preload, robots correcto, cero páginas huérfanas, rendimiento de 93 a 100 en PSI. Todo eso está bien y no hay que tocarlo.
 
@@ -258,9 +258,29 @@ Cada página del sitio sirve una imagen de `portfolio/fallback-image-NN.avif`. E
 
 Para un sitio cuyo argumento de venta es la ejecución técnica impecable, la tarjeta de LinkedIn muestra un placeholder.
 
-### 22. Todas las imágenes de portada llevan `alt=""`
+### 22. ~~Todas las imágenes de portada llevan `alt=""`~~ — CORREGIDO, el hallazgo estaba mal
 
-676 de 972 `<img>` tienen alt vacío, o sea marcadas como decorativas. Para fondos y patrones está bien. Las portadas de artículo y los logos de clientes no son decorativos.
+**Este punto era falso.** Lo dejo escrito en vez de borrarlo porque el error de método vale más que el hallazgo.
+
+Volví a medir sobre el HTML servido, distinguiendo atributo ausente de `alt=""`:
+
+| URL | img | sin atributo alt | `alt=""` | con alt |
+|---|---|---|---|---|
+| `/` | 30 | 0 | 0 | 30 |
+| `/blog` | 13 | 0 | 13 | 0 |
+| `/authors/juan-carlos-angulo` | 50 | 0 | 50 | 0 |
+| `/servicios/seo-consulting` | 28 | 0 | 0 | 28 |
+| **Total sobre 6 páginas** | **126** | **0** | 68 | 58 |
+
+Ninguna imagen del sitio carece de `alt`. Las 68 vacías lo están a propósito.
+
+Mi regex contaba como "sin alt" cualquier `<img>` que no tuviera `alt="algo"`, metiendo en la misma bolsa el atributo ausente y el vacío. Son opuestos: el ausente es un fallo, el vacío es la forma correcta de declarar que una imagen es decorativa.
+
+Y están vacíos por buenas razones, ya documentadas en el código. Las tarjetas son un solo `<a>` que envuelve imagen y título, así que repetir el título en el `alt` hace que un lector de pantalla lea la misma frase dos veces, algo que axe marca como `image-redundant-alt`. Se arregló en el issue #10 de la auditoría anterior. Los fondos de hero van dentro de un `div` con `aria-hidden="true"`. Los logos de cliente sí llevan alt real.
+
+Poner el título como `alt` sería una regresión, no una mejora.
+
+La señal que debería haberme hecho dudar antes de publicarlo estaba en mi propio informe: accesibilidad 100 en las doce corridas de PageSpeed.
 
 ### 23. Dos imágenes de Cloudinary devuelven 404 en la home y en las páginas de servicio
 
@@ -360,7 +380,7 @@ El orden importa. Todo lo demás vale poco mientras Google siga indexando el sit
 
 **Backlog**
 
-17. Imágenes propias, arrancando por los 7 casos de éxito y las 4 páginas de servicio (#21).
+17. Imágenes propias, arrancando por los 7 casos de éxito y las 4 páginas de servicio (#21). El punto 22 quedó descartado: ver la corrección.
 18. Subir los dos assets faltantes de Cloudinary (#23).
 19. Qué hacer con `/blog/general` (#24) y con `/websites/` (#25).
 
