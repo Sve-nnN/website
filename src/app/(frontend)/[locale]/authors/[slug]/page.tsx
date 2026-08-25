@@ -185,17 +185,23 @@ export default async function AuthorProfilePage({
   const payload = await getPayload({ config })
 
   const [{ docs: posts }, { docs: caseStudies }, { docs: speakingEvents }] = await Promise.all([
+    // SEO-40: `overrideAccess: false` en los dos listados. Sin eso la Local API
+    // se saltea `read: authenticatedOrPublished` y la pagina del autor lista
+    // posts y casos DESPUBLICADOS, enlazando a URLs que redirigen o no existen.
+    // Mismo mecanismo que RelatedCaseStudyBlock y src/lib/cache.ts.
     payload.find({
       collection: 'posts',
       where: { author: { equals: doc.id } },
       locale: locale as 'es' | 'en',
       limit: 50,
+      overrideAccess: false,
     }),
     payload.find({
       collection: 'case-studies',
       where: { author: { equals: doc.id } },
       locale: locale as 'es' | 'en',
       limit: 50,
+      overrideAccess: false,
     }),
     payload.find({
       collection: 'speaking-events',
