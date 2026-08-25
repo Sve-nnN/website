@@ -123,6 +123,25 @@ export function buildOpenGraph(params: {
   slug: string
   metaImage?: (number | null) | Media
   heroImage?: (number | null) | Media
+  /**
+   * SEO-47: pasalo en las paginas que SON un articulo (posts y casos de exito)
+   * para que emitan `og:type: article` con sus fechas y su autor, en vez del
+   * `website` generico que emitian las 169 paginas del sitio.
+   *
+   * No cambia ranking. Cambia como se ve el enlace cuando alguien lo comparte:
+   * `article` es lo que habilita la tarjeta con fecha y autor en LinkedIn, que
+   * es de donde viene la mayor parte de la difusion de este sitio. Hasta ahora
+   * un articulo se compartia con la misma tarjeta que la pagina de terminos.
+   *
+   * Los tres valores ya existen en el JSON-LD de esas mismas paginas, asi que
+   * esto reusa el dato en vez de abrir una segunda fuente de verdad.
+   */
+  article?: {
+    publishedTime?: string
+    modifiedTime?: string
+    authors?: string[]
+    section?: string
+  }
 }): NonNullable<Metadata['openGraph']> {
   const backgroundUrl = resolveOgBackgroundUrl({
     metaImage: params.metaImage,
@@ -131,8 +150,7 @@ export function buildOpenGraph(params: {
   })
   const ogImageUrl = getCloudinaryOgWithTitle(backgroundUrl, params.title)
 
-  return {
-    type: 'website',
+  const shared = {
     title: params.title,
     description: params.description,
     url: params.url,
@@ -147,4 +165,17 @@ export function buildOpenGraph(params: {
       },
     ],
   }
+
+  if (params.article) {
+    return {
+      ...shared,
+      type: 'article',
+      publishedTime: params.article.publishedTime,
+      modifiedTime: params.article.modifiedTime,
+      authors: params.article.authors,
+      section: params.article.section,
+    }
+  }
+
+  return { ...shared, type: 'website' }
 }

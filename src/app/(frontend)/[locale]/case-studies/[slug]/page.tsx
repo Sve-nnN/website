@@ -73,6 +73,18 @@ export async function generateMetadata({
       slug,
       metaImage: meta?.image,
       heroImage: doc.heroImage,
+      // SEO-47: un caso de exito se comparte como pieza firmada, no como
+      // pagina institucional.
+      //
+      // Sin `publishedTime` a proposito: la coleccion no tiene campo de
+      // publicacion, y el JSON-LD de esta misma pagina ya decidio no hacer
+      // pasar `createdAt` por `datePublished` (ver el comentario en el bloque
+      // de structured data). Emitir aca una fecha que alla se descarto seria
+      // contradecirnos en la misma respuesta.
+      article: {
+        modifiedTime: doc.updatedAt ?? undefined,
+        authors: ['Juan Carlos Angulo'],
+      },
     }),
     alternates: buildAlternates(
       locale as 'es' | 'en',
