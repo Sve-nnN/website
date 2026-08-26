@@ -5,6 +5,7 @@ import config from '@payload-config'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { pageTitle } from '@/lib/page-title'
 import { JsonLd } from '@/components/JsonLd'
 import { SITE_URL } from '@/lib/sitemap-data'
 import { buildLocalService } from '@/lib/site-schema'
@@ -52,7 +53,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const url = locale === 'en' ? '/en/seo-tecnico-madrid' : '/seo-tecnico-madrid'
 
   return {
-    title,
+    title: pageTitle(title),
     description,
     openGraph: buildOpenGraph({
       title,

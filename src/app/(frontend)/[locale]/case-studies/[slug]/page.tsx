@@ -14,6 +14,7 @@ import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { pageTitle } from '@/lib/page-title'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { SITE_URL } from '@/lib/sitemap-data'
@@ -63,7 +64,7 @@ export async function generateMetadata({
   const description = meta?.description ?? doc.heroSubtitle ?? ''
 
   return {
-    title,
+    title: pageTitle(title),
     description,
     openGraph: buildOpenGraph({
       title,

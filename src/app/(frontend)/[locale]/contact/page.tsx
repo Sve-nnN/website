@@ -6,6 +6,7 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { sendContactMessage } from '@/app/actions/contact'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { pageTitle } from '@/lib/page-title'
 import { JsonLd } from '@/components/JsonLd'
 import { SITE_URL } from '@/lib/sitemap-data'
 import { personRef } from '@/lib/person'
@@ -42,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const url = locale === 'en' ? '/en/contact' : '/contact'
 
   return {
-    title,
+    title: pageTitle(title),
     description,
     openGraph: buildOpenGraph({
       title,

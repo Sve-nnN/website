@@ -12,6 +12,7 @@ import config from '@payload-config'
 import { JsonLd } from '@/components/JsonLd'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { pageTitle } from '@/lib/page-title'
 import { Container } from '@/components/Container'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { buildAuthorsTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
@@ -125,7 +126,7 @@ export async function generateMetadata({
   const description = doc.meta?.description ?? doc.jobTitle ?? ''
 
   return {
-    title,
+    title: pageTitle(title),
     description,
     openGraph: buildOpenGraph({
       title,

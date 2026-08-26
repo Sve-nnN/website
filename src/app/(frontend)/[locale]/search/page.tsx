@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { pageTitle } from '@/lib/page-title'
 import { getCachedPostCategoryMap } from '@/lib/cache'
 import { blogIndexPath, blogPostPath } from '@/lib/blog-paths'
 
@@ -60,7 +61,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const t = copy[locale as 'es' | 'en'] ?? copy.es
   const title = t.title
   return {
-    title,
+    title: pageTitle(title),
     // SEO-46: las paginas de resultados de busqueda interna son el caso de
     // manual de lo que Google pide no indexar. `/search` y `/en/search` se
     // servian 200 sin `noindex` y con 169 enlaces internos entre las dos.

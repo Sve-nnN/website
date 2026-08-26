@@ -2,6 +2,7 @@ import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import { buildServiceAlternates } from '@/lib/canonical'
+import { pageTitle } from '@/lib/page-title'
 import { buildOpenGraph } from '@/lib/og-image'
 import { getCachedPageBySlug } from '@/lib/cache'
 
@@ -33,7 +34,7 @@ export async function getServicesIndexMetadata(locale: 'es' | 'en') {
   const description = doc?.meta?.description ?? ''
 
   return {
-    title,
+    title: pageTitle(title),
     description,
     alternates: buildServiceAlternates(locale),
     openGraph: buildOpenGraph({
@@ -87,7 +88,7 @@ export async function getServiceMetadata(locale: 'es' | 'en', slug: string) {
   const resolvedSlug = doc.slug ?? slug
 
   return {
-    title,
+    title: pageTitle(title),
     description,
     alternates: buildServiceAlternates(locale, { slug: resolvedSlug }),
     openGraph: buildOpenGraph({

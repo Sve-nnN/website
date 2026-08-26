@@ -7,6 +7,7 @@ import { Container } from '@/components/Container'
 import { PageHero } from '@/components/PageHero'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { pageTitle } from '@/lib/page-title'
 
 // SEO-06: estas rutas servian `cache-control: no-store` y re-ejecutaban el SSR
 // completo en cada request. Venia de `force-dynamic`, que estaba por una razon
@@ -49,7 +50,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const url = locale === 'en' ? '/en/privacy' : '/privacy'
 
   return {
-    title,
+    title: pageTitle(title),
     description,
     openGraph: buildOpenGraph({
       title,
