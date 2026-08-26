@@ -14,6 +14,7 @@ import { TableOfContentsBlockComponent } from '@/blocks/TableOfContentsBlock/Com
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { pageTitle } from '@/lib/page-title'
 import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { SITE_URL } from '@/lib/sitemap-data'
 import { getCachedPost, getCachedBlogPromo } from '@/lib/cache'
@@ -75,7 +76,7 @@ export async function generateMetadata({
   const description = meta?.description ?? doc.excerpt ?? ''
 
   return {
-    title,
+    title: pageTitle(title),
     description,
     openGraph: buildOpenGraph({
       title,

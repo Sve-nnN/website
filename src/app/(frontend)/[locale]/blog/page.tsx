@@ -12,6 +12,7 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { JsonLd } from '@/components/JsonLd'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { pageTitle } from '@/lib/page-title'
 import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { getCachedPageBySlug } from '@/lib/cache'
 
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const url = locale === 'en' ? '/en/blog' : '/blog'
 
   return {
-    title,
+    title: pageTitle(title),
     description,
     openGraph: buildOpenGraph({
       title,

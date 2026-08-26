@@ -10,6 +10,7 @@ import { SiteHeader } from '@/components/SiteHeader'
 import { SiteFooter } from '@/components/SiteFooter'
 import { MotionProvider } from '@/components/MotionProvider'
 import { SITE_URL } from '@/lib/sitemap-data'
+import { BRAND, BRAND_SUFFIX } from '@/lib/page-title'
 import '../../globals.css'
 
 // This file has no src/app/layout.tsx above it — it IS the root of the
@@ -17,6 +18,20 @@ import '../../globals.css'
 // (OG images, canonicals) is set here exactly once, sitewide.
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  // SEO-45: 165 de los 169 titulos del sitio no nombraban a nadie. "Blog",
+  // "General", "Apturio" o "Contacto" a secas no dicen de quien es la pagina
+  // ni de que va cuando aparecen en una SERP.
+  //
+  // El sufijo se aplica desde aca, en un solo lugar, pero NO a todos: cada
+  // ruta pasa su titulo por `pageTitle()` (src/lib/page-title.ts), que
+  // devuelve un string cuando el sufijo entra en 60 caracteres y `absolute`
+  // cuando no, o cuando el titulo ya nombra la marca. Google corta cerca de
+  // los 60 y el sufijo ocupa 21: agregarselo a un titulo de 55 no suma
+  // contexto, le come el final de su propia frase.
+  title: {
+    template: `%s${BRAND_SUFFIX}`,
+    default: BRAND,
+  },
   // og:image-derived twitter:image is inherited automatically per Next's
   // Metadata API — no separate twitter.images/twitter.creator declared here.
   // twitter.creator omitted: Juan confirmed no Twitter/X account (41-CONTEXT.md).

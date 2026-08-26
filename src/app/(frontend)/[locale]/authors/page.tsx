@@ -10,6 +10,7 @@ import { buildAuthorsTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { Badge } from '@/components/ui/badge'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { pageTitle } from '@/lib/page-title'
 
 // SEO-06: estas rutas servian `cache-control: no-store` y re-ejecutaban el SSR
 // completo en cada request. Venia de `force-dynamic`, que estaba por una razon
@@ -45,7 +46,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params
   const title = locale === 'es' ? 'Autores' : 'Authors'
   return {
-    title,
+    title: pageTitle(title),
     openGraph: buildOpenGraph({
       title,
       url: locale === 'en' ? '/en/authors' : '/authors',

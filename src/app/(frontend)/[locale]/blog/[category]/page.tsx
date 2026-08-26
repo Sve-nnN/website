@@ -10,6 +10,7 @@ import { BlogClosing } from '@/components/BlogClosing'
 import { JsonLd } from '@/components/JsonLd'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { pageTitle } from '@/lib/page-title'
 import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import {
   getCachedArchive,
@@ -99,7 +100,7 @@ export async function generateMetadata({
   const description = category.description ?? ''
 
   return {
-    title,
+    title: pageTitle(title),
     description,
     openGraph: buildOpenGraph({
       title,

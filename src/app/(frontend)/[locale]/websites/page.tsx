@@ -8,6 +8,7 @@ import { JsonLd } from '@/components/JsonLd'
 import { buildWebsitesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
+import { pageTitle } from '@/lib/page-title'
 
 // SEO-06: estas rutas servian `cache-control: no-store` y re-ejecutaban el SSR
 // completo en cada request. Venia de `force-dynamic`, que estaba por una razon
@@ -50,7 +51,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       ? 'Sitios que construí de punta a punta: qué resolvía cada uno, con qué stack se hizo y cómo quedó el rendimiento y el SEO técnico.'
       : 'Sites I built end to end: what each one had to solve, the stack behind it, and where its performance and technical SEO landed.'
   return {
-    title,
+    title: pageTitle(title),
     description,
     openGraph: buildOpenGraph({
       title,
