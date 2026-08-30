@@ -20,13 +20,13 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-31)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 44 — baseline de regresión + decisiones de monetización (milestone v2.1, Phases 44-49)
+**Current focus:** Phase 45 — baseline de regresión (milestone v2.1, Phases 44-50)
 
 ## Current Position
 
-Phase: 44 — Decisiones de Monetización (ejecutada, esperando UAT)
+Phase: 45 — Baseline de Regresión (siguiente; Phase 44 cerrada 2026-08-30)
 Plan: 44-01 — completo (`DECISIONS.md` + propagación del reloj de Amazon)
-Status: Verificación goal-backward en `human_needed`, 5 de 6 criterios. El único abierto es el criterio 4 del ROADMAP: Polar queda registrado con su razonamiento y cero código, pero el alta de la cuenta es acción manual de Juan (KYC), declarada Out of Scope en el plan. Los dos ítems manuales están en `44-UAT.md`; la fase cierra con `/gsd-verify-work 44`. Previo: Roadmap v2.1 reestructurado (Phases 44-50, 37/37 requirements mapeados) — listo para `/gsd:plan-phase 44`. Phase 45 (Baseline de Regresión) queda BLOQUEADA por Neon caído + juan-tech.com sin proyecto en Ahrefs, y es gate duro: ninguna fase que renderice (46-49) puede empezar antes de que cierre
+Status: Phase 44 CERRADA con override aceptado por Juan (2026-08-30) — el criterio 4 del ROADMAP pedía la cuenta de Polar abierta, pero el alta exige KYC personal y el propio plan la declaró Out of Scope; queda como acción pendiente de Juan en `DECISIONS.md`. Verificación 5/6, `44-VERIFICATION.md` en `passed`. En la misma tanda se sincronizó el listado de fases del ROADMAP con las secciones de detalle: estaba corrido un lugar (decía Phase 44 = "Baseline + Decisiones" y Phase 49 = gate contra el baseline de Phase 44). El listado ahora dice 44 Decisiones, 45 Baseline, 46 Disclosure, 47 /go, 48 Stack, 48.5 Auditor, 49 Email, 50 Gate. Las entradas viejas del log de decisiones de este archivo describen la estructura previa de 6 fases (44-49) y se dejan como historial. Nota sobre el bloqueo de Phase 45: la mitad "Neon caído" está obsoleta — la base de producción vive en Dokploy y juan-tech.com responde 200 con TTFB de 0,92s (verificado 2026-08-30). Queda por confirmar la parte de Ahrefs
 Last activity: 2026-08-25 — Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice.
 Previa: Quick task 260820-blg completado: rediseño del blog (filas por categoría, CRO por audiencia, alta al correo con doble opt-in) + recategorización de 4 posts con sus 301. Datos, migraciones y código ya en producción (el código entró a master con la PR #22 y salió en el deploy del 2026-08-20)
 

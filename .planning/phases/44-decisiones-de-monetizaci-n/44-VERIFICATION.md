@@ -1,10 +1,15 @@
 ---
 phase: 44-decisiones-de-monetizaci-n
 verified: 2026-08-30T18:29:40Z
-status: human_needed
+status: passed
 score: 5/6 must-haves verified
 behavior_unverified: 0
-overrides_applied: 0
+overrides_applied: 1
+overrides:
+  - must_have: "Polar queda registrado como merchant of record con el razonamiento completo, la cuenta abierta, y cero código escrito"
+    reason: "Abrir la cuenta exige KYC con la identidad de Juan; el plan la declaró Out of Scope y la decisión con sus pasos de alta ya está documentada. La implementación de pagos es v2.2."
+    accepted_by: "Juan"
+    accepted_at: "2026-08-30T18:35:00Z"
 human_verification:
   - test: "Abrir la cuenta en Polar (polar.sh) con la identidad fiscal correcta (persona natural, Perú), completar KYC y conectar la cuenta de pagos vía Stripe Connect Express. No crear productos. Al terminar, marcar la casilla de DECISIONS.md: `[ ] cuenta Polar creada — fecha: ____`"
     expected: "Cuenta Polar activa con KYC aprobado y payout conectado, y la casilla de DECISIONS.md marcada con la fecha real"

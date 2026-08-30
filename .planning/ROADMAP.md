@@ -83,12 +83,14 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 41: OG Image Generation (Cloudinary)** - `og:image` dinámico por página vía Cloudinary + `og:url`/`twitter:card` correctos
 - [ ] **Phase 42: Meta Tags Completion** - favicon, apple-touch-icon, theme-color, manifest, canonical sitewide
 - [ ] **Phase 43: Performance (Response Time + HTML Size)** - respuesta de servidor <1.58s y HTML de home reducido de 271KB
-- [ ] **Phase 44: Baseline de Regresión + Decisiones de Monetización** - Baseline Lighthouse/CWV/H1/JSON-LD + snapshot de Search Console + tráfico real con número, y las 5 decisiones escritas (Amazon, modelo de ingresos, Polar, orden de postulaciones, mitigaciones descartadas) — cero cambios renderizados
-- [ ] **Phase 45: Disclosure Legal + Esquema de Links de Afiliado** - Disclosure bilingüe desde `messages/`, `/privacy` actualizada, y colección `affiliate-links` con la matriz de localización congelada antes de cargar contenido (única migración de schema del milestone)
-- [ ] **Phase 46: Ruta /go + Fix de Middleware + Registro de Clics** - `/go/[slug]` 302 `no-store`, el fix de una línea del matcher curl-verificado contra rutas control, `Disallow: /go`, clics append-only vía `after()`
-- [ ] **Phase 47: Página de Stack + Links Inline en Contenido** - `/stack` bilingüe con segmento único, ≥100 palabras de experiencia propia por herramienta y por locale, fuera del nav principal, + inline block de afiliado en posts con disclosure automático
-- [ ] **Phase 48: Captura de Email (Resend, env-gated)** - Bloque inline con Server Action, doble opt-in propio, lead magnet vía URL firmada de Cloudinary, degradación limpia sin `RESEND_API_KEY`
-- [ ] **Phase 49: Gate de Cierre de Monetización** - Paridad medida contra el baseline de Phase 44 + aserciones de `rel`/disclosure/paridad de locales/`overrideAccess`
+- [x] **Phase 44: Decisiones de Monetización** - Las 5 decisiones escritas y fundamentadas (estado de Amazon, modelo de ingresos paramétrico, Polar como merchant of record, orden de postulaciones, mitigaciones descartadas) — cero cambios renderizados (completed 2026-08-30)
+- [ ] **Phase 45: Baseline de Regresión** - Foto medible contra la cual compara el gate de cierre: Lighthouse/CWV, H1, JSON-LD, canonical/hreflang, snapshot de Search Console y el tráfico mensual real con número
+- [ ] **Phase 46: Disclosure Legal + Esquema de Links de Afiliado** - Disclosure bilingüe desde `messages/`, `/privacy` actualizada, y colección `affiliate-links` con la matriz de localización congelada antes de cargar contenido (única migración de schema del milestone)
+- [ ] **Phase 47: Ruta /go + Fix de Middleware + Registro de Clics** - `/go/[slug]` 302 `no-store`, el fix de una línea del matcher curl-verificado contra rutas control, `Disallow: /go`, clics append-only vía `after()`
+- [ ] **Phase 48: Página de Stack + Links Inline en Contenido** - `/stack` bilingüe con segmento único, ≥100 palabras de experiencia propia por herramienta y por locale, fuera del nav principal, + inline block de afiliado en posts con disclosure automático
+- [ ] **Phase 48.5 [INSERTED]: Auditor Destacado** - `auditor.juan-tech.com` deja de estar escondida: sección propia en Home, enlaces desde las landings de servicio relevantes y desde la página de stack
+- [ ] **Phase 49: Captura de Email (Resend, env-gated)** - Bloque inline con Server Action, doble opt-in propio, lead magnet vía URL firmada de Cloudinary, degradación limpia sin `RESEND_API_KEY`
+- [ ] **Phase 50: Gate de Cierre de Monetización** - Paridad medida contra el baseline de Phase 45 + aserciones de `rel`/disclosure/paridad de locales/`overrideAccess`
 
 ## Phase Details
 
