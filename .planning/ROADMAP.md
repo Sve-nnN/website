@@ -1098,10 +1098,10 @@ Plans:
 
 **Plans**: TBD
 
-### Phase 45: Baseline de Regresión (BLOQUEADA — infraestructura)
+### Phase 45: Baseline de Regresión
 
 **Goal**: Existe la foto medible del estado actual del sitio contra la cual el gate de cierre va a comparar: Lighthouse/CWV, H1, JSON-LD, canonical/hreflang, el snapshot de Search Console y el tráfico mensual real con número.
-**Depends on**: Phase 44 (el documento de decisiones consume el número de tráfico de esta fase, pero se escribe paramétrico para no bloquearse). **BLOQUEADA por dos dependencias externas que Juan debe resolver**: (a) Neon caído — `read ECONNRESET` en endpoint directo y `-pooler`, registrado como "TCP 5432 unreachable" desde antes de este milestone, sin él no renderiza ninguna página y no hay Lighthouse posible; (b) juan-tech.com no está dado de alta como proyecto en Ahrefs, que es la única vía a Search Console disponible en esta sesión — alternativa: Juan pega los números de GSC a mano.
+**Depends on**: Phase 44 (el documento de decisiones consume el número de tráfico de esta fase, pero se escribe paramétrico para no bloquearse). **DESBLOQUEADA 2026-08-30**: los dos bloqueos externos que tenía murieron. (a) "Neon caído" quedó obsoleto — la base de producción vive en Dokploy y `juan-tech.com` responde 200 con TTFB de 0,92s, verificado por curl. (b) La falta de proyecto en Ahrefs dejó de importar: el acceso a Search Console llega por las herramientas `gsc-juan-*` del hub MCP, con `sc-domain:juan-tech.com` como siteOwner y datos vivos confirmados (190 páginas con métricas en la ventana 2026-07-31 → 08-27).
 **Requirements**: BASE-01, BASE-02, BASE-03
 **Rationale (fase propia y bloqueante, 2026-08-13)**: esta fase **no se puede posponer al final**. Su valor entero es ser una medición previa: si corre después de que las Phases 46-49 cambiaron el sitio, ya no mide nada y la Phase 50 se queda sin punto de comparación. Por eso queda como gate duro — **ninguna fase que cambie un byte renderizado puede empezar antes de que esta cierre**, aunque Phase 44 (que no renderiza nada) ya haya terminado. Si Neon sigue caído cuando Phase 44 cierre, el milestone se detiene acá a propósito, en vez de avanzar a ciegas y descubrir en la Phase 50 que no hay contra qué comparar.
 **Success Criteria** (what must be TRUE):
