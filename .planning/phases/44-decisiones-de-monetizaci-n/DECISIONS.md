@@ -187,7 +187,7 @@ Verificado contra la página del propio proveedor el 2026-08-13. Esta lista exis
 | **Sitebulb** | Sin programa público. Es una empresa chica — un correo directo podría conseguir un arreglo privado |
 | **DataForSEO** | Sin programa público encontrable |
 
-**El hallazgo incómodo:** casi todo el stack sobre el que Juan realmente construye es immonetizable. Eso no es un fallo del plan, es la realidad del nicho — y refuerza DEC-02: el dinero está en las pocas herramientas recurrentes que sí pagan, no en cubrir el stack entero de links.
+**El hallazgo incómodo:** casi todo el stack sobre el que Juan realmente construye es inmonetizable. Eso no es un fallo del plan, es la realidad del nicho — y refuerza DEC-02: el dinero está en las pocas herramientas recurrentes que sí pagan, no en cubrir el stack entero de links.
 
 **Sin datos públicos:** Vercel no publica ni comisión ni ventana de cookie en ningún lado; solo se ven después de registrarse vía Dub. **SE Ranking** se promociona como "recurrente vitalicio" en todas partes, pero sus términos legales **no dicen nada sobre renovaciones** — mandar un correo a su equipo de afiliados antes de escribir copy que prometa algo.
 
