@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v2.1
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 status: planning
-last_updated: "2026-08-25T00:30:00.000Z"
-last_activity: 2026-08-20
+last_updated: "2026-08-30T18:40:00.000Z"
+last_activity: 2026-08-30
 progress:
   total_phases: 8
   completed_phases: 0
@@ -24,9 +24,9 @@ See: .planning/PROJECT.md (updated 2026-07-31)
 
 ## Current Position
 
-Phase: 44 — Decisiones de Monetización (not started)
-Plan: —
-Status: Roadmap v2.1 reestructurado (Phases 44-50, 37/37 requirements mapeados) — listo para `/gsd:plan-phase 44`. Phase 45 (Baseline de Regresión) queda BLOQUEADA por Neon caído + juan-tech.com sin proyecto en Ahrefs, y es gate duro: ninguna fase que renderice (46-49) puede empezar antes de que cierre
+Phase: 44 — Decisiones de Monetización (ejecutada, esperando UAT)
+Plan: 44-01 — completo (`DECISIONS.md` + propagación del reloj de Amazon)
+Status: Verificación goal-backward en `human_needed`, 5 de 6 criterios. El único abierto es el criterio 4 del ROADMAP: Polar queda registrado con su razonamiento y cero código, pero el alta de la cuenta es acción manual de Juan (KYC), declarada Out of Scope en el plan. Los dos ítems manuales están en `44-UAT.md`; la fase cierra con `/gsd-verify-work 44`. Previo: Roadmap v2.1 reestructurado (Phases 44-50, 37/37 requirements mapeados) — listo para `/gsd:plan-phase 44`. Phase 45 (Baseline de Regresión) queda BLOQUEADA por Neon caído + juan-tech.com sin proyecto en Ahrefs, y es gate duro: ninguna fase que renderice (46-49) puede empezar antes de que cierre
 Last activity: 2026-08-25 — Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice.
 Previa: Quick task 260820-blg completado: rediseño del blog (filas por categoría, CRO por audiencia, alta al correo con doble opt-in) + recategorización de 4 posts con sus 301. Datos, migraciones y código ya en producción (el código entró a master con la PR #22 y salió en el deploy del 2026-08-20)
 
