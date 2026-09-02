@@ -1111,7 +1111,11 @@ Plans:
   3. El tráfico mensual real del sitio queda escrito con número, no con adjetivos, y el documento de decisiones de Phase 44 se actualiza reemplazando la incógnita `V` por ese valor
   4. `git diff` sobre `src/` queda vacío en toda la fase — ningún cambio renderizado precedió a la captura
 
-**Plans**: TBD
+**Plans**: 3 plans (3 waves)
+
+- [ ] 45-01-PLAN.md — Tracer del pipeline del baseline (resolución de las 14 rutas, script hermano `capture-head-links-snapshot.mjs`, pasada de calentamiento de Lighthouse) + captura de H1/JSON-LD y canonical/hreflang de las 14 rutas [BASE-01]
+- [ ] 45-02-PLAN.md — Lighthouse mobile de las 14 rutas contra producción, 3 corridas + mediana diffeable contra `lh-phase32-baseline.json` [BASE-01]
+- [ ] 45-03-PLAN.md — Snapshot de Search Console por página + número de tráfico mensual real + resolución de `V` en `DECISIONS.md` + veredicto humanizado del baseline [BASE-02, BASE-03]
 
 ### Phase 46: Disclosure Legal + Esquema de Links de Afiliado
 
