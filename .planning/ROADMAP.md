@@ -1111,7 +1111,7 @@ Plans:
   3. El tráfico mensual real del sitio queda escrito con número, no con adjetivos, y el documento de decisiones de Phase 44 se actualiza reemplazando la incógnita `V` por ese valor
   4. `git diff` sobre `src/` queda vacío en toda la fase — ningún cambio renderizado precedió a la captura
 
-**Plans**: 3 plans (3 waves)
+**Plans**: 0/3 plans executed (3 waves)
 
 - [ ] 45-01-PLAN.md — Tracer del pipeline del baseline (resolución de las 14 rutas, script hermano `capture-head-links-snapshot.mjs`, pasada de calentamiento de Lighthouse) + captura de H1/JSON-LD y canonical/hreflang de las 14 rutas [BASE-01]
 - [ ] 45-02-PLAN.md — Lighthouse mobile de las 14 rutas contra producción, 3 corridas + mediana diffeable contra `lh-phase32-baseline.json` [BASE-01]
@@ -1302,7 +1302,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 42. Meta Tags Completion | 3/3 | In Progress|  |
 | 43. Performance (Response Time + HTML Size) | 3/3 | In Progress|  |
 | 44. Decisiones de Monetización | 0/TBD | Not started | - |
-| 45. Baseline de Regresión | 0/TBD | Blocked (Neon + GSC) | - |
+| 45. Baseline de Regresión | 0/3 | Planned    |  |
 | 46. Disclosure Legal + Esquema de Links de Afiliado | 0/TBD | Not started | - |
 | 47. Ruta /go + Fix de Middleware + Registro de Clics | 0/TBD | Not started | - |
 | 48. Página de Stack + Links Inline en Contenido | 0/TBD | Not started | - |
