@@ -10,8 +10,8 @@
 ### Baseline de Regresión
 
 - [x] **BASE-01**: Existe un baseline de Lighthouse/CWV + H1 + JSON-LD + canonical/hreflang de las rutas críticas (Home, 4 landings de servicio, 2 geo, ambos locales) capturado **antes** de cualquier cambio renderizado, siguiendo el patrón REG-01/REG-02 de v1.7
-- [ ] **BASE-02**: Existe un snapshot de Search Console (impresiones, clics, posición media) de esas mismas rutas, para poder distinguir después "la monetización diluyó el clúster de servicios" de estacionalidad
-- [ ] **BASE-03**: El tráfico mensual real del sitio queda documentado con número, porque dos programas (Semrush, Hostinger afiliados) se gatean en ~1.000 visitas únicas y el modelo de ingresos se parametriza sobre ese valor
+- [x] **BASE-02**: Existe un snapshot de Search Console (impresiones, clics, posición media) de esas mismas rutas, para poder distinguir después "la monetización diluyó el clúster de servicios" de estacionalidad
+- [x] **BASE-03**: El tráfico mensual real del sitio queda documentado con número, porque dos programas (Semrush, Hostinger afiliados) se gatean en ~1.000 visitas únicas y el modelo de ingresos se parametriza sobre ese valor
 
 ### Decisiones y Postulaciones
 
@@ -129,8 +129,8 @@ Diferidos. Reconocidos pero fuera de este roadmap.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | BASE-01 | Phase 45 | Complete |
-| BASE-02 | Phase 45 | Pending |
-| BASE-03 | Phase 45 | Pending |
+| BASE-02 | Phase 45 | Complete |
+| BASE-03 | Phase 45 | Complete |
 | DEC-01 | Phase 44 | Pending |
 | DEC-02 | Phase 44 | Pending |
 | DEC-03 | Phase 44 | Pending |

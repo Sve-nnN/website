@@ -4,16 +4,16 @@ milestone: v2.1
 current_phase: 45
 current_phase_name: Baseline de Regresión
 status: planning
-stopped_at: Completado 45-02-PLAN.md (Lighthouse mobile de 14 rutas, mediana diffeable con escalado a 5 lecturas en 10 rutas)
-last_updated: "2026-09-03T19:09:01.944Z"
+stopped_at: Completado 45-03-PLAN.md (Search Console + trafico real + resolucion de V + veredicto humanizado) -- Phase 45 CERRADA, 3/3 planes
+last_updated: "2026-09-03T20:00:23.482Z"
 last_activity: 2026-08-30
 last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."
-state_head: cf38b952f8fce70282eb730c6ecad0dc6803c5ea
+state_head: f38661670d275719475113c42d5450c5e6ed770c
 progress:
   total_phases: 51
   completed_phases: 1
   total_plans: 4
-  completed_plans: 3
+  completed_plans: 4
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
@@ -28,9 +28,9 @@ See: .planning/PROJECT.md (updated 2026-07-31)
 
 ## Current Position
 
-Phase: 45 — Baseline de Regresión (en curso; Phase 44 cerrada 2026-08-30)
-Plan: 45-02 — completo (Lighthouse mobile de las 14 rutas criticas, mediana diffeable con escalado a 5 lecturas en 10 rutas)
-Status: Wave 2 de Phase 45 cerrada. Mediana de `/` en 71 de performance (LCP 5461ms), por debajo de la referencia de 94 en PSI del 2026-08-25 — atribuido a contencion de CPU local (TTFB estable, ver `45-RESEARCH.md` Trampa 1), pendiente de la revision humana de Juan prevista en 45-03. 10 de 14 rutas necesitaron mediana de 5 corridas por spread de performance mayor a 15 puntos entre las 3 primeras. Hallazgo real del sitio sin corregir por estar fuera de alcance de esta fase de solo medicion (de 45-01): el H1 de `/en` renderiza en español identico al de `/`, mientras que title/og:locale si estan en ingles — ver `45-REGRESSION-BASELINE.md`. Sigue 45-03 (Search Console + trafico real + resolucion de `V` en DECISIONS.md + veredicto humanizado). `git diff src/` vacio en toda la wave 2.
+Phase: 45 — Baseline de Regresión (CERRADA 2026-09-03; Phase 44 cerrada 2026-08-30)
+Plan: 45-03 — completo (Search Console de 190 paginas + trafico real 22 clics/mes + V resuelto en DECISIONS.md + veredicto humanizado) — Phase 45 completa, 3/3 planes
+Status: Phase 45 CERRADA. Baseline capturado sin tocar `src/` en ninguna de las 3 olas: Lighthouse mobile (mediana de 71 en `/`, por debajo de la referencia de 94 en PSI del 2026-08-25, atribuido a contencion de CPU local no a regresion — pendiente confirmacion de Juan), H1/JSON-LD, canonical/hreflang, snapshot de Search Console (190 paginas, 8/14 rutas criticas con datos) y trafico organico real (22 clics / 6.328 impresiones en 28 dias). `V(stack) = 0` resuelto en `DECISIONS.md` de la Phase 44 sin tocar la formula ni la tabla de tramos parametrica (decision explicita de `45-CONTEXT.md`). Dos hallazgos reales del sitio documentados sin corregir por ser fuera de alcance de esta fase de solo medicion: H1 de `/en` en español identico al de `/`, y canibalizacion viva entre `/blog/pilas-y-colas` (150 impresiones) y su version canonica (48 impresiones). Human-check de fin de fase (plausibilidad de numeros + voz de la prosa) queda pendiente de la revision orquestada de Juan, per `human_verify_mode = end-of-phase`. Siguiente: Phase 46 (Disclosure Legal + Esquema de Links de Afiliado), que ya puede arrancar porque el baseline esta cerrado.
 Last activity: 2026-08-25 — Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice.
 Previa: Quick task 260820-blg completado: rediseño del blog (filas por categoría, CRO por audiencia, alta al correo con doble opt-in) + recategorización de 4 posts con sus 301. Datos, migraciones y código ya en producción (el código entró a master con la PR #22 y salió en el deploy del 2026-08-20)
 
@@ -132,6 +132,7 @@ Previa: Quick task 260820-blg completado: rediseño del blog (filas por categor�
 | Phase 43 P03 | ~20min | 2 tasks | 2 files |
 | Phase 45 P01 | 45min | 3 tasks | 6 files |
 | Phase 45 P02 | 90min | 2 tasks | 6 files |
+| Phase 45 P03 | 35min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -270,6 +271,7 @@ Recent decisions affecting current work:
 - [Phase ?]: Phase 43 tracer complete: all 5 named routes (Home, Servicios index, Blog listing, post detail, case-study detail) served from src/lib/cache.ts's unstable_cache layer; live before/after measurement deferred to production post-deploy due to persistent local Neon ECONNRESET (WINDOWS ids 6-8)
 - [Phase 45]: [Phase 45] 45-01: Juan eligio sibling-script (scripts/capture-head-links-snapshot.mjs) sobre extender capture-service-page-snapshot.mjs, para mantener comparable byte a byte la serie Phase 32 -> 36 -> 45 -> 50
 - [Phase 45]: [Phase 45] 45-02: 10 de 14 rutas superaron el umbral de 15 puntos de spread de performance y se escalaron a mediana de 5 corridas; la home queda en 71 de performance (LCP 5461ms), por debajo de la referencia de 94 en PSI, atribuido a contencion de CPU local (TTFB estable) y no a regresion del sitio
+- [Phase 45]: [Phase 45] 45-03: trafico organico real medido en 22 clics / 6.328 impresiones mensuales (ventana 2026-07-31 -> 2026-08-27, via dimensions=date); V(stack)=0 resuelto en DECISIONS.md de la Phase 44 sin tocar formula ni tabla de tramos, per decision explicita de CONTEXT.md de no recalcular
 
 ### Pending Todos
 
@@ -320,9 +322,9 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-09-03T19:09:01.779Z
-Stopped at: Completado 45-02-PLAN.md (Lighthouse mobile de 14 rutas, mediana diffeable con escalado a 5 lecturas en 10 rutas)
-Resume file: 45-03-PLAN.md
+Last session: 2026-09-03T20:00:23.258Z
+Stopped at: Completado 45-03-PLAN.md (Search Console + trafico real + resolucion de V + veredicto humanizado) -- Phase 45 CERRADA, 3/3 planes
+Resume file: None
 
 ## Operator Next Steps
 
