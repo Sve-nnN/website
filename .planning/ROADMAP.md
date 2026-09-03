@@ -1140,7 +1140,12 @@ Plans:
   4. La colección `affiliate-links` existe con `active` en vez de drafts, sin campo `rel` ni `price`, con los campos internos (`program`, `cookieWindowDays`, `commissionNote`) gateados por el helper de field-access existente, y su migración puramente aditiva fue leída antes de aplicarse
   5. `getCachedAffiliateLinks()` es la única lectura de la colección (con `overrideAccess: false`, cache tags y hooks de revalidación), `pickDestination()` es una función pura sin acceso a DB, y el componente `AffiliateLink` emite `rel="sponsored nofollow noopener"` desde el código con la rama de Amazon renderizando la URL directa con `tag=` visible
 
-**Plans**: TBD
+**Plans**: 2 plans (1 wave)
+
+Plans:
+
+- [ ] 46-01-PLAN.md — Colección affiliate-links + access + migración aditiva + getCachedAffiliateLinks() + pickDestination() + AffiliateLink (AFF-01..06)
+- [ ] 46-02-PLAN.md — AffiliateDisclosure bilingüe (frase de Amazon con checkpoint de aprobación en español) + actualización de /privacy (LEG-01..04)
 
 ### Phase 47: Ruta /go + Fix de Middleware + Registro de Clics
 
