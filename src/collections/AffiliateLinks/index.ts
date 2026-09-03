@@ -3,6 +3,10 @@ import type { CollectionConfig, FieldAccess } from 'payload'
 import { authenticated } from '@/access/authenticated'
 import { authenticatedOrActive } from '@/access/authenticatedOrActive'
 import { slugField } from '@/fields/slug'
+import {
+  revalidateAffiliateLinksCache,
+  revalidateAffiliateLinksCacheOnDelete,
+} from '@/lib/cache-tags'
 
 // Internal-only field gate for `cookieWindowDays`/`commissionNote` — same
 // shape as src/fields/targetKeyword.ts's `authenticatedFieldRead`, applied
@@ -27,6 +31,12 @@ export const AffiliateLinks: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'program', 'active', 'placement'],
+  },
+  // Hooks wireados directamente acá (no vía `overrides` de plugin): esta
+  // colección no está registrada por ningún plugin.
+  hooks: {
+    afterChange: [revalidateAffiliateLinksCache],
+    afterDelete: [revalidateAffiliateLinksCacheOnDelete],
   },
   fields: [
     { name: 'name', type: 'text', required: true }, // NO localizado — identificador interno
