@@ -1,16 +1,20 @@
 ---
 gsd_state_version: 1.0
 milestone: v2.1
-milestone_name: Monetizacion del Sitio - Research + Fundaciones
+current_phase: 45
+current_phase_name: Baseline de Regresión
 status: planning
-last_updated: "2026-08-30T18:40:00.000Z"
+stopped_at: "Completado 45-01-PLAN.md (tracer del baseline: script hermano + H1/JSON-LD/canonical-hreflang de las 14 rutas)"
+last_updated: "2026-09-03T18:42:47.241Z"
 last_activity: 2026-08-30
+last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."
+state_head: 32eb52e92cabb17bf99be0eec8c3ebf8e992618a
 progress:
-  total_phases: 8
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_phases: 51
+  completed_phases: 1
+  total_plans: 4
+  completed_plans: 2
+milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
 # Project State
@@ -24,9 +28,9 @@ See: .planning/PROJECT.md (updated 2026-07-31)
 
 ## Current Position
 
-Phase: 45 — Baseline de Regresión (siguiente; Phase 44 cerrada 2026-08-30)
-Plan: 44-01 — completo (`DECISIONS.md` + propagación del reloj de Amazon)
-Status: Phase 44 CERRADA con override aceptado por Juan (2026-08-30) — el criterio 4 del ROADMAP pedía la cuenta de Polar abierta, pero el alta exige KYC personal y el propio plan la declaró Out of Scope; queda como acción pendiente de Juan en `DECISIONS.md`. Verificación 5/6, `44-VERIFICATION.md` en `passed`. En la misma tanda se sincronizó el listado de fases del ROADMAP con las secciones de detalle: estaba corrido un lugar (decía Phase 44 = "Baseline + Decisiones" y Phase 49 = gate contra el baseline de Phase 44). El listado ahora dice 44 Decisiones, 45 Baseline, 46 Disclosure, 47 /go, 48 Stack, 48.5 Auditor, 49 Email, 50 Gate. Las entradas viejas del log de decisiones de este archivo describen la estructura previa de 6 fases (44-49) y se dejan como historial. Nota sobre el bloqueo de Phase 45: la mitad "Neon caído" está obsoleta — la base de producción vive en Dokploy y juan-tech.com responde 200 con TTFB de 0,92s (verificado 2026-08-30). Queda por confirmar la parte de Ahrefs
+Phase: 45 — Baseline de Regresión (en curso; Phase 44 cerrada 2026-08-30)
+Plan: 45-01 — completo (script hermano `capture-head-links-snapshot.mjs` + H1/JSON-LD/canonical/hreflang de las 14 rutas criticas; `45-REGRESSION-BASELINE.md` con esqueleto de las 6 secciones)
+Status: Wave 1 de Phase 45 cerrada. Task 1 (checkpoint:decision, gate blocking-human) resuelta por Juan: `sibling-script`. Las 14 rutas resuelven 200 directo contra produccion (`/es` 308 hacia `/`, documentado). Hallazgo real del sitio sin corregir por estar fuera de alcance de esta fase de solo medicion: el H1 de `/en` renderiza en español identico al de `/`, mientras que title/og:locale si estan en ingles — ver `45-REGRESSION-BASELINE.md`. Sigue 45-02 (Lighthouse mobile, 3 corridas + mediana) y 45-03 (Search Console + trafico real + resolucion de `V` en DECISIONS.md). `git diff src/` vacio en toda la wave 1.
 Last activity: 2026-08-25 — Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice.
 Previa: Quick task 260820-blg completado: rediseño del blog (filas por categoría, CRO por audiencia, alta al correo con doble opt-in) + recategorización de 4 posts con sus 301. Datos, migraciones y código ya en producción (el código entró a master con la PR #22 y salió en el deploy del 2026-08-20)
 
@@ -126,6 +130,7 @@ Previa: Quick task 260820-blg completado: rediseño del blog (filas por categor�
 | Phase 43-performance-response-time-html-size P01 | 35min | 2 tasks | 13 files |
 | Phase 43 P02 | 25min | 2 tasks | 4 files |
 | Phase 43 P03 | ~20min | 2 tasks | 2 files |
+| Phase 45 P01 | 45min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -262,6 +267,7 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 43]: 43-01: getCachedPageBySlug now passes overrideAccess:false explicitly, closing a pre-existing gap where the original Home getHomePage had no overrideAccess handling at all
 - [Phase ?]: [Phase 43]: 43-02: getServicesIndexPage delegates to getCachedPageBySlug — both /services and /servicios route twins covered automatically. Two real latent bugs found and fixed in cache.ts's unwired getCachedArchive before its first real caller (this plan): categoryId typed string vs Category.id's real number type (would have silently broken category filtering), and missing sort:'-publishedAt' (would have silently dropped list ordering sitewide).
 - [Phase ?]: Phase 43 tracer complete: all 5 named routes (Home, Servicios index, Blog listing, post detail, case-study detail) served from src/lib/cache.ts's unstable_cache layer; live before/after measurement deferred to production post-deploy due to persistent local Neon ECONNRESET (WINDOWS ids 6-8)
+- [Phase 45]: [Phase 45] 45-01: Juan eligio sibling-script (scripts/capture-head-links-snapshot.mjs) sobre extender capture-service-page-snapshot.mjs, para mantener comparable byte a byte la serie Phase 32 -> 36 -> 45 -> 50
 
 ### Pending Todos
 
@@ -312,9 +318,9 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-08-13T22:05:03.000Z
-Stopped at: Roadmap del milestone v2.1 creado (Phases 44-49) — próximo paso `/gsd:plan-phase 44`
-Resume file: None
+Last session: 2026-09-03T18:42:47.184Z
+Stopped at: Completado 45-01-PLAN.md (tracer del baseline: script hermano + H1/JSON-LD/canonical-hreflang de las 14 rutas)
+Resume file: 45-02-PLAN.md
 
 ## Operator Next Steps
 
