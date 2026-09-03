@@ -1,6 +1,31 @@
 # Phase 45 Regression Baseline
 
-**Captured:** 2026-09-03 en adelante, contra producción live `https://juan-tech.com` (sin build local — Hostinger/Dokploy sirve el sitio real), mediana de 3 corridas por ruta, Chrome-for-Testing vía `scripts/lighthouse-mobile.mjs`, mobile form factor. Los tres archivos crudos de Lighthouse quedan nombrados (`lh-phase45-run1.json`, `run2`, `run3`) junto con la mediana (`lh-phase45-baseline.json`). Nota de lectura: esta serie es de laboratorio local contra un servidor remoto, así que no es directamente comparable con un score de PageSpeed Insights, que corre desde infraestructura de Google.
+**Captured:** 2026-09-03, contra producción live `https://juan-tech.com` (sin build local, Hostinger/Dokploy sirve el sitio real), Chrome-for-Testing vía `scripts/lighthouse-mobile.mjs`, mobile form factor. Tres corridas por ruta (`lh-phase45-run1.json`, `run2`, `run3`); en 10 de las 14 rutas el spread de performance entre esas tres corridas superó los 15 puntos (regla de escalado de esta fase), así que esas 10 rutas se corrieron 2 veces más y su valor final es la mediana de 5 lecturas, no de 3. Las otras 4 rutas (`/`, `/en/services/ai-seo-geo`, `/seo-tecnico-madrid`, `/en/seo-tecnico-lima`) quedaron con la mediana de 3. Mediana calculada con este comando inline (mismo patrón que las Phases 28/32):
+
+```
+node -e "
+const run1 = require('./.planning/phases/45-baseline-de-regresi-n/lh-phase45-run1.json');
+const run2 = require('./.planning/phases/45-baseline-de-regresi-n/lh-phase45-run2.json');
+const run3 = require('./.planning/phases/45-baseline-de-regresi-n/lh-phase45-run3.json');
+const run4 = require('./.planning/phases/45-baseline-de-regresi-n/lh-phase45-run4-escalated.json'); // 10 rutas con spread > 15
+const run5 = require('./.planning/phases/45-baseline-de-regresi-n/lh-phase45-run5-escalated.json'); // 10 rutas con spread > 15
+const metrics = ['performance','accessibility','best-practices','seo','lcpMs','cls','tbtMs'];
+function median(arr){ const s=[...arr].sort((a,b)=>a-b); const n=s.length; return n%2===1 ? s[(n-1)/2] : (s[n/2-1]+s[n/2])/2; }
+const escalated = new Set(Object.keys(run4));
+const out = {};
+for (const r of Object.keys(run1)) {
+  out[r] = {};
+  const isEsc = escalated.has(r);
+  for (const m of metrics) {
+    const vals = isEsc ? [run1[r][m], run2[r][m], run3[r][m], run4[r][m], run5[r][m]] : [run1[r][m], run2[r][m], run3[r][m]];
+    out[r][m] = median(vals);
+  }
+}
+require('fs').writeFileSync('.planning/phases/45-baseline-de-regresi-n/lh-phase45-baseline.json', JSON.stringify(out, null, 2) + '\n');
+"
+```
+
+Nota de lectura: esta serie es de laboratorio local contra un servidor remoto, así que no es directamente comparable con un score de PageSpeed Insights, que corre desde infraestructura de Google.
 
 Purpose: foto del estado actual del sitio antes de que ninguna fase del milestone v2.1 (46-49) toque un byte renderizado. Contra este archivo compara el gate de cierre de la Phase 50. Mismo patrón que `32-REGRESSION-BASELINE.md` (Phase 32, v1.7).
 
@@ -10,24 +35,24 @@ Route set: las 14 rutas críticas del criterio 1 — Home y `/en`, las 4 landing
 
 | Route | Performance | Accessibility | Best Practices | SEO | LCP | CLS | TBT |
 |---|---|---|---|---|---|---|---|
-| / | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /en | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /servicios/seo-technical-audit | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /servicios/seo-consulting | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /servicios/fullstack-development | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /servicios/ai-seo-geo | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /en/services/seo-technical-audit | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /en/services/seo-consulting | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /en/services/fullstack-development | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /en/services/ai-seo-geo | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /seo-tecnico-madrid | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /seo-tecnico-lima | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /en/seo-tecnico-madrid | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
-| /en/seo-tecnico-lima | TBD | TBD | TBD | TBD | TBD | TBD | TBD |
+| / | 71 | 100 | 96 | 100 | 5461ms (poor) | 0 (good) | 74ms (good) |
+| /en | 72 | 100 | 96 | 100 | 5415ms (poor) | 0 (good) | 46ms (good) |
+| /servicios/seo-technical-audit | 79 | 100 | 96 | 100 | 3713ms (needs-improvement) | 0 (good) | 48ms (good) |
+| /servicios/seo-consulting | 72 | 100 | 96 | 100 | 4471ms (poor) | 0 (good) | 53ms (good) |
+| /servicios/fullstack-development | 76 | 100 | 96 | 100 | 4992ms (poor) | 0 (good) | 51ms (good) |
+| /servicios/ai-seo-geo | 77 | 100 | 96 | 100 | 4414ms (poor) | 0 (good) | 34ms (good) |
+| /en/services/seo-technical-audit | 81 | 100 | 96 | 100 | 3727ms (needs-improvement) | 0 (good) | 44ms (good) |
+| /en/services/seo-consulting | 64 | 100 | 96 | 100 | 4786ms (poor) | 0 (good) | 202ms (needs-improvement) |
+| /en/services/fullstack-development | 87 | 100 | 96 | 100 | 3425ms (needs-improvement) | 0 (good) | 43ms (good) |
+| /en/services/ai-seo-geo | 86 | 100 | 96 | 100 | 3544ms (needs-improvement) | 0 (good) | 107ms (good) |
+| /seo-tecnico-madrid | 77 | 100 | 100 | 100 | 4047ms (poor) | 0 (good) | 30ms (good) |
+| /seo-tecnico-lima | 72 | 100 | 100 | 100 | 4944ms (poor) | 0 (good) | 40ms (good) |
+| /en/seo-tecnico-madrid | 79 | 100 | 100 | 100 | 4530ms (poor) | 0 (good) | 40ms (good) |
+| /en/seo-tecnico-lima | 74 | 100 | 100 | 100 | 5463ms (poor) | 0 (good) | 47ms (good) |
 
-Raw data: `lh-phase45-baseline.json` (mediana), `lh-phase45-run1.json`/`run2`/`run3` (crudos), `lh-phase45-tracer.json` (pasada de calentamiento sobre `/`, no cuenta como una de las 3 corridas — el `/` de esta tabla se completa en 45-02 con la mediana real). LCP bands: good <=2500ms / needs-improvement <=4000ms / poor above. CLS: good <=0.1 / needs-improvement <=0.25 / poor above. TBT: good <=200ms / needs-improvement <=600ms / poor above.
+Raw data: `lh-phase45-baseline.json` (mediana), `lh-phase45-run1.json`/`run2`/`run3` (las tres corridas base de todas las rutas), `lh-phase45-run4-escalated.json`/`run5-escalated.json` (dos corridas extra, solo para las 10 rutas escaladas), `lh-phase45-tracer.json` (pasada de calentamiento sobre `/`, no cuenta para ninguna mediana). LCP bands: good <=2500ms / needs-improvement <=4000ms / poor above. CLS: good <=0.1 / needs-improvement <=0.25 / poor above. TBT: good <=200ms / needs-improvement <=600ms / poor above.
 
-Referencia de cordura (pasada tracer sobre `/`, reemplazada por la mediana de 3 corridas en 45-02): performance 61, accessibility 100, best-practices 96, seo 100, LCP 3788ms (needs-improvement), CLS 0 (good), TBT 722ms (poor). La auditoría del 2026-08-25 dejó la home en 94 en PageSpeed Insights (LCP 2,63s, TBT 156ms, TTFB 0,12s) — la brecha con esta pasada tracer es varianza de contención de CPU local documentada en 45-RESEARCH.md ("Trampa 1"), no una regresión del sitio.
+Referencia de cordura: la auditoría del 2026-08-25 dejó la home en 94 en PageSpeed Insights (LCP 2,63s, TBT 156ms, TTFB 0,12s). La mediana de esta fase para `/` da 71 de performance con LCP de 5461ms, más lejos de esa referencia que lo esperado. La causa más probable, según lo que ya documentó 45-RESEARCH.md ("Trampa 1"), es contención de CPU en la laptop durante la captura: el TTFB medido por curl en la fase de research fue estable entre 0,71 y 0,92 segundos, así que el servidor no es la variable que se mueve. Diez de las catorce rutas necesitaron la mediana de 5 corridas en vez de 3 porque el spread de performance entre lecturas superó los 15 puntos en cada una de ellas (el detalle completo, con las cinco lecturas de cada ruta escalada, queda en el SUMMARY de este plan). Se deja anotado como advertencia de lectura para la Phase 50: si su propia medición muestra un salto de 20 o más puntos de performance en una sola ruta, primero hay que descartar contención de CPU antes de leerlo como regresión del sitio.
 
 Nota de datos de campo (CrUX): `juan-tech.com` no tiene tráfico suficiente para que Chrome UX Report emita datos de campo. Todos los CWV de este baseline son de laboratorio (Lighthouse simulado); el TBT es el proxy de laboratorio de INP, no INP real. Esta ausencia se repite en la Phase 50 y no debe leerse como una regresión.
 
