@@ -4,16 +4,16 @@ milestone: v2.1
 current_phase: 45
 current_phase_name: Baseline de Regresión
 status: planning
-stopped_at: "Completado 45-01-PLAN.md (tracer del baseline: script hermano + H1/JSON-LD/canonical-hreflang de las 14 rutas)"
-last_updated: "2026-09-03T18:42:47.241Z"
+stopped_at: Completado 45-02-PLAN.md (Lighthouse mobile de 14 rutas, mediana diffeable con escalado a 5 lecturas en 10 rutas)
+last_updated: "2026-09-03T19:09:01.944Z"
 last_activity: 2026-08-30
 last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."
-state_head: 32eb52e92cabb17bf99be0eec8c3ebf8e992618a
+state_head: cf38b952f8fce70282eb730c6ecad0dc6803c5ea
 progress:
   total_phases: 51
   completed_phases: 1
   total_plans: 4
-  completed_plans: 2
+  completed_plans: 3
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
@@ -29,8 +29,8 @@ See: .planning/PROJECT.md (updated 2026-07-31)
 ## Current Position
 
 Phase: 45 — Baseline de Regresión (en curso; Phase 44 cerrada 2026-08-30)
-Plan: 45-01 — completo (script hermano `capture-head-links-snapshot.mjs` + H1/JSON-LD/canonical/hreflang de las 14 rutas criticas; `45-REGRESSION-BASELINE.md` con esqueleto de las 6 secciones)
-Status: Wave 1 de Phase 45 cerrada. Task 1 (checkpoint:decision, gate blocking-human) resuelta por Juan: `sibling-script`. Las 14 rutas resuelven 200 directo contra produccion (`/es` 308 hacia `/`, documentado). Hallazgo real del sitio sin corregir por estar fuera de alcance de esta fase de solo medicion: el H1 de `/en` renderiza en español identico al de `/`, mientras que title/og:locale si estan en ingles — ver `45-REGRESSION-BASELINE.md`. Sigue 45-02 (Lighthouse mobile, 3 corridas + mediana) y 45-03 (Search Console + trafico real + resolucion de `V` en DECISIONS.md). `git diff src/` vacio en toda la wave 1.
+Plan: 45-02 — completo (Lighthouse mobile de las 14 rutas criticas, mediana diffeable con escalado a 5 lecturas en 10 rutas)
+Status: Wave 2 de Phase 45 cerrada. Mediana de `/` en 71 de performance (LCP 5461ms), por debajo de la referencia de 94 en PSI del 2026-08-25 — atribuido a contencion de CPU local (TTFB estable, ver `45-RESEARCH.md` Trampa 1), pendiente de la revision humana de Juan prevista en 45-03. 10 de 14 rutas necesitaron mediana de 5 corridas por spread de performance mayor a 15 puntos entre las 3 primeras. Hallazgo real del sitio sin corregir por estar fuera de alcance de esta fase de solo medicion (de 45-01): el H1 de `/en` renderiza en español identico al de `/`, mientras que title/og:locale si estan en ingles — ver `45-REGRESSION-BASELINE.md`. Sigue 45-03 (Search Console + trafico real + resolucion de `V` en DECISIONS.md + veredicto humanizado). `git diff src/` vacio en toda la wave 2.
 Last activity: 2026-08-25 — Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice.
 Previa: Quick task 260820-blg completado: rediseño del blog (filas por categoría, CRO por audiencia, alta al correo con doble opt-in) + recategorización de 4 posts con sus 301. Datos, migraciones y código ya en producción (el código entró a master con la PR #22 y salió en el deploy del 2026-08-20)
 
@@ -131,6 +131,7 @@ Previa: Quick task 260820-blg completado: rediseño del blog (filas por categor�
 | Phase 43 P02 | 25min | 2 tasks | 4 files |
 | Phase 43 P03 | ~20min | 2 tasks | 2 files |
 | Phase 45 P01 | 45min | 3 tasks | 6 files |
+| Phase 45 P02 | 90min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -268,6 +269,7 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 43]: 43-02: getServicesIndexPage delegates to getCachedPageBySlug — both /services and /servicios route twins covered automatically. Two real latent bugs found and fixed in cache.ts's unwired getCachedArchive before its first real caller (this plan): categoryId typed string vs Category.id's real number type (would have silently broken category filtering), and missing sort:'-publishedAt' (would have silently dropped list ordering sitewide).
 - [Phase ?]: Phase 43 tracer complete: all 5 named routes (Home, Servicios index, Blog listing, post detail, case-study detail) served from src/lib/cache.ts's unstable_cache layer; live before/after measurement deferred to production post-deploy due to persistent local Neon ECONNRESET (WINDOWS ids 6-8)
 - [Phase 45]: [Phase 45] 45-01: Juan eligio sibling-script (scripts/capture-head-links-snapshot.mjs) sobre extender capture-service-page-snapshot.mjs, para mantener comparable byte a byte la serie Phase 32 -> 36 -> 45 -> 50
+- [Phase 45]: [Phase 45] 45-02: 10 de 14 rutas superaron el umbral de 15 puntos de spread de performance y se escalaron a mediana de 5 corridas; la home queda en 71 de performance (LCP 5461ms), por debajo de la referencia de 94 en PSI, atribuido a contencion de CPU local (TTFB estable) y no a regresion del sitio
 
 ### Pending Todos
 
@@ -318,9 +320,9 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-09-03T18:42:47.184Z
-Stopped at: Completado 45-01-PLAN.md (tracer del baseline: script hermano + H1/JSON-LD/canonical-hreflang de las 14 rutas)
-Resume file: 45-02-PLAN.md
+Last session: 2026-09-03T19:09:01.779Z
+Stopped at: Completado 45-02-PLAN.md (Lighthouse mobile de 14 rutas, mediana diffeable con escalado a 5 lecturas en 10 rutas)
+Resume file: 45-03-PLAN.md
 
 ## Operator Next Steps
 
