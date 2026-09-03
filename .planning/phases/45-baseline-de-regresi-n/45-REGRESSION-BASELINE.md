@@ -29,7 +29,7 @@ Nota de lectura: esta serie es de laboratorio local contra un servidor remoto, a
 
 Purpose: foto del estado actual del sitio antes de que ninguna fase del milestone v2.1 (46-49) toque un byte renderizado. Contra este archivo compara el gate de cierre de la Phase 50. Mismo patrón que `32-REGRESSION-BASELINE.md` (Phase 32, v1.7).
 
-Route set: las 14 rutas críticas del criterio 1 — Home y `/en`, las 4 landings de servicio en `/servicios/{slug}` y `/en/services/{slug}` (`seo-technical-audit`, `seo-consulting`, `fullstack-development`, `ai-seo-geo`), y las 2 geo `/seo-tecnico-madrid` / `/seo-tecnico-lima` con sus variantes `/en/`. Resolución confirmada por curl el 2026-09-03: las 14 dan `200` directo, sin redirect intermedio. `/es` no entra en la lista de medición: devuelve `308` permanente hacia `/` (next-intl `localePrefix: 'as-needed'` con `defaultLocale: 'es'`). Nota de continuidad: `32-REGRESSION-BASELINE.md` registró ese mismo redirect como `307` contra un build local en el puerto 3040; producción emite `308` permanente. La diferencia es esperada (Next distingue redirect temporal en dev vs. permanente en producción) y no debe leerse como un cambio en la Phase 50.
+Route set: las 14 rutas críticas del criterio 1, es decir Home y `/en`, las 4 landings de servicio en `/servicios/{slug}` y `/en/services/{slug}` (`seo-technical-audit`, `seo-consulting`, `fullstack-development`, `ai-seo-geo`), y las 2 geo `/seo-tecnico-madrid` / `/seo-tecnico-lima` con sus variantes `/en/`. Resolución confirmada por curl el 2026-09-03: las 14 dan `200` directo, sin redirect intermedio. `/es` no entra en la lista de medición: devuelve `308` permanente hacia `/` (next-intl `localePrefix: 'as-needed'` con `defaultLocale: 'es'`). Nota de continuidad: `32-REGRESSION-BASELINE.md` registró ese mismo redirect como `307` contra un build local en el puerto 3040; producción emite `308` permanente. La diferencia es esperada (Next distingue redirect temporal en dev vs. permanente en producción) y no debe leerse como un cambio en la Phase 50.
 
 ## Lighthouse Mobile (producción live, mediana de 3 corridas)
 
@@ -75,9 +75,9 @@ Nota de datos de campo (CrUX): `juan-tech.com` no tiene tráfico suficiente para
 | /en/seo-tecnico-madrid | 1, "Technical SEO in Madrid / Spain" | Service |
 | /en/seo-tecnico-lima | 1, "Technical SEO in Lima" | Service |
 
-Raw data: `45-baseline-content.json`. Las 14 rutas tienen exactamente un H1, sin duplicados ni ausencias. La home y `/en` emiten 3 bloques JSON-LD (Person, WebSite, ProfessionalService), las 8 landings de servicio 2 (Service, BreadcrumbList) y las 4 geo 1 (Service) — se anota como estado de base, no como hallazgo.
+Raw data: `45-baseline-content.json`. Las 14 rutas tienen exactamente un H1, sin duplicados ni ausencias. La home y `/en` emiten 3 bloques JSON-LD (Person, WebSite, ProfessionalService), las 8 landings de servicio 2 (Service, BreadcrumbList) y las 4 geo 1 (Service). Se anota como estado de base, no como hallazgo.
 
-**Hallazgo real (no es un defecto de esta fase, es del sitio — no se toca, `src/` sigue en cero cambios):** el H1 de `/en` sale idéntico en español al de `/`, "Construyo software rápido y hago que se encuentre en Google", en vez de una versión en inglés. Confirmado dos veces por curl directo contra `https://juan-tech.com/en` el 2026-09-03. El resto de la página sí está en inglés (`<title>Technical SEO Consultant | Juan Carlos Angulo</title>`, `og:locale=en_US`), así que es un H1 puntual sin traducir en el Hero de Home, no un problema de ruteo ni de locale general. Queda registrado acá como línea base — si se corrige en una fase futura, la Phase 50 tiene que leer ese cambio como una mejora esperada y no como una regresión de contenido.
+**Hallazgo real (no es un defecto de esta fase, es del sitio; no se toca, `src/` sigue en cero cambios):** el H1 de `/en` sale idéntico en español al de `/`, "Construyo software rápido y hago que se encuentre en Google", en vez de una versión en inglés. Confirmado dos veces por curl directo contra `https://juan-tech.com/en` el 2026-09-03. El resto de la página sí está en inglés (`<title>Technical SEO Consultant | Juan Carlos Angulo</title>`, `og:locale=en_US`), así que es un H1 puntual sin traducir en el Hero de Home, no un problema de ruteo ni de locale general. Queda registrado acá como línea base. Si se corrige en una fase futura, la Phase 50 tiene que leer ese cambio como una mejora esperada y no como una regresión de contenido.
 
 ## Canonical / hreflang
 
@@ -98,11 +98,11 @@ Raw data: `45-baseline-content.json`. Las 14 rutas tienen exactamente un H1, sin
 | /en/seo-tecnico-madrid | https://juan-tech.com/en/seo-tecnico-madrid | es -> https://juan-tech.com/seo-tecnico-madrid, en -> https://juan-tech.com/en/seo-tecnico-madrid, x-default -> https://juan-tech.com/seo-tecnico-madrid |
 | /en/seo-tecnico-lima | https://juan-tech.com/en/seo-tecnico-lima | es -> https://juan-tech.com/seo-tecnico-lima, en -> https://juan-tech.com/en/seo-tecnico-lima, x-default -> https://juan-tech.com/seo-tecnico-lima |
 
-Raw data: `45-baseline-headlinks.json`, capturado con el script hermano nuevo `scripts/capture-head-links-snapshot.mjs` (mismo contrato CLI que `capture-service-page-snapshot.mjs`, que queda sin modificar). Las 14 rutas emiten canonical propio y exactamente 3 variantes de hreflang (es/en/x-default) — estado de base limpio, sin ausencias. Nota de normalización: el canonical de la home sale sin barra final (`https://juan-tech.com`) mientras que Search Console reporta la misma URL con barra (`https://juan-tech.com/`) — la sección Search Console de más abajo normaliza antes de cruzar los dos datasets, esto no es una inconsistencia del sitio.
+Raw data: `45-baseline-headlinks.json`, capturado con el script hermano nuevo `scripts/capture-head-links-snapshot.mjs` (mismo contrato CLI que `capture-service-page-snapshot.mjs`, que queda sin modificar). Las 14 rutas emiten canonical propio y exactamente 3 variantes de hreflang (es/en/x-default). Estado de base limpio, sin ausencias. Nota de normalización: el canonical de la home sale sin barra final (`https://juan-tech.com`) mientras que Search Console reporta la misma URL con barra (`https://juan-tech.com/`). La sección Search Console de más abajo normaliza antes de cruzar los dos datasets; esto no es una inconsistencia del sitio.
 
 ## Search Console
 
-Ventana: 2026-07-31 → 2026-08-27 (28 días), comparada contra 2026-07-03 → 2026-07-30 (28 días previos) — misma ventana que usó la auditoría SEO de agosto, para que las dos series sean comparables. Fuente: herramientas `gsc-juan-*` del hub MCP, `sc-domain:juan-tech.com` como siteOwner.
+Ventana: 2026-07-31 → 2026-08-27 (28 días), comparada contra 2026-07-03 → 2026-07-30 (28 días previos), la misma ventana que usó la auditoría SEO de agosto, para que las dos series sean comparables. Fuente: herramientas `gsc-juan-*` del hub MCP, `sc-domain:juan-tech.com` como siteOwner.
 
 | Route | Impresiones | Clics | Posición media |
 |---|---|---|---|
@@ -135,6 +135,10 @@ Los dos números van separados y sin mezclarse, como fija `45-CONTEXT.md`.
 
 Lectura frente al modelo de DEC-02: el tráfico orgánico real (22 clics/mes) queda muy por debajo incluso del primer tramo modelado (V = 1.000 visitas/mes). Es tráfico total del sitio, no visitas a la página de stack, así que no es directamente comparable con la tabla de tramos de DEC-02, pero sitúa la escala real del punto de partida. El detalle de cómo esto actualiza `DECISIONS.md` de la Phase 44 está en ese mismo documento, sección DEC-02.
 
-## Phase 45 Verdict: TBD
+## Phase 45 Verdict: Baseline captured, 14/14 routes clean
 
-Se completa al cierre de 45-03, cuando las 14 rutas estén pobladas en las 4 secciones de datos. Ningún componente ni contenido se modificó durante esta fase — medición únicamente, per BASE-01/02/03 y el criterio de cierre de la fase (`git diff` sobre `src/` vacío).
+Las 14 rutas críticas quedan pobladas en las cuatro secciones de datos: Lighthouse mobile, H1/JSON-LD, canonical/hreflang y Search Console (con `sin datos en la ventana` explícito donde Google no reportó métricas, nunca una celda vacía). El tráfico orgánico real del sitio y `V(stack) = 0` quedan documentados por separado, y `DECISIONS.md` de la Phase 44 ya no tiene ninguna incógnita pendiente.
+
+Ningún componente, contenido ni schema se modificó durante esta fase: es medición únicamente, per BASE-01, BASE-02, BASE-03 y el criterio de cierre de la fase. `git diff` sobre `src/` quedó vacío en las tres olas de ejecución (45-01, 45-02, 45-03). Este archivo y sus cinco JSON (`45-baseline-content.json`, `45-baseline-headlinks.json`, `lh-phase45-baseline.json`, `45-gsc-snapshot.json`, más las corridas crudas de Lighthouse) son el punto de comparación del gate de cierre de la Phase 50.
+
+Dos hallazgos quedan anotados como estado de base, no como defectos de esta fase, para que la Phase 50 no los confunda con una regresión introducida por el milestone de monetización: el H1 de `/en` sale en español en vez de inglés, y la canibalización entre `/blog/pilas-y-colas` y su versión canónica sigue viva. Ninguno de los dos se corrigió acá; ambos están documentados con su evidencia en las secciones correspondientes de este mismo archivo.
