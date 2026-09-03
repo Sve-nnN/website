@@ -1,0 +1,19 @@
+{
+  "/": {
+    "canonical": "https://juan-tech.com",
+    "hreflang": [
+      {
+        "lang": "es",
+        "href": "https://juan-tech.com"
+      },
+      {
+        "lang": "en",
+        "href": "https://juan-tech.com/en"
+      },
+      {
+        "lang": "x-default",
+        "href": "https://juan-tech.com"
+      }
+    ]
+  }
+}
