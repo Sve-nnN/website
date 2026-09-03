@@ -106,22 +106,24 @@ Ventana: 2026-07-31 → 2026-08-27 (28 días), comparada contra 2026-07-03 → 2
 
 | Route | Impresiones | Clics | Posición media |
 |---|---|---|---|
-| / | TBD | TBD | TBD |
-| /en | TBD | TBD | TBD |
-| /servicios/seo-technical-audit | TBD | TBD | TBD |
-| /servicios/seo-consulting | TBD | TBD | TBD |
-| /servicios/fullstack-development | TBD | TBD | TBD |
-| /servicios/ai-seo-geo | TBD | TBD | TBD |
-| /en/services/seo-technical-audit | TBD | TBD | TBD |
-| /en/services/seo-consulting | TBD | TBD | TBD |
-| /en/services/fullstack-development | TBD | TBD | TBD |
-| /en/services/ai-seo-geo | TBD | TBD | TBD |
-| /seo-tecnico-madrid | TBD | TBD | TBD |
-| /seo-tecnico-lima | TBD | TBD | TBD |
-| /en/seo-tecnico-madrid | TBD | TBD | TBD |
-| /en/seo-tecnico-lima | TBD | TBD | TBD |
+| / | 42 | 1 | 6,6 |
+| /en | 20 | 0 | 3,5 |
+| /servicios/seo-technical-audit | 83 | 0 | 49,7 |
+| /servicios/seo-consulting | 9 | 0 | 6,3 |
+| /servicios/fullstack-development | 12 | 0 | 15,8 |
+| /servicios/ai-seo-geo | 7 | 0 | 28,9 |
+| /en/services/seo-technical-audit | sin datos en la ventana | sin datos en la ventana | sin datos en la ventana |
+| /en/services/seo-consulting | sin datos en la ventana | sin datos en la ventana | sin datos en la ventana |
+| /en/services/fullstack-development | 1 | 0 | 10 |
+| /en/services/ai-seo-geo | sin datos en la ventana | sin datos en la ventana | sin datos en la ventana |
+| /seo-tecnico-madrid | sin datos en la ventana | sin datos en la ventana | sin datos en la ventana |
+| /seo-tecnico-lima | 13 | 1 | 7,8 |
+| /en/seo-tecnico-madrid | sin datos en la ventana | sin datos en la ventana | sin datos en la ventana |
+| /en/seo-tecnico-lima | sin datos en la ventana | sin datos en la ventana | sin datos en la ventana |
 
-Se completa en 45-03. Las rutas sin datos en la ventana se marcan explícitamente `sin datos en la ventana`, nunca con la celda vacía. Raw data: `45-gsc-snapshot.json`, con `p1_*`/`p2_*` crudos (el campo `*_diff` que devuelve la herramienta viene calculado como período viejo menos período nuevo, signo invertido — no se copia tal cual).
+8 de las 14 rutas críticas tienen datos en la ventana medida; las 6 restantes no aparecen entre las 190 páginas que Search Console reportó con métricas, y quedan marcadas `sin datos en la ventana` en vez de con la celda vacía, para que en la Phase 50 una ausencia repetida no se lea como regresión. Raw data: `45-gsc-snapshot.json`, con `p1_*`/`p2_*` crudos de las 190 páginas de la ventana (el campo `*_diff` que devuelve la herramienta viene calculado como período viejo menos período nuevo, signo invertido, y no se copió). Normalización aplicada al cruzar HTML con GSC: se quitó la barra final de ambas puntas antes de comparar (el canonical de `/` sale sin barra, GSC reporta la misma URL con barra).
+
+Dato de canibalización confirmado en esta misma ventana, ya adelantado por la auditoría del 2026-08-25: `https://juan-tech.com/blog/pilas-y-colas` (URL vieja) tiene 150 impresiones y 4 clics contra 48 impresiones y 0 clics de `https://juan-tech.com/blog/cs-fundamentals/pilas-y-colas` (la canónica). La URL vieja sigue captando más del triple de impresiones que la que debería rankear. No es un hallazgo nuevo de esta fase, es la confirmación de que el problema sigue vivo al momento de este baseline.
 
 ## Trafico real y V
 
