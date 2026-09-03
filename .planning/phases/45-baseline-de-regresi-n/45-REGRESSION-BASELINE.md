@@ -36,42 +36,44 @@ Nota de datos de campo (CrUX): `juan-tech.com` no tiene tráfico suficiente para
 | Route | H1 (count, text) | JSON-LD types |
 |---|---|---|
 | / | 1, "Construyo software rápido y hago que se encuentre en Google" | Person, WebSite, ProfessionalService |
-| /en | TBD | TBD |
-| /servicios/seo-technical-audit | TBD | TBD |
-| /servicios/seo-consulting | TBD | TBD |
-| /servicios/fullstack-development | TBD | TBD |
-| /servicios/ai-seo-geo | TBD | TBD |
-| /en/services/seo-technical-audit | TBD | TBD |
-| /en/services/seo-consulting | TBD | TBD |
-| /en/services/fullstack-development | TBD | TBD |
-| /en/services/ai-seo-geo | TBD | TBD |
-| /seo-tecnico-madrid | TBD | TBD |
-| /seo-tecnico-lima | TBD | TBD |
-| /en/seo-tecnico-madrid | TBD | TBD |
-| /en/seo-tecnico-lima | TBD | TBD |
+| /en | 1, "Construyo software rápido y hago que se encuentre en Google" | Person, WebSite, ProfessionalService |
+| /servicios/seo-technical-audit | 1, "Auditoría SEO Técnica" | Service, BreadcrumbList |
+| /servicios/seo-consulting | 1, "Consultoría SEO" | Service, BreadcrumbList |
+| /servicios/fullstack-development | 1, "Desarrollo Full-Stack con SEO integrado" | Service, BreadcrumbList |
+| /servicios/ai-seo-geo | 1, "SEO para IA / GEO" | Service, BreadcrumbList |
+| /en/services/seo-technical-audit | 1, "Technical SEO Audit" | Service, BreadcrumbList |
+| /en/services/seo-consulting | 1, "SEO Consulting" | Service, BreadcrumbList |
+| /en/services/fullstack-development | 1, "Full-Stack Development with SEO Built In" | Service, BreadcrumbList |
+| /en/services/ai-seo-geo | 1, "AI SEO / GEO" | Service, BreadcrumbList |
+| /seo-tecnico-madrid | 1, "SEO Técnico en Madrid / España" | Service |
+| /seo-tecnico-lima | 1, "SEO Técnico en Lima" | Service |
+| /en/seo-tecnico-madrid | 1, "Technical SEO in Madrid / Spain" | Service |
+| /en/seo-tecnico-lima | 1, "Technical SEO in Lima" | Service |
 
-Raw data: `45-baseline-content.json`. La home emite 3 bloques JSON-LD (Person, WebSite, ProfessionalService) — se anota como estado de base, no como hallazgo; las 13 rutas restantes se completan en la Task 3.
+Raw data: `45-baseline-content.json`. Las 14 rutas tienen exactamente un H1, sin duplicados ni ausencias. La home y `/en` emiten 3 bloques JSON-LD (Person, WebSite, ProfessionalService), las 8 landings de servicio 2 (Service, BreadcrumbList) y las 4 geo 1 (Service) — se anota como estado de base, no como hallazgo.
+
+**Hallazgo real (no es un defecto de esta fase, es del sitio — no se toca, `src/` sigue en cero cambios):** el H1 de `/en` sale idéntico en español al de `/`, "Construyo software rápido y hago que se encuentre en Google", en vez de una versión en inglés. Confirmado dos veces por curl directo contra `https://juan-tech.com/en` el 2026-09-03. El resto de la página sí está en inglés (`<title>Technical SEO Consultant | Juan Carlos Angulo</title>`, `og:locale=en_US`), así que es un H1 puntual sin traducir en el Hero de Home, no un problema de ruteo ni de locale general. Queda registrado acá como línea base — si se corrige en una fase futura, la Phase 50 tiene que leer ese cambio como una mejora esperada y no como una regresión de contenido.
 
 ## Canonical / hreflang
 
 | Route | Canonical | hreflang (lang -> href) |
 |---|---|---|
 | / | https://juan-tech.com | es -> https://juan-tech.com, en -> https://juan-tech.com/en, x-default -> https://juan-tech.com |
-| /en | TBD | TBD |
-| /servicios/seo-technical-audit | TBD | TBD |
-| /servicios/seo-consulting | TBD | TBD |
-| /servicios/fullstack-development | TBD | TBD |
-| /servicios/ai-seo-geo | TBD | TBD |
-| /en/services/seo-technical-audit | TBD | TBD |
-| /en/services/seo-consulting | TBD | TBD |
-| /en/services/fullstack-development | TBD | TBD |
-| /en/services/ai-seo-geo | TBD | TBD |
-| /seo-tecnico-madrid | TBD | TBD |
-| /seo-tecnico-lima | TBD | TBD |
-| /en/seo-tecnico-madrid | TBD | TBD |
-| /en/seo-tecnico-lima | TBD | TBD |
+| /en | https://juan-tech.com/en | es -> https://juan-tech.com, en -> https://juan-tech.com/en, x-default -> https://juan-tech.com |
+| /servicios/seo-technical-audit | https://juan-tech.com/servicios/seo-technical-audit | es -> https://juan-tech.com/servicios/seo-technical-audit, en -> https://juan-tech.com/en/services/seo-technical-audit, x-default -> https://juan-tech.com/servicios/seo-technical-audit |
+| /servicios/seo-consulting | https://juan-tech.com/servicios/seo-consulting | es -> https://juan-tech.com/servicios/seo-consulting, en -> https://juan-tech.com/en/services/seo-consulting, x-default -> https://juan-tech.com/servicios/seo-consulting |
+| /servicios/fullstack-development | https://juan-tech.com/servicios/fullstack-development | es -> https://juan-tech.com/servicios/fullstack-development, en -> https://juan-tech.com/en/services/fullstack-development, x-default -> https://juan-tech.com/servicios/fullstack-development |
+| /servicios/ai-seo-geo | https://juan-tech.com/servicios/ai-seo-geo | es -> https://juan-tech.com/servicios/ai-seo-geo, en -> https://juan-tech.com/en/services/ai-seo-geo, x-default -> https://juan-tech.com/servicios/ai-seo-geo |
+| /en/services/seo-technical-audit | https://juan-tech.com/en/services/seo-technical-audit | es -> https://juan-tech.com/servicios/seo-technical-audit, en -> https://juan-tech.com/en/services/seo-technical-audit, x-default -> https://juan-tech.com/servicios/seo-technical-audit |
+| /en/services/seo-consulting | https://juan-tech.com/en/services/seo-consulting | es -> https://juan-tech.com/servicios/seo-consulting, en -> https://juan-tech.com/en/services/seo-consulting, x-default -> https://juan-tech.com/servicios/seo-consulting |
+| /en/services/fullstack-development | https://juan-tech.com/en/services/fullstack-development | es -> https://juan-tech.com/servicios/fullstack-development, en -> https://juan-tech.com/en/services/fullstack-development, x-default -> https://juan-tech.com/servicios/fullstack-development |
+| /en/services/ai-seo-geo | https://juan-tech.com/en/services/ai-seo-geo | es -> https://juan-tech.com/servicios/ai-seo-geo, en -> https://juan-tech.com/en/services/ai-seo-geo, x-default -> https://juan-tech.com/servicios/ai-seo-geo |
+| /seo-tecnico-madrid | https://juan-tech.com/seo-tecnico-madrid | es -> https://juan-tech.com/seo-tecnico-madrid, en -> https://juan-tech.com/en/seo-tecnico-madrid, x-default -> https://juan-tech.com/seo-tecnico-madrid |
+| /seo-tecnico-lima | https://juan-tech.com/seo-tecnico-lima | es -> https://juan-tech.com/seo-tecnico-lima, en -> https://juan-tech.com/en/seo-tecnico-lima, x-default -> https://juan-tech.com/seo-tecnico-lima |
+| /en/seo-tecnico-madrid | https://juan-tech.com/en/seo-tecnico-madrid | es -> https://juan-tech.com/seo-tecnico-madrid, en -> https://juan-tech.com/en/seo-tecnico-madrid, x-default -> https://juan-tech.com/seo-tecnico-madrid |
+| /en/seo-tecnico-lima | https://juan-tech.com/en/seo-tecnico-lima | es -> https://juan-tech.com/seo-tecnico-lima, en -> https://juan-tech.com/en/seo-tecnico-lima, x-default -> https://juan-tech.com/seo-tecnico-lima |
 
-Raw data: `45-baseline-headlinks.json`, capturado con el script hermano nuevo `scripts/capture-head-links-snapshot.mjs` (mismo contrato CLI que `capture-service-page-snapshot.mjs`, que queda sin modificar). Nota de normalización: el canonical de la home sale sin barra final (`https://juan-tech.com`) mientras que Search Console reporta la misma URL con barra (`https://juan-tech.com/`) — la sección Search Console de más abajo normaliza antes de cruzar los dos datasets, esto no es una inconsistencia del sitio.
+Raw data: `45-baseline-headlinks.json`, capturado con el script hermano nuevo `scripts/capture-head-links-snapshot.mjs` (mismo contrato CLI que `capture-service-page-snapshot.mjs`, que queda sin modificar). Las 14 rutas emiten canonical propio y exactamente 3 variantes de hreflang (es/en/x-default) — estado de base limpio, sin ausencias. Nota de normalización: el canonical de la home sale sin barra final (`https://juan-tech.com`) mientras que Search Console reporta la misma URL con barra (`https://juan-tech.com/`) — la sección Search Console de más abajo normaliza antes de cruzar los dos datasets, esto no es una inconsistencia del sitio.
 
 ## Search Console
 
