@@ -80,6 +80,7 @@ export interface Config {
     clientes: Cliente;
     'speaking-events': SpeakingEvent;
     websites: Website;
+    'affiliate-links': AffiliateLink;
     redirects: Redirect;
     search: Search;
     'payload-mcp-api-keys': PayloadMcpApiKey;
@@ -103,6 +104,7 @@ export interface Config {
     clientes: ClientesSelect<false> | ClientesSelect<true>;
     'speaking-events': SpeakingEventsSelect<false> | SpeakingEventsSelect<true>;
     websites: WebsitesSelect<false> | WebsitesSelect<true>;
+    'affiliate-links': AffiliateLinksSelect<false> | AffiliateLinksSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
     'payload-mcp-api-keys': PayloadMcpApiKeysSelect<false> | PayloadMcpApiKeysSelect<true>;
@@ -1479,6 +1481,34 @@ export interface SpeakingEvent {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "affiliate-links".
+ */
+export interface AffiliateLink {
+  id: number;
+  name: string;
+  slug?: string | null;
+  program: 'amazon' | 'kinsta' | 'dinorank' | 'digitalocean' | 'other';
+  destinations?:
+    | {
+        marketplace: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  cookieWindowDays?: number | null;
+  commissionNote?: string | null;
+  active?: boolean | null;
+  placement?: ('stack-page' | 'inline-post' | 'both') | null;
+  order?: number | null;
+  tagline?: string | null;
+  whyIUseIt?: string | null;
+  disclosureOverride?: string | null;
+  ctaLabel?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1915,6 +1945,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'websites';
         value: number | Website;
+      } | null)
+    | ({
+        relationTo: 'affiliate-links';
+        value: number | AffiliateLink;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2831,6 +2865,33 @@ export interface WebsitesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "affiliate-links_select".
+ */
+export interface AffiliateLinksSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  program?: T;
+  destinations?:
+    | T
+    | {
+        marketplace?: T;
+        url?: T;
+        id?: T;
+      };
+  cookieWindowDays?: T;
+  commissionNote?: T;
+  active?: T;
+  placement?: T;
+  order?: T;
+  tagline?: T;
+  whyIUseIt?: T;
+  disclosureOverride?: T;
+  ctaLabel?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
