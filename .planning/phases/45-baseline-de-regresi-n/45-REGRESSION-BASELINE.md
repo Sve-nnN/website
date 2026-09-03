@@ -127,7 +127,13 @@ Dato de canibalización confirmado en esta misma ventana, ya adelantado por la a
 
 ## Trafico real y V
 
-TBD — se completa en 45-03 con el número real de tráfico orgánico del sitio (clics e impresiones del período 2026-07-31 → 2026-08-27, con el método declarado) y con `V(stack) = 0` a la fecha de captura, separado y sin mezclar con la medición real. `DECISIONS.md` de la Phase 44 se actualiza en 45-03 reemplazando la incógnita `V` por este valor.
+Los dos números van separados y sin mezclarse, como fija `45-CONTEXT.md`.
+
+**(a) Tráfico orgánico real del sitio:** 22 clics y 6.328 impresiones en la ventana 2026-07-31 → 2026-08-27 (28 días), medido el 2026-09-03. Método: `gsc-juan-compare-search-periods` con `dimensions=date` sobre las mismas cuatro fechas de la sección anterior, devuelve 56 filas (28 días de cada período); las filas del período 2 traen `p1_clicks`/`p1_impressions` en cero estructural, así que sumar esos dos campos sobre las 56 filas da el total exacto del período 1 sin el filtrado por anonimización que castiga la suma por `dimensions=page`. `showing` (56) es igual a `total_items` (56), así que no hay truncamiento silencioso.
+
+**(b) `V(stack) = 0`** a 2026-09-03. La página `/stack` no existe todavía, la construye la Phase 48. Cualquier proyección de qué fracción del tráfico del sitio llegaría ahí es un supuesto, nunca una medición, y no se declara ninguna en este documento.
+
+Lectura frente al modelo de DEC-02: el tráfico orgánico real (22 clics/mes) queda muy por debajo incluso del primer tramo modelado (V = 1.000 visitas/mes). Es tráfico total del sitio, no visitas a la página de stack, así que no es directamente comparable con la tabla de tramos de DEC-02, pero sitúa la escala real del punto de partida. El detalle de cómo esto actualiza `DECISIONS.md` de la Phase 44 está en ese mismo documento, sección DEC-02.
 
 ## Phase 45 Verdict: TBD
 
