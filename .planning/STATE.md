@@ -1,19 +1,19 @@
 ---
 gsd_state_version: 1.0
 milestone: v2.1
-current_phase: 46
-current_phase_name: Disclosure Legal + Esquema de Links de Afiliado
+current_phase: 47
+current_phase_name: Ruta /go + Fix de Middleware + Registro de Clics
 status: planning
-stopped_at: Completados 46-01 y 46-02 (coleccion affiliate-links + migracion aditiva contra Dokploy + AffiliateLink/AffiliateDisclosure + /privacy actualizada) -- Phase 46 CERRADA, verificacion pendiente
-last_updated: "2026-09-03T20:00:23.482Z"
-last_activity: 2026-08-30
+stopped_at: Completado 47-01-PLAN.md (Phase 47, unico plan)
+last_updated: "2026-09-04T18:16:56.423Z"
+last_activity: 2026-09-04
 last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."
-state_head: f38661670d275719475113c42d5450c5e6ed770c
+state_head: 5a4481df6f457a12541f33dd368dfc7729f8fc6a
 progress:
   total_phases: 51
-  completed_phases: 1
-  total_plans: 4
-  completed_plans: 4
+  completed_phases: 3
+  total_plans: 7
+  completed_plans: 7
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
@@ -24,15 +24,15 @@ milestone_name: Monetizacion del Sitio - Research + Fundaciones
 See: .planning/PROJECT.md (updated 2026-07-31)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 45 — baseline de regresión (milestone v2.1, Phases 44-50)
+**Current focus:** Phase 47 — Ruta /go + Fix de Middleware + Registro de Clics (milestone v2.1, Phases 44-50)
 
 ## Current Position
 
-Phase: 45 — Baseline de Regresión (CERRADA 2026-09-03; Phase 44 cerrada 2026-08-30)
-Plan: 45-03 — completo (Search Console de 190 paginas + trafico real 22 clics/mes + V resuelto en DECISIONS.md + veredicto humanizado) — Phase 45 completa, 3/3 planes
-Status: Phase 45 CERRADA. Baseline capturado sin tocar `src/` en ninguna de las 3 olas: Lighthouse mobile (mediana de 71 en `/`, por debajo de la referencia de 94 en PSI del 2026-08-25, atribuido a contencion de CPU local no a regresion — pendiente confirmacion de Juan), H1/JSON-LD, canonical/hreflang, snapshot de Search Console (190 paginas, 8/14 rutas criticas con datos) y trafico organico real (22 clics / 6.328 impresiones en 28 dias). `V(stack) = 0` resuelto en `DECISIONS.md` de la Phase 44 sin tocar la formula ni la tabla de tramos parametrica (decision explicita de `45-CONTEXT.md`). Dos hallazgos reales del sitio documentados sin corregir por ser fuera de alcance de esta fase de solo medicion: H1 de `/en` en español identico al de `/`, y canibalizacion viva entre `/blog/pilas-y-colas` (150 impresiones) y su version canonica (48 impresiones). Human-check de fin de fase (plausibilidad de numeros + voz de la prosa) queda pendiente de la revision orquestada de Juan, per `human_verify_mode = end-of-phase`. Siguiente: Phase 46 (Disclosure Legal + Esquema de Links de Afiliado), que ya puede arrancar porque el baseline esta cerrado.
-Last activity: 2026-08-25 — Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice.
-Previa: Quick task 260820-blg completado: rediseño del blog (filas por categoría, CRO por audiencia, alta al correo con doble opt-in) + recategorización de 4 posts con sus 301. Datos, migraciones y código ya en producción (el código entró a master con la PR #22 y salió en el deploy del 2026-08-20)
+Phase: 47 — Ruta /go + Fix de Middleware + Registro de Clics (Phase 46 cerrada, 46-01/46-02 completos; Phase 45 cerrada 2026-09-03; Phase 44 cerrada 2026-08-30)
+Plan: 47-01 — completo (fix del matcher `go/`, route handler `/go/[slug]`, `robots.txt` con `Disallow: /go`, coleccion `affiliate-clicks` append-only + migracion aditiva aplicada contra Dokploy, descarte de bots + throttle por IP via `after()`) — Phase 47 completa, unico plan (1/1)
+Status: 47-01 verificado de punta a punta contra el dev server real conectado al Postgres real de Dokploy (sin sandbox): `/go/{slug}` activo redirige 302 con `no-store` leyendo el destino exclusivamente del documento admin-autorado, `?to=` se ignora, slug inactivo e inexistente devuelven el mismo 404, las 5 rutas control (`/`, `/en`, `/servicios`, `/en/services`, `/blog`) mas el decoy `/golang-para-seo` no cambiaron de comportamiento tras el fix del matcher, `robots.txt` bloquea `/go`, y un clic normal deja fila en `affiliate-clicks` via `after()` mientras un bot o un IP throttled reciben el 302 pero no dejan fila. `npx tsc --noEmit` limpio en las 3 tasks. Human-check de fin de fase queda pendiente de la revision orquestada de Juan, per `human_verify_mode = end-of-phase`. Siguiente: Phase 48 (Pagina de Stack + Links Inline en Contenido), que ya puede arrancar porque `/go/[slug]` funciona y esta verificado.
+Last activity: 2026-09-04 — Phase 47 Plan 01 ejecutado y verificado (GO-01, GO-02, GO-03, GO-04).
+Previa: Phase 45 CERRADA 2026-09-03 (baseline de regresion: Lighthouse mobile, H1/JSON-LD, canonical/hreflang, snapshot de Search Console, trafico organico real).
 
 ## Performance Metrics
 
@@ -133,6 +133,7 @@ Previa: Quick task 260820-blg completado: rediseño del blog (filas por categor�
 | Phase 45 P01 | 45min | 3 tasks | 6 files |
 | Phase 45 P02 | 90min | 2 tasks | 6 files |
 | Phase 45 P03 | 35min | 3 tasks | 3 files |
+| Phase 47 P01 | 65min | 3 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -272,6 +273,7 @@ Recent decisions affecting current work:
 - [Phase 45]: [Phase 45] 45-01: Juan eligio sibling-script (scripts/capture-head-links-snapshot.mjs) sobre extender capture-service-page-snapshot.mjs, para mantener comparable byte a byte la serie Phase 32 -> 36 -> 45 -> 50
 - [Phase 45]: [Phase 45] 45-02: 10 de 14 rutas superaron el umbral de 15 puntos de spread de performance y se escalaron a mediana de 5 corridas; la home queda en 71 de performance (LCP 5461ms), por debajo de la referencia de 94 en PSI, atribuido a contencion de CPU local (TTFB estable) y no a regresion del sitio
 - [Phase 45]: [Phase 45] 45-03: trafico organico real medido en 22 clics / 6.328 impresiones mensuales (ventana 2026-07-31 -> 2026-08-27, via dimensions=date); V(stack)=0 resuelto en DECISIONS.md de la Phase 44 sin tocar formula ni tabla de tramos, per decision explicita de CONTEXT.md de no recalcular
+- [Phase 46]: [Phase 47] 47-01: go/ (con barra) insertado en la alternancia real y actual del matcher (post-SEO-39), no en el ejemplo desactualizado del ROADMAP; detección de bots construida desde cero (contact.ts solo tiene honeypot de formulario, no aplica a un GET); affiliate-clicks sin clickedAt (usa createdAt automático) y sin IP cruda persistida
 
 ### Pending Todos
 
@@ -322,8 +324,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-09-03T20:00:23.258Z
-Stopped at: Completado 45-03-PLAN.md (Search Console + trafico real + resolucion de V + veredicto humanizado) -- Phase 45 CERRADA, 3/3 planes
+Last session: 2026-09-04T18:16:56.160Z
+Stopped at: Completado 47-01-PLAN.md (Phase 47, unico plan)
 Resume file: None
 
 ## Operator Next Steps

@@ -1168,11 +1168,11 @@ El lookahead negativo está anclado inmediatamente después de la barra inicial,
   3. `curl` a `/robots.txt` muestra `Disallow: /go` junto a los `Disallow` ya existentes de `/admin` y `/api`
   4. Un clic real deja exactamente una fila nueva en `affiliate-clicks` (append-only, nunca `UPDATE ... clicks + 1`), escrita vía `after()` después de emitir el redirect; un user-agent de bot y un segundo request dentro del throttle por IP no dejan fila
 
-**Plans**: 1 plan (1 wave)
+**Plans**: 1/1 plans executed (1 wave)
 
 Plans:
 
-- [ ] 47-01-PLAN.md — Fix del matcher (GO-02) + route handler `/go/[slug]` (GO-01) + robots.ts (GO-03) + colección `affiliate-clicks` append-only con descarte de bots/throttle vía `after()` (GO-04)
+- [x] 47-01-PLAN.md — Fix del matcher (GO-02) + route handler `/go/[slug]` (GO-01) + robots.ts (GO-03) + colección `affiliate-clicks` append-only con descarte de bots/throttle vía `after()` (GO-04)
 
 ### Phase 48: Página de Stack + Links Inline en Contenido
 
@@ -1313,7 +1313,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 44. Decisiones de Monetización | 0/TBD | Not started | - |
 | 45. Baseline de Regresión | 3/3 | In Progress|  |
 | 46. Disclosure Legal + Esquema de Links de Afiliado | 0/TBD | Not started | - |
-| 47. Ruta /go + Fix de Middleware + Registro de Clics | 0/TBD | Not started | - |
+| 47. Ruta /go + Fix de Middleware + Registro de Clics | 1/1 | In Progress|  |
 | 48. Página de Stack + Links Inline en Contenido | 0/TBD | Not started | - |
 | 48.5. Auditor Destacado | 0/TBD | Not started | - |
 | 49. Captura de Email (Resend, env-gated) | 0/TBD | Not started | - |
