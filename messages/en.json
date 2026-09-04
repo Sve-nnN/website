@@ -28,5 +28,9 @@
   },
   "testimonialsCarousel": {
     "title": "Testimonials"
+  },
+  "affiliateDisclosure": {
+    "generalDisclosure": "Some of the links on this page are affiliate links. If you buy through one, I may earn a small commission at no extra cost to you. I only recommend tools I've actually used.",
+    "amazonDisclosure": "As an Amazon Associate I earn from qualifying purchases."
   }
 }

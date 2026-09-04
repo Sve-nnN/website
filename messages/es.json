@@ -28,5 +28,8 @@
   },
   "testimonialsCarousel": {
     "title": "Testimonios"
+  },
+  "affiliateDisclosure": {
+    "generalDisclosure": "Algunos enlaces de esta página son de afiliado. Si compras a través de alguno, puedo ganar una comisión pequeña sin costo adicional para ti. Solo recomiendo herramientas que uso de verdad."
   }
 }
