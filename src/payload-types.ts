@@ -81,6 +81,7 @@ export interface Config {
     'speaking-events': SpeakingEvent;
     websites: Website;
     'affiliate-links': AffiliateLink;
+    'affiliate-clicks': AffiliateClick;
     redirects: Redirect;
     search: Search;
     'payload-mcp-api-keys': PayloadMcpApiKey;
@@ -105,6 +106,7 @@ export interface Config {
     'speaking-events': SpeakingEventsSelect<false> | SpeakingEventsSelect<true>;
     websites: WebsitesSelect<false> | WebsitesSelect<true>;
     'affiliate-links': AffiliateLinksSelect<false> | AffiliateLinksSelect<true>;
+    'affiliate-clicks': AffiliateClicksSelect<false> | AffiliateClicksSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
     'payload-mcp-api-keys': PayloadMcpApiKeysSelect<false> | PayloadMcpApiKeysSelect<true>;
@@ -1509,6 +1511,23 @@ export interface AffiliateLink {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "affiliate-clicks".
+ */
+export interface AffiliateClick {
+  id: number;
+  /**
+   * A qué affiliate-links.slug corresponde el clic (guardado como string plano).
+   */
+  slug: string;
+  /**
+   * User-Agent del request. Sin IP cruda por diseño.
+   */
+  userAgent?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1949,6 +1968,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'affiliate-links';
         value: number | AffiliateLink;
+      } | null)
+    | ({
+        relationTo: 'affiliate-clicks';
+        value: number | AffiliateClick;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -2890,6 +2913,16 @@ export interface AffiliateLinksSelect<T extends boolean = true> {
   whyIUseIt?: T;
   disclosureOverride?: T;
   ctaLabel?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "affiliate-clicks_select".
+ */
+export interface AffiliateClicksSelect<T extends boolean = true> {
+  slug?: T;
+  userAgent?: T;
   updatedAt?: T;
   createdAt?: T;
 }

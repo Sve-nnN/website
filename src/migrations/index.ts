@@ -32,6 +32,7 @@ import * as migration_20260820_001837_blog_promo_inline_title_and_rail from './2
 import * as migration_20260820_153557_blog_promo_by_category from './20260820_153557_blog_promo_by_category';
 import * as migration_20260820_155934_subscribers_collection from './20260820_155934_subscribers_collection';
 import * as migration_20260903_225836_affiliate_links_collection from './20260903_225836_affiliate_links_collection';
+import * as migration_20260904_175022_affiliate_clicks_collection from './20260904_175022_affiliate_clicks_collection';
 
 export const migrations = [
   {
@@ -202,6 +203,11 @@ export const migrations = [
   {
     up: migration_20260903_225836_affiliate_links_collection.up,
     down: migration_20260903_225836_affiliate_links_collection.down,
-    name: '20260903_225836_affiliate_links_collection'
+    name: '20260903_225836_affiliate_links_collection',
+  },
+  {
+    up: migration_20260904_175022_affiliate_clicks_collection.up,
+    down: migration_20260904_175022_affiliate_clicks_collection.down,
+    name: '20260904_175022_affiliate_clicks_collection'
   },
 ];
