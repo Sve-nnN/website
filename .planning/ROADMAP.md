@@ -1168,7 +1168,11 @@ El lookahead negativo está anclado inmediatamente después de la barra inicial,
   3. `curl` a `/robots.txt` muestra `Disallow: /go` junto a los `Disallow` ya existentes de `/admin` y `/api`
   4. Un clic real deja exactamente una fila nueva en `affiliate-clicks` (append-only, nunca `UPDATE ... clicks + 1`), escrita vía `after()` después de emitir el redirect; un user-agent de bot y un segundo request dentro del throttle por IP no dejan fila
 
-**Plans**: TBD
+**Plans**: 1 plan (1 wave)
+
+Plans:
+
+- [ ] 47-01-PLAN.md — Fix del matcher (GO-02) + route handler `/go/[slug]` (GO-01) + robots.ts (GO-03) + colección `affiliate-clicks` append-only con descarte de bots/throttle vía `after()` (GO-04)
 
 ### Phase 48: Página de Stack + Links Inline en Contenido
 
