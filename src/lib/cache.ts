@@ -23,7 +23,7 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
-import type { Post, CaseStudy, Category } from '@/payload-types'
+import type { Post, CaseStudy, Category, AffiliateLink } from '@/payload-types'
 import { CACHE_TAGS, CACHE_TTL_SECONDS } from './cache-tags'
 import { resolvePrimaryCategorySlug } from './blog-paths'
 
@@ -320,6 +320,28 @@ export function getCachedArchive({
       ],
       revalidate: CACHE_TTL_SECONDS,
     },
+  )()
+}
+
+// --- Affiliate Links (Phase 46) — única lectura pública de la colección.
+// `overrideAccess: false` explícito (T-46-01): sin usuario, el `FieldAccess`
+// de `cookieWindowDays`/`commissionNote` los redacta, pero el resto de los
+// campos igual pasa por el `read: authenticatedOrActive` de la colección. ---
+
+export function getCachedAffiliateLinks(locale: Locale): Promise<AffiliateLink[]> {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'affiliate-links',
+        locale,
+        limit: 100,
+        overrideAccess: false,
+      })
+      return docs
+    },
+    ['affiliate-links', locale],
+    { tags: [CACHE_TAGS.affiliateLinks()], revalidate: CACHE_TTL_SECONDS },
   )()
 }
 

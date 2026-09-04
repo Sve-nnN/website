@@ -20,7 +20,7 @@ import type {
   GlobalAfterChangeHook,
 } from 'payload'
 
-import type { Page, Post, CaseStudy, Category } from '@/payload-types'
+import type { Page, Post, CaseStudy, Category, AffiliateLink } from '@/payload-types'
 
 export const CACHE_TTL_SECONDS = 60
 
@@ -81,6 +81,7 @@ export const CACHE_TAGS = {
   featuredContent: () => 'featured-content',
   blogPromo: () => 'blog-promo',
   redirects: () => 'redirects',
+  affiliateLinks: () => 'affiliate-links:all',
 }
 
 // --- Pages ---
@@ -163,6 +164,27 @@ export const revalidateFeaturedContentCache: GlobalAfterChangeHook = ({ doc }) =
 
 export const revalidateBlogPromoCache: GlobalAfterChangeHook = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.blogPromo())
+  safeRevalidateAllPaths()
+  return doc
+}
+
+// --- Affiliate Links (Phase 46 — hand-authored collection, hooks wired
+// DIRECTLY in AffiliateLinks/index.ts, NOT via `overrides.hooks`: that shape
+// is specific to wrapping a plugin's own collection config, per
+// 46-RESEARCH.md Pitfall 3) ---
+
+export const revalidateAffiliateLinksCache: CollectionAfterChangeHook<AffiliateLink> = ({
+  doc,
+}) => {
+  safeRevalidateTag(CACHE_TAGS.affiliateLinks())
+  safeRevalidateAllPaths()
+  return doc
+}
+
+export const revalidateAffiliateLinksCacheOnDelete: CollectionAfterDeleteHook<AffiliateLink> = ({
+  doc,
+}) => {
+  safeRevalidateTag(CACHE_TAGS.affiliateLinks())
   safeRevalidateAllPaths()
   return doc
 }

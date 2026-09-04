@@ -27,6 +27,7 @@ import { Subscribers } from './collections/Subscribers'
 import { Clientes } from './collections/Clientes'
 import { SpeakingEvents } from './collections/SpeakingEvents'
 import { Websites } from './collections/Websites'
+import { AffiliateLinks } from './collections/AffiliateLinks'
 import { Llms } from './globals/Llms'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
@@ -110,6 +111,7 @@ export default buildConfig({
     Clientes,
     SpeakingEvents,
     Websites,
+    AffiliateLinks,
   ],
   globals: [Llms, Header, Footer, FeaturedContent, BlogPromo],
   plugins: [
