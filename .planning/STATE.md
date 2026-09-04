@@ -1,10 +1,10 @@
 ---
 gsd_state_version: 1.0
 milestone: v2.1
-current_phase: 45
-current_phase_name: Baseline de Regresión
+current_phase: 46
+current_phase_name: Disclosure Legal + Esquema de Links de Afiliado
 status: planning
-stopped_at: Completado 45-03-PLAN.md (Search Console + trafico real + resolucion de V + veredicto humanizado) -- Phase 45 CERRADA, 3/3 planes
+stopped_at: Completados 46-01 y 46-02 (coleccion affiliate-links + migracion aditiva contra Dokploy + AffiliateLink/AffiliateDisclosure + /privacy actualizada) -- Phase 46 CERRADA, verificacion pendiente
 last_updated: "2026-09-03T20:00:23.482Z"
 last_activity: 2026-08-30
 last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."

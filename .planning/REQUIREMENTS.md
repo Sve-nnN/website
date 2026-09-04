@@ -23,19 +23,19 @@
 
 ### Legal y Disclosure
 
-- [ ] **LEG-01**: Un componente de disclosure bilingüe se renderiza **antes** del primer link de afiliado en orden del DOM, con la copia en `messages/{es,en}.json` y no en contenido del CMS
-- [ ] **LEG-02**: La frase textual de Amazon ("As an Amazon Associate I earn from qualifying purchases." y su versión en español) aparece donde haya links de Amazon
-- [ ] **LEG-03**: `/privacy` queda actualizada cubriendo el formulario de email, Resend como encargado del tratamiento, retención de datos y proceso de baja
-- [ ] **LEG-04**: Queda escrita como restricción del milestone la prohibición de cualquier tracking que dispare consentimiento — sin GA4, sin píxeles, sin IDs de clic por usuario, sin `document.cookie`/`localStorage` en la ruta de afiliado
+- [x] **LEG-01**: Un componente de disclosure bilingüe se renderiza **antes** del primer link de afiliado en orden del DOM, con la copia en `messages/{es,en}.json` y no en contenido del CMS
+- [x] **LEG-02**: La frase textual de Amazon ("As an Amazon Associate I earn from qualifying purchases." y su versión en español) aparece donde haya links de Amazon
+- [x] **LEG-03**: `/privacy` queda actualizada cubriendo el formulario de email, Resend como encargado del tratamiento, retención de datos y proceso de baja
+- [x] **LEG-04**: Queda escrita como restricción del milestone la prohibición de cualquier tracking que dispare consentimiento — sin GA4, sin píxeles, sin IDs de clic por usuario, sin `document.cookie`/`localStorage` en la ruta de afiliado
 
 ### Sistema de Links de Afiliado
 
-- [ ] **AFF-01**: Existe la colección `affiliate-links` con la matriz de localización campo por campo **congelada y aprobada antes de cargar cualquier contenido** — prosa localizada, identificadores y URLs no
-- [ ] **AFF-02**: Los destinos por mercado viven en un array NO localizado con clave `marketplace`, resueltos en render por una función pura `pickDestination()` en `src/lib/affiliate.ts`
-- [ ] **AFF-03**: El componente `AffiliateLink` emite `rel="sponsored nofollow noopener"` estructuralmente desde el código — nunca como campo editable en el CMS, nunca a criterio del editor
-- [ ] **AFF-04**: Los links de Amazon se renderizan directos y sin cloaking, con el `tag=` visible y sin `referrerPolicy` override, cumpliendo la prohibición textual de Redirecting Links de las Program Policies
-- [ ] **AFF-05**: Las lecturas pasan por un único `getCachedAffiliateLinks()` con `overrideAccess: false`, con cache tags y hooks de revalidación
-- [ ] **AFF-06**: La migración de esquema es puramente aditiva (`CREATE TABLE`/`ADD COLUMN`), leída antes de aplicarse contra la base real
+- [x] **AFF-01**: Existe la colección `affiliate-links` con la matriz de localización campo por campo **congelada y aprobada antes de cargar cualquier contenido** — prosa localizada, identificadores y URLs no
+- [x] **AFF-02**: Los destinos por mercado viven en un array NO localizado con clave `marketplace`, resueltos en render por una función pura `pickDestination()` en `src/lib/affiliate.ts`
+- [x] **AFF-03**: El componente `AffiliateLink` emite `rel="sponsored nofollow noopener"` estructuralmente desde el código — nunca como campo editable en el CMS, nunca a criterio del editor
+- [x] **AFF-04**: Los links de Amazon se renderizan directos y sin cloaking, con el `tag=` visible y sin `referrerPolicy` override, cumpliendo la prohibición textual de Redirecting Links de las Program Policies
+- [x] **AFF-05**: Las lecturas pasan por un único `getCachedAffiliateLinks()` con `overrideAccess: false`, con cache tags y hooks de revalidación
+- [x] **AFF-06**: La migración de esquema es puramente aditiva (`CREATE TABLE`/`ADD COLUMN`), leída antes de aplicarse contra la base real
 
 ### Ruta de Redirección
 
@@ -136,16 +136,16 @@ Diferidos. Reconocidos pero fuera de este roadmap.
 | DEC-03 | Phase 44 | Pending |
 | DEC-04 | Phase 44 | Pending |
 | DEC-05 | Phase 44 | Pending |
-| LEG-01 | Phase 46 | Pending |
-| LEG-02 | Phase 46 | Pending |
-| LEG-03 | Phase 46 | Pending |
-| LEG-04 | Phase 46 | Pending |
-| AFF-01 | Phase 46 | Pending |
-| AFF-02 | Phase 46 | Pending |
-| AFF-03 | Phase 46 | Pending |
-| AFF-04 | Phase 46 | Pending |
-| AFF-05 | Phase 46 | Pending |
-| AFF-06 | Phase 46 | Pending |
+| LEG-01 | Phase 46 | Complete |
+| LEG-02 | Phase 46 | Complete |
+| LEG-03 | Phase 46 | Complete |
+| LEG-04 | Phase 46 | Complete |
+| AFF-01 | Phase 46 | Complete |
+| AFF-02 | Phase 46 | Complete |
+| AFF-03 | Phase 46 | Complete |
+| AFF-04 | Phase 46 | Complete |
+| AFF-05 | Phase 46 | Complete |
+| AFF-06 | Phase 46 | Complete |
 | GO-01 | Phase 47 | Pending |
 | GO-02 | Phase 47 | Pending |
 | GO-03 | Phase 47 | Pending |
