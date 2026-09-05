@@ -47,11 +47,11 @@
 ### Página de Stack
 
 - [ ] **STACK-01**: Existe un bloque `ToolStack` y la página `/stack` servida en ambos locales bajo un segmento único, sin tocar `sitemap-data.ts`, `canonical.ts` ni `breadcrumbs.ts`
-- [ ] **STACK-02**: Cada herramienta listada tiene al menos 100 palabras de experiencia propia y de primera mano en cada locale, sin copy de fabricante ni tablas de especificaciones
-- [ ] **STACK-03**: La página incluye un bloque "qué elegiría hoy si empezara de cero", ausente en las cinco páginas de referencia estudiadas
-- [ ] **STACK-04**: La página incluye al menos una recomendación destacada que no paga comisión y negativos honestos sobre las herramientas listadas
-- [ ] **STACK-05**: La página se enlaza desde el footer y la página de autor, y **no** desde el nav principal, para no diluir el clúster de servicios que ya rankea
-- [ ] **STACK-06**: Cada herramienta enlaza al case study o la página de servicio donde Juan la usó realmente, convirtiendo el riesgo de dilución en refuerzo del clúster
+- [x] **STACK-02**: Cada herramienta listada tiene al menos 100 palabras de experiencia propia y de primera mano en cada locale, sin copy de fabricante ni tablas de especificaciones
+- [x] **STACK-03**: La página incluye un bloque "qué elegiría hoy si empezara de cero", ausente en las cinco páginas de referencia estudiadas
+- [x] **STACK-04**: La página incluye al menos una recomendación destacada que no paga comisión y negativos honestos sobre las herramientas listadas
+- [x] **STACK-05**: La página se enlaza desde el footer y la página de autor, y **no** desde el nav principal, para no diluir el clúster de servicios que ya rankea
+- [x] **STACK-06**: Cada herramienta enlaza al case study o la página de servicio donde Juan la usó realmente, convirtiendo el riesgo de dilución en refuerzo del clúster
 
 ### Links Inline en Contenido
 
@@ -151,11 +151,11 @@ Diferidos. Reconocidos pero fuera de este roadmap.
 | GO-03 | Phase 47 | Complete |
 | GO-04 | Phase 47 | Complete |
 | STACK-01 | Phase 48 | Pending |
-| STACK-02 | Phase 48 | Pending |
-| STACK-03 | Phase 48 | Pending |
-| STACK-04 | Phase 48 | Pending |
-| STACK-05 | Phase 48 | Pending |
-| STACK-06 | Phase 48 | Pending |
+| STACK-02 | Phase 48 | Complete |
+| STACK-03 | Phase 48 | Complete |
+| STACK-04 | Phase 48 | Complete |
+| STACK-05 | Phase 48 | Complete |
+| STACK-06 | Phase 48 | Complete |
 | INL-01 | Phase 48 | Pending |
 | INL-02 | Phase 48 | Pending |
 | MAIL-01 | Phase 49 | Pending |

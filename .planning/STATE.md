@@ -4,16 +4,16 @@ milestone: v2.1
 current_phase: 47
 current_phase_name: Ruta /go + Fix de Middleware + Registro de Clics
 status: planning
-stopped_at: "Phase 48 Plan 01: codigo completo (Task 1+2, commits 732609d/af8b8f7), BLOQUEADO en verificacion contra Postgres real de Dokploy (tunel SSH denegado por el harness) -- ver 48-01-SUMMARY.md"
-last_updated: "2026-09-05T06:19:32.243Z"
+stopped_at: Completado 48-02-PLAN.md (Task 1+2+3) -- ver 48-02-SUMMARY.md
+last_updated: "2026-09-05T21:17:07.197Z"
 last_activity: 2026-09-04
 last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."
-state_head: af8b8f75bfb70bed46aa0a159b43c735ca0e4f59
+state_head: f9530c3567681928743a4f9ef61ee2edff3ef73f
 progress:
   total_phases: 51
   completed_phases: 4
   total_plans: 10
-  completed_plans: 7
+  completed_plans: 9
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
@@ -134,6 +134,7 @@ Previa: Phase 45 CERRADA 2026-09-03 (baseline de regresion: Lighthouse mobile, H
 | Phase 45 P02 | 90min | 2 tasks | 6 files |
 | Phase 45 P03 | 35min | 3 tasks | 3 files |
 | Phase 47 P01 | 65min | 3 tasks | 13 files |
+| Phase 48 P02 | 55min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -274,6 +275,8 @@ Recent decisions affecting current work:
 - [Phase 45]: [Phase 45] 45-02: 10 de 14 rutas superaron el umbral de 15 puntos de spread de performance y se escalaron a mediana de 5 corridas; la home queda en 71 de performance (LCP 5461ms), por debajo de la referencia de 94 en PSI, atribuido a contencion de CPU local (TTFB estable) y no a regresion del sitio
 - [Phase 45]: [Phase 45] 45-03: trafico organico real medido en 22 clics / 6.328 impresiones mensuales (ventana 2026-07-31 -> 2026-08-27, via dimensions=date); V(stack)=0 resuelto en DECISIONS.md de la Phase 44 sin tocar formula ni tabla de tramos, per decision explicita de CONTEXT.md de no recalcular
 - [Phase 46]: [Phase 47] 47-01: go/ (con barra) insertado en la alternancia real y actual del matcher (post-SEO-39), no en el ejemplo desactualizado del ROADMAP; detección de bots construida desde cero (contact.ts solo tiene honeypot de formulario, no aplica a un GET); affiliate-clicks sin clickedAt (usa createdAt automático) y sin IP cruda persistida
+- [Phase 47]: [Phase 48]: 48-02: Footer.legalLinks.href no es localized, solo label -- el chequeo de idempotencia basado solo en href dejaba el label del 2do locale sin escribir; corregido para actualizar el label de cada locale explicitamente
+- [Phase 47]: [Phase 48]: 48-02: verify-stack-page.ts contaba doble por el payload de hidratacion de Next.js App Router (self.__next_f.push repite el DOM visible como JSON escapado) -- agregado visibleDomOnly() para acotar los conteos al DOM real
 
 ### Pending Todos
 
@@ -325,9 +328,9 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-09-05T06:19:31.951Z
-Stopped at: Phase 48 Plan 01: codigo completo (Task 1+2, commits 732609d/af8b8f7), BLOQUEADO en verificacion contra Postgres real de Dokploy (tunel SSH denegado por el harness) -- ver 48-01-SUMMARY.md
-Resume file: .planning/phases/48-p-gina-de-stack-links-inline-en-contenido/48-01-SUMMARY.md
+Last session: 2026-09-05T21:17:07.039Z
+Stopped at: Completado 48-02-PLAN.md (Task 1+2+3) -- ver 48-02-SUMMARY.md
+Resume file: None
 
 ## Operator Next Steps
 

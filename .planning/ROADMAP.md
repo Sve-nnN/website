@@ -1197,11 +1197,12 @@ Plans:
   4. `/stack` aparece enlazada desde el footer y desde la página de autor en ambos locales, y el HTML de Home confirma que **no** está en el nav principal
   5. Un post con el inline block renderiza el mismo `rel="sponsored nofollow noopener"` que la página de stack y muestra el disclosure automáticamente antes del primer link de afiliado en orden del DOM, sin migración nueva (`git diff` de `migrations/` vacío en esta fase)
 
-**Plans:** 3 plans
+**Plans:** 2/3 plans executed
 
 Plans:
-- [ ] 48-01-PLAN.md — Bloque `ToolStack` (schema + migración aditiva), ruta `/stack`, y DinoRANK de punta a punta (tracer) + GearCard/StackHighlightCallout (STACK-01)
-- [ ] 48-02-PLAN.md — Contenido real: 6 docs `affiliate-links` restantes, las 9 herramientas + 13 gear items + callouts en `/stack`, footer + página de autor (STACK-02..06)
+
+- [x] 48-01-PLAN.md — Bloque `ToolStack` (schema + migración aditiva), ruta `/stack`, y DinoRANK de punta a punta (tracer) + GearCard/StackHighlightCallout (STACK-01)
+- [x] 48-02-PLAN.md — Contenido real: 6 docs `affiliate-links` restantes, las 9 herramientas + 13 gear items + callouts en `/stack`, footer + página de autor (STACK-02..06)
 - [ ] 48-03-PLAN.md — Bloque inline de Lexical en `posts.content` (cero migración) + disclosure auto-inyectado + demo en un post real (INL-01, INL-02)
 
 **UI hint**: yes
@@ -1320,7 +1321,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 45. Baseline de Regresión | 3/3 | In Progress|  |
 | 46. Disclosure Legal + Esquema de Links de Afiliado | 0/TBD | Not started | - |
 | 47. Ruta /go + Fix de Middleware + Registro de Clics | 1/1 | In Progress|  |
-| 48. Página de Stack + Links Inline en Contenido | 0/TBD | Not started | - |
+| 48. Página de Stack + Links Inline en Contenido | 2/3 | In Progress|  |
 | 48.5. Auditor Destacado | 0/TBD | Not started | - |
 | 49. Captura de Email (Resend, env-gated) | 0/TBD | Not started | - |
 | 50. Gate de Cierre de Monetización | 0/TBD | Not started | - |
