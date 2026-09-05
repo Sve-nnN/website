@@ -45,7 +45,25 @@ export const AffiliateLinks: CollectionConfig = {
       name: 'program',
       type: 'select',
       required: true,
-      options: ['amazon', 'kinsta', 'dinorank', 'digitalocean', 'other'].map((v) => ({
+      // Ensanchado en Phase 48 (Paso 1 de 48-01-PLAN.md): +7 valores para
+      // cubrir el resto del stack real de Juan (hostinger, dataforseo,
+      // payload, cloudinary, resend, ahrefs, google-search-console). Ningún
+      // otro campo de esta colección se toca — matriz de localización sigue
+      // congelada per 46-CONTEXT.md.
+      options: [
+        'amazon',
+        'kinsta',
+        'dinorank',
+        'digitalocean',
+        'other',
+        'hostinger',
+        'dataforseo',
+        'payload',
+        'cloudinary',
+        'resend',
+        'ahrefs',
+        'google-search-console',
+      ].map((v) => ({
         label: v,
         value: v,
       })),

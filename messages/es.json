@@ -32,5 +32,24 @@
   "affiliateDisclosure": {
     "generalDisclosure": "Algunos enlaces de esta página son de afiliado. Si compras a través de alguno, puedo ganar una comisión pequeña sin costo adicional para ti. Solo recomiendo herramientas que uso de verdad.",
     "amazonDisclosure": "Como Afiliado de Amazon, obtengo ingresos por las compras que califican."
+  },
+  "stackPage": {
+    "title": "Mi stack",
+    "gearHeading": "Mi equipo personal",
+    "elegiriaHoyHeading": "Qué elegiría hoy si empezara de cero",
+    "noCommissionHeading": "Mi recomendación sin comisión",
+    "noCommissionBadge": "Recomendación sin comisión",
+    "rowUsage": "Cómo lo uso",
+    "rowPro": "Lo bueno",
+    "rowCon": "Lo no tan bueno",
+    "rowConEmpty": "Sin quejas reales hasta ahora",
+    "rowReference": "Dónde lo usé",
+    "ctaDefault": "Probar {tool}",
+    "ctaAmazon": "Ver en Amazon",
+    "badgePending": "Sin programa de afiliados todavía",
+    "emptyTitle": "Próximamente",
+    "emptyBody": "Estoy armando la página de herramientas. Vuelve pronto.",
+    "inlineEyebrow": "Herramienta que uso",
+    "gscLinkLabel": "search.google.com/search-console"
   }
 }

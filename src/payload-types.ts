@@ -266,6 +266,7 @@ export interface Page {
       | AuditOfferBlock
       | BlogCategoryRowsBlock
       | NewsletterBlockType
+      | ToolStackBlock
     )[];
   };
   slug?: string | null;
@@ -1410,6 +1411,123 @@ export interface NewsletterBlockType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ToolStackBlock".
+ */
+export interface ToolStackBlock {
+  /**
+   * Lede corta debajo del <h1>, antes del disclosure de afiliados.
+   */
+  intro?: string | null;
+  /**
+   * El ORDEN de este array es el único orden de render — nunca se reordena en el componente por affiliateLink != null ni por comisión.
+   */
+  categoryGroups?:
+    | {
+        heading: string;
+        /**
+         * El ORDEN de este array es el único orden de render — nunca se reordena en el componente por affiliateLink != null ni por comisión.
+         */
+        tools?:
+          | {
+              /**
+               * Nombre propio de la herramienta — no localizado.
+               */
+              name: string;
+              /**
+               * Vacío = "sin afiliado todavía" (chip neutral, sin CTA). Nunca fabricar un doc de afiliate-links solo para llenar este campo.
+               */
+              affiliateLink?: (number | null) | AffiliateLink;
+              /**
+               * >=100 palabras por locale, experiencia propia real — sin copy de fabricante ni specs (STACK-02).
+               */
+              narrative: string;
+              pro: string;
+              /**
+               * Vacío es válido — nunca se fabrica un contra que Juan no reportó. El componente muestra una copy honesta-vacía en su lugar.
+               */
+              con?: string | null;
+              referenceLink?: {
+                type?: ('caseStudy' | 'custom') | null;
+                caseStudy?: (number | null) | CaseStudy;
+                /**
+                 * Ruta bare, sin prefijo de locale — mismo idioma que Footer.legalLinks.href. Ej: /servicios/fullstack-development o /case-studies.
+                 */
+                url?: string | null;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Un solo párrafo compartido para toda la sección Gear (menciona Amazon Prime en prosa — Prime NO es un gearItem con link propio).
+   */
+  gearIntro?: string | null;
+  gearItems?:
+    | {
+        name: string;
+        /**
+         * URL completa de producto Amazon con tag=juantech02-20 visible. PROHIBIDO cualquier valor amzn.to (shortlink) — Amazon prohíbe Redirecting Links.
+         */
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Feed de StackHighlightCallout instancia 1 ("Qué elegiría hoy...").
+   */
+  elegiriaHoy: string;
+  /**
+   * Se espera que resuelva al doc de Google Search Console (program: "google-search-console").
+   */
+  noCommissionPick?: (number | null) | AffiliateLink;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'toolStack';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "affiliate-links".
+ */
+export interface AffiliateLink {
+  id: number;
+  name: string;
+  slug?: string | null;
+  program:
+    | 'amazon'
+    | 'kinsta'
+    | 'dinorank'
+    | 'digitalocean'
+    | 'other'
+    | 'hostinger'
+    | 'dataforseo'
+    | 'payload'
+    | 'cloudinary'
+    | 'resend'
+    | 'ahrefs'
+    | 'google-search-console';
+  destinations?:
+    | {
+        marketplace: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  cookieWindowDays?: number | null;
+  commissionNote?: string | null;
+  active?: boolean | null;
+  placement?: ('stack-page' | 'inline-post' | 'both') | null;
+  order?: number | null;
+  tagline?: string | null;
+  whyIUseIt?: string | null;
+  disclosureOverride?: string | null;
+  ctaLabel?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -1478,34 +1596,6 @@ export interface SpeakingEvent {
   attendeeCount?: number | null;
   link?: string | null;
   flyer?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "affiliate-links".
- */
-export interface AffiliateLink {
-  id: number;
-  name: string;
-  slug?: string | null;
-  program: 'amazon' | 'kinsta' | 'dinorank' | 'digitalocean' | 'other';
-  destinations?:
-    | {
-        marketplace: string;
-        url: string;
-        id?: string | null;
-      }[]
-    | null;
-  cookieWindowDays?: number | null;
-  commissionNote?: string | null;
-  active?: boolean | null;
-  placement?: ('stack-page' | 'inline-post' | 'both') | null;
-  order?: number | null;
-  tagline?: string | null;
-  whyIUseIt?: string | null;
-  disclosureOverride?: string | null;
-  ctaLabel?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -2116,6 +2206,7 @@ export interface PagesSelect<T extends boolean = true> {
               auditOfferBlock?: T | AuditOfferBlockSelect<T>;
               blogCategoryRows?: T | BlogCategoryRowsBlockSelect<T>;
               newsletterBlock?: T | NewsletterBlockTypeSelect<T>;
+              toolStack?: T | ToolStackBlockSelect<T>;
             };
       };
   slug?: T;
@@ -2582,6 +2673,48 @@ export interface NewsletterBlockTypeSelect<T extends boolean = true> {
   emailLabel?: T;
   submitLabel?: T;
   consentText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ToolStackBlock_select".
+ */
+export interface ToolStackBlockSelect<T extends boolean = true> {
+  intro?: T;
+  categoryGroups?:
+    | T
+    | {
+        heading?: T;
+        tools?:
+          | T
+          | {
+              name?: T;
+              affiliateLink?: T;
+              narrative?: T;
+              pro?: T;
+              con?: T;
+              referenceLink?:
+                | T
+                | {
+                    type?: T;
+                    caseStudy?: T;
+                    url?: T;
+                  };
+              id?: T;
+            };
+        id?: T;
+      };
+  gearIntro?: T;
+  gearItems?:
+    | T
+    | {
+        name?: T;
+        href?: T;
+        id?: T;
+      };
+  elegiriaHoy?: T;
+  noCommissionPick?: T;
   id?: T;
   blockName?: T;
 }

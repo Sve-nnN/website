@@ -32,5 +32,24 @@
   "affiliateDisclosure": {
     "generalDisclosure": "Some of the links on this page are affiliate links. If you buy through one, I may earn a small commission at no extra cost to you. I only recommend tools I've actually used.",
     "amazonDisclosure": "As an Amazon Associate I earn from qualifying purchases."
+  },
+  "stackPage": {
+    "title": "My stack",
+    "gearHeading": "My personal gear",
+    "elegiriaHoyHeading": "What I'd choose today, starting from zero",
+    "noCommissionHeading": "My pick that pays me nothing",
+    "noCommissionBadge": "No-commission pick",
+    "rowUsage": "How I use it",
+    "rowPro": "What's good",
+    "rowCon": "What's not",
+    "rowConEmpty": "No real complaints so far",
+    "rowReference": "Where I used it",
+    "ctaDefault": "Try {tool}",
+    "ctaAmazon": "View on Amazon",
+    "badgePending": "No affiliate program yet",
+    "emptyTitle": "Coming soon",
+    "emptyBody": "I'm putting together the tools page. Check back soon.",
+    "inlineEyebrow": "Tool I use",
+    "gscLinkLabel": "search.google.com/search-console"
   }
 }
