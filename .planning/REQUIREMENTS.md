@@ -46,7 +46,7 @@
 
 ### Página de Stack
 
-- [ ] **STACK-01**: Existe un bloque `ToolStack` y la página `/stack` servida en ambos locales bajo un segmento único, sin tocar `sitemap-data.ts`, `canonical.ts` ni `breadcrumbs.ts`
+- [x] **STACK-01**: Existe un bloque `ToolStack` y la página `/stack` servida en ambos locales bajo un segmento único, sin tocar `sitemap-data.ts`, `canonical.ts` ni `breadcrumbs.ts`
 - [x] **STACK-02**: Cada herramienta listada tiene al menos 100 palabras de experiencia propia y de primera mano en cada locale, sin copy de fabricante ni tablas de especificaciones
 - [x] **STACK-03**: La página incluye un bloque "qué elegiría hoy si empezara de cero", ausente en las cinco páginas de referencia estudiadas
 - [x] **STACK-04**: La página incluye al menos una recomendación destacada que no paga comisión y negativos honestos sobre las herramientas listadas
@@ -55,8 +55,8 @@
 
 ### Links Inline en Contenido
 
-- [ ] **INL-01**: Existe un inline block de afiliado usable dentro del rich text de Posts, emitiendo el mismo `rel` estructural y sin migración de esquema
-- [ ] **INL-02**: El disclosure se inyecta automáticamente en cualquier post que contenga links de afiliado, detectado por un escaneo puro del estado del editor y sin consulta extra
+- [x] **INL-01**: Existe un inline block de afiliado usable dentro del rich text de Posts, emitiendo el mismo `rel` estructural y sin migración de esquema
+- [x] **INL-02**: El disclosure se inyecta automáticamente en cualquier post que contenga links de afiliado, detectado por un escaneo puro del estado del editor y sin consulta extra
 
 ### Auditor Destacado (agregado 2026-08-13)
 
@@ -150,14 +150,14 @@ Diferidos. Reconocidos pero fuera de este roadmap.
 | GO-02 | Phase 47 | Complete |
 | GO-03 | Phase 47 | Complete |
 | GO-04 | Phase 47 | Complete |
-| STACK-01 | Phase 48 | Pending |
+| STACK-01 | Phase 48 | Complete |
 | STACK-02 | Phase 48 | Complete |
 | STACK-03 | Phase 48 | Complete |
 | STACK-04 | Phase 48 | Complete |
 | STACK-05 | Phase 48 | Complete |
 | STACK-06 | Phase 48 | Complete |
-| INL-01 | Phase 48 | Pending |
-| INL-02 | Phase 48 | Pending |
+| INL-01 | Phase 48 | Complete |
+| INL-02 | Phase 48 | Complete |
 | MAIL-01 | Phase 49 | Pending |
 | MAIL-02 | Phase 49 | Pending |
 | MAIL-03 | Phase 49 | Pending |

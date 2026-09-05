@@ -1197,7 +1197,7 @@ Plans:
   4. `/stack` aparece enlazada desde el footer y desde la página de autor en ambos locales, y el HTML de Home confirma que **no** está en el nav principal
   5. Un post con el inline block renderiza el mismo `rel="sponsored nofollow noopener"` que la página de stack y muestra el disclosure automáticamente antes del primer link de afiliado en orden del DOM, sin migración nueva (`git diff` de `migrations/` vacío en esta fase)
 
-**Plans:** 2/3 plans executed
+**Plans:** 3/3 plans executed
 
 Plans:
 
