@@ -1,8 +1,10 @@
 import type { JSXConvertersFunction } from '@payloadcms/richtext-lexical/react'
+import type { AffiliateLink } from '@/payload-types'
 
 import React from 'react'
 import { RichText, defaultJSXConverters } from '@payloadcms/richtext-lexical/react'
 import { Plus } from 'lucide-react'
+import { AffiliateInlineCard } from '@/components/AffiliateInlineCard'
 
 /**
  * Converters for the `block` nodes that live inside migrated post content.
@@ -23,12 +25,26 @@ import { Plus } from 'lucide-react'
  * NOT imported here on purpose: `FAQComponent` imports `RichTextRenderer`,
  * which imports this module, and that cycle is exactly the shape that already
  * caused a production TDZ ReferenceError once (see `src/lib/sitemap-data.ts`).
+ *
+ * Phase 48 (INL-01) adds `affiliate-inline`, the first block here that IS
+ * registered via `BlocksFeature` (on `posts.content`, see
+ * `src/collections/Posts/index.ts`) — `payload-types` does generate a real
+ * `AffiliateInlineBlock` interface for it. Its converter renders
+ * `AffiliateInlineCard`, which follows the exact same import-cycle
+ * constraint as `code-block`/`faq`: it never imports `AffiliateDisclosure`
+ * nor `RichTextRenderer` (directly or transitively), because either would
+ * reopen this same TDZ cycle from inside a Lexical block converter.
  */
 
 type CodeBlockNodeFields = {
   blockType: 'code-block'
   language?: string | null
   code?: string | null
+}
+
+type AffiliateInlineBlockNodeFields = {
+  blockType: 'affiliate-inline'
+  affiliateLink?: (number | null) | AffiliateLink
 }
 
 type FaqBlockNodeFields = {
@@ -237,6 +253,9 @@ export const richTextConverters: JSXConvertersFunction = ({ defaultConverters })
       <CodeBlockNode {...node.fields} />
     ),
     faq: ({ node }: { node: { fields: FaqBlockNodeFields } }) => <FaqBlockNode {...node.fields} />,
+    'affiliate-inline': ({ node }: { node: { fields: AffiliateInlineBlockNodeFields } }) => (
+      <AffiliateInlineCard affiliateLink={node.fields.affiliateLink} />
+    ),
   },
   table: ({ node, nodesToJSX }) => (
     <TableFromNode node={node as TableNode} nodesToJSX={nodesToJSX as never} />
