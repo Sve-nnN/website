@@ -445,7 +445,7 @@ export const ToolStack: Block = {
 | A2 | `AffiliateLinks.whyIUseIt` (Phase 46 field) goes unused by this phase's design, since UI-SPEC's `ToolCard` narrative is sourced from a NEW `ToolStack.tools[].narrative` field instead | Architecture Patterns | Low-medium — if the planner instead wants to source the ≥100-word narrative FROM `whyIUseIt` to avoid content duplication between `/stack` and the inline block's `tagline`, that's a valid alternative design not fully specified by UI-SPEC; flagging so it's a deliberate choice, not an oversight |
 | A3 | Payload's Local API default relationship depth (2) is sufficient to populate `tools[].affiliateLink` when fetched via `getCachedPageBySlug('stack', locale)` without an explicit `depth` override | Common Pitfalls / Pitfall 2 | Medium — if depth is insufficient, `affiliateLink` resolves to a bare ID and the CTA branch logic breaks; verify with a real Local API call during Task 1 execution, not left to production discovery |
 
-## Open Questions
+## Open Questions (RESOLVED — see 48-02-PLAN.md)
 
 1. **Should `AffiliateLinks.whyIUseIt` be deprecated/removed, or repurposed?**
    - What we know: it exists, localized, exactly the shape UI-SPEC wants for `narrative` — but UI-SPEC's schema shape puts `narrative` on `ToolStack.tools[]` instead.
