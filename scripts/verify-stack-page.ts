@@ -26,6 +26,20 @@ async function fetchHtml(path: string): Promise<{ res: Response; html: string }>
   return { res, html }
 }
 
+/**
+ * Next.js App Router embeds the SSR'd RSC payload a second time as
+ * JSON-escaped text inside trailing `<script>self.__next_f.push(...)`
+ * hydration tags. Any plain-text search across the full document (e.g.
+ * counting row labels) double-counts every string that also happens to
+ * appear in that payload — visible DOM occurrences always come first in
+ * document order, so truncating at the first such script tag isolates the
+ * real rendered content without needing an HTML parser.
+ */
+function visibleDomOnly(html: string): string {
+  const flightPayloadStart = html.indexOf('self.__next_f.push')
+  return flightPayloadStart === -1 ? html : html.slice(0, flightPayloadStart)
+}
+
 async function verifyLocale(path: string, locale: 'es' | 'en') {
   const { res, html } = await fetchHtml(path)
   check(res.status === 200, `${path}: esperaba 200, obtuvo ${res.status}`)
@@ -113,12 +127,98 @@ async function verifyLocale(path: string, locale: 'es' | 'en') {
     )
   }
 
+  // Task 3 (d): las 9 herramientas deben renderizar su fila "Dónde lo usé" /
+  // "Where I used it" con un href real (nunca vacío ni "#"). El row solo se
+  // renderiza cuando `referenceHref` es verdadero (ver ToolCard.tsx), así
+  // que contar las apariciones del label también confirma que ninguna
+  // tarjeta se quedó sin referencia. Restringido al DOM visible: Next.js
+  // repite el mismo texto dentro del payload de hidratación
+  // (`self.__next_f.push`) al final del documento, y un conteo sobre el
+  // HTML completo lo contaría dos veces (visibleDomOnly arriba).
+  const domOnly = visibleDomOnly(html)
+  const rowReferenceLabel = locale === 'es' ? 'Dónde lo usé' : 'Where I used it'
+  const rowReferenceMatches = [...domOnly.matchAll(new RegExp(rowReferenceLabel, 'g'))]
+  check(
+    rowReferenceMatches.length === 9,
+    `${path}: esperaba 9 filas "${rowReferenceLabel}" (una por tool), encontró ${rowReferenceMatches.length}`,
+  )
+  for (const m of rowReferenceMatches) {
+    const windowStart = m.index ?? 0
+    const windowSlice = domOnly.slice(windowStart, windowStart + 600)
+    const hrefMatch = windowSlice.match(/href="([^"]*)"/)
+    const href = hrefMatch?.[1]
+    check(
+      !!href && href !== '#' && !href.includes('undefined'),
+      `${path}: fila "Dónde lo usé" en posición ${windowStart} no resuelve a una URL real (href="${href}")`,
+    )
+  }
+
   return html
+}
+
+/**
+ * Task 3 (a)+(b)+(c) — footer, página de autor, y ausencia de /stack en el
+ * nav del header de Home. Cada chequeo hace su propio fetch (no reutiliza
+ * el HTML de /stack).
+ */
+async function verifyFooterAuthorAndNav() {
+  // (a) Footer: '/' y '/en' deben tener un href a /stack con el label
+  // correcto por locale.
+  const { html: homeEs } = await fetchHtml('/')
+  check(
+    /href="\/stack"[^>]*>\s*Mi stack\s*</.test(homeEs) || homeEs.includes('>Mi stack<'),
+    `/: footer no tiene el link "Mi stack" -> /stack`,
+  )
+  check(homeEs.includes('href="/stack"'), `/: footer no tiene href="/stack"`)
+
+  const { html: homeEn } = await fetchHtml('/en')
+  check(
+    homeEn.includes('>My stack<'),
+    `/en: footer no tiene el label "My stack"`,
+  )
+  check(homeEn.includes('href="/en/stack"'), `/en: footer no tiene href="/en/stack"`)
+
+  // (c) Home nav (header): NUNCA debe contener /stack — grep acotado a la
+  // región <header>...</header>, no un grep global de la página (el footer
+  // de la MISMA página ya tiene el link legítimo, y un grep global daría un
+  // falso FAIL).
+  for (const [path, html] of [
+    ['/', homeEs],
+    ['/en', homeEn],
+  ] as const) {
+    const headerStart = html.indexOf('<header')
+    const headerEnd = html.indexOf('</header>')
+    check(
+      headerStart !== -1 && headerEnd !== -1,
+      `${path}: no se encontró la región <header>...</header>`,
+    )
+    if (headerStart !== -1 && headerEnd !== -1) {
+      const headerSlice = html.slice(headerStart, headerEnd)
+      check(
+        !headerSlice.includes('/stack'),
+        `${path}: el nav del header NO debe contener /stack (encontrado dentro de <header>)`,
+      )
+    }
+  }
+
+  // (b) Página de autor: ambos locales deben tener el link a /stack.
+  const { html: authorEs } = await fetchHtml('/authors/juan-carlos-angulo')
+  check(
+    authorEs.includes('href="/stack"') && authorEs.includes('Ver mi stack de herramientas'),
+    `/authors/juan-carlos-angulo: falta el link "Ver mi stack de herramientas" -> /stack`,
+  )
+
+  const { html: authorEn } = await fetchHtml('/en/authors/juan-carlos-angulo')
+  check(
+    authorEn.includes('href="/en/stack"') && authorEn.includes('See my tool stack'),
+    `/en/authors/juan-carlos-angulo: falta el link "See my tool stack" -> /en/stack`,
+  )
 }
 
 async function main() {
   await verifyLocale('/stack', 'es')
   await verifyLocale('/en/stack', 'en')
+  await verifyFooterAuthorAndNav()
 
   if (failures.length > 0) {
     console.log(`FAIL: ${failures.join(' | ')}`)

@@ -9,6 +9,7 @@ import Link from 'next/link'
 import { GraduationCap, Mic, ExternalLink } from 'lucide-react'
 
 import config from '@payload-config'
+import { Link as LocaleLink } from '@/i18n/navigation'
 import { JsonLd } from '@/components/JsonLd'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
@@ -436,6 +437,17 @@ export default async function AuthorProfilePage({
             </div>
           </section>
         )}
+
+        {/* STACK-05: link simple a /stack, deliberadamente NO agregado a
+            AuthorCard (ese componente es la byline en 100+ posts/case
+            studies — ponerlo ahí diluiría el link equity de servicios que
+            esta constraint protege). Mismo tratamiento visual que
+            /websites/[slug]/page.tsx usa para "View related case study". */}
+        <div className="mt-12">
+          <LocaleLink href="/stack" className="text-primary-text underline underline-offset-2">
+            {locale === 'es' ? 'Ver mi stack de herramientas' : 'See my tool stack'}
+          </LocaleLink>
+        </div>
       </Container>
 
       <JsonLd data={personData} />
