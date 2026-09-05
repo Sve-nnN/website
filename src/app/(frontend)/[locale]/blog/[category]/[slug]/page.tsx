@@ -9,6 +9,11 @@ import { Badge } from '@/components/ui/badge'
 import { AuthorByline } from '@/components/AuthorByline'
 import { AuthorCard } from '@/components/AuthorCard'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
+import { AffiliateDisclosureFrame } from '@/components/AffiliateDisclosureFrame'
+import {
+  postHasAffiliateInline,
+  postHasAmazonAffiliateInline,
+} from '@/lib/post-affiliate-scan'
 import { RelatedPostsComponent } from '@/blocks/RelatedPosts/Component'
 import { TableOfContentsBlockComponent } from '@/blocks/TableOfContentsBlock/Component'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
@@ -256,6 +261,19 @@ export default async function PostPage({
       {/* Mide el artículo, no la página: ver ReadingProgress. Va acá y no
           dentro del Container para poder ocupar el ancho completo. */}
       <ReadingProgress targetId="post-body" />
+
+      {/* INL-02: el escaneo cubre `doc.content` ENTERO (no `body.before`/
+          `body.after`, recortados por splitContentForOffer) — el disclosure
+          debe aparecer antes del cuerpo sin importar en qué punto del
+          artículo el editor insertó el bloque inline. */}
+      {postHasAffiliateInline(doc.content) && (
+        <Container className="py-4">
+          <AffiliateDisclosureFrame
+            hasAmazonLinks={postHasAmazonAffiliateInline(doc.content)}
+            locale={locale as 'es' | 'en'}
+          />
+        </Container>
+      )}
 
       <Container className="py-8 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_16rem] gap-12">
         {/* Las dos mitades viven dentro del MISMO <article>: la tabla de
