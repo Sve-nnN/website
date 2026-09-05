@@ -58,6 +58,22 @@ const STACK_PAGE_TITLE: Record<Locale, string> = {
   en: 'My stack',
 }
 
+// Un solo item de Gear real (no fabricado) para que Task 2 pruebe el grid de
+// Gear de punta a punta — 48-02 agrega los 12 restantes. `href` ya resuelto
+// (no amzn.to): shortlink real de 48-CONTEXT.md
+// (https://amzn.to/4iT0S8y) seguido con `curl -sIL` hasta la URL de
+// producto, recortado a la forma canónica /dp/<ASIN> con el tag visible
+// (Pitfall 3 de 48-RESEARCH.md — Amazon prohíbe publicar el shortlink).
+const GEAR_ITEM = {
+  name: 'Logitech G305',
+  href: 'https://www.amazon.com/dp/B07CMS5Q6P?tag=juantech02-20',
+}
+
+const GEAR_INTRO: Record<Locale, string> = {
+  es: 'Compro mis componentes de PC en Amazon y uso Amazon Prime para la entrega rápida.',
+  en: 'I buy my PC components on Amazon and use Amazon Prime for fast delivery.',
+}
+
 async function upsertDinorankAffiliateLink(payload: Awaited<ReturnType<typeof getPayload>>) {
   const { docs } = await payload.find({
     collection: 'affiliate-links',
@@ -150,6 +166,11 @@ function reapplyIds(
           }
         },
       )
+
+      const refGearItems = (refBlock.gearItems as Record<string, unknown>[] | undefined) ?? []
+      withId.gearItems = ((block.gearItems as Record<string, unknown>[]) ?? []).map((item, ii) =>
+        refGearItems[ii] ? { ...item, id: refGearItems[ii].id } : item,
+      )
     }
 
     return withId
@@ -175,6 +196,8 @@ function buildStackLayout(locale: Locale, dinorankId: number | string): Record<s
           ],
         },
       ],
+      gearIntro: GEAR_INTRO[locale],
+      gearItems: [GEAR_ITEM],
       elegiriaHoy: DINORANK_NARRATIVE[locale],
     },
   ]

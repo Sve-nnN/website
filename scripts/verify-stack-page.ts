@@ -1,10 +1,9 @@
 /**
- * Verifica STACK-01 (Task 1 de 48-01-PLAN.md) contra el dev server real
- * (ya debe estar corriendo en http://localhost:3000) conectado al Postgres
- * real de Dokploy, DESPUÉS de correr scripts/seed-phase48-tracer.ts.
- *
- * Task 2 de este mismo plan extiende este script (Gear/callouts). Este
- * archivo NO crea/borra datos — solo lee HTML servido.
+ * Verifica STACK-01 (Task 1 + Task 2 de 48-01-PLAN.md) contra el dev server
+ * real (ya debe estar corriendo en http://localhost:3000) conectado al
+ * Postgres real de Dokploy, DESPUÉS de correr
+ * scripts/seed-phase48-tracer.ts. Este archivo NO crea/borra datos — solo
+ * lee HTML servido.
  *
  * Run (con el dev server ya arriba y el tracer ya sembrado):
  *   node --env-file=.env node_modules/.bin/tsx scripts/verify-stack-page.ts
@@ -81,6 +80,35 @@ async function verifyLocale(path: string, locale: 'es' | 'en') {
     !undefinedHrefs || undefinedHrefs.length === 0,
     `${path}: hrefs con "undefined": ${JSON.stringify(undefinedHrefs)}`,
   )
+
+  // Task 2: al menos 1 GearCard renderizado ("Ver en Amazon" / "View on Amazon").
+  check(
+    html.includes('Ver en Amazon') || html.includes('View on Amazon'),
+    `${path}: no se encontró ningún GearCard renderizado (falta el CTA "Ver en Amazon"/"View on Amazon")`,
+  )
+
+  // Task 2: heading de "elegiría hoy" presente.
+  const elegiriaHoyHeading =
+    locale === 'es'
+      ? 'Qué elegiría hoy si empezara de cero'
+      : "What I'd choose today, starting from zero"
+  check(
+    html.includes(elegiriaHoyHeading),
+    `${path}: falta el heading de "elegiría hoy" ("${elegiriaHoyHeading}")`,
+  )
+
+  // Task 2 (opcional — solo si el tracer ya sembró un noCommissionPick):
+  // ningún link dentro del callout de no-commission lleva rel="sponsored".
+  const noCommissionHeading =
+    locale === 'es' ? 'Mi recomendación sin comisión' : 'My pick that pays me nothing'
+  const noCommissionIndex = html.indexOf(noCommissionHeading)
+  if (noCommissionIndex !== -1) {
+    const calloutSlice = html.slice(noCommissionIndex, noCommissionIndex + 2000)
+    check(
+      !calloutSlice.includes('rel="sponsored'),
+      `${path}: el callout de no-commission pick no debe llevar rel="sponsored" en ningún link`,
+    )
+  }
 
   return html
 }
