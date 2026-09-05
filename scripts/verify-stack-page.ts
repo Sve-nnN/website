@@ -38,16 +38,19 @@ async function verifyLocale(path: string, locale: 'es' | 'en') {
     !!canonicalMatch && canonicalMatch[1].endsWith(expectedCanonicalPath),
     `${path}: canonical esperado terminando en "${expectedCanonicalPath}", obtuvo "${canonicalMatch?.[1]}"`,
   )
+  // Next.js server-renders the attribute as `hrefLang` (camelCase, per React's
+  // DOM prop name) — match case-insensitively so this doesn't false-negative
+  // against a correctly-rendered page.
   check(
-    /<link rel="alternate" hreflang="es" href="[^"]*\/stack"/.test(html),
+    /<link rel="alternate" hrefLang="es" href="[^"]*\/stack"/i.test(html),
     `${path}: falta hreflang="es" apuntando a /stack`,
   )
   check(
-    /<link rel="alternate" hreflang="en" href="[^"]*\/en\/stack"/.test(html),
+    /<link rel="alternate" hrefLang="en" href="[^"]*\/en\/stack"/i.test(html),
     `${path}: falta hreflang="en" apuntando a /en/stack`,
   )
   check(
-    /<link rel="alternate" hreflang="x-default" href="[^"]*\/stack"/.test(html),
+    /<link rel="alternate" hrefLang="x-default" href="[^"]*\/stack"/i.test(html),
     `${path}: falta hreflang="x-default" apuntando a /stack (es)`,
   )
 
