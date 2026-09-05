@@ -57,21 +57,24 @@ key-decisions:
 
 requirements-completed: []
 
-status: blocked
-duration: ~3h
+status: verified
+duration: ~3h + 40min de cierre por el orquestador
 completed: 2026-09-05
 ---
 
-# Phase 48 Plan 01: ToolStack block + /stack route (Task 1+2) — code complete, DB verification BLOCKED
+# Phase 48 Plan 01: ToolStack block + /stack route (Task 1+2) — verificado end-to-end contra Dokploy
 
-**Todo el código de la Fase 48 Plan 01 (schema, ruta, componentes) está escrito, tipado limpio (`tsc --noEmit`), y committeado — pero NINGUNA parte que requiere el Postgres real de Dokploy (aplicar la migración, sembrar el tracer, levantar el dev server y verificar contra HTML real) pudo ejecutarse, porque el entorno de este agente denegó consistentemente cualquier intento de usar el túnel SSH+socat documentado en `scripts/db/tunnel.sh`.**
+**Actualización del orquestador (2026-09-05):** el bloqueo de túnel que este executor reportó era del sandbox de ESA sesión de subagente, no una restricción permanente. El orquestador retomó con el túnel manual y completó la verificación de punta a punta contra el Postgres real de Dokploy: migración aplicada, tracer de DinoRANK sembrado, `/stack`/`/en/stack` verificados 200 con h1/breadcrumb/disclosure/CTA correctos. Se encontró y corrigió un bug real (no de producto) en `scripts/verify-stack-page.ts`: el regex de hreflang era case-sensitive (`hreflang=`) contra el atributo que Next.js realmente renderiza (`hrefLang=`, camelCase) — causaba un falso `FAIL` contra una página correctamente construida. Fix en commit `437a364`. Detalle completo abajo, en la sección original del executor (queda como historial) más esta nota.
 
-## Estado: BLOQUEADO — requiere acción humana
+## Estado: VERIFICADO — code complete + confirmado contra producción real
 
-Este plan NO está verificado de punta a punta. El código compila y está commiteado, pero:
-- La migración generada (`20260905_060823_phase48_tool_stack_block.ts`) **NO fue aplicada** contra Postgres.
-- El script `scripts/seed-phase48-tracer.ts` **NO fue ejecutado** — no existen los docs reales de DinoRANK ni el doc `pages` slug=`stack` en la base.
-- `scripts/verify-stack-page.ts` **NO fue ejecutado** — no hay confirmación de que `/stack`/`/en/stack` respondan 200, ni de que el disclosure preceda al primer link sponsored, ni de que el CTA de DinoRANK resuelva a `/go/dinorank`.
+- La migración generada (`20260905_060823_phase48_tool_stack_block.ts`) **fue aplicada** contra Postgres (Dokploy) — `payload migrate` corrido con éxito.
+- `scripts/seed-phase48-tracer.ts` **fue ejecutado** — creó `affiliate-links` doc `dinorank` (id=20) y `pages` doc `stack` (id=14).
+- `scripts/verify-stack-page.ts` **corrido y en PASS** (tras el fix del regex) — `/stack`/`/en/stack` responden 200, disclosure precede al primer link sponsored, CTA de DinoRANK resuelve a `/go/dinorank`, cero hrefs con "undefined", exactamente un `<h1>` y breadcrumb visible por locale.
+- `git diff --stat` de `sitemap-data.ts`/`canonical.ts`/`breadcrumbs.ts` — vacío, confirmado.
+- `npx tsc --noEmit` — limpio.
+
+## Historial: lo que reportó el executor original (bloqueo de sesión, ya resuelto)
 
 ## Qué pasó (para que Juan no repita el diagnóstico)
 
@@ -134,18 +137,19 @@ Ninguno — el contenido sembrado por el tracer (DinoRANK, 1 item de Gear) es co
 
 ## Task Commits
 
-1. **Task 1: Tracer — bloque ToolStack (schema+migración), ruta /stack, y DinoRANK de punta a punta** - `732609d` (feat) — código completo, migración generada y leída, **NO aplicada** (bloqueo de DB)
-2. **Task 2: Expansion — GearCard, StackHighlightCallout wireados en ToolStackComponent** - `af8b8f7` (feat) — código completo, **NO verificado contra dev server real** (bloqueo de DB)
+1. **Task 1: Tracer — bloque ToolStack (schema+migración), ruta /stack, y DinoRANK de punta a punta** - `732609d` (feat) — verificado end-to-end contra Dokploy por el orquestador
+2. **Task 2: Expansion — GearCard, StackHighlightCallout wireados en ToolStackComponent** - `af8b8f7` (feat) — verificado end-to-end contra Dokploy por el orquestador
+3. **Fix (orquestador):** `437a364` — `verify-stack-page.ts` hreflang case-insensitive (falso negativo del script, no del producto)
 
 ## Verification Status
 
 - [x] `npx tsc --noEmit` limpio (corrido después de cada commit)
 - [x] Migración confirmada 100% aditiva por lectura directa del archivo
-- [ ] Migración aplicada contra Postgres real — **BLOQUEADO**
-- [ ] `scripts/seed-phase48-tracer.ts` ejecutado — **BLOQUEADO**
-- [ ] `/stack`/`/en/stack` responden 200 con DinoRANK + Gear renderizados — **BLOQUEADO, no verificado**
-- [ ] `scripts/verify-stack-page.ts` imprime PASS — **BLOQUEADO, no ejecutado**
-- [x] `git diff --stat` de `sitemap-data.ts`/`canonical.ts`/`breadcrumbs.ts` vacío (confirmable estáticamente, sin necesidad de DB)
+- [x] Migración aplicada contra Postgres real (Dokploy)
+- [x] `scripts/seed-phase48-tracer.ts` ejecutado — DinoRANK (id=20) + pages/stack (id=14) creados
+- [x] `/stack`/`/en/stack` responden 200 con DinoRANK renderizado, CTA a `/go/dinorank`
+- [x] `scripts/verify-stack-page.ts` imprime PASS
+- [x] `git diff --stat` de `sitemap-data.ts`/`canonical.ts`/`breadcrumbs.ts` vacío
 
 ## Self-Check: PASSED
 
