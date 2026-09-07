@@ -8,11 +8,13 @@ import { AffiliateDisclosureFrame } from '@/components/AffiliateDisclosureFrame'
 import { ToolCard } from '@/components/ToolCard'
 import { GearCard } from '@/components/GearCard'
 import { StackHighlightCallout } from '@/components/StackHighlightCallout'
+import { AUDITOR_URL } from '@/lib/auditor'
 
 /**
  * Server component de la página `/stack`. Renderiza las 3 secciones
- * completas: tool cards por categoría, Gear grid, y los dos
- * StackHighlightCallout ("elegiría hoy" / no-commission pick).
+ * completas: tool cards por categoría, Gear grid, y los tres
+ * StackHighlightCallout ("elegiría hoy" / no-commission pick / el
+ * auditor que Juan construyó).
  */
 export async function ToolStackComponent({
   intro,
@@ -21,6 +23,7 @@ export async function ToolStackComponent({
   gearItems,
   elegiriaHoy,
   noCommissionPick,
+  auditorHighlight,
   locale,
 }: ToolStackBlockProps & { locale?: 'es' | 'en' }) {
   const t = locale
@@ -95,6 +98,18 @@ export async function ToolStackComponent({
                 : undefined
             }
             linkLabel={t('gscLinkLabel')}
+          />
+        </div>
+      )}
+
+      {auditorHighlight?.narrative && (
+        <div className="mt-12">
+          <StackHighlightCallout
+            heading={t('auditorHeading')}
+            narrative={auditorHighlight.narrative}
+            linkHref={AUDITOR_URL}
+            linkLabel={t('auditorCta')}
+            linkOpensInNewTabLabel={t('opensInNewTab')}
           />
         </div>
       )}

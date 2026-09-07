@@ -64,6 +64,9 @@
     "emptyTitle": "Próximamente",
     "emptyBody": "Estoy armando la página de herramientas. Vuelve pronto.",
     "inlineEyebrow": "Herramienta que uso",
-    "gscLinkLabel": "search.google.com/search-console"
+    "gscLinkLabel": "search.google.com/search-console",
+    "auditorHeading": "El auditor que construí",
+    "auditorCta": "Ir al auditor",
+    "opensInNewTab": "se abre en una pestaña nueva"
   }
 }

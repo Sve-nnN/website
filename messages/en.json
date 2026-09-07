@@ -64,6 +64,9 @@
     "emptyTitle": "Coming soon",
     "emptyBody": "I'm putting together the tools page. Check back soon.",
     "inlineEyebrow": "Tool I use",
-    "gscLinkLabel": "search.google.com/search-console"
+    "gscLinkLabel": "search.google.com/search-console",
+    "auditorHeading": "The auditor I built",
+    "auditorCta": "Go to the auditor",
+    "opensInNewTab": "opens in a new tab"
   }
 }
