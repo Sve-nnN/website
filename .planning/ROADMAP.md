@@ -88,7 +88,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 46: Disclosure Legal + Esquema de Links de Afiliado** - Disclosure bilingüe desde `messages/`, `/privacy` actualizada, y colección `affiliate-links` con la matriz de localización congelada antes de cargar contenido (única migración de schema del milestone) (completed 2026-09-03)
 - [x] **Phase 47: Ruta /go + Fix de Middleware + Registro de Clics** - `/go/[slug]` 302 `no-store`, el fix de una línea del matcher curl-verificado contra rutas control, `Disallow: /go`, clics append-only vía `after()` (completed 2026-09-04)
 - [x] **Phase 48: Página de Stack + Links Inline en Contenido** - `/stack` bilingüe con segmento único, ≥100 palabras de experiencia propia por herramienta y por locale, fuera del nav principal, + inline block de afiliado en posts con disclosure automático (completed 2026-09-05)
-- [ ] **Phase 48.5 [INSERTED]: Auditor Destacado** - `auditor.juan-tech.com` deja de estar escondida: sección propia en Home, enlaces desde las landings de servicio relevantes y desde la página de stack
+- [x] **Phase 48.5 [INSERTED]: Auditor Destacado** - `auditor.juan-tech.com` deja de estar escondida: sección propia en Home, enlaces desde las landings de servicio relevantes y desde la página de stack (completed 2026-09-07)
 - [ ] **Phase 49: Captura de Email (Resend, env-gated)** - Bloque inline con Server Action, doble opt-in propio, lead magnet vía URL firmada de Cloudinary, degradación limpia sin `RESEND_API_KEY`
 - [ ] **Phase 50: Gate de Cierre de Monetización** - Paridad medida contra el baseline de Phase 45 + aserciones de `rel`/disclosure/paridad de locales/`overrideAccess`
 
@@ -1203,7 +1203,7 @@ Plans:
 
 - [x] 48-01-PLAN.md — Bloque `ToolStack` (schema + migración aditiva), ruta `/stack`, y DinoRANK de punta a punta (tracer) + GearCard/StackHighlightCallout (STACK-01)
 - [x] 48-02-PLAN.md — Contenido real: 6 docs `affiliate-links` restantes, las 9 herramientas + 13 gear items + callouts en `/stack`, footer + página de autor (STACK-02..06)
-- [ ] 48-03-PLAN.md — Bloque inline de Lexical en `posts.content` (cero migración) + disclosure auto-inyectado + demo en un post real (INL-01, INL-02)
+- [x] 48-03-PLAN.md — Bloque inline de Lexical en `posts.content` (cero migración) + disclosure auto-inyectado + demo en un post real (INL-01, INL-02)
 
 **UI hint**: yes
 
@@ -1228,14 +1228,14 @@ Plans:
   4. Ningún enlace al auditor lleva `rel="sponsored"`; canonical y hreflang de las páginas tocadas quedan idénticos al baseline; el JavaScript de cliente agregado es 0 KB
   5. Toda la copy nueva existe en EN y ES, pasada por humanizer, y declara el límite del plan gratuito
 
-**Plans**: 2/3 plans executed (3 waves)
+**Plans**: 3/3 plans executed (3 waves)
 **UI hint**: yes
 
 Plans:
 
 - [x] 48.5-01-PLAN.md — Bloque AuditorHighlight en Home (tracer de la fase: schema+migración+registro+contenido bilingüe)
 - [x] 48.5-02-PLAN.md — StackHighlightCallout generalizado + bloque AuditorCallout en la landing de Auditoría SEO Técnica
-- [ ] 48.5-03-PLAN.md — Campo auditorHighlight en ToolStack + 3ra instancia de StackHighlightCallout en /stack
+- [x] 48.5-03-PLAN.md — Campo auditorHighlight en ToolStack + 3ra instancia de StackHighlightCallout en /stack
 
 ### Phase 49: Captura de Email (Resend, env-gated)
 
