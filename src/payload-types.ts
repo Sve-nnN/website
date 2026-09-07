@@ -230,32 +230,6 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    card?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    hero?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -293,6 +267,7 @@ export interface Page {
       | BlogCategoryRowsBlock
       | NewsletterBlockType
       | ToolStackBlock
+      | AuditorHighlightBlock
     )[];
   };
   slug?: string | null;
@@ -1554,6 +1529,31 @@ export interface AffiliateLink {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuditorHighlightBlock".
+ */
+export interface AuditorHighlightBlock {
+  /**
+   * Vacío -> heading sr-only, mismo patrón SEO-10.2 que ServicesShowcase.title, nunca saltar un nivel de heading.
+   */
+  title?: string | null;
+  /**
+   * 1-2 oraciones, sin line-clamp — este es un bloque de feature único, no una grilla de 4.
+   */
+  description: string;
+  /**
+   * Vacío -> fallback i18n auditorHighlight.cta.
+   */
+  ctaLabel?: string | null;
+  /**
+   * La disclosure honesta del plan gratuito. Renderiza como texto visible, NUNCA sr-only, NUNCA solo debajo del fold.
+   */
+  freeTierNote: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'auditorHighlight';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -2193,40 +2193,6 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-  sizes?:
-    | T
-    | {
-        thumbnail?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        card?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-        hero?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2267,6 +2233,7 @@ export interface PagesSelect<T extends boolean = true> {
               blogCategoryRows?: T | BlogCategoryRowsBlockSelect<T>;
               newsletterBlock?: T | NewsletterBlockTypeSelect<T>;
               toolStack?: T | ToolStackBlockSelect<T>;
+              auditorHighlight?: T | AuditorHighlightBlockSelect<T>;
             };
       };
   slug?: T;
@@ -2775,6 +2742,18 @@ export interface ToolStackBlockSelect<T extends boolean = true> {
       };
   elegiriaHoy?: T;
   noCommissionPick?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuditorHighlightBlock_select".
+ */
+export interface AuditorHighlightBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  ctaLabel?: T;
+  freeTierNote?: T;
   id?: T;
   blockName?: T;
 }

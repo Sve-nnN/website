@@ -17,6 +17,15 @@
     "cta": "Explore service",
     "sectionHeading": "Services"
   },
+  "auditorHighlight": {
+    "statsChecks": "technical checks",
+    "statsCategories": "categories",
+    "statsUrls": "URLs per audit",
+    "statsCwv": "Core Web Vitals (PageSpeed Insights)",
+    "cta": "Try the auditor",
+    "sectionHeading": "My SEO auditor",
+    "opensInNewTab": "opens in a new tab"
+  },
   "serviceScopeCard": {
     "title": "Service scope",
     "scopeLabel": "What's included",

@@ -33,6 +33,7 @@ import { ServiceScopeCard } from '@/blocks/ServiceScopeCard/config'
 import { RelatedCaseStudyBlock } from '@/blocks/RelatedCaseStudyBlock/config'
 import { LocalProofSection } from '@/blocks/LocalProofSection/config'
 import { ToolStack } from '@/blocks/ToolStack/config'
+import { AuditorHighlight } from '@/blocks/AuditorHighlight/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -109,6 +110,7 @@ export const Pages: CollectionConfig = {
             BlogCategoryRows,
             NewsletterBlock,
             ToolStack,
+            AuditorHighlight,
           ],
         },
       ],
