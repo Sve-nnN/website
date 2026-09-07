@@ -1228,8 +1228,14 @@ Plans:
   4. Ningún enlace al auditor lleva `rel="sponsored"`; canonical y hreflang de las páginas tocadas quedan idénticos al baseline; el JavaScript de cliente agregado es 0 KB
   5. Toda la copy nueva existe en EN y ES, pasada por humanizer, y declara el límite del plan gratuito
 
-**Plans**: TBD
+**Plans**: 3 plans (3 waves)
 **UI hint**: yes
+
+Plans:
+
+- [ ] 48.5-01-PLAN.md — Bloque AuditorHighlight en Home (tracer de la fase: schema+migración+registro+contenido bilingüe)
+- [ ] 48.5-02-PLAN.md — StackHighlightCallout generalizado + bloque AuditorCallout en la landing de Auditoría SEO Técnica
+- [ ] 48.5-03-PLAN.md — Campo auditorHighlight en ToolStack + 3ra instancia de StackHighlightCallout en /stack
 
 ### Phase 49: Captura de Email (Resend, env-gated)
 
