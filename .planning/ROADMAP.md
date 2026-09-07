@@ -1228,12 +1228,12 @@ Plans:
   4. Ningún enlace al auditor lleva `rel="sponsored"`; canonical y hreflang de las páginas tocadas quedan idénticos al baseline; el JavaScript de cliente agregado es 0 KB
   5. Toda la copy nueva existe en EN y ES, pasada por humanizer, y declara el límite del plan gratuito
 
-**Plans**: 3 plans (3 waves)
+**Plans**: 1/3 plans executed (3 waves)
 **UI hint**: yes
 
 Plans:
 
-- [ ] 48.5-01-PLAN.md — Bloque AuditorHighlight en Home (tracer de la fase: schema+migración+registro+contenido bilingüe)
+- [x] 48.5-01-PLAN.md — Bloque AuditorHighlight en Home (tracer de la fase: schema+migración+registro+contenido bilingüe)
 - [ ] 48.5-02-PLAN.md — StackHighlightCallout generalizado + bloque AuditorCallout en la landing de Auditoría SEO Técnica
 - [ ] 48.5-03-PLAN.md — Campo auditorHighlight en ToolStack + 3ra instancia de StackHighlightCallout en /stack
 
@@ -1328,7 +1328,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 46. Disclosure Legal + Esquema de Links de Afiliado | 0/TBD | Not started | - |
 | 47. Ruta /go + Fix de Middleware + Registro de Clics | 1/1 | In Progress|  |
 | 48. Página de Stack + Links Inline en Contenido | 2/3 | In Progress|  |
-| 48.5. Auditor Destacado | 0/TBD | Not started | - |
+| 48.5. Auditor Destacado | 1/3 | In Progress|  |
 | 49. Captura de Email (Resend, env-gated) | 0/TBD | Not started | - |
 | 50. Gate de Cierre de Monetización | 0/TBD | Not started | - |
 </content>

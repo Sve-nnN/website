@@ -62,11 +62,11 @@
 
 Promoción de `auditor.juan-tech.com` — herramienta propia de Juan, ya en producción y con usuarios reales. **En v2.1 solo se destaca; no se cobra.** El cobro es v2.2, y el propio repo del auditor ya lo tiene previsto (`packages/quota/src/canRunAudit.ts`: *"Free-tier limits (v1, no billing — see PRD deferred: PAY in v2)"*).
 
-- [ ] **FEAT-01**: Existe una sección dedicada en Home que presenta el auditor con CTA a `auditor.juan-tech.com`, siguiendo el patrón de bloque ya establecido por `ServicesShowcase`
-- [ ] **FEAT-02**: La sección presenta la herramienta como prueba de pericia con datos concretos y verificables (29 checks, 5 categorías, hasta 500 URLs por auditoría, CWV vía PageSpeed Insights), no como banner genérico
+- [x] **FEAT-01**: Existe una sección dedicada en Home que presenta el auditor con CTA a `auditor.juan-tech.com`, siguiendo el patrón de bloque ya establecido por `ServicesShowcase`
+- [x] **FEAT-02**: La sección presenta la herramienta como prueba de pericia con datos concretos y verificables (29 checks, 5 categorías, hasta 500 URLs por auditoría, CWV vía PageSpeed Insights), no como banner genérico
 - [ ] **FEAT-03**: El auditor se enlaza desde las landings de servicio donde es genuinamente relevante — sobre todo Auditoría SEO Técnica — y desde la página de stack
-- [ ] **FEAT-04**: Los enlaces cross-subdominio son correctos: **sin** `rel="sponsored"` (es producto propio, no afiliación), sin romper canonical ni hreflang, y sin agregar JavaScript de cliente
-- [ ] **FEAT-05**: Toda la copy nueva es bilingüe EN/ES, humanizada, y describe la herramienta con honestidad — incluido el límite del plan gratuito
+- [x] **FEAT-04**: Los enlaces cross-subdominio son correctos: **sin** `rel="sponsored"` (es producto propio, no afiliación), sin romper canonical ni hreflang, y sin agregar JavaScript de cliente
+- [x] **FEAT-05**: Toda la copy nueva es bilingüe EN/ES, humanizada, y describe la herramienta con honestidad — incluido el límite del plan gratuito
 
 **Nota para v2.2 (no actuar en v2.1):** el auditor ya hace double opt-in con Resend y su README lo define como lead magnet de juan-tech.com. Eso se solapa con MAIL-02 y MAIL-03. La opción evidente es que **el lead magnet sea el auditor** en vez de un PDF. No se fusiona ahora porque las listas viven en bases separadas (Prisma en el auditor, Payload acá) y unificarlas es una decisión de arquitectura con implicancias de datos personales, no un ajuste de copy.
 
@@ -164,11 +164,11 @@ Diferidos. Reconocidos pero fuera de este roadmap.
 | MAIL-04 | Phase 49 | Pending |
 | MAIL-05 | Phase 49 | Pending |
 | GATE-01 | Phase 50 | Pending |
-| FEAT-01 | Phase 48.5 | Pending |
-| FEAT-02 | Phase 48.5 | Pending |
+| FEAT-01 | Phase 48.5 | Complete |
+| FEAT-02 | Phase 48.5 | Complete |
 | FEAT-03 | Phase 48.5 | Pending |
-| FEAT-04 | Phase 48.5 | Pending |
-| FEAT-05 | Phase 48.5 | Pending |
+| FEAT-04 | Phase 48.5 | Complete |
+| FEAT-05 | Phase 48.5 | Complete |
 | GATE-02 | Phase 50 | Pending |
 
 **Coverage:**
