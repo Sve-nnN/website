@@ -64,7 +64,7 @@ Promoción de `auditor.juan-tech.com` — herramienta propia de Juan, ya en prod
 
 - [x] **FEAT-01**: Existe una sección dedicada en Home que presenta el auditor con CTA a `auditor.juan-tech.com`, siguiendo el patrón de bloque ya establecido por `ServicesShowcase`
 - [x] **FEAT-02**: La sección presenta la herramienta como prueba de pericia con datos concretos y verificables (29 checks, 5 categorías, hasta 500 URLs por auditoría, CWV vía PageSpeed Insights), no como banner genérico
-- [ ] **FEAT-03**: El auditor se enlaza desde las landings de servicio donde es genuinamente relevante — sobre todo Auditoría SEO Técnica — y desde la página de stack
+- [x] **FEAT-03**: El auditor se enlaza desde las landings de servicio donde es genuinamente relevante — sobre todo Auditoría SEO Técnica — y desde la página de stack
 - [x] **FEAT-04**: Los enlaces cross-subdominio son correctos: **sin** `rel="sponsored"` (es producto propio, no afiliación), sin romper canonical ni hreflang, y sin agregar JavaScript de cliente
 - [x] **FEAT-05**: Toda la copy nueva es bilingüe EN/ES, humanizada, y describe la herramienta con honestidad — incluido el límite del plan gratuito
 
@@ -166,7 +166,7 @@ Diferidos. Reconocidos pero fuera de este roadmap.
 | GATE-01 | Phase 50 | Pending |
 | FEAT-01 | Phase 48.5 | Complete |
 | FEAT-02 | Phase 48.5 | Complete |
-| FEAT-03 | Phase 48.5 | Pending |
+| FEAT-03 | Phase 48.5 | Complete |
 | FEAT-04 | Phase 48.5 | Complete |
 | FEAT-05 | Phase 48.5 | Complete |
 | GATE-02 | Phase 50 | Pending |

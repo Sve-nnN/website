@@ -4,16 +4,16 @@ milestone: v2.1
 current_phase: 47
 current_phase_name: Ruta /go + Fix de Middleware + Registro de Clics
 status: planning
-stopped_at: Completado 48.5-01-PLAN.md (Task 1+2) -- ver 48.5-01-SUMMARY.md
-last_updated: "2026-09-07T03:50:36.634Z"
+stopped_at: Completado 48.5-02-PLAN.md (Tasks 1-3) -- ver 48.5-02-SUMMARY.md
+last_updated: "2026-09-07T04:17:09.580Z"
 last_activity: 2026-09-04
 last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."
-state_head: fd5edb27403eed27808263e49bfb92f2e5828ba5
+state_head: 701e44c8618f1eb4cd7ea2cb61f2deae6e5db324
 progress:
   total_phases: 51
   completed_phases: 5
   total_plans: 13
-  completed_plans: 11
+  completed_plans: 12
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
@@ -136,6 +136,7 @@ Previa: Phase 45 CERRADA 2026-09-03 (baseline de regresion: Lighthouse mobile, H
 | Phase 47 P01 | 65min | 3 tasks | 13 files |
 | Phase 48 P02 | 55min | 3 tasks | 6 files |
 | Phase 48.5 P01 | 40min | 2 tasks | 13 files |
+| Phase 48.5 P02 | 50min | 3 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -279,6 +280,7 @@ Recent decisions affecting current work:
 - [Phase 47]: [Phase 48]: 48-02: Footer.legalLinks.href no es localized, solo label -- el chequeo de idempotencia basado solo en href dejaba el label del 2do locale sin escribir; corregido para actualizar el label de cada locale explicitamente
 - [Phase 47]: [Phase 48]: 48-02: verify-stack-page.ts contaba doble por el payload de hidratacion de Next.js App Router (self.__next_f.push repite el DOM visible como JSON escapado) -- agregado visibleDomOnly() para acotar los conteos al DOM real
 - [Phase 47]: [Phase 48.5]: 48.5-01: bloque AuditorHighlight construido sobre el patron ServicesShowcase, con AUDITOR_URL/AUDITOR_STATS hardcodeados en src/lib/auditor.ts (nunca campos CMS); id-reuse discipline entre locales aplicada para evitar bloques duplicados; migracion aditiva verificada 100% CREATE-only antes de aplicar contra Postgres real de Dokploy
+- [Phase 47]: [Phase 48.5]: 48.5-02: StackHighlightCallout generalizado a linkHref/linkLabel/linkOpensInNewTabLabel sin regresion; nuevo bloque de un solo uso AuditorCallout (mismo patron que RelatedCaseStudyBlock) en vez de campo en ServiceScopeCard (compartido por otras 3 landings); copy de la landing reescrita a espanol neutral sin voceo per CLAUDE.md (draft del plan tenia voceo rioplatense)
 
 ### Pending Todos
 
@@ -330,8 +332,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-09-07T03:50:36.453Z
-Stopped at: Completado 48.5-01-PLAN.md (Task 1+2) -- ver 48.5-01-SUMMARY.md
+Last session: 2026-09-07T04:17:09.222Z
+Stopped at: Completado 48.5-02-PLAN.md (Tasks 1-3) -- ver 48.5-02-SUMMARY.md
 Resume file: None
 
 ## Operator Next Steps
