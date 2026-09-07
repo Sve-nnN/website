@@ -2,24 +2,27 @@ import { Badge } from '@/components/ui/badge'
 import { Prose } from '@/components/Prose'
 
 /**
- * Un componente, dos instancias ("qué elegiría hoy" / no-commission pick) —
- * comparten la misma firma visual en vez de inventar dos superficies
- * distintas. El link de GSC (cuando aplica) es deliberadamente un `<a>`
- * plano, NUNCA `AffiliateLink` — Google Search Console no es una relación
- * de afiliado, nunca lleva `rel="sponsored"`.
+ * Un componente, multiples instancias no-afiliadas ("qué elegiría hoy" /
+ * no-commission pick en /stack, y el callout del auditor en la landing de
+ * Auditoria SEO Tecnica) — comparten la misma firma visual en vez de
+ * inventar una superficie distinta por caller. El link externo (cuando
+ * aplica) es deliberadamente un `<a>` plano, NUNCA `AffiliateLink` — ninguno
+ * de estos casos es una relación de afiliado, nunca llevan `rel="sponsored"`.
  */
 export function StackHighlightCallout({
   heading,
   narrative,
   badge,
-  gscHref,
-  gscLabel,
+  linkHref,
+  linkLabel,
+  linkOpensInNewTabLabel,
 }: {
   heading: string
   narrative: string
   badge?: string
-  gscHref?: string
-  gscLabel?: string
+  linkHref?: string
+  linkLabel?: string
+  linkOpensInNewTabLabel?: string
 }) {
   return (
     <div className="rounded-lg bg-secondary p-8 text-secondary-foreground">
@@ -34,14 +37,17 @@ export function StackHighlightCallout({
           <p>{narrative}</p>
         </Prose>
       </div>
-      {gscHref && (
+      {linkHref && (
         <a
-          href={gscHref}
+          href={linkHref}
           target="_blank"
           rel="noopener"
           className="text-secondary-foreground underline underline-offset-2"
         >
-          {gscLabel}
+          {linkLabel}
+          {linkOpensInNewTabLabel && (
+            <span className="sr-only"> ({linkOpensInNewTabLabel})</span>
+          )}
         </a>
       )}
     </div>

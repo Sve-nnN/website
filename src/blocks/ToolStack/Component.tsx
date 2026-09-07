@@ -89,12 +89,12 @@ export async function ToolStackComponent({
             heading={t('noCommissionHeading')}
             badge={t('noCommissionBadge')}
             narrative={resolvedNoCommissionPick.whyIUseIt ?? ''}
-            gscHref={
+            linkHref={
               resolvedNoCommissionPick.program === 'google-search-console'
                 ? 'https://search.google.com/search-console'
                 : undefined
             }
-            gscLabel={t('gscLinkLabel')}
+            linkLabel={t('gscLinkLabel')}
           />
         </div>
       )}
