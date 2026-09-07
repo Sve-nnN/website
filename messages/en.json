@@ -35,6 +35,11 @@
   "relatedCaseStudyBlock": {
     "title": "A real example of how I work"
   },
+  "auditorCallout": {
+    "heading": "I also built a free automated auditor",
+    "cta": "Go to the auditor",
+    "opensInNewTab": "opens in a new tab"
+  },
   "testimonialsCarousel": {
     "title": "Testimonials"
   },

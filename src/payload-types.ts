@@ -268,6 +268,7 @@ export interface Page {
       | NewsletterBlockType
       | ToolStackBlock
       | AuditorHighlightBlock
+      | AuditorCalloutBlock
     )[];
   };
   slug?: string | null;
@@ -1554,6 +1555,23 @@ export interface AuditorHighlightBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuditorCalloutBlock".
+ */
+export interface AuditorCalloutBlock {
+  /**
+   * Vacio -> fallback i18n auditorCallout.heading
+   */
+  heading?: string | null;
+  /**
+   * El pitch completo. Este bloque no tiene fila de stats separada, los 4 datos van tejidos en la oracion
+   */
+  narrative: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'auditorCallout';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -2234,6 +2252,7 @@ export interface PagesSelect<T extends boolean = true> {
               newsletterBlock?: T | NewsletterBlockTypeSelect<T>;
               toolStack?: T | ToolStackBlockSelect<T>;
               auditorHighlight?: T | AuditorHighlightBlockSelect<T>;
+              auditorCallout?: T | AuditorCalloutBlockSelect<T>;
             };
       };
   slug?: T;
@@ -2754,6 +2773,16 @@ export interface AuditorHighlightBlockSelect<T extends boolean = true> {
   description?: T;
   ctaLabel?: T;
   freeTierNote?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuditorCalloutBlock_select".
+ */
+export interface AuditorCalloutBlockSelect<T extends boolean = true> {
+  heading?: T;
+  narrative?: T;
   id?: T;
   blockName?: T;
 }

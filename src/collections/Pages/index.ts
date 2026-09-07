@@ -34,6 +34,7 @@ import { RelatedCaseStudyBlock } from '@/blocks/RelatedCaseStudyBlock/config'
 import { LocalProofSection } from '@/blocks/LocalProofSection/config'
 import { ToolStack } from '@/blocks/ToolStack/config'
 import { AuditorHighlight } from '@/blocks/AuditorHighlight/config'
+import { AuditorCallout } from '@/blocks/AuditorCallout/config'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -111,6 +112,7 @@ export const Pages: CollectionConfig = {
             NewsletterBlock,
             ToolStack,
             AuditorHighlight,
+            AuditorCallout,
           ],
         },
       ],

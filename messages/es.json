@@ -35,6 +35,11 @@
   "relatedCaseStudyBlock": {
     "title": "Un caso real de cómo trabajo"
   },
+  "auditorCallout": {
+    "heading": "También tengo un auditor automatizado, gratis",
+    "cta": "Ir al auditor",
+    "opensInNewTab": "se abre en una pestaña nueva"
+  },
   "testimonialsCarousel": {
     "title": "Testimonios"
   },

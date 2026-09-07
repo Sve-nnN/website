@@ -29,6 +29,7 @@ import { BlogCategoryRowsComponent } from '@/blocks/BlogCategoryRows/Component'
 import { NewsletterBlockComponent } from '@/blocks/NewsletterBlock/Component'
 import { ToolStackComponent } from '@/blocks/ToolStack/Component'
 import { AuditorHighlightComponent } from '@/blocks/AuditorHighlight/Component'
+import { AuditorCalloutComponent } from '@/blocks/AuditorCallout/Component'
 
 // MAINTAINABILITY (circular-dependency): the registry, RenderBlocks.tsx, and
 // Section/Component.tsx form a natural recursive relationship -- Section
@@ -78,4 +79,5 @@ export const blockComponents: Record<string, (props: any) => ReactNode> = {
   newsletterBlock: NewsletterBlockComponent,
   toolStack: ToolStackComponent,
   auditorHighlight: AuditorHighlightComponent,
+  auditorCallout: AuditorCalloutComponent,
 }
