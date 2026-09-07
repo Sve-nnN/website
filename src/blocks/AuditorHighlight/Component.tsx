@@ -9,8 +9,9 @@ import { buttonVariants } from '@/components/ui/button-variants'
 import { AUDITOR_URL, AUDITOR_STATS } from '@/lib/auditor'
 
 /**
- * Server Component, no 'use client', no fetch to auditor.juan-tech.com — the
- * 4 stats are local constants (src/lib/auditor.ts), not live data. Renders
+ * Server Component (no client directive at the top of this file), no fetch
+ * to auditor.juan-tech.com — the 4 stats are local constants
+ * (src/lib/auditor.ts), not live data. Renders
  * between ServicesShowcase and AboutSection in Home's layout, deliberately
  * NOT adjacent to AuditOfferBlock (the paid 600 USD audit) — see
  * 48.5-UI-SPEC.md "Home Block" for why AboutSection is the required buffer.
