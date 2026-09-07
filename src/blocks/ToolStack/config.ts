@@ -169,5 +169,24 @@ export const ToolStack: Block = {
         description: 'Se espera que resuelva al doc de Google Search Console (program: "google-search-console").',
       },
     },
+    {
+      name: 'auditorHighlight',
+      type: 'group',
+      // Sin dbName: es un group escalar (no array), no una tabla nueva —
+      // sin riesgo del límite de 63 caracteres que forzó dbName: 'groups'
+      // en categoryGroups (comentario arriba).
+      fields: [
+        {
+          name: 'narrative',
+          type: 'textarea',
+          localized: true,
+          required: true,
+          admin: {
+            description:
+              "Feed de la 3ra instancia de StackHighlightCallout ('El auditor que construí'). Debe mencionar los 4 datos verificables (29 checks, 5 categorías, 500 URLs, CWV) y el límite del plan gratuito.",
+          },
+        },
+      ],
+    },
   ],
 }

@@ -1484,6 +1484,12 @@ export interface ToolStackBlock {
    * Se espera que resuelva al doc de Google Search Console (program: "google-search-console").
    */
   noCommissionPick?: (number | null) | AffiliateLink;
+  auditorHighlight: {
+    /**
+     * Feed de la 3ra instancia de StackHighlightCallout ('El auditor que construí'). Debe mencionar los 4 datos verificables (29 checks, 5 categorías, 500 URLs, CWV) y el límite del plan gratuito.
+     */
+    narrative: string;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'toolStack';
@@ -2761,6 +2767,11 @@ export interface ToolStackBlockSelect<T extends boolean = true> {
       };
   elegiriaHoy?: T;
   noCommissionPick?: T;
+  auditorHighlight?:
+    | T
+    | {
+        narrative?: T;
+      };
   id?: T;
   blockName?: T;
 }
