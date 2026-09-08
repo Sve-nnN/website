@@ -5,6 +5,7 @@ import React from 'react'
 import { RichText, defaultJSXConverters } from '@payloadcms/richtext-lexical/react'
 import { Plus } from 'lucide-react'
 import { AffiliateInlineCard } from '@/components/AffiliateInlineCard'
+import { EmailCaptureCard } from '@/blocks/EmailCaptureBlock/Component'
 
 /**
  * Converters for the `block` nodes that live inside migrated post content.
@@ -34,6 +35,31 @@ import { AffiliateInlineCard } from '@/components/AffiliateInlineCard'
  * constraint as `code-block`/`faq`: it never imports `AffiliateDisclosure`
  * nor `RichTextRenderer` (directly or transitively), because either would
  * reopen this same TDZ cycle from inside a Lexical block converter.
+ *
+ * Phase 49 (MAIL-01) adds `email-capture`, second `BlocksFeature`-registered
+ * block on `posts.content`. Its converter renders `EmailCaptureCard`, which
+ * follows the exact same import-cycle constraint as `affiliate-inline`.
+ * Unlike every other block here, `email-capture` needs a piece of
+ * per-request context the static `richTextConverters` object below cannot
+ * carry: `searchParams.subscribed` from the post-detail page, so the block
+ * can swap its form for a pending/already/error state after the visitor
+ * comes back from the Server Action redirect. `richTextConverters` stays a
+ * static, module-level object (its other 8 call sites — everything except
+ * the post-detail page — never pass request-scoped data and must keep
+ * working unmodified), so `email-capture` is deliberately left WITHOUT an
+ * entry in the static `blocks` map below. `buildRichTextConverters(ctx)` is
+ * the per-request factory: it wraps the static object and adds ONLY the
+ * `email-capture` entry, closing over `ctx.postPath`/`ctx.subscribedState`.
+ * The post-detail page calls it once per request and passes the result to
+ * `RichTextRenderer`'s `converters` prop instead of relying on the default.
+ *
+ * Known limitation (documented, not a bug): the `faq` converter below
+ * recurses using the static `richTextConverters`, not the factory's output —
+ * so an `email-capture` block nested inside an FAQ answer would never see
+ * `subscribedState`/`postPath`. Same precedent Phase 48 already set for
+ * multiple `affiliate-inline` instances per post: an acceptable
+ * simplification for content that doesn't occur today, not a case worth
+ * threading a factory through recursive FAQ rendering to support.
  */
 
 type CodeBlockNodeFields = {
@@ -261,3 +287,28 @@ export const richTextConverters: JSXConvertersFunction = ({ defaultConverters })
     <TableFromNode node={node as TableNode} nodesToJSX={nodesToJSX as never} />
   ),
 })
+
+/**
+ * Per-request factory (Phase 49, MAIL-01) — see the docblock above for why
+ * this exists instead of adding `email-capture` to the static
+ * `richTextConverters` object. Wraps the static converters and overrides
+ * ONLY `blocks['email-capture']`; every other converter (`code-block`/`faq`/
+ * `affiliate-inline`/`table`/`heading`) comes through unchanged from the
+ * static object.
+ */
+export function buildRichTextConverters(
+  ctx: { subscribedState?: string; postPath?: string } = {},
+): JSXConvertersFunction {
+  return (args) => {
+    const base = richTextConverters(args)
+    return {
+      ...base,
+      blocks: {
+        ...base.blocks,
+        'email-capture': () => (
+          <EmailCaptureCard postPath={ctx.postPath ?? ''} subscribedState={ctx.subscribedState} />
+        ),
+      },
+    }
+  }
+}

@@ -7,6 +7,7 @@ import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
 import { revalidatePostsCache, revalidatePostsCacheOnDelete } from '@/lib/cache-tags'
 import { AffiliateInlineBlock } from '@/blocks/AffiliateInlineBlock/config'
+import { EmailCaptureBlock } from '@/blocks/EmailCaptureBlock/config'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -54,13 +55,14 @@ export const Posts: CollectionConfig = {
       type: 'richText',
       required: true,
       localized: true,
-      // Phase 48 (INL-01): agrega el bloque `affiliate-inline` — jsonb ya
-      // existente, cero migración. Único override de `content` en este
-      // archivo; el resto de campos queda intacto.
+      // Phase 48 (INL-01) agregó `affiliate-inline`; Phase 49 (MAIL-01) suma
+      // `email-capture` al mismo array — jsonb ya existente, cero migración
+      // nueva. Único override de `content` en este archivo; el resto de
+      // campos queda intacto.
       editor: lexicalEditor({
         features: ({ rootFeatures }) => [
           ...rootFeatures,
-          BlocksFeature({ blocks: [AffiliateInlineBlock] }),
+          BlocksFeature({ blocks: [AffiliateInlineBlock, EmailCaptureBlock] }),
         ],
       }),
     },

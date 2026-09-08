@@ -68,5 +68,21 @@
     "auditorHeading": "El auditor que construí",
     "auditorCta": "Ir al auditor",
     "opensInNewTab": "se abre en una pestaña nueva"
+  },
+  "emailCapture": {
+    "eyebrow": "Descarga gratis",
+    "heading": "Checklist de auditoría SEO técnica",
+    "description": "5 categorías, decenas de checks accionables — el mismo criterio que uso en mis propias auditorías.",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tucorreo@ejemplo.com",
+    "submitLabel": "Enviarme el checklist",
+    "privacyPrefix": "Al suscribirte aceptas nuestra ",
+    "privacyLinkText": "política de privacidad",
+    "privacySuffix": ". Solo te escribiremos para confirmar la descarga, sin spam.",
+    "pendingHeading": "Revisa tu correo",
+    "pendingBody": "Te enviamos un enlace para confirmar tu suscripción y desbloquear la descarga.",
+    "alreadyHeading": "Ya estás suscrito",
+    "alreadyBody": "Revisa tu bandeja — ya deberías tener el checklist.",
+    "errorBody": "Algo salió mal. No pudimos registrar tu correo — intenta de nuevo en un momento."
   }
 }

@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import { AuthorByline } from '@/components/AuthorByline'
 import { AuthorCard } from '@/components/AuthorCard'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
+import { buildRichTextConverters } from '@/components/richTextBlockConverters'
 import { AffiliateDisclosureFrame } from '@/components/AffiliateDisclosureFrame'
 import {
   postHasAffiliateInline,
@@ -30,7 +31,12 @@ import { InlineOffer } from '@/components/InlineOffer'
 import { RailOffer } from '@/components/RailOffer'
 import { ReadingProgress } from '@/components/ReadingProgress'
 import { BlogClosing } from '@/components/BlogClosing'
-import { blogCategoryPath, blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
+import {
+  blogCategoryPath,
+  blogPostPath,
+  localizeBlogPath,
+  resolvePrimaryCategorySlug,
+} from '@/lib/blog-paths'
 import { personRef, SITE_PERSON_SLUG } from '@/lib/person'
 import { websiteRef } from '@/lib/site-schema'
 import { EN_TRANSLATION_INCOMPLETE, isEnTranslationIncomplete } from '@/lib/translation-gaps'
@@ -119,10 +125,12 @@ export async function generateMetadata({
 
 export default async function PostPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string; category: string; slug: string }>
+  searchParams: Promise<{ subscribed?: string }>
 }) {
-  const { locale, category, slug } = await params
+  const [{ locale, category, slug }, { subscribed }] = await Promise.all([params, searchParams])
   const doc = await getPost(locale, slug)
 
   if (!doc) {
@@ -175,14 +183,25 @@ export default async function PostPage({
   // `mainEntityOfPage` and `image` must be absolute, so they go through
   // SITE_URL. `heroImageUrl` can already be absolute (Cloudinary) or a root
   // path (local/fallback), hence the conditional.
-  const articleUrl = `${SITE_URL}${
-    locale === 'en'
-      ? `/en${blogPostPath(primaryCategorySlug, doc.slug ?? slug)}`
-      : blogPostPath(primaryCategorySlug, doc.slug ?? slug)
-  }`
+  // MAIL-01: mismo path que `articleUrl` construye para el JSON-LD, extraído
+  // acá porque `buildRichTextConverters` (abajo) también lo necesita como
+  // `postPath` — la Server Action del bloque redirige de vuelta a esta misma
+  // URL con `?subscribed=...` tras el submit.
+  const localizedPostPath = localizeBlogPath(
+    locale as 'es' | 'en',
+    blogPostPath(primaryCategorySlug, doc.slug ?? slug),
+  )
+  const articleUrl = `${SITE_URL}${localizedPostPath}`
   const articleImage = heroImageUrl.startsWith('http')
     ? heroImageUrl
     : `${SITE_URL}${heroImageUrl}`
+
+  // MAIL-01: factory por-request — el `email-capture` embebido en `doc.content`
+  // necesita leer `searchParams.subscribed` para mostrar el estado correcto
+  // tras el redirect de la Server Action. Construida una sola vez, pasada a
+  // AMBAS mitades del cuerpo (el bloque puede caer en cualquiera de las dos,
+  // ver `splitContentForOffer`).
+  const converters = buildRichTextConverters({ subscribedState: subscribed, postPath: localizedPostPath })
 
   const articleData = {
     '@context': 'https://schema.org',
@@ -280,7 +299,7 @@ export default async function PostPage({
             contenidos lee `article h2` del DOM, así que partirlo en dos
             elementos le escondería la mitad de los encabezados. */}
         <article id="post-body">
-          <RichTextRenderer data={body.before} />
+          <RichTextRenderer data={body.before} converters={converters} />
           {body.after && (
             <>
               <InlineOffer
@@ -289,7 +308,7 @@ export default async function PostPage({
                 linkLabel={promo.inline.linkLabel}
                 linkUrl={promo.inline.linkUrl}
               />
-              <RichTextRenderer data={body.after} />
+              <RichTextRenderer data={body.after} converters={converters} />
             </>
           )}
         </article>
