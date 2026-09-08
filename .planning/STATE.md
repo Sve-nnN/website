@@ -4,16 +4,16 @@ milestone: v2.1
 current_phase: 49
 current_phase_name: Captura de Email (Resend, env-gated)
 status: planning
-stopped_at: Completado 49-02-PLAN.md (EmailCaptureBlock + factory de converters por-request, verificado con Playwright real en technical-seo-checklist es+en)
-last_updated: "2026-09-08T03:52:10.135Z"
+stopped_at: "Completado 49-03-PLAN.md -- Phase 49 cerrada (3/3 plans): Lighthouse gate PASS + fix real de DYNAMIC_SERVER_USAGE + MAIL-01..05 verificados en cadena completa"
+last_updated: "2026-09-08T05:22:36.622Z"
 last_activity: 2026-09-08
 last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."
-state_head: 9ad4c588aea9cb7703c37f622ebb27121184167f
+state_head: 0c488c963112b470540d1bef41b77c8a07d7b00a
 progress:
   total_phases: 51
   completed_phases: 6
   total_plans: 16
-  completed_plans: 15
+  completed_plans: 16
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-07-31)
 ## Current Position
 
 Phase: 49 — Captura de Email (Resend, env-gated) (Phase 48 y 48.5 con plans pendientes de cierre formal; Phase 47 cerrada 2026-09-04; Phase 46 cerrada; Phase 45 cerrada 2026-09-03; Phase 44 cerrada 2026-08-30)
-Plan: 49-02 — completo (`EmailCaptureBlock` cero JS de cliente registrado en `posts.content` junto a `affiliate-inline`; `buildRichTextConverters` factory por-request nueva que le permite leer `searchParams.subscribed` sin tocar los 8 call sites existentes de `RichTextRenderer`; bloque insertado en el post real `technical-seo-checklist` es+en y verificado con Playwright real) — Phase 49 en curso (2/3 plans)
-Status: 49-02 verificado de punta a punta contra el dev server real conectado al Postgres real de Dokploy (via tunel SSH): `npm run build` limpio sin regresion de TDZ, grep confirma cero JS de cliente nuevo (`<form action=` presente, sin `use client`/onChange/onInput/useState/useActionState/useFormStatus), y Playwright real confirma que enviar el formulario en un post real (es+en) deja al visitante en el estado `pending` en la MISMA pagina via `?subscribed=`. `npx tsc --noEmit` limpio en las 2 tasks. Siguiente: Plan 49-03 (verificacion Lighthouse antes/despues contra el baseline de Phase 45 + cierre final de los 5 requirements de la fase).
-Last activity: 2026-09-08 — Phase 49 Plan 02 ejecutado y verificado (MAIL-01).
-Previa: Phase 49 Plan 01 completo 2026-09-08 (schema aditivo sobre `subscribers` + coleccion `lead-magnets` + mecanismo de doble opt-in a descarga firmada, tracer verificado de punta a punta).
+Plan: 49-03 — completo (gate empirico de Lighthouse sobre el post con `EmailCaptureBlock`: PASS contra el bar de GATE-01 en ambos locales; fix real de un 500 en produccion por `DYNAMIC_SERVER_USAGE`; MAIL-01..05 verificados como una sola cadena sobre el sistema completo y descubrible) — **Phase 49 cerrada (3/3 plans)**
+Status: 49-03 verificado de punta a punta. Task 1: Lighthouse (a) URL plana vs (b) `?subscribed=pending` sobre `technical-seo-checklist` (es+en), mediana de 3 corridas contra build de produccion local real, sin caida de performance > 5 puntos ni cruce de banda de CWV ni delta de CLS — sentinel LIGHTHOUSE_PASS. Bug real encontrado y corregido en el camino: `revalidate=60` fijo + lectura incondicional de `searchParams` disparaba `DynamicServerError`/`DYNAMIC_SERVER_USAGE`, la pagina devolvia 500 en TODAS las rutas de post; corregido con `dynamic = 'force-dynamic'` explicito. Task 2: MAIL-01..05 re-verificados como una cadena real (formulario real via Playwright -> Server Action real -> confirm route real -> descarga firmada real), mas re-cierre de T-49-03 (PDFs privados) y T-49-07 (subscribers/lead-magnets fuera de sitemap/mcpPlugin). `npx tsc --noEmit` limpio en las 2 tasks. Siguiente: Phase 50 (Gate de Cierre de Monetizacion).
+Last activity: 2026-09-08 — Phase 49 Plan 03 ejecutado y verificado; Phase 49 cerrada.
+Previa: Phase 49 Plan 02 completo 2026-09-08 (EmailCaptureBlock + factory de converters por-request, verificado con Playwright real en technical-seo-checklist es+en).
 
 ## Performance Metrics
 
@@ -139,6 +139,7 @@ Previa: Phase 49 Plan 01 completo 2026-09-08 (schema aditivo sobre `subscribers`
 | Phase 48.5 P02 | 50min | 3 tasks | 13 files |
 | Phase 49 P01 | 48min | 2 tasks | 20 files |
 | Phase 49 P02 | 62min | 2 tasks | 11 files |
+| Phase 49 P03 | 75min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -286,6 +287,8 @@ Recent decisions affecting current work:
 - [Phase 49-01]: worktree del agente estaba branchado desde master@2026-08-26 (88 commits detras de docs/seo-handoff, Phase 48.5 ya cerrada) -- corregido por fast-forward + cherry-pick del WIP antes de tocar payload.config.ts/migrations, sin generar un commit propio (movimiento de puntero)
 - [Phase 49-01]: mecanismo de doble opt-in a descarga firmada verificado de punta a punta contra Dokploy/Cloudinary/Resend reales -- camino feliz (HAPPY_PATH_OK), camino degradado sin RESEND_API_KEY vía proceso hijo aislado (DEGRADED_PATH_OK, MAIL-04), y anti-enumeracion (ANTI_ENUMERATION_OK); secure-download.ts/download-token.ts confirmados como helpers puros sin ninguna referencia a payload/subscribers (MAIL-05)
 - [Phase 49]: 49-02: buildRichTextConverters() factory por-request envuelve richTextConverters estatico y sobreescribe solo blocks['email-capture'] con searchParams.subscribed/postPath -- los 8 call sites existentes de RichTextRenderer siguen usando la version estatica sin cambio de comportamiento
+- [Phase 49]: [Phase 49] 49-03: Phase 45 baseline no tiene ninguna ruta de post -- gate de GATE-01 aplicado al delta (a) plana vs (b) ?subscribed=pending sobre la MISMA ruta y build, no a un diff archivo-contra-archivo inexistente
+- [Phase 49]: [Phase 49] 49-03: revalidate=60 fijo + lectura incondicional de searchParams -> DYNAMIC_SERVER_USAGE, 500 real en todas las rutas de post en produccion; corregido con dynamic='force-dynamic' explicito
 
 ### Pending Todos
 
@@ -337,8 +340,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-09-08T03:52:09.741Z
-Stopped at: Completado 49-02-PLAN.md (EmailCaptureBlock + factory de converters por-request, verificado con Playwright real en technical-seo-checklist es+en)
+Last session: 2026-09-08T05:22:36.352Z
+Stopped at: Completado 49-03-PLAN.md -- Phase 49 cerrada (3/3 plans): Lighthouse gate PASS + fix real de DYNAMIC_SERVER_USAGE + MAIL-01..05 verificados en cadena completa
 Resume file: None
 
 ## Operator Next Steps
