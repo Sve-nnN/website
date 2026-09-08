@@ -4,16 +4,16 @@ milestone: v2.1
 current_phase: 48.5
 current_phase_name: Auditor Destacado
 status: planning
-stopped_at: Phase 48.5 CERRADA -- 3/3 planes ejecutados y verificados contra Dokploy (48.5-01/02/03), FEAT-01..05 completos
-last_updated: "2026-09-07T04:17:09.580Z"
+stopped_at: Completado 49-01-PLAN.md (schema aditivo + helpers de seguridad + mecanismo doble opt-in a descarga firmada, tracer verificado end-to-end)
+last_updated: "2026-09-08T03:07:48.427Z"
 last_activity: 2026-09-04
 last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."
-state_head: 701e44c8618f1eb4cd7ea2cb61f2deae6e5db324
+state_head: 96b839a5d3099bf68729f169b099c15cd589088c
 progress:
   total_phases: 51
-  completed_phases: 5
-  total_plans: 13
-  completed_plans: 12
+  completed_phases: 6
+  total_plans: 16
+  completed_plans: 14
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
@@ -137,6 +137,7 @@ Previa: Phase 45 CERRADA 2026-09-03 (baseline de regresion: Lighthouse mobile, H
 | Phase 48 P02 | 55min | 3 tasks | 6 files |
 | Phase 48.5 P01 | 40min | 2 tasks | 13 files |
 | Phase 48.5 P02 | 50min | 3 tasks | 13 files |
+| Phase 49 P01 | 48min | 2 tasks | 20 files |
 
 ## Accumulated Context
 
@@ -281,6 +282,8 @@ Recent decisions affecting current work:
 - [Phase 47]: [Phase 48]: 48-02: verify-stack-page.ts contaba doble por el payload de hidratacion de Next.js App Router (self.__next_f.push repite el DOM visible como JSON escapado) -- agregado visibleDomOnly() para acotar los conteos al DOM real
 - [Phase 47]: [Phase 48.5]: 48.5-01: bloque AuditorHighlight construido sobre el patron ServicesShowcase, con AUDITOR_URL/AUDITOR_STATS hardcodeados en src/lib/auditor.ts (nunca campos CMS); id-reuse discipline entre locales aplicada para evitar bloques duplicados; migracion aditiva verificada 100% CREATE-only antes de aplicar contra Postgres real de Dokploy
 - [Phase 47]: [Phase 48.5]: 48.5-02: StackHighlightCallout generalizado a linkHref/linkLabel/linkOpensInNewTabLabel sin regresion; nuevo bloque de un solo uso AuditorCallout (mismo patron que RelatedCaseStudyBlock) en vez de campo en ServiceScopeCard (compartido por otras 3 landings); copy de la landing reescrita a espanol neutral sin voceo per CLAUDE.md (draft del plan tenia voceo rioplatense)
+- [Phase 49-01]: worktree del agente estaba branchado desde master@2026-08-26 (88 commits detras de docs/seo-handoff, Phase 48.5 ya cerrada) -- corregido por fast-forward + cherry-pick del WIP antes de tocar payload.config.ts/migrations, sin generar un commit propio (movimiento de puntero)
+- [Phase 49-01]: mecanismo de doble opt-in a descarga firmada verificado de punta a punta contra Dokploy/Cloudinary/Resend reales -- camino feliz (HAPPY_PATH_OK), camino degradado sin RESEND_API_KEY vía proceso hijo aislado (DEGRADED_PATH_OK, MAIL-04), y anti-enumeracion (ANTI_ENUMERATION_OK); secure-download.ts/download-token.ts confirmados como helpers puros sin ninguna referencia a payload/subscribers (MAIL-05)
 
 ### Pending Todos
 
@@ -332,8 +335,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-09-07T04:17:09.222Z
-Stopped at: Completado 48.5-02-PLAN.md (Tasks 1-3) -- ver 48.5-02-SUMMARY.md
+Last session: 2026-09-08T03:07:47.970Z
+Stopped at: Completado 49-01-PLAN.md (schema aditivo + helpers de seguridad + mecanismo doble opt-in a descarga firmada, tracer verificado end-to-end)
 Resume file: None
 
 ## Operator Next Steps

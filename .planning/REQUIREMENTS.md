@@ -73,10 +73,10 @@ Promoción de `auditor.juan-tech.com` — herramienta propia de Juan, ya en prod
 ### Captura de Email
 
 - [ ] **MAIL-01**: Existe un bloque de captura de email inline (nunca popup ni modal), resuelto con Server Action y sin JavaScript de cliente
-- [ ] **MAIL-02**: El doble opt-in está implementado en el propio sitio (Resend no lo trae), y Resend solo recibe direcciones ya confirmadas
-- [ ] **MAIL-03**: El lead magnet se entrega vía URL firmada de Cloudinary con expiración corta, no como archivo público
-- [ ] **MAIL-04**: El flujo está env-gated y degrada limpio sin `RESEND_API_KEY` real — el suscriptor se registra y el magnet se entrega aunque falte la credencial
-- [ ] **MAIL-05**: `secure-download.ts` y `download-token.ts` quedan como helpers separados, para que la tienda de v2.2 sea una adición y no una reescritura
+- [x] **MAIL-02**: El doble opt-in está implementado en el propio sitio (Resend no lo trae), y Resend solo recibe direcciones ya confirmadas
+- [x] **MAIL-03**: El lead magnet se entrega vía URL firmada de Cloudinary con expiración corta, no como archivo público
+- [x] **MAIL-04**: El flujo está env-gated y degrada limpio sin `RESEND_API_KEY` real — el suscriptor se registra y el magnet se entrega aunque falte la credencial
+- [x] **MAIL-05**: `secure-download.ts` y `download-token.ts` quedan como helpers separados, para que la tienda de v2.2 sea una adición y no una reescritura
 
 ### Gate de Cierre
 
@@ -159,10 +159,10 @@ Diferidos. Reconocidos pero fuera de este roadmap.
 | INL-01 | Phase 48 | Complete |
 | INL-02 | Phase 48 | Complete |
 | MAIL-01 | Phase 49 | Pending |
-| MAIL-02 | Phase 49 | Pending |
-| MAIL-03 | Phase 49 | Pending |
-| MAIL-04 | Phase 49 | Pending |
-| MAIL-05 | Phase 49 | Pending |
+| MAIL-02 | Phase 49 | Complete |
+| MAIL-03 | Phase 49 | Complete |
+| MAIL-04 | Phase 49 | Complete |
+| MAIL-05 | Phase 49 | Complete |
 | GATE-01 | Phase 50 | Pending |
 | FEAT-01 | Phase 48.5 | Complete |
 | FEAT-02 | Phase 48.5 | Complete |
