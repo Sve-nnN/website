@@ -24,6 +24,11 @@ Queda fuera: unificar esta lista con la del auditor (nota v2.2, decisión de arq
 - Inline dentro de `posts.content`, mismo patrón de bloque reusable que `AffiliateInlineBlock` (Phase 48) — el blog es donde ya hay tráfico orgánico real medido en el baseline de Phase 45.
 - No en footer, no en `/stack`, no como página dedicada — decisión explícita de Juan.
 
+## Reconciliación con el sistema de newsletter existente (hallazgo del research)
+- Ya existe en producción, de una tarea quick del 2026-08-20: colección `Subscribers`, `subscribeAction`, `/api/newsletter/confirm`, `/unsubscribe`, bloque `NewsletterBlock` — pero ese formulario es `'use client'` (sí emite JS), incompatible con MAIL-01.
+- **Decisión de Juan**: reusar la tabla `Subscribers` existente (migración aditiva sobre ella, no una tabla paralela), pero el bloque inline nuevo (`EmailCaptureBlock`, en posts) usa su propia Server Action nueva sin JavaScript de cliente — no tocar `NewsletterForm.tsx` ni su flujo `'use client'` actual. Los dos sistemas comparten la tabla de suscriptores pero tienen entry points de captura separados.
+- PDF bilingüe: **dos archivos separados** (uno ES, uno EN), no un único PDF con ambos idiomas — más simple de generar y servir con URL firmada inequívoca por locale.
+
 ### Claude's Discretion
 - Copy exacta del bloque de captura (heading, CTA, microcopy de privacidad — reusando el disclosure/`/privacy` ya construido en Phase 46).
 - Redacción completa del checklist (contenido real y honesto, sin fabricar credenciales o números no verificados).
