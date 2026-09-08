@@ -4,16 +4,16 @@ milestone: v2.1
 current_phase: 49
 current_phase_name: Captura de Email (Resend, env-gated)
 status: planning
-stopped_at: Completado 49-01-PLAN.md (schema aditivo + helpers de seguridad + mecanismo doble opt-in a descarga firmada, tracer verificado end-to-end). Juan aprobó el contenido de los 2 PDFs (checklist SEO técnico ES/EN) el 2026-09-08 -- nota: rediseño visual de los PDFs queda pendiente para más adelante, no bloquea el cierre de la fase.
-last_updated: "2026-09-08T03:07:48.427Z"
-last_activity: 2026-09-04
+stopped_at: Completado 49-02-PLAN.md (EmailCaptureBlock + factory de converters por-request, verificado con Playwright real en technical-seo-checklist es+en)
+last_updated: "2026-09-08T03:52:10.135Z"
+last_activity: 2026-09-08
 last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."
-state_head: 96b839a5d3099bf68729f169b099c15cd589088c
+state_head: 9ad4c588aea9cb7703c37f622ebb27121184167f
 progress:
   total_phases: 51
   completed_phases: 6
   total_plans: 16
-  completed_plans: 14
+  completed_plans: 15
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
@@ -24,15 +24,15 @@ milestone_name: Monetizacion del Sitio - Research + Fundaciones
 See: .planning/PROJECT.md (updated 2026-07-31)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 47 — Ruta /go + Fix de Middleware + Registro de Clics (milestone v2.1, Phases 44-50)
+**Current focus:** Phase 49 — Captura de Email (Resend, env-gated) (milestone v2.1, Phases 44-50)
 
 ## Current Position
 
-Phase: 47 — Ruta /go + Fix de Middleware + Registro de Clics (Phase 46 cerrada, 46-01/46-02 completos; Phase 45 cerrada 2026-09-03; Phase 44 cerrada 2026-08-30)
-Plan: 47-01 — completo (fix del matcher `go/`, route handler `/go/[slug]`, `robots.txt` con `Disallow: /go`, coleccion `affiliate-clicks` append-only + migracion aditiva aplicada contra Dokploy, descarte de bots + throttle por IP via `after()`) — Phase 47 completa, unico plan (1/1)
-Status: 47-01 verificado de punta a punta contra el dev server real conectado al Postgres real de Dokploy (sin sandbox): `/go/{slug}` activo redirige 302 con `no-store` leyendo el destino exclusivamente del documento admin-autorado, `?to=` se ignora, slug inactivo e inexistente devuelven el mismo 404, las 5 rutas control (`/`, `/en`, `/servicios`, `/en/services`, `/blog`) mas el decoy `/golang-para-seo` no cambiaron de comportamiento tras el fix del matcher, `robots.txt` bloquea `/go`, y un clic normal deja fila en `affiliate-clicks` via `after()` mientras un bot o un IP throttled reciben el 302 pero no dejan fila. `npx tsc --noEmit` limpio en las 3 tasks. Human-check de fin de fase queda pendiente de la revision orquestada de Juan, per `human_verify_mode = end-of-phase`. Siguiente: Phase 48 (Pagina de Stack + Links Inline en Contenido), que ya puede arrancar porque `/go/[slug]` funciona y esta verificado.
-Last activity: 2026-09-04 — Phase 47 Plan 01 ejecutado y verificado (GO-01, GO-02, GO-03, GO-04).
-Previa: Phase 45 CERRADA 2026-09-03 (baseline de regresion: Lighthouse mobile, H1/JSON-LD, canonical/hreflang, snapshot de Search Console, trafico organico real).
+Phase: 49 — Captura de Email (Resend, env-gated) (Phase 48 y 48.5 con plans pendientes de cierre formal; Phase 47 cerrada 2026-09-04; Phase 46 cerrada; Phase 45 cerrada 2026-09-03; Phase 44 cerrada 2026-08-30)
+Plan: 49-02 — completo (`EmailCaptureBlock` cero JS de cliente registrado en `posts.content` junto a `affiliate-inline`; `buildRichTextConverters` factory por-request nueva que le permite leer `searchParams.subscribed` sin tocar los 8 call sites existentes de `RichTextRenderer`; bloque insertado en el post real `technical-seo-checklist` es+en y verificado con Playwright real) — Phase 49 en curso (2/3 plans)
+Status: 49-02 verificado de punta a punta contra el dev server real conectado al Postgres real de Dokploy (via tunel SSH): `npm run build` limpio sin regresion de TDZ, grep confirma cero JS de cliente nuevo (`<form action=` presente, sin `use client`/onChange/onInput/useState/useActionState/useFormStatus), y Playwright real confirma que enviar el formulario en un post real (es+en) deja al visitante en el estado `pending` en la MISMA pagina via `?subscribed=`. `npx tsc --noEmit` limpio en las 2 tasks. Siguiente: Plan 49-03 (verificacion Lighthouse antes/despues contra el baseline de Phase 45 + cierre final de los 5 requirements de la fase).
+Last activity: 2026-09-08 — Phase 49 Plan 02 ejecutado y verificado (MAIL-01).
+Previa: Phase 49 Plan 01 completo 2026-09-08 (schema aditivo sobre `subscribers` + coleccion `lead-magnets` + mecanismo de doble opt-in a descarga firmada, tracer verificado de punta a punta).
 
 ## Performance Metrics
 
@@ -138,6 +138,7 @@ Previa: Phase 45 CERRADA 2026-09-03 (baseline de regresion: Lighthouse mobile, H
 | Phase 48.5 P01 | 40min | 2 tasks | 13 files |
 | Phase 48.5 P02 | 50min | 3 tasks | 13 files |
 | Phase 49 P01 | 48min | 2 tasks | 20 files |
+| Phase 49 P02 | 62min | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -284,6 +285,7 @@ Recent decisions affecting current work:
 - [Phase 47]: [Phase 48.5]: 48.5-02: StackHighlightCallout generalizado a linkHref/linkLabel/linkOpensInNewTabLabel sin regresion; nuevo bloque de un solo uso AuditorCallout (mismo patron que RelatedCaseStudyBlock) en vez de campo en ServiceScopeCard (compartido por otras 3 landings); copy de la landing reescrita a espanol neutral sin voceo per CLAUDE.md (draft del plan tenia voceo rioplatense)
 - [Phase 49-01]: worktree del agente estaba branchado desde master@2026-08-26 (88 commits detras de docs/seo-handoff, Phase 48.5 ya cerrada) -- corregido por fast-forward + cherry-pick del WIP antes de tocar payload.config.ts/migrations, sin generar un commit propio (movimiento de puntero)
 - [Phase 49-01]: mecanismo de doble opt-in a descarga firmada verificado de punta a punta contra Dokploy/Cloudinary/Resend reales -- camino feliz (HAPPY_PATH_OK), camino degradado sin RESEND_API_KEY vía proceso hijo aislado (DEGRADED_PATH_OK, MAIL-04), y anti-enumeracion (ANTI_ENUMERATION_OK); secure-download.ts/download-token.ts confirmados como helpers puros sin ninguna referencia a payload/subscribers (MAIL-05)
+- [Phase 49]: 49-02: buildRichTextConverters() factory por-request envuelve richTextConverters estatico y sobreescribe solo blocks['email-capture'] con searchParams.subscribed/postPath -- los 8 call sites existentes de RichTextRenderer siguen usando la version estatica sin cambio de comportamiento
 
 ### Pending Todos
 
@@ -335,8 +337,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-09-08T03:07:47.970Z
-Stopped at: Completado 49-01-PLAN.md (schema aditivo + helpers de seguridad + mecanismo doble opt-in a descarga firmada, tracer verificado end-to-end)
+Last session: 2026-09-08T03:52:09.741Z
+Stopped at: Completado 49-02-PLAN.md (EmailCaptureBlock + factory de converters por-request, verificado con Playwright real en technical-seo-checklist es+en)
 Resume file: None
 
 ## Operator Next Steps
