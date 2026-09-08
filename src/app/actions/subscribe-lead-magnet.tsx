@@ -166,7 +166,7 @@ export async function subscribeToLeadMagnetAction(formData: FormData): Promise<v
               locale,
               token,
               status: resendReady ? 'pending' : 'confirmed',
-              confirmedAt: resendReady ? nowIso : null,
+              confirmedAt: resendReady ? null : nowIso,
             },
           })
           subscriberId = created.id
