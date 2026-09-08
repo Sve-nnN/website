@@ -89,7 +89,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 47: Ruta /go + Fix de Middleware + Registro de Clics** - `/go/[slug]` 302 `no-store`, el fix de una línea del matcher curl-verificado contra rutas control, `Disallow: /go`, clics append-only vía `after()` (completed 2026-09-04)
 - [x] **Phase 48: Página de Stack + Links Inline en Contenido** - `/stack` bilingüe con segmento único, ≥100 palabras de experiencia propia por herramienta y por locale, fuera del nav principal, + inline block de afiliado en posts con disclosure automático (completed 2026-09-05)
 - [x] **Phase 48.5 [INSERTED]: Auditor Destacado** - `auditor.juan-tech.com` deja de estar escondida: sección propia en Home, enlaces desde las landings de servicio relevantes y desde la página de stack (completed 2026-09-07)
-- [ ] **Phase 49: Captura de Email (Resend, env-gated)** - Bloque inline con Server Action, doble opt-in propio, lead magnet vía URL firmada de Cloudinary, degradación limpia sin `RESEND_API_KEY`
+- [x] **Phase 49: Captura de Email (Resend, env-gated)** - Bloque inline con Server Action, doble opt-in propio, lead magnet vía URL firmada de Cloudinary, degradación limpia sin `RESEND_API_KEY` (completed 2026-09-08)
 - [ ] **Phase 50: Gate de Cierre de Monetización** - Paridad medida contra el baseline de Phase 45 + aserciones de `rel`/disclosure/paridad de locales/`overrideAccess`
 
 ## Phase Details
