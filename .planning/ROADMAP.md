@@ -1251,7 +1251,13 @@ Plans:
   4. El lead magnet se entrega por una URL firmada de Cloudinary con expiración corta — verificable: la URL deja de servir el archivo después del plazo y el recurso no es accesible públicamente sin firma
   5. `secure-download.ts` y `download-token.ts` existen como helpers separados e importables, sin lógica de suscripción adentro, de modo que la tienda de v2.2 sea una adición y no una reescritura
 
-**Plans**: TBD
+**Plans**: 3 plans (3 waves)
+
+Plans:
+- [ ] 49-01-PLAN.md — Schema aditivo sobre `subscribers` existente + colección `lead-magnets` + helpers de seguridad (`secure-download.ts`, `download-token.ts`, `resend-configured.ts`) + Server Action/ruta de confirmación/página de descarga — mecanismo probado de punta a punta con 2 PDFs reales (tracer)
+- [ ] 49-02-PLAN.md — `EmailCaptureBlock` (cero JS de cliente) registrado en `posts.content`, factory de `richTextConverters` por-request, y el bloque insertado y verificado en un post real (Playwright)
+- [ ] 49-03-PLAN.md — Verificación Lighthouse antes/después de la ruta de post con el bloque contra el baseline de Phase 45 + cierre final de los 5 requirements de la fase
+
 **UI hint**: yes
 
 ### Phase 50: Gate de Cierre de Monetización
