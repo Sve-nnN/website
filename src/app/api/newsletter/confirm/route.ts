@@ -3,6 +3,7 @@ import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import { publicOrigin } from '@/lib/public-origin'
+import { mintDownloadToken } from '@/lib/download-token'
 
 // Local API + driver de Postgres: runtime Node, nunca Edge.
 export const runtime = 'nodejs'
@@ -59,6 +60,25 @@ export async function GET(request: NextRequest) {
           unsubscribedAt: null,
         },
       })
+    }
+
+    // Phase 49-01: un suscriptor con `leadMagnet` seteado vino por el flujo
+    // de lead magnet, no por el newsletter del blog — su clic de
+    // confirmación tiene que llevarlo a la descarga, no a `/blog`. El camino
+    // de arriba (update de status/confirmedAt/unsubscribedAt) es EXACTAMENTE
+    // el mismo para los dos flujos; esto solo decide a dónde redirige.
+    const leadMagnetId =
+      typeof subscriber?.leadMagnet === 'number'
+        ? subscriber.leadMagnet
+        : subscriber?.leadMagnet?.id
+
+    if (leadMagnetId) {
+      const localePrefix = subscriber?.locale === 'en' ? '/en' : ''
+      const downloadToken = reactivable ? mintDownloadToken(leadMagnetId) : 'invalid'
+      const target = new URL(`${localePrefix}/blog/confirm`, origin)
+      target.searchParams.set('token', downloadToken)
+
+      return NextResponse.redirect(target)
     }
 
     const target = new URL(

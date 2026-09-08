@@ -82,6 +82,7 @@ export interface Config {
     websites: Website;
     'affiliate-links': AffiliateLink;
     'affiliate-clicks': AffiliateClick;
+    'lead-magnets': LeadMagnet;
     redirects: Redirect;
     search: Search;
     'payload-mcp-api-keys': PayloadMcpApiKey;
@@ -107,6 +108,7 @@ export interface Config {
     websites: WebsitesSelect<false> | WebsitesSelect<true>;
     'affiliate-links': AffiliateLinksSelect<false> | AffiliateLinksSelect<true>;
     'affiliate-clicks': AffiliateClicksSelect<false> | AffiliateClicksSelect<true>;
+    'lead-magnets': LeadMagnetsSelect<false> | LeadMagnetsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
     'payload-mcp-api-keys': PayloadMcpApiKeysSelect<false> | PayloadMcpApiKeysSelect<true>;
@@ -1617,6 +1619,39 @@ export interface Subscriber {
   token?: string | null;
   confirmedAt?: string | null;
   unsubscribedAt?: string | null;
+  /**
+   * Por qué dejó el correo. Las filas de antes de Phase 49 quedan en `newsletter`.
+   */
+  optInReason: 'newsletter' | 'lead-magnet';
+  /**
+   * Solo tiene valor si `optInReason` es `lead-magnet`.
+   */
+  leadMagnet?: (number | null) | LeadMagnet;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * PDFs de lead magnet, uno por locale. El public_id de Cloudinary lo escribe el script de subida — no editar a mano.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lead-magnets".
+ */
+export interface LeadMagnet {
+  id: number;
+  title: string;
+  /**
+   * Identificador interno fijo (ej. "seo-audit-checklist") — nunca una URL pública.
+   */
+  slug: string;
+  locale: 'es' | 'en';
+  /**
+   * Nunca editar a mano — lo escribe el script de subida.
+   */
+  cloudinaryPublicId: string;
+  /**
+   * Nombre de archivo con el que se ofrece la descarga.
+   */
+  fileName: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -2112,6 +2147,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'affiliate-clicks';
         value: number | AffiliateClick;
+      } | null)
+    | ({
+        relationTo: 'lead-magnets';
+        value: number | LeadMagnet;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -3007,6 +3046,8 @@ export interface SubscribersSelect<T extends boolean = true> {
   token?: T;
   confirmedAt?: T;
   unsubscribedAt?: T;
+  optInReason?: T;
+  leadMagnet?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -3135,6 +3176,19 @@ export interface AffiliateLinksSelect<T extends boolean = true> {
 export interface AffiliateClicksSelect<T extends boolean = true> {
   slug?: T;
   userAgent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lead-magnets_select".
+ */
+export interface LeadMagnetsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  locale?: T;
+  cloudinaryPublicId?: T;
+  fileName?: T;
   updatedAt?: T;
   createdAt?: T;
 }

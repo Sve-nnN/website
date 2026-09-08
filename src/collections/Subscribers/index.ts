@@ -94,5 +94,31 @@ export const Subscribers: CollectionConfig = {
       type: 'date',
       admin: { readOnly: true },
     },
+    // Phase 49: campos aditivos para distinguir el alta al blog (2026-08-20)
+    // de un alta por lead magnet, sin duplicar esta colección. `optInReason`
+    // arranca en `newsletter` por default a propósito: preserva sin
+    // reinterpretar las filas que ya existían antes de este campo.
+    {
+      name: 'optInReason',
+      type: 'select',
+      required: true,
+      defaultValue: 'newsletter',
+      options: [
+        { label: 'Newsletter del blog', value: 'newsletter' },
+        { label: 'Lead magnet', value: 'lead-magnet' },
+      ],
+      admin: {
+        description: 'Por qué dejó el correo. Las filas de antes de Phase 49 quedan en `newsletter`.',
+      },
+    },
+    {
+      name: 'leadMagnet',
+      type: 'relationship',
+      relationTo: 'lead-magnets',
+      admin: {
+        description: 'Solo tiene valor si `optInReason` es `lead-magnet`.',
+        condition: (_, siblingData) => siblingData?.optInReason === 'lead-magnet',
+      },
+    },
   ],
 }

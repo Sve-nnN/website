@@ -37,6 +37,7 @@ import * as migration_20260905_060823_phase48_tool_stack_block from './20260905_
 import * as migration_20260907_033042_phase48_5_auditor_highlight from './20260907_033042_phase48_5_auditor_highlight';
 import * as migration_20260907_040039_phase48_5_auditor_callout from './20260907_040039_phase48_5_auditor_callout';
 import * as migration_20260907_042330_phase48_5_tool_stack_auditor_highlight from './20260907_042330_phase48_5_tool_stack_auditor_highlight';
+import * as migration_20260908_014507_phase49_subscribers_lead_magnets from './20260908_014507_phase49_subscribers_lead_magnets';
 
 export const migrations = [
   {
@@ -232,6 +233,11 @@ export const migrations = [
   {
     up: migration_20260907_042330_phase48_5_tool_stack_auditor_highlight.up,
     down: migration_20260907_042330_phase48_5_tool_stack_auditor_highlight.down,
-    name: '20260907_042330_phase48_5_tool_stack_auditor_highlight'
+    name: '20260907_042330_phase48_5_tool_stack_auditor_highlight',
+  },
+  {
+    up: migration_20260908_014507_phase49_subscribers_lead_magnets.up,
+    down: migration_20260908_014507_phase49_subscribers_lead_magnets.down,
+    name: '20260908_014507_phase49_subscribers_lead_magnets'
   },
 ];
