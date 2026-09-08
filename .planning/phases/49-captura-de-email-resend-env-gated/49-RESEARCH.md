@@ -391,7 +391,9 @@ Pattern source: `src/blocks/AffiliateInlineBlock/config.ts` (own read, this sess
 
 **If this table is empty:** N/A — see above.
 
-## Open Questions
+## Open Questions (RESOLVED — see 49-01/02/03-PLAN.md)
+
+Nota: los planes se apartan de la sugerencia de segmento `/blog/confirmar`↔`/blog/confirm` — usan un único `/blog/confirm` compartido entre locales (mismo patrón que `/stack`), decisión documentada en 49-02-PLAN.md.
 
 1. **Extend the existing `Subscribers`/confirm-route system, or build a parallel lead-magnet-only system?**
    - What we know: the existing system fully satisfies MAIL-02's double-opt-in invariants and lives in production; extending it is less code and less risk of divergent anti-enumeration behavior.
