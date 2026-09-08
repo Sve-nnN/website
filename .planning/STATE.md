@@ -1,10 +1,10 @@
 ---
 gsd_state_version: 1.0
 milestone: v2.1
-current_phase: 48.5
-current_phase_name: Auditor Destacado
+current_phase: 49
+current_phase_name: Captura de Email (Resend, env-gated)
 status: planning
-stopped_at: Completado 49-01-PLAN.md (schema aditivo + helpers de seguridad + mecanismo doble opt-in a descarga firmada, tracer verificado end-to-end)
+stopped_at: Completado 49-01-PLAN.md (schema aditivo + helpers de seguridad + mecanismo doble opt-in a descarga firmada, tracer verificado end-to-end). Juan aprobó el contenido de los 2 PDFs (checklist SEO técnico ES/EN) el 2026-09-08 -- nota: rediseño visual de los PDFs queda pendiente para más adelante, no bloquea el cierre de la fase.
 last_updated: "2026-09-08T03:07:48.427Z"
 last_activity: 2026-09-04
 last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."
