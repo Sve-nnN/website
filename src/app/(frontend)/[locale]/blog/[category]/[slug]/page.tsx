@@ -46,16 +46,42 @@ import { EN_TRANSLATION_INCOMPLETE, isEnTranslationIncomplete } from '@/lib/tran
 // real: el build de Dokploy corre en un contenedor sin red hacia
 // shared-postgres, asi que cualquier prerender en `next build` falla.
 //
-// ISR resuelve las dos cosas: `generateStaticParams` devuelve una lista VACIA,
+// ISR resolvia las dos cosas: `generateStaticParams` devuelve una lista VACIA,
 // o sea que el build no renderiza ni una ruta y nunca toca la base;
 // `dynamicParams` (true por defecto) deja que cada URL se renderice en la
 // primera visita y quede en la cache incremental, y de ahi salen las
-// siguientes. Verificado en el prerender-manifest: cero rutas prerenderizadas.
+// siguientes.
 //
-// La frescura no depende del TTL: los hooks de contenido llaman
-// `revalidatePath` (src/lib/cache-tags.ts), asi que publicar en el admin
-// actualiza la pagina sin esperar los 60 s. El TTL es la red de seguridad.
-export const revalidate = 60
+// [Phase 49-03] `export const revalidate` fijo ya NO es compatible con esta
+// pagina: desde que lee `searchParams` (Phase 49-02, para el estado
+// pending/already/error del EmailCaptureBlock), cualquier intento de Next de
+// generar la ruta estaticamente en el fallback ISR (primera visita a un path
+// no listado en generateStaticParams, con `isStaticGeneration=true`) revienta
+// con `DynamicServerError`/digest `DYNAMIC_SERVER_USAGE` en cuanto toca
+// `searchParams` — confirmado en produccion local (`node
+// .next/standalone/server.js`), no solo en teoria: la pagina devolvia 500 en
+// TODAS las rutas de post antes de este fix. La lectura de `searchParams` ya
+// fuerza render dinamico por si sola (clasificacion todo-o-nada de Next), asi
+// que declarar ademas un `revalidate` numerico es contradictorio, no
+// redundante. Se elimina el TTL; la frescura sigue dependiendo de
+// `revalidatePath` (src/lib/cache-tags.ts) en los hooks de contenido, que ya
+// era el mecanismo real (el TTL nunca fue mas que una red de seguridad, per
+// el comentario original). `getCachedPost()` sigue cacheando la lectura de
+// Postgres via `unstable_cache` sin importar la clasificacion de la ruta.
+//
+// Quitar solo `revalidate` NO alcanzo: con `generateStaticParams` devolviendo
+// una lista vacia y `dynamicParams` en su default (true), Next seguia
+// intentando tratar la primera visita a cada path como una generacion
+// estatica candidata a cachear (`isStaticGeneration=true` en esa pasada), y
+// leer `searchParams` ahi adentro sigue disparando el mismo
+// `DynamicServerError` sin importar que `revalidate` ya no exista
+// (confirmado: seguia devolviendo 500 tras quitar solo el TTL). `dynamic =
+// 'force-dynamic'` es la forma explicita de decirle a Next que esta ruta
+// nunca es candidata a generacion estatica/ISR — coincide ademas, mejor que
+// antes, con la garantia original del comentario de arriba (build de Dokploy
+// sin red hacia shared-postgres: con `force-dynamic` ninguna pagina de esta
+// ruta se toca durante `next build`, ni siquiera intenta).
+export const dynamic = 'force-dynamic'
 
 export function generateStaticParams(): Array<{ locale: string; category: string; slug: string }> {
   return []
