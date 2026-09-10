@@ -1,8 +1,9 @@
 ---
 phase: 50-gate-de-cierre-de-monetizaci-n
 verified: 2026-09-10T18:58:40Z
-status: human_needed
-score: 8/9 must-haves verified
+status: passed
+score: 9/9 must-haves verified
+human_decision: "accept — Juan confirmó 2026-09-10 que la evidencia indirecta (TTFB estable, CLS 0.00 limpio, JS-cliente 0KB limpio) alcanza para cerrar sin re-medición aislada"
 covered_files: [".planning/REQUIREMENTS.md", ".planning/phases/50-gate-de-cierre-de-monetizaci-n/50-01-PLAN.md", ".planning/phases/50-gate-de-cierre-de-monetizaci-n/50-01-SUMMARY.md", ".planning/phases/50-gate-de-cierre-de-monetizaci-n/50-02-PLAN.md", ".planning/phases/50-gate-de-cierre-de-monetizaci-n/50-02-SUMMARY.md", ".planning/phases/50-gate-de-cierre-de-monetizaci-n/50-03-PLAN.md", ".planning/phases/50-gate-de-cierre-de-monetizaci-n/50-03-SUMMARY.md", ".planning/phases/50-gate-de-cierre-de-monetizaci-n/50-REGRESSION-DIFF.md", ".planning/phases/50-gate-de-cierre-de-monetizaci-n/50-gate01-findings.md", ".planning/phases/50-gate-de-cierre-de-monetizaci-n/50-gate02-findings.md", "src/lib/cache.ts", "src/lib/sitemap-data.ts", "src/payload.config.ts"]
 covered_digest: "v1:sha256:2abbaeedaaf3a5866a4a04c2f9b9daa20321e75971f47db0587ff3306f344ab0"
 behavior_unverified: 0
@@ -17,8 +18,9 @@ human_verification:
 
 **Phase Goal:** El milestone cierra probando que la monetización no costó performance ni SEO — paridad medida contra el baseline de Phase 45 y las aserciones específicas de afiliación verificadas sobre el HTML realmente renderizado, no sobre lectura de código.
 **Verified:** 2026-09-10T18:58:40Z
-**Status:** human_needed
+**Status:** passed
 **Re-verification:** No — initial post-execution verification (no prior post-execution `*-VERIFICATION.md` existed; the pre-existing `50-VERIFICATION.md` was a pre-execution plan-verification artifact from `gsd-plan-checker`, with no frontmatter `status:` field, so it read as `missing` to `gsd_run query verification.status`)
+**Human decision (2026-09-10):** Juan respondió "accept" — la evidencia indirecta (TTFB real estable, CLS 0.00 limpio en 14/14, JS-cliente 0KB limpio) es suficiente para aceptar la explicación de contención de CPU en el Criterio 1 de GATE-01, sin re-medición aislada. Gate cerrado en firme.
 
 ## Goal Achievement
 
@@ -28,14 +30,14 @@ human_verification:
 |---|-------|--------|----------|
 | 1 | Delta de CLS es 0.00 en las 14 rutas críticas vs. baseline Phase 45 | ✓ VERIFIED | `50-gate01-findings.md` tabla líneas 27-46: 0.00 delta en 14/14 rutas sin excepción |
 | 2 | JS de cliente agregado por el milestone es ≤5 KB | ✓ VERIFIED | Grep estructural de `'use client'` sobre los 10 archivos de superficie de afiliación/email, re-corrido independientemente en este checkout (`grep -rl "use client" src/components/AffiliateLink.tsx src/components/AffiliateDisclosure.tsx src/components/AffiliateDisclosureFrame.tsx src/components/ToolCard.tsx src/components/GearCard.tsx src/components/AffiliateInlineCard.tsx src/blocks/AuditorHighlight/Component.tsx src/blocks/AuditorCallout/Component.tsx src/blocks/EmailCaptureBlock/Component.tsx "src/app/go/[slug]/route.ts"` → exit code 1, cero coincidencias) |
-| 3 | Ninguna ruta cae más de 5 puntos de performance ni cruza de banda de CWV vs. baseline Phase 45 | ? UNCERTAIN | `50-gate01-findings.md` tabla: 6/14 rutas caen >5 puntos de performance (hasta -35), 9/14 cruzan banda de TBT, 3/14 cruzan banda de LCP — violación literal del criterio. Explicación documentada (contención de CPU, TTFB estable vía curl 0.71s-1.09s vs. 0.71s-0.92s de Phase 45) es plausible y bien evidenciada, pero no confirmada por re-medición aislada ni por validación externa (PSI devolvió 429). Ver human_verification. |
+| 3 | Ninguna ruta cae más de 5 puntos de performance ni cruza de banda de CWV vs. baseline Phase 45 | ✓ ACCEPTED (human decision) | `50-gate01-findings.md` tabla: 6/14 rutas caen >5 puntos de performance (hasta -35), 9/14 cruzan banda de TBT, 3/14 cruzan banda de LCP — violación literal del criterio en datos crudos. Explicación documentada (contención de CPU, TTFB estable vía curl 0.71s-1.09s vs. 0.71s-0.92s de Phase 45) fue aceptada por Juan 2026-09-10 sin re-medición aislada — ver human_decision arriba. |
 | 4 | Cero anchors de afiliado sin `rel="sponsored nofollow noopener"` en todas las superficies medidas | ✓ VERIFIED | Spot-check independiente contra producción viva: `curl -s https://juan-tech.com/stack` → 19 anchors `rel="sponsored nofollow noopener"` exactos; `curl -s https://juan-tech.com/en/stack` → 19 anchors idénticos. Coincide con el hallazgo de `50-gate02-findings.md` (19/19 + 1/1 en post con `affiliate-inline`) |
 | 5 | Disclosure precede al primer anchor de afiliado en orden del DOM | ✓ VERIFIED | Spot-check independiente: offset de `role="note"` (9726) < offset del primer `rel="sponsored nofollow noopener"` (13060) en `/stack` es; marcador de disclosure confirmado presente en `/en/stack` también |
 | 6 | Ningún link de Amazon pasa por `/go/` | ✓ VERIFIED (vacuously) | `50-gate02-findings.md`: 0 de 7 docs reales en `affiliate-links` tienen `program: 'amazon'`; Amazon se renderiza siempre directo vía `GearCard` |
 | 7 | Paridad de locales por dato (destinations[] y disclosure distintos por locale donde corresponde) | ✓ VERIFIED | `50-gate02-findings.md`: `destinations[]` con URLs distintas por marketplace (dataforseo 3, dinorank 2); disclosure de Amazon con copy distinto ES/EN en `messages/*.json`. Spot-check: `/en/stack` en vivo devuelve 200 con 19 anchors sponsored y disclosure presente, igual que `/stack` es |
 | 8 | `overrideAccess: false` (o exención documentada) en cada `payload.find(`/`findByID(`/`findGlobal(` de `src/lib/cache.ts`, y `subscribers`/`affiliate-clicks`/`lead-magnets` ausentes de `SITEMAP_COLLECTIONS`/`mcpPlugin` | ✓ VERIFIED | Re-grep independiente de `src/lib/cache.ts`: 13 llamadas totales, 12 con `overrideAccess: false` explícito, 1 excepción (`getCachedFeaturedContent`, línea 70) con comentario de exención inline confirmado en el propio archivo. `grep SITEMAP_COLLECTIONS` y el bloque `mcpPlugin` en `src/payload.config.ts`: 0 coincidencias de `subscribers`/`affiliate-clicks`/`lead-magnets` en ambos |
 
-**Score:** 8/9 truths verified (1 uncertain, routed to human verification)
+**Score:** 9/9 truths verified (1 accepted via explicit human decision — see human_decision above)
 
 ### Required Artifacts
 

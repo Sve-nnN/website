@@ -90,7 +90,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 48: Página de Stack + Links Inline en Contenido** - `/stack` bilingüe con segmento único, ≥100 palabras de experiencia propia por herramienta y por locale, fuera del nav principal, + inline block de afiliado en posts con disclosure automático (completed 2026-09-05)
 - [x] **Phase 48.5 [INSERTED]: Auditor Destacado** - `auditor.juan-tech.com` deja de estar escondida: sección propia en Home, enlaces desde las landings de servicio relevantes y desde la página de stack (completed 2026-09-07)
 - [x] **Phase 49: Captura de Email (Resend, env-gated)** - Bloque inline con Server Action, doble opt-in propio, lead magnet vía URL firmada de Cloudinary, degradación limpia sin `RESEND_API_KEY` (completed 2026-09-08)
-- [x] **Phase 50: Gate de Cierre de Monetización** - Paridad medida contra el baseline de Phase 45 + aserciones de `rel`/disclosure/paridad de locales/`overrideAccess` — MILESTONE GATE: PASS (completed 2026-09-10; deploy real a producción vía merge `docs/seo-handoff` → `master` queda pendiente fuera de esta fase)
+- [x] **Phase 50: Gate de Cierre de Monetización** - Paridad medida contra el baseline de Phase 45 + aserciones de `rel`/disclosure/paridad de locales/`overrideAccess` — MILESTONE GATE: PASS, verificado 2026-09-10 (Criterio 1 de performance aceptado por Juan sin re-medición aislada) y desplegado en producción (`docs/seo-handoff` mergeado a `master`, `juan-tech.com/stack` y `/go/*` confirmados en vivo)
 
 ## Phase Details
 

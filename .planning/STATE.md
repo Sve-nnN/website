@@ -3,17 +3,17 @@ gsd_state_version: "1.0"
 milestone: v2.1
 current_phase: 50
 current_phase_name: Gate de Cierre de Monetización
-status: planning
-stopped_at: "Completado 50-03-PLAN.md -- Phase 50 cerrada, milestone v2.1 tecnicamente cerrado (MILESTONE GATE: PASS)"
-last_updated: "2026-09-10T18:15:21.405Z"
+status: verified
+stopped_at: "Phase 50 verificada (post-execution VERIFICATION.md: status passed, 9/9). Milestone v2.1 cerrado en firme y desplegado en produccion."
+last_updated: "2026-09-10T19:30:00.000Z"
 last_activity: 2026-09-10
-last_activity_desc: "Phase 50 (Gate de Cierre de Monetizacion) cerrada 3/3: GATE-01 re-medido contra baseline Phase 45 (CLS 0.00 y JS-cliente 0KB limpios, salvedad de medicion documentada en performance/TBT por contencion de CPU); GATE-02 crawl real de afiliacion (sponsored/disclosure/go-route/overrideAccess) PASS limpio. 50-03 sintetizo ambos veredictos en 50-REGRESSION-DIFF.md: MILESTONE GATE: PASS. REQUIREMENTS.md actualizado (GATE-01/GATE-02 Complete). Hallazgo critico pendiente: docs/seo-handoff sigue sin mergear a master (Dokploy solo despliega desde master), asi que el milestone v2.1 esta tecnicamente cerrado pero no desplegado en juan-tech.com todavia."
-state_head: ab0cbff54b336b7375bff3b940fc8a4b35f6d013
+last_activity_desc: "Verificacion post-execution de Phase 50 completada: GATE-02 (afiliacion) confirmado en vivo contra juan-tech.com/stack (19 anchors rel=sponsored nofollow noopener por locale, disclosure antes en DOM, overrideAccess correcto, colecciones privadas excluidas de sitemap/mcp). GATE-01 CLS 0.00 y JS-cliente 0KB confirmados 14/14 rutas. Unico punto abierto (Criterio 1 performance/LCP/TBT, 6/14 rutas fuera de banda por contencion de CPU durante el crawl paralelo) resuelto: Juan acepto la evidencia indirecta (TTFB estable, CLS/JS limpios) sin re-medicion aislada. Hallazgo positivo: docs/seo-handoff ya esta mergeado a master y Dokploy ya sirve el milestone completo en produccion (/stack y /go/* responden en vivo) -- el gap de deploy que preocupaba en el corte anterior ya no existe. Milestone v2.1 (Phases 44-50) queda tecnicamente cerrado, verificado y desplegado."
+state_head: e44b115
 progress:
   total_phases: 51
-  completed_phases: 7
+  completed_phases: 8
   total_plans: 19
-  completed_plans: 18
+  completed_plans: 19
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
@@ -24,14 +24,14 @@ milestone_name: Monetizacion del Sitio - Research + Fundaciones
 See: .planning/PROJECT.md (updated 2026-07-31)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 50 — Gate de Cierre de Monetización (milestone v2.1, Phases 44-50) — CERRADA, milestone v2.1 tecnicamente completo
+**Current focus:** Milestone v2.1 (Monetización, Phases 44-50) — CERRADO, VERIFICADO Y DESPLEGADO en producción (juan-tech.com)
 
 ## Current Position
 
 Phase: 50 — Gate de Cierre de Monetización (Phase 49 cerrada 2026-09-08; Phase 48 y 48.5 cerradas; Phase 47 cerrada 2026-09-04; Phase 46 cerrada; Phase 45 cerrada 2026-09-03; Phase 44 cerrada 2026-08-30) — **Phase 50 cerrada (3/3 plans), milestone v2.1 (Phases 44-50) tecnicamente cerrado**
 Plan: 50-03 — completo (sintesis final de GATE-01 + GATE-02 en `50-REGRESSION-DIFF.md`: **MILESTONE GATE: PASS**; REQUIREMENTS.md actualizado con GATE-01/GATE-02 marcados Complete; Task 3 checkpoint saltado por no haber FAIL)
 Status: 50-03 verificado de punta a punta. Task 1: leidos `50-gate01-findings.md` y `50-gate02-findings.md` completos, veredicto explicito por cada uno de los 4 Success Criteria del ROADMAP Phase 50 (perf/CWV/CLS/JS-cliente PASS con salvedad de medicion por contencion de CPU; sponsored/disclosure/go-route PASS limpio; paridad de locales PASS limpio; overrideAccess/exclusion de colecciones PASS limpio) -- `50-REGRESSION-DIFF.md` con `MILESTONE GATE: PASS`. Task 2: `Edit` (no `Write`) sobre REQUIREMENTS.md, GATE-01 pasado de Pending/`[ ]` a Complete/`[x]` (GATE-02 ya estaba Complete de una edicion previa); `50-FAIL-CHECKPOINT.md` no se creo, confirmando la rama PASS. Hallazgo critico propagado y no resuelto en esta fase: `docs/seo-handoff` sigue 106-110 commits por delante de `master`, Dokploy solo despliega desde `master`, asi que ninguna superficie de Phases 46-49 (`/stack`, `/go/*`, disclosure, AuditorHighlight, EmailCaptureBlock) esta hoy en `juan-tech.com` -- el gate certifica el codigo, no el deploy real. Siguiente paso operativo fuera de esta fase: mergear `docs/seo-handoff` a `master` para que Dokploy despliegue el milestone completo.
-Last activity: 2026-09-10 — Phase 50 Plan 03 ejecutado y verificado; Phase 50 cerrada; milestone v2.1 tecnicamente cerrado (deploy real pendiente).
+Last activity: 2026-09-10 — Verificación post-execution de Phase 50 completada (status: passed, 9/9). Juan aceptó la salvedad de medición del Criterio 1 (performance/LCP/TBT) sin re-medición aislada. Milestone v2.1 cerrado en firme; docs/seo-handoff ya está mergeado a master y desplegado en juan-tech.com (/stack y /go/* confirmados en vivo) — el deploy real ya no está pendiente.
 Previa: Phase 50 Plan 02 completo 2026-09-10 (GATE-02 PASS: crawl real de afiliacion sobre HTML servido por build local contra Postgres real de Dokploy via tunel SSH, porque el codigo del milestone no esta desplegado a `master` todavia).
 
 ## Performance Metrics
