@@ -1,0 +1,214 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "capturedAt": "2026-09-08T04:31:11.710Z",
+  "methodologyNote": "Comparación (a) plana vs (b) ?subscribed=pending sobre la MISMA ruta y el MISMO build local (scripts/lighthouse-mobile.mjs, mediana de 3, escalado a 5 si spread>15 — mismo patrón que 45-02-PLAN.md). Phase 45 no tiene ninguna ruta de post en su baseline de 14 rutas; comparar un build local contra sus números (capturados contra producción live) sería ademas metodológicamente inválido por la ruta elegida. Por eso el gate estricto de GATE-01 se aplica al delta (a)->(b), y los números absolutos de (a) se reportan solo como contexto frente al rango de Phase 45.",
+  "es": {
+    "routeA": "/blog/tech-seo/technical-seo-checklist",
+    "routeB": "/blog/tech-seo/technical-seo-checklist?subscribed=pending",
+    "medianA": {
+      "performance": 77,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100,
+      "lcpMs": 3641,
+      "cls": 0.012,
+      "tbtMs": 160
+    },
+    "medianB": {
+      "performance": 81,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100,
+      "lcpMs": 3430,
+      "cls": 0.012,
+      "tbtMs": 71
+    },
+    "rawA": [
+      {
+        "performance": 77,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "lcpMs": 3705,
+        "cls": 0.012,
+        "tbtMs": 160
+      },
+      {
+        "performance": 77,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "lcpMs": 3641,
+        "cls": 0.012,
+        "tbtMs": 184
+      },
+      {
+        "performance": 80,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "lcpMs": 3640,
+        "cls": 0.012,
+        "tbtMs": 78
+      }
+    ],
+    "rawB": [
+      {
+        "performance": 80,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "lcpMs": 3542,
+        "cls": 0.012,
+        "tbtMs": 71
+      },
+      {
+        "performance": 82,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "lcpMs": 3147,
+        "cls": 0.012,
+        "tbtMs": 148
+      },
+      {
+        "performance": 81,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "lcpMs": 3430,
+        "cls": 0.012,
+        "tbtMs": 13
+      }
+    ],
+    "escalatedA": false,
+    "escalatedB": false
+  },
+  "en": {
+    "routeA": "/en/blog/tech-seo/technical-seo-checklist",
+    "routeB": "/en/blog/tech-seo/technical-seo-checklist?subscribed=pending",
+    "medianA": {
+      "performance": 80,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100,
+      "lcpMs": 3571,
+      "cls": 0.012,
+      "tbtMs": 85
+    },
+    "medianB": {
+      "performance": 81,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100,
+      "lcpMs": 3516,
+      "cls": 0.012,
+      "tbtMs": 47
+    },
+    "rawA": [
+      {
+        "performance": 80,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "lcpMs": 3571,
+        "cls": 0.012,
+        "tbtMs": 85
+      },
+      {
+        "performance": 79,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "lcpMs": 3611,
+        "cls": 0.012,
+        "tbtMs": 129
+      },
+      {
+        "performance": 81,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "lcpMs": 3462,
+        "cls": 0.012,
+        "tbtMs": 30
+      }
+    ],
+    "rawB": [
+      {
+        "performance": 81,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "lcpMs": 3535,
+        "cls": 0.012,
+        "tbtMs": 47
+      },
+      {
+        "performance": 80,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "lcpMs": 3516,
+        "cls": 0.012,
+        "tbtMs": 122
+      },
+      {
+        "performance": 81,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100,
+        "lcpMs": 3449,
+        "cls": 0.012,
+        "tbtMs": 39
+      }
+    ],
+    "escalatedA": false,
+    "escalatedB": false
+  },
+  "gate": {
+    "es": {
+      "perfDrop": -4,
+      "lcpBandA": "needs-improvement",
+      "lcpBandB": "needs-improvement",
+      "tbtBandA": "good",
+      "tbtBandB": "good",
+      "clsBandA": "good",
+      "clsBandB": "good",
+      "clsDelta": 0,
+      "reasons": []
+    },
+    "en": {
+      "perfDrop": -1,
+      "lcpBandA": "needs-improvement",
+      "lcpBandB": "needs-improvement",
+      "tbtBandA": "good",
+      "tbtBandB": "good",
+      "clsBandA": "good",
+      "clsBandB": "good",
+      "clsDelta": 0,
+      "reasons": []
+    },
+    "perfDrop": -4,
+    "lcpBandA": "needs-improvement",
+    "lcpBandB": "needs-improvement",
+    "tbtBandA": "good",
+    "tbtBandB": "good",
+    "clsBandA": "good",
+    "clsBandB": "good",
+    "clsDelta": 0,
+    "reasons": []
+  },
+  "phase45ContextRange": {
+    "performance": [
+      64,
+      87
+    ],
+    "lcpMsWorstBand": "poor (hasta 5461ms observado en /)",
+    "clsAllGood": true,
+    "tbtRangeMs": [
+      30,
+      202
+    ]
+  }
+}

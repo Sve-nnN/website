@@ -1,0 +1,784 @@
+{
+  "/": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Construyo software rápido y hago que se encuentre en Google"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Person",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://juan-tech.com/#person",
+          "name": "Juan Carlos Angulo",
+          "jobTitle": "Ingeniero de Software y Consultor SEO Técnico",
+          "url": "https://juan-tech.com",
+          "mainEntityOfPage": "https://juan-tech.com/authors/juan-carlos-angulo",
+          "sameAs": [
+            "https://linkedin.com/in/juancangulo",
+            "https://github.com/sve-nnn",
+            "https://juan-tech.com"
+          ],
+          "image": "https://res.cloudinary.com/dmufha3qv/image/upload/f_auto,q_auto/v1/media/juan-carlos-angulo-avatar-v3?_a=BAMABkWO0",
+          "description": "Soy Juan Carlos Angulo, Ingeniero de Software y Consultor SEO Técnico freelance con sede en Lima, Perú. A lo largo de más de cuatro años de experiencia profesional me he especializado en la intersección entre el desarrollo de software y la optimización para motores de búsqueda.\n\nMi trabajo combina la auditoría técnica SEO (rastreo, indexabilidad, Core Web Vitals, Schema.org y datos estructurados) con el desarrollo full-stack usando Next.js y Payload CMS. Ayudo a empresas a mejorar su visibilidad orgánica con correcciones directas a nivel de código, sin intermediarios. Construyo y mantengo juan-tech.com, un blog técnico bilingüe para desarrolladores y profesionales de tecnología en Latinoamérica y España.",
+          "knowsAbout": [
+            "SEO Técnico Avanzado (Rastreo e indexación)",
+            "Rendimiento Web (WPO & Core Web Vitals)",
+            "Algoritmia y Estructuras de Datos",
+            "Optimización de Tasa de Conversión (CRO)"
+          ],
+          "hasCredential": [
+            {
+              "@type": "EducationalOccupationalCredential",
+              "name": "Técnico en informática",
+              "recognizedBy": {
+                "@type": "Organization",
+                "name": "Universidad Politécnica Territorial del Estado Bolívar"
+              },
+              "datePublished": "2020-08-01T00:00:00.000Z"
+            }
+          ],
+          "alumniOf": [
+            {
+              "@type": "CollegeOrUniversity",
+              "name": "Universidad Peruana de Ciencias Aplicadas (UPC)"
+            }
+          ]
+        }
+      },
+      {
+        "type": "WebSite",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://juan-tech.com/#website",
+          "name": "Juan Tech",
+          "url": "https://juan-tech.com",
+          "description": "Blog técnico bilingüe y portfolio de Juan Carlos Angulo, ingeniero de software y consultor SEO técnico.",
+          "inLanguage": [
+            "es",
+            "en"
+          ],
+          "publisher": {
+            "@id": "https://juan-tech.com/#person"
+          },
+          "author": {
+            "@id": "https://juan-tech.com/#person"
+          }
+        }
+      },
+      {
+        "type": "ProfessionalService",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "@id": "https://juan-tech.com/#business",
+          "name": "Juan Carlos Angulo — SEO técnico y desarrollo web",
+          "url": "https://juan-tech.com",
+          "description": "Auditoría SEO técnica, consultoría SEO, desarrollo full-stack con Next.js y Payload CMS, y optimización para buscadores con IA.",
+          "founder": {
+            "@id": "https://juan-tech.com/#person"
+          },
+          "employee": {
+            "@id": "https://juan-tech.com/#person"
+          },
+          "areaServed": [
+            {
+              "@type": "City",
+              "name": "Lima"
+            },
+            {
+              "@type": "City",
+              "name": "Madrid"
+            }
+          ],
+          "knowsLanguage": [
+            {
+              "@type": "Language",
+              "name": "Spanish",
+              "alternateName": "es"
+            },
+            {
+              "@type": "Language",
+              "name": "English",
+              "alternateName": "en"
+            }
+          ],
+          "mainEntityOfPage": "https://juan-tech.com/servicios"
+        }
+      }
+    ]
+  },
+  "/en": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Construyo software rápido y hago que se encuentre en Google"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Person",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Person",
+          "@id": "https://juan-tech.com/#person",
+          "name": "Juan Carlos Angulo",
+          "jobTitle": "Software Engineer & Technical SEO Consultant",
+          "url": "https://juan-tech.com",
+          "mainEntityOfPage": "https://juan-tech.com/authors/juan-carlos-angulo",
+          "sameAs": [
+            "https://linkedin.com/in/juancangulo",
+            "https://github.com/sve-nnn",
+            "https://juan-tech.com"
+          ],
+          "image": "https://res.cloudinary.com/dmufha3qv/image/upload/f_auto,q_auto/v1/media/juan-carlos-angulo-avatar-v3?_a=BAMABkWO0",
+          "description": "I'm Juan Carlos Angulo, a Software Engineer and Technical SEO Consultant based in Lima, Peru, with over four years of professional experience. My work sits at the intersection of software development and search engine optimization: technical SEO audits (crawlability, Core Web Vitals, Schema.org, indexation) combined with full-stack development in Next.js and Payload CMS. I help businesses grow their organic visibility by fixing issues directly in the code, no intermediaries involved. I also run juan-tech.com, a bilingual technical blog for developers and tech professionals across Latin America and Spain.",
+          "knowsAbout": [
+            "Advanced Technical SEO (Crawling & Indexing)",
+            "Web Performance (WPO & Core Web Vitals)",
+            "Algorithms & Data Structures",
+            "Conversion Rate Optimization (CRO)"
+          ],
+          "hasCredential": [
+            {
+              "@type": "EducationalOccupationalCredential",
+              "name": "IT Technician",
+              "recognizedBy": {
+                "@type": "Organization",
+                "name": "Universidad Politécnica Territorial del Estado Bolívar"
+              },
+              "datePublished": "2020-08-01T00:00:00.000Z"
+            }
+          ],
+          "alumniOf": [
+            {
+              "@type": "CollegeOrUniversity",
+              "name": "Universidad Peruana de Ciencias Aplicadas (UPC)"
+            }
+          ]
+        }
+      },
+      {
+        "type": "WebSite",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://juan-tech.com/#website",
+          "name": "Juan Tech",
+          "url": "https://juan-tech.com",
+          "description": "Bilingual technical blog and portfolio of Juan Carlos Angulo, software engineer and technical SEO consultant.",
+          "inLanguage": [
+            "es",
+            "en"
+          ],
+          "publisher": {
+            "@id": "https://juan-tech.com/#person"
+          },
+          "author": {
+            "@id": "https://juan-tech.com/#person"
+          }
+        }
+      },
+      {
+        "type": "ProfessionalService",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "ProfessionalService",
+          "@id": "https://juan-tech.com/#business",
+          "name": "Juan Carlos Angulo — Technical SEO and web development",
+          "url": "https://juan-tech.com",
+          "description": "Technical SEO audits, SEO consulting, full-stack development with Next.js and Payload CMS, and optimisation for AI search engines.",
+          "founder": {
+            "@id": "https://juan-tech.com/#person"
+          },
+          "employee": {
+            "@id": "https://juan-tech.com/#person"
+          },
+          "areaServed": [
+            {
+              "@type": "City",
+              "name": "Lima"
+            },
+            {
+              "@type": "City",
+              "name": "Madrid"
+            }
+          ],
+          "knowsLanguage": [
+            {
+              "@type": "Language",
+              "name": "Spanish",
+              "alternateName": "es"
+            },
+            {
+              "@type": "Language",
+              "name": "English",
+              "alternateName": "en"
+            }
+          ],
+          "mainEntityOfPage": "https://juan-tech.com/servicios"
+        }
+      }
+    ]
+  },
+  "/servicios/seo-technical-audit": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Auditoría SEO Técnica"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Service",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Auditoría SEO Técnica",
+          "description": "Auditoría técnica SEO completa: rastreo, indexación, Core Web Vitals y datos estructurados, con un plan de corrección priorizado por impacto real.",
+          "url": "https://juan-tech.com/servicios/seo-technical-audit",
+          "provider": {
+            "@type": "Person",
+            "name": "Juan Carlos Angulo",
+            "url": "https://juan-tech.com"
+          },
+          "serviceType": "Auditoría SEO Técnica"
+        }
+      },
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://juan-tech.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Servicios",
+              "item": "https://juan-tech.com/servicios"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Auditoría SEO Técnica",
+              "item": "https://juan-tech.com/servicios/seo-technical-audit"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/servicios/seo-consulting": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Consultoría SEO"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Service",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Consultoría SEO",
+          "description": "Consultoría SEO continua para equipos que necesitan alguien que entienda tanto el código como el posicionamiento, sin traducir entre agencia y desarrollo.",
+          "url": "https://juan-tech.com/servicios/seo-consulting",
+          "provider": {
+            "@type": "Person",
+            "name": "Juan Carlos Angulo",
+            "url": "https://juan-tech.com"
+          },
+          "serviceType": "Consultoría SEO"
+        }
+      },
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://juan-tech.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Servicios",
+              "item": "https://juan-tech.com/servicios"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Consultoría SEO",
+              "item": "https://juan-tech.com/servicios/seo-consulting"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/servicios/fullstack-development": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Desarrollo Full-Stack con SEO integrado"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Service",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Desarrollo Full-Stack con SEO integrado",
+          "description": "Desarrollo full-stack con Next.js y Payload CMS, pensado desde el primer commit para que el sitio rinda bien y sea indexable sin parches después.",
+          "url": "https://juan-tech.com/servicios/fullstack-development",
+          "provider": {
+            "@type": "Person",
+            "name": "Juan Carlos Angulo",
+            "url": "https://juan-tech.com"
+          },
+          "serviceType": "Desarrollo Full-Stack con SEO integrado"
+        }
+      },
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://juan-tech.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Servicios",
+              "item": "https://juan-tech.com/servicios"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Desarrollo Full-Stack con SEO integrado",
+              "item": "https://juan-tech.com/servicios/fullstack-development"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/servicios/ai-seo-geo": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "SEO para IA / GEO"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Service",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "SEO para IA / GEO",
+          "description": "Optimización para que tu contenido sea citado por ChatGPT, Perplexity y las respuestas de IA de Google, además del ranking tradicional en buscadores.",
+          "url": "https://juan-tech.com/servicios/ai-seo-geo",
+          "provider": {
+            "@type": "Person",
+            "name": "Juan Carlos Angulo",
+            "url": "https://juan-tech.com"
+          },
+          "serviceType": "SEO para IA / GEO"
+        }
+      },
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Inicio",
+              "item": "https://juan-tech.com"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Servicios",
+              "item": "https://juan-tech.com/servicios"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "SEO para IA / GEO",
+              "item": "https://juan-tech.com/servicios/ai-seo-geo"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/en/services/seo-technical-audit": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Technical SEO Audit"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Service",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Technical SEO Audit",
+          "description": "Full technical SEO audit: crawling, indexation, Core Web Vitals, and structured data, with a fix plan prioritized by real impact.",
+          "url": "https://juan-tech.com/en/services/seo-technical-audit",
+          "provider": {
+            "@type": "Person",
+            "name": "Juan Carlos Angulo",
+            "url": "https://juan-tech.com"
+          },
+          "serviceType": "Technical SEO Audit"
+        }
+      },
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://juan-tech.com/en"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services",
+              "item": "https://juan-tech.com/en/services"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Technical SEO Audit",
+              "item": "https://juan-tech.com/en/services/seo-technical-audit"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/en/services/seo-consulting": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "SEO Consulting"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Service",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "SEO Consulting",
+          "description": "Ongoing SEO consulting for teams that need someone who understands both the code and the rankings, no translation layer between agency and dev.",
+          "url": "https://juan-tech.com/en/services/seo-consulting",
+          "provider": {
+            "@type": "Person",
+            "name": "Juan Carlos Angulo",
+            "url": "https://juan-tech.com"
+          },
+          "serviceType": "SEO Consulting"
+        }
+      },
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://juan-tech.com/en"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services",
+              "item": "https://juan-tech.com/en/services"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "SEO Consulting",
+              "item": "https://juan-tech.com/en/services/seo-consulting"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/en/services/fullstack-development": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Full-Stack Development with SEO Built In"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Service",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "Full-Stack Development with SEO Built In",
+          "description": "Full-stack development with Next.js and Payload CMS, built from the first commit to perform well and stay indexable without patches later.",
+          "url": "https://juan-tech.com/en/services/fullstack-development",
+          "provider": {
+            "@type": "Person",
+            "name": "Juan Carlos Angulo",
+            "url": "https://juan-tech.com"
+          },
+          "serviceType": "Full-Stack Development with SEO Built In"
+        }
+      },
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://juan-tech.com/en"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services",
+              "item": "https://juan-tech.com/en/services"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Full-Stack Development with SEO Built In",
+              "item": "https://juan-tech.com/en/services/fullstack-development"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/en/services/ai-seo-geo": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "AI SEO / GEO"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Service",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "AI SEO / GEO",
+          "description": "Optimization so your content gets cited by ChatGPT, Perplexity, and Google AI answers, on top of traditional search rankings.",
+          "url": "https://juan-tech.com/en/services/ai-seo-geo",
+          "provider": {
+            "@type": "Person",
+            "name": "Juan Carlos Angulo",
+            "url": "https://juan-tech.com"
+          },
+          "serviceType": "AI SEO / GEO"
+        }
+      },
+      {
+        "type": "BreadcrumbList",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://juan-tech.com/en"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Services",
+              "item": "https://juan-tech.com/en/services"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "AI SEO / GEO",
+              "item": "https://juan-tech.com/en/services/ai-seo-geo"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "/seo-tecnico-madrid": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "SEO Técnico en Madrid / España"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Service",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "@id": "https://juan-tech.com/seo-tecnico-madrid#service",
+          "name": "SEO Técnico en Madrid / España",
+          "description": "SEO técnico para negocios en Madrid: auditorías, SEO local y contenido que compite de verdad contra la competencia real de la ciudad.",
+          "serviceType": "SEO técnico",
+          "provider": {
+            "@id": "https://juan-tech.com/#business"
+          },
+          "url": "https://juan-tech.com/seo-tecnico-madrid",
+          "areaServed": {
+            "@type": "City",
+            "name": "Madrid",
+            "containedInPlace": {
+              "@type": "Country",
+              "name": "ES"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "/seo-tecnico-lima": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "SEO Técnico en Lima"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Service",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "@id": "https://juan-tech.com/seo-tecnico-lima#service",
+          "name": "SEO Técnico en Lima",
+          "description": "SEO técnico para negocios en Lima: auditorías, SEO local y contenido que compite de verdad contra la competencia real de la ciudad.",
+          "serviceType": "SEO técnico",
+          "provider": {
+            "@id": "https://juan-tech.com/#business"
+          },
+          "url": "https://juan-tech.com/seo-tecnico-lima",
+          "areaServed": {
+            "@type": "City",
+            "name": "Lima",
+            "containedInPlace": {
+              "@type": "Country",
+              "name": "PE"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "/en/seo-tecnico-madrid": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Technical SEO in Madrid / Spain"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Service",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "@id": "https://juan-tech.com/en/seo-tecnico-madrid#service",
+          "name": "Technical SEO in Madrid / Spain",
+          "description": "Technical SEO for businesses in Madrid: audits, local SEO, and content that actually competes against the city’s real competition.",
+          "serviceType": "Technical SEO",
+          "provider": {
+            "@id": "https://juan-tech.com/#business"
+          },
+          "url": "https://juan-tech.com/en/seo-tecnico-madrid",
+          "areaServed": {
+            "@type": "City",
+            "name": "Madrid",
+            "containedInPlace": {
+              "@type": "Country",
+              "name": "ES"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "/en/seo-tecnico-lima": {
+    "h1": {
+      "count": 1,
+      "texts": [
+        "Technical SEO in Lima"
+      ]
+    },
+    "jsonLd": [
+      {
+        "type": "Service",
+        "raw": {
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "@id": "https://juan-tech.com/en/seo-tecnico-lima#service",
+          "name": "Technical SEO in Lima",
+          "description": "Technical SEO for businesses in Lima: audits, local SEO, and content that actually competes against the city’s real competition.",
+          "serviceType": "Technical SEO",
+          "provider": {
+            "@id": "https://juan-tech.com/#business"
+          },
+          "url": "https://juan-tech.com/en/seo-tecnico-lima",
+          "areaServed": {
+            "@type": "City",
+            "name": "Lima",
+            "containedInPlace": {
+              "@type": "Country",
+              "name": "PE"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

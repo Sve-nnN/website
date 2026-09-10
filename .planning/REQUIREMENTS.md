@@ -9,9 +9,9 @@
 
 ### Baseline de Regresión
 
-- [ ] **BASE-01**: Existe un baseline de Lighthouse/CWV + H1 + JSON-LD + canonical/hreflang de las rutas críticas (Home, 4 landings de servicio, 2 geo, ambos locales) capturado **antes** de cualquier cambio renderizado, siguiendo el patrón REG-01/REG-02 de v1.7
-- [ ] **BASE-02**: Existe un snapshot de Search Console (impresiones, clics, posición media) de esas mismas rutas, para poder distinguir después "la monetización diluyó el clúster de servicios" de estacionalidad
-- [ ] **BASE-03**: El tráfico mensual real del sitio queda documentado con número, porque dos programas (Semrush, Hostinger afiliados) se gatean en ~1.000 visitas únicas y el modelo de ingresos se parametriza sobre ese valor
+- [x] **BASE-01**: Existe un baseline de Lighthouse/CWV + H1 + JSON-LD + canonical/hreflang de las rutas críticas (Home, 4 landings de servicio, 2 geo, ambos locales) capturado **antes** de cualquier cambio renderizado, siguiendo el patrón REG-01/REG-02 de v1.7
+- [x] **BASE-02**: Existe un snapshot de Search Console (impresiones, clics, posición media) de esas mismas rutas, para poder distinguir después "la monetización diluyó el clúster de servicios" de estacionalidad
+- [x] **BASE-03**: El tráfico mensual real del sitio queda documentado con número, porque dos programas (Semrush, Hostinger afiliados) se gatean en ~1.000 visitas únicas y el modelo de ingresos se parametriza sobre ese valor
 
 ### Decisiones y Postulaciones
 
@@ -23,65 +23,65 @@
 
 ### Legal y Disclosure
 
-- [ ] **LEG-01**: Un componente de disclosure bilingüe se renderiza **antes** del primer link de afiliado en orden del DOM, con la copia en `messages/{es,en}.json` y no en contenido del CMS
-- [ ] **LEG-02**: La frase textual de Amazon ("As an Amazon Associate I earn from qualifying purchases." y su versión en español) aparece donde haya links de Amazon
-- [ ] **LEG-03**: `/privacy` queda actualizada cubriendo el formulario de email, Resend como encargado del tratamiento, retención de datos y proceso de baja
-- [ ] **LEG-04**: Queda escrita como restricción del milestone la prohibición de cualquier tracking que dispare consentimiento — sin GA4, sin píxeles, sin IDs de clic por usuario, sin `document.cookie`/`localStorage` en la ruta de afiliado
+- [x] **LEG-01**: Un componente de disclosure bilingüe se renderiza **antes** del primer link de afiliado en orden del DOM, con la copia en `messages/{es,en}.json` y no en contenido del CMS
+- [x] **LEG-02**: La frase textual de Amazon ("As an Amazon Associate I earn from qualifying purchases." y su versión en español) aparece donde haya links de Amazon
+- [x] **LEG-03**: `/privacy` queda actualizada cubriendo el formulario de email, Resend como encargado del tratamiento, retención de datos y proceso de baja
+- [x] **LEG-04**: Queda escrita como restricción del milestone la prohibición de cualquier tracking que dispare consentimiento — sin GA4, sin píxeles, sin IDs de clic por usuario, sin `document.cookie`/`localStorage` en la ruta de afiliado
 
 ### Sistema de Links de Afiliado
 
-- [ ] **AFF-01**: Existe la colección `affiliate-links` con la matriz de localización campo por campo **congelada y aprobada antes de cargar cualquier contenido** — prosa localizada, identificadores y URLs no
-- [ ] **AFF-02**: Los destinos por mercado viven en un array NO localizado con clave `marketplace`, resueltos en render por una función pura `pickDestination()` en `src/lib/affiliate.ts`
-- [ ] **AFF-03**: El componente `AffiliateLink` emite `rel="sponsored nofollow noopener"` estructuralmente desde el código — nunca como campo editable en el CMS, nunca a criterio del editor
-- [ ] **AFF-04**: Los links de Amazon se renderizan directos y sin cloaking, con el `tag=` visible y sin `referrerPolicy` override, cumpliendo la prohibición textual de Redirecting Links de las Program Policies
-- [ ] **AFF-05**: Las lecturas pasan por un único `getCachedAffiliateLinks()` con `overrideAccess: false`, con cache tags y hooks de revalidación
-- [ ] **AFF-06**: La migración de esquema es puramente aditiva (`CREATE TABLE`/`ADD COLUMN`), leída antes de aplicarse contra la base real
+- [x] **AFF-01**: Existe la colección `affiliate-links` con la matriz de localización campo por campo **congelada y aprobada antes de cargar cualquier contenido** — prosa localizada, identificadores y URLs no
+- [x] **AFF-02**: Los destinos por mercado viven en un array NO localizado con clave `marketplace`, resueltos en render por una función pura `pickDestination()` en `src/lib/affiliate.ts`
+- [x] **AFF-03**: El componente `AffiliateLink` emite `rel="sponsored nofollow noopener"` estructuralmente desde el código — nunca como campo editable en el CMS, nunca a criterio del editor
+- [x] **AFF-04**: Los links de Amazon se renderizan directos y sin cloaking, con el `tag=` visible y sin `referrerPolicy` override, cumpliendo la prohibición textual de Redirecting Links de las Program Policies
+- [x] **AFF-05**: Las lecturas pasan por un único `getCachedAffiliateLinks()` con `overrideAccess: false`, con cache tags y hooks de revalidación
+- [x] **AFF-06**: La migración de esquema es puramente aditiva (`CREATE TABLE`/`ADD COLUMN`), leída antes de aplicarse contra la base real
 
 ### Ruta de Redirección
 
-- [ ] **GO-01**: `/go/[slug]` responde 302 en runtime Node con `no-store`, leyendo el destino exclusivamente del documento autorizado en el admin — nunca de un parámetro `?to=`
-- [ ] **GO-02**: El matcher de `src/middleware.ts` excluye `/go` escrito como `go/` **con barra** (el lookahead matchea por prefijo, no por segmento: un `go` pelado se llevaría puestos `/gobierno`, `/golang-para-seo` y cualquier slug futuro que empiece con esas letras), verificado por curl contra rutas control (`/`, `/en`, `/servicios`, `/en/services`, `/blog`) más al menos un slug señuelo que empiece con "go" — sin este fix cada clic de afiliado devuelve 404
-- [ ] **GO-03**: `src/app/robots.ts` incluye `Disallow: /go`
-- [ ] **GO-04**: Los clics se registran en una tabla `affiliate-clicks` append-only escrita vía `after()` después de emitir el redirect, con descarte de bots y el throttle por IP ya usado en `contact.ts`
+- [x] **GO-01**: `/go/[slug]` responde 302 en runtime Node con `no-store`, leyendo el destino exclusivamente del documento autorizado en el admin — nunca de un parámetro `?to=`
+- [x] **GO-02**: El matcher de `src/middleware.ts` excluye `/go` escrito como `go/` **con barra** (el lookahead matchea por prefijo, no por segmento: un `go` pelado se llevaría puestos `/gobierno`, `/golang-para-seo` y cualquier slug futuro que empiece con esas letras), verificado por curl contra rutas control (`/`, `/en`, `/servicios`, `/en/services`, `/blog`) más al menos un slug señuelo que empiece con "go" — sin este fix cada clic de afiliado devuelve 404
+- [x] **GO-03**: `src/app/robots.ts` incluye `Disallow: /go`
+- [x] **GO-04**: Los clics se registran en una tabla `affiliate-clicks` append-only escrita vía `after()` después de emitir el redirect, con descarte de bots y el throttle por IP ya usado en `contact.ts`
 
 ### Página de Stack
 
-- [ ] **STACK-01**: Existe un bloque `ToolStack` y la página `/stack` servida en ambos locales bajo un segmento único, sin tocar `sitemap-data.ts`, `canonical.ts` ni `breadcrumbs.ts`
-- [ ] **STACK-02**: Cada herramienta listada tiene al menos 100 palabras de experiencia propia y de primera mano en cada locale, sin copy de fabricante ni tablas de especificaciones
-- [ ] **STACK-03**: La página incluye un bloque "qué elegiría hoy si empezara de cero", ausente en las cinco páginas de referencia estudiadas
-- [ ] **STACK-04**: La página incluye al menos una recomendación destacada que no paga comisión y negativos honestos sobre las herramientas listadas
-- [ ] **STACK-05**: La página se enlaza desde el footer y la página de autor, y **no** desde el nav principal, para no diluir el clúster de servicios que ya rankea
-- [ ] **STACK-06**: Cada herramienta enlaza al case study o la página de servicio donde Juan la usó realmente, convirtiendo el riesgo de dilución en refuerzo del clúster
+- [x] **STACK-01**: Existe un bloque `ToolStack` y la página `/stack` servida en ambos locales bajo un segmento único, sin tocar `sitemap-data.ts`, `canonical.ts` ni `breadcrumbs.ts`
+- [x] **STACK-02**: Cada herramienta listada tiene al menos 100 palabras de experiencia propia y de primera mano en cada locale, sin copy de fabricante ni tablas de especificaciones
+- [x] **STACK-03**: La página incluye un bloque "qué elegiría hoy si empezara de cero", ausente en las cinco páginas de referencia estudiadas
+- [x] **STACK-04**: La página incluye al menos una recomendación destacada que no paga comisión y negativos honestos sobre las herramientas listadas
+- [x] **STACK-05**: La página se enlaza desde el footer y la página de autor, y **no** desde el nav principal, para no diluir el clúster de servicios que ya rankea
+- [x] **STACK-06**: Cada herramienta enlaza al case study o la página de servicio donde Juan la usó realmente, convirtiendo el riesgo de dilución en refuerzo del clúster
 
 ### Links Inline en Contenido
 
-- [ ] **INL-01**: Existe un inline block de afiliado usable dentro del rich text de Posts, emitiendo el mismo `rel` estructural y sin migración de esquema
-- [ ] **INL-02**: El disclosure se inyecta automáticamente en cualquier post que contenga links de afiliado, detectado por un escaneo puro del estado del editor y sin consulta extra
+- [x] **INL-01**: Existe un inline block de afiliado usable dentro del rich text de Posts, emitiendo el mismo `rel` estructural y sin migración de esquema
+- [x] **INL-02**: El disclosure se inyecta automáticamente en cualquier post que contenga links de afiliado, detectado por un escaneo puro del estado del editor y sin consulta extra
 
 ### Auditor Destacado (agregado 2026-08-13)
 
 Promoción de `auditor.juan-tech.com` — herramienta propia de Juan, ya en producción y con usuarios reales. **En v2.1 solo se destaca; no se cobra.** El cobro es v2.2, y el propio repo del auditor ya lo tiene previsto (`packages/quota/src/canRunAudit.ts`: *"Free-tier limits (v1, no billing — see PRD deferred: PAY in v2)"*).
 
-- [ ] **FEAT-01**: Existe una sección dedicada en Home que presenta el auditor con CTA a `auditor.juan-tech.com`, siguiendo el patrón de bloque ya establecido por `ServicesShowcase`
-- [ ] **FEAT-02**: La sección presenta la herramienta como prueba de pericia con datos concretos y verificables (29 checks, 5 categorías, hasta 500 URLs por auditoría, CWV vía PageSpeed Insights), no como banner genérico
-- [ ] **FEAT-03**: El auditor se enlaza desde las landings de servicio donde es genuinamente relevante — sobre todo Auditoría SEO Técnica — y desde la página de stack
-- [ ] **FEAT-04**: Los enlaces cross-subdominio son correctos: **sin** `rel="sponsored"` (es producto propio, no afiliación), sin romper canonical ni hreflang, y sin agregar JavaScript de cliente
-- [ ] **FEAT-05**: Toda la copy nueva es bilingüe EN/ES, humanizada, y describe la herramienta con honestidad — incluido el límite del plan gratuito
+- [x] **FEAT-01**: Existe una sección dedicada en Home que presenta el auditor con CTA a `auditor.juan-tech.com`, siguiendo el patrón de bloque ya establecido por `ServicesShowcase`
+- [x] **FEAT-02**: La sección presenta la herramienta como prueba de pericia con datos concretos y verificables (29 checks, 5 categorías, hasta 500 URLs por auditoría, CWV vía PageSpeed Insights), no como banner genérico
+- [x] **FEAT-03**: El auditor se enlaza desde las landings de servicio donde es genuinamente relevante — sobre todo Auditoría SEO Técnica — y desde la página de stack
+- [x] **FEAT-04**: Los enlaces cross-subdominio son correctos: **sin** `rel="sponsored"` (es producto propio, no afiliación), sin romper canonical ni hreflang, y sin agregar JavaScript de cliente
+- [x] **FEAT-05**: Toda la copy nueva es bilingüe EN/ES, humanizada, y describe la herramienta con honestidad — incluido el límite del plan gratuito
 
 **Nota para v2.2 (no actuar en v2.1):** el auditor ya hace double opt-in con Resend y su README lo define como lead magnet de juan-tech.com. Eso se solapa con MAIL-02 y MAIL-03. La opción evidente es que **el lead magnet sea el auditor** en vez de un PDF. No se fusiona ahora porque las listas viven en bases separadas (Prisma en el auditor, Payload acá) y unificarlas es una decisión de arquitectura con implicancias de datos personales, no un ajuste de copy.
 
 ### Captura de Email
 
-- [ ] **MAIL-01**: Existe un bloque de captura de email inline (nunca popup ni modal), resuelto con Server Action y sin JavaScript de cliente
-- [ ] **MAIL-02**: El doble opt-in está implementado en el propio sitio (Resend no lo trae), y Resend solo recibe direcciones ya confirmadas
-- [ ] **MAIL-03**: El lead magnet se entrega vía URL firmada de Cloudinary con expiración corta, no como archivo público
-- [ ] **MAIL-04**: El flujo está env-gated y degrada limpio sin `RESEND_API_KEY` real — el suscriptor se registra y el magnet se entrega aunque falte la credencial
-- [ ] **MAIL-05**: `secure-download.ts` y `download-token.ts` quedan como helpers separados, para que la tienda de v2.2 sea una adición y no una reescritura
+- [x] **MAIL-01**: Existe un bloque de captura de email inline (nunca popup ni modal), resuelto con Server Action y sin JavaScript de cliente
+- [x] **MAIL-02**: El doble opt-in está implementado en el propio sitio (Resend no lo trae), y Resend solo recibe direcciones ya confirmadas
+- [x] **MAIL-03**: El lead magnet se entrega vía URL firmada de Cloudinary con expiración corta, no como archivo público
+- [x] **MAIL-04**: El flujo está env-gated y degrada limpio sin `RESEND_API_KEY` real — el suscriptor se registra y el magnet se entrega aunque falte la credencial
+- [x] **MAIL-05**: `secure-download.ts` y `download-token.ts` quedan como helpers separados, para que la tienda de v2.2 sea una adición y no una reescritura
 
 ### Gate de Cierre
 
-- [ ] **GATE-01**: Paridad verificada contra el baseline: sin caída de más de 5 puntos de performance, sin cruce de banda de CWV, no más de 5 KB de JavaScript de cliente agregado, delta de CLS 0.00
-- [ ] **GATE-02**: Aserciones específicas del milestone: cero anchors a dominios de afiliado sin `sponsored`; el disclosure precede al primer anchor de afiliado en orden del DOM; ambos locales resuelven a un destino no vacío y distinto; grep confirma que todo `payload.find(` lleva `overrideAccess: false` o una exención documentada
+- [x] **GATE-01**: Paridad verificada contra el baseline: sin caída de más de 5 puntos de performance, sin cruce de banda de CWV, no más de 5 KB de JavaScript de cliente agregado, delta de CLS 0.00
+- [x] **GATE-02**: Aserciones específicas del milestone: cero anchors a dominios de afiliado sin `sponsored`; el disclosure precede al primer anchor de afiliado en orden del DOM; ambos locales resuelven a un destino no vacío y distinto; grep confirma que todo `payload.find(` lleva `overrideAccess: false` o una exención documentada
 
 ## v2.2 Requirements
 
@@ -128,50 +128,51 @@ Diferidos. Reconocidos pero fuera de este roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BASE-01 | Phase 45 | Pending |
-| BASE-02 | Phase 45 | Pending |
-| BASE-03 | Phase 45 | Pending |
+| BASE-01 | Phase 45 | Complete |
+| BASE-02 | Phase 45 | Complete |
+| BASE-03 | Phase 45 | Complete |
 | DEC-01 | Phase 44 | Pending |
 | DEC-02 | Phase 44 | Pending |
 | DEC-03 | Phase 44 | Pending |
 | DEC-04 | Phase 44 | Pending |
 | DEC-05 | Phase 44 | Pending |
-| LEG-01 | Phase 46 | Pending |
-| LEG-02 | Phase 46 | Pending |
-| LEG-03 | Phase 46 | Pending |
-| LEG-04 | Phase 46 | Pending |
-| AFF-01 | Phase 46 | Pending |
-| AFF-02 | Phase 46 | Pending |
-| AFF-03 | Phase 46 | Pending |
-| AFF-04 | Phase 46 | Pending |
-| AFF-05 | Phase 46 | Pending |
-| AFF-06 | Phase 46 | Pending |
-| GO-01 | Phase 47 | Pending |
-| GO-02 | Phase 47 | Pending |
-| GO-03 | Phase 47 | Pending |
-| GO-04 | Phase 47 | Pending |
-| STACK-01 | Phase 48 | Pending |
-| STACK-02 | Phase 48 | Pending |
-| STACK-03 | Phase 48 | Pending |
-| STACK-04 | Phase 48 | Pending |
-| STACK-05 | Phase 48 | Pending |
-| STACK-06 | Phase 48 | Pending |
-| INL-01 | Phase 48 | Pending |
-| INL-02 | Phase 48 | Pending |
-| MAIL-01 | Phase 49 | Pending |
-| MAIL-02 | Phase 49 | Pending |
-| MAIL-03 | Phase 49 | Pending |
-| MAIL-04 | Phase 49 | Pending |
-| MAIL-05 | Phase 49 | Pending |
-| GATE-01 | Phase 50 | Pending |
-| FEAT-01 | Phase 48.5 | Pending |
-| FEAT-02 | Phase 48.5 | Pending |
-| FEAT-03 | Phase 48.5 | Pending |
-| FEAT-04 | Phase 48.5 | Pending |
-| FEAT-05 | Phase 48.5 | Pending |
-| GATE-02 | Phase 50 | Pending |
+| LEG-01 | Phase 46 | Complete |
+| LEG-02 | Phase 46 | Complete |
+| LEG-03 | Phase 46 | Complete |
+| LEG-04 | Phase 46 | Complete |
+| AFF-01 | Phase 46 | Complete |
+| AFF-02 | Phase 46 | Complete |
+| AFF-03 | Phase 46 | Complete |
+| AFF-04 | Phase 46 | Complete |
+| AFF-05 | Phase 46 | Complete |
+| AFF-06 | Phase 46 | Complete |
+| GO-01 | Phase 47 | Complete |
+| GO-02 | Phase 47 | Complete |
+| GO-03 | Phase 47 | Complete |
+| GO-04 | Phase 47 | Complete |
+| STACK-01 | Phase 48 | Complete |
+| STACK-02 | Phase 48 | Complete |
+| STACK-03 | Phase 48 | Complete |
+| STACK-04 | Phase 48 | Complete |
+| STACK-05 | Phase 48 | Complete |
+| STACK-06 | Phase 48 | Complete |
+| INL-01 | Phase 48 | Complete |
+| INL-02 | Phase 48 | Complete |
+| MAIL-01 | Phase 49 | Complete |
+| MAIL-02 | Phase 49 | Complete |
+| MAIL-03 | Phase 49 | Complete |
+| MAIL-04 | Phase 49 | Complete |
+| MAIL-05 | Phase 49 | Complete |
+| GATE-01 | Phase 50 | Complete |
+| FEAT-01 | Phase 48.5 | Complete |
+| FEAT-02 | Phase 48.5 | Complete |
+| FEAT-03 | Phase 48.5 | Complete |
+| FEAT-04 | Phase 48.5 | Complete |
+| FEAT-05 | Phase 48.5 | Complete |
+| GATE-02 | Phase 50 | Complete |
 
 **Coverage:**
+
 - v2.1 requirements: 42 total
 - Mapped to phases: 42 ✓
 - Unmapped: 0

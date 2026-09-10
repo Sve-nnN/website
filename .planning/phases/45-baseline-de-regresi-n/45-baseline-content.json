@@ -1,0 +1,154 @@
+{
+  "/": {
+    "h1Count": 1,
+    "h1": [
+      "Construyo software rápido y hago que se encuentre en Google"
+    ],
+    "jsonLdCount": 3,
+    "jsonLdTypes": [
+      "Person",
+      "WebSite",
+      "ProfessionalService"
+    ]
+  },
+  "/en": {
+    "h1Count": 1,
+    "h1": [
+      "Construyo software rápido y hago que se encuentre en Google"
+    ],
+    "jsonLdCount": 3,
+    "jsonLdTypes": [
+      "Person",
+      "WebSite",
+      "ProfessionalService"
+    ]
+  },
+  "/servicios/seo-technical-audit": {
+    "h1Count": 1,
+    "h1": [
+      "Auditoría SEO Técnica"
+    ],
+    "jsonLdCount": 2,
+    "jsonLdTypes": [
+      "Service",
+      "BreadcrumbList"
+    ]
+  },
+  "/servicios/seo-consulting": {
+    "h1Count": 1,
+    "h1": [
+      "Consultoría SEO"
+    ],
+    "jsonLdCount": 2,
+    "jsonLdTypes": [
+      "Service",
+      "BreadcrumbList"
+    ]
+  },
+  "/servicios/fullstack-development": {
+    "h1Count": 1,
+    "h1": [
+      "Desarrollo Full-Stack con SEO integrado"
+    ],
+    "jsonLdCount": 2,
+    "jsonLdTypes": [
+      "Service",
+      "BreadcrumbList"
+    ]
+  },
+  "/servicios/ai-seo-geo": {
+    "h1Count": 1,
+    "h1": [
+      "SEO para IA / GEO"
+    ],
+    "jsonLdCount": 2,
+    "jsonLdTypes": [
+      "Service",
+      "BreadcrumbList"
+    ]
+  },
+  "/en/services/seo-technical-audit": {
+    "h1Count": 1,
+    "h1": [
+      "Technical SEO Audit"
+    ],
+    "jsonLdCount": 2,
+    "jsonLdTypes": [
+      "Service",
+      "BreadcrumbList"
+    ]
+  },
+  "/en/services/seo-consulting": {
+    "h1Count": 1,
+    "h1": [
+      "SEO Consulting"
+    ],
+    "jsonLdCount": 2,
+    "jsonLdTypes": [
+      "Service",
+      "BreadcrumbList"
+    ]
+  },
+  "/en/services/fullstack-development": {
+    "h1Count": 1,
+    "h1": [
+      "Full-Stack Development with SEO Built In"
+    ],
+    "jsonLdCount": 2,
+    "jsonLdTypes": [
+      "Service",
+      "BreadcrumbList"
+    ]
+  },
+  "/en/services/ai-seo-geo": {
+    "h1Count": 1,
+    "h1": [
+      "AI SEO / GEO"
+    ],
+    "jsonLdCount": 2,
+    "jsonLdTypes": [
+      "Service",
+      "BreadcrumbList"
+    ]
+  },
+  "/seo-tecnico-madrid": {
+    "h1Count": 1,
+    "h1": [
+      "SEO Técnico en Madrid / España"
+    ],
+    "jsonLdCount": 1,
+    "jsonLdTypes": [
+      "Service"
+    ]
+  },
+  "/seo-tecnico-lima": {
+    "h1Count": 1,
+    "h1": [
+      "SEO Técnico en Lima"
+    ],
+    "jsonLdCount": 1,
+    "jsonLdTypes": [
+      "Service"
+    ]
+  },
+  "/en/seo-tecnico-madrid": {
+    "h1Count": 1,
+    "h1": [
+      "Technical SEO in Madrid / Spain"
+    ],
+    "jsonLdCount": 1,
+    "jsonLdTypes": [
+      "Service"
+    ]
+  },
+  "/en/seo-tecnico-lima": {
+    "h1Count": 1,
+    "h1": [
+      "Technical SEO in Lima"
+    ],
+    "jsonLdCount": 1,
+    "jsonLdTypes": [
+      "Service"
+    ]
+  }
+}

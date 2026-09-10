@@ -1,0 +1,128 @@
+{
+  "/": {
+    "performance": 34,
+    "accessibility": 100,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 7307,
+    "cls": 0,
+    "tbtMs": 3855
+  },
+  "/en": {
+    "performance": 36,
+    "accessibility": 100,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 5926,
+    "cls": 0,
+    "tbtMs": 2684
+  },
+  "/servicios/seo-technical-audit": {
+    "performance": 34,
+    "accessibility": 100,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 6660,
+    "cls": 0,
+    "tbtMs": 3455
+  },
+  "/servicios/seo-consulting": {
+    "performance": 58,
+    "accessibility": 100,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4747,
+    "cls": 0,
+    "tbtMs": 880
+  },
+  "/servicios/fullstack-development": {
+    "performance": 80,
+    "accessibility": 100,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 3411,
+    "cls": 0,
+    "tbtMs": 356
+  },
+  "/servicios/ai-seo-geo": {
+    "performance": 28,
+    "accessibility": 100,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 6901,
+    "cls": 0,
+    "tbtMs": 12001
+  },
+  "/en/services/seo-technical-audit": {
+    "performance": 48,
+    "accessibility": 100,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4169,
+    "cls": 0,
+    "tbtMs": 3820
+  },
+  "/en/services/seo-consulting": {
+    "performance": 48,
+    "accessibility": 100,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 4990,
+    "cls": 0,
+    "tbtMs": 1355
+  },
+  "/en/services/fullstack-development": {
+    "performance": 26,
+    "accessibility": 100,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 9693,
+    "cls": 0,
+    "tbtMs": 10256
+  },
+  "/en/services/ai-seo-geo": {
+    "performance": 34,
+    "accessibility": 100,
+    "best-practices": 96,
+    "seo": 100,
+    "lcpMs": 6247,
+    "cls": 0,
+    "tbtMs": 3740
+  },
+  "/seo-tecnico-madrid": {
+    "performance": 25,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100,
+    "lcpMs": 19484,
+    "cls": 0,
+    "tbtMs": 19106
+  },
+  "/seo-tecnico-lima": {
+    "performance": 37,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100,
+    "lcpMs": 6841,
+    "cls": 0,
+    "tbtMs": 1793
+  },
+  "/en/seo-tecnico-madrid": {
+    "performance": 26,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100,
+    "lcpMs": 12801,
+    "cls": 0,
+    "tbtMs": 23655
+  },
+  "/en/seo-tecnico-lima": {
+    "performance": 54,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100,
+    "lcpMs": 5088,
+    "cls": 0,
+    "tbtMs": 903
+  }
+}

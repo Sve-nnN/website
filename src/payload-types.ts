@@ -80,6 +80,9 @@ export interface Config {
     clientes: Cliente;
     'speaking-events': SpeakingEvent;
     websites: Website;
+    'affiliate-links': AffiliateLink;
+    'affiliate-clicks': AffiliateClick;
+    'lead-magnets': LeadMagnet;
     redirects: Redirect;
     search: Search;
     'payload-mcp-api-keys': PayloadMcpApiKey;
@@ -103,6 +106,9 @@ export interface Config {
     clientes: ClientesSelect<false> | ClientesSelect<true>;
     'speaking-events': SpeakingEventsSelect<false> | SpeakingEventsSelect<true>;
     websites: WebsitesSelect<false> | WebsitesSelect<true>;
+    'affiliate-links': AffiliateLinksSelect<false> | AffiliateLinksSelect<true>;
+    'affiliate-clicks': AffiliateClicksSelect<false> | AffiliateClicksSelect<true>;
+    'lead-magnets': LeadMagnetsSelect<false> | LeadMagnetsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
     'payload-mcp-api-keys': PayloadMcpApiKeysSelect<false> | PayloadMcpApiKeysSelect<true>;
@@ -262,6 +268,9 @@ export interface Page {
       | AuditOfferBlock
       | BlogCategoryRowsBlock
       | NewsletterBlockType
+      | ToolStackBlock
+      | AuditorHighlightBlock
+      | AuditorCalloutBlock
     )[];
   };
   slug?: string | null;
@@ -1406,6 +1415,171 @@ export interface NewsletterBlockType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ToolStackBlock".
+ */
+export interface ToolStackBlock {
+  /**
+   * Lede corta debajo del <h1>, antes del disclosure de afiliados.
+   */
+  intro?: string | null;
+  /**
+   * El ORDEN de este array es el único orden de render — nunca se reordena en el componente por affiliateLink != null ni por comisión.
+   */
+  categoryGroups?:
+    | {
+        heading: string;
+        /**
+         * El ORDEN de este array es el único orden de render — nunca se reordena en el componente por affiliateLink != null ni por comisión.
+         */
+        tools?:
+          | {
+              /**
+               * Nombre propio de la herramienta — no localizado.
+               */
+              name: string;
+              /**
+               * Vacío = "sin afiliado todavía" (chip neutral, sin CTA). Nunca fabricar un doc de afiliate-links solo para llenar este campo.
+               */
+              affiliateLink?: (number | null) | AffiliateLink;
+              /**
+               * >=100 palabras por locale, experiencia propia real — sin copy de fabricante ni specs (STACK-02).
+               */
+              narrative: string;
+              pro: string;
+              /**
+               * Vacío es válido — nunca se fabrica un contra que Juan no reportó. El componente muestra una copy honesta-vacía en su lugar.
+               */
+              con?: string | null;
+              referenceLink?: {
+                type?: ('caseStudy' | 'custom') | null;
+                caseStudy?: (number | null) | CaseStudy;
+                /**
+                 * Ruta bare, sin prefijo de locale — mismo idioma que Footer.legalLinks.href. Ej: /servicios/fullstack-development o /case-studies.
+                 */
+                url?: string | null;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Un solo párrafo compartido para toda la sección Gear (menciona Amazon Prime en prosa — Prime NO es un gearItem con link propio).
+   */
+  gearIntro?: string | null;
+  gearItems?:
+    | {
+        name: string;
+        /**
+         * URL completa de producto Amazon con tag=juantech02-20 visible. PROHIBIDO cualquier valor amzn.to (shortlink) — Amazon prohíbe Redirecting Links.
+         */
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Feed de StackHighlightCallout instancia 1 ("Qué elegiría hoy...").
+   */
+  elegiriaHoy: string;
+  /**
+   * Se espera que resuelva al doc de Google Search Console (program: "google-search-console").
+   */
+  noCommissionPick?: (number | null) | AffiliateLink;
+  auditorHighlight: {
+    /**
+     * Feed de la 3ra instancia de StackHighlightCallout ('El auditor que construí'). Debe mencionar los 4 datos verificables (29 checks, 5 categorías, 500 URLs, CWV) y el límite del plan gratuito.
+     */
+    narrative: string;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'toolStack';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "affiliate-links".
+ */
+export interface AffiliateLink {
+  id: number;
+  name: string;
+  slug?: string | null;
+  program:
+    | 'amazon'
+    | 'kinsta'
+    | 'dinorank'
+    | 'digitalocean'
+    | 'other'
+    | 'hostinger'
+    | 'dataforseo'
+    | 'payload'
+    | 'cloudinary'
+    | 'resend'
+    | 'ahrefs'
+    | 'google-search-console';
+  destinations?:
+    | {
+        marketplace: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  cookieWindowDays?: number | null;
+  commissionNote?: string | null;
+  active?: boolean | null;
+  placement?: ('stack-page' | 'inline-post' | 'both') | null;
+  order?: number | null;
+  tagline?: string | null;
+  whyIUseIt?: string | null;
+  disclosureOverride?: string | null;
+  ctaLabel?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuditorHighlightBlock".
+ */
+export interface AuditorHighlightBlock {
+  /**
+   * Vacío -> heading sr-only, mismo patrón SEO-10.2 que ServicesShowcase.title, nunca saltar un nivel de heading.
+   */
+  title?: string | null;
+  /**
+   * 1-2 oraciones, sin line-clamp — este es un bloque de feature único, no una grilla de 4.
+   */
+  description: string;
+  /**
+   * Vacío -> fallback i18n auditorHighlight.cta.
+   */
+  ctaLabel?: string | null;
+  /**
+   * La disclosure honesta del plan gratuito. Renderiza como texto visible, NUNCA sr-only, NUNCA solo debajo del fold.
+   */
+  freeTierNote: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'auditorHighlight';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuditorCalloutBlock".
+ */
+export interface AuditorCalloutBlock {
+  /**
+   * Vacio -> fallback i18n auditorCallout.heading
+   */
+  heading?: string | null;
+  /**
+   * El pitch completo. Este bloque no tiene fila de stats separada, los 4 datos van tejidos en la oracion
+   */
+  narrative: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'auditorCallout';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -1445,6 +1619,39 @@ export interface Subscriber {
   token?: string | null;
   confirmedAt?: string | null;
   unsubscribedAt?: string | null;
+  /**
+   * Por qué dejó el correo. Las filas de antes de Phase 49 quedan en `newsletter`.
+   */
+  optInReason: 'newsletter' | 'lead-magnet';
+  /**
+   * Solo tiene valor si `optInReason` es `lead-magnet`.
+   */
+  leadMagnet?: (number | null) | LeadMagnet;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * PDFs de lead magnet, uno por locale. El public_id de Cloudinary lo escribe el script de subida — no editar a mano.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lead-magnets".
+ */
+export interface LeadMagnet {
+  id: number;
+  title: string;
+  /**
+   * Identificador interno fijo (ej. "seo-audit-checklist") — nunca una URL pública.
+   */
+  slug: string;
+  locale: 'es' | 'en';
+  /**
+   * Nunca editar a mano — lo escribe el script de subida.
+   */
+  cloudinaryPublicId: string;
+  /**
+   * Nombre de archivo con el que se ofrece la descarga.
+   */
+  fileName: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -1474,6 +1681,23 @@ export interface SpeakingEvent {
   attendeeCount?: number | null;
   link?: string | null;
   flyer?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "affiliate-clicks".
+ */
+export interface AffiliateClick {
+  id: number;
+  /**
+   * A qué affiliate-links.slug corresponde el clic (guardado como string plano).
+   */
+  slug: string;
+  /**
+   * User-Agent del request. Sin IP cruda por diseño.
+   */
+  userAgent?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1917,6 +2141,18 @@ export interface PayloadLockedDocument {
         value: number | Website;
       } | null)
     | ({
+        relationTo: 'affiliate-links';
+        value: number | AffiliateLink;
+      } | null)
+    | ({
+        relationTo: 'affiliate-clicks';
+        value: number | AffiliateClick;
+      } | null)
+    | ({
+        relationTo: 'lead-magnets';
+        value: number | LeadMagnet;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -2059,6 +2295,9 @@ export interface PagesSelect<T extends boolean = true> {
               auditOfferBlock?: T | AuditOfferBlockSelect<T>;
               blogCategoryRows?: T | BlogCategoryRowsBlockSelect<T>;
               newsletterBlock?: T | NewsletterBlockTypeSelect<T>;
+              toolStack?: T | ToolStackBlockSelect<T>;
+              auditorHighlight?: T | AuditorHighlightBlockSelect<T>;
+              auditorCallout?: T | AuditorCalloutBlockSelect<T>;
             };
       };
   slug?: T;
@@ -2530,6 +2769,75 @@ export interface NewsletterBlockTypeSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ToolStackBlock_select".
+ */
+export interface ToolStackBlockSelect<T extends boolean = true> {
+  intro?: T;
+  categoryGroups?:
+    | T
+    | {
+        heading?: T;
+        tools?:
+          | T
+          | {
+              name?: T;
+              affiliateLink?: T;
+              narrative?: T;
+              pro?: T;
+              con?: T;
+              referenceLink?:
+                | T
+                | {
+                    type?: T;
+                    caseStudy?: T;
+                    url?: T;
+                  };
+              id?: T;
+            };
+        id?: T;
+      };
+  gearIntro?: T;
+  gearItems?:
+    | T
+    | {
+        name?: T;
+        href?: T;
+        id?: T;
+      };
+  elegiriaHoy?: T;
+  noCommissionPick?: T;
+  auditorHighlight?:
+    | T
+    | {
+        narrative?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuditorHighlightBlock_select".
+ */
+export interface AuditorHighlightBlockSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  ctaLabel?: T;
+  freeTierNote?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AuditorCalloutBlock_select".
+ */
+export interface AuditorCalloutBlockSelect<T extends boolean = true> {
+  heading?: T;
+  narrative?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "posts_select".
  */
 export interface PostsSelect<T extends boolean = true> {
@@ -2738,6 +3046,8 @@ export interface SubscribersSelect<T extends boolean = true> {
   token?: T;
   confirmedAt?: T;
   unsubscribedAt?: T;
+  optInReason?: T;
+  leadMagnet?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -2831,6 +3141,56 @@ export interface WebsitesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "affiliate-links_select".
+ */
+export interface AffiliateLinksSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  program?: T;
+  destinations?:
+    | T
+    | {
+        marketplace?: T;
+        url?: T;
+        id?: T;
+      };
+  cookieWindowDays?: T;
+  commissionNote?: T;
+  active?: T;
+  placement?: T;
+  order?: T;
+  tagline?: T;
+  whyIUseIt?: T;
+  disclosureOverride?: T;
+  ctaLabel?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "affiliate-clicks_select".
+ */
+export interface AffiliateClicksSelect<T extends boolean = true> {
+  slug?: T;
+  userAgent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lead-magnets_select".
+ */
+export interface LeadMagnetsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  locale?: T;
+  cloudinaryPublicId?: T;
+  fileName?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -3509,6 +3869,25 @@ export interface TaskSchedulePublish {
     user?: (number | null) | User;
   };
   output?: unknown;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AffiliateInlineBlock".
+ */
+export interface AffiliateInlineBlock {
+  affiliateLink: number | AffiliateLink;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'affiliate-inline';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EmailCaptureBlock".
+ */
+export interface EmailCaptureBlock {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'email-capture';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

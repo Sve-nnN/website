@@ -17,6 +17,15 @@
     "cta": "Explore service",
     "sectionHeading": "Services"
   },
+  "auditorHighlight": {
+    "statsChecks": "technical checks",
+    "statsCategories": "categories",
+    "statsUrls": "URLs per audit",
+    "statsCwv": "Core Web Vitals (PageSpeed Insights)",
+    "cta": "Try the auditor",
+    "sectionHeading": "My SEO auditor",
+    "opensInNewTab": "opens in a new tab"
+  },
   "serviceScopeCard": {
     "title": "Service scope",
     "scopeLabel": "What's included",
@@ -26,7 +35,54 @@
   "relatedCaseStudyBlock": {
     "title": "A real example of how I work"
   },
+  "auditorCallout": {
+    "heading": "I also built a free automated auditor",
+    "cta": "Go to the auditor",
+    "opensInNewTab": "opens in a new tab"
+  },
   "testimonialsCarousel": {
     "title": "Testimonials"
+  },
+  "affiliateDisclosure": {
+    "generalDisclosure": "Some of the links on this page are affiliate links. If you buy through one, I may earn a small commission at no extra cost to you. I only recommend tools I've actually used.",
+    "amazonDisclosure": "As an Amazon Associate I earn from qualifying purchases."
+  },
+  "stackPage": {
+    "title": "My stack",
+    "gearHeading": "My personal gear",
+    "elegiriaHoyHeading": "What I'd choose today, starting from zero",
+    "noCommissionHeading": "My pick that pays me nothing",
+    "noCommissionBadge": "No-commission pick",
+    "rowUsage": "How I use it",
+    "rowPro": "What's good",
+    "rowCon": "What's not",
+    "rowConEmpty": "No real complaints so far",
+    "rowReference": "Where I used it",
+    "ctaDefault": "Try {tool}",
+    "ctaAmazon": "View on Amazon",
+    "badgePending": "No affiliate program yet",
+    "emptyTitle": "Coming soon",
+    "emptyBody": "I'm putting together the tools page. Check back soon.",
+    "inlineEyebrow": "Tool I use",
+    "gscLinkLabel": "search.google.com/search-console",
+    "auditorHeading": "The auditor I built",
+    "auditorCta": "Go to the auditor",
+    "opensInNewTab": "opens in a new tab"
+  },
+  "emailCapture": {
+    "eyebrow": "Free download",
+    "heading": "Technical SEO audit checklist",
+    "description": "5 categories, dozens of actionable checks — the same criteria I use in my own audits.",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "submitLabel": "Send me the checklist",
+    "privacyPrefix": "By subscribing you accept our ",
+    "privacyLinkText": "privacy policy",
+    "privacySuffix": ". We'll only email you to confirm your download — no spam.",
+    "pendingHeading": "Check your email",
+    "pendingBody": "We sent you a link to confirm your subscription and unlock the download.",
+    "alreadyHeading": "You're already subscribed",
+    "alreadyBody": "Check your inbox — you should already have the checklist.",
+    "errorBody": "Something went wrong. We couldn't register your email — please try again in a moment."
   }
 }

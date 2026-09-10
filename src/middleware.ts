@@ -138,9 +138,19 @@ function stripIntlAlternateLinks(response: NextResponse): NextResponse {
 // El costo de pasar rutas con punto por el middleware es una lectura de
 // `redirects`, que ya viene cacheada con unstable_cache (src/lib/cache.ts), y
 // a cambio permite redirigir URLs legacy con extension como `/sitemap_index.xml`.
+// GO-02: `go/` (con barra) recién agregado a la alternancia de abajo. La barra
+// ancla la exclusión al segmento completo, no a un prefijo — sin ella,
+// `/golang-para-seo` quedaría excluido igual que `/go/notion`, el mismo trap
+// que `isPrefixableHref` (src/i18n/navigation.ts) ya resuelve para `/en` vs
+// `/entrevistas` partiendo el primer segmento en vez de usar `startsWith`.
+// Sin esta exclusion, `/go/[slug]` entraba a este middleware, disparaba el
+// fetch loopback a /api/redirects-lookup y luego `createIntlMiddleware` lo
+// reescribia a `/es/go/notion` (inexistente) -> 404 en cada clic de afiliado.
+// `api`/`admin` comparten el mismo bug latente de prefijo pero quedan fuera de
+// esta fase a proposito (47-CONTEXT.md) — no ampliar este diff con ellos.
 export const config = {
   matcher: [
     '/',
-    '/((?!api|admin|_next|_vercel|\\.well-known|robots\\.txt|sitemap\\.xml|sitemap\\.xsl|sitemap\\.html|llms\\.txt|llms-full\\.txt|site\\.webmanifest|favicon\\.ico|favicon\\.svg|favicon-32x32\\.png|apple-touch-icon\\.png|icon-192\\.png|icon-512\\.png).*)',
+    '/((?!api|admin|go/|_next|_vercel|\\.well-known|robots\\.txt|sitemap\\.xml|sitemap\\.xsl|sitemap\\.html|llms\\.txt|llms-full\\.txt|site\\.webmanifest|favicon\\.ico|favicon\\.svg|favicon-32x32\\.png|apple-touch-icon\\.png|icon-192\\.png|icon-512\\.png).*)',
   ],
 }

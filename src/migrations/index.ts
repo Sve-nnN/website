@@ -31,6 +31,13 @@ import * as migration_20260820_000041_blog_promo_and_category_rows from './20260
 import * as migration_20260820_001837_blog_promo_inline_title_and_rail from './20260820_001837_blog_promo_inline_title_and_rail';
 import * as migration_20260820_153557_blog_promo_by_category from './20260820_153557_blog_promo_by_category';
 import * as migration_20260820_155934_subscribers_collection from './20260820_155934_subscribers_collection';
+import * as migration_20260903_225836_affiliate_links_collection from './20260903_225836_affiliate_links_collection';
+import * as migration_20260904_175022_affiliate_clicks_collection from './20260904_175022_affiliate_clicks_collection';
+import * as migration_20260905_060823_phase48_tool_stack_block from './20260905_060823_phase48_tool_stack_block';
+import * as migration_20260907_033042_phase48_5_auditor_highlight from './20260907_033042_phase48_5_auditor_highlight';
+import * as migration_20260907_040039_phase48_5_auditor_callout from './20260907_040039_phase48_5_auditor_callout';
+import * as migration_20260907_042330_phase48_5_tool_stack_auditor_highlight from './20260907_042330_phase48_5_tool_stack_auditor_highlight';
+import * as migration_20260908_014507_phase49_subscribers_lead_magnets from './20260908_014507_phase49_subscribers_lead_magnets';
 
 export const migrations = [
   {
@@ -196,6 +203,41 @@ export const migrations = [
   {
     up: migration_20260820_155934_subscribers_collection.up,
     down: migration_20260820_155934_subscribers_collection.down,
-    name: '20260820_155934_subscribers_collection'
+    name: '20260820_155934_subscribers_collection',
+  },
+  {
+    up: migration_20260903_225836_affiliate_links_collection.up,
+    down: migration_20260903_225836_affiliate_links_collection.down,
+    name: '20260903_225836_affiliate_links_collection',
+  },
+  {
+    up: migration_20260904_175022_affiliate_clicks_collection.up,
+    down: migration_20260904_175022_affiliate_clicks_collection.down,
+    name: '20260904_175022_affiliate_clicks_collection',
+  },
+  {
+    up: migration_20260905_060823_phase48_tool_stack_block.up,
+    down: migration_20260905_060823_phase48_tool_stack_block.down,
+    name: '20260905_060823_phase48_tool_stack_block',
+  },
+  {
+    up: migration_20260907_033042_phase48_5_auditor_highlight.up,
+    down: migration_20260907_033042_phase48_5_auditor_highlight.down,
+    name: '20260907_033042_phase48_5_auditor_highlight',
+  },
+  {
+    up: migration_20260907_040039_phase48_5_auditor_callout.up,
+    down: migration_20260907_040039_phase48_5_auditor_callout.down,
+    name: '20260907_040039_phase48_5_auditor_callout',
+  },
+  {
+    up: migration_20260907_042330_phase48_5_tool_stack_auditor_highlight.up,
+    down: migration_20260907_042330_phase48_5_tool_stack_auditor_highlight.down,
+    name: '20260907_042330_phase48_5_tool_stack_auditor_highlight',
+  },
+  {
+    up: migration_20260908_014507_phase49_subscribers_lead_magnets.up,
+    down: migration_20260908_014507_phase49_subscribers_lead_magnets.down,
+    name: '20260908_014507_phase49_subscribers_lead_magnets'
   },
 ];

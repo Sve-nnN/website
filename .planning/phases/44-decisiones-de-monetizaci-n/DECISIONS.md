@@ -42,7 +42,9 @@ Este dato **resuelve** la pregunta abierta que `research/SUMMARY.md` había marc
 
 ### Riesgo real, dicho sin adornos
 
-Cruzando el plazo con el modelo de DEC-02: si el tráfico a la página de stack queda en el orden de 1.000 visitas mensuales, alcanzar 3 ventas calificadas toma entre **1,2 y 7,5 meses**. El plazo es de 6. Es decir: en el extremo pesimista de las tasas de conversión, **el plazo no alcanza**. No es una certeza de fracaso, es un riesgo real que se dimensiona recién cuando Phase 45 entregue el número de tráfico.
+Cruzando el plazo con el modelo de DEC-02: si el tráfico a la página de stack queda en el orden de 1.000 visitas mensuales, alcanzar 3 ventas calificadas toma entre **1,2 y 7,5 meses**. El plazo es de 6. Es decir: en el extremo pesimista de las tasas de conversión, **el plazo no alcanza**. No es una certeza de fracaso, es un riesgo real.
+
+**Actualización (Phase 45, 2026-09-03):** el número de tráfico ya está medido y el riesgo es mayor al modelado, no menor. El sitio completo mueve 22 clics orgánicos mensuales (ver `45-REGRESSION-BASELINE.md`), muy por debajo del tramo de 1.000 visitas que sostiene este cálculo, y `V(stack) = 0` porque la página de stack todavía no existe. El plazo de 180 días no empieza a correr en serio hasta que la Phase 48 publique esa página; cuanto más tarde eso ocurra, menos margen queda para las 3 ventas calificadas.
 
 Mitigación disponible si a mitad de camino (2026-11-11) no hay ventas: los links de Amazon no tienen que vivir solo en la página de stack. Un post de comparación o una reseña con intención de compra convierte mejor que una página de referencia. Decisión a tomar en el punto de control, con datos, no ahora.
 
@@ -52,12 +54,12 @@ Mitigación disponible si a mitad de camino (2026-11-11) no hay ventas: los link
 
 ### Advertencia de método
 
-Esto es un modelo **paramétrico, no una medición**. La única entrada real que falta es `V`, y llega en Phase 45. Todo lo demás son tasas tomadas del research o rangos declarados como supuesto.
+Esto es un modelo **paramétrico, no una medición**. La entrada real, `V`, ya no falta: `45-REGRESSION-BASELINE.md` (Phase 45, 2026-09-03) la resuelve como `V(stack) = 0`, porque la página de stack todavía no existe. Todo lo demás son tasas tomadas del research o rangos declarados como supuesto.
 
 ### La multiplicación
 
 ```
-V                = visitas mensuales a la página de stack        [INCÓGNITA → Phase 45]
+V                = visitas mensuales a la página de stack        V(stack) = 0 a 2026-09-03 (la página no existe; se construye en Phase 48)
 CTR de link      = 2% a 5%          (supuesto, rango de industria)
 Conversión       = 2% a 5%          (supuesto, ventana de cookie de 24h de Amazon)
 Ticket promedio  = $100 a $200      (supuesto, accesorios de escritorio y hardware de dev)
@@ -75,6 +77,8 @@ Ingreso/mes   = Ventas/mes × Comisión/vta
 | **1.000** | 0,4 – 2,5 | **$1 – $12** | 1,2 – 7,5 meses |
 | **10.000** | 4 – 25 | **$10 – $125** | 4 – 22 días |
 
+**Nota (Phase 45, 2026-09-03):** la tabla queda intacta, per `45-CONTEXT.md`, para poder recalcular cuando el tráfico cambie. El tramo real de hoy no es ninguno de los dos: el sitio completo mueve 22 clics orgánicos mensuales (medido en `45-REGRESSION-BASELINE.md`), muy por debajo del primer escalón de 1.000. Y esa cifra es tráfico total del sitio, no visitas a la página de stack — con `V(stack) = 0`, el ingreso de esta tabla es literalmente $0/mes hasta que la Phase 48 publique la página.
+
 El research modeló la banda central en **$2–$9/mes con V=1.000**, que cae dentro de este rango y es la cifra a citar si hace falta una sola.
 
 La ventana de cookie de Amazon es de **24 horas**, no 30 días como en la mayoría de los programas. Eso comprime fuerte la conversión: el visitante tiene que comprar prácticamente el mismo día.
@@ -91,7 +95,7 @@ Eso equivale a **unas 12 ventas de Amazon**.
 
 ### Qué actualizar en Phase 45
 
-Sustituir `V` por el número real y recalcular la tabla de tramos. Nada más de este documento cambia.
+**Hecho el 2026-09-03.** La instrucción original decía "sustituir `V` por el número real y recalcular la tabla de tramos", pero `45-CONTEXT.md` fijó una regla distinta y más reciente: la tabla de tramos queda textualmente intacta para poder recalcular cuando el tráfico cambie, y en vez de recalcularla se le agregó una nota debajo indicando en qué tramo cae el sitio hoy. `V` quedó resuelto como `V(stack) = 0` (la página de stack no existe todavía), y el tráfico orgánico real del sitio (22 clics/mes) se documentó por separado en `45-REGRESSION-BASELINE.md`, sin mezclar los dos números. Nada más de este documento cambió.
 
 ---
 
@@ -169,6 +173,8 @@ Esto convierte al merchant of record en **obligatorio, no en una comodidad**. Po
 
 Confirmar el número real en Phase 45 antes de postular. Un rechazo temprano puede ser difícil de revertir.
 
+**Confirmado (2026-09-03):** el sitio mueve 22 clics orgánicos mensuales (ver `45-REGRESSION-BASELINE.md`), muy por debajo del umbral de ~1.000 visitas mensuales que piden Semrush y Hostinger afiliados. No postular todavía a ninguno de los dos.
+
 ### Sin programa usable — no perder tiempo buscándolos
 
 Verificado contra la página del propio proveedor el 2026-08-13. Esta lista existe para que dentro de seis meses nadie vuelva a investigarlo.
@@ -187,7 +193,7 @@ Verificado contra la página del propio proveedor el 2026-08-13. Esta lista exis
 | **Sitebulb** | Sin programa público. Es una empresa chica — un correo directo podría conseguir un arreglo privado |
 | **DataForSEO** | Sin programa público encontrable |
 
-**El hallazgo incómodo:** casi todo el stack sobre el que Juan realmente construye es immonetizable. Eso no es un fallo del plan, es la realidad del nicho — y refuerza DEC-02: el dinero está en las pocas herramientas recurrentes que sí pagan, no en cubrir el stack entero de links.
+**El hallazgo incómodo:** casi todo el stack sobre el que Juan realmente construye es inmonetizable. Eso no es un fallo del plan, es la realidad del nicho — y refuerza DEC-02: el dinero está en las pocas herramientas recurrentes que sí pagan, no en cubrir el stack entero de links.
 
 **Sin datos públicos:** Vercel no publica ni comisión ni ventana de cookie en ningún lado; solo se ven después de registrarse vía Dub. **SE Ranking** se promociona como "recurrente vitalicio" en todas partes, pero sus términos legales **no dicen nada sobre renovaciones** — mandar un correo a su equipo de afiliados antes de escribir copy que prometa algo.
 

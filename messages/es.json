@@ -17,6 +17,15 @@
     "cta": "Explorar servicio",
     "sectionHeading": "Servicios"
   },
+  "auditorHighlight": {
+    "statsChecks": "checks técnicos",
+    "statsCategories": "categorías",
+    "statsUrls": "URLs por auditoría",
+    "statsCwv": "Core Web Vitals (PageSpeed Insights)",
+    "cta": "Probar el auditor",
+    "sectionHeading": "Mi auditor SEO",
+    "opensInNewTab": "se abre en una pestaña nueva"
+  },
   "serviceScopeCard": {
     "title": "Alcance de este servicio",
     "scopeLabel": "Qué incluye",
@@ -26,7 +35,54 @@
   "relatedCaseStudyBlock": {
     "title": "Un caso real de cómo trabajo"
   },
+  "auditorCallout": {
+    "heading": "También tengo un auditor automatizado, gratis",
+    "cta": "Ir al auditor",
+    "opensInNewTab": "se abre en una pestaña nueva"
+  },
   "testimonialsCarousel": {
     "title": "Testimonios"
+  },
+  "affiliateDisclosure": {
+    "generalDisclosure": "Algunos enlaces de esta página son de afiliado. Si compras a través de alguno, puedo ganar una comisión pequeña sin costo adicional para ti. Solo recomiendo herramientas que uso de verdad.",
+    "amazonDisclosure": "Como Afiliado de Amazon, obtengo ingresos por las compras que califican."
+  },
+  "stackPage": {
+    "title": "Mi stack",
+    "gearHeading": "Mi equipo personal",
+    "elegiriaHoyHeading": "Qué elegiría hoy si empezara de cero",
+    "noCommissionHeading": "Mi recomendación sin comisión",
+    "noCommissionBadge": "Recomendación sin comisión",
+    "rowUsage": "Cómo lo uso",
+    "rowPro": "Lo bueno",
+    "rowCon": "Lo no tan bueno",
+    "rowConEmpty": "Sin quejas reales hasta ahora",
+    "rowReference": "Dónde lo usé",
+    "ctaDefault": "Probar {tool}",
+    "ctaAmazon": "Ver en Amazon",
+    "badgePending": "Sin programa de afiliados todavía",
+    "emptyTitle": "Próximamente",
+    "emptyBody": "Estoy armando la página de herramientas. Vuelve pronto.",
+    "inlineEyebrow": "Herramienta que uso",
+    "gscLinkLabel": "search.google.com/search-console",
+    "auditorHeading": "El auditor que construí",
+    "auditorCta": "Ir al auditor",
+    "opensInNewTab": "se abre en una pestaña nueva"
+  },
+  "emailCapture": {
+    "eyebrow": "Descarga gratis",
+    "heading": "Checklist de auditoría SEO técnica",
+    "description": "5 categorías, decenas de checks accionables — el mismo criterio que uso en mis propias auditorías.",
+    "emailLabel": "Correo electrónico",
+    "emailPlaceholder": "tucorreo@ejemplo.com",
+    "submitLabel": "Enviarme el checklist",
+    "privacyPrefix": "Al suscribirte aceptas nuestra ",
+    "privacyLinkText": "política de privacidad",
+    "privacySuffix": ". Solo te escribiremos para confirmar la descarga, sin spam.",
+    "pendingHeading": "Revisa tu correo",
+    "pendingBody": "Te enviamos un enlace para confirmar tu suscripción y desbloquear la descarga.",
+    "alreadyHeading": "Ya estás suscrito",
+    "alreadyBody": "Revisa tu bandeja — ya deberías tener el checklist.",
+    "errorBody": "Algo salió mal. No pudimos registrar tu correo — intenta de nuevo en un momento."
   }
 }

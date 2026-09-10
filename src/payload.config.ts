@@ -27,6 +27,9 @@ import { Subscribers } from './collections/Subscribers'
 import { Clientes } from './collections/Clientes'
 import { SpeakingEvents } from './collections/SpeakingEvents'
 import { Websites } from './collections/Websites'
+import { AffiliateLinks } from './collections/AffiliateLinks'
+import { AffiliateClicks } from './collections/AffiliateClicks'
+import { LeadMagnets } from './collections/LeadMagnets'
 import { Llms } from './globals/Llms'
 import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
@@ -110,6 +113,17 @@ export default buildConfig({
     Clientes,
     SpeakingEvents,
     Websites,
+    AffiliateLinks,
+    // Fuera de seoPlugin, redirectsPlugin, searchPlugin y mcpPlugin a
+    // propósito, igual que Subscribers: log append-only de clics, no
+    // contenido público — REQUIREMENTS.md "Out of Scope" lo nombra
+    // explícitamente junto a subscribers/lead-magnets.
+    AffiliateClicks,
+    // Fuera de seoPlugin, redirectsPlugin, searchPlugin y mcpPlugin a
+    // propósito, igual que Subscribers/AffiliateClicks: el `public_id` de
+    // Cloudinary no debería ser legible por ninguna API pública ni por MCP
+    // (Phase 49-01).
+    LeadMagnets,
   ],
   globals: [Llms, Header, Footer, FeaturedContent, BlogPromo],
   plugins: [

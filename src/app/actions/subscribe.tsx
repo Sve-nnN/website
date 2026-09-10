@@ -7,6 +7,7 @@ import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import { ConfirmSubscription } from '@/emails/ConfirmSubscription'
+import { resolveSiteUrl } from '@/lib/resolve-site-url'
 
 /**
  * Alta al correo del blog, con doble opt-in real.
@@ -54,28 +55,6 @@ async function isRateLimited(): Promise<boolean> {
   recent.push(now)
   submissionLog.set(clientIp, recent)
   return false
-}
-
-/**
- * Host público desde el que se arma el enlace de confirmación. Mismo criterio
- * que `src/lib/public-origin.ts`, que resuelve lo mismo para las redirecciones
- * de las rutas de confirmación y baja.
- */
-async function resolveSiteUrl(): Promise<string | null> {
-  const headerList = await headers()
-  const forwardedHost = headerList.get('x-forwarded-host') ?? headerList.get('host')
-  const forwardedProto = headerList.get('x-forwarded-proto')?.split(',')[0]?.trim()
-
-  if (forwardedHost && !/localhost|127\.0\.0\.1/.test(forwardedHost)) {
-    return `${forwardedProto || 'https'}://${forwardedHost.split(',')[0].trim()}`
-  }
-
-  const configured = process.env.NEXT_PUBLIC_SERVER_URL?.trim()
-
-  if (configured) return configured.replace(/\/$/, '')
-
-  // Sin proxy y sin variable: dev local. El host crudo alcanza.
-  return forwardedHost ? `http://${forwardedHost}` : null
 }
 
 const SUBJECT = {
@@ -147,7 +126,12 @@ export async function subscribeAction(
     } else {
       await payload.create({
         collection: 'subscribers',
-        data: { email, status: 'pending', token, locale, source },
+        // Phase 49-01: `optInReason` es un campo nuevo y requerido en el
+        // schema (con `defaultValue: 'newsletter'` para las filas de antes
+        // de este campo). Este alta SIGUE siendo la del newsletter del blog
+        // — nunca toca el flujo de lead magnet — así que se declara acá de
+        // forma explícita, no porque el comportamiento cambie.
+        data: { email, status: 'pending', token, locale, source, optInReason: 'newsletter' },
       })
     }
 

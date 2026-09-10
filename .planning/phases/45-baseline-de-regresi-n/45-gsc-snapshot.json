@@ -1,0 +1,1917 @@
+{
+  "_meta": {
+    "site_url": "sc-domain:juan-tech.com",
+    "dimensions": "page",
+    "period1": {
+      "start": "2026-07-31",
+      "end": "2026-08-27"
+    },
+    "period2": {
+      "start": "2026-07-03",
+      "end": "2026-07-30"
+    },
+    "total_items": 190,
+    "showing": 190,
+    "note": "p1_* y p2_* son valores crudos de gsc-juan-compare-search-periods. Los campos *_diff y *_pct originales NO se copian: la herramienta los calcula como periodo2 menos periodo1 (viejo menos nuevo), signo invertido respecto de lo intuitivo. Cualquier delta se calcula por separado a partir de estos valores crudos."
+  },
+  "https://juan-tech.com/": {
+    "p1_clicks": 1,
+    "p1_impressions": 42,
+    "p1_ctr": 0.0238,
+    "p1_position": 6.6,
+    "p2_clicks": 5,
+    "p2_impressions": 29,
+    "p2_ctr": 0.1724,
+    "p2_position": 9.0
+  },
+  "https://juan-tech.com/blog/pilas-y-colas": {
+    "p1_clicks": 4,
+    "p1_impressions": 150,
+    "p1_ctr": 0.0267,
+    "p1_position": 9.1,
+    "p2_clicks": 1,
+    "p2_impressions": 37,
+    "p2_ctr": 0.027,
+    "p2_position": 9.8
+  },
+  "https://juan-tech.com/blog/payloadcms-tutorial": {
+    "p1_clicks": 3,
+    "p1_impressions": 78,
+    "p1_ctr": 0.0385,
+    "p1_position": 14.1,
+    "p2_clicks": 0,
+    "p2_impressions": 30,
+    "p2_ctr": 0,
+    "p2_position": 17.2
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/pilas-y-colas": {
+    "p1_clicks": 0,
+    "p1_impressions": 48,
+    "p1_ctr": 0,
+    "p1_position": 9.4,
+    "p2_clicks": 2,
+    "p2_impressions": 16,
+    "p2_ctr": 0.125,
+    "p2_position": 6.9
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/space-complexity": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 2,
+    "p2_impressions": 216,
+    "p2_ctr": 0.0093,
+    "p2_position": 12.7
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/complejidad-algoritmica": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 2,
+    "p2_impressions": 65,
+    "p2_ctr": 0.0308,
+    "p2_position": 14.6
+  },
+  "https://juan-tech.com/blog/space-complexity": {
+    "p1_clicks": 1,
+    "p1_impressions": 108,
+    "p1_ctr": 0.0093,
+    "p1_position": 7.6,
+    "p2_clicks": 0,
+    "p2_impressions": 19,
+    "p2_ctr": 0,
+    "p2_position": 7.8
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/binary-search-tree": {
+    "p1_clicks": 0,
+    "p1_impressions": 6,
+    "p1_ctr": 0,
+    "p1_position": 30.5,
+    "p2_clicks": 1,
+    "p2_impressions": 14,
+    "p2_ctr": 0.0714,
+    "p2_position": 13.8
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/tablas-hash": {
+    "p1_clicks": 1,
+    "p1_impressions": 56,
+    "p1_ctr": 0.0179,
+    "p1_position": 9.9,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/payload-cms-guide": {
+    "p1_clicks": 1,
+    "p1_impressions": 45,
+    "p1_ctr": 0.0222,
+    "p1_position": 31.8,
+    "p2_clicks": 0,
+    "p2_impressions": 6,
+    "p2_ctr": 0,
+    "p2_position": 21
+  },
+  "https://juan-tech.com/en/blog/astro-vs-nextjs": {
+    "p1_clicks": 1,
+    "p1_impressions": 196,
+    "p1_ctr": 0.0051,
+    "p1_position": 24.1,
+    "p2_clicks": 0,
+    "p2_impressions": 7,
+    "p2_ctr": 0,
+    "p2_position": 36.6
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/heap-data-structure": {
+    "p1_clicks": 0,
+    "p1_impressions": 183,
+    "p1_ctr": 0,
+    "p1_position": 23.3,
+    "p2_clicks": 1,
+    "p2_impressions": 130,
+    "p2_ctr": 0.0077,
+    "p2_position": 8.2
+  },
+  "https://juan-tech.com/en/blog/recursividad": {
+    "p1_clicks": 1,
+    "p1_impressions": 11,
+    "p1_ctr": 0.0909,
+    "p1_position": 26.5,
+    "p2_clicks": 0,
+    "p2_impressions": 23,
+    "p2_ctr": 0,
+    "p2_position": 23.1
+  },
+  "https://juan-tech.com/blog/react-19": {
+    "p1_clicks": 1,
+    "p1_impressions": 24,
+    "p1_ctr": 0.0417,
+    "p1_position": 28.5,
+    "p2_clicks": 0,
+    "p2_impressions": 7,
+    "p2_ctr": 0,
+    "p2_position": 16.7
+  },
+  "https://juan-tech.com/blog/graph-algorithms": {
+    "p1_clicks": 1,
+    "p1_impressions": 53,
+    "p1_ctr": 0.0189,
+    "p1_position": 17.0,
+    "p2_clicks": 0,
+    "p2_impressions": 18,
+    "p2_ctr": 0,
+    "p2_position": 18.4
+  },
+  "https://juan-tech.com/seo-tecnico-lima": {
+    "p1_clicks": 1,
+    "p1_impressions": 13,
+    "p1_ctr": 0.0769,
+    "p1_position": 7.8,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/space-complexity": {
+    "p1_clicks": 1,
+    "p1_impressions": 240,
+    "p1_ctr": 0.0042,
+    "p1_position": 46.5,
+    "p2_clicks": 0,
+    "p2_impressions": 26,
+    "p2_ctr": 0,
+    "p2_position": 39.6
+  },
+  "https://juan-tech.com/blog/nextjs-seo-optimization": {
+    "p1_clicks": 1,
+    "p1_impressions": 5,
+    "p1_ctr": 0.2,
+    "p1_position": 8,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/development/astro-vs-nextjs": {
+    "p1_clicks": 0,
+    "p1_impressions": 232,
+    "p1_ctr": 0,
+    "p1_position": 22.2,
+    "p2_clicks": 1,
+    "p2_impressions": 108,
+    "p2_ctr": 0.0093,
+    "p2_position": 45.9
+  },
+  "https://juan-tech.com/blog/data-structures": {
+    "p1_clicks": 1,
+    "p1_impressions": 71,
+    "p1_ctr": 0.0141,
+    "p1_position": 14.2,
+    "p2_clicks": 0,
+    "p2_impressions": 21,
+    "p2_ctr": 0,
+    "p2_position": 15.3
+  },
+  "https://juan-tech.com/blog/nextjs-cms": {
+    "p1_clicks": 0,
+    "p1_impressions": 13,
+    "p1_ctr": 0,
+    "p1_position": 19.6,
+    "p2_clicks": 1,
+    "p2_impressions": 6,
+    "p2_ctr": 0.1667,
+    "p2_position": 24.7
+  },
+  "https://juan-tech.com/blog/seo/seo-off-page-guia": {
+    "p1_clicks": 1,
+    "p1_impressions": 32,
+    "p1_ctr": 0.0312,
+    "p1_position": 25.3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/servicios/seo-technical-audit": {
+    "p1_clicks": 0,
+    "p1_impressions": 83,
+    "p1_ctr": 0,
+    "p1_position": 49.7,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/headless-cms-comparison": {
+    "p1_clicks": 0,
+    "p1_impressions": 4,
+    "p1_ctr": 0,
+    "p1_position": 24.2,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/payload-cms-guide": {
+    "p1_clicks": 0,
+    "p1_impressions": 53,
+    "p1_ctr": 0,
+    "p1_position": 12.4,
+    "p2_clicks": 0,
+    "p2_impressions": 15,
+    "p2_ctr": 0,
+    "p2_position": 15.9
+  },
+  "https://juan-tech.com/websites/drmanuelvargashidalgo-com": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 1,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/cs-fundamentals/diseno-bases-datos": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 3,
+    "p2_ctr": 0,
+    "p2_position": 18.3
+  },
+  "https://juan-tech.com/en/blog/general/schema-markup-guide": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 9
+  },
+  "https://juan-tech.com/blog/tech-seo/seo-on-page-guia": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 2,
+    "p2_ctr": 0,
+    "p2_position": 57
+  },
+  "https://juan-tech.com/en/blog/enlaces-internos-guia": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 1
+  },
+  "https://juan-tech.com/services/fullstack-development": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 8
+  },
+  "https://juan-tech.com/en/blog/sql-vs-nosql": {
+    "p1_clicks": 0,
+    "p1_impressions": 7,
+    "p1_ctr": 0,
+    "p1_position": 2.7,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 40
+  },
+  "https://juan-tech.com/blog/payloadcms-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 9,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/cs-fundamentals/quicksort-python": {
+    "p1_clicks": 0,
+    "p1_impressions": 202,
+    "p1_ctr": 0,
+    "p1_position": 42.9,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/pillar-page-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 86,
+    "p1_ctr": 0,
+    "p1_position": 61.0,
+    "p2_clicks": 0,
+    "p2_impressions": 18,
+    "p2_ctr": 0,
+    "p2_position": 74.6
+  },
+  "https://juan-tech.com/blog/diseno-bases-datos": {
+    "p1_clicks": 0,
+    "p1_impressions": 29,
+    "p1_ctr": 0,
+    "p1_position": 34.9,
+    "p2_clicks": 0,
+    "p2_impressions": 17,
+    "p2_ctr": 0,
+    "p2_position": 41.9
+  },
+  "https://juan-tech.com/blog/recursividad": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 4,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 2
+  },
+  "https://juan-tech.com/blog/technical-seo-guide": {
+    "p1_clicks": 0,
+    "p1_impressions": 11,
+    "p1_ctr": 0,
+    "p1_position": 42.9,
+    "p2_clicks": 0,
+    "p2_impressions": 10,
+    "p2_ctr": 0,
+    "p2_position": 51.4
+  },
+  "https://juan-tech.com/en/blog/canibalizacion-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 1,
+    "p2_clicks": 0,
+    "p2_impressions": 12,
+    "p2_ctr": 0,
+    "p2_position": 33.7
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/space-complexity#importancia-y-aplicacin-prctica-de-la-complejidad-espacial": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 10,
+    "p2_ctr": 0,
+    "p2_position": 7.8
+  },
+  "https://juan-tech.com/en/blog/general/tablas-hash": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 9
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/big-o-notation": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 78,
+    "p2_ctr": 0,
+    "p2_position": 27.4
+  },
+  "https://juan-tech.com/terms": {
+    "p1_clicks": 0,
+    "p1_impressions": 6,
+    "p1_ctr": 0,
+    "p1_position": 2.2,
+    "p2_clicks": 0,
+    "p2_impressions": 8,
+    "p2_ctr": 0,
+    "p2_position": 25.5
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/time-complexity": {
+    "p1_clicks": 0,
+    "p1_impressions": 24,
+    "p1_ctr": 0,
+    "p1_position": 10.5,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/headless-cms-comparison": {
+    "p1_clicks": 0,
+    "p1_impressions": 103,
+    "p1_ctr": 0,
+    "p1_position": 66.7,
+    "p2_clicks": 0,
+    "p2_impressions": 27,
+    "p2_ctr": 0,
+    "p2_position": 68.2
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/data-structures": {
+    "p1_clicks": 0,
+    "p1_impressions": 166,
+    "p1_ctr": 0,
+    "p1_position": 17.3,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 4
+  },
+  "https://juan-tech.com/en": {
+    "p1_clicks": 0,
+    "p1_impressions": 20,
+    "p1_ctr": 0,
+    "p1_position": 3.5,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 9
+  },
+  "https://juan-tech.com/en/blog/seo-off-page-guia": {
+    "p1_clicks": 0,
+    "p1_impressions": 3,
+    "p1_ctr": 0,
+    "p1_position": 6.7,
+    "p2_clicks": 0,
+    "p2_impressions": 3,
+    "p2_ctr": 0,
+    "p2_position": 16
+  },
+  "https://juan-tech.com/blog/canibalizacion-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 9,
+    "p1_ctr": 0,
+    "p1_position": 9.1,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/time-complexity": {
+    "p1_clicks": 0,
+    "p1_impressions": 86,
+    "p1_ctr": 0,
+    "p1_position": 15.7,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/content-pillar": {
+    "p1_clicks": 0,
+    "p1_impressions": 107,
+    "p1_ctr": 0,
+    "p1_position": 28.3,
+    "p2_clicks": 0,
+    "p2_impressions": 39,
+    "p2_ctr": 0,
+    "p2_position": 29.7
+  },
+  "https://juan-tech.com/blog/general/web-performance-guide": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 18,
+    "p2_ctr": 0,
+    "p2_position": 27.4
+  },
+  "https://juan-tech.com/blog/merge-sort-python": {
+    "p1_clicks": 0,
+    "p1_impressions": 3,
+    "p1_ctr": 0,
+    "p1_position": 7.7,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/dynamic-programming": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 3,
+    "p2_ctr": 0,
+    "p2_position": 3.3
+  },
+  "https://juan-tech.com/servicios/ai-seo-geo": {
+    "p1_clicks": 0,
+    "p1_impressions": 7,
+    "p1_ctr": 0,
+    "p1_position": 28.9,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/queue-data-structure": {
+    "p1_clicks": 0,
+    "p1_impressions": 95,
+    "p1_ctr": 0,
+    "p1_position": 11.7,
+    "p2_clicks": 0,
+    "p2_impressions": 13,
+    "p2_ctr": 0,
+    "p2_position": 5.9
+  },
+  "https://juan-tech.com/en/blog/cs-fundamentals/dynamic-programming": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 2,
+    "p2_ctr": 0,
+    "p2_position": 31.5
+  },
+  "https://juan-tech.com/case-studies/talleres-costura-miami-lanzamiento-seo-local": {
+    "p1_clicks": 0,
+    "p1_impressions": 3,
+    "p1_ctr": 0,
+    "p1_position": 2,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/seo-copywriting": {
+    "p1_clicks": 0,
+    "p1_impressions": 3,
+    "p1_ctr": 0,
+    "p1_position": 43.3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/servicios": {
+    "p1_clicks": 0,
+    "p1_impressions": 13,
+    "p1_ctr": 0,
+    "p1_position": 14.3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/nextjs-portfolio": {
+    "p1_clicks": 0,
+    "p1_impressions": 27,
+    "p1_ctr": 0,
+    "p1_position": 11.9,
+    "p2_clicks": 0,
+    "p2_impressions": 14,
+    "p2_ctr": 0,
+    "p2_position": 15.5
+  },
+  "https://juan-tech.com/blog/development/que-es-css": {
+    "p1_clicks": 0,
+    "p1_impressions": 3,
+    "p1_ctr": 0,
+    "p1_position": 7.3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/case-studies/migracion-ecommerce-nextjs-seo-tecnico": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 5.5,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/graph-algorithms": {
+    "p1_clicks": 0,
+    "p1_impressions": 111,
+    "p1_ctr": 0,
+    "p1_position": 15.3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/case-studies/fabricante-baldosa-hidraulica-seo-espana": {
+    "p1_clicks": 0,
+    "p1_impressions": 7,
+    "p1_ctr": 0,
+    "p1_position": 8,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 3
+  },
+  "https://juan-tech.com/en/blog/seo-copywriting-guide": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 10,
+    "p2_clicks": 0,
+    "p2_impressions": 4,
+    "p2_ctr": 0,
+    "p2_position": 7.8
+  },
+  "https://juan-tech.com/servicios/fullstack-development": {
+    "p1_clicks": 0,
+    "p1_impressions": 12,
+    "p1_ctr": 0,
+    "p1_position": 15.8,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/general/tablas-hash": {
+    "p1_clicks": 0,
+    "p1_impressions": 55,
+    "p1_ctr": 0,
+    "p1_position": 12.1,
+    "p2_clicks": 0,
+    "p2_impressions": 46,
+    "p2_ctr": 0,
+    "p2_position": 21.8
+  },
+  "https://juan-tech.com/authors/juan-carlos-angulo": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 4,
+    "p2_ctr": 0,
+    "p2_position": 4.5
+  },
+  "https://juan-tech.com/en/blog/mejores-cursos-seo-espanol": {
+    "p1_clicks": 0,
+    "p1_impressions": 6,
+    "p1_ctr": 0,
+    "p1_position": 7.2,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/schema-markup-guide": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 6,
+    "p2_ctr": 0,
+    "p2_position": 50.8
+  },
+  "https://juan-tech.com/en/blog/queue-data-structure": {
+    "p1_clicks": 0,
+    "p1_impressions": 289,
+    "p1_ctr": 0,
+    "p1_position": 19.3,
+    "p2_clicks": 0,
+    "p2_impressions": 51,
+    "p2_ctr": 0,
+    "p2_position": 19.1
+  },
+  "https://juan-tech.com/en/blog/topic-clusters-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 12,
+    "p1_ctr": 0,
+    "p1_position": 28.9,
+    "p2_clicks": 0,
+    "p2_impressions": 207,
+    "p2_ctr": 0,
+    "p2_position": 37.7
+  },
+  "https://juan-tech.com/blog/seo-content-strategy": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 70,
+    "p2_clicks": 0,
+    "p2_impressions": 2,
+    "p2_ctr": 0,
+    "p2_position": 9
+  },
+  "https://juan-tech.com/blog/estrategia-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 9,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 7
+  },
+  "https://juan-tech.com/en/blog/development/que-es-css": {
+    "p1_clicks": 0,
+    "p1_impressions": 3,
+    "p1_ctr": 0,
+    "p1_position": 5,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/space-complexity#definicin-y-fundamentos-de-la-complejidad-espacial": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 10,
+    "p2_ctr": 0,
+    "p2_position": 7.8
+  },
+  "https://juan-tech.com/en/blog/heap-data-structure": {
+    "p1_clicks": 0,
+    "p1_impressions": 74,
+    "p1_ctr": 0,
+    "p1_position": 14.3,
+    "p2_clicks": 0,
+    "p2_impressions": 236,
+    "p2_ctr": 0,
+    "p2_position": 18.4
+  },
+  "https://juan-tech.com/blog/structured-data-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 4,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/tree-traversal": {
+    "p1_clicks": 0,
+    "p1_impressions": 27,
+    "p1_ctr": 0,
+    "p1_position": 27.0,
+    "p2_clicks": 0,
+    "p2_impressions": 23,
+    "p2_ctr": 0,
+    "p2_position": 29.7
+  },
+  "https://juan-tech.com/sitemap": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 1
+  },
+  "https://juan-tech.com/blog/enlaces-internos-guia": {
+    "p1_clicks": 0,
+    "p1_impressions": 3,
+    "p1_ctr": 0,
+    "p1_position": 13.3,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 18
+  },
+  "https://juan-tech.com/en/blog/structured-data-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 7,
+    "p1_ctr": 0,
+    "p1_position": 15.4,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/time-complexity": {
+    "p1_clicks": 0,
+    "p1_impressions": 121,
+    "p1_ctr": 0,
+    "p1_position": 10.8,
+    "p2_clicks": 0,
+    "p2_impressions": 32,
+    "p2_ctr": 0,
+    "p2_position": 11.4
+  },
+  "https://juan-tech.com/en/services/fullstack-development": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 10,
+    "p2_clicks": 0,
+    "p2_impressions": 2,
+    "p2_ctr": 0,
+    "p2_position": 85
+  },
+  "https://juan-tech.com/en/websites/drmanuelvargashidalgo-com": {
+    "p1_clicks": 0,
+    "p1_impressions": 4,
+    "p1_ctr": 0,
+    "p1_position": 5,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/quicksort-python": {
+    "p1_clicks": 0,
+    "p1_impressions": 12,
+    "p1_ctr": 0,
+    "p1_position": 7.9,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/que-es-css": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 9,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/content-pillar": {
+    "p1_clicks": 0,
+    "p1_impressions": 20,
+    "p1_ctr": 0,
+    "p1_position": 29.1,
+    "p2_clicks": 0,
+    "p2_impressions": 10,
+    "p2_ctr": 0,
+    "p2_position": 26
+  },
+  "https://juan-tech.com/en/blog/keyword-research-guide": {
+    "p1_clicks": 0,
+    "p1_impressions": 15,
+    "p1_ctr": 0,
+    "p1_position": 24.1,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/tablas-hash": {
+    "p1_clicks": 1,
+    "p1_impressions": 174,
+    "p1_ctr": 0.0057,
+    "p1_position": 11.4,
+    "p2_clicks": 1,
+    "p2_impressions": 30,
+    "p2_ctr": 0.0333,
+    "p2_position": 9.3
+  },
+  "https://juan-tech.com/case-studies/migracion-ecommerce-nextjs-seo-tecnico": {
+    "p1_clicks": 0,
+    "p1_impressions": 11,
+    "p1_ctr": 0,
+    "p1_position": 10.7,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/web-performance-guide": {
+    "p1_clicks": 0,
+    "p1_impressions": 4,
+    "p1_ctr": 0,
+    "p1_position": 93.2,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 11
+  },
+  "https://juan-tech.com/en/blog/ssr-vs-csr-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 138,
+    "p1_ctr": 0,
+    "p1_position": 15.9,
+    "p2_clicks": 0,
+    "p2_impressions": 38,
+    "p2_ctr": 0,
+    "p2_position": 16.6
+  },
+  "https://juan-tech.com/blog/topic-clusters-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 35,
+    "p1_ctr": 0,
+    "p1_position": 61.7,
+    "p2_clicks": 0,
+    "p2_impressions": 17,
+    "p2_ctr": 0,
+    "p2_position": 71
+  },
+  "https://juan-tech.com/en/blog/tablas-hash": {
+    "p1_clicks": 0,
+    "p1_impressions": 22,
+    "p1_ctr": 0,
+    "p1_position": 9.0,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/development/sql-vs-nosql": {
+    "p1_clicks": 0,
+    "p1_impressions": 5,
+    "p1_ctr": 0,
+    "p1_position": 5.2,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/authors": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 6,
+    "p2_ctr": 0,
+    "p2_position": 4.7
+  },
+  "https://juan-tech.com/blog": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 6,
+    "p2_ctr": 0,
+    "p2_position": 18.5
+  },
+  "https://juan-tech.com/en/blog/pillar-page-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 63,
+    "p1_ctr": 0,
+    "p1_position": 21.2,
+    "p2_clicks": 0,
+    "p2_impressions": 17,
+    "p2_ctr": 0,
+    "p2_position": 18.9
+  },
+  "https://juan-tech.com/blog/nextjs-portfolio": {
+    "p1_clicks": 1,
+    "p1_impressions": 13,
+    "p1_ctr": 0.0769,
+    "p1_position": 8.3,
+    "p2_clicks": 1,
+    "p2_impressions": 6,
+    "p2_ctr": 0.1667,
+    "p2_position": 4.8
+  },
+  "https://juan-tech.com/en/blog/tech-seo/guia-google-search-console": {
+    "p1_clicks": 0,
+    "p1_impressions": 15,
+    "p1_ctr": 0,
+    "p1_position": 59.9,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/seo/mejores-cursos-seo-espanol": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 180,
+    "p2_ctr": 0,
+    "p2_position": 20.9
+  },
+  "https://juan-tech.com/blog/nextjs-server-components": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 7,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 6
+  },
+  "https://juan-tech.com/blog/queue-data-structure": {
+    "p1_clicks": 0,
+    "p1_impressions": 25,
+    "p1_ctr": 0,
+    "p1_position": 11.3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/seo-copywriting-guide": {
+    "p1_clicks": 0,
+    "p1_impressions": 33,
+    "p1_ctr": 0,
+    "p1_position": 70.1,
+    "p2_clicks": 0,
+    "p2_impressions": 14,
+    "p2_ctr": 0,
+    "p2_position": 78.3
+  },
+  "https://juan-tech.com/websites/juan-tech-com": {
+    "p1_clicks": 0,
+    "p1_impressions": 3,
+    "p1_ctr": 0,
+    "p1_position": 3.7,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/robots-txt-best-practices": {
+    "p1_clicks": 0,
+    "p1_impressions": 20,
+    "p1_ctr": 0,
+    "p1_position": 19.4,
+    "p2_clicks": 0,
+    "p2_impressions": 107,
+    "p2_ctr": 0,
+    "p2_position": 24.4
+  },
+  "https://juan-tech.com/en/blog/estrategia-topic-clusters": {
+    "p1_clicks": 0,
+    "p1_impressions": 10,
+    "p1_ctr": 0,
+    "p1_position": 7.4,
+    "p2_clicks": 0,
+    "p2_impressions": 21,
+    "p2_ctr": 0,
+    "p2_position": 22.7
+  },
+  "https://juan-tech.com/case-studies/fabricante-baldosa-hidraulica-seo-espana": {
+    "p1_clicks": 0,
+    "p1_impressions": 4,
+    "p1_ctr": 0,
+    "p1_position": 1.2,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/astro-vs-nextjs": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 17,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 11
+  },
+  "https://juan-tech.com/blog/seo/topic-clusters-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 102,
+    "p1_ctr": 0,
+    "p1_position": 38.3,
+    "p2_clicks": 0,
+    "p2_impressions": 25,
+    "p2_ctr": 0,
+    "p2_position": 29.0
+  },
+  "https://juan-tech.com/blog/development/sql-vs-nosql": {
+    "p1_clicks": 0,
+    "p1_impressions": 25,
+    "p1_ctr": 0,
+    "p1_position": 64.9,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/case-studies/pittsburgh-criminal-defense-legal-content-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 2,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/dynamic-programming": {
+    "p1_clicks": 0,
+    "p1_impressions": 25,
+    "p1_ctr": 0,
+    "p1_position": 10.1,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/websites/aprendoclub-com": {
+    "p1_clicks": 0,
+    "p1_impressions": 5,
+    "p1_ctr": 0,
+    "p1_position": 8.4,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 6
+  },
+  "https://juan-tech.com/en/blog/web-performance-guide": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 26
+  },
+  "https://juan-tech.com/blog/estrategia-topic-clusters": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 8,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/space-complexity#complejidad-en-algoritmos-tiempo-y-espacio": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 10
+  },
+  "https://juan-tech.com/en/blog/pilas-y-colas": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 6,
+    "p2_clicks": 0,
+    "p2_impressions": 7,
+    "p2_ctr": 0,
+    "p2_position": 19.7
+  },
+  "https://juan-tech.com/en/case-studies/talleres-costura-miami-lanzamiento-seo-local": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 6
+  },
+  "https://juan-tech.com/blog/seo/pillar-page-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 129,
+    "p2_ctr": 0,
+    "p2_position": 14.2
+  },
+  "https://juan-tech.com/en/blog/cs-fundamentals/space-complexity": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 32,
+    "p2_ctr": 0,
+    "p2_position": 31.3
+  },
+  "https://juan-tech.com/en/blog/que-es-css": {
+    "p1_clicks": 0,
+    "p1_impressions": 29,
+    "p1_ctr": 0,
+    "p1_position": 29.3,
+    "p2_clicks": 0,
+    "p2_impressions": 17,
+    "p2_ctr": 0,
+    "p2_position": 31.9
+  },
+  "https://juan-tech.com/en/blog/dynamic-programming": {
+    "p1_clicks": 0,
+    "p1_impressions": 17,
+    "p1_ctr": 0,
+    "p1_position": 18.6,
+    "p2_clicks": 0,
+    "p2_impressions": 11,
+    "p2_ctr": 0,
+    "p2_position": 21.5
+  },
+  "https://juan-tech.com/en/blog/quicksort-python": {
+    "p1_clicks": 0,
+    "p1_impressions": 52,
+    "p1_ctr": 0,
+    "p1_position": 17.1,
+    "p2_clicks": 0,
+    "p2_impressions": 36,
+    "p2_ctr": 0,
+    "p2_position": 36.9
+  },
+  "https://juan-tech.com/en/blog/cs-fundamentals/data-structures": {
+    "p1_clicks": 0,
+    "p1_impressions": 61,
+    "p1_ctr": 0,
+    "p1_position": 42.2,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/graph-algorithms": {
+    "p1_clicks": 0,
+    "p1_impressions": 48,
+    "p1_ctr": 0,
+    "p1_position": 33,
+    "p2_clicks": 0,
+    "p2_impressions": 22,
+    "p2_ctr": 0,
+    "p2_position": 55.7
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/tree-traversal": {
+    "p1_clicks": 0,
+    "p1_impressions": 37,
+    "p1_ctr": 0,
+    "p1_position": 32.9,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/websites": {
+    "p1_clicks": 0,
+    "p1_impressions": 9,
+    "p1_ctr": 0,
+    "p1_position": 7.1,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/seo-on-page-guia": {
+    "p1_clicks": 0,
+    "p1_impressions": 4,
+    "p1_ctr": 0,
+    "p1_position": 4,
+    "p2_clicks": 0,
+    "p2_impressions": 21,
+    "p2_ctr": 0,
+    "p2_position": 47.7
+  },
+  "https://juan-tech.com/en/blog/seo-on-page-guia": {
+    "p1_clicks": 0,
+    "p1_impressions": 7,
+    "p1_ctr": 0,
+    "p1_position": 52.3,
+    "p2_clicks": 0,
+    "p2_impressions": 4,
+    "p2_ctr": 0,
+    "p2_position": 63.8
+  },
+  "https://juan-tech.com/sitemap.html": {
+    "p1_clicks": 0,
+    "p1_impressions": 10,
+    "p1_ctr": 0,
+    "p1_position": 11.9,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/websites/apturio-com": {
+    "p1_clicks": 0,
+    "p1_impressions": 17,
+    "p1_ctr": 0,
+    "p1_position": 4.1,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/development/astro-vs-nextjs": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 5,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/ssr-vs-csr-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 7,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/data-structures": {
+    "p1_clicks": 0,
+    "p1_impressions": 6,
+    "p1_ctr": 0,
+    "p1_position": 16.8,
+    "p2_clicks": 0,
+    "p2_impressions": 8,
+    "p2_ctr": 0,
+    "p2_position": 19.1
+  },
+  "https://juan-tech.com/en/blog/diseno-bases-datos": {
+    "p1_clicks": 0,
+    "p1_impressions": 8,
+    "p1_ctr": 0,
+    "p1_position": 14.2,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/cs-fundamentals/heap-data-structure": {
+    "p1_clicks": 0,
+    "p1_impressions": 233,
+    "p1_ctr": 0,
+    "p1_position": 56.0,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/auditoria-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 9,
+    "p1_ctr": 0,
+    "p1_position": 31.1,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/websites/ariannalupi-com": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 4.5,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/algoritmos-estructuras-datos": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 18,
+    "p2_clicks": 0,
+    "p2_impressions": 3,
+    "p2_ctr": 0,
+    "p2_position": 17.7
+  },
+  "https://juan-tech.com/en/blog/nextjs-server-components": {
+    "p1_clicks": 0,
+    "p1_impressions": 4,
+    "p1_ctr": 0,
+    "p1_position": 45.8,
+    "p2_clicks": 0,
+    "p2_impressions": 8,
+    "p2_ctr": 0,
+    "p2_position": 38.4
+  },
+  "https://juan-tech.com/en/case-studies/pittsburgh-criminal-defense-legal-content-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/mejores-cursos-seo-espanol": {
+    "p1_clicks": 0,
+    "p1_impressions": 108,
+    "p1_ctr": 0,
+    "p1_position": 22.0,
+    "p2_clicks": 0,
+    "p2_impressions": 23,
+    "p2_ctr": 0,
+    "p2_position": 23
+  },
+  "https://juan-tech.com/en/blog/guia-google-search-console": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 59,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 48
+  },
+  "https://juan-tech.com/en/blog/guia-eeat": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 7
+  },
+  "https://juan-tech.com/en/blog/headless-cms-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 3,
+    "p1_ctr": 0,
+    "p1_position": 7.7,
+    "p2_clicks": 0,
+    "p2_impressions": 16,
+    "p2_ctr": 0,
+    "p2_position": 22.2
+  },
+  "https://juan-tech.com/blog/guia-google-search-console": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 6,
+    "p2_ctr": 0,
+    "p2_position": 24.3
+  },
+  "https://juan-tech.com/en/blog/payloadcms-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 21,
+    "p1_ctr": 0,
+    "p1_position": 8.5,
+    "p2_clicks": 0,
+    "p2_impressions": 39,
+    "p2_ctr": 0,
+    "p2_position": 12.5
+  },
+  "https://juan-tech.com/blog/tech-seo/technical-seo-checklist": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 6,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 7
+  },
+  "https://juan-tech.com/en/blog/cs-fundamentals/queue-data-structure": {
+    "p1_clicks": 0,
+    "p1_impressions": 240,
+    "p1_ctr": 0,
+    "p1_position": 48.1,
+    "p2_clicks": 0,
+    "p2_impressions": 144,
+    "p2_ctr": 0,
+    "p2_position": 41.8
+  },
+  "https://juan-tech.com/en/blog/cs-fundamentals/tree-traversal": {
+    "p1_clicks": 0,
+    "p1_impressions": 204,
+    "p1_ctr": 0,
+    "p1_position": 45.4,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/development/experiencia-de-usuario": {
+    "p1_clicks": 0,
+    "p1_impressions": 205,
+    "p1_ctr": 0,
+    "p1_position": 46.3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/seo-copywriting": {
+    "p1_clicks": 0,
+    "p1_impressions": 9,
+    "p1_ctr": 0,
+    "p1_position": 7.1,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/seo-off-page-guia": {
+    "p1_clicks": 0,
+    "p1_impressions": 31,
+    "p1_ctr": 0,
+    "p1_position": 23.6,
+    "p2_clicks": 0,
+    "p2_impressions": 9,
+    "p2_ctr": 0,
+    "p2_position": 26.9
+  },
+  "https://juan-tech.com/en/blog/seo/mejores-cursos-seo-espanol": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 7,
+    "p2_ctr": 0,
+    "p2_position": 8.4
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/merge-sort-python": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 2,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/development/react-19": {
+    "p1_clicks": 0,
+    "p1_impressions": 18,
+    "p1_ctr": 0,
+    "p1_position": 22.7,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/services/seo-technical-audit": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 66
+  },
+  "https://juan-tech.com/blog/tree-traversal": {
+    "p1_clicks": 0,
+    "p1_impressions": 5,
+    "p1_ctr": 0,
+    "p1_position": 13.8,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 5
+  },
+  "https://juan-tech.com/en/search": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/binary-search-tree": {
+    "p1_clicks": 0,
+    "p1_impressions": 10,
+    "p1_ctr": 0,
+    "p1_position": 35.6,
+    "p2_clicks": 0,
+    "p2_impressions": 15,
+    "p2_ctr": 0,
+    "p2_position": 33
+  },
+  "https://juan-tech.com/blog/binary-search-tree": {
+    "p1_clicks": 0,
+    "p1_impressions": 6,
+    "p1_ctr": 0,
+    "p1_position": 6.3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/react-19": {
+    "p1_clicks": 0,
+    "p1_impressions": 7,
+    "p1_ctr": 0,
+    "p1_position": 38.1,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 50
+  },
+  "https://juan-tech.com/en/websites/juan-tech-com": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 4,
+    "p2_ctr": 0,
+    "p2_position": 10
+  },
+  "https://juan-tech.com/en/websites": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/servicios/seo-consulting": {
+    "p1_clicks": 0,
+    "p1_impressions": 9,
+    "p1_ctr": 0,
+    "p1_position": 6.3,
+    "p2_clicks": 0,
+    "p2_impressions": 1,
+    "p2_ctr": 0,
+    "p2_position": 10
+  },
+  "https://juan-tech.com/en/blog/auditoria-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 85,
+    "p1_ctr": 0,
+    "p1_position": 32.7,
+    "p2_clicks": 0,
+    "p2_impressions": 91,
+    "p2_ctr": 0,
+    "p2_position": 39.9
+  },
+  "https://juan-tech.com/en/blog/nextjs-cms": {
+    "p1_clicks": 0,
+    "p1_impressions": 16,
+    "p1_ctr": 0,
+    "p1_position": 22.8,
+    "p2_clicks": 0,
+    "p2_impressions": 22,
+    "p2_ctr": 0,
+    "p2_position": 27.8
+  },
+  "https://juan-tech.com/blog/headless-cms-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 10,
+    "p1_ctr": 0,
+    "p1_position": 8.7,
+    "p2_clicks": 0,
+    "p2_impressions": 4,
+    "p2_ctr": 0,
+    "p2_position": 16
+  },
+  "https://juan-tech.com/blog/cs-fundamentals/quicksort-python": {
+    "p1_clicks": 0,
+    "p1_impressions": 14,
+    "p1_ctr": 0,
+    "p1_position": 12.2,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/merge-sort-python": {
+    "p1_clicks": 0,
+    "p1_impressions": 38,
+    "p1_ctr": 0,
+    "p1_position": 47.1,
+    "p2_clicks": 0,
+    "p2_impressions": 40,
+    "p2_ctr": 0,
+    "p2_position": 43
+  },
+  "https://juan-tech.com/en/privacy": {
+    "p1_clicks": 0,
+    "p1_impressions": 13,
+    "p1_ctr": 0,
+    "p1_position": 3.1,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/seo-content-strategy": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 6,
+    "p2_clicks": 0,
+    "p2_impressions": 4,
+    "p2_ctr": 0,
+    "p2_position": 38.5
+  },
+  "https://juan-tech.com/blog/tech-seo/guia-google-search-console": {
+    "p1_clicks": 0,
+    "p1_impressions": 2,
+    "p1_ctr": 0,
+    "p1_position": 14,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/nextjs-seo-optimization": {
+    "p1_clicks": 0,
+    "p1_impressions": 279,
+    "p1_ctr": 0,
+    "p1_position": 26.5,
+    "p2_clicks": 0,
+    "p2_impressions": 33,
+    "p2_ctr": 0,
+    "p2_position": 32.2
+  },
+  "https://juan-tech.com/blog/keyword-research-guide": {
+    "p1_clicks": 0,
+    "p1_impressions": 72,
+    "p1_ctr": 0,
+    "p1_position": 40.9,
+    "p2_clicks": 0,
+    "p2_impressions": 40,
+    "p2_ctr": 0,
+    "p2_position": 41.9
+  },
+  "https://juan-tech.com/en/blog/estrategia-de-contenidos": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/que-es-css": {
+    "p1_clicks": 0,
+    "p1_impressions": 95,
+    "p1_ctr": 0,
+    "p1_position": 60.6,
+    "p2_clicks": 0,
+    "p2_impressions": 25,
+    "p2_ctr": 0,
+    "p2_position": 44.2
+  },
+  "https://juan-tech.com/blog/guia-eeat": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 4,
+    "p2_ctr": 0,
+    "p2_position": 6.5
+  },
+  "https://juan-tech.com/en/websites/apturio-com": {
+    "p1_clicks": 0,
+    "p1_impressions": 16,
+    "p1_ctr": 0,
+    "p1_position": 9.7,
+    "p2_clicks": 0,
+    "p2_impressions": 6,
+    "p2_ctr": 0,
+    "p2_position": 6.3
+  },
+  "https://juan-tech.com/en/blog/cs-fundamentals/graph-algorithms": {
+    "p1_clicks": 0,
+    "p1_impressions": 211,
+    "p1_ctr": 0,
+    "p1_position": 43.8,
+    "p2_clicks": 0,
+    "p2_impressions": 64,
+    "p2_ctr": 0,
+    "p2_position": 25.3
+  },
+  "https://juan-tech.com/blog/algoritmos-ordenamiento": {
+    "p1_clicks": 0,
+    "p1_impressions": 1,
+    "p1_ctr": 0,
+    "p1_position": 11,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/development/experiencia-de-usuario": {
+    "p1_clicks": 0,
+    "p1_impressions": 9,
+    "p1_ctr": 0,
+    "p1_position": 9.8,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/en/blog/technical-seo-guide": {
+    "p1_clicks": 0,
+    "p1_impressions": 7,
+    "p1_ctr": 0,
+    "p1_position": 42.4,
+    "p2_clicks": 0,
+    "p2_impressions": 2,
+    "p2_ctr": 0,
+    "p2_position": 39
+  },
+  "https://juan-tech.com/blog/tech-seo/nextjs-seo": {
+    "p1_clicks": 0,
+    "p1_impressions": 0,
+    "p1_ctr": 0,
+    "p1_position": 0,
+    "p2_clicks": 0,
+    "p2_impressions": 8,
+    "p2_ctr": 0,
+    "p2_position": 5.8
+  },
+  "https://juan-tech.com/en/blog/big-o-notation": {
+    "p1_clicks": 0,
+    "p1_impressions": 4,
+    "p1_ctr": 0,
+    "p1_position": 7.5,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/websites/ariannalupi-com": {
+    "p1_clicks": 0,
+    "p1_impressions": 9,
+    "p1_ctr": 0,
+    "p1_position": 6.3,
+    "p2_clicks": 0,
+    "p2_impressions": 0,
+    "p2_ctr": 0,
+    "p2_position": 0
+  },
+  "https://juan-tech.com/blog/sql-vs-nosql": {
+    "p1_clicks": 0,
+    "p1_impressions": 46,
+    "p1_ctr": 0,
+    "p1_position": 57.2,
+    "p2_clicks": 0,
+    "p2_impressions": 32,
+    "p2_ctr": 0,
+    "p2_position": 48.4
+  }
+}

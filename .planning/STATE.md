@@ -1,16 +1,20 @@
 ---
-gsd_state_version: 1.0
+gsd_state_version: "1.0"
 milestone: v2.1
-milestone_name: Monetizacion del Sitio - Research + Fundaciones
+current_phase: 50
+current_phase_name: Gate de Cierre de Monetización
 status: planning
-last_updated: "2026-08-25T00:30:00.000Z"
-last_activity: 2026-08-20
+stopped_at: "Completado 50-03-PLAN.md -- Phase 50 cerrada, milestone v2.1 tecnicamente cerrado (MILESTONE GATE: PASS)"
+last_updated: "2026-09-10T18:15:21.405Z"
+last_activity: 2026-09-10
+last_activity_desc: "Phase 50 (Gate de Cierre de Monetizacion) cerrada 3/3: GATE-01 re-medido contra baseline Phase 45 (CLS 0.00 y JS-cliente 0KB limpios, salvedad de medicion documentada en performance/TBT por contencion de CPU); GATE-02 crawl real de afiliacion (sponsored/disclosure/go-route/overrideAccess) PASS limpio. 50-03 sintetizo ambos veredictos en 50-REGRESSION-DIFF.md: MILESTONE GATE: PASS. REQUIREMENTS.md actualizado (GATE-01/GATE-02 Complete). Hallazgo critico pendiente: docs/seo-handoff sigue sin mergear a master (Dokploy solo despliega desde master), asi que el milestone v2.1 esta tecnicamente cerrado pero no desplegado en juan-tech.com todavia."
+state_head: ab0cbff54b336b7375bff3b940fc8a4b35f6d013
 progress:
-  total_phases: 8
-  completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_phases: 51
+  completed_phases: 7
+  total_plans: 19
+  completed_plans: 18
+milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
 # Project State
@@ -20,15 +24,15 @@ progress:
 See: .planning/PROJECT.md (updated 2026-07-31)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 44 — baseline de regresión + decisiones de monetización (milestone v2.1, Phases 44-49)
+**Current focus:** Phase 50 — Gate de Cierre de Monetización (milestone v2.1, Phases 44-50) — CERRADA, milestone v2.1 tecnicamente completo
 
 ## Current Position
 
-Phase: 44 — Decisiones de Monetización (not started)
-Plan: —
-Status: Roadmap v2.1 reestructurado (Phases 44-50, 37/37 requirements mapeados) — listo para `/gsd:plan-phase 44`. Phase 45 (Baseline de Regresión) queda BLOQUEADA por Neon caído + juan-tech.com sin proyecto en Ahrefs, y es gate duro: ninguna fase que renderice (46-49) puede empezar antes de que cierre
-Last activity: 2026-08-25 — Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice.
-Previa: Quick task 260820-blg completado: rediseño del blog (filas por categoría, CRO por audiencia, alta al correo con doble opt-in) + recategorización de 4 posts con sus 301. Datos, migraciones y código ya en producción (el código entró a master con la PR #22 y salió en el deploy del 2026-08-20)
+Phase: 50 — Gate de Cierre de Monetización (Phase 49 cerrada 2026-09-08; Phase 48 y 48.5 cerradas; Phase 47 cerrada 2026-09-04; Phase 46 cerrada; Phase 45 cerrada 2026-09-03; Phase 44 cerrada 2026-08-30) — **Phase 50 cerrada (3/3 plans), milestone v2.1 (Phases 44-50) tecnicamente cerrado**
+Plan: 50-03 — completo (sintesis final de GATE-01 + GATE-02 en `50-REGRESSION-DIFF.md`: **MILESTONE GATE: PASS**; REQUIREMENTS.md actualizado con GATE-01/GATE-02 marcados Complete; Task 3 checkpoint saltado por no haber FAIL)
+Status: 50-03 verificado de punta a punta. Task 1: leidos `50-gate01-findings.md` y `50-gate02-findings.md` completos, veredicto explicito por cada uno de los 4 Success Criteria del ROADMAP Phase 50 (perf/CWV/CLS/JS-cliente PASS con salvedad de medicion por contencion de CPU; sponsored/disclosure/go-route PASS limpio; paridad de locales PASS limpio; overrideAccess/exclusion de colecciones PASS limpio) -- `50-REGRESSION-DIFF.md` con `MILESTONE GATE: PASS`. Task 2: `Edit` (no `Write`) sobre REQUIREMENTS.md, GATE-01 pasado de Pending/`[ ]` a Complete/`[x]` (GATE-02 ya estaba Complete de una edicion previa); `50-FAIL-CHECKPOINT.md` no se creo, confirmando la rama PASS. Hallazgo critico propagado y no resuelto en esta fase: `docs/seo-handoff` sigue 106-110 commits por delante de `master`, Dokploy solo despliega desde `master`, asi que ninguna superficie de Phases 46-49 (`/stack`, `/go/*`, disclosure, AuditorHighlight, EmailCaptureBlock) esta hoy en `juan-tech.com` -- el gate certifica el codigo, no el deploy real. Siguiente paso operativo fuera de esta fase: mergear `docs/seo-handoff` a `master` para que Dokploy despliegue el milestone completo.
+Last activity: 2026-09-10 — Phase 50 Plan 03 ejecutado y verificado; Phase 50 cerrada; milestone v2.1 tecnicamente cerrado (deploy real pendiente).
+Previa: Phase 50 Plan 02 completo 2026-09-10 (GATE-02 PASS: crawl real de afiliacion sobre HTML servido por build local contra Postgres real de Dokploy via tunel SSH, porque el codigo del milestone no esta desplegado a `master` todavia).
 
 ## Performance Metrics
 
@@ -126,6 +130,17 @@ Previa: Quick task 260820-blg completado: rediseño del blog (filas por categor�
 | Phase 43-performance-response-time-html-size P01 | 35min | 2 tasks | 13 files |
 | Phase 43 P02 | 25min | 2 tasks | 4 files |
 | Phase 43 P03 | ~20min | 2 tasks | 2 files |
+| Phase 45 P01 | 45min | 3 tasks | 6 files |
+| Phase 45 P02 | 90min | 2 tasks | 6 files |
+| Phase 45 P03 | 35min | 3 tasks | 3 files |
+| Phase 47 P01 | 65min | 3 tasks | 13 files |
+| Phase 48 P02 | 55min | 3 tasks | 6 files |
+| Phase 48.5 P01 | 40min | 2 tasks | 13 files |
+| Phase 48.5 P02 | 50min | 3 tasks | 13 files |
+| Phase 49 P01 | 48min | 2 tasks | 20 files |
+| Phase 49 P02 | 62min | 2 tasks | 11 files |
+| Phase 49 P03 | 75min | 2 tasks | 4 files |
+| Phase 50 P02 | 120min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -262,6 +277,21 @@ Recent decisions affecting current work:
 - [Phase ?]: [Phase 43]: 43-01: getCachedPageBySlug now passes overrideAccess:false explicitly, closing a pre-existing gap where the original Home getHomePage had no overrideAccess handling at all
 - [Phase ?]: [Phase 43]: 43-02: getServicesIndexPage delegates to getCachedPageBySlug — both /services and /servicios route twins covered automatically. Two real latent bugs found and fixed in cache.ts's unwired getCachedArchive before its first real caller (this plan): categoryId typed string vs Category.id's real number type (would have silently broken category filtering), and missing sort:'-publishedAt' (would have silently dropped list ordering sitewide).
 - [Phase ?]: Phase 43 tracer complete: all 5 named routes (Home, Servicios index, Blog listing, post detail, case-study detail) served from src/lib/cache.ts's unstable_cache layer; live before/after measurement deferred to production post-deploy due to persistent local Neon ECONNRESET (WINDOWS ids 6-8)
+- [Phase 45]: [Phase 45] 45-01: Juan eligio sibling-script (scripts/capture-head-links-snapshot.mjs) sobre extender capture-service-page-snapshot.mjs, para mantener comparable byte a byte la serie Phase 32 -> 36 -> 45 -> 50
+- [Phase 45]: [Phase 45] 45-02: 10 de 14 rutas superaron el umbral de 15 puntos de spread de performance y se escalaron a mediana de 5 corridas; la home queda en 71 de performance (LCP 5461ms), por debajo de la referencia de 94 en PSI, atribuido a contencion de CPU local (TTFB estable) y no a regresion del sitio
+- [Phase 45]: [Phase 45] 45-03: trafico organico real medido en 22 clics / 6.328 impresiones mensuales (ventana 2026-07-31 -> 2026-08-27, via dimensions=date); V(stack)=0 resuelto en DECISIONS.md de la Phase 44 sin tocar formula ni tabla de tramos, per decision explicita de CONTEXT.md de no recalcular
+- [Phase 46]: [Phase 47] 47-01: go/ (con barra) insertado en la alternancia real y actual del matcher (post-SEO-39), no en el ejemplo desactualizado del ROADMAP; detección de bots construida desde cero (contact.ts solo tiene honeypot de formulario, no aplica a un GET); affiliate-clicks sin clickedAt (usa createdAt automático) y sin IP cruda persistida
+- [Phase 47]: [Phase 48]: 48-02: Footer.legalLinks.href no es localized, solo label -- el chequeo de idempotencia basado solo en href dejaba el label del 2do locale sin escribir; corregido para actualizar el label de cada locale explicitamente
+- [Phase 47]: [Phase 48]: 48-02: verify-stack-page.ts contaba doble por el payload de hidratacion de Next.js App Router (self.__next_f.push repite el DOM visible como JSON escapado) -- agregado visibleDomOnly() para acotar los conteos al DOM real
+- [Phase 47]: [Phase 48.5]: 48.5-01: bloque AuditorHighlight construido sobre el patron ServicesShowcase, con AUDITOR_URL/AUDITOR_STATS hardcodeados en src/lib/auditor.ts (nunca campos CMS); id-reuse discipline entre locales aplicada para evitar bloques duplicados; migracion aditiva verificada 100% CREATE-only antes de aplicar contra Postgres real de Dokploy
+- [Phase 47]: [Phase 48.5]: 48.5-02: StackHighlightCallout generalizado a linkHref/linkLabel/linkOpensInNewTabLabel sin regresion; nuevo bloque de un solo uso AuditorCallout (mismo patron que RelatedCaseStudyBlock) en vez de campo en ServiceScopeCard (compartido por otras 3 landings); copy de la landing reescrita a espanol neutral sin voceo per CLAUDE.md (draft del plan tenia voceo rioplatense)
+- [Phase 49-01]: worktree del agente estaba branchado desde master@2026-08-26 (88 commits detras de docs/seo-handoff, Phase 48.5 ya cerrada) -- corregido por fast-forward + cherry-pick del WIP antes de tocar payload.config.ts/migrations, sin generar un commit propio (movimiento de puntero)
+- [Phase 49-01]: mecanismo de doble opt-in a descarga firmada verificado de punta a punta contra Dokploy/Cloudinary/Resend reales -- camino feliz (HAPPY_PATH_OK), camino degradado sin RESEND_API_KEY vía proceso hijo aislado (DEGRADED_PATH_OK, MAIL-04), y anti-enumeracion (ANTI_ENUMERATION_OK); secure-download.ts/download-token.ts confirmados como helpers puros sin ninguna referencia a payload/subscribers (MAIL-05)
+- [Phase 49]: 49-02: buildRichTextConverters() factory por-request envuelve richTextConverters estatico y sobreescribe solo blocks['email-capture'] con searchParams.subscribed/postPath -- los 8 call sites existentes de RichTextRenderer siguen usando la version estatica sin cambio de comportamiento
+- [Phase 49]: [Phase 49] 49-03: Phase 45 baseline no tiene ninguna ruta de post -- gate de GATE-01 aplicado al delta (a) plana vs (b) ?subscribed=pending sobre la MISMA ruta y build, no a un diff archivo-contra-archivo inexistente
+- [Phase 49]: [Phase 49] 49-03: revalidate=60 fijo + lectura incondicional de searchParams -> DYNAMIC_SERVER_USAGE, 500 real en todas las rutas de post en produccion; corregido con dynamic='force-dynamic' explicito
+- [Phase 49]: [Phase 50-02] GATE-02: PASS (5/5 aserciones) verificado sobre HTML real y grep de codigo. Hallazgo critico: codigo de Phases 46-49 (rama docs/seo-handoff) nunca se desplego a produccion -- 106 commits por delante de master, Dokploy solo construye desde master. Crawl hecho contra next build+start local tunelado a la Postgres real de Dokploy (mismo patron ya usado en Phase 48.5-03). Registrado en WINDOWS.md id 9 para visibilidad en /gsd:ship.
+- [Phase 50]: [Phase 50]: 50-03 sintetizo GATE-01 (PASS con salvedad de medicion por contencion de CPU, CLS 0.00 y JS-cliente 0KB limpios) y GATE-02 (PASS limpio) en MILESTONE GATE: PASS -- REQUIREMENTS.md cerrado (GATE-01/GATE-02 Complete); milestone v2.1 tecnicamente cerrado pero docs/seo-handoff sigue sin mergear a master, asi que el deploy real a juan-tech.com queda como accion pendiente fuera de esta fase
 
 ### Pending Todos
 
@@ -285,6 +315,7 @@ None yet.
 - Post 47 (xml-sitemap-automation) en locale is missing its article body — only a See Also links section exists. Pre-existing, out of scope for 31-09's voice rewrite; needs a dedicated content-authoring plan.
 - 8 posts (ids 9,35,36,37,38,56,57,58) have zero English content (title/excerpt/content all missing en, pre-existing since before Phase 30) — needs a dedicated translation-authoring plan if bilingual parity is required, out of Phase 31's voice-rewrite scope
 - 6 Posts + 6 CaseStudies are unpublished drafts (pre-existing since before Phase 30, listed by id/slug in 31-HISTORICAL-DIFF.md) — content already humanized, ready to publish whenever Juan decides
+- Fase 48 Plan 01 (ToolStack): codigo completo y committeado (732609d, af8b8f7), tsc limpio, migracion generada y confirmada aditiva por lectura directa -- pero BLOQUEADO en la verificacion end-to-end: el clasificador de modo automatico del harness denego consistentemente todo intento de apuntar la app/scripts al tunel SSH+socat hacia el Postgres real de Dokploy (4 vias probadas: export inline, sed sobre .env, .env alterno via Write, script auxiliar con source). Falta aplicar la migracion (payload migrate), correr scripts/seed-phase48-tracer.ts, y correr scripts/verify-stack-page.ts contra el dev server real. Requiere que Juan corra estos 3 pasos manualmente (procedimiento en 48-01-SUMMARY.md) o conceda el permiso especifico.
 
 ### Quick Tasks Completed
 
@@ -312,8 +343,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-08-13T22:05:03.000Z
-Stopped at: Roadmap del milestone v2.1 creado (Phases 44-49) — próximo paso `/gsd:plan-phase 44`
+Last session: 2026-09-10T18:15:20.814Z
+Stopped at: Completado 50-03-PLAN.md -- Phase 50 cerrada, milestone v2.1 tecnicamente cerrado (MILESTONE GATE: PASS)
 Resume file: None
 
 ## Operator Next Steps

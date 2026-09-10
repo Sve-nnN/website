@@ -83,12 +83,14 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 41: OG Image Generation (Cloudinary)** - `og:image` dinámico por página vía Cloudinary + `og:url`/`twitter:card` correctos
 - [ ] **Phase 42: Meta Tags Completion** - favicon, apple-touch-icon, theme-color, manifest, canonical sitewide
 - [ ] **Phase 43: Performance (Response Time + HTML Size)** - respuesta de servidor <1.58s y HTML de home reducido de 271KB
-- [ ] **Phase 44: Baseline de Regresión + Decisiones de Monetización** - Baseline Lighthouse/CWV/H1/JSON-LD + snapshot de Search Console + tráfico real con número, y las 5 decisiones escritas (Amazon, modelo de ingresos, Polar, orden de postulaciones, mitigaciones descartadas) — cero cambios renderizados
-- [ ] **Phase 45: Disclosure Legal + Esquema de Links de Afiliado** - Disclosure bilingüe desde `messages/`, `/privacy` actualizada, y colección `affiliate-links` con la matriz de localización congelada antes de cargar contenido (única migración de schema del milestone)
-- [ ] **Phase 46: Ruta /go + Fix de Middleware + Registro de Clics** - `/go/[slug]` 302 `no-store`, el fix de una línea del matcher curl-verificado contra rutas control, `Disallow: /go`, clics append-only vía `after()`
-- [ ] **Phase 47: Página de Stack + Links Inline en Contenido** - `/stack` bilingüe con segmento único, ≥100 palabras de experiencia propia por herramienta y por locale, fuera del nav principal, + inline block de afiliado en posts con disclosure automático
-- [ ] **Phase 48: Captura de Email (Resend, env-gated)** - Bloque inline con Server Action, doble opt-in propio, lead magnet vía URL firmada de Cloudinary, degradación limpia sin `RESEND_API_KEY`
-- [ ] **Phase 49: Gate de Cierre de Monetización** - Paridad medida contra el baseline de Phase 44 + aserciones de `rel`/disclosure/paridad de locales/`overrideAccess`
+- [x] **Phase 44: Decisiones de Monetización** - Las 5 decisiones escritas y fundamentadas (estado de Amazon, modelo de ingresos paramétrico, Polar como merchant of record, orden de postulaciones, mitigaciones descartadas) — cero cambios renderizados (completed 2026-08-30)
+- [x] **Phase 45: Baseline de Regresión** - Foto medible contra la cual compara el gate de cierre: Lighthouse/CWV, H1, JSON-LD, canonical/hreflang, snapshot de Search Console y el tráfico mensual real con número (completed 2026-09-03)
+- [x] **Phase 46: Disclosure Legal + Esquema de Links de Afiliado** - Disclosure bilingüe desde `messages/`, `/privacy` actualizada, y colección `affiliate-links` con la matriz de localización congelada antes de cargar contenido (única migración de schema del milestone) (completed 2026-09-03)
+- [x] **Phase 47: Ruta /go + Fix de Middleware + Registro de Clics** - `/go/[slug]` 302 `no-store`, el fix de una línea del matcher curl-verificado contra rutas control, `Disallow: /go`, clics append-only vía `after()` (completed 2026-09-04)
+- [x] **Phase 48: Página de Stack + Links Inline en Contenido** - `/stack` bilingüe con segmento único, ≥100 palabras de experiencia propia por herramienta y por locale, fuera del nav principal, + inline block de afiliado en posts con disclosure automático (completed 2026-09-05)
+- [x] **Phase 48.5 [INSERTED]: Auditor Destacado** - `auditor.juan-tech.com` deja de estar escondida: sección propia en Home, enlaces desde las landings de servicio relevantes y desde la página de stack (completed 2026-09-07)
+- [x] **Phase 49: Captura de Email (Resend, env-gated)** - Bloque inline con Server Action, doble opt-in propio, lead magnet vía URL firmada de Cloudinary, degradación limpia sin `RESEND_API_KEY` (completed 2026-09-08)
+- [x] **Phase 50: Gate de Cierre de Monetización** - Paridad medida contra el baseline de Phase 45 + aserciones de `rel`/disclosure/paridad de locales/`overrideAccess` — MILESTONE GATE: PASS (completed 2026-09-10; deploy real a producción vía merge `docs/seo-handoff` → `master` queda pendiente fuera de esta fase)
 
 ## Phase Details
 
@@ -1096,10 +1098,10 @@ Plans:
 
 **Plans**: TBD
 
-### Phase 45: Baseline de Regresión (BLOQUEADA — infraestructura)
+### Phase 45: Baseline de Regresión
 
 **Goal**: Existe la foto medible del estado actual del sitio contra la cual el gate de cierre va a comparar: Lighthouse/CWV, H1, JSON-LD, canonical/hreflang, el snapshot de Search Console y el tráfico mensual real con número.
-**Depends on**: Phase 44 (el documento de decisiones consume el número de tráfico de esta fase, pero se escribe paramétrico para no bloquearse). **BLOQUEADA por dos dependencias externas que Juan debe resolver**: (a) Neon caído — `read ECONNRESET` en endpoint directo y `-pooler`, registrado como "TCP 5432 unreachable" desde antes de este milestone, sin él no renderiza ninguna página y no hay Lighthouse posible; (b) juan-tech.com no está dado de alta como proyecto en Ahrefs, que es la única vía a Search Console disponible en esta sesión — alternativa: Juan pega los números de GSC a mano.
+**Depends on**: Phase 44 (el documento de decisiones consume el número de tráfico de esta fase, pero se escribe paramétrico para no bloquearse). **DESBLOQUEADA 2026-08-30**: los dos bloqueos externos que tenía murieron. (a) "Neon caído" quedó obsoleto — la base de producción vive en Dokploy y `juan-tech.com` responde 200 con TTFB de 0,92s, verificado por curl. (b) La falta de proyecto en Ahrefs dejó de importar: el acceso a Search Console llega por las herramientas `gsc-juan-*` del hub MCP, con `sc-domain:juan-tech.com` como siteOwner y datos vivos confirmados (190 páginas con métricas en la ventana 2026-07-31 → 08-27).
 **Requirements**: BASE-01, BASE-02, BASE-03
 **Rationale (fase propia y bloqueante, 2026-08-13)**: esta fase **no se puede posponer al final**. Su valor entero es ser una medición previa: si corre después de que las Phases 46-49 cambiaron el sitio, ya no mide nada y la Phase 50 se queda sin punto de comparación. Por eso queda como gate duro — **ninguna fase que cambie un byte renderizado puede empezar antes de que esta cierre**, aunque Phase 44 (que no renderiza nada) ya haya terminado. Si Neon sigue caído cuando Phase 44 cierre, el milestone se detiene acá a propósito, en vez de avanzar a ciegas y descubrir en la Phase 50 que no hay contra qué comparar.
 **Success Criteria** (what must be TRUE):
@@ -1109,7 +1111,11 @@ Plans:
   3. El tráfico mensual real del sitio queda escrito con número, no con adjetivos, y el documento de decisiones de Phase 44 se actualiza reemplazando la incógnita `V` por ese valor
   4. `git diff` sobre `src/` queda vacío en toda la fase — ningún cambio renderizado precedió a la captura
 
-**Plans**: TBD
+**Plans**: 3/3 plans executed (3 waves)
+
+- [x] 45-01-PLAN.md — Tracer del pipeline del baseline (resolución de las 14 rutas, script hermano `capture-head-links-snapshot.mjs`, pasada de calentamiento de Lighthouse) + captura de H1/JSON-LD y canonical/hreflang de las 14 rutas [BASE-01]
+- [x] 45-02-PLAN.md — Lighthouse mobile de las 14 rutas contra producción, 3 corridas + mediana diffeable contra `lh-phase32-baseline.json` [BASE-01]
+- [x] 45-03-PLAN.md — Snapshot de Search Console por página + número de tráfico mensual real + resolución de `V` en `DECISIONS.md` + veredicto humanizado del baseline [BASE-02, BASE-03]
 
 ### Phase 46: Disclosure Legal + Esquema de Links de Afiliado
 
@@ -1134,7 +1140,12 @@ Plans:
   4. La colección `affiliate-links` existe con `active` en vez de drafts, sin campo `rel` ni `price`, con los campos internos (`program`, `cookieWindowDays`, `commissionNote`) gateados por el helper de field-access existente, y su migración puramente aditiva fue leída antes de aplicarse
   5. `getCachedAffiliateLinks()` es la única lectura de la colección (con `overrideAccess: false`, cache tags y hooks de revalidación), `pickDestination()` es una función pura sin acceso a DB, y el componente `AffiliateLink` emite `rel="sponsored nofollow noopener"` desde el código con la rama de Amazon renderizando la URL directa con `tag=` visible
 
-**Plans**: TBD
+**Plans**: 2 plans (1 wave)
+
+Plans:
+
+- [ ] 46-01-PLAN.md — Colección affiliate-links + access + migración aditiva + getCachedAffiliateLinks() + pickDestination() + AffiliateLink (AFF-01..06)
+- [ ] 46-02-PLAN.md — AffiliateDisclosure bilingüe (frase de Amazon con checkpoint de aprobación en español) + actualización de /privacy (LEG-01..04)
 
 ### Phase 47: Ruta /go + Fix de Middleware + Registro de Clics
 
@@ -1157,7 +1168,11 @@ El lookahead negativo está anclado inmediatamente después de la barra inicial,
   3. `curl` a `/robots.txt` muestra `Disallow: /go` junto a los `Disallow` ya existentes de `/admin` y `/api`
   4. Un clic real deja exactamente una fila nueva en `affiliate-clicks` (append-only, nunca `UPDATE ... clicks + 1`), escrita vía `after()` después de emitir el redirect; un user-agent de bot y un segundo request dentro del throttle por IP no dejan fila
 
-**Plans**: TBD
+**Plans**: 1/1 plans executed (1 wave)
+
+Plans:
+
+- [x] 47-01-PLAN.md — Fix del matcher (GO-02) + route handler `/go/[slug]` (GO-01) + robots.ts (GO-03) + colección `affiliate-clicks` append-only con descarte de bots/throttle vía `after()` (GO-04)
 
 ### Phase 48: Página de Stack + Links Inline en Contenido
 
@@ -1182,7 +1197,14 @@ El lookahead negativo está anclado inmediatamente después de la barra inicial,
   4. `/stack` aparece enlazada desde el footer y desde la página de autor en ambos locales, y el HTML de Home confirma que **no** está en el nav principal
   5. Un post con el inline block renderiza el mismo `rel="sponsored nofollow noopener"` que la página de stack y muestra el disclosure automáticamente antes del primer link de afiliado en orden del DOM, sin migración nueva (`git diff` de `migrations/` vacío en esta fase)
 
-**Plans**: TBD
+**Plans:** 3/3 plans executed
+
+Plans:
+
+- [x] 48-01-PLAN.md — Bloque `ToolStack` (schema + migración aditiva), ruta `/stack`, y DinoRANK de punta a punta (tracer) + GearCard/StackHighlightCallout (STACK-01)
+- [x] 48-02-PLAN.md — Contenido real: 6 docs `affiliate-links` restantes, las 9 herramientas + 13 gear items + callouts en `/stack`, footer + página de autor (STACK-02..06)
+- [x] 48-03-PLAN.md — Bloque inline de Lexical en `posts.content` (cero migración) + disclosure auto-inyectado + demo en un post real (INL-01, INL-02)
+
 **UI hint**: yes
 
 ### Phase 48.5: Auditor Destacado
@@ -1206,8 +1228,14 @@ El lookahead negativo está anclado inmediatamente después de la barra inicial,
   4. Ningún enlace al auditor lleva `rel="sponsored"`; canonical y hreflang de las páginas tocadas quedan idénticos al baseline; el JavaScript de cliente agregado es 0 KB
   5. Toda la copy nueva existe en EN y ES, pasada por humanizer, y declara el límite del plan gratuito
 
-**Plans**: TBD
+**Plans**: 3/3 plans executed (3 waves)
 **UI hint**: yes
+
+Plans:
+
+- [x] 48.5-01-PLAN.md — Bloque AuditorHighlight en Home (tracer de la fase: schema+migración+registro+contenido bilingüe)
+- [x] 48.5-02-PLAN.md — StackHighlightCallout generalizado + bloque AuditorCallout en la landing de Auditoría SEO Técnica
+- [x] 48.5-03-PLAN.md — Campo auditorHighlight en ToolStack + 3ra instancia de StackHighlightCallout en /stack
 
 ### Phase 49: Captura de Email (Resend, env-gated)
 
@@ -1223,7 +1251,14 @@ El lookahead negativo está anclado inmediatamente después de la barra inicial,
   4. El lead magnet se entrega por una URL firmada de Cloudinary con expiración corta — verificable: la URL deja de servir el archivo después del plazo y el recurso no es accesible públicamente sin firma
   5. `secure-download.ts` y `download-token.ts` existen como helpers separados e importables, sin lógica de suscripción adentro, de modo que la tienda de v2.2 sea una adición y no una reescritura
 
-**Plans**: TBD
+**Plans**: 3/3 plans executed (3 waves)
+
+Plans:
+
+- [x] 49-01-PLAN.md — Schema aditivo sobre `subscribers` existente + colección `lead-magnets` + helpers de seguridad (`secure-download.ts`, `download-token.ts`, `resend-configured.ts`) + Server Action/ruta de confirmación/página de descarga — mecanismo probado de punta a punta con 2 PDFs reales (tracer)
+- [x] 49-02-PLAN.md — `EmailCaptureBlock` (cero JS de cliente) registrado en `posts.content`, factory de `richTextConverters` por-request, y el bloque insertado y verificado en un post real (Playwright)
+- [x] 49-03-PLAN.md — Verificación Lighthouse antes/después de la ruta de post con el bloque contra el baseline de Phase 45 + cierre final de los 5 requirements de la fase
+
 **UI hint**: yes
 
 ### Phase 50: Gate de Cierre de Monetización
@@ -1239,7 +1274,13 @@ El lookahead negativo está anclado inmediatamente después de la barra inicial,
   3. Paridad de locales verificada por dato, no por inspección: cada link resuelve a un destino no vacío en ambos locales y el destino ES no queda accidentalmente idéntico al EN donde debería diferir
   4. Un grep confirma que todo `payload.find(` agregado en el milestone lleva `overrideAccess: false` o una exención documentada, y que `subscribers`/`affiliate-clicks`/`lead-magnets` no están en el mapa de colecciones de `mcpPlugin` ni en `SITEMAP_COLLECTIONS`
 
-**Plans**: TBD
+**Plans**: 3/3 plans executed (2 waves)
+
+Plans:
+
+- [x] 50-01-PLAN.md — Re-medición GATE-01: Lighthouse/CWV/CLS (14 rutas) + auditoría estructural de JS de cliente
+- [x] 50-02-PLAN.md — Crawl GATE-02: cumplimiento de afiliación (rel, disclosure, /go/, overrideAccess) sobre HTML real
+- [x] 50-03-PLAN.md — Síntesis final: veredicto del gate de cierre + cierre de traceability
 
 ## Progress
 
@@ -1296,11 +1337,11 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 →
 | 42. Meta Tags Completion | 3/3 | In Progress|  |
 | 43. Performance (Response Time + HTML Size) | 3/3 | In Progress|  |
 | 44. Decisiones de Monetización | 0/TBD | Not started | - |
-| 45. Baseline de Regresión | 0/TBD | Blocked (Neon + GSC) | - |
+| 45. Baseline de Regresión | 3/3 | In Progress|  |
 | 46. Disclosure Legal + Esquema de Links de Afiliado | 0/TBD | Not started | - |
-| 47. Ruta /go + Fix de Middleware + Registro de Clics | 0/TBD | Not started | - |
-| 48. Página de Stack + Links Inline en Contenido | 0/TBD | Not started | - |
-| 48.5. Auditor Destacado | 0/TBD | Not started | - |
-| 49. Captura de Email (Resend, env-gated) | 0/TBD | Not started | - |
-| 50. Gate de Cierre de Monetización | 0/TBD | Not started | - |
+| 47. Ruta /go + Fix de Middleware + Registro de Clics | 1/1 | In Progress|  |
+| 48. Página de Stack + Links Inline en Contenido | 2/3 | In Progress|  |
+| 48.5. Auditor Destacado | 2/3 | In Progress|  |
+| 49. Captura de Email (Resend, env-gated) | 3/3 | In Progress|  |
+| 50. Gate de Cierre de Monetización | 3/3 | In Progress|  |
 </content>
