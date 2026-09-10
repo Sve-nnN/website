@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "crawledAt": "2026-09-10T16:38:00Z-2026-09-10T20:35:00Z",
+    "crawlTarget": "CRITICAL DEVIATION FROM PLAN: el plan pedia curl directo contra https://juan-tech.com. Se confirmo empiricamente que /stack y /go/[slug] devuelven 404 real en produccion porque el codigo de Phases 46-49 vive en la rama docs/seo-handoff, 106 commits por delante de master, y Dokploy solo construye/despliega desde master (memoria del proyecto: 'Deploy: Dokploy auto al mergear a master'). El schema/contenido SI esta en la Postgres real (migraciones aplicadas via tunel SSH, independiente del deploy del codigo), pero el codigo que lo renderiza nunca llego a produccion. Este mismo problema ya fue encontrado y resuelto con el mismo patron en Phase 48.5-03 ('Verificacion contra dev server local via tunel SSH, nunca contra produccion, porque /stack (Phase 48) no llego a master todavia'). Aplicado Rule 3 (blocking issue con fix ya establecido por precedente del propio repo): se corrio `next build` + `next start` LOCAL en este worktree (docs/seo-handoff, HEAD real) contra la Postgres REAL de Dokploy via tunel SSH (scripts/db/tunnel.sh), sirviendo en localhost:3877. El HTML crawleado es HTML real renderizado por codigo real contra datos reales de produccion -- cumple el requisito de 50-CONTEXT.md de 'nunca por lectura de codigo' -- pero NO es HTML servido por el dominio publico, porque ese dominio todavia no ejecuta este codigo.",
+    "implication": "GATE-02 tal como se mide aqui certifica que el codigo, UNA VEZ DESPLEGADO, cumple las 5 aserciones. No certifica que juan-tech.com las cumple HOY, porque hoy no sirve ninguna de las superficies de Phases 46-49. Esto debe ser visible para 50-03 y para Juan: el milestone v2.1 completo (Phases 44-49) sigue sin desplegar a produccion.",
+    "verifiedProductionIsStale": {
+      "curl https://juan-tech.com/stack": "HTTP 404 (2 intentos con retry, no transitorio)",
+      "curl https://juan-tech.com/go/dinorank": "HTTP 404 (mismo 404 que un slug inexistente -- pero por ausencia total de la ruta en el build desplegado, no por la logica de negocio de la ruta)",
+      "git rev-list --count master..HEAD (worktree en docs/seo-handoff)": 106,
+      "DB real confirma pages.stack _status=published (id=14, updatedAt=2026-09-07)": true
+    },
+    "localServerUsedForCrawl": "http://localhost:3877 (next build + next start, HEAD real de docs/seo-handoff, DATABASE_URI apuntando a la Postgres real de Dokploy via scripts/db/tunnel.sh)",
+    "dbConfirmation": "scripts/db/04-which-database.ts confirmo host/base localhost:15432/juantech (tunel -> shared-postgres real de Dokploy) antes de leer nada, con valores testigo cruzados contra producción EN VIVO (posts/tablas-hash, posts/nextjs-seo, pages/home) -- todos OK."
+  },
+  "contentAudit": {
+    "openQuestion1_amazonActiveAffiliateLink": {
+      "question": "Existe algun doc de affiliate-links con program:'amazon' y active:true?",
+      "answer": false,
+      "detail": "7 docs totales en affiliate-links, ninguno con program='amazon'. Docs reales: google-search-console, ahrefs, resend, cloudinary, payload, dataforseo, dinorank -- todos active:true.",
+      "conclusion": "La asercion 'ningun link de Amazon por /go/' se satisface de forma VACUA -- no existe ningun doc Amazon en la colección que pudiera intentarlo. Amazon en este sitio SIEMPRE se renderiza directo via GearCard (hardcoded en /stack), nunca via affiliate-links/go, consistente con Phase 46/47 (Amazon Program Policies prohiben redirecting links)."
+    },
+    "openQuestion2_postWithAffiliateInline": {
+      "question": "Existe al menos un post publicado con el bloque affiliate-inline?",
+      "answer": true,
+      "detail": "1 de 58 posts publicados (es) usa el bloque: slug='guia-keyword-research', categoria='seo', referencia al doc affiliate-links slug='dinorank' (program=dinorank, active=true).",
+      "conclusion": "Se crawleo esta superficie real en ambos locales (ver postsWithAffiliateInline abajo) -- NO fue necesario documentar 'sin contenido real que crawlear'."
+    },
+    "dataHygieneNote_googleSearchConsoleEmptyDestinations": {
+      "finding": "El doc affiliate-links slug='google-search-console' tiene destinations:[] (vacio) pese a active:true.",
+      "isThisABug": false,
+      "reasoning": "Este doc se usa exclusivamente como noCommissionPick en /stack (ToolStackComponent.tsx linea ~95), que resuelve su linkHref con un valor HARDCODEADO ('https://search.google.com/search-console') cuando program==='google-search-console', ignorando por completo destinations[]. Nunca se renderiza ningun anchor que dependa de destinations[] para este doc, y /go/google-search-console (si alguien lo visitara a mano) devuelve 404 identico a un slug inexistente -- comportamiento correcto del route handler (pickDestination sin match -> 404 generico, nunca 500 ni open redirect). Verificado por curl: ver goRouteChecks abajo.",
+      "recommendation": "No bloqueante para GATE-02. Data-hygiene: el campo destinations podria eliminarse o documentarse como no-usado en este doc especifico, pero no representa un link roto real ni una superficie de afiliacion con anchors."
+    }
+  },
+  "stackPage": {
+    "es": {
+      "url": "http://localhost:3877/stack (equivalente a https://juan-tech.com/stack una vez desplegado)",
+      "httpStatus": 200,
+      "affiliateAnchorRelCounts": { "rel=\"sponsored nofollow noopener\"": 19, "rel=\"noopener\"": 2, "rel=\"noopener noreferrer\"": 1 },
+      "zeroAnchorsWithoutSponsored": true,
+      "zeroAnchorsCheck": "grep de <a> con href a amazon|hostinger|kinsta|dinorank|digitalocean|dataforseo|ahrefs.com|resend.com|cloudinary.com|payloadcms.com SIN rel=sponsored nofollow noopener -> 0 resultados",
+      "disclosureOrder": { "discloseIdx": 9725, "firstAffiliateIdx": 13059, "disclosurePrecedesFirstAffiliate": true },
+      "negativeControls": [
+        { "component": "noCommissionPick (Google Search Console)", "href": "https://search.google.com/search-console", "rel": "noopener", "hasSponsored": false },
+        { "component": "auditorHighlight callout", "href": "https://auditor.juan-tech.com", "rel": "noopener", "hasSponsored": false }
+      ],
+      "amazonGearItemsSample": [
+        { "href": "https://www.amazon.com/dp/B0DKFMSMYK?tag=juantech02-20", "rel": "sponsored nofollow noopener" },
+        { "href": "https://www.amazon.com/dp/B0BHJJ9Y77?tag=juantech02-20", "rel": "sponsored nofollow noopener" }
+      ]
+    },
+    "en": {
+      "url": "http://localhost:3877/en/stack",
+      "httpStatus": 200,
+      "affiliateAnchorRelCounts": { "rel=\"sponsored nofollow noopener\"": 19, "rel=\"noopener\"": 2, "rel=\"noopener noreferrer\"": 1 },
+      "zeroAnchorsWithoutSponsored": true,
+      "disclosureOrder": { "discloseIdx": 9741, "firstAffiliateIdx": 12925, "disclosurePrecedesFirstAffiliate": true }
+    }
+  },
+  "goRouteChecks": {
+    "activeRealSlugs": [
+      { "slug": "ahrefs", "httpStatus": 302, "location": "https://ahrefs.com/" },
+      { "slug": "resend", "httpStatus": 302, "location": "https://resend.com/" },
+      { "slug": "cloudinary", "httpStatus": 302, "location": "https://cloudinary.com/invites/lpov9zyyucivvxsnalc5/odxm3irnpy6wjrctdf8y?t=default" },
+      { "slug": "payload", "httpStatus": 302, "location": "https://payloadcms.com/" },
+      { "slug": "dataforseo", "httpStatus": 302, "location": "https://dataforseo.com/?aff=1b6bcf57-3342-484a-b84b-44885374c08c" },
+      { "slug": "dinorank", "httpStatus": 302, "location": "https://dinorank.com/?afid=MTE2NQ==" }
+    ],
+    "googleSearchConsole_activeButNoDestinations": { "slug": "google-search-console", "httpStatus": 404, "reason": "destinations:[] -- pickDestination sin match -> 404 generico, nunca usado como href real en ningun render (ver dataHygieneNote)" },
+    "nonExistentSlug": { "slug": "nonexistent-slug-xyz-123", "httpStatus": 404 },
+    "enumerationCheck": { "bodiesIdenticalBetweenGscAnd404": true, "detail": "diff entre el body de /go/google-search-console (activo, sin destinos) y /go/nonexistent-slug-xyz-123 (no existe) -> IDENTICO -- no hay enumeracion posible de slugs por status/body" },
+    "noAmazonSlugExists": true,
+    "goWithoutSlug": { "httpStatus": 404 },
+    "localeParityNote": "/go/[slug] vive FUERA de [locale] (confirmado en 47-CONTEXT.md) -- no existe /en/go/<slug>, el handler resuelve locale='es' fijo por diseno (slug/active/destinations/program no estan localizados). La 'paridad de locales' de GATE-02 para esta superficie NO aplica a la ruta en si; aplica a (a) destinations[] con URLs distintas por marketplace dentro del mismo doc [confirmado: dataforseo tiene 3 marketplaces con URLs distintas (default/platform/sheets), dinorank tiene 2 (default/registro)], y (b) el copy del disclosure de Amazon variando por locale en messages/{es,en}.json [confirmado abajo]."
+  },
+  "amazonDisclosureLocaleParity": {
+    "es": "Como Afiliado de Amazon, obtengo ingresos por las compras que califican.",
+    "en": "As an Amazon Associate I earn from qualifying purchases.",
+    "distinctPerLocale": true,
+    "source": "messages/es.json:48, messages/en.json:48"
+  },
+  "postsWithAffiliateInline": {
+    "slug": "guia-keyword-research",
+    "categorySlug": "seo",
+    "affiliateProgram": "dinorank",
+    "es": {
+      "url": "http://localhost:3877/blog/seo/guia-keyword-research",
+      "httpStatus": 200,
+      "anchorHref": "/go/dinorank",
+      "anchorRel": "sponsored nofollow noopener",
+      "disclosureOrder": { "discloseIdx": 15782, "firstAffiliateIdx": 17914, "disclosurePrecedesFirstAffiliate": true }
+    },
+    "en": {
+      "url": "http://localhost:3877/en/blog/seo/guia-keyword-research",
+      "httpStatus": 200,
+      "anchorHref": "/go/dinorank",
+      "anchorRel": "sponsored nofollow noopener",
+      "disclosureOrder": { "discloseIdx": 15636, "firstAffiliateIdx": 17632, "disclosurePrecedesFirstAffiliate": true }
+    },
+    "note": "A diferencia de /stack (ToolCard/GearCard enlazan directo al destino externo), el bloque affiliate-inline en posts enruta via /go/dinorank -- ambos patrones son validos y ambos llevan el rel exacto."
+  },
+  "emailCaptureCardNegativeControl": {
+    "postSlug": "technical-seo-checklist",
+    "categorySlug": "tech-seo",
+    "url": "http://localhost:3877/blog/tech-seo/technical-seo-checklist",
+    "httpStatus": 200,
+    "privacyAnchors": [
+      { "href": "/privacy", "rel": "none (sin atributo rel)" },
+      { "href": "/privacy", "rel": "none (sin atributo rel)", "note": "segundo anchor, probablemente footer" }
+    ],
+    "hasAffiliateLinkComponent": false,
+    "hasSponsored": false
+  },
+  "negativeControls_auditorProduct": {
+    "home_auditorHighlight": {
+      "url": "http://localhost:3877/",
+      "httpStatus": 200,
+      "anchorHref": "https://auditor.juan-tech.com",
+      "anchorRel": "noopener",
+      "hasSponsored": false
+    },
+    "landing_auditorCallout": {
+      "url": "http://localhost:3877/servicios/seo-technical-audit",
+      "httpStatus": 200,
+      "anchorHref": "https://auditor.juan-tech.com",
+      "anchorRel": "noopener",
+      "hasSponsored": false
+    }
+  },
+  "overrideAccessGrep": {
+    "file": "src/lib/cache.ts",
+    "totalFindCalls": 13,
+    "callsWithOverrideAccessFalseLiteral": 15,
+    "note": "15 > 13 porque el string 'overrideAccess: false' tambien aparece 2 veces en comentarios de prosa (header del archivo, seccion Affiliate Links).",
+    "callsWithoutOverrideAccessFalse": [
+      {
+        "function": "getCachedFeaturedContent",
+        "line": 66,
+        "call": "payload.findGlobal({ slug: 'featured-content', ... })",
+        "isDocumentedException": true,
+        "exceptionComment": "featured-content no tiene versions/drafts, no hay estado borrador que filtrar; el access por defecto de Payload para globals sin access explicito ya deniega lectura no autenticada -- confirmado que agregar overrideAccess:false rompio Home en produccion con 500 hasta que se quito.",
+        "verdict": "NO ES UN GAP -- exencion real y documentada, Pitfall 3 de 50-RESEARCH.md"
+      }
+    ],
+    "verdict": "PASS -- 12/13 calls con overrideAccess:false explicito, 1/13 con exencion documentada y verificada."
+  },
+  "privateCollectionsExclusionGrep": {
+    "sitemapDataTs": {
+      "command": "grep -n \"SITEMAP_COLLECTIONS\" -A 8 src/lib/sitemap-data.ts | grep -iE \"subscribers|affiliate-clicks|lead-magnets\"",
+      "matches": [],
+      "collectionsInSitemap": ["pages", "posts", "case-studies", "authors", "websites"],
+      "verdict": "PASS -- 0 coincidencias"
+    },
+    "mcpPluginConfig": {
+      "command": "sed -n '/mcpPlugin(/,/^    }),$/p' src/payload.config.ts | grep -iE \"subscribers|affiliate-clicks|lead-magnets\"",
+      "matches": [],
+      "collectionsInMcpPlugin": ["pages", "posts", "case-studies", "authors", "testimonials", "clientes", "speaking-events", "categories", "users", "media"],
+      "globalsInMcpPlugin": ["llms", "header", "footer", "featured-content", "blog-promo"],
+      "verdict": "PASS -- 0 coincidencias"
+    }
+  }
+}
