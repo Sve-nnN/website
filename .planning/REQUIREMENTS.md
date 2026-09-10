@@ -81,7 +81,7 @@ Promoción de `auditor.juan-tech.com` — herramienta propia de Juan, ya en prod
 ### Gate de Cierre
 
 - [ ] **GATE-01**: Paridad verificada contra el baseline: sin caída de más de 5 puntos de performance, sin cruce de banda de CWV, no más de 5 KB de JavaScript de cliente agregado, delta de CLS 0.00
-- [ ] **GATE-02**: Aserciones específicas del milestone: cero anchors a dominios de afiliado sin `sponsored`; el disclosure precede al primer anchor de afiliado en orden del DOM; ambos locales resuelven a un destino no vacío y distinto; grep confirma que todo `payload.find(` lleva `overrideAccess: false` o una exención documentada
+- [x] **GATE-02**: Aserciones específicas del milestone: cero anchors a dominios de afiliado sin `sponsored`; el disclosure precede al primer anchor de afiliado en orden del DOM; ambos locales resuelven a un destino no vacío y distinto; grep confirma que todo `payload.find(` lleva `overrideAccess: false` o una exención documentada
 
 ## v2.2 Requirements
 
@@ -169,7 +169,7 @@ Diferidos. Reconocidos pero fuera de este roadmap.
 | FEAT-03 | Phase 48.5 | Complete |
 | FEAT-04 | Phase 48.5 | Complete |
 | FEAT-05 | Phase 48.5 | Complete |
-| GATE-02 | Phase 50 | Pending |
+| GATE-02 | Phase 50 | Complete |
 
 **Coverage:**
 

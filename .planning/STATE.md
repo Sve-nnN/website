@@ -1,19 +1,19 @@
 ---
-gsd_state_version: 1.0
+gsd_state_version: "1.0"
 milestone: v2.1
 current_phase: 49
 current_phase_name: Captura de Email (Resend, env-gated)
 status: planning
 stopped_at: "Completado 49-03-PLAN.md -- Phase 49 cerrada (3/3 plans): Lighthouse gate PASS + fix real de DYNAMIC_SERVER_USAGE + MAIL-01..05 verificados en cadena completa"
-last_updated: "2026-09-08T05:22:36.622Z"
+last_updated: "2026-09-10T17:38:48.343Z"
 last_activity: 2026-09-08
 last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."
-state_head: 0c488c963112b470540d1bef41b77c8a07d7b00a
+state_head: adb472cb5e91957bda5c01799b7d700ee8543775
 progress:
   total_phases: 51
-  completed_phases: 6
-  total_plans: 16
-  completed_plans: 16
+  completed_phases: 7
+  total_plans: 19
+  completed_plans: 17
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
@@ -140,6 +140,7 @@ Previa: Phase 49 Plan 02 completo 2026-09-08 (EmailCaptureBlock + factory de con
 | Phase 49 P01 | 48min | 2 tasks | 20 files |
 | Phase 49 P02 | 62min | 2 tasks | 11 files |
 | Phase 49 P03 | 75min | 2 tasks | 4 files |
+| Phase 50 P02 | 120min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -289,6 +290,7 @@ Recent decisions affecting current work:
 - [Phase 49]: 49-02: buildRichTextConverters() factory por-request envuelve richTextConverters estatico y sobreescribe solo blocks['email-capture'] con searchParams.subscribed/postPath -- los 8 call sites existentes de RichTextRenderer siguen usando la version estatica sin cambio de comportamiento
 - [Phase 49]: [Phase 49] 49-03: Phase 45 baseline no tiene ninguna ruta de post -- gate de GATE-01 aplicado al delta (a) plana vs (b) ?subscribed=pending sobre la MISMA ruta y build, no a un diff archivo-contra-archivo inexistente
 - [Phase 49]: [Phase 49] 49-03: revalidate=60 fijo + lectura incondicional de searchParams -> DYNAMIC_SERVER_USAGE, 500 real en todas las rutas de post en produccion; corregido con dynamic='force-dynamic' explicito
+- [Phase 49]: [Phase 50-02] GATE-02: PASS (5/5 aserciones) verificado sobre HTML real y grep de codigo. Hallazgo critico: codigo de Phases 46-49 (rama docs/seo-handoff) nunca se desplego a produccion -- 106 commits por delante de master, Dokploy solo construye desde master. Crawl hecho contra next build+start local tunelado a la Postgres real de Dokploy (mismo patron ya usado en Phase 48.5-03). Registrado en WINDOWS.md id 9 para visibilidad en /gsd:ship.
 
 ### Pending Todos
 
