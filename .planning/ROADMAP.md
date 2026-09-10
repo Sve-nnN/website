@@ -1274,7 +1274,13 @@ Plans:
   3. Paridad de locales verificada por dato, no por inspección: cada link resuelve a un destino no vacío en ambos locales y el destino ES no queda accidentalmente idéntico al EN donde debería diferir
   4. Un grep confirma que todo `payload.find(` agregado en el milestone lleva `overrideAccess: false` o una exención documentada, y que `subscribers`/`affiliate-clicks`/`lead-magnets` no están en el mapa de colecciones de `mcpPlugin` ni en `SITEMAP_COLLECTIONS`
 
-**Plans**: TBD
+**Plans**: 3 plans (2 waves)
+
+Plans:
+
+- [ ] 50-01-PLAN.md — Re-medición GATE-01: Lighthouse/CWV/CLS (14 rutas) + auditoría estructural de JS de cliente
+- [ ] 50-02-PLAN.md — Crawl GATE-02: cumplimiento de afiliación (rel, disclosure, /go/, overrideAccess) sobre HTML real
+- [ ] 50-03-PLAN.md — Síntesis final: veredicto del gate de cierre + cierre de traceability
 
 ## Progress
 
