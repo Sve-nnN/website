@@ -1,19 +1,19 @@
 ---
 gsd_state_version: "1.0"
 milestone: v2.1
-current_phase: 49
-current_phase_name: Captura de Email (Resend, env-gated)
+current_phase: 50
+current_phase_name: Gate de Cierre de Monetización
 status: planning
-stopped_at: "Completado 49-03-PLAN.md -- Phase 49 cerrada (3/3 plans): Lighthouse gate PASS + fix real de DYNAMIC_SERVER_USAGE + MAIL-01..05 verificados en cadena completa"
-last_updated: "2026-09-10T17:38:48.343Z"
-last_activity: 2026-09-08
-last_activity_desc: "Auditoria SEO cerrada en 10 de 11. En esta tanda: #3 (identidad), #5 (canibalizacion, ganadoras decididas con GSC), #6 (rendimiento: home de 46 a 94 en PageSpeed Insights, LCP 7,9s -> 2,63s, TBT 620ms -> 156ms, TTFB 3,82s -> 0,12s), #8 (meta descriptions) y #10 (accesibilidad, 9/9 rutas). Queda abierto solo #7: ~31.400 palabras de traduccion al ingles, con los 11 posts peores ya fuera del indice."
-state_head: adb472cb5e91957bda5c01799b7d700ee8543775
+stopped_at: "Completado 50-03-PLAN.md -- Phase 50 cerrada, milestone v2.1 tecnicamente cerrado (MILESTONE GATE: PASS)"
+last_updated: "2026-09-10T18:15:21.405Z"
+last_activity: 2026-09-10
+last_activity_desc: "Phase 50 (Gate de Cierre de Monetizacion) cerrada 3/3: GATE-01 re-medido contra baseline Phase 45 (CLS 0.00 y JS-cliente 0KB limpios, salvedad de medicion documentada en performance/TBT por contencion de CPU); GATE-02 crawl real de afiliacion (sponsored/disclosure/go-route/overrideAccess) PASS limpio. 50-03 sintetizo ambos veredictos en 50-REGRESSION-DIFF.md: MILESTONE GATE: PASS. REQUIREMENTS.md actualizado (GATE-01/GATE-02 Complete). Hallazgo critico pendiente: docs/seo-handoff sigue sin mergear a master (Dokploy solo despliega desde master), asi que el milestone v2.1 esta tecnicamente cerrado pero no desplegado en juan-tech.com todavia."
+state_head: ab0cbff54b336b7375bff3b940fc8a4b35f6d013
 progress:
   total_phases: 51
   completed_phases: 7
   total_plans: 19
-  completed_plans: 17
+  completed_plans: 18
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
 ---
 
@@ -24,15 +24,15 @@ milestone_name: Monetizacion del Sitio - Research + Fundaciones
 See: .planning/PROJECT.md (updated 2026-07-31)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 49 — Captura de Email (Resend, env-gated) (milestone v2.1, Phases 44-50)
+**Current focus:** Phase 50 — Gate de Cierre de Monetización (milestone v2.1, Phases 44-50) — CERRADA, milestone v2.1 tecnicamente completo
 
 ## Current Position
 
-Phase: 49 — Captura de Email (Resend, env-gated) (Phase 48 y 48.5 con plans pendientes de cierre formal; Phase 47 cerrada 2026-09-04; Phase 46 cerrada; Phase 45 cerrada 2026-09-03; Phase 44 cerrada 2026-08-30)
-Plan: 49-03 — completo (gate empirico de Lighthouse sobre el post con `EmailCaptureBlock`: PASS contra el bar de GATE-01 en ambos locales; fix real de un 500 en produccion por `DYNAMIC_SERVER_USAGE`; MAIL-01..05 verificados como una sola cadena sobre el sistema completo y descubrible) — **Phase 49 cerrada (3/3 plans)**
-Status: 49-03 verificado de punta a punta. Task 1: Lighthouse (a) URL plana vs (b) `?subscribed=pending` sobre `technical-seo-checklist` (es+en), mediana de 3 corridas contra build de produccion local real, sin caida de performance > 5 puntos ni cruce de banda de CWV ni delta de CLS — sentinel LIGHTHOUSE_PASS. Bug real encontrado y corregido en el camino: `revalidate=60` fijo + lectura incondicional de `searchParams` disparaba `DynamicServerError`/`DYNAMIC_SERVER_USAGE`, la pagina devolvia 500 en TODAS las rutas de post; corregido con `dynamic = 'force-dynamic'` explicito. Task 2: MAIL-01..05 re-verificados como una cadena real (formulario real via Playwright -> Server Action real -> confirm route real -> descarga firmada real), mas re-cierre de T-49-03 (PDFs privados) y T-49-07 (subscribers/lead-magnets fuera de sitemap/mcpPlugin). `npx tsc --noEmit` limpio en las 2 tasks. Siguiente: Phase 50 (Gate de Cierre de Monetizacion).
-Last activity: 2026-09-08 — Phase 49 Plan 03 ejecutado y verificado; Phase 49 cerrada.
-Previa: Phase 49 Plan 02 completo 2026-09-08 (EmailCaptureBlock + factory de converters por-request, verificado con Playwright real en technical-seo-checklist es+en).
+Phase: 50 — Gate de Cierre de Monetización (Phase 49 cerrada 2026-09-08; Phase 48 y 48.5 cerradas; Phase 47 cerrada 2026-09-04; Phase 46 cerrada; Phase 45 cerrada 2026-09-03; Phase 44 cerrada 2026-08-30) — **Phase 50 cerrada (3/3 plans), milestone v2.1 (Phases 44-50) tecnicamente cerrado**
+Plan: 50-03 — completo (sintesis final de GATE-01 + GATE-02 en `50-REGRESSION-DIFF.md`: **MILESTONE GATE: PASS**; REQUIREMENTS.md actualizado con GATE-01/GATE-02 marcados Complete; Task 3 checkpoint saltado por no haber FAIL)
+Status: 50-03 verificado de punta a punta. Task 1: leidos `50-gate01-findings.md` y `50-gate02-findings.md` completos, veredicto explicito por cada uno de los 4 Success Criteria del ROADMAP Phase 50 (perf/CWV/CLS/JS-cliente PASS con salvedad de medicion por contencion de CPU; sponsored/disclosure/go-route PASS limpio; paridad de locales PASS limpio; overrideAccess/exclusion de colecciones PASS limpio) -- `50-REGRESSION-DIFF.md` con `MILESTONE GATE: PASS`. Task 2: `Edit` (no `Write`) sobre REQUIREMENTS.md, GATE-01 pasado de Pending/`[ ]` a Complete/`[x]` (GATE-02 ya estaba Complete de una edicion previa); `50-FAIL-CHECKPOINT.md` no se creo, confirmando la rama PASS. Hallazgo critico propagado y no resuelto en esta fase: `docs/seo-handoff` sigue 106-110 commits por delante de `master`, Dokploy solo despliega desde `master`, asi que ninguna superficie de Phases 46-49 (`/stack`, `/go/*`, disclosure, AuditorHighlight, EmailCaptureBlock) esta hoy en `juan-tech.com` -- el gate certifica el codigo, no el deploy real. Siguiente paso operativo fuera de esta fase: mergear `docs/seo-handoff` a `master` para que Dokploy despliegue el milestone completo.
+Last activity: 2026-09-10 — Phase 50 Plan 03 ejecutado y verificado; Phase 50 cerrada; milestone v2.1 tecnicamente cerrado (deploy real pendiente).
+Previa: Phase 50 Plan 02 completo 2026-09-10 (GATE-02 PASS: crawl real de afiliacion sobre HTML servido por build local contra Postgres real de Dokploy via tunel SSH, porque el codigo del milestone no esta desplegado a `master` todavia).
 
 ## Performance Metrics
 
@@ -291,6 +291,7 @@ Recent decisions affecting current work:
 - [Phase 49]: [Phase 49] 49-03: Phase 45 baseline no tiene ninguna ruta de post -- gate de GATE-01 aplicado al delta (a) plana vs (b) ?subscribed=pending sobre la MISMA ruta y build, no a un diff archivo-contra-archivo inexistente
 - [Phase 49]: [Phase 49] 49-03: revalidate=60 fijo + lectura incondicional de searchParams -> DYNAMIC_SERVER_USAGE, 500 real en todas las rutas de post en produccion; corregido con dynamic='force-dynamic' explicito
 - [Phase 49]: [Phase 50-02] GATE-02: PASS (5/5 aserciones) verificado sobre HTML real y grep de codigo. Hallazgo critico: codigo de Phases 46-49 (rama docs/seo-handoff) nunca se desplego a produccion -- 106 commits por delante de master, Dokploy solo construye desde master. Crawl hecho contra next build+start local tunelado a la Postgres real de Dokploy (mismo patron ya usado en Phase 48.5-03). Registrado en WINDOWS.md id 9 para visibilidad en /gsd:ship.
+- [Phase 50]: [Phase 50]: 50-03 sintetizo GATE-01 (PASS con salvedad de medicion por contencion de CPU, CLS 0.00 y JS-cliente 0KB limpios) y GATE-02 (PASS limpio) en MILESTONE GATE: PASS -- REQUIREMENTS.md cerrado (GATE-01/GATE-02 Complete); milestone v2.1 tecnicamente cerrado pero docs/seo-handoff sigue sin mergear a master, asi que el deploy real a juan-tech.com queda como accion pendiente fuera de esta fase
 
 ### Pending Todos
 
@@ -342,8 +343,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-09-08T05:22:36.352Z
-Stopped at: Completado 49-03-PLAN.md -- Phase 49 cerrada (3/3 plans): Lighthouse gate PASS + fix real de DYNAMIC_SERVER_USAGE + MAIL-01..05 verificados en cadena completa
+Last session: 2026-09-10T18:15:20.814Z
+Stopped at: Completado 50-03-PLAN.md -- Phase 50 cerrada, milestone v2.1 tecnicamente cerrado (MILESTONE GATE: PASS)
 Resume file: None
 
 ## Operator Next Steps
