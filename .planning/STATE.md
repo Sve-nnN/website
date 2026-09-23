@@ -1,20 +1,20 @@
 ---
 gsd_state_version: "1.0"
 milestone: v2.1
-current_phase: 50
-current_phase_name: Gate de Cierre de Monetización
-status: verified
+status: Awaiting next milestone
 stopped_at: "Phase 50 verificada (post-execution VERIFICATION.md: status passed, 9/9). Milestone v2.1 cerrado en firme y desplegado en produccion."
-last_updated: "2026-09-10T19:30:00.000Z"
-last_activity: 2026-09-10
-last_activity_desc: "Verificacion post-execution de Phase 50 completada: GATE-02 (afiliacion) confirmado en vivo contra juan-tech.com/stack (19 anchors rel=sponsored nofollow noopener por locale, disclosure antes en DOM, overrideAccess correcto, colecciones privadas excluidas de sitemap/mcp). GATE-01 CLS 0.00 y JS-cliente 0KB confirmados 14/14 rutas. Unico punto abierto (Criterio 1 performance/LCP/TBT, 6/14 rutas fuera de banda por contencion de CPU durante el crawl paralelo) resuelto: Juan acepto la evidencia indirecta (TTFB estable, CLS/JS limpios) sin re-medicion aislada. Hallazgo positivo: docs/seo-handoff ya esta mergeado a master y Dokploy ya sirve el milestone completo en produccion (/stack y /go/* responden en vivo) -- el gap de deploy que preocupaba en el corte anterior ya no existe. Milestone v2.1 (Phases 44-50) queda tecnicamente cerrado, verificado y desplegado."
-state_head: e44b115
+last_updated: "2026-09-23T02:28:02.062Z"
+last_activity: 2026-09-22
+last_activity_desc: Milestone v2.1 completed and archived
+state_head: 4010090beeae413ae748e6d7b3ea66b3c841c94d
 progress:
   total_phases: 51
-  completed_phases: 8
+  completed_phases: 35
   total_plans: 19
   completed_plans: 19
 milestone_name: Monetizacion del Sitio - Research + Fundaciones
+current_phase: 50
+current_phase_name: Gate de Cierre de Monetización
 ---
 
 # Project State
@@ -28,11 +28,10 @@ See: .planning/PROJECT.md (updated 2026-07-31)
 
 ## Current Position
 
-Phase: 50 — Gate de Cierre de Monetización (Phase 49 cerrada 2026-09-08; Phase 48 y 48.5 cerradas; Phase 47 cerrada 2026-09-04; Phase 46 cerrada; Phase 45 cerrada 2026-09-03; Phase 44 cerrada 2026-08-30) — **Phase 50 cerrada (3/3 plans), milestone v2.1 (Phases 44-50) tecnicamente cerrado**
-Plan: 50-03 — completo (sintesis final de GATE-01 + GATE-02 en `50-REGRESSION-DIFF.md`: **MILESTONE GATE: PASS**; REQUIREMENTS.md actualizado con GATE-01/GATE-02 marcados Complete; Task 3 checkpoint saltado por no haber FAIL)
-Status: 50-03 verificado de punta a punta. Task 1: leidos `50-gate01-findings.md` y `50-gate02-findings.md` completos, veredicto explicito por cada uno de los 4 Success Criteria del ROADMAP Phase 50 (perf/CWV/CLS/JS-cliente PASS con salvedad de medicion por contencion de CPU; sponsored/disclosure/go-route PASS limpio; paridad de locales PASS limpio; overrideAccess/exclusion de colecciones PASS limpio) -- `50-REGRESSION-DIFF.md` con `MILESTONE GATE: PASS`. Task 2: `Edit` (no `Write`) sobre REQUIREMENTS.md, GATE-01 pasado de Pending/`[ ]` a Complete/`[x]` (GATE-02 ya estaba Complete de una edicion previa); `50-FAIL-CHECKPOINT.md` no se creo, confirmando la rama PASS. Hallazgo critico propagado y no resuelto en esta fase: `docs/seo-handoff` sigue 106-110 commits por delante de `master`, Dokploy solo despliega desde `master`, asi que ninguna superficie de Phases 46-49 (`/stack`, `/go/*`, disclosure, AuditorHighlight, EmailCaptureBlock) esta hoy en `juan-tech.com` -- el gate certifica el codigo, no el deploy real. Siguiente paso operativo fuera de esta fase: mergear `docs/seo-handoff` a `master` para que Dokploy despliegue el milestone completo.
-Last activity: 2026-09-10 — Verificación post-execution de Phase 50 completada (status: passed, 9/9). Juan aceptó la salvedad de medición del Criterio 1 (performance/LCP/TBT) sin re-medición aislada. Milestone v2.1 cerrado en firme; docs/seo-handoff ya está mergeado a master y desplegado en juan-tech.com (/stack y /go/* confirmados en vivo) — el deploy real ya no está pendiente.
-Previa: Phase 50 Plan 02 completo 2026-09-10 (GATE-02 PASS: crawl real de afiliacion sobre HTML servido por build local contra Postgres real de Dokploy via tunel SSH, porque el codigo del milestone no esta desplegado a `master` todavia).
+Phase: Milestone v2.1 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-09-22 — Milestone v2.1 completed and archived
 
 ## Performance Metrics
 
@@ -349,10 +348,4 @@ Resume file: None
 
 ## Operator Next Steps
 
-- **Milestone v1.6 CERRADO 2026-07-17** — Phases 26-31 complete (Track A motion/UI + Track B content humanization), 20/20 requirements verified, final Lighthouse/CWV gate PASS on all 10 representative routes. See `31-VERIFICATION.md`.
-- Milestones v1.2, v1.3, v1.4, v1.5, v1.6, v1.7, v1.8 (Phase 37), and v1.9 (Phases 38-40) are all CERRADO. Only Phase 6 (Deploy + Cutover) remains open, paused, awaiting Juan's go-ahead — no active milestone is currently in progress.
-- 3 non-blocking follow-up items flagged at v1.6 close for Juan's future decision (none block deploy or any other milestone): (1) 8 posts with zero English content — needs a dedicated translation-authoring plan; (2) 6 Posts + 6 Case Studies remain unpublished drafts — publishing is Juan's editorial call, content already humanized and ready; (3) 50 of 160 routes have empty `meta.description` — pre-existing SEO gap, already partially addressed for Pages, not yet for Posts/CaseStudies.
-- When ready to resume Phase 6 (Deploy + Cutover to Hostinger): `RESEND_API_KEY` in `.env` is still a placeholder (see Blockers/Concerns) and must be replaced with a real key before contact-form email delivery can be verified in production.
-- Optional cleanup (still deferred): archive `.planning/phases/32-*` through `36-*` into `.planning/milestones/v1.7-phases/` via `/gsd:cleanup` if/when Juan wants phase directories tidied up, matching the v1.4/v1.5 precedent.
-- **Milestone v2.1 ACTIVO (2026-08-13)** — Roadmap creado: Phases 44-49, 37/37 requirements mapeados. Orden: 44 baseline+decisiones (cero cambio renderizado) → 45 disclosure legal + esquema `affiliate-links` (única migración de schema; la matriz de localización se congela y Juan la aprueba ANTES de cargar contenido) → 46 ruta `/go` + fix del matcher de middleware (una línea, radio sitewide, curl-verificar contra `/`, `/en`, `/servicios`, `/en/services`, `/blog` antes de cualquier UI) → 47 página de stack + links inline → 48 captura de email (env-gated, bloqueada por `RESEND_API_KEY`) → 49 gate contra el baseline de Phase 44. Próximo paso: `/gsd:plan-phase 44`.
-- [Milestone v2.0]: Roadmap: 3 fases nuevas (41-43), continuando la numeración desde Phase 40. Origen: auditoría externa opengraph.to (score 17/100, sin og:image en ninguna página + 8 warnings). Juan confirmó por AskUserQuestion: (1) misma cuenta Cloudinary que JuanPortfolio — reusar `og-scrim`/`Array-Bold.woff2` ya subidos, no resubir; (2) alcance completo incluyendo performance (respuesta lenta 1.58s + HTML 271KB), no solo meta tags. Orden: Phase 41 (OG image dinámico, el error crítico) primero y sola porque toca el layout raíz por primera vez; Phase 42 (resto de meta tags) depende de 41 por tocar el mismo archivo; Phase 43 (performance) es independiente, puede correr en paralelo. Pendiente de verificar en Phase 41: que `og-scrim`/`Array-Bold.woff2` realmente existan en la cuenta Cloudinary de juan-payload (Juan dijo "misma cuenta" pero no se confirmó con un fetch real todavía).
+- Start the next milestone with /gsd-new-milestone

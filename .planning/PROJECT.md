@@ -28,6 +28,7 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 - **LOCAL-05** (Phase 34): `LocalProofSection` incorporado a ambas landings, estructuralmente completo y funcionando — **con caveat**: contenido en su mayoría `[PLACEHOLDER]` (solo 1 stat real de Lima, taller DinoRANK/Arianna Lupi 2025), autorizado explícitamente por Juan a la espera de datos reales de clientes vía Google Search Console; ver `.planning/v1.7-MILESTONE-AUDIT.md`
 - **POLISH-01..06** (Phase 35): revisión `ui-ux-pro-max` de los 28 componentes restantes del .pen (UI primitives, chrome, Hero variants existentes, bloques de contenido, autoría) contra `designs/current-site-real.pen`; 6 micro-mejoras genuinas implementadas (incluido un bug real preexistente: `text-destructive-foreground` sin efecto en Button/Badge destructive por falta de `.foreground` en el token `destructive`), 6 descartadas con razón explícita — `HeroGrainGradient` confirmado intacto — verificado en vivo por `.planning/v1.7-MILESTONE-AUDIT.md`
 - **REG-01, REG-02** (Phases 32, 36): baseline de Lighthouse/CWV + H1/JSON-LD capturado antes de tocar componentes, gate de cierre PASS 6/6 rutas (sin caída >5pt de performance, sin cruce de banda CWV, H1/JSON-LD byte-idénticos) — verificado en vivo por `.planning/v1.7-MILESTONE-AUDIT.md`
+- **DEC-01..05, BASE-01..03, LEG-01..04, AFF-01..06, GO-01..04, STACK-01..06, INL-01..02, FEAT-01..05, MAIL-01..05, GATE-01..02** (Phases 44-50, milestone v2.1): infraestructura de monetización ética de punta a punta — baseline y decisiones paramétricas, disclosure bilingüe en código y `/privacy`, colección `affiliate-links` con matriz de 13 campos congelada y lecturas cacheadas seguras (`overrideAccess: false`), ruta `/go/[slug]` 302 con matcher fix y registro append-only vía `after()`, links de Amazon directos sin cloaking, página `/stack` bilingüe con 9 herramientas narradas (>100 palabras) y bloque "qué elegiría hoy", inline card en posts con inyección automática de disclosure, sección AuditorHighlight en Home y landings con links a `auditor.juan-tech.com`, captura de email inline con doble opt-in propio y entrega de lead magnet con URLs firmadas de Cloudinary (0 KB JS de cliente agregado), y gate de cierre verificado en vivo con paridad de CLS 0.00 y desplegado a producción en Dokploy — verificado por `.planning/v2.1-MILESTONE-AUDIT.md`
 
 ### Active
 
@@ -90,14 +91,20 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | OG image (v2.0) se genera vía transforms de Cloudinary (overlay de texto), no `next/og`/`ImageResponse` | Juan pidió explícitamente replicar el enfoque de `JuanPortfolio`; juan-payload usa la misma cuenta Cloudinary que ese sitio, que ya tiene el asset `og-scrim` y la fuente `Array-Bold.woff2` subidos — reusar es más barato que introducir un mecanismo de generación de imágenes nuevo | Pending (Phase 41) |
 | Geo-pages (v1.4): Lima grounded en presencia física real, Madrid honesto sobre trabajo remoto sin oficina física | Evita el patrón templated/find-replace-por-ciudad que Juan rechazó explícitamente — cada página necesitaba un argumento genuinamente distinto, no solo el nombre de la ciudad cambiado | ✓ Good |
 | Database Safety rule (root CLAUDE.md, agregada durante v1.4, luego relajada por Juan) | Un incidente real de pérdida de datos (migración de fase 19 sin backfill, recuperada vía Neon PITR) forzó una regla dura de aprobación humana antes de cualquier escritura contra la DB real; Juan luego la relajó a solo operaciones destructivas (DROP/TRUNCATE/delete/reshape con pérdida) una vez que confió en el patrón | ✓ Good |
+| Links de Amazon directos y sin cloaking (v2.1) | Prohibición textual de Redirecting Links en Program Policies 2026-04-14; Amazon se emite directo con tag visible, `/go/` reservado para no-Amazon | ✓ Good |
+| Polar como Merchant of Record (v2.1) | Stripe no opera en Perú; vendedor en Perú entra por non-Union OSS sin umbral de €10.000, MoR es mandatario | ✓ Good |
+| Matcher de `/go/` con barra estricta en middleware (v2.1) | Evita consumir falsos positivos de slugs que empiecen por "go" (`/gobierno`, etc.) | ✓ Good |
+| `/stack` fuera de la navegación principal (v2.1) | Previene la dilución del clúster de servicios en los motores de búsqueda | ✓ Good |
+| Lead magnet entregado por URL firmada de Cloudinary con expiración (v2.1) | Previene acceso público directo no autorizado sin suscripción | ✓ Good |
+| Doble opt-in propio en el sitio para email capture (v2.1) | Resend no incluye doble opt-in nativo; garantiza que solo direcciones confirmadas lleguen a la audiencia | ✓ Good |
 
-## Milestone En Cola: v1.8 Case Studies Content Audit & Fix (ids 15-20) — Phase 37 a mitad de camino
+## Current Milestone: v2.2 Productos Digitales y Tienda Polar
 
-Phase 37 tiene CONTEXT.md y UI-SPEC.md (ambos aprobados) pero aún no plan-phase/execute-phase. Queda en pausa mientras corre v1.9 — retomar con `/gsd:plan-phase 37` cuando v1.9 cierre. Detalle completo del scope más abajo, sección "Milestone Anterior".
+**Goal:** Implementar el catálogo de productos digitales descargables con checkout alojado en Polar (Merchant of Record), entrega segura mediante los helpers ya establecidos en v2.1 (`secure-download.ts`), y webhooks con verificación de firma e idempotencia.
 
-## Current Milestone: v2.1 Monetización del Sitio — Research + Fundaciones
+## Milestone Anterior: v2.1 Monetización del Sitio — Research + Fundaciones (cerrado 2026-09-22)
 
-**Goal:** Convertir juan-tech.com de portfolio/blog en un activo que además genera ingresos — empezando por una fase de research que decide qué vías de monetización valen la pena para el perfil real de Juan (dev + SEO técnico), y construyendo después solo las de mayor retorno sobre esfuerzo.
+**Goal:** Convertir juan-tech.com de portfolio/blog en un activo que además genera ingresos — baseline de regresión, decisiones de monetización, esquema de afiliados, ruta `/go`, página `/stack` bilingüe, auditor destacado, captura de email inline con doble opt-in y gate de cierre verificado y desplegado en producción. 42/42 requirements verificados en vivo por `.planning/v2.1-MILESTONE-AUDIT.md`.
 
 **Target features:**
 - **Research en 4 dimensiones** (fase 1, insumo de todo lo demás):
@@ -191,4 +198,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-08-13 — milestone v2.1 (Monetización del Sitio — Research + Fundaciones) iniciado, continuando la numeración de fases desde Phase 43 (v2.0, cerrada); pausados sin tocar: v1.6 Track B (Content Humanization, fases 29-31), Phase 37 (Case Studies Content Audit) y Phase 6 Deploy + Cutover*
+*Last updated: 2026-09-22 after milestone v2.1 completion (Monetización del Sitio — Research + Fundaciones); 42/42 requirements verificados y desplegados*
