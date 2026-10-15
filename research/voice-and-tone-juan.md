@@ -1,16 +1,40 @@
 # Voz, tono y reglas de escritura: juan-tech.com
 
-Estado: primer borrador del 2026-10-15. Juan corrige y aprueba. Lo que dice "Por confirmar" espera tu decisión.
+Estado: borrador v2 del 2026-10-15. Incluye tus decisiones de dirección (sección 0). Lo que dice "Por confirmar" espera tu respuesta.
 
 Base: `research/voice-sample-juan.md` (muestra real de tu escritura), la skill `humanizer` y las reglas de tu CLAUDE.md global. Aplica a todo texto visible del sitio en ES y EN, a los mockups HTML y a cualquier contenido que vaya a Payload.
 
 ---
 
+## 0. Decisiones de Juan (mandan sobre el resto del documento)
+
+1. **Encabezados directos.** Ningún encabezado lleva puntos ni comas. Dicen de qué trata la sección en pocas palabras.
+2. **Meta títulos igual.** Sin puntos ni comas, directos, con la palabra clave al inicio.
+3. **Habla un profesional con toda su experiencia**, en todas sus áreas: SEO técnico, desarrollo full-stack, infraestructura y servidores, rendimiento web y SEO para IA. No suena a junior, a vendedor ni a agencia.
+4. **El sitio muestra expertise y enseña.** Cada página demuestra cómo trabaja Juan y deja algo que el lector aprende. El sitio es la prueba.
+5. **Habla de Juan, no de una agencia.** Primera persona del singular. No aparece Sapling ni "nuestro equipo", "nosotros" o "la agencia" en el copy del sitio.
+6. Sin em dash, sin en dash y sin tells de IA.
+
 ## 1. Quién habla
 
-Juan Carlos Angulo, ingeniero de software y consultor SEO técnico. Habla en primera persona, desde la práctica: audita, arregla código, mide y reporta. No suena a agencia, no suena a gurú y no suena a folleto.
+Juan Carlos Angulo, ingeniero de software y consultor SEO técnico con experiencia en desarrollo, servidores, rendimiento y búsqueda. Habla en primera persona del singular, desde la práctica: audita, arregla código, despliega, mide y explica por qué. No suena a agencia, no suena a gurú y no suena a folleto.
 
-Una frase resume la voz: **alguien que trabaja con las manos en el código y cuenta lo que hizo, sin adornos.**
+Una frase resume la voz: **un profesional que domina varias áreas, trabaja con las manos en el código y enseña lo que sabe sin adornos.**
+
+### Cómo se nota la experiencia sin presumir
+
+- Explica el porqué de una decisión, no solo el qué. Un profesional señala el criterio.
+- Nombra el límite: "esto funciona hasta cierto tamaño de sitio, después cambio de enfoque".
+- Conecta áreas: un problema de indexación se resuelve en la plantilla, el servidor o el contenido, y lo dice.
+- Usa detalles que solo conoce quien lo hizo: el archivo, el header, la métrica, el orden de los pasos.
+- No necesita adjetivos. Los años de experiencia aparecen como hechos verificables, no como "experto con amplia trayectoria".
+
+### Cómo enseña
+
+- Cada página responde una pregunta concreta que el lector tiene.
+- Muestra el paso a paso o el criterio de decisión, y deja un ejemplo real o un fragmento de código cuando aporta.
+- Explica el término técnico la primera vez, sin condescendencia.
+- Cierra con lo que el lector puede hacer ahora, no con una venta.
 
 ## 2. Rasgos de la voz
 
@@ -55,6 +79,10 @@ El tono cambia con lo que el visitante viene a hacer. La voz no cambia.
 6. **Sin precios** en landings de servicio. Las tarifas se hablan por contacto.
 7. **Paridad ES y EN.** Todo texto existe en los dos idiomas con el mismo significado, no traducido palabra por palabra.
 8. **Un H1 por página**, en texto real, nunca dentro de una imagen, canvas o ASCII.
+9. **Encabezados sin puntos ni comas.** Aplica a H1, H2, H3 y títulos de cards. Tampoco llevan dos puntos, punto y coma, puntos suspensivos ni signos de exclamación. Directos: "Auditoría técnica SEO", "Cómo corregí el LCP de un ecommerce", no "Auditoría técnica, la base de todo.".
+10. **Meta títulos sin puntos ni comas**, directos, con la palabra clave al inicio y un máximo de 60 caracteres. Formato: `Tema principal | Juan Carlos Angulo`.
+11. **Habla de Juan, no de una agencia.** Primera persona del singular. Sin "Sapling", "nosotros", "nuestro equipo" ni "la agencia" en el copy del sitio.
+12. **Cada página enseña algo** y demuestra cómo trabaja Juan (ver sección 1).
 
 ### 4.2 Reglas de estilo
 
@@ -159,9 +187,13 @@ Con tu voz:
 
 ## 11. Por confirmar con Juan
 
+Resueltas por Juan: "yo" siempre y sin agencia (decisión 5); encabezados y meta títulos sin puntos ni comas (decisiones 1 y 2).
+
 1. ¿Tuteo ("tú") o trato impersonal en todo el sitio? Este borrador asume tuteo cálido y neutro.
-2. ¿Usas "yo" siempre, o "yo y mi agencia Sapling" en servicios? Este borrador usa "yo".
-3. ¿Se menciona el gimnasio y otras facetas personales en la página de autor, como en tu muestra? Este borrador lo permite en una línea.
-4. ¿Hay palabras que odias o que usas siempre? Súmalas a la sección 5.
-5. ¿Plazo de respuesta real para el formulario de contacto?
-6. ¿El microcopy de terminal (`> contacto`) te gusta o prefieres texto plano en toda la UI?
+2. Los encabezados en forma de pregunta (FAQ) llevan signos de interrogación. ¿Los permites, o los reescribimos como afirmación ("Cuánto dura una auditoría")?
+3. Separador del meta título: `|` o ningún separador. El borrador usa `|`.
+4. ¿Qué áreas de experiencia van en primer plano? El borrador asume: SEO técnico, desarrollo full-stack con Next.js y Payload, infraestructura y servidores, rendimiento web, SEO para IA.
+5. ¿Se menciona el gimnasio y otras facetas personales en la página de autor, como en tu muestra? El borrador lo permite en una línea.
+6. ¿Hay palabras que odias o que usas siempre? Súmalas a la sección 5.
+7. ¿Plazo de respuesta real para el formulario de contacto?
+8. ¿El microcopy de terminal (`> contacto`) te gusta o prefieres texto plano en toda la UI?
