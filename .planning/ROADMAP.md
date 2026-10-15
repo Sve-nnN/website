@@ -34,7 +34,12 @@
   3. La biblioteca de componentes (botones, cards, badges, nav, footer, formulario, bloque terminal CRT, bloque ASCII) muestra estados hover, focus, disabled y reduced-motion que Juan puede probar en el navegador.
   4. Cada efecto (grainy gradient, pattern waves, CRT warp, micro slats, pixel, ASCII) indica el nombre exacto del componente de origen en el catálogo de reactbits.dev y su costo de peso.
   5. Con JavaScript desactivado, en mobile, con `prefers-reduced-motion` o con `saveData`, cada efecto se ve bien con su fallback CSS (gradiente más ruido SVG).
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 51-01-PLAN.md: Cimientos (tracer del grainy gradient, fuentes autohospedadas, tokens y tabla de contraste por script)
+- [ ] 51-02-PLAN.md: Efectos (fallbacks CSS de los 6 efectos y de los 8 adicionales del scout, motor de slot único, catálogo contra reactbits.dev y pesos)
+- [ ] 51-03-PLAN.md: Componentes con estados, verificación final (chequeo estático, Lighthouse, capturas) y commit de designs/redesign-v3
 **UI hint**: yes
 
 ### Phase 52: Home mockup y gate de revisión
