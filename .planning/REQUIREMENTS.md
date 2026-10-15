@@ -15,6 +15,13 @@ Alcance del milestone v2.3: mockups HTML estáticos en `designs/redesign-v3/`. N
 - [ ] **SYS-04**: Cada efecto inspirado en React Bits (grainy gradient, pattern waves, CRT warp, micro slats, pixel, ASCII) está identificado contra el catálogo real de reactbits.dev, con nombre exacto del componente de origen y su costo de peso.
 - [ ] **SYS-05**: Cada efecto tiene un fallback estático en CSS (gradiente + ruido SVG) que se ve bien sin JavaScript y es lo que ve mobile, `prefers-reduced-motion` y `saveData`.
 
+### Entorno React de mockups (REACT)
+
+- [ ] **REACT-01**: Juan puede levantar con un comando un dev server en `designs/redesign-v3/app/` y ver la galería `/system` con los componentes originales de React Bits.
+- [ ] **REACT-02**: La app tiene su propio `package.json` y `node_modules`, y no modifica el `package.json`, los lockfiles ni `src/` del proyecto.
+- [ ] **REACT-03**: Cada componente original conserva su cabecera de origen y el aviso de licencia MIT + Commons Clause está documentado.
+- [ ] **REACT-04**: El build de producción de la app se mide con Lighthouse y el peso real de cada componente original queda comparado con el porte vanilla de la fase 51.
+
 ### Home (HOME)
 
 - [ ] **HOME-01**: Juan puede abrir `designs/redesign-v3/home.html` en desktop y mobile y ver la home completa con todas las secciones actuales (hero, servicios, case studies, websites, about, testimonios, FAQ, contacto).
@@ -47,8 +54,8 @@ Alcance del milestone v2.3: mockups HTML estáticos en `designs/redesign-v3/`. N
 |---------|--------|
 | Cualquier cambio en `src/`, Payload, colecciones, schema o DB | Juan pidió ver la visión primero en HTML; la base es la de producción |
 | Reemplazar fuentes de contenido o copy factual | Es un rediseño visual, no editorial |
-| Dependencia nueva en `package.json` | Los mockups son archivos estáticos y no deben alterar el proyecto |
-| Implementación de React Bits en el proyecto | Llega con el milestone de implementación |
+| Dependencia nueva en el `package.json` raíz | La app React de mockups lleva su propio `package.json` aislado en `designs/redesign-v3/app/` |
+| Instalar React Bits en el proyecto Next.js | Los componentes viven solo en la app de mockups; llegan al proyecto con el milestone de implementación |
 | Tienda Polar y productos digitales | Pertenece al milestone v2.2, en cola |
 
 ## Traceability
@@ -62,6 +69,10 @@ Cada requirement pertenece a exactamente una fase. PERF-01 a PERF-04 se establec
 | SYS-03 | Phase 51 | Pending |
 | SYS-04 | Phase 51 | Pending |
 | SYS-05 | Phase 51 | Pending |
+| REACT-01 | Phase 51.1 | Pending |
+| REACT-02 | Phase 51.1 | Pending |
+| REACT-03 | Phase 51.1 | Pending |
+| REACT-04 | Phase 51.1 | Pending |
 | HOME-01 | Phase 52 | Pending |
 | HOME-02 | Phase 52 | Pending |
 | HOME-03 | Phase 52 | Pending |
@@ -75,7 +86,7 @@ Cada requirement pertenece a exactamente una fase. PERF-01 a PERF-04 se establec
 | PAGE-03 | Phase 55 | Pending |
 | PAGE-04 | Phase 55 | Pending |
 
-**Cobertura:** 17/17 requirements mapeados, 0 huérfanos, 0 duplicados.
+**Cobertura:** 21/21 requirements mapeados, 0 huérfanos, 0 duplicados.
 
 ---
 *Requirements defined: 2026-10-15*

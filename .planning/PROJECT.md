@@ -108,7 +108,7 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 - Resto de páginas en HTML (servicios, landings locales, blog, case studies, autor, contacto, websites, stack, búsqueda, legales), sujeto a la aprobación de Juan sobre la home
 
 **Restricciones clave:**
-- Solo HTML/CSS/JS estático. Prohibido tocar `src/`, Payload, colecciones, schema o base de datos
+- Mockups en `designs/redesign-v3/`: HTML/CSS/JS estático más una app Vite + React aislada (`designs/redesign-v3/app/`, su propio `package.json`) para ver los componentes originales de React Bits. Prohibido tocar `src/`, el `package.json` raíz, Payload, colecciones, schema o base de datos
 - PSI/CWV es requisito: máx 1 shader activo a la vez, fallback CSS estático, `prefers-reduced-motion` respetado, mobile con fallback, H1 real en HTML, ASCII decorativo `aria-hidden`
 - WCAG 2.2 AA + A11Y.md, paridad EN/ES, sin datos inventados
 - La implementación en Payload es un milestone posterior, fuera de alcance

@@ -25,69 +25,103 @@
 ## Phase Details
 
 ### Phase 51: Sistema visual
+
 **Goal**: Juan tiene en `designs/redesign-v3/system.html` un sistema visual completo, medido y con fallbacks, sobre el que se construyen todas las páginas. Los entregables son HTML estático bajo `designs/redesign-v3/` únicamente; no hay cambios en `src/`, Payload, schema ni base de datos.
 **Depends on**: Nothing (first phase of v2.3)
 **Requirements**: SYS-01, SYS-02, SYS-03, SYS-04, SYS-05
 **Success Criteria** (what must be TRUE):
+
   1. Juan abre `system.html` y ve la paleta (negro tinta, gradiente grainy violeta a coral a ámbar, verde fósforo reservado para ASCII y estados), la tipografía y la escala de espaciado.
   2. Cada par texto/fondo del sistema muestra su ratio de contraste calculado y todos cumplen WCAG 2.2 AA.
   3. La biblioteca de componentes (botones, cards, badges, nav, footer, formulario, bloque terminal CRT, bloque ASCII) muestra estados hover, focus, disabled y reduced-motion que Juan puede probar en el navegador.
   4. Cada efecto (grainy gradient, pattern waves, CRT warp, micro slats, pixel, ASCII) indica el nombre exacto del componente de origen en el catálogo de reactbits.dev y su costo de peso.
   5. Con JavaScript desactivado, en mobile, con `prefers-reduced-motion` o con `saveData`, cada efecto se ve bien con su fallback CSS (gradiente más ruido SVG).
+
 **Plans**: 3 plans
 
 Plans:
+
 - [ ] 51-01-PLAN.md: Cimientos (tracer del grainy gradient, fuentes autohospedadas, tokens y tabla de contraste por script)
 - [ ] 51-02-PLAN.md: Efectos (fallbacks CSS de los 6 efectos y de los 8 adicionales del scout, motor de slot único, catálogo contra reactbits.dev y pesos)
 - [ ] 51-03-PLAN.md: Componentes con estados, verificación final (chequeo estático, Lighthouse, capturas) y commit de designs/redesign-v3
+
 **UI hint**: yes
 
+### Phase 51.1: Entorno React de mockups con componentes originales de React Bits (INSERTED)
+
+**Goal:** Juan ve los componentes de React Bits tal cual, no aproximaciones. Se monta una app Vite + React + TS aislada en `designs/redesign-v3/app/` (su propio `package.json`, sin tocar el `package.json` ni `src/` del proyecto) con los componentes originales instalados desde el registro de React Bits y una galería `/system` servida en un dev server. Sigue prohibido tocar `src/`, Payload, schema y base de datos.
+**Requirements**: REACT-01, REACT-02, REACT-03, REACT-04
+**Depends on:** Phase 51
+**Success criteria:**
+1. `npm install && npm run dev` dentro de `designs/redesign-v3/app/` levanta un dev server y `/system` muestra los componentes originales (Grainient, PatternWaves, CRTWarp, MicroSlats, PixelBlast, PixelCard, GradientASCII, ASCIIText y los del top 8 del scout que Juan elija) con la paleta y los tokens de la fase 51.
+2. El `package.json` y `src/` del proyecto no tienen cambios (`git status` limpio fuera de `designs/redesign-v3/`).
+3. Una página `/rendimiento` o el propio `/system` registra el build de producción medido con Lighthouse (mobile y desktop) y documenta el peso real de cada componente original frente al porte vanilla de la fase 51.
+4. El aviso de licencia MIT + Commons Clause está en `designs/redesign-v3/app/LICENSES.md` y cada componente conserva su cabecera de origen.
+5. Se respeta 1 efecto pesado activo a la vez, carga diferida después de LCP, fallback estático y `prefers-reduced-motion`, y Juan puede pausar las animaciones.
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (run /gsd-plan-phase 51.1 to break down)
+
 ### Phase 52: Home mockup y gate de revisión
+
 **Goal**: Juan revisa la home completa en HTML, con el presupuesto de performance y accesibilidad ya cumplido, y decide si la dirección visual avanza al resto de las páginas. Los entregables son HTML estático bajo `designs/redesign-v3/` únicamente; no hay cambios en `src/`, Payload, schema ni base de datos.
 **Depends on**: Phase 51
 **Requirements**: HOME-01, HOME-02, HOME-03, HOME-04, PERF-01, PERF-02, PERF-03, PERF-04
 **Success Criteria** (what must be TRUE):
+
   1. Juan abre `home.html` en desktop y mobile y ve todas las secciones actuales (hero, servicios, case studies, websites, about, testimonios, FAQ, contacto); el primer viewport muestra un H1 real en HTML sobre gradiente grainy, un bloque ASCII decorativo `aria-hidden` y un CTA de contacto visible sin scroll.
   2. Juan alterna EN/ES en el mockup y ve el mismo contenido en ambos idiomas, sin cifras, clientes ni credenciales inventadas; los datos faltantes aparecen visibles como pendientes.
   3. La home activa como máximo 1 efecto WebGL/canvas a la vez y 2 en total; cada efecto pesado carga después de LCP, solo al entrar al viewport, y se pausa al salir; el resto es CSS o SVG.
   4. El reporte de Lighthouse mobile guardado en `designs/redesign-v3/reports/` muestra performance >= 90, CLS 0 y LCP < 2.0 s, y la home cumple las reglas de A11Y.md (H1 único, landmarks, foco visible, objetivos táctiles, reduced-motion, ASCII oculto a lectores de pantalla).
   5. **Gate humano:** Juan revisa la home y la aprueba o entrega feedback; el feedback se aplica y se vuelve a presentar dentro de esta fase, y las Phases 53 a 55 no empiezan hasta que Juan apruebe explícitamente.
+
 **Plans**: TBD
 **UI hint**: yes
 
 ### Phase 53: Servicios y landings locales
+
 **Goal**: Juan ve las páginas de servicios y las landings locales de Lima y Madrid en el sistema visual aprobado en la home. Los entregables son HTML estático bajo `designs/redesign-v3/` únicamente; no hay cambios en `src/`, Payload, schema ni base de datos.
 **Depends on**: Phase 52 (aprobación explícita de Juan sobre la home)
 **Requirements**: PAGE-01
 **Success Criteria** (what must be TRUE):
+
   1. Juan abre el índice de servicios y una landing de servicio representativa, y ambas usan los tokens y componentes de `system.html` sin estilos ad hoc.
   2. Juan abre las landings locales de Lima y Madrid y cada una se diferencia estructuralmente de la otra, no solo en el nombre de la ciudad.
   3. Las cuatro páginas funcionan en EN y ES con paridad de contenido, sin datos inventados; las estadísticas o pruebas sociales faltantes quedan visibles como pendientes.
   4. Cada página cumple el presupuesto de efectos (PERF-01, PERF-02) y las reglas de A11Y.md, con su reporte de Lighthouse mobile en `designs/redesign-v3/reports/`.
+
 **Plans**: TBD
 **UI hint**: yes
 
 ### Phase 54: Blog y case studies
+
 **Goal**: Juan ve el blog y los case studies en el sistema aprobado, con una experiencia de lectura donde el efecto visual cede ante el texto. Los entregables son HTML estático bajo `designs/redesign-v3/` únicamente; no hay cambios en `src/`, Payload, schema ni base de datos.
 **Depends on**: Phase 52 (aprobación explícita de Juan sobre la home); sin dependencia técnica de Phase 53
 **Requirements**: PAGE-02
 **Success Criteria** (what must be TRUE):
+
   1. Juan abre el listado de blog y un detalle de post, y ambos usan los tokens y componentes de `system.html`.
   2. Juan abre el listado de case studies y un detalle de case study, con la estructura de contenido actual (métrica principal, KPIs, cliente, reto, solución, resultados) sin cifras inventadas.
   3. En los detalles de blog y de case study hay un modo lectura: ningún efecto animado corre detrás del cuerpo del texto, solo el fallback estático, y el texto mantiene contraste AA.
   4. Las cuatro páginas funcionan en EN y ES con paridad de contenido, cumplen PERF-01 a PERF-04 y tienen su reporte de Lighthouse mobile en `designs/redesign-v3/reports/`.
+
 **Plans**: TBD
 **UI hint**: yes
 
 ### Phase 55: Páginas restantes e índice
+
 **Goal**: Juan tiene todas las páginas restantes del sitio como mockups y un índice único desde donde las recorre. Los entregables son HTML estático bajo `designs/redesign-v3/` únicamente; no hay cambios en `src/`, Payload, schema ni base de datos.
 **Depends on**: Phase 52 (aprobación explícita de Juan sobre la home); sin dependencia técnica de Phases 53 y 54
 **Requirements**: PAGE-03, PAGE-04
 **Success Criteria** (what must be TRUE):
+
   1. Juan abre los mockups de autor, contacto, websites (listado y detalle), stack y búsqueda, y todos usan los tokens y componentes de `system.html`.
   2. Juan abre los mockups de privacy y terms, con el texto legal legible y sin efectos animados detrás del cuerpo.
   3. Juan abre `designs/redesign-v3/index.html` y desde ahí llega a cada mockup del milestone (sistema, home y todas las páginas de las Phases 53 a 55) sin enlaces rotos.
   4. Todas las páginas funcionan en EN y ES con paridad de contenido, cumplen PERF-01 a PERF-04 y tienen su reporte de Lighthouse mobile en `designs/redesign-v3/reports/`.
+
 **Plans**: TBD
 **UI hint**: yes
 

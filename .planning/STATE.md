@@ -2,14 +2,19 @@
 gsd_state_version: "1.0"
 milestone: v2.3
 milestone_name: Rediseño Visual v3 (mockups HTML)
+current_phase: 51
+current_phase_name: Sistema visual
 status: ready_to_plan
-last_updated: "2026-10-15T22:10:00.000Z"
+stopped_at: Roadmap v2.3 creado (Phases 51-55), listo para discutir/planificar Phase 51
+last_updated: "2026-10-15T23:09:33.191Z"
 last_activity: 2026-10-15
+last_activity_desc: Roadmap v2.3 creado (5 fases, 17/17 requirements mapeados)
+state_head: e47c7819be81a6e867c34436b4f74f36ac61ba39
 progress:
-  total_phases: 5
+  total_phases: 6
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 3
+  completed_plans: 2
   percent: 0
 ---
 
@@ -327,6 +332,10 @@ None yet.
 | 260814-lzz | Cerró el hueco que dejó 260813-o0n: el breadcrumb del Hero y las tabs de categoría del blog seguían mandando a los lectores de `/en` al español. Causa raíz distinta a la del barrido anterior — `Hero/config.ts:36` define `breadcrumbs` como array del CMS con `label` localizado y `url` NO localizado, así que un solo valor de URL se comparte entre idiomas; `blog/page.tsx` nunca llama `buildBlogTrail()`, o sea que el índice del blog nunca estuvo cubierto por `breadcrumbs.ts`. Fix solo de render (`isPrefixableHref` + `localizeBlogPath`), **sin migración ni cambio de schema** — localizar el campo `url` es el reshape que borró el CTA del Home el 2026-07-12. `BlogCategoryTabs.tsx` aportaba 5 hrefs sin prefijo más, no estaba en el barrido anterior. Finding del footer `/services` NO reproduce (producción ya emite `/servicios`), trabado con aserción en vez de editar. Hueco blanco de `/blog` medido con Playwright: no es bug — 64px exactos de `mt-16` del footer, cero elementos fantasma, el blanco era el estado SSR del scroll-reveal antes de disparar el IntersectionObserver; cero código cambiado | 2026-08-14 | d478103 | Needs Deploy (RED contra prod confirmado 49/3; el green sale post-deploy) | [260814-lzz-fix-hero-breadcrumb-locale-leak-and-the-](./quick/260814-lzz-fix-hero-breadcrumb-locale-leak-and-the-/) |
 | 260814-sw0 | Wiring de GSD para los 11 issues de la auditoría SEO 2026-08 (issues #1-#11 en `Sve-nnN/website`, baseline en #12). Tres scripts nuevos bajo `scripts/seo/`, cero cambios en código de la app: `validate.sh` (un validador por issue contra el sitio en vivo, exit 1 si falla), `validate-a11y.py` (los 3 audits de accesibilidad del #10 + resumen de performance del #6 sobre reportes de unlighthouse) e `issue.sh` (`prompt`/`start`/`pr`/`close`/`status`). El gate real es `close`, que se niega a cerrar en rojo y deja la salida como comentario del issue. Probado contra producción: da rojo en los 11 defectos conocidos con conteos idénticos al baseline (14/14/10/10 placeholders) y verde en los 3 checks de regresión de hreflang. Bug encontrado y corregido en el propio validador: `grep -oc` cuenta líneas y no ocurrencias, reportaba 1 donde el baseline decía 14 — habría pasado a verde con un placeholder suelto. `--full` reservado a #5 (borrado irreversible, necesita GSC) y #6 (fuentes + middleware + next.config a la vez) | 2026-08-14 | | Complete | [260814-sw0-wire-gsd-for-seo-audit-issues](./quick/260814-sw0-wire-gsd-for-seo-audit-issues/) |
 | 260713-2q2 | React Doctor remaining findings by priority (44 of 68): unsafe-json-in-html (verified false positive, hardened doc + regression script), server-auth-actions (false positive on auth premise, added real per-IP rate limit to public contact action), 19 no-array-index-as-key sites fixed with stable Payload ids, 7 next/image fill sites given layout-correct `sizes`, 2 sequential-await sites parallelized, 6 performance findings (Intl hoisting, flatMap, hydration flicker, async-in-loop), 1 a11y autofocus removed, 7 maintainability findings (variant exports split, inline styles hoisted, RenderBlocks/Section circular dep broken via next/dynamic). New server-no-mutable-module-state finding from the rate limiter documented as false positive (persistent Node/PM2 process, not serverless) | 2026-07-13 | d892077 | Verified | [260713-2q2-fix-remaining-react-doctor-findings-by-p](./quick/260713-2q2-fix-remaining-react-doctor-findings-by-p/) |
+
+### Roadmap Evolution
+
+- Phase 51.1 inserted after Phase 51: Entorno React de mockups con componentes originales de React Bits (pedido de Juan: ver los componentes tal cual)
 
 ## Deferred Items
 
