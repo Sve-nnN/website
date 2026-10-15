@@ -1,0 +1,275 @@
+/*
+ * system-doc.css: estilos solo de la pagina de documentacion system.html.
+ * No es parte del kit: ninguna pagina de las fases 52 a 55 lo enlaza.
+ * Usa unicamente tokens de tokens.css. El script de peso lo reporta aparte, sin presupuesto.
+ */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+.doc-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.doc-nav a,
+.doc-section a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  color: var(--violet-text);
+  text-underline-offset: .2em;
+}
+
+.doc-section {
+  padding: var(--space-7) var(--space-6);
+}
+
+.doc-section + .doc-section {
+  border-top: 1px solid var(--ink-top);
+}
+
+.doc-inner {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.doc-inner > h3 {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-3);
+}
+
+.doc-intro {
+  margin-top: var(--space-3);
+  max-width: var(--measure);
+}
+
+.doc-note {
+  margin-top: var(--space-3);
+  max-width: var(--measure);
+  color: var(--quiet);
+  font-size: var(--text-sm);
+}
+
+.grad-strip {
+  height: var(--space-6);
+  margin-top: var(--space-5);
+  background: var(--grad);
+}
+
+/* Paleta */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.swatch {
+  padding: var(--space-3);
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-top);
+  border-radius: var(--radius-2);
+}
+
+.swatch-chip {
+  height: var(--space-6);
+  background: var(--chip);
+  border: 1px solid var(--ink-top);
+  border-radius: var(--radius-1);
+}
+
+.swatch-chip.is-translucent {
+  background: linear-gradient(var(--chip), var(--chip)), var(--grad);
+}
+
+.swatch-name {
+  margin-top: var(--space-3);
+  font-weight: 600;
+}
+
+.swatch-hex {
+  margin-top: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--quiet);
+  overflow-wrap: anywhere;
+}
+
+.swatch-rule {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+}
+
+/* Tipografia */
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.type-card {
+  padding: var(--space-4);
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-top);
+  border-radius: var(--radius-2);
+}
+
+.type-card > * + * {
+  margin-top: var(--space-3);
+}
+
+.sample-h1,
+.sample-h2,
+.sample-h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: var(--leading-tight);
+}
+
+.sample-h1 {
+  font-size: var(--text-2xl);
+}
+
+.sample-h2 {
+  font-size: var(--text-xl);
+}
+
+.sample-h3 {
+  font-size: var(--text-lg);
+}
+
+.sample-body {
+  max-width: var(--measure);
+}
+
+.sample-label {
+  font-size: var(--text-sm);
+  color: var(--quiet);
+}
+
+.sample-mono {
+  margin: 0;
+  padding: var(--space-3);
+  background: var(--ink);
+  border: 1px solid var(--ink-top);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  color: var(--phosphor);
+  overflow-x: auto;
+}
+
+.sample-pixel {
+  font-size: var(--text-base);
+}
+
+.table-scroll {
+  margin-top: var(--space-4);
+  overflow-x: auto;
+}
+
+.doc-table,
+.contrast-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.doc-table caption,
+.contrast-table caption {
+  padding-bottom: var(--space-2);
+  text-align: left;
+  color: var(--quiet);
+}
+
+.doc-table th,
+.doc-table td,
+.contrast-table th,
+.contrast-table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--ink-top);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.contrast-table th[scope="row"] {
+  font-weight: 400;
+}
+
+.contrast-sample {
+  display: inline-block;
+  min-width: 3.5rem;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--ink-top);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  text-align: center;
+}
+
+/* Espaciado y radios */
+.space-list,
+.radius-list {
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.space-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  padding: var(--space-2) 0;
+}
+
+.space-label {
+  min-width: 11rem;
+  font-size: var(--text-sm);
+}
+
+.space-bar {
+  display: block;
+  height: var(--space-3);
+  background: var(--violet);
+}
+
+.radius-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.radius-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.radius-sample {
+  display: block;
+  width: var(--space-6);
+  height: var(--space-6);
+  background: var(--ink-higher);
+  border: 2px solid var(--violet-text-raised);
+}
+
+@media (max-width: 767px) {
+  .doc-section {
+    padding: var(--space-6) var(--space-4);
+  }
+}

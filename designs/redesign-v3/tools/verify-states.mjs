@@ -346,6 +346,117 @@ STAGES.fonts = async (env) => {
   }
 };
 
+STAGES.tokens = async (env) => {
+  const report = JSON.parse(fs.readFileSync(path.join(ROOT, 'reports/contrast.json'), 'utf8'));
+  const totalPairs = Object.values(report.groups).reduce((n, g) => n + g.results.length, 0);
+
+  /* Referencias externas (CDN) en el codigo fuente del sistema. */
+  const external = [];
+  for (const file of walk(ROOT)) {
+    const rel = path.relative(ROOT, file).split(path.sep).join('/');
+    if (rel.startsWith('reports/') || !['.html', '.css', '.js'].includes(path.extname(file))) continue;
+    const text = fs.readFileSync(file, 'utf8');
+    if (/(?:src|href)\s*=\s*["']https?:/i.test(text) || /url\(\s*["']?https?:/i.test(text) || /@import\s+["']?https?:/i.test(text)) {
+      external.push(rel);
+    }
+  }
+  check('tokens: sin script src, link href ni url() externos', external.length === 0, external.join(', '));
+
+  const { context, page, log } = await visit(env, httpUrl(env, 'system.html'), { ctx: { viewport: { width: 1440, height: 900 } }, wait: 800 });
+  check('tokens: cero errores de consola ni respuestas 4xx', log.console.length === 0 && log.bad.length === 0 && log.pageerrors.length === 0, [...log.console, ...log.bad, ...log.pageerrors].join(' ; '));
+
+  const data = await page.evaluate(() => {
+    const root = getComputedStyle(document.documentElement);
+    const swatches = [...document.querySelectorAll('[data-token][data-hex]')].map((el) => {
+      const token = el.getAttribute('data-token');
+      const chip = el.querySelector('.swatch-chip');
+      return {
+        token,
+        shown: el.getAttribute('data-hex'),
+        actual: root.getPropertyValue(token).trim(),
+        chipBg: chip ? getComputedStyle(chip).backgroundColor : null,
+        chipImage: chip ? getComputedStyle(chip).backgroundImage : null,
+        visibleHex: el.querySelector('.swatch-hex') ? el.querySelector('.swatch-hex').textContent.trim() : null,
+      };
+    });
+    const values = [...document.querySelectorAll('[data-token][data-value]')].map((el) => ({
+      token: el.getAttribute('data-token'),
+      shown: el.getAttribute('data-value'),
+      actual: root.getPropertyValue(el.getAttribute('data-token')).trim(),
+    }));
+    const body = getComputedStyle(document.body);
+    const lineHeight = parseFloat(body.lineHeight) / parseFloat(body.fontSize);
+    const heads = [...document.querySelectorAll('h1, h2, h3')].map((h) => ({ tag: h.tagName, weight: getComputedStyle(h).fontWeight, synth: getComputedStyle(h).fontSynthesis }));
+    const pixel = [...document.querySelectorAll('.pixel-label')].map((el) => parseFloat(getComputedStyle(el).fontSize));
+    const rows = [...document.querySelectorAll('#contraste tbody tr')].map((tr) => ({
+      group: tr.getAttribute('data-group'),
+      result: tr.getAttribute('data-result'),
+      text: tr.lastElementChild.textContent.trim(),
+    }));
+    return {
+      swatches,
+      values,
+      ids: ['paleta', 'tipografia', 'espaciado', 'contraste'].map((id) => [id, Boolean(document.getElementById(id))]),
+      bodyFamily: body.fontFamily,
+      lineHeight,
+      heads,
+      pixel,
+      rows,
+      table: {
+        caption: Boolean(document.querySelector('#contraste table caption')),
+        colHeaders: document.querySelectorAll('#contraste thead th[scope="col"]').length,
+        rowHeaders: document.querySelectorAll('#contraste tbody th[scope="row"]').length,
+      },
+      nav: Boolean(document.querySelector('nav[aria-label="Secciones"]')),
+      h1: document.querySelectorAll('h1').length,
+      mono: getComputedStyle(document.querySelector('.sample-mono')).fontFamily,
+    };
+  });
+
+  const bad = data.swatches.filter((s) => s.shown.toLowerCase() !== s.actual.toLowerCase());
+  check(`tokens: ${data.swatches.length} muestras de color con data-hex igual al token real`, data.swatches.length >= 14 && bad.length === 0, bad.map((s) => `${s.token}: ${s.shown} vs ${s.actual}`).join(' ; '));
+  const hexBad = data.swatches.filter((s) => s.visibleHex && s.visibleHex.toLowerCase() !== s.actual.toLowerCase());
+  check('tokens: el valor escrito en cada muestra coincide con el token', hexBad.length === 0, hexBad.map((s) => s.token).join(', '));
+  const chipBad = data.swatches.filter((s) => {
+    const m = /^#([0-9a-f]{6})$/i.exec(s.actual);
+    if (!m) return false;
+    const n = parseInt(m[1], 16);
+    return s.chipBg !== `rgb(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255})`;
+  });
+  check('tokens: el fondo real de cada swatch es el color del token', chipBad.length === 0, chipBad.map((s) => `${s.token}: ${s.chipBg}`).join(' ; '));
+  const valBad = data.values.filter((v) => v.shown !== v.actual);
+  check(`tokens: ${data.values.length} valores de escala (tipografia, espaciado, radios) coinciden con tokens.css`, data.values.length >= 20 && valBad.length === 0, valBad.map((v) => `${v.token}: ${v.shown} vs ${v.actual}`).join(' ; '));
+  check('tokens: existen #paleta #tipografia #espaciado y #contraste', data.ids.every(([, ok]) => ok), data.ids.filter(([, ok]) => !ok).map(([id]) => id).join(', '));
+  check('tokens: nav con aria-label "Secciones" y un solo h1', data.nav && data.h1 === 1, `h1=${data.h1}`);
+
+  check(`tokens: la tabla tiene una fila por par de contrast.json (${totalPairs})`, data.rows.length === totalPairs, `filas=${data.rows.length}`);
+  check('tokens: tabla con caption, th scope="col" y th scope="row"', data.table.caption && data.table.colHeaders === 6 && data.table.rowHeaders === totalPairs, JSON.stringify(data.table));
+  const failing = data.rows.filter((r) => ['required', 'ui', 'scrim', 'reading'].includes(r.group) && (r.result !== 'ok' || !/^Cumple AA$/.test(r.text)));
+  check('tokens: ninguna fila required, ui, scrim o reading marca fallo', failing.length === 0, failing.map((r) => r.group).join(', '));
+  const proh = data.rows.filter((r) => r.group === 'prohibited');
+  check('tokens: las combinaciones prohibidas aparecen marcadas como no usables', proh.length > 0 && proh.every((r) => r.text === 'No cumple: uso prohibido'), `prohibidas=${proh.length}`);
+  check('tokens: contrast.json no tiene problemas', report.summary.problems === 0, `problemas=${report.summary.problems}`);
+
+  check('tokens: el body usa Geist', /^"?Geist"?/.test(data.bodyFamily), data.bodyFamily);
+  check('tokens: line-height del body de al menos 1.5', data.lineHeight >= 1.5, String(data.lineHeight));
+  check('tokens: .pixel-label mide 12 px o mas', data.pixel.length > 0 && Math.min(...data.pixel) >= 12, `min=${Math.min(...data.pixel)}`);
+  check('tokens: h1, h2 y h3 con font-weight 400 y font-synthesis none', data.heads.length >= 5 && data.heads.every((h) => h.weight === '400' && /none/.test(h.synth)), JSON.stringify(data.heads.slice(0, 2)));
+  check('tokens: la muestra mono usa Geist Mono', /Geist Mono/.test(data.mono), data.mono);
+
+  /* Sin desborde horizontal en la pagina larga. */
+  await context.close();
+  for (const [label, w, h] of [['1440', 1440, 900], ['390', 390, 844], ['320', 320, 640]]) {
+    const v = await visit(env, httpUrl(env, 'system.html'), { ctx: { viewport: { width: w, height: h }, isMobile: w < 768, hasTouch: w < 768 }, wait: 500 });
+    const { sw, iw } = await v.page.evaluate(() => ({ sw: document.documentElement.scrollWidth, iw: window.innerWidth }));
+    check(`tokens: ${label} px sin desborde horizontal en toda la pagina`, sw <= iw, `scrollWidth=${sw} innerWidth=${iw}`);
+    if (env.shots && (w === 1440 || w === 390)) {
+      fs.mkdirSync(path.join(ROOT, 'reports/shots'), { recursive: true });
+      await v.page.screenshot({ path: path.join(ROOT, `reports/shots/system-${w === 1440 ? 'desktop' : 'mobile'}.jpg`), type: 'jpeg', quality: 60, fullPage: true });
+    }
+    await v.context.close();
+  }
+};
+
 /* ---------- main ---------- */
 
 async function main() {

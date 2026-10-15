@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/effects.css">
+  <link rel="stylesheet" href="assets/css/system-doc.css">
   <script src="assets/js/effects.js" defer></script>
 </head>
 <body>
@@ -15,6 +16,14 @@
 
   <header class="site-header">
     <p class="brand">Juan Carlos Angulo</p>
+    <nav class="doc-nav" aria-label="Secciones">
+      <ul>
+        <li><a href="#paleta">Paleta</a></li>
+        <li><a href="#tipografia">Tipografía</a></li>
+        <li><a href="#espaciado">Espaciado</a></li>
+        <li><a href="#contraste">Contraste</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main id="main">
@@ -22,6 +31,603 @@
       <div class="fx-content">
         <h1 id="titulo-sistema">Sistema visual v3</h1>
         <p class="lede">Este archivo es estático. Ábrelo con doble clic o sírvelo con <code>npx serve@14</code>. La Fase 52 consume este sistema para construir la home.</p>
+      </div>
+    </section>
+
+    <section class="doc-section" id="paleta" aria-labelledby="titulo-paleta">
+      <div class="doc-inner">
+        <h2 id="titulo-paleta">Paleta</h2>
+        <p class="doc-intro">Cada muestra lee su color de <code>tokens.css</code>. El nombre y el valor se escriben en texto: el color nunca es la única señal.</p>
+
+        <div class="grad-strip" role="img" aria-label="Franja del gradiente: violeta, coral y ámbar"></div>
+        <p class="doc-note"><code>--grad</code> corre a 135 grados de violeta a coral (55 por ciento) y ámbar. El texto nunca vive directo sobre él: siempre va sobre el panel <code>--scrim</code> o sobre un panel sólido de tinta.</p>
+
+        <h3>Tinta y superficies</h3>
+        <ul class="swatches">
+          <li class="swatch" data-token="--ink" data-hex="#0B0B12">
+            <div class="swatch-chip" style="--chip: var(--ink);"></div>
+            <p class="swatch-name"><code>--ink</code> Tinta</p>
+            <p class="swatch-hex">#0B0B12</p>
+            <p class="swatch-rule">Fondo base de todas las páginas.</p>
+          </li>
+          <li class="swatch" data-token="--ink-raised" data-hex="#14141F">
+            <div class="swatch-chip" style="--chip: var(--ink-raised);"></div>
+            <p class="swatch-name"><code>--ink-raised</code> Tinta elevada 1</p>
+            <p class="swatch-hex">#14141F</p>
+            <p class="swatch-rule">Tarjetas y paneles sobre la tinta.</p>
+          </li>
+          <li class="swatch" data-token="--ink-higher" data-hex="#1B1B2A">
+            <div class="swatch-chip" style="--chip: var(--ink-higher);"></div>
+            <p class="swatch-name"><code>--ink-higher</code> Tinta elevada 2</p>
+            <p class="swatch-hex">#1B1B2A</p>
+            <p class="swatch-rule">Elementos dentro de una tarjeta.</p>
+          </li>
+          <li class="swatch" data-token="--ink-top" data-hex="#23233A">
+            <div class="swatch-chip" style="--chip: var(--ink-top);"></div>
+            <p class="swatch-name"><code>--ink-top</code> Tinta elevada 3</p>
+            <p class="swatch-hex">#23233A</p>
+            <p class="swatch-rule">Menús y capas superiores.</p>
+          </li>
+        </ul>
+
+        <h3>Gradiente y acentos</h3>
+        <ul class="swatches">
+          <li class="swatch" data-token="--violet" data-hex="#5B3DF5">
+            <div class="swatch-chip" style="--chip: var(--violet);"></div>
+            <p class="swatch-name"><code>--violet</code> Violeta</p>
+            <p class="swatch-hex">#5B3DF5</p>
+            <p class="swatch-rule">Inicio del gradiente y relleno de botón con texto papel. Como texto, solo con <code>--violet-text</code>.</p>
+          </li>
+          <li class="swatch" data-token="--coral" data-hex="#FF4D6D">
+            <div class="swatch-chip" style="--chip: var(--coral);"></div>
+            <p class="swatch-name"><code>--coral</code> Coral</p>
+            <p class="swatch-hex">#FF4D6D</p>
+            <p class="swatch-rule">Centro del gradiente. Relleno con texto tinta; nunca texto papel encima.</p>
+          </li>
+          <li class="swatch" data-token="--amber" data-hex="#FFB020">
+            <div class="swatch-chip" style="--chip: var(--amber);"></div>
+            <p class="swatch-name"><code>--amber</code> Ámbar</p>
+            <p class="swatch-hex">#FFB020</p>
+            <p class="swatch-rule">Final del gradiente y anillo de foco. Relleno con texto tinta.</p>
+          </li>
+          <li class="swatch" data-token="--phosphor" data-hex="#B6FF3B">
+            <div class="swatch-chip" style="--chip: var(--phosphor);"></div>
+            <p class="swatch-name"><code>--phosphor</code> Fósforo</p>
+            <p class="swatch-hex">#B6FF3B</p>
+            <p class="swatch-rule">Solo ASCII, cursores y estados, y siempre sobre tinta o sus superficies elevadas.</p>
+          </li>
+        </ul>
+
+        <h3>Texto y derivados</h3>
+        <ul class="swatches">
+          <li class="swatch" data-token="--paper" data-hex="#FAFAF7">
+            <div class="swatch-chip" style="--chip: var(--paper);"></div>
+            <p class="swatch-name"><code>--paper</code> Papel</p>
+            <p class="swatch-hex">#FAFAF7</p>
+            <p class="swatch-rule">Texto principal, sobre tinta, superficies elevadas, violeta y scrim.</p>
+          </li>
+          <li class="swatch" data-token="--quiet" data-hex="#A8ACBB">
+            <div class="swatch-chip" style="--chip: var(--quiet);"></div>
+            <p class="swatch-name"><code>--quiet</code> Silencio</p>
+            <p class="swatch-hex">#A8ACBB</p>
+            <p class="swatch-rule">Texto de apoyo. Nunca sobre el gradiente ni sobre violeta.</p>
+          </li>
+          <li class="swatch" data-token="--violet-text" data-hex="#7A61F7">
+            <div class="swatch-chip" style="--chip: var(--violet-text);"></div>
+            <p class="swatch-name"><code>--violet-text</code> Violeta de texto</p>
+            <p class="swatch-hex">#7A61F7</p>
+            <p class="swatch-rule">Texto y enlaces violeta, solo sobre <code>--ink</code>.</p>
+          </li>
+          <li class="swatch" data-token="--violet-text-raised" data-hex="#8F7BFF">
+            <div class="swatch-chip" style="--chip: var(--violet-text-raised);"></div>
+            <p class="swatch-name"><code>--violet-text-raised</code> Violeta de texto elevado</p>
+            <p class="swatch-hex">#8F7BFF</p>
+            <p class="swatch-rule">Texto violeta sobre las tres superficies elevadas.</p>
+          </li>
+          <li class="swatch" data-token="--scrim" data-hex="rgba(11, 11, 18, .6)">
+            <div class="swatch-chip is-translucent" style="--chip: var(--scrim);"></div>
+            <p class="swatch-name"><code>--scrim</code> Scrim</p>
+            <p class="swatch-hex">rgba(11, 11, 18, .6)</p>
+            <p class="swatch-rule">Panel de tinta que va debajo de todo texto sobre el gradiente.</p>
+          </li>
+          <li class="swatch" data-token="--dot" data-hex="rgba(168, 172, 187, .18)">
+            <div class="swatch-chip is-translucent" style="--chip: var(--dot);"></div>
+            <p class="swatch-name"><code>--dot</code> Punto</p>
+            <p class="swatch-hex">rgba(168, 172, 187, .18)</p>
+            <p class="swatch-rule">Punto del dot grid estático en superficies de lectura.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="doc-section" id="tipografia" aria-labelledby="titulo-tipografia">
+      <div class="doc-inner">
+        <h2 id="titulo-tipografia">Tipografía</h2>
+        <p class="doc-intro">Cuatro familias autohospedadas en <code>assets/fonts/</code>, sin CDN. Array solo existe en peso 400 y nunca se sintetiza una negrita.</p>
+
+        <div class="type-grid">
+          <article class="type-card">
+            <p class="pixel-label">Array, titulares, peso 400</p>
+            <p class="sample-h1">Rendimiento y SEO sin ruido</p>
+            <p class="sample-h2">Segundo nivel de titular</p>
+            <p class="sample-h3">Tercer nivel de titular</p>
+          </article>
+          <article class="type-card">
+            <p class="pixel-label">Geist, cuerpo y etiquetas</p>
+            <p class="sample-body">El cuerpo corre a 16 píxeles con una altura de línea de 1.5 y una medida que no pasa de 80 caracteres, para que la lectura larga no canse la vista.</p>
+            <p class="sample-label">Etiqueta de interfaz a 14 píxeles en Geist.</p>
+          </article>
+          <article class="type-card">
+            <p class="pixel-label">Geist Mono, ASCII y código</p>
+            <p>Juego de caracteres permitido: <code>.:-=+*#%@</code></p>
+            <pre class="sample-mono" aria-hidden="true">.:-=+*#%@@%#*+=-:.
+:-=+*#%@@@@%#*+=-:
+.:-=+*#%@@%#*+=-:.</pre>
+            <p class="doc-note">El arte ASCII es decorativo y lleva <code>aria-hidden</code>. Si transmite información, se da el equivalente en texto normal.</p>
+          </article>
+          <article class="type-card">
+            <p class="pixel-label">Pixel Label, etiquetas cortas</p>
+            <p class="pixel-label sample-pixel">Auditoría técnica → publicar año 2026</p>
+            <p class="doc-note">Solo mayúsculas, dígitos y acentos del español, a 12 píxeles o más.</p>
+          </article>
+        </div>
+
+        <h3>Escala</h3>
+        <div class="table-scroll" role="region" aria-label="Escala tipográfica" tabindex="0">
+          <table class="doc-table">
+            <caption>Tokens de tipografía y su valor</caption>
+            <thead>
+              <tr><th scope="col">Token</th><th scope="col">Valor</th><th scope="col">Uso</th></tr>
+            </thead>
+            <tbody>
+              <tr data-token="--text-xs" data-value="0.75rem"><th scope="row"><code>--text-xs</code></th><td>0.75rem</td><td>Etiquetas Pixel Label, el mínimo permitido</td></tr>
+              <tr data-token="--text-sm" data-value="0.875rem"><th scope="row"><code>--text-sm</code></th><td>0.875rem</td><td>Etiquetas de interfaz y texto de apoyo</td></tr>
+              <tr data-token="--text-base" data-value="1rem"><th scope="row"><code>--text-base</code></th><td>1rem</td><td>Cuerpo</td></tr>
+              <tr data-token="--text-lg" data-value="1.25rem"><th scope="row"><code>--text-lg</code></th><td>1.25rem</td><td>Texto destacado</td></tr>
+              <tr data-token="--text-xl" data-value="1.5rem"><th scope="row"><code>--text-xl</code></th><td>1.5rem</td><td>Tercer nivel de titular</td></tr>
+              <tr data-token="--text-2xl" data-value="clamp(1.75rem, 1.4rem + 1.5vw, 2.25rem)"><th scope="row"><code>--text-2xl</code></th><td>clamp(1.75rem, 1.4rem + 1.5vw, 2.25rem)</td><td>Segundo nivel de titular, fluido</td></tr>
+              <tr data-token="--text-display" data-value="clamp(2.5rem, 1.6rem + 4vw, 4.5rem)"><th scope="row"><code>--text-display</code></th><td>clamp(2.5rem, 1.6rem + 4vw, 4.5rem)</td><td>Titular principal, fluido</td></tr>
+              <tr data-token="--leading-body" data-value="1.5"><th scope="row"><code>--leading-body</code></th><td>1.5</td><td>Altura de línea del cuerpo</td></tr>
+              <tr data-token="--measure" data-value="80ch"><th scope="row"><code>--measure</code></th><td>80ch</td><td>Ancho máximo de lectura</td></tr>
+              <tr data-token="--tap" data-value="44px"><th scope="row"><code>--tap</code></th><td>44px</td><td>Objetivo táctil mínimo de diseño</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="doc-section" id="espaciado" aria-labelledby="titulo-espaciado">
+      <div class="doc-inner">
+        <h2 id="titulo-espaciado">Espaciado y radios</h2>
+        <p class="doc-intro">La escala crece en siete pasos. Cada barra usa el token real como ancho.</p>
+
+        <ul class="space-list">
+          <li data-token="--space-1" data-value="4px"><span class="space-label"><code>--space-1</code> 4px</span><span class="space-bar" style="width: var(--space-1);"></span></li>
+          <li data-token="--space-2" data-value="8px"><span class="space-label"><code>--space-2</code> 8px</span><span class="space-bar" style="width: var(--space-2);"></span></li>
+          <li data-token="--space-3" data-value="16px"><span class="space-label"><code>--space-3</code> 16px</span><span class="space-bar" style="width: var(--space-3);"></span></li>
+          <li data-token="--space-4" data-value="24px"><span class="space-label"><code>--space-4</code> 24px</span><span class="space-bar" style="width: var(--space-4);"></span></li>
+          <li data-token="--space-5" data-value="32px"><span class="space-label"><code>--space-5</code> 32px</span><span class="space-bar" style="width: var(--space-5);"></span></li>
+          <li data-token="--space-6" data-value="48px"><span class="space-label"><code>--space-6</code> 48px</span><span class="space-bar" style="width: var(--space-6);"></span></li>
+          <li data-token="--space-7" data-value="64px"><span class="space-label"><code>--space-7</code> 64px</span><span class="space-bar" style="width: var(--space-7);"></span></li>
+        </ul>
+
+        <h3>Radios</h3>
+        <ul class="radius-list">
+          <li data-token="--radius-1" data-value="2px"><span class="radius-sample" style="border-radius: var(--radius-1);"></span><code>--radius-1</code> 2px</li>
+          <li data-token="--radius-2" data-value="4px"><span class="radius-sample" style="border-radius: var(--radius-2);"></span><code>--radius-2</code> 4px</li>
+          <li data-token="--radius-3" data-value="8px"><span class="radius-sample" style="border-radius: var(--radius-3);"></span><code>--radius-3</code> 8px</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="doc-section" id="contraste" aria-labelledby="titulo-contraste">
+      <div class="doc-inner">
+        <h2 id="titulo-contraste">Contraste</h2>
+        <p class="doc-intro">Ningún color de texto único cumple 4.5:1 sobre todo el gradiente, y el violeta puro sobre tinta queda en 3.2:1. Por eso el texto vive sobre scrim o sobre panel sólido. La tabla sale de <code>tools/contrast.mjs</code> y se lee de <code>tokens.css</code>; no hay valores escritos a mano.</p>
+        <div class="table-scroll" role="region" aria-label="Tabla de contraste" tabindex="0">
+          <!-- contrast:start -->
+        <table class="contrast-table">
+          <caption>Ratios de contraste calculados por tools/contrast.mjs a partir de tokens.css</caption>
+          <thead>
+            <tr>
+              <th scope="col">Par texto y fondo</th>
+              <th scope="col">Grupo</th>
+              <th scope="col">Muestra</th>
+              <th scope="col">Ratio</th>
+              <th scope="col">Umbral</th>
+              <th scope="col">Resultado</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">paper sobre ink</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: var(--ink);">Aa</span></td>
+            <td>18.75:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">paper sobre ink-raised</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: var(--ink-raised);">Aa</span></td>
+            <td>17.46:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">paper sobre ink-higher</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: var(--ink-higher);">Aa</span></td>
+            <td>16.23:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">paper sobre ink-top</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: var(--ink-top);">Aa</span></td>
+            <td>14.62:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">quiet sobre ink</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: var(--ink);">Aa</span></td>
+            <td>8.66:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">quiet sobre ink-raised</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: var(--ink-raised);">Aa</span></td>
+            <td>8.07:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">quiet sobre ink-higher</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: var(--ink-higher);">Aa</span></td>
+            <td>7.50:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">quiet sobre ink-top</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: var(--ink-top);">Aa</span></td>
+            <td>6.76:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">phosphor sobre ink</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--phosphor); background: var(--ink);">Aa</span></td>
+            <td>16.20:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">phosphor sobre ink-raised</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--phosphor); background: var(--ink-raised);">Aa</span></td>
+            <td>15.09:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">amber sobre ink</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--amber); background: var(--ink);">Aa</span></td>
+            <td>10.72:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">coral sobre ink</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--coral); background: var(--ink);">Aa</span></td>
+            <td>6.10:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">violet-text sobre ink</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--violet-text); background: var(--ink);">Aa</span></td>
+            <td>4.55:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">violet-text-raised sobre ink-raised</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--violet-text-raised); background: var(--ink-raised);">Aa</span></td>
+            <td>5.60:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">violet-text-raised sobre ink-higher</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--violet-text-raised); background: var(--ink-higher);">Aa</span></td>
+            <td>5.21:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">violet-text-raised sobre ink-top</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--violet-text-raised); background: var(--ink-top);">Aa</span></td>
+            <td>4.69:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">paper sobre violet</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: var(--violet);">Aa</span></td>
+            <td>5.85:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">ink sobre coral</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--ink); background: var(--coral);">Aa</span></td>
+            <td>6.10:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">ink sobre amber</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--ink); background: var(--amber);">Aa</span></td>
+            <td>10.72:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">ink sobre phosphor</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--ink); background: var(--phosphor);">Aa</span></td>
+            <td>16.20:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">phosphor sobre violet</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--phosphor); background: var(--violet);">Aa</span></td>
+            <td>5.05:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="required" data-result="ok">
+            <th scope="row">phosphor al 50% sobre ink (ASCII que lleva informacion)</th>
+            <td>Texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: #618527; background: var(--ink);">Aa</span></td>
+            <td>4.56:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="ui" data-result="ok">
+            <th scope="row">violet sobre ink</th>
+            <td>Componentes y bordes</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--violet); background: var(--ink);">Aa</span></td>
+            <td>3.20:1</td>
+            <td>3.0:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="ui" data-result="ok">
+            <th scope="row">amber sobre ink</th>
+            <td>Componentes y bordes</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--amber); background: var(--ink);">Aa</span></td>
+            <td>10.72:1</td>
+            <td>3.0:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="ui" data-result="ok">
+            <th scope="row">amber sobre violet</th>
+            <td>Componentes y bordes</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--amber); background: var(--violet);">Aa</span></td>
+            <td>3.34:1</td>
+            <td>3.0:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="ui" data-result="ok">
+            <th scope="row">paper sobre violet</th>
+            <td>Componentes y bordes</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: var(--violet);">Aa</span></td>
+            <td>5.85:1</td>
+            <td>3.0:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="ui" data-result="ok">
+            <th scope="row">quiet sobre ink</th>
+            <td>Componentes y bordes</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: var(--ink);">Aa</span></td>
+            <td>8.66:1</td>
+            <td>3.0:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="scrim" data-result="ok">
+            <th scope="row">paper sobre violet con grano de 8% bajo scrim</th>
+            <td>Texto sobre scrim, peor caso de grano</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #332771;">Aa</span></td>
+            <td>12.01:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="scrim" data-result="ok">
+            <th scope="row">paper sobre coral con grano de 8% bajo scrim</th>
+            <td>Texto sobre scrim, peor caso de grano</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #6D2E3F;">Aa</span></td>
+            <td>9.56:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="scrim" data-result="ok">
+            <th scope="row">paper sobre amber con grano de 8% bajo scrim</th>
+            <td>Texto sobre scrim, peor caso de grano</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #6D5520;">Aa</span></td>
+            <td>6.76:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="scrim" data-result="ok">
+            <th scope="row">paper sobre mezcla violet y coral al 50% con grano de 8% bajo scrim</th>
+            <td>Texto sobre scrim, peor caso de grano</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #542A5A;">Aa</span></td>
+            <td>10.79:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="scrim" data-result="ok">
+            <th scope="row">paper sobre mezcla violet y coral al 65% con grano de 8% bajo scrim</th>
+            <td>Texto sobre scrim, peor caso de grano</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #5E2B52;">Aa</span></td>
+            <td>10.32:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="scrim" data-result="ok">
+            <th scope="row">paper sobre mezcla coral y amber al 50% con grano de 8% bajo scrim</th>
+            <td>Texto sobre scrim, peor caso de grano</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #6D412F;">Aa</span></td>
+            <td>8.19:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="prohibited" data-result="ok">
+            <th scope="row">paper sobre coral</th>
+            <td>Combinaciones prohibidas como texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: var(--coral);">Aa</span></td>
+            <td>3.07:1</td>
+            <td>4.5:1</td>
+            <td>No cumple: uso prohibido</td>
+          </tr>
+          <tr data-group="prohibited" data-result="ok">
+            <th scope="row">paper sobre amber</th>
+            <td>Combinaciones prohibidas como texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: var(--amber);">Aa</span></td>
+            <td>1.74:1</td>
+            <td>4.5:1</td>
+            <td>No cumple: uso prohibido</td>
+          </tr>
+          <tr data-group="prohibited" data-result="ok">
+            <th scope="row">phosphor sobre amber</th>
+            <td>Combinaciones prohibidas como texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--phosphor); background: var(--amber);">Aa</span></td>
+            <td>1.51:1</td>
+            <td>4.5:1</td>
+            <td>No cumple: uso prohibido</td>
+          </tr>
+          <tr data-group="prohibited" data-result="ok">
+            <th scope="row">phosphor sobre coral</th>
+            <td>Combinaciones prohibidas como texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--phosphor); background: var(--coral);">Aa</span></td>
+            <td>2.65:1</td>
+            <td>4.5:1</td>
+            <td>No cumple: uso prohibido</td>
+          </tr>
+          <tr data-group="prohibited" data-result="ok">
+            <th scope="row">violet sobre ink (violeta como texto sobre tinta)</th>
+            <td>Combinaciones prohibidas como texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--violet); background: var(--ink);">Aa</span></td>
+            <td>3.20:1</td>
+            <td>4.5:1</td>
+            <td>No cumple: uso prohibido</td>
+          </tr>
+          <tr data-group="prohibited" data-result="ok">
+            <th scope="row">quiet sobre violet</th>
+            <td>Combinaciones prohibidas como texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: var(--violet);">Aa</span></td>
+            <td>2.70:1</td>
+            <td>4.5:1</td>
+            <td>No cumple: uso prohibido</td>
+          </tr>
+          <tr data-group="prohibited" data-result="ok">
+            <th scope="row">quiet sobre amber con grano de 8% bajo scrim (quiet sobre el scrim con el peor caso de ambar)</th>
+            <td>Combinaciones prohibidas como texto normal</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: #6D5520;">Aa</span></td>
+            <td>3.12:1</td>
+            <td>4.5:1</td>
+            <td>No cumple: uso prohibido</td>
+          </tr>
+          <tr data-group="reading" data-result="ok">
+            <th scope="row">paper sobre ink con grano de 8%</th>
+            <td>Superficies de lectura (blog, FAQ, case studies)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #1F1F26;">Aa</span></td>
+            <td>15.58:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="reading" data-result="ok">
+            <th scope="row">quiet sobre ink con grano de 8%</th>
+            <td>Superficies de lectura (blog, FAQ, case studies)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: #1F1F26;">Aa</span></td>
+            <td>7.20:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="reading" data-result="ok">
+            <th scope="row">paper sobre ink-raised con grano de 8%</th>
+            <td>Superficies de lectura (blog, FAQ, case studies)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #282833;">Aa</span></td>
+            <td>13.85:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="reading" data-result="ok">
+            <th scope="row">quiet sobre ink-raised con grano de 8%</th>
+            <td>Superficies de lectura (blog, FAQ, case studies)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: #282833;">Aa</span></td>
+            <td>6.40:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="reading" data-result="ok">
+            <th scope="row">paper sobre ink con grano de 8% bajo dot (con un punto del dot grid debajo)</th>
+            <td>Superficies de lectura (blog, FAQ, case studies)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #383941;">Aa</span></td>
+            <td>11.00:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="reading" data-result="ok">
+            <th scope="row">quiet sobre ink con grano de 8% bajo dot (con un punto del dot grid debajo)</th>
+            <td>Superficies de lectura (blog, FAQ, case studies)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: #383941;">Aa</span></td>
+            <td>5.08:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="reading" data-result="ok">
+            <th scope="row">paper sobre ink-raised con grano de 8% bajo dot (con un punto del dot grid debajo)</th>
+            <td>Superficies de lectura (blog, FAQ, case studies)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #3F404C;">Aa</span></td>
+            <td>9.78:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="reading" data-result="ok">
+            <th scope="row">quiet sobre ink-raised con grano de 8% bajo dot (con un punto del dot grid debajo)</th>
+            <td>Superficies de lectura (blog, FAQ, case studies)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: #3F404C;">Aa</span></td>
+            <td>4.52:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          </tbody>
+        </table>
+        <!-- contrast:end -->
+        </div>
+        <p class="doc-note">Las filas marcadas como uso prohibido se esperan fallar: documentan lo que no se debe combinar.</p>
       </div>
     </section>
   </main>

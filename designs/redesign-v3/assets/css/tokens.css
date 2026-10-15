@@ -38,6 +38,24 @@
   --font-mono: "Geist Mono", ui-monospace, "SF Mono", Consolas, monospace;
   --font-pixel: "Pixel Label", var(--font-mono);
 
+  /* Escala tipografica (rem; --text-2xl y --text-display fluidos) */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.5vw, 2.25rem);
+  --text-display: clamp(2.5rem, 1.6rem + 4vw, 4.5rem);
+
+  /* Alturas de linea */
+  --leading-body: 1.5;
+  --leading-snug: 1.25;
+  --leading-tight: 1.1;
+
+  /* Medida de lectura y objetivo tactil minimo (A11Y.md) */
+  --measure: 80ch;
+  --tap: 44px;
+
   /* Escala de espaciado */
   --space-1: 4px;
   --space-2: 8px;
@@ -46,4 +64,22 @@
   --space-5: 32px;
   --space-6: 48px;
   --space-7: 64px;
+
+  /* Radios pequenos, acordes a la estetica pixel */
+  --radius-1: 2px;
+  --radius-2: 4px;
+  --radius-3: 8px;
+
+  /* Foco */
+  --focus: var(--amber);
+
+  /* Movimiento */
+  --dur-fast: 120ms;
+  --dur: 200ms;
+  --dur-slow: 400ms;
+  --ease: cubic-bezier(.2, .7, .2, 1);
+
+  /* Superficies de lectura: solo grano estatico o dot grid estatico */
+  --dot: rgba(168, 172, 187, .18);
+  --grain-reading: .06;
 }

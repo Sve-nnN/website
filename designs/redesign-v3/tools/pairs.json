@@ -1,0 +1,92 @@
+{
+  "description": "Pares texto y fondo del sistema visual v3, por nombre de token (sin hex). tools/contrast.mjs los resuelve contra tokens.css.",
+  "grammar": {
+    "fg": "nombre de token, o {\"token\", \"alpha\"} para componer el texto sobre el fondo",
+    "bg": "nombre de token; {\"mix\": [a, b], \"t\"} interpola en sRGB; {\"grain\": 0.08, \"of\": bg} suma esa fraccion de la escala completa a cada canal y recorta a 255; {\"over\": bg, \"layer\": token} compone un token rgba sobre bg"
+  },
+  "groups": {
+    "required": {
+      "label": "Texto normal",
+      "threshold": 4.5,
+      "expect": "pass",
+      "pairs": [
+        { "fg": "paper", "bg": "ink" },
+        { "fg": "paper", "bg": "ink-raised" },
+        { "fg": "paper", "bg": "ink-higher" },
+        { "fg": "paper", "bg": "ink-top" },
+        { "fg": "quiet", "bg": "ink" },
+        { "fg": "quiet", "bg": "ink-raised" },
+        { "fg": "quiet", "bg": "ink-higher" },
+        { "fg": "quiet", "bg": "ink-top" },
+        { "fg": "phosphor", "bg": "ink" },
+        { "fg": "phosphor", "bg": "ink-raised" },
+        { "fg": "amber", "bg": "ink" },
+        { "fg": "coral", "bg": "ink" },
+        { "fg": "violet-text", "bg": "ink" },
+        { "fg": "violet-text-raised", "bg": "ink-raised" },
+        { "fg": "violet-text-raised", "bg": "ink-higher" },
+        { "fg": "violet-text-raised", "bg": "ink-top" },
+        { "fg": "paper", "bg": "violet" },
+        { "fg": "ink", "bg": "coral" },
+        { "fg": "ink", "bg": "amber" },
+        { "fg": "ink", "bg": "phosphor" },
+        { "fg": "phosphor", "bg": "violet" },
+        { "fg": { "token": "phosphor", "alpha": 0.5 }, "bg": "ink", "note": "ASCII que lleva informacion" }
+      ]
+    },
+    "ui": {
+      "label": "Componentes y bordes",
+      "threshold": 3.0,
+      "expect": "pass",
+      "pairs": [
+        { "fg": "violet", "bg": "ink" },
+        { "fg": "amber", "bg": "ink" },
+        { "fg": "amber", "bg": "violet" },
+        { "fg": "paper", "bg": "violet" },
+        { "fg": "quiet", "bg": "ink" }
+      ]
+    },
+    "scrim": {
+      "label": "Texto sobre scrim, peor caso de grano",
+      "threshold": 4.5,
+      "expect": "pass",
+      "pairs": [
+        { "fg": "paper", "bg": { "over": { "grain": 0.08, "of": "violet" }, "layer": "scrim" } },
+        { "fg": "paper", "bg": { "over": { "grain": 0.08, "of": "coral" }, "layer": "scrim" } },
+        { "fg": "paper", "bg": { "over": { "grain": 0.08, "of": "amber" }, "layer": "scrim" } },
+        { "fg": "paper", "bg": { "over": { "grain": 0.08, "of": { "mix": ["violet", "coral"], "t": 0.5 } }, "layer": "scrim" } },
+        { "fg": "paper", "bg": { "over": { "grain": 0.08, "of": { "mix": ["violet", "coral"], "t": 0.65 } }, "layer": "scrim" } },
+        { "fg": "paper", "bg": { "over": { "grain": 0.08, "of": { "mix": ["coral", "amber"], "t": 0.5 } }, "layer": "scrim" } }
+      ]
+    },
+    "prohibited": {
+      "label": "Combinaciones prohibidas como texto normal",
+      "threshold": 4.5,
+      "expect": "fail",
+      "pairs": [
+        { "fg": "paper", "bg": "coral" },
+        { "fg": "paper", "bg": "amber" },
+        { "fg": "phosphor", "bg": "amber" },
+        { "fg": "phosphor", "bg": "coral" },
+        { "fg": "violet", "bg": "ink", "note": "violeta como texto sobre tinta" },
+        { "fg": "quiet", "bg": "violet" },
+        { "fg": "quiet", "bg": { "over": { "grain": 0.08, "of": "amber" }, "layer": "scrim" }, "note": "quiet sobre el scrim con el peor caso de ambar" }
+      ]
+    },
+    "reading": {
+      "label": "Superficies de lectura (blog, FAQ, case studies)",
+      "threshold": 4.5,
+      "expect": "pass",
+      "pairs": [
+        { "fg": "paper", "bg": { "grain": 0.08, "of": "ink" } },
+        { "fg": "quiet", "bg": { "grain": 0.08, "of": "ink" } },
+        { "fg": "paper", "bg": { "grain": 0.08, "of": "ink-raised" } },
+        { "fg": "quiet", "bg": { "grain": 0.08, "of": "ink-raised" } },
+        { "fg": "paper", "bg": { "over": { "grain": 0.08, "of": "ink" }, "layer": "dot" }, "note": "con un punto del dot grid debajo" },
+        { "fg": "quiet", "bg": { "over": { "grain": 0.08, "of": "ink" }, "layer": "dot" }, "note": "con un punto del dot grid debajo" },
+        { "fg": "paper", "bg": { "over": { "grain": 0.08, "of": "ink-raised" }, "layer": "dot" }, "note": "con un punto del dot grid debajo" },
+        { "fg": "quiet", "bg": { "over": { "grain": 0.08, "of": "ink-raised" }, "layer": "dot" }, "note": "con un punto del dot grid debajo" }
+      ]
+    }
+  }
+}

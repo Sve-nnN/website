@@ -28,13 +28,19 @@
   font-display: swap;
 }
 
-/* Solo mayusculas y digitos: el CSS aplica text-transform: uppercase. */
+/*
+ * Solo mayusculas y digitos: el CSS aplica text-transform: uppercase.
+ * font-display: swap y no optional. Medido: con optional, bajo file:// la fuente llega
+ * despues del periodo de bloqueo y la pagina se queda en Geist Mono para siempre, y los
+ * <link rel="preload" crossorigin> fallan por CORS en file://. Son etiquetas cortas,
+ * el salto de layout es de unos pocos pixeles.
+ */
 @font-face {
   font-family: "Pixel Label";
   src: url("../fonts/GeistPixel-Square-upper.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
-  font-display: optional;
+  font-display: swap;
 }
 
 /*
@@ -75,8 +81,8 @@ body {
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
 }
 
 /* Array no tiene negrita real: peso 400 y sin sintesis. */
@@ -122,7 +128,7 @@ svg {
  * Prohibido quitar el outline sin reemplazo (A11Y.md).
  */
 :focus-visible {
-  outline: 2px solid var(--amber);
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
   box-shadow: 0 0 0 4px var(--ink);
 }
@@ -144,7 +150,15 @@ svg {
 }
 
 h1 {
-  font-size: clamp(2.5rem, 7vw, 4.5rem);
+  font-size: var(--text-display);
+}
+
+h2 {
+  font-size: var(--text-2xl);
+}
+
+h3 {
+  font-size: var(--text-xl);
 }
 
 .lede {
