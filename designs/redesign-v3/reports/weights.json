@@ -27,19 +27,19 @@
       "brotli": 4980
     },
     "assets/css/tokens.css": {
-      "raw": 3834,
-      "gzip": 1605,
-      "brotli": 1444
+      "raw": 3996,
+      "gzip": 1694,
+      "brotli": 1531
     },
     "assets/css/base.css": {
-      "raw": 3777,
-      "gzip": 1432,
-      "brotli": 1260
+      "raw": 3778,
+      "gzip": 1430,
+      "brotli": 1262
     },
     "assets/css/components.css": {
-      "raw": 14114,
-      "gzip": 3277,
-      "brotli": 2899
+      "raw": 14706,
+      "gzip": 3544,
+      "brotli": 3138
     },
     "assets/css/effects.css": {
       "raw": 13148,
@@ -70,11 +70,11 @@
     }
   },
   "kitCss": {
-    "raw": 34873,
-    "gzip": 8449,
-    "brotli": 7485
+    "raw": 35628,
+    "gzip": 8754,
+    "brotli": 7770
   },
-  "jsPlusCssGzip": 14040,
+  "jsPlusCssGzip": 14345,
   "fontsRaw": 59644,
   "segments": {
     "css": {
@@ -120,13 +120,13 @@
     },
     {
       "name": "CSS del kit concatenado (gzip)",
-      "value": 8449,
+      "value": 8754,
       "limit": 14336,
       "ok": true
     },
     {
       "name": "JS de producción más CSS del kit (gzip)",
-      "value": 14040,
+      "value": 14345,
       "limit": 24576,
       "ok": true
     },
