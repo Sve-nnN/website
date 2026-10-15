@@ -53,10 +53,29 @@ Alcance del milestone v2.3: mockups HTML estáticos en `designs/redesign-v3/`. N
 
 ## Traceability
 
-Se completa al crear el roadmap.
+Cada requirement pertenece a exactamente una fase. PERF-01 a PERF-04 se establecen y miden en Phase 52 sobre la home y las Phases 53 a 55 los heredan como criterio de aceptación por página.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
+| SYS-01 | Phase 51 | Pending |
+| SYS-02 | Phase 51 | Pending |
+| SYS-03 | Phase 51 | Pending |
+| SYS-04 | Phase 51 | Pending |
+| SYS-05 | Phase 51 | Pending |
+| HOME-01 | Phase 52 | Pending |
+| HOME-02 | Phase 52 | Pending |
+| HOME-03 | Phase 52 | Pending |
+| HOME-04 | Phase 52 | Pending |
+| PERF-01 | Phase 52 | Pending |
+| PERF-02 | Phase 52 | Pending |
+| PERF-03 | Phase 52 | Pending |
+| PERF-04 | Phase 52 | Pending |
+| PAGE-01 | Phase 53 | Pending |
+| PAGE-02 | Phase 54 | Pending |
+| PAGE-03 | Phase 55 | Pending |
+| PAGE-04 | Phase 55 | Pending |
+
+**Cobertura:** 17/17 requirements mapeados, 0 huérfanos, 0 duplicados.
 
 ---
 *Requirements defined: 2026-10-15*

@@ -2,11 +2,11 @@
 gsd_state_version: "1.0"
 milestone: v2.3
 milestone_name: Rediseño Visual v3 (mockups HTML)
-status: planning
-last_updated: "2026-10-15T21:38:44.445Z"
+status: ready_to_plan
+last_updated: "2026-10-15T22:10:00.000Z"
 last_activity: 2026-10-15
 progress:
-  total_phases: 0
+  total_phases: 5
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,17 +17,19 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-07-31)
+See: .planning/PROJECT.md (updated 2026-10-15)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Milestone v2.1 (Monetización, Phases 44-50) — CERRADO, VERIFICADO Y DESPLEGADO en producción (juan-tech.com)
+**Current focus:** Milestone v2.3 Rediseño Visual v3 (mockups HTML, Phases 51-55). Entregables solo HTML estático en `designs/redesign-v3/`; sin cambios en `src/`, Payload, schema ni DB. Milestone v2.1 (Phases 44-50) cerrado y desplegado; v2.2 (Tienda Polar) en cola.
 
 ## Current Position
 
-Phase: Not started (defining requirements)
+Phase: 51 (Sistema visual), not started
 Plan: —
-Status: Defining requirements
-Last activity: 2026-10-15 — Milestone v2.3 started
+Status: Roadmap creado, listo para planificar Phase 51
+Last activity: 2026-10-15 — Roadmap v2.3 creado (5 fases, 17/17 requirements mapeados)
+
+Progress: [░░░░░░░░░░] 0% (0/5 fases)
 
 ## Performance Metrics
 
@@ -144,6 +146,7 @@ Last activity: 2026-10-15 — Milestone v2.3 started
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- [Milestone v2.3]: Roadmap: 5 fases (51-55) derivadas de los 17 requirements (SYS-01..05, HOME-01..04, PERF-01..04, PAGE-01..04), continuando la numeración desde Phase 50 (v2.1). v2.2 (Productos Digitales y Tienda Polar) queda en cola sin fases y no se renumera. Orden por dependencia real: Phase 51 (sistema visual, SYS) primero porque tokens, componentes y fallbacks son la base de todo mockup; Phase 52 (home + PERF-01..04) establece el presupuesto de performance y accesibilidad sobre la primera página y cierra con un gate humano explícito: Juan aprueba o da feedback antes de que arranquen las Phases 53-55. Phases 53 (PAGE-01), 54 (PAGE-02) y 55 (PAGE-03, PAGE-04) agrupan familias de páginas por afinidad de plantilla y solo dependen de la aprobación de Phase 52, no entre sí. PERF-01..04 se mapean a Phase 52 donde se establecen y miden, y las Phases 53-55 los heredan como criterio de aceptación por página. Granularity=coarse sugiere 2-4 fases; se mantienen 5 por pedido explícito de Juan y porque el gate humano en la home es una frontera real de entrega. Restricción dura repetida en cada goal: solo HTML estático bajo `designs/redesign-v3/`.
 - [Milestone v2.1]: Roadmap: 6 fases nuevas (44-49), continuando la numeración desde Phase 43 (v2.0). No se tocan ni se renumeran Phase 6 (Deploy + Cutover), Phase 37 ni las Phases 29-31 — las tres siguen pausadas. Los 9 pasos conceptuales que adjudicó `research/SUMMARY.md` ("Resolved Conflicts" #3: BASELINE → DECIDE → LEGAL → LINK-SCHEMA → GO-ROUTE → STACK-PAGE → LEXICAL-INLINE → EMAIL → GATE) se comprimen a 6 fases por granularity=coarse, con 3 merges justificados y 4 boundaries respetados. Merges: (1) DEC entra en la fase de BASELINE (Phase 44) porque ambas son medición/documentación con cero cambio renderizado, y porque el número de tráfico real de BASE-03 es literalmente el parámetro `V` del modelo de ingresos de DEC-02 y el umbral que ordena las postulaciones de DEC-04 — separarlas obligaría a abrir Search Console dos veces; (2) LEGAL entra con LINK-SCHEMA (Phase 45) porque son la misma clase de trabajo, la capa que el CMS no puede editar (disclosure en `messages/{es,en}.json`, `rel` emitido desde código, matriz de localización congelada), y porque la mitad legal aporta cero DDL: la migración de `affiliate-links` sigue siendo la única de la fase y se lee en aislamiento contra Neon; el trabajo legal se completa primero dentro de la fase para desbloquear la reactivación de Amazon y la postulación a Kinsta, que exigen el disclosure publicado; (3) LEXICAL-INLINE entra con STACK-PAGE (Phase 47) porque son la misma UI sobre dos superficies (mismo leaf `AffiliateLink`, mismo `AffiliateDisclosure`) y la parte inline no toca schema — construirlas separadas es exactamente cómo se cuela un anchor sin `sponsored`. Boundaries respetados sin excepción: Phase 44 (baseline) es la primera y nada renderizado cambia antes; Phase 45 es la única fase que reshapea schema de afiliados y su migración se lee sola; Phase 46 aísla el fix de una línea del matcher de middleware (GO-02, radio de impacto sitewide, defecto confirmado por 2 investigadores independientes: hoy `/go/*` entra al matcher y devolvería 404 en cada clic) para curl-verificarlo contra rutas control antes de que exista UI que emita hrefs `/go/`; Phase 49 (gate) es la última y compara contra el baseline de Phase 44. EMAIL (Phase 48) queda penúltima por factibilidad y no por valor: `RESEND_API_KEY` sigue siendo placeholder (misma credencial que bloquea Phase 6) y su bloqueo real es contenido que Juan debe escribir (el lead magnet). Constraints duras propagadas a las fases: links de Amazon directos y sin cloaking (Program Policies 2026-04-14 prohíben Redirecting Links; `/go/` solo para no-Amazon); matriz de localización de `affiliate-links` congelada y aprobada ANTES de cargar contenido (retrofittear `localized: true` sobre columna poblada es la forma exacta del incidente del 2026-07-12); `rel="sponsored nofollow noopener"` estructural desde código, nunca campo editable; `/stack` fuera del nav principal en v2.1 y con segmento único compartido en ambos locales (confirmado por Juan); cero tracking que dispare consentimiento y ≤5 KB de JS de cliente agregado.
 - [Milestone v1.9]: Roadmap: 3 fases nuevas (38-40), continuando la numeración desde Phase 37 (que queda en cola, no se toca ni renumera — tiene CONTEXT.md/UI-SPEC.md ya aprobados para v1.8, retoma cuando v1.9 cierre). Estructura sigue directamente la recomendación de `research/SUMMARY-v1.9.md`: Phase 38 (schema `Websites`, WEB-01..05) primero porque todo lo demás depende de que el schema exista con las cardinalidades/fechas correctas — más barato de arreglar aquí que con contenido real ya cargado; Phase 39 (componentes/rutas de frontend, WEB-06..11) porque necesita el schema ya existente antes de poder consultarlo; Phase 40 (poblado de contenido real, WEB-12..16) va última para que el poblado interactivo con Juan (stack sitio por sitio) y la captura de screenshots/Lighthouse apunten a una UI que ya renderiza, permitiendo verificación visual inmediata de cada doc. Nota de ejecución explícita en Phase 40: Juan quiere que se le pregunte el stack de cada uno de los 6 sitios al momento de montarlos, no asumir todo de una vez; Lighthouse/screenshots son captura manual puntual, nunca en vivo/recurrente (viola el límite arquitectónico "sin SEO tooling en vivo" del proyecto) — de ahí el campo `lighthouseCapturedAt` obligatorio desde Phase 38. Granularity=coarse per config.json, 3 fases mantiene el milestone lean.
 - [Milestone v1.8]: Roadmap: 1 fase nueva (Phase 37), continuando la numeración desde Phase 36. Los 6 requirements (CASE-01..06) son un solo bug-fix de contenido coherente sobre los mismos 6 docs — auditoría, fix bilingüe, anonimización, fetch de datos GSC reales y verificación con JSON crudo son todos pasos de la misma unidad de trabajo, no fases separadas (granularity=coarse, milestone acotado). Nota de riesgo de ejecución explícita en la fase: un intento previo de Local API scripting falló en silencio en el shell de Juan — el plan debe verificar output real antes de confiar en cualquier script y devolver JSON crudo completo para verificación manual, no un resumen.
@@ -338,10 +341,10 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-09-10T18:15:20.814Z
-Stopped at: Completado 50-03-PLAN.md -- Phase 50 cerrada, milestone v2.1 tecnicamente cerrado (MILESTONE GATE: PASS)
+Last session: 2026-10-15T22:10:00.000Z
+Stopped at: Roadmap v2.3 creado (Phases 51-55), listo para discutir/planificar Phase 51
 Resume file: None
 
 ## Operator Next Steps
 
-- Start the next milestone with /gsd-new-milestone
+- Planificar la primera fase del milestone v2.3 con /gsd-discuss-phase 51 o /gsd-plan-phase 51
