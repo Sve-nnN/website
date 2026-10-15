@@ -87,7 +87,9 @@ async function visit(env, target, { ctx = {}, init = null, wait = 0 } = {}) {
     if (m.type() === 'error') log.console.push(m.text());
   });
   page.on('pageerror', (e) => log.pageerrors.push(String(e)));
+  log.responses = [];
   page.on('response', (r) => {
+    log.responses.push({ url: r.url(), status: r.status() });
     if (r.status() >= 400) log.bad.push(`${r.status()} ${r.url()}`);
   });
   page.on('requestfailed', (r) => log.failed.push(r.url()));
@@ -265,6 +267,82 @@ STAGES.tracer = async (env) => {
     await m.page.screenshot({ path: path.join(ROOT, 'reports/shots/tracer-mobile.jpg'), type: 'jpeg', quality: 60 });
     await m.context.close();
     check('tracer: capturas guardadas en reports/shots', true);
+  }
+};
+
+STAGES.fonts = async (env) => {
+  const dir = path.join(ROOT, 'assets/fonts');
+  const manifestPath = path.join(dir, 'fonts-manifest.json');
+  check('fonts: existe fonts-manifest.json', fs.existsSync(manifestPath));
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+
+  const LIMITS = {
+    'Geist-latin-var.woff2': 31 * 1000,
+    'GeistMono-400-latin.woff2': 9 * 1000,
+    'GeistPixel-Square-upper.woff2': 3.5 * 1000,
+  };
+  for (const f of manifest.files) {
+    const file = path.join(dir, f.file);
+    const exists = fs.existsSync(file);
+    check(`fonts: ${f.file} existe`, exists);
+    if (!exists) continue;
+    const buf = fs.readFileSync(file);
+    check(`fonts: ${f.file} firma wOF2`, buf.subarray(0, 4).toString('latin1') === 'wOF2');
+    check(`fonts: ${f.file} bytes coinciden con el manifiesto`, buf.length === f.bytes, `${buf.length} vs ${f.bytes}`);
+    const sha = crypto.createHash('sha256').update(buf).digest('hex');
+    check(`fonts: ${f.file} sha256 coincide con el manifiesto`, sha === f.sha256);
+    check(`fonts: ${f.file} cobertura sin glifos faltantes`, Array.isArray(f.coverage.missing) && f.coverage.missing.length === 0, (f.coverage.missing || []).join(' '));
+    if (LIMITS[f.file]) check(`fonts: ${f.file} pesa menos de ${LIMITS[f.file] / 1000} KB`, buf.length < LIMITS[f.file], `${buf.length} bytes`);
+    check(`fonts: ${f.file} declara licencia y procedencia`, Boolean(f.license && f.source && f.sha256 && f.glyphs > 0));
+  }
+  const array = manifest.files.find((f) => f.file === 'Array-Regular.woff2');
+  const srcArray = path.resolve(ROOT, '../../src/fonts/Array-Regular.woff2');
+  if (array && fs.existsSync(srcArray)) {
+    const same = crypto.createHash('sha256').update(fs.readFileSync(srcArray)).digest('hex') === array.sha256;
+    check('fonts: Array es copia exacta de src/fonts/Array-Regular.woff2', same);
+  }
+  check('fonts: LICENSES.txt existe y cita OFL y Array', (() => {
+    const p = path.join(dir, 'LICENSES.txt');
+    if (!fs.existsSync(p)) return false;
+    const t = fs.readFileSync(p, 'utf8');
+    return t.includes('SIL OPEN FONT LICENSE') && t.includes('Array');
+  })());
+  const fm = manifest.fallbackMetrics;
+  check('fonts: el manifiesto trae metricas de fallback medidas', Boolean(fm && fm.array && fm.geist && fm.array.sizeAdjustPct > 0 && fm.geist.sizeAdjustPct > 0));
+
+  /* Carga real desde el navegador, por http y por file://, sin origenes externos. */
+  const FAMILIES = [
+    ['Array', 'Array-Regular.woff2'],
+    ['Geist', 'Geist-latin-var.woff2'],
+    ['Geist Mono', 'GeistMono-400-latin.woff2'],
+    ['Pixel Label', 'GeistPixel-Square-upper.woff2'],
+  ];
+  for (const [label, url] of [['http', httpUrl(env, 'system.html')], ['file', fileUrl('system.html')]]) {
+    const { context, page, log } = await visit(env, url, { ctx: { viewport: { width: 1440, height: 900 } } });
+    const result = await page.evaluate(async (families) => {
+      const out = {};
+      for (const [family] of families) {
+        const el = document.createElement('p');
+        el.setAttribute('data-font-probe', family);
+        el.style.fontFamily = `"${family}"`;
+        el.textContent = 'ABC 123 ÁÉÍÑÓÚÜ';
+        document.body.appendChild(el);
+      }
+      for (const [family] of families) {
+        const faces = await document.fonts.load(`1em "${family}"`, 'ABC 123');
+        out[family] = faces.length > 0 && faces.every((f) => f.status === 'loaded');
+      }
+      return out;
+    }, FAMILIES);
+    for (const [family, file] of FAMILIES) {
+      check(`fonts: ${label} ${family} carga (FontFace loaded)`, result[family] === true);
+      const hit = log.responses.find((r) => r.url.endsWith(`assets/fonts/${file}`));
+      const okStatus = label === 'file' ? Boolean(hit) || log.requests.some((u) => u.endsWith(`assets/fonts/${file}`)) : hit && hit.status === 200;
+      check(`fonts: ${label} ${file} se pide desde assets/fonts/`, Boolean(okStatus), hit ? String(hit.status) : 'sin respuesta');
+    }
+    check(`fonts: ${label} cero peticiones a origenes externos`, log.external.length === 0, log.external.join(' ; '));
+    check(`fonts: ${label} cero errores de consola ni respuestas 4xx`, log.console.length === 0 && log.bad.length === 0, [...log.console, ...log.bad].join(' ; '));
+    await context.close();
   }
 };
 
