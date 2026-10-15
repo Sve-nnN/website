@@ -1,7 +1,7 @@
 {
   "method": "WCAG 2.2: luminancia relativa sRGB, ratio truncado a dos decimales hacia abajo. Pares leidos de tools/pairs.json, colores de assets/css/tokens.css.",
   "summary": {
-    "totalPairs": 48,
+    "totalPairs": 51,
     "problems": 0
   },
   "groups": {
@@ -709,6 +709,48 @@
           "expected": "pass",
           "ok": true,
           "note": "con un punto del dot grid debajo"
+        },
+        {
+          "fg": "paper",
+          "bg": "ink-raised bajo spot",
+          "fgHex": "#FAFAF7",
+          "bgHex": "#303039",
+          "fgToken": "paper",
+          "bgToken": null,
+          "ratio": 12.55,
+          "threshold": 4.5,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "peor caso del spotlight: luz papel al 12 por ciento"
+        },
+        {
+          "fg": "quiet",
+          "bg": "ink-raised bajo spot",
+          "fgHex": "#A8ACBB",
+          "bgHex": "#303039",
+          "fgToken": "quiet",
+          "bgToken": null,
+          "ratio": 5.8,
+          "threshold": 4.5,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "peor caso del spotlight: luz papel al 12 por ciento"
+        },
+        {
+          "fg": "paper",
+          "bg": "ink con grano de 8% bajo dot bajo spot",
+          "fgHex": "#FAFAF7",
+          "bgHex": "#4F5057",
+          "fgToken": "paper",
+          "bgToken": null,
+          "ratio": 7.67,
+          "threshold": 4.5,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "grano de 8 por ciento, punto del dot grid y luz del spotlight"
         }
       ]
     }

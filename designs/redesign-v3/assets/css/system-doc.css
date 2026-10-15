@@ -268,6 +268,194 @@
   border: 2px solid var(--violet-text-raised);
 }
 
+/* Efectos: galeria, botones y estados (solo documentacion) */
+.doc-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+}
+
+.doc-btn {
+  min-height: var(--tap);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--quiet);
+  border-radius: var(--radius-2);
+  background: var(--ink-raised);
+  color: var(--paper);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.doc-btn[aria-pressed="true"] {
+  border-color: var(--paper);
+  background: var(--violet);
+}
+
+.doc-btn:disabled {
+  border-color: var(--ink-top);
+  color: var(--quiet);
+  cursor: not-allowed;
+}
+
+.fx-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fx-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  height: 100%;
+  padding: var(--space-3);
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-top);
+  border-radius: var(--radius-2);
+}
+
+.fx-card h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: var(--leading-tight);
+}
+
+.fx-origin,
+.fx-note,
+.fx-status {
+  font-size: var(--text-sm);
+}
+
+.fx-origin,
+.fx-note {
+  color: var(--quiet);
+}
+
+.fx-flag {
+  font-family: var(--font-pixel);
+  font-size: var(--text-xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--phosphor);
+}
+
+.fx-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.fx-status:empty {
+  display: none;
+}
+
+.fx-card .fx-grain {
+  min-height: 12rem;
+  padding: var(--space-3);
+}
+
+.fx-card .fx-content {
+  max-width: none;
+  padding: var(--space-3);
+}
+
+.doc-section .fx-content a {
+  color: var(--paper);
+}
+
+.doc-section .fx-transition__detail a {
+  color: var(--violet-text-raised);
+}
+
+.fx-card .fx-content > p + p {
+  margin-top: var(--space-2);
+}
+
+.fx-card .fx-waves,
+.fx-card .fx-pixel,
+.fx-card .fx-slats,
+.fx-card .fx-dither,
+.fx-card .fx-blinds {
+  display: flex;
+  align-items: flex-end;
+  padding: var(--space-3);
+}
+
+.fx-card .fx-slats {
+  align-items: flex-start;
+}
+
+.fx-card .fx-dither,
+.fx-card .fx-blinds {
+  align-items: center;
+}
+
+.fx-card .fx-crt {
+  display: flex;
+  align-items: center;
+}
+
+.fx-stage {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: 9rem;
+  padding: var(--space-3);
+  overflow: hidden;
+  background: var(--grad);
+}
+
+.fx-showcase {
+  display: grid;
+  place-items: center;
+  min-height: 9rem;
+  background: var(--ink);
+  border: 1px solid var(--ink-top);
+}
+
+.dotgrid-sample,
+.reading-sample {
+  position: relative;
+  min-height: 9rem;
+  padding: var(--space-4);
+  overflow: hidden;
+  background-color: var(--ink);
+  border: 1px solid var(--ink-top);
+}
+
+.reading-text,
+.reading-quiet {
+  position: relative;
+  max-width: 60ch;
+}
+
+.reading-quiet {
+  margin-top: var(--space-3);
+  color: var(--quiet);
+  font-size: var(--text-sm);
+}
+
+.doc-table td,
+.doc-table th {
+  vertical-align: top;
+}
+
+.doc-table .num {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
 @media (max-width: 767px) {
   .doc-section {
     padding: var(--space-6) var(--space-4);

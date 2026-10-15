@@ -28,6 +28,7 @@ const MIME = {
   '.json': 'application/json; charset=utf-8',
   '.woff2': 'font/woff2',
   '.jpg': 'image/jpeg',
+  '.svg': 'image/svg+xml',
   '.txt': 'text/plain; charset=utf-8',
 };
 
@@ -159,7 +160,7 @@ STAGES.tracer = async (env) => {
   {
     const { context, page } = await visit(env, httpUrl(env, page0), { ctx: { viewport: { width: 1440, height: 900 }, javaScriptEnabled: false } });
     const h1 = await page.locator('h1').isVisible();
-    const bg = await page.locator('.fx-grain').evaluate((el) => getComputedStyle(el).backgroundImage);
+    const bg = await page.locator('.fx-grain[data-fx]').evaluate((el) => getComputedStyle(el).backgroundImage);
     const canvases = await page.locator('canvas').count();
     check('tracer: sin JS el h1 es visible', h1);
     check('tracer: sin JS el fallback pinta radial-gradient', bg.includes('radial-gradient'), bg.slice(0, 60));
@@ -356,7 +357,11 @@ STAGES.tokens = async (env) => {
     const rel = path.relative(ROOT, file).split(path.sep).join('/');
     if (rel.startsWith('reports/') || !['.html', '.css', '.js'].includes(path.extname(file))) continue;
     const text = fs.readFileSync(file, 'utf8');
-    if (/(?:src|href)\s*=\s*["']https?:/i.test(text) || /url\(\s*["']?https?:/i.test(text) || /@import\s+["']?https?:/i.test(text)) {
+    /* Cargas de recursos externos. Los enlaces <a href> de documentacion (catalogo) no cargan nada y se excluyen. */
+    const loadsExternal = path.extname(file) === '.html'
+      ? /<(?:script|link|img|iframe|source|video|audio|embed|object)\b[^>]*\b(?:src|href|data)\s*=\s*["']https?:/i.test(text)
+      : /(?:src|href)\s*=\s*["']https?:/i.test(text);
+    if (loadsExternal || /url\(\s*["']?https?:/i.test(text) || /@import\s+["']?https?:/i.test(text)) {
       external.push(rel);
     }
   }
@@ -457,6 +462,445 @@ STAGES.tokens = async (env) => {
   }
 };
 
+/* ---------- stage: fallbacks ---------- */
+
+const EFFECTS = ['grain', 'waves', 'crt', 'slats', 'pixel', 'ascii', 'noise', 'dither', 'blinds', 'reveal', 'transition', 'spotlight', 'star', 'dotgrid', 'reading'];
+const DEMOS = [['grain', 'demo-grain', 'grain'], ['waves', 'demo-waves', 'halftone'], ['crt', 'demo-crt', 'crt'], ['slats', 'demo-slats', 'slats']];
+const DESKTOP = { viewport: { width: 1440, height: 900 } };
+const MOBILE = { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true };
+
+/* Bytes de una captura del elemento -> fraccion de pixeles a mas de 40 de distancia RGB de la tinta. */
+async function coverage(page, selector) {
+  const buf = await page.locator(selector).first().screenshot({ type: 'png' });
+  return page.evaluate(async (b64) => {
+    const img = new Image();
+    img.src = `data:image/png;base64,${b64}`;
+    await img.decode();
+    const c = document.createElement('canvas');
+    c.width = img.width;
+    c.height = img.height;
+    const ctx = c.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    const d = ctx.getImageData(0, 0, c.width, c.height).data;
+    const ink = [11, 11, 18];
+    let far = 0;
+    for (let i = 0; i < d.length; i += 4) {
+      const dist = Math.hypot(d[i] - ink[0], d[i + 1] - ink[1], d[i + 2] - ink[2]);
+      if (dist > 40) far += 1;
+    }
+    return far / (d.length / 4);
+  }, buf.toString('base64'));
+}
+
+STAGES.fallbacks = async (env) => {
+  const page0 = 'system.html';
+
+  /* 1. Sin JavaScript, desktop: cada tarjeta existe y su vista previa se pinta con CSS. */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: { ...DESKTOP, javaScriptEnabled: false } });
+    const info = await page.evaluate((effects) => {
+      const paints = (el) => {
+        for (const n of [el, ...el.querySelectorAll('*')]) {
+          for (const ps of [null, '::before', '::after']) {
+            const cs = getComputedStyle(n, ps);
+            if (ps && (cs.content === 'none' || cs.content === 'normal')) continue;
+            const mask = cs.maskImage || cs.webkitMaskImage || 'none';
+            if (cs.backgroundImage !== 'none' || cs.boxShadow !== 'none' || mask !== 'none') return true;
+          }
+        }
+        return false;
+      };
+      return effects.map((name) => {
+        const card = document.querySelector(`[data-effect="${name}"]`);
+        const prev = card && card.querySelector('[data-preview]');
+        return {
+          name,
+          card: Boolean(card),
+          prev: Boolean(prev),
+          h: prev ? prev.getBoundingClientRect().height : 0,
+          canvas: card ? card.querySelectorAll('canvas').length : -1,
+          paints: prev ? paints(prev) : false,
+          flag: card ? /Fallback CSS siempre visible/.test(card.textContent) : false,
+          origin: card ? card.querySelectorAll('.fx-origin strong').length > 0 || card.querySelector('.fx-origin') !== null : false,
+        };
+      });
+    }, EFFECTS);
+    for (const r of info) {
+      check(`fallbacks: ${r.name} existe, vista previa de 120 px o mas, sin canvas, pintada con CSS y con etiqueta`, r.card && r.prev && r.h >= 120 && r.canvas === 0 && r.paints && r.flag && r.origin, JSON.stringify(r));
+    }
+    const ascii = await page.evaluate(() => {
+      const pre = document.querySelector('pre.fx-ascii');
+      return pre ? { aria: pre.getAttribute('aria-hidden'), text: pre.textContent, font: getComputedStyle(pre).fontFamily, lines: pre.textContent.split('\n').length } : null;
+    });
+    check('fallbacks: pre.fx-ascii con aria-hidden="true"', ascii && ascii.aria === 'true');
+    check('fallbacks: el ASCII solo usa .:-=+*#%@, espacios y saltos de linea, en varias lineas', ascii && /^[.:\-=+*#%@ \n]+$/.test(ascii.text) && ascii.lines > 1, ascii ? `lineas=${ascii.lines}` : 'sin pre');
+    check('fallbacks: el ASCII usa Geist Mono', ascii && /^"?Geist Mono"?/.test(ascii.font), ascii && ascii.font);
+    const pause = await page.locator('[data-fx-pause]').first().evaluate((b) => {
+      const r = b.getBoundingClientRect();
+      return { w: r.width, h: r.height, label: b.textContent.trim(), pressed: b.getAttribute('aria-pressed') };
+    });
+    check('fallbacks: boton Pausar animaciones visible, etiqueta fija y aria-pressed="false"', pause.w > 0 && pause.h > 0 && pause.label === 'Pausar animaciones' && pause.pressed === 'false', JSON.stringify(pause));
+    const reveal = await page.locator('[data-effect="reveal"] img').evaluate((img) => ({ vis: img.getBoundingClientRect().height > 0, alt: img.alt.length > 10, wh: img.width > 0 && img.height > 0, op: getComputedStyle(img.parentElement, '::after').opacity }));
+    check('fallbacks: sin JS la imagen del reveal es visible con alt y sin trama encima', reveal.vis && reveal.alt && reveal.wh && reveal.op === '0', JSON.stringify(reveal));
+    const buttons = await page.locator('[data-fx-demo-for]').evaluateAll((els) => els.map((b) => b.hidden));
+    check('fallbacks: sin JS los botones de demo siguen ocultos', buttons.length === 4 && buttons.every(Boolean), `botones=${buttons.length}`);
+    await context.close();
+  }
+
+  /* 2. Movimiento permitido: hay animaciones y ninguna en bucle dura menos de 1 s. */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: DESKTOP, wait: 2500 });
+    const anim = await page.evaluate(() => {
+      const all = document.getAnimations();
+      const loops = all.filter((a) => a.effect && a.effect.getComputedTiming().iterations === Infinity);
+      return {
+        total: all.length,
+        loops: loops.length,
+        short: loops.filter((a) => a.effect.getComputedTiming().duration < 1000).map((a) => a.animationName || a.constructor.name),
+      };
+    });
+    check('fallbacks: con movimiento permitido document.getAnimations() es mayor que 0', anim.total > 0, `total=${anim.total}`);
+    check('fallbacks: toda animacion CSS infinita dura 1000 ms o mas', anim.loops > 0 && anim.short.length === 0, `bucles=${anim.loops} cortas=${anim.short.join(',')}`);
+    const reading = await page.evaluate(() => {
+      const card = document.querySelector('[data-effect="reading"]');
+      const surf = card.querySelector('[data-surface="reading"]');
+      const anims = document.getAnimations().filter((a) => a.effect && a.effect.target && surf.contains(a.effect.target));
+      const classes = new Set();
+      for (const n of [surf, ...surf.querySelectorAll('*')]) n.classList.forEach((c) => { if (c.startsWith('fx-')) classes.add(c); });
+      return { anims: anims.length, canvas: surf.querySelectorAll('canvas').length, classes: [...classes].sort(), demo: surf.querySelectorAll('[data-fx-demo],[data-fx-ascii],[data-fx]').length };
+    });
+    check('fallbacks: la tarjeta de lectura no ejecuta animaciones aun con movimiento permitido', reading.anims === 0, `animaciones=${reading.anims}`);
+    check('fallbacks: la tarjeta de lectura no tiene canvas ni demos', reading.canvas === 0 && reading.demo === 0);
+    check('fallbacks: en lectura solo hay clases fx-noise y fx-dotgrid', JSON.stringify(reading.classes) === JSON.stringify(['fx-dotgrid', 'fx-noise']), reading.classes.join(','));
+
+    /* Foco por teclado en la tarjeta transition. */
+    await page.locator('[data-effect="transition"] a').scrollIntoViewIfNeeded();
+    const before = await page.locator('.fx-transition__cover').evaluate((e) => getComputedStyle(e).opacity);
+    await page.locator('[data-effect="transition"] a').focus();
+    await page.waitForTimeout(600);
+    const after = await page.locator('.fx-transition__cover').evaluate((e) => getComputedStyle(e).opacity);
+    check('fallbacks: al enfocar el enlace de transition la portada baja de opacidad en 600 ms', before === '1' && Number(after) < 1, `antes=${before} despues=${after}`);
+    await context.close();
+  }
+
+  /* 3. Movimiento reducido: por media query, por data-motion y por data-saver, cero animaciones. */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: { ...DESKTOP, reducedMotion: 'reduce' }, wait: 1500 });
+    const n = await page.evaluate(() => document.getAnimations().length);
+    check('fallbacks: con prefers-reduced-motion document.getAnimations() vale 0', n === 0, `animaciones=${n}`);
+    const cov = await coverage(page, '.fx-slats');
+    check('fallbacks: la cobertura de .fx-slats es de al menos 40 por ciento', cov >= 0.4, `cobertura=${(cov * 100).toFixed(1)}%`);
+    await context.close();
+  }
+  for (const [attr, label] of [['data-motion', 'reduced'], ['data-saver', 'on']]) {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: DESKTOP, wait: 1500 });
+    await page.evaluate(([a, v]) => document.documentElement.setAttribute(a, v), [attr, label]);
+    await page.waitForTimeout(600);
+    const n = await page.evaluate(() => document.getAnimations().length);
+    check(`fallbacks: con ${attr}="${label}" document.getAnimations() vale 0`, n === 0, `animaciones=${n}`);
+    await context.close();
+  }
+
+  /* 4. Mobile 390: ninguna tarjeta desborda y el boton de pausa es visible. */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: MOBILE, wait: 800 });
+    const r = await page.evaluate(() => {
+      const iw = window.innerWidth;
+      const over = [...document.querySelectorAll('[data-effect]')].filter((c) => c.getBoundingClientRect().right > iw + 0.5 || c.scrollWidth > c.clientWidth + 1).map((c) => c.dataset.effect);
+      const b = document.querySelector('[data-fx-pause]').getBoundingClientRect();
+      return { over, pause: b.width > 0 && b.height > 0, sw: document.documentElement.scrollWidth, iw };
+    });
+    check('fallbacks: a 390 px ninguna tarjeta desborda horizontalmente', r.over.length === 0 && r.sw <= r.iw, `desbordan=${r.over.join(',')} scrollWidth=${r.sw}`);
+    check('fallbacks: a 390 px el boton Pausar animaciones es visible', r.pause);
+    await context.close();
+  }
+
+  /* Capturas del fallback puro (sin JavaScript). */
+  if (env.shots) {
+    fs.mkdirSync(path.join(ROOT, 'reports/shots'), { recursive: true });
+    for (const [name, ctx] of [['desktop', { ...DESKTOP, javaScriptEnabled: false }], ['mobile', { ...MOBILE, deviceScaleFactor: 1, javaScriptEnabled: false }]]) {
+      const v = await visit(env, httpUrl(env, page0), { ctx, wait: 300 });
+      await v.page.locator('#efectos').screenshot({ path: path.join(ROOT, `reports/shots/fallbacks-${name}.jpg`), type: 'jpeg', quality: 60 });
+      await v.context.close();
+    }
+    check('fallbacks: capturas guardadas en reports/shots', true);
+  }
+};
+
+/* ---------- stage: effects ---------- */
+
+const poll = (page, fn, arg, timeout) => page.waitForFunction(fn, arg, { timeout, polling: 50 }).then(() => true, () => false);
+const canvasInfo = (page) =>
+  page.evaluate(() => ({
+    n: document.querySelectorAll('canvas').length,
+    parents: [...document.querySelectorAll('canvas')].map((c) => c.parentElement.id || c.parentElement.className),
+    kind: window.FX.active() ? window.FX.active().kind : null,
+  }));
+
+STAGES.effects = async (env) => {
+  const page0 = 'system.html';
+
+  /* 1. Slot unico y demos por boton (desktop). */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: DESKTOP, wait: 3000 });
+    const hero = await canvasInfo(page);
+    check('effects: el grain del hero monta un canvas', hero.n === 1 && hero.kind === 'grain', JSON.stringify(hero));
+
+    await page.locator('#demo-waves').scrollIntoViewIfNeeded();
+    await page.locator('[data-fx-demo-for="demo-waves"]').click();
+    let samples = [];
+    for (let i = 0; i < 15; i += 1) {
+      samples.push((await canvasInfo(page)).n);
+      await page.waitForTimeout(100);
+    }
+    const w = await canvasInfo(page);
+    check('effects: pulsar la demo de waves deja exactamente un canvas, dentro de esa tarjeta, con kind halftone', w.n === 1 && w.parents[0] === 'demo-waves' && w.kind === 'halftone', JSON.stringify(w));
+    check('effects: sondeando 100 ms durante 1500 ms el total de canvas nunca supera 1', Math.max(...samples) <= 1, `muestras=${samples.join(',')}`);
+    const st = await page.locator('[data-effect="waves"] [role="status"]').textContent();
+    check('effects: la region de estado informa la demo activa y 1 de 1 canvas', /activa/.test(st) && /1 de 1 canvas/.test(st), st);
+
+    for (const [name, id, kind] of [['crt', 'demo-crt', 'crt'], ['slats', 'demo-slats', 'slats'], ['grain', 'demo-grain', 'grain']]) {
+      await page.locator(`#${id}`).scrollIntoViewIfNeeded();
+      await page.locator(`[data-fx-demo-for="${id}"]`).click();
+      await page.waitForTimeout(400);
+      const r = await canvasInfo(page);
+      check(`effects: pulsar ${name} deja un solo canvas y retira el anterior`, r.n === 1 && r.parents[0] === id && r.kind === kind, JSON.stringify(r));
+    }
+    await page.locator('[data-fx-demo-for="demo-grain"]').click();
+    await page.waitForTimeout(400);
+    const off = await canvasInfo(page);
+    check('effects: pulsar de nuevo la demo activa deja 0 canvas', off.n === 0, JSON.stringify(off));
+    const stOff = await page.locator('[data-effect="grain"] [role="status"]').textContent();
+    check('effects: al apagar la demo la region de estado lo dice', /detenida/.test(stOff), stOff);
+
+    const gl = await page.evaluate(() => !!document.createElement('canvas').getContext('webgl'));
+    check('effects: WebGL disponible en el navegador de prueba', gl);
+
+    /* Capturas de cada demo con su shader activo (evidencia visual, solo con --shots). */
+    if (env.shots) {
+      fs.mkdirSync(path.join(ROOT, 'reports/shots'), { recursive: true });
+      for (const [name, id] of [['grain', 'demo-grain'], ['waves', 'demo-waves'], ['crt', 'demo-crt'], ['slats', 'demo-slats']]) {
+        await page.locator(`#${id}`).scrollIntoViewIfNeeded();
+        await page.locator(`[data-fx-demo-for="${id}"]`).click();
+        await page.waitForTimeout(1200);
+        await page.locator(`#${id}`).screenshot({ path: path.join(ROOT, `reports/shots/demo-${name}.jpg`), type: 'jpeg', quality: 70 });
+      }
+      check('effects: capturas de las cuatro demos guardadas en reports/shots', true);
+    }
+    await context.close();
+  }
+
+  /* 2. ASCII, estados bloqueados y region de estado. */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: DESKTOP, wait: 3000 });
+    await page.locator('pre.fx-ascii').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+    const t0 = await page.locator('pre.fx-ascii').textContent();
+    await page.waitForTimeout(1500);
+    const t1 = await page.locator('pre.fx-ascii').textContent();
+    check('effects: el texto del ASCII cambia en 1500 ms con el elemento en el viewport', t0 !== t1, '');
+    check('effects: el ASCII sigue dentro de .:-=+*#%@ y conserva filas y columnas', /^[.:\-=+*#%@\n]+$/.test(t1) && t1.split('\n').length === t0.split('\n').length && t1.split('\n')[0].length === t0.split('\n')[0].length, '');
+    const aria = await page.locator('pre.fx-ascii').getAttribute('aria-hidden');
+    check('effects: el ticker no cambia aria-hidden ni agrega canvas', aria === 'true' && (await canvasCount(page)) <= 1);
+    await context.close();
+  }
+  const blocked = [
+    ['prefers-reduced-motion', { ctx: { ...DESKTOP, reducedMotion: 'reduce' }, setup: null, reason: /reduced-motion/ }],
+    ['data-motion="reduced"', { ctx: DESKTOP, setup: (p) => p.evaluate(() => document.documentElement.setAttribute('data-motion', 'reduced')), reason: /data-motion/ }],
+    ['data-saver="on"', { ctx: DESKTOP, setup: (p) => p.evaluate(() => document.documentElement.setAttribute('data-saver', 'on')), reason: /data-saver/ }],
+  ];
+  for (const [label, cfg] of blocked) {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: cfg.ctx, wait: 2500 });
+    if (cfg.setup) await cfg.setup(page);
+    await page.locator('pre.fx-ascii').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(400);
+    const a = await page.locator('pre.fx-ascii').textContent();
+    await page.waitForTimeout(1500);
+    const b = await page.locator('pre.fx-ascii').textContent();
+    check(`effects: con ${label} el ASCII no cambia`, a === b);
+    await page.locator('#demo-waves').scrollIntoViewIfNeeded();
+    await page.locator('[data-fx-demo-for="demo-waves"]').click();
+    await page.waitForTimeout(400);
+    const n = await canvasCount(page);
+    const st = await page.locator('[data-effect="waves"] [role="status"]').textContent();
+    check(`effects: con ${label} pulsar una demo deja 0 canvas y el estado explica el motivo`, n === 0 && cfg.reason.test(st), `canvas=${n} estado="${st}"`);
+    await context.close();
+  }
+
+  /* 3. Mobile 390: montaje automatico en 0, demo explicita si monta. */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: MOBILE, wait: 3500 });
+    const n = await canvasCount(page);
+    check('effects: a 390 px de ancho el montaje automatico deja 0 canvas', n === 0, `canvas=${n}`);
+    const a = await page.locator('pre.fx-ascii').textContent();
+    await page.locator('pre.fx-ascii').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1500);
+    check('effects: a 390 px el ASCII queda estatico', a === (await page.locator('pre.fx-ascii').textContent()));
+    await page.locator('[data-fx-demo-for="demo-crt"]').scrollIntoViewIfNeeded();
+    await page.evaluate(() => document.querySelector('[data-fx-demo-for="demo-crt"]').click());
+    await page.waitForTimeout(500);
+    const d = await canvasInfo(page);
+    check('effects: a 390 px una demo explicita monta un solo canvas', d.n === 1 && d.kind === 'crt', JSON.stringify(d));
+    await context.close();
+  }
+
+  /* 4. Spotlight. */
+  for (const [label, reduce] of [['con movimiento permitido', false], ['con reduced-motion', true]]) {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: { ...DESKTOP, ...(reduce ? { reducedMotion: 'reduce' } : {}) }, wait: 2500 });
+    const card = page.locator('.fx-spotlight');
+    await card.scrollIntoViewIfNeeded();
+    const box = await card.boundingBox();
+    await page.mouse.move(box.x + 40, box.y + 30);
+    await page.mouse.move(box.x + 120, box.y + 70, { steps: 4 });
+    await page.waitForTimeout(250);
+    const v = await card.evaluate((e) => ({ mx: e.style.getPropertyValue('--mx'), my: e.style.getPropertyValue('--my') }));
+    if (!reduce) {
+      check('effects: spotlight con puntero fija --mx y --my en px', /^[\d.]+px$/.test(v.mx) && /^[\d.]+px$/.test(v.my), JSON.stringify(v));
+      await page.mouse.move(box.x - 60, box.y - 60);
+      await page.waitForTimeout(250);
+      const back = await card.evaluate((e) => e.style.getPropertyValue('--mx'));
+      check('effects: al salir el spotlight vuelve a su posicion por defecto', back === '', back);
+    } else {
+      check('effects: spotlight con reduced-motion no cambia --mx ni --my', v.mx === '' && v.my === '', JSON.stringify(v));
+    }
+    await context.close();
+  }
+
+  /* 5. Reveal. */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: DESKTOP, wait: 3000 });
+    const pending = await page.locator('.fx-reveal').evaluate((e) => e.classList.contains('is-pending'));
+    check('effects: reveal pasa por .is-pending con movimiento permitido', pending);
+    await page.locator('.fx-reveal').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(1200);
+    const cls = await page.locator('.fx-reveal').evaluate((e) => [...e.classList]);
+    check('effects: reveal termina en .is-in al entrar al viewport', cls.includes('is-in') && !cls.includes('is-pending'), cls.join(' '));
+    await context.close();
+  }
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: { ...DESKTOP, reducedMotion: 'reduce' }, wait: 3000 });
+    await page.locator('.fx-reveal').scrollIntoViewIfNeeded();
+    await page.waitForTimeout(600);
+    const cls = await page.locator('.fx-reveal').evaluate((e) => [...e.classList]);
+    check('effects: reveal con reduced-motion nunca queda pendiente', !cls.includes('is-pending'), cls.join(' '));
+    await context.close();
+  }
+
+  /* 6. Superficie de lectura: inerte. */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: DESKTOP, wait: 3000 });
+    const r = await page.evaluate(async () => {
+      const surf = document.querySelector('[data-surface="reading"]');
+      const mk = (parent) => {
+        const demo = document.createElement('div');
+        demo.id = `probe-demo-${parent === surf ? 'in' : 'out'}`;
+        demo.setAttribute('data-fx-demo', 'grain');
+        demo.style.minHeight = '120px';
+        const pre = document.createElement('pre');
+        pre.setAttribute('data-fx-ascii', '');
+        pre.id = `probe-ascii-${parent === surf ? 'in' : 'out'}`;
+        pre.textContent = '.:-=+*#%@\n@%#*+=-:.';
+        parent.appendChild(demo);
+        parent.appendChild(pre);
+        return { demo, pre };
+      };
+      const inside = mk(surf);
+      const outside = mk(document.querySelector('[data-effect="ascii"]'));
+      window.FX.scan();
+      const demoInside = window.FX.demo(inside.demo);
+      outside.pre.scrollIntoView({ block: 'center' });
+      await new Promise((res) => setTimeout(res, 1800));
+      return {
+        demoInside,
+        canvasInside: inside.demo.querySelectorAll('canvas').length,
+        asciiInside: inside.pre.textContent,
+        asciiOutsideChanged: outside.pre.textContent !== '.:-=+*#%@\n@%#*+=-:.',
+        reading: window.FX.demo(inside.demo),
+      };
+    });
+    check('effects: FX.demo devuelve false dentro de una superficie de lectura', r.demoInside === false && r.reading === false);
+    check('effects: en lectura un data-fx-demo inyectado nunca monta canvas', r.canvasInside === 0, `canvas=${r.canvasInside}`);
+    check('effects: en lectura un data-fx-ascii inyectado nunca cambia', r.asciiInside === '.:-=+*#%@\n@%#*+=-:.');
+    check('effects: control fuera de lectura, el mismo ASCII inyectado si cambia tras FX.scan()', r.asciiOutsideChanged);
+    /* Un boton de demo apuntando al elemento inyectado en lectura: la region de estado explica el motivo. */
+    const msg = await page.evaluate(() => {
+      const card = document.querySelector('[data-effect="reading"]');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('data-fx-demo-for', 'probe-demo-in');
+      btn.textContent = 'probe';
+      const out = document.createElement('p');
+      out.setAttribute('role', 'status');
+      card.appendChild(btn);
+      card.appendChild(out);
+      btn.click();
+      return out.textContent;
+    });
+    check('effects: en lectura la region de estado explica "superficie de lectura"', /superficie de lectura/.test(msg), msg);
+    await context.close();
+  }
+
+  /* 7. Pausa. */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: DESKTOP, wait: 3000 });
+    const heroOn = await canvasCount(page);
+    await page.evaluate(() => document.querySelector('[data-fx-pause]').click());
+    await page.waitForTimeout(300);
+    const p = await page.evaluate(() => ({ pressed: document.querySelector('[data-fx-pause]').getAttribute('aria-pressed'), motion: document.documentElement.dataset.motion, count: window.FX.count(), label: document.querySelector('[data-fx-pause]').textContent.trim() }));
+    check('effects: pausa deja aria-pressed="true", data-motion="reduced" y FX.count() en 0', heroOn === 1 && p.pressed === 'true' && p.motion === 'reduced' && p.count === 0 && p.label === 'Pausar animaciones', JSON.stringify(p));
+    await page.evaluate(() => document.querySelector('[data-fx-pause]').click());
+    const back = await poll(page, () => window.FX.count() === 1, null, 2000);
+    const p2 = await page.evaluate(() => ({ pressed: document.querySelector('[data-fx-pause]').getAttribute('aria-pressed'), motion: document.documentElement.dataset.motion }));
+    check('effects: al soltar la pausa vuelve el canvas del hero en 2000 ms', back && p2.pressed === 'false' && p2.motion === undefined, JSON.stringify(p2));
+
+    /* Clic real desde la galeria y persistencia en sessionStorage. */
+    await page.locator('[data-fx-pause]').first().scrollIntoViewIfNeeded();
+    await page.locator('[data-fx-pause]').first().click();
+    await page.waitForTimeout(300);
+    const real = await page.evaluate(() => document.querySelector('[data-fx-pause]').getAttribute('aria-pressed'));
+    check('effects: el clic real en Pausar animaciones deja aria-pressed="true"', real === 'true');
+    await page.reload({ waitUntil: 'load' });
+    await page.waitForTimeout(2500);
+    const kept = await page.evaluate(() => ({ pressed: document.querySelector('[data-fx-pause]').getAttribute('aria-pressed'), motion: document.documentElement.dataset.motion, count: window.FX.count() }));
+    check('effects: la pausa se conserva al recargar (sessionStorage) y no monta canvas', kept.pressed === 'true' && kept.motion === 'reduced' && kept.count === 0, JSON.stringify(kept));
+    await page.locator('[data-fx-pause]').first().click();
+    await page.waitForTimeout(300);
+    const freed = await page.evaluate(() => document.documentElement.dataset.motion);
+    check('effects: soltar la pausa quita data-motion', freed === undefined);
+    await context.close();
+  }
+
+  /* 8. Cambio externo de atributos (simulador del plan 03). */
+  for (const [attr, value] of [['data-saver', 'on'], ['data-motion', 'reduced']]) {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: DESKTOP, wait: 3000 });
+    await page.evaluate(([a, v]) => document.documentElement.setAttribute(a, v), [attr, value]);
+    const gone = await poll(page, () => window.FX.count() === 0, null, 500);
+    check(`effects: poner ${attr}="${value}" deja 0 canvas en 500 ms`, gone);
+    if (attr === 'data-motion') {
+      const pressed = await page.evaluate(() => document.querySelector('[data-fx-pause]').getAttribute('aria-pressed'));
+      check('effects: el boton de pausa refleja data-motion puesto desde fuera', pressed === 'true', pressed);
+    }
+    await page.evaluate((a) => document.documentElement.removeAttribute(a), attr);
+    const back = await poll(page, () => window.FX.count() === 1, null, 2000);
+    check(`effects: quitar ${attr} devuelve el canvas del hero en 2000 ms`, back);
+    if (attr === 'data-motion') {
+      const pressed = await page.evaluate(() => document.querySelector('[data-fx-pause]').getAttribute('aria-pressed'));
+      check('effects: aria-pressed vuelve a "false" al quitar data-motion', pressed === 'false', pressed);
+    }
+    await context.close();
+  }
+
+  /* 9. Sin errores de consola en la interaccion completa, por http y file://. */
+  for (const [label, url] of [['http', httpUrl(env, page0)], ['file', fileUrl(page0)]]) {
+    const { context, page, log } = await visit(env, url, { ctx: DESKTOP, wait: 2500 });
+    await page.locator('[data-fx-demo-for="demo-slats"]').scrollIntoViewIfNeeded();
+    await page.locator('[data-fx-demo-for="demo-slats"]').click();
+    await page.waitForTimeout(800);
+    check(`effects: ${label} cero errores de consola, pageerror, 4xx ni origenes externos tras activar una demo`, log.console.length === 0 && log.pageerrors.length === 0 && log.bad.length === 0 && log.external.length === 0, [...log.console, ...log.pageerrors, ...log.bad, ...log.external].join(' ; '));
+    await context.close();
+  }
+};
+
 /* ---------- main ---------- */
 
 async function main() {
@@ -486,6 +930,7 @@ async function main() {
     await server.close();
   }
   console.log(`\n${passes} PASS, ${failures} FAIL`);
+  console.log(`RESULT: ${failures ? 'FAIL (exit 1: al menos un check fallo)' : 'PASS (exit 0: ningun check fallo)'}`);
   process.exit(failures ? 1 : 0);
 }
 

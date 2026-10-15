@@ -1,0 +1,307 @@
+{
+  "method": "Bytes crudos, gzip nivel 9 y brotli calidad 11 de node:zlib sobre los archivos tal como se sirven (sin minificar). Tramos entre marcadores fx:NOMBRE.",
+  "verifiedAt": "2026-10-15",
+  "registryGzip": {
+    "grain": 6948,
+    "waves": 8383,
+    "crt": 8600,
+    "slats": 8029,
+    "pixel-blast": 9369,
+    "pixel-card": 5971,
+    "gradient-ascii": 9143,
+    "ascii-text": 6234,
+    "noise": 3258,
+    "dither": 7055,
+    "halftone-reveal": 8569,
+    "pixel-transition": 4452,
+    "faulty-terminal": 8717,
+    "spotlight-card": 3570,
+    "gradient-blinds": 6155,
+    "star-border": 6220,
+    "dot-grid": 6149
+  },
+  "files": {
+    "assets/js/effects.js": {
+      "raw": 16001,
+      "gzip": 5591,
+      "brotli": 4980
+    },
+    "assets/css/tokens.css": {
+      "raw": 3834,
+      "gzip": 1605,
+      "brotli": 1444
+    },
+    "assets/css/base.css": {
+      "raw": 3777,
+      "gzip": 1432,
+      "brotli": 1260
+    },
+    "assets/css/effects.css": {
+      "raw": 13142,
+      "gzip": 3337,
+      "brotli": 2952
+    }
+  },
+  "fonts": {
+    "assets/fonts/Array-Regular.woff2": {
+      "raw": 20832,
+      "gzip": 20860,
+      "brotli": 20832
+    },
+    "assets/fonts/Geist-latin-var.woff2": {
+      "raw": 29288,
+      "gzip": 29316,
+      "brotli": 29291
+    },
+    "assets/fonts/GeistMono-400-latin.woff2": {
+      "raw": 7140,
+      "gzip": 7163,
+      "brotli": 7144
+    },
+    "assets/fonts/GeistPixel-Square-upper.woff2": {
+      "raw": 2384,
+      "gzip": 2407,
+      "brotli": 2388
+    }
+  },
+  "kitCss": {
+    "raw": 20753,
+    "gzip": 5897,
+    "brotli": 5242
+  },
+  "jsPlusCssGzip": 11488,
+  "fontsRaw": 59644,
+  "segments": {
+    "css": {
+      "core": 235,
+      "grain": 474,
+      "waves": 500,
+      "crt": 598,
+      "slats": 585,
+      "pixel": 380,
+      "ascii": 272,
+      "noise": 362,
+      "dither": 347,
+      "blinds": 329,
+      "reveal": 435,
+      "transition": 503,
+      "spotlight": 254,
+      "star": 520,
+      "dotgrid": 155,
+      "reading": 233
+    },
+    "js": {
+      "grain": 388,
+      "halftone": 318,
+      "crt": 400,
+      "slats": 304,
+      "ascii": 445,
+      "spotlight": 335,
+      "reveal": 130
+    }
+  },
+  "budgets": [
+    {
+      "name": "assets/js/effects.js (gzip)",
+      "value": 5591,
+      "limit": 5632,
+      "ok": true
+    },
+    {
+      "name": "assets/css/effects.css (gzip)",
+      "value": 3337,
+      "limit": 6144,
+      "ok": true
+    },
+    {
+      "name": "CSS del kit concatenado (gzip)",
+      "value": 5897,
+      "limit": 14336,
+      "ok": true
+    },
+    {
+      "name": "JS de producción más CSS del kit (gzip)",
+      "value": 11488,
+      "limit": 24576,
+      "ok": true
+    },
+    {
+      "name": "Fuentes (bytes crudos)",
+      "value": 59644,
+      "limit": 65536,
+      "ok": true
+    }
+  ],
+  "effects": [
+    {
+      "id": "grain",
+      "name": "Grainient",
+      "css": 474,
+      "js": 388,
+      "total": 862,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "waves",
+      "name": "PatternWaves",
+      "css": 500,
+      "js": 318,
+      "total": 818,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "crt",
+      "name": "CRTWarp",
+      "css": 598,
+      "js": 400,
+      "total": 998,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "slats",
+      "name": "MicroSlats",
+      "css": 585,
+      "js": 304,
+      "total": 889,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "pixel-blast",
+      "name": "PixelBlast",
+      "css": 380,
+      "js": 0,
+      "total": 380,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "pixel-card",
+      "name": "PixelCard",
+      "css": 380,
+      "js": 0,
+      "total": 380,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "gradient-ascii",
+      "name": "GradientASCII",
+      "css": 272,
+      "js": 445,
+      "total": 717,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "ascii-text",
+      "name": "ASCIIText",
+      "css": 272,
+      "js": 445,
+      "total": 717,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "noise",
+      "name": "Noise",
+      "css": 362,
+      "js": 0,
+      "total": 362,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "dither",
+      "name": "Dither",
+      "css": 347,
+      "js": 0,
+      "total": 347,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "halftone-reveal",
+      "name": "Halftone Reveal",
+      "css": 435,
+      "js": 130,
+      "total": 565,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "pixel-transition",
+      "name": "Pixel Transition",
+      "css": 503,
+      "js": 0,
+      "total": 503,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "faulty-terminal",
+      "name": "Faulty Terminal",
+      "css": 598,
+      "js": 400,
+      "total": 998,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "spotlight-card",
+      "name": "Spotlight Card",
+      "css": 254,
+      "js": 335,
+      "total": 589,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "gradient-blinds",
+      "name": "Gradient Blinds",
+      "css": 329,
+      "js": 0,
+      "total": 329,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "star-border",
+      "name": "Star Border",
+      "css": 520,
+      "js": 0,
+      "total": 520,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    },
+    {
+      "id": "dot-grid",
+      "name": "Dot Grid",
+      "css": 155,
+      "js": 0,
+      "total": 155,
+      "cap": 2048,
+      "ok": true,
+      "missing": []
+    }
+  ]
+}

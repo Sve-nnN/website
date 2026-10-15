@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400" role="img" aria-label="Composición abstracta de formas geométricas en violeta, coral y ámbar">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5B3DF5"/>
+      <stop offset=".55" stop-color="#FF4D6D"/>
+      <stop offset="1" stop-color="#FFB020"/>
+    </linearGradient>
+    <pattern id="dots" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="2.6" fill="#0B0B12" fill-opacity=".55"/>
+    </pattern>
+    <clipPath id="frame"><rect width="640" height="400"/></clipPath>
+  </defs>
+  <g clip-path="url(#frame)">
+    <rect width="640" height="400" fill="url(#bg)"/>
+    <circle cx="470" cy="150" r="130" fill="#0B0B12" fill-opacity=".28"/>
+    <circle cx="470" cy="150" r="130" fill="url(#dots)"/>
+    <rect x="-40" y="250" width="420" height="40" transform="rotate(-18 170 270)" fill="#FAFAF7" fill-opacity=".85"/>
+    <rect x="-40" y="305" width="520" height="22" transform="rotate(-18 220 316)" fill="#0B0B12" fill-opacity=".7"/>
+    <circle cx="120" cy="110" r="46" fill="#FAFAF7" fill-opacity=".9"/>
+    <circle cx="120" cy="110" r="46" fill="url(#dots)"/>
+    <rect x="360" y="300" width="220" height="14" fill="#B6FF3B"/>
+    <rect x="360" y="326" width="140" height="14" fill="#B6FF3B" fill-opacity=".6"/>
+  </g>
+</svg>
