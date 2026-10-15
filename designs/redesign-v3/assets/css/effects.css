@@ -1,0 +1,70 @@
+/*
+ * effects.css: estado por defecto de cada efecto (fallback CSS, visible sin JS).
+ * El JavaScript solo agrega movimiento por encima de lo que pinta este archivo.
+ * Los tramos delimitados con fx:NOMBRE:start y fx:NOMBRE:end los mide el script de peso.
+ */
+
+/* fx:grain:start */
+.fx-grain {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(28rem, 70vh, 40rem);
+  padding: var(--space-6);
+  background:
+    radial-gradient(60% 90% at 12% 15%, var(--violet) 0, transparent 72%),
+    radial-gradient(55% 80% at 88% 25%, var(--coral) 0, transparent 72%),
+    radial-gradient(70% 90% at 55% 105%, var(--amber) 0, transparent 70%),
+    var(--ink);
+}
+
+.fx-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--grain);
+  mix-blend-mode: overlay;
+  opacity: .4;
+}
+
+/* Con el shader activo el grano lo pinta el canvas: se atenua el SVG para no duplicarlo. */
+.fx-grain:has(.fx-canvas.is-on)::after {
+  opacity: .12;
+}
+
+/* El texto nunca vive directo sobre el gradiente. */
+.fx-content {
+  position: relative;
+  z-index: 1;
+  max-width: 44rem;
+  padding: var(--space-5);
+  background: var(--scrim);
+}
+
+.fx-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms;
+}
+
+.fx-canvas.is-on {
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .fx-grain {
+    padding: var(--space-4);
+  }
+
+  .fx-content {
+    padding: var(--space-4);
+  }
+}
+/* fx:grain:end */

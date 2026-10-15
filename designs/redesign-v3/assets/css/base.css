@@ -1,0 +1,117 @@
+/*
+ * base.css: fuentes, reset minimo, tipografia base, foco global y enlace de salto.
+ * Depende de tokens.css. Las rutas de fuentes son relativas a este archivo.
+ */
+
+@font-face {
+  font-family: "Array";
+  src: url("../fonts/Array-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Array no tiene negrita real: peso 400 y sin sintesis. */
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: 1.1;
+}
+
+p {
+  margin: 0;
+}
+
+img,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+/* Enlace de salto: visible solo con foco. */
+.skip-link {
+  position: absolute;
+  top: -4rem;
+  left: var(--space-3);
+  z-index: 100;
+  padding: var(--space-2) var(--space-3);
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  top: var(--space-3);
+}
+
+/*
+ * Anillo de foco global: 2 px ambar con halo de tinta que lo separa de cualquier fondo.
+ * Prohibido quitar el outline sin reemplazo (A11Y.md).
+ */
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--ink);
+}
+
+/* Marco de pagina */
+.site-header,
+.site-footer {
+  padding: var(--space-4) var(--space-6);
+}
+
+.site-footer {
+  color: var(--quiet);
+  font-size: .875rem;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
+}
+
+.lede {
+  margin-top: var(--space-3);
+  max-width: 60ch;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: .9em;
+}
+
+@media (max-width: 767px) {
+  .site-header,
+  .site-footer {
+    padding: var(--space-3) var(--space-4);
+  }
+}
