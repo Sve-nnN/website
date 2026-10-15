@@ -160,7 +160,7 @@ STAGES.tracer = async (env) => {
   {
     const { context, page } = await visit(env, httpUrl(env, page0), { ctx: { viewport: { width: 1440, height: 900 }, javaScriptEnabled: false } });
     const h1 = await page.locator('h1').isVisible();
-    const bg = await page.locator('.fx-grain').evaluate((el) => getComputedStyle(el).backgroundImage);
+    const bg = await page.locator('.fx-grain[data-fx]').evaluate((el) => getComputedStyle(el).backgroundImage);
     const canvases = await page.locator('canvas').count();
     check('tracer: sin JS el h1 es visible', h1);
     check('tracer: sin JS el fallback pinta radial-gradient', bg.includes('radial-gradient'), bg.slice(0, 60));
@@ -357,7 +357,11 @@ STAGES.tokens = async (env) => {
     const rel = path.relative(ROOT, file).split(path.sep).join('/');
     if (rel.startsWith('reports/') || !['.html', '.css', '.js'].includes(path.extname(file))) continue;
     const text = fs.readFileSync(file, 'utf8');
-    if (/(?:src|href)\s*=\s*["']https?:/i.test(text) || /url\(\s*["']?https?:/i.test(text) || /@import\s+["']?https?:/i.test(text)) {
+    /* Cargas de recursos externos. Los enlaces <a href> de documentacion (catalogo) no cargan nada y se excluyen. */
+    const loadsExternal = path.extname(file) === '.html'
+      ? /<(?:script|link|img|iframe|source|video|audio|embed|object)\b[^>]*\b(?:src|href|data)\s*=\s*["']https?:/i.test(text)
+      : /(?:src|href)\s*=\s*["']https?:/i.test(text);
+    if (loadsExternal || /url\(\s*["']?https?:/i.test(text) || /@import\s+["']?https?:/i.test(text)) {
       external.push(rel);
     }
   }

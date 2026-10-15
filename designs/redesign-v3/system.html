@@ -442,6 +442,408 @@
       <div class="doc-inner">
         <h2 id="titulo-catalogo">Catálogo de origen</h2>
         <!-- catalog:start -->
+        <p class="doc-intro">Cada efecto de este sistema nombra el componente de React Bits del que parte la idea. El código es propio: los shaders y el CSS están escritos desde cero. Las dos tablas muestran la identidad verificada y el costo medido de nuestro fallback y de nuestra mejora.</p>
+        <div class="table-scroll" role="region" aria-label="Tabla de identidad del catálogo" tabindex="0">
+          <table class="doc-table">
+            <caption>Identidad de cada efecto contra el catálogo real de React Bits</caption>
+            <thead>
+            <tr>
+              <th scope="col">Efecto pedido o motivo</th>
+              <th scope="col">Componente de origen</th>
+              <th scope="col">Categoría</th>
+              <th scope="col">URL</th>
+              <th scope="col">Dependencias del original</th>
+              <th scope="col">Clase de costo</th>
+              <th scope="col">Peso original min</th>
+              <th scope="col">Peso original gzip</th>
+              <th scope="col">Fuente de la medida</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">Grainy gradient</th>
+              <td><strong>Grainient</strong></td>
+              <td>Backgrounds</td>
+              <td><a href="https://reactbits.dev/backgrounds/grainient">/backgrounds/grainient</a></td>
+              <td>ninguna</td>
+              <td>GL</td>
+              <td><span class="num">13.9 KB</span></td>
+              <td><span class="num">5.8 KB</span></td>
+              <td>esbuild sobre el código del componente, sin React ni ogl</td>
+            </tr>
+            <tr>
+              <th scope="row">Pattern waves</th>
+              <td><strong>PatternWaves</strong></td>
+              <td>Backgrounds</td>
+              <td><a href="https://reactbits.dev/backgrounds/pattern-waves">/backgrounds/pattern-waves</a></td>
+              <td>ogl@^1.0.11</td>
+              <td>GL</td>
+              <td><span class="num">19.1 KB</span></td>
+              <td><span class="num">7.1 KB</span></td>
+              <td>esbuild sobre el código del componente, sin React ni ogl</td>
+            </tr>
+            <tr>
+              <th scope="row">CRT warp</th>
+              <td><strong>CRTWarp</strong></td>
+              <td>Backgrounds</td>
+              <td><a href="https://reactbits.dev/backgrounds/crt-warp">/backgrounds/crt-warp</a></td>
+              <td>ninguna</td>
+              <td>GL</td>
+              <td><span class="num">19.7 KB</span></td>
+              <td><span class="num">7.5 KB</span></td>
+              <td>esbuild sobre el código del componente, sin React ni ogl</td>
+            </tr>
+            <tr>
+              <th scope="row">Micro slats</th>
+              <td><strong>MicroSlats</strong></td>
+              <td>Backgrounds</td>
+              <td><a href="https://reactbits.dev/backgrounds/micro-slats">/backgrounds/micro-slats</a></td>
+              <td>ogl@^1.0.11</td>
+              <td>GL</td>
+              <td><span class="num">18.7 KB</span></td>
+              <td><span class="num">6.7 KB</span></td>
+              <td>esbuild sobre el código del componente, sin React ni ogl</td>
+            </tr>
+            <tr>
+              <th scope="row">Pixel (fondo)</th>
+              <td><strong>PixelBlast</strong></td>
+              <td>Backgrounds</td>
+              <td><a href="https://reactbits.dev/backgrounds/pixel-blast">/backgrounds/pixel-blast</a></td>
+              <td>ninguna</td>
+              <td>GL</td>
+              <td><span class="num">22.6 KB</span></td>
+              <td><span class="num">8.1 KB</span></td>
+              <td>esbuild sobre el código del componente, sin React ni ogl</td>
+            </tr>
+            <tr>
+              <th scope="row">Pixel (tarjeta)</th>
+              <td><strong>PixelCard</strong></td>
+              <td>Components</td>
+              <td><a href="https://reactbits.dev/components/pixel-card">/components/pixel-card</a></td>
+              <td>ninguna</td>
+              <td>C2D</td>
+              <td><span class="num">10.2 KB</span></td>
+              <td><span class="num">4.2 KB</span></td>
+              <td>esbuild sobre el código del componente, sin React ni ogl</td>
+            </tr>
+            <tr>
+              <th scope="row">ASCII (fondo)</th>
+              <td><strong>GradientASCII</strong></td>
+              <td>Backgrounds</td>
+              <td><a href="https://reactbits.dev/backgrounds/gradient-ascii">/backgrounds/gradient-ascii</a></td>
+              <td>ninguna</td>
+              <td>GL</td>
+              <td><span class="num">20.8 KB</span></td>
+              <td><span class="num">7.7 KB</span></td>
+              <td>esbuild sobre el código del componente, sin React ni ogl</td>
+            </tr>
+            <tr>
+              <th scope="row">ASCII (texto)</th>
+              <td><strong>ASCIIText</strong></td>
+              <td>Text Animations</td>
+              <td><a href="https://reactbits.dev/text-animations/ascii-text">/text-animations/ascii-text</a></td>
+              <td>ninguna</td>
+              <td>GL</td>
+              <td><span class="num">12.9 KB</span></td>
+              <td><span class="num">5.3 KB</span></td>
+              <td>esbuild sobre el código del componente, sin React ni ogl</td>
+            </tr>
+            <tr>
+              <th scope="row">Scout: grano global casi gratis</th>
+              <td><strong>Noise</strong></td>
+              <td>Animations</td>
+              <td><a href="https://www.reactbits.dev/animations/noise">/animations/noise</a></td>
+              <td>ninguna</td>
+              <td>CSS</td>
+              <td>sin medir</td>
+              <td><span class="num">3.3 KB</span></td>
+              <td>archivo del registro, cota superior</td>
+            </tr>
+            <tr>
+              <th scope="row">Scout: dithering real</th>
+              <td><strong>Dither</strong></td>
+              <td>Backgrounds</td>
+              <td><a href="https://www.reactbits.dev/backgrounds/dither">/backgrounds/dither</a></td>
+              <td>ninguna</td>
+              <td>GL</td>
+              <td>sin medir</td>
+              <td><span class="num">7.1 KB</span></td>
+              <td>archivo del registro, cota superior</td>
+            </tr>
+            <tr>
+              <th scope="row">Scout: imagen que se revela con trama</th>
+              <td><strong>Halftone Reveal</strong></td>
+              <td>Animations</td>
+              <td><a href="https://www.reactbits.dev/animations/halftone-reveal">/animations/halftone-reveal</a></td>
+              <td>ninguna</td>
+              <td>GL</td>
+              <td>sin medir</td>
+              <td><span class="num">8.6 KB</span></td>
+              <td>archivo del registro, cota superior</td>
+            </tr>
+            <tr>
+              <th scope="row">Scout: hover de tarjeta pixelado</th>
+              <td><strong>Pixel Transition</strong></td>
+              <td>Animations</td>
+              <td><a href="https://www.reactbits.dev/animations/pixel-transition">/animations/pixel-transition</a></td>
+              <td>ninguna</td>
+              <td>CSS</td>
+              <td>sin medir</td>
+              <td><span class="num">4.5 KB</span></td>
+              <td>archivo del registro, cota superior</td>
+            </tr>
+            <tr>
+              <th scope="row">Scout: terminal CRT para 404 y contacto</th>
+              <td><strong>Faulty Terminal</strong></td>
+              <td>Backgrounds</td>
+              <td><a href="https://www.reactbits.dev/backgrounds/faulty-terminal">/backgrounds/faulty-terminal</a></td>
+              <td>ninguna</td>
+              <td>GL</td>
+              <td>sin medir</td>
+              <td><span class="num">8.8 KB</span></td>
+              <td>archivo del registro, cota superior</td>
+            </tr>
+            <tr>
+              <th scope="row">Scout: hover profesional de bajo costo</th>
+              <td><strong>Spotlight Card</strong></td>
+              <td>Components</td>
+              <td><a href="https://www.reactbits.dev/components/spotlight-card">/components/spotlight-card</a></td>
+              <td>ninguna</td>
+              <td>CSS</td>
+              <td>sin medir</td>
+              <td><span class="num">3.6 KB</span></td>
+              <td>archivo del registro, cota superior</td>
+            </tr>
+            <tr>
+              <th scope="row">Scout: slats con gradiente</th>
+              <td><strong>Gradient Blinds</strong></td>
+              <td>Backgrounds</td>
+              <td><a href="https://www.reactbits.dev/backgrounds/gradient-blinds">/backgrounds/gradient-blinds</a></td>
+              <td>ninguna</td>
+              <td>GL</td>
+              <td>sin medir</td>
+              <td><span class="num">6.2 KB</span></td>
+              <td>archivo del registro, cota superior</td>
+            </tr>
+            <tr>
+              <th scope="row">Scout: borde de luz para el CTA</th>
+              <td><strong>Star Border</strong></td>
+              <td>Animations</td>
+              <td><a href="https://www.reactbits.dev/animations/star-border">/animations/star-border</a></td>
+              <td>ninguna</td>
+              <td>CSS</td>
+              <td>sin medir</td>
+              <td><span class="num">6.3 KB</span></td>
+              <td>archivo del registro, cota superior</td>
+            </tr>
+            <tr>
+              <th scope="row">Mención del scout: fondo de lectura (mencion)</th>
+              <td><strong>Dot Grid</strong></td>
+              <td>Backgrounds</td>
+              <td><a href="https://www.reactbits.dev/backgrounds/dot-grid">/backgrounds/dot-grid</a></td>
+              <td>ninguna</td>
+              <td>CSS</td>
+              <td>sin medir</td>
+              <td><span class="num">6.2 KB</span></td>
+              <td>archivo del registro, cota superior</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-scroll" role="region" aria-label="Tabla de costo medido por efecto" tabindex="0">
+          <table class="doc-table">
+            <caption>Costo medido de nuestro fallback y de nuestra mejora contra el tope de 2048 B por efecto</caption>
+            <thead>
+            <tr>
+              <th scope="col">Componente de origen</th>
+              <th scope="col">Fallback CSS gzip</th>
+              <th scope="col">Mejora JS gzip</th>
+              <th scope="col">Total contra el tope</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Cuenta como canvas</th>
+              <th scope="col">Decisión en producción</th>
+              <th scope="col">En system.html</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row"><strong>Grainient</strong></th>
+              <td><span class="num">474 B</span></td>
+              <td><span class="num">388 B</span></td>
+              <td><span class="num">862 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>sí, permanente</td>
+              <td>Único WebGL permanente: shader original de una pasada con fallback CSS de tres gradientes y grano SVG</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>PatternWaves</strong></th>
+              <td><span class="num">500 B</span></td>
+              <td><span class="num">318 B</span></td>
+              <td><span class="num">818 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>sí, demo con slot único</td>
+              <td>CSS en producción; shader halftone solo como demo opt-in</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>CRTWarp</strong></th>
+              <td><span class="num">598 B</span></td>
+              <td><span class="num">400 B</span></td>
+              <td><span class="num">998 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>sí, demo con slot único</td>
+              <td>CSS en producción; shader de barril, scanlines y mascara de fosforo solo como demo opt-in</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>MicroSlats</strong></th>
+              <td><span class="num">585 B</span></td>
+              <td><span class="num">304 B</span></td>
+              <td><span class="num">889 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>sí, demo con slot único</td>
+              <td>CSS en producción; columnas ondulantes solo como demo opt-in</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>PixelBlast</strong></th>
+              <td><span class="num">380 B</span></td>
+              <td><span class="num">0 B</span></td>
+              <td><span class="num">380 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, CSS</td>
+              <td>Solo CSS: tramado conic-gradient de 6 px; sin shader</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>PixelCard</strong></th>
+              <td><span class="num">380 B</span></td>
+              <td><span class="num">0 B</span></td>
+              <td><span class="num">380 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, CSS</td>
+              <td>Solo CSS: la disolución en hover y en foco usa steps(); sin canvas 2D</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>GradientASCII</strong></th>
+              <td><span class="num">272 B</span></td>
+              <td><span class="num">445 B</span></td>
+              <td><span class="num">717 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, DOM</td>
+              <td>pre aria-hidden con el juego .:-=+*#%@ y ticker de texto a 10 fps</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>ASCIIText</strong></th>
+              <td><span class="num">272 B</span></td>
+              <td><span class="num">445 B</span></td>
+              <td><span class="num">717 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, DOM</td>
+              <td>Comparte el pre y el ticker de GradientASCII; el texto real vive en el DOM</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>Noise</strong></th>
+              <td><span class="num">362 B</span></td>
+              <td><span class="num">0 B</span></td>
+              <td><span class="num">362 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, CSS</td>
+              <td>Capa SVG feTurbulence estática; variante viva en 4 posiciones discretas a 2 por segundo</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>Dither</strong></th>
+              <td><span class="num">347 B</span></td>
+              <td><span class="num">0 B</span></td>
+              <td><span class="num">347 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, CSS</td>
+              <td>Tramado Bayer 4x4 estático en tres densidades; sin shader</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>Halftone Reveal</strong></th>
+              <td><span class="num">435 B</span></td>
+              <td><span class="num">130 B</span></td>
+              <td><span class="num">565 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, CSS</td>
+              <td>img real visible sin JS; trama de puntos que se disuelve una sola vez; sin canvas</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>Pixel Transition</strong></th>
+              <td><span class="num">503 B</span></td>
+              <td><span class="num">0 B</span></td>
+              <td><span class="num">503 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, CSS</td>
+              <td>CSS puro con steps(); el foco por teclado dispara el mismo cambio que el hover</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>Faulty Terminal</strong></th>
+              <td><span class="num">598 B</span></td>
+              <td><span class="num">400 B</span></td>
+              <td><span class="num">998 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, solo catálogo</td>
+              <td>Solo catálogo: su fallback estático es el de CRT warp (.fx-crt); no agrega shader</td>
+              <td>Solo catálogo</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>Spotlight Card</strong></th>
+              <td><span class="num">254 B</span></td>
+              <td><span class="num">335 B</span></td>
+              <td><span class="num">589 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, CSS</td>
+              <td>radial-gradient con --mx y --my; el JS solo sigue al puntero fino</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>Gradient Blinds</strong></th>
+              <td><span class="num">329 B</span></td>
+              <td><span class="num">0 B</span></td>
+              <td><span class="num">329 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, CSS</td>
+              <td>Estático: --grad visto a través de una mascara de persianas; sin shader</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>Star Border</strong></th>
+              <td><span class="num">520 B</span></td>
+              <td><span class="num">0 B</span></td>
+              <td><span class="num">520 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, CSS</td>
+              <td>Aproximación en CSS: anillo conic-gradient con @property en vez de una estrella que recorre el contorno</td>
+              <td>Componente visible</td>
+            </tr>
+            <tr>
+              <th scope="row"><strong>Dot Grid</strong></th>
+              <td><span class="num">155 B</span></td>
+              <td><span class="num">0 B</span></td>
+              <td><span class="num">155 de 2048 B</span></td>
+              <td>Dentro del tope</td>
+              <td>no, CSS</td>
+              <td>Solo la forma estática, unica decoracion admitida junto al grano en superficies de lectura</td>
+              <td>Componente visible</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="doc-note">Catálogo verificado en línea contra <a href="https://reactbits.dev/llms.txt">reactbits.dev/llms.txt</a> y los registros JSON el 2026-10-15. Los ocho primeros pesos son el código del componente medido con esbuild, sin React ni <code>ogl</code>. Los ocho adicionales y Dot Grid son el gzip del archivo del registro, una cota superior que incluye props y demo. Cada tramo medido incluye unos 20 B de cabecera gzip.</p>
+        <p class="doc-note">Los pesos de nuestro fallback y de nuestra mejora son los de <code>effects.css</code> y <code>effects.js</code> tal como se sirven, sin minificar. Los tramos compartidos (el pixel de PixelBlast y PixelCard, el ASCII de GradientASCII y ASCIIText, el CRT de CRTWarp y Faulty Terminal) se cuentan completos en cada fila.</p>
+        <p class="doc-note">Licencia de React Bits: MIT más Commons Clause (<a href="https://raw.githubusercontent.com/DavidHDev/react-bits/main/LICENSE.md">LICENSE.md</a>). Los shaders y el CSS de este kit son originales: no se copio GLSL ni JavaScript de React Bits. Solo se citan los nombres de origen.</p>
+        <p class="doc-note">Fuentes: <a href="https://reactbits.dev/llms.txt">https://reactbits.dev/llms.txt</a>, <a href="https://github.com/DavidHDev/react-bits/tree/main/src/content">https://github.com/DavidHDev/react-bits/tree/main/src/content</a>, <a href="https://reactbits.dev/r/NOMBRE-JS-CSS.json">https://reactbits.dev/r/NOMBRE-JS-CSS.json</a>. Vecinos útiles que no se implementan: Waves, Letter Glitch, Line Waves, Glitch Text, Glare Hover.</p>
+        <p class="doc-note">Excluidos por el scout, sin clase, tipo ni tarjeta: Topography (Pesa 15 KB en el registro, muy por encima del presupuesto de 1 a 2 KB por efecto); Folder (Pesa 20 KB en el registro y es una carpeta 3D); AeroShards (Pesa 21 KB y depende de vgpu); GridScan (Pesa 11 KB; solo valdria si sustituyera a otro shader); Pixel Snow (Look estacional, fuera de la estética técnica); Plasma (Look genérico, sin ventaja sobre Grainient); Silk (Fuera del tono ASCII, pixel y tinta); Iridescence (No encaja con tinta y fosforo); Glass Surface (Contradice tinta y grano, con bajo contraste y 9 KB).</p>
         <!-- catalog:end -->
       </div>
     </section>
@@ -450,6 +852,251 @@
       <div class="doc-inner">
         <h2 id="titulo-pesos">Pesos</h2>
         <!-- weights:start -->
+        <p class="doc-intro">El peso medido es el del archivo tal como se sirve, sin minificar, por lo tanto es un tope superior de producción. El motor compartido (montaje, gates, slot único) no pertenece a ningún efecto y se cuenta solo en el total de <code>effects.js</code>.</p>
+        <div class="table-scroll" role="region" aria-label="Tabla de presupuestos del kit" tabindex="0">
+          <table class="doc-table">
+            <caption>Presupuestos del kit</caption>
+            <thead>
+            <tr>
+              <th scope="col">Medida</th>
+              <th scope="col">Valor</th>
+              <th scope="col">Presupuesto</th>
+              <th scope="col">Estado</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">assets/js/effects.js (gzip)</th>
+              <td><span class="num">5591 B</span></td>
+              <td><span class="num">5632 B</span></td>
+              <td>Cumple</td>
+            </tr>
+            <tr>
+              <th scope="row">assets/css/effects.css (gzip)</th>
+              <td><span class="num">3337 B</span></td>
+              <td><span class="num">6144 B</span></td>
+              <td>Cumple</td>
+            </tr>
+            <tr>
+              <th scope="row">CSS del kit concatenado (gzip)</th>
+              <td><span class="num">5897 B</span></td>
+              <td><span class="num">14336 B</span></td>
+              <td>Cumple</td>
+            </tr>
+            <tr>
+              <th scope="row">JS de producción más CSS del kit (gzip)</th>
+              <td><span class="num">11488 B</span></td>
+              <td><span class="num">24576 B</span></td>
+              <td>Cumple</td>
+            </tr>
+            <tr>
+              <th scope="row">Fuentes (bytes crudos)</th>
+              <td><span class="num">59644 B</span></td>
+              <td><span class="num">65536 B</span></td>
+              <td>Cumple</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-scroll" role="region" aria-label="Tabla de pesos por archivo" tabindex="0">
+          <table class="doc-table">
+            <caption>Peso por archivo, crudo, gzip nivel 9 y brotli calidad 11</caption>
+            <thead>
+            <tr>
+              <th scope="col">Archivo</th>
+              <th scope="col">Crudo</th>
+              <th scope="col">Gzip</th>
+              <th scope="col">Brotli</th>
+              <th scope="col">Pertenece a</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row"><code>assets/js/effects.js</code></th>
+              <td><span class="num">16001 B</span></td>
+              <td><span class="num">5591 B</span></td>
+              <td><span class="num">4980 B</span></td>
+              <td>Kit</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>assets/css/tokens.css</code></th>
+              <td><span class="num">3834 B</span></td>
+              <td><span class="num">1605 B</span></td>
+              <td><span class="num">1444 B</span></td>
+              <td>Kit</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>assets/css/base.css</code></th>
+              <td><span class="num">3777 B</span></td>
+              <td><span class="num">1432 B</span></td>
+              <td><span class="num">1260 B</span></td>
+              <td>Kit</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>assets/css/effects.css</code></th>
+              <td><span class="num">13142 B</span></td>
+              <td><span class="num">3337 B</span></td>
+              <td><span class="num">2952 B</span></td>
+              <td>Kit</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>assets/fonts/Array-Regular.woff2</code></th>
+              <td><span class="num">20832 B</span></td>
+              <td><span class="num">20860 B</span></td>
+              <td><span class="num">20832 B</span></td>
+              <td>Kit</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>assets/fonts/Geist-latin-var.woff2</code></th>
+              <td><span class="num">29288 B</span></td>
+              <td><span class="num">29316 B</span></td>
+              <td><span class="num">29291 B</span></td>
+              <td>Kit</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>assets/fonts/GeistMono-400-latin.woff2</code></th>
+              <td><span class="num">7140 B</span></td>
+              <td><span class="num">7163 B</span></td>
+              <td><span class="num">7144 B</span></td>
+              <td>Kit</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>assets/fonts/GeistPixel-Square-upper.woff2</code></th>
+              <td><span class="num">2384 B</span></td>
+              <td><span class="num">2407 B</span></td>
+              <td><span class="num">2388 B</span></td>
+              <td>Kit</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>assets/css/system-doc.css</code></th>
+              <td><span class="num">8144 B</span></td>
+              <td><span class="num">1895 B</span></td>
+              <td><span class="num">1641 B</span></td>
+              <td>Solo documentación, sin tope</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>assets/js/system-demo.js</code></th>
+              <td><span class="num">2162 B</span></td>
+              <td><span class="num">963 B</span></td>
+              <td><span class="num">840 B</span></td>
+              <td>Solo documentación, sin tope</td>
+            </tr>
+            <tr>
+              <th scope="row"><code>system.html</code></th>
+              <td><span class="num">81.2 KB</span></td>
+              <td><span class="num">11.4 KB</span></td>
+              <td><span class="num">9.7 KB</span></td>
+              <td>Solo documentación, sin tope</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-scroll" role="region" aria-label="Tabla de tramos medidos" tabindex="0">
+          <table class="doc-table">
+            <caption>Gzip de cada tramo entre marcadores, con unos 20 B de cabecera cada uno</caption>
+            <thead>
+            <tr>
+              <th scope="col">Tramo</th>
+              <th scope="col">Gzip</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:core</th>
+              <td><span class="num">235 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:grain</th>
+              <td><span class="num">474 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:waves</th>
+              <td><span class="num">500 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:crt</th>
+              <td><span class="num">598 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:slats</th>
+              <td><span class="num">585 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:pixel</th>
+              <td><span class="num">380 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:ascii</th>
+              <td><span class="num">272 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:noise</th>
+              <td><span class="num">362 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:dither</th>
+              <td><span class="num">347 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:blinds</th>
+              <td><span class="num">329 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:reveal</th>
+              <td><span class="num">435 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:transition</th>
+              <td><span class="num">503 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:spotlight</th>
+              <td><span class="num">254 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:star</th>
+              <td><span class="num">520 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:dotgrid</th>
+              <td><span class="num">155 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.css</code> fx:reading</th>
+              <td><span class="num">233 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.js</code> fx:grain</th>
+              <td><span class="num">388 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.js</code> fx:halftone</th>
+              <td><span class="num">318 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.js</code> fx:crt</th>
+              <td><span class="num">400 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.js</code> fx:slats</th>
+              <td><span class="num">304 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.js</code> fx:ascii</th>
+              <td><span class="num">445 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.js</code> fx:spotlight</th>
+              <td><span class="num">335 B</span></td>
+            </tr>
+            <tr>
+              <th scope="row"><code>effects.js</code> fx:reveal</th>
+              <td><span class="num">130 B</span></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="doc-note">Los topes son valores de diseño derivados de la investigación; Juan puede revisarlos. <code>system.html</code>, <code>system-doc.css</code> y <code>system-demo.js</code> se reportan aparte y no tienen tope.</p>
         <!-- weights:end -->
       </div>
     </section>
