@@ -12,6 +12,16 @@
  * Sin backdrop-filter ni filter: blur.
  */
 
+/*
+ * El inline box de code usa la fuente mono, que carga despues. Con line-height heredado el cambio
+ * de metricas del swap mueve la linea un pixel y suma CLS. Con line-height 1 no supera al strut.
+ */
+code,
+kbd,
+samp {
+  line-height: 1;
+}
+
 /* ---------- Estados forzables ---------- */
 
 .is-focus {
@@ -104,6 +114,11 @@
 }
 
 /* Interruptor: el estado lo comunica aria-pressed y un indicador de forma, no solo el color. */
+/* Ancho constante: la etiqueta cambia de ancho al cargar Geist y movia la cabecera (CLS medido). */
+.pause-toggle {
+  min-width: 14rem;
+}
+
 .btn[aria-pressed]::before {
   content: "";
   flex: none;
@@ -364,9 +379,14 @@
   border-bottom: 1px solid var(--ink-top);
 }
 
+/*
+ * Ancho minimo fijo: el texto de la marca cambia de ancho al cargar Array y movia la navegacion
+ * (CLS medido). Con la caja constante, el swap de la fuente no mueve a los vecinos.
+ */
 .brand {
   display: inline-flex;
   align-items: center;
+  min-width: 11rem;
   min-height: var(--tap);
   color: var(--paper);
   text-decoration: none;
@@ -379,7 +399,7 @@
 .nav__list {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-1) var(--space-3);
+  gap: var(--space-1) var(--space-2);
   margin: 0;
   padding: 0;
   list-style: none;

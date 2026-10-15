@@ -420,7 +420,7 @@
 .reading-text,
 .reading-quiet {
   position: relative;
-  max-width: 60ch;
+  max-width: 36rem;
 }
 
 .reading-quiet {
