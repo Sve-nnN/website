@@ -7,6 +7,7 @@
   <title>Sistema visual v3 | Juan Carlos Angulo</title>
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
   <link rel="stylesheet" href="assets/css/effects.css">
   <link rel="stylesheet" href="assets/css/system-doc.css">
   <script src="assets/js/effects.js" defer></script>
@@ -16,18 +17,39 @@
   <a class="skip-link" href="#main">Saltar al contenido</a>
 
   <header class="site-header">
-    <p class="brand">Juan Carlos Angulo</p>
-    <nav class="doc-nav" aria-label="Secciones">
-      <ul>
+    <a class="brand" href="#main">Juan Carlos Angulo</a>
+    <nav class="nav" aria-label="Secciones">
+      <ul class="nav__list nav__list--bar">
         <li><a href="#paleta">Paleta</a></li>
         <li><a href="#tipografia">Tipografía</a></li>
         <li><a href="#espaciado">Espaciado</a></li>
         <li><a href="#efectos">Efectos</a></li>
+        <li><a href="#componentes">Componentes</a></li>
         <li><a href="#catalogo">Catálogo</a></li>
         <li><a href="#pesos">Pesos</a></li>
         <li><a href="#contraste">Contraste</a></li>
       </ul>
+      <details class="nav__menu">
+        <summary>Menú</summary>
+        <ul class="nav__list">
+          <li><a href="#paleta">Paleta</a></li>
+          <li><a href="#tipografia">Tipografía</a></li>
+          <li><a href="#espaciado">Espaciado</a></li>
+          <li><a href="#efectos">Efectos</a></li>
+          <li><a href="#componentes">Componentes</a></li>
+          <li><a href="#catalogo">Catálogo</a></li>
+          <li><a href="#pesos">Pesos</a></li>
+          <li><a href="#contraste">Contraste</a></li>
+        </ul>
+      </details>
     </nav>
+    <div class="site-header__tools">
+      <ul class="lang">
+        <li><a href="#main" lang="es" hreflang="es" aria-label="Español" aria-current="true">ES</a></li>
+        <li><a href="#main" lang="en" hreflang="en" aria-label="English">EN</a></li>
+      </ul>
+      <button type="button" class="btn btn--ghost pause-toggle" data-fx-pause aria-pressed="false">Pausar animaciones</button>
+    </div>
   </header>
 
   <main id="main">
@@ -438,6 +460,970 @@
       </div>
     </section>
 
+    <!-- components:start -->
+    <section class="doc-section" id="componentes" aria-labelledby="titulo-componentes">
+      <div class="doc-inner">
+        <h2 id="titulo-componentes">Componentes</h2>
+        <p class="doc-intro">Cada familia muestra una matriz con los estados Normal, Hover, Foco, Deshabilitado y Movimiento reducido, y una muestra en vivo para probarla con el puntero y el teclado. Los componentes solo usan tokens y componen los efectos de la sección anterior.</p>
+
+        <h3 id="titulo-simulador">Simulador de estados</h3>
+        <div class="sim-panel" role="group" aria-labelledby="titulo-simulador">
+          <p>Cada interruptor pone un atributo en la raíz de la página: <code>data-motion="reduced"</code> o <code>data-saver="on"</code>. Los efectos y los componentes responden igual que con la preferencia real del sistema.</p>
+          <button type="button" class="btn btn--ghost" data-sim="motion" aria-pressed="false">Simular prefers-reduced-motion</button>
+          <button type="button" class="btn btn--ghost" data-sim="saver" aria-pressed="false">Simular saveData</button>
+        </div>
+
+    <div class="comp" data-component="button">
+      <h3 id="comp-botones">Botones</h3>
+      <p class="doc-note">Violeta con texto papel. Coral, ámbar y fósforo con texto tinta. Alto mínimo de 44 px y peso 600 de Geist.</p>
+      <ul class="state-list">
+        <li class="state-row">
+          <p class="state-name">Primario</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--primary">Pedir auditoría</button></div>
+              <p class="state-note">Estado base</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--primary is-hover">Pedir auditoría</button></div>
+              <p class="state-note">Fondo violeta más oscuro, texto papel</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--primary is-focus">Pedir auditoría</button></div>
+              <p class="state-note">Anillo ámbar de 2 px con halo de tinta</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--primary" disabled>Pedir auditoría</button></div>
+              <p class="state-note">Superficie elevada, texto en silencio, sin hover</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--primary is-reduced">Pedir auditoría</button></div>
+              <p class="state-note">Sin transición, el cambio es inmediato</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Coral</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--coral">Escribirme</button></div>
+              <p class="state-note">Estado base</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--coral is-hover">Escribirme</button></div>
+              <p class="state-note">Fondo coral más claro, texto tinta</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--coral is-focus">Escribirme</button></div>
+              <p class="state-note">Anillo ámbar de 2 px con halo de tinta</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--coral" disabled>Escribirme</button></div>
+              <p class="state-note">Superficie elevada, texto en silencio, sin hover</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--coral is-reduced">Escribirme</button></div>
+              <p class="state-note">Sin transición, el cambio es inmediato</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Ámbar</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--amber">Ver servicios</button></div>
+              <p class="state-note">Estado base</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--amber is-hover">Ver servicios</button></div>
+              <p class="state-note">Fondo ámbar más claro, texto tinta</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--amber is-focus">Ver servicios</button></div>
+              <p class="state-note">Anillo ámbar de 2 px con halo de tinta</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--amber" disabled>Ver servicios</button></div>
+              <p class="state-note">Superficie elevada, texto en silencio, sin hover</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--amber is-reduced">Ver servicios</button></div>
+              <p class="state-note">Sin transición, el cambio es inmediato</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Fósforo</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--phosphor">Ver estado</button></div>
+              <p class="state-note">Estado base</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--phosphor is-hover">Ver estado</button></div>
+              <p class="state-note">Fondo fósforo más claro, texto tinta</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--phosphor is-focus">Ver estado</button></div>
+              <p class="state-note">Anillo ámbar de 2 px con halo de tinta</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--phosphor" disabled>Ver estado</button></div>
+              <p class="state-note">Superficie elevada, texto en silencio, sin hover</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--phosphor is-reduced">Ver estado</button></div>
+              <p class="state-note">Sin transición, el cambio es inmediato</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Fantasma</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--ghost">Ver casos</button></div>
+              <p class="state-note">Estado base</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--ghost is-hover">Ver casos</button></div>
+              <p class="state-note">Fondo elevado y borde papel</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--ghost is-focus">Ver casos</button></div>
+              <p class="state-note">Anillo ámbar de 2 px con halo de tinta</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--ghost" disabled>Ver casos</button></div>
+              <p class="state-note">Superficie elevada, texto en silencio, sin hover</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--ghost is-reduced">Ver casos</button></div>
+              <p class="state-note">Sin transición, el cambio es inmediato</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Primario con borde estrella</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><span class="fx-star-border"><button type="button" class="btn btn--primary">Pedir auditoría</button></span></div>
+              <p class="state-note">El anillo orbita en 4 s</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><span class="fx-star-border"><button type="button" class="btn btn--primary is-hover">Pedir auditoría</button></span></div>
+              <p class="state-note">Fondo más oscuro</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><span class="fx-star-border"><button type="button" class="btn btn--primary is-focus">Pedir auditoría</button></span></div>
+              <p class="state-note">Anillo ámbar de 2 px</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><span class="fx-star-border"><button type="button" class="btn btn--primary" disabled>Pedir auditoría</button></span></div>
+              <p class="state-note">El botón se apaga, el anillo sigue</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><span class="fx-star-border is-reduced"><button type="button" class="btn btn--primary">Pedir auditoría</button></span></div>
+              <p class="state-note">El anillo queda fijo</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="live" data-live="button">
+        <p class="live-title pixel-label">En vivo</p>
+        <div class="live-row">
+          <button type="button" class="btn btn--primary">Pedir auditoría</button>
+          <button type="button" class="btn btn--coral">Escribirme</button>
+          <a class="btn btn--amber" href="#componentes">Ver servicios</a>
+          <button type="button" class="btn btn--phosphor">Ver estado</button>
+          <button type="button" class="btn btn--ghost">Ver casos</button>
+          <span class="fx-star-border"><button type="button" class="btn btn--primary">Pedir auditoría</button></span>
+        </div>
+        <div class="live-row">
+          <button type="button" class="btn btn--primary" disabled>Pedir auditoría</button>
+          <button type="button" class="btn btn--ghost" aria-disabled="true">Ver casos</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp" data-component="card">
+      <h3 id="comp-cards">Cards</h3>
+      <p class="doc-note">Superficie elevada con borde de 1 px. Las variantes componen los efectos y el texto vive siempre sobre scrim o sobre un panel sólido.</p>
+      <ul class="state-list">
+        <li class="state-row">
+          <p class="state-name">Base</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><article class="card"><h4 class="card__title">Auditoría técnica SEO</h4><p class="card__text">Reviso rastreo, indexación y plantillas.</p></article></div>
+              <p class="state-note">Superficie elevada y borde de 1 px</p>
+            </div>
+            <div class="state-cell" data-state="hover" data-applies="false">
+              <p class="state-label pixel-label">Hover</p>
+              <p class="state-na">No aplica: la card no es interactiva.</p>
+            </div>
+            <div class="state-cell" data-state="focus" data-applies="false">
+              <p class="state-label pixel-label">Foco</p>
+              <p class="state-na">No aplica: la card no es interactiva.</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><div class="card" role="group" aria-disabled="true"><h4 class="card__title">Caso en preparación</h4><p class="card__meta">Próximamente</p></div></div>
+              <p class="state-note">Borde discontinuo, texto en silencio</p>
+            </div>
+            <div class="state-cell" data-state="reduced" data-applies="false">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <p class="state-na">Sin movimiento, no cambia.</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Gradiente</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><article class="card card--gradient fx-grain"><div class="fx-content"><h4 class="card__title">Rendimiento web</h4><p class="card__text">Mido LCP, CLS e INP.</p></div></article></div>
+              <p class="state-note">Grano sobre gradiente, el texto va sobre scrim</p>
+            </div>
+            <div class="state-cell" data-state="hover" data-applies="false">
+              <p class="state-label pixel-label">Hover</p>
+              <p class="state-na">No aplica: la card no es interactiva.</p>
+            </div>
+            <div class="state-cell" data-state="focus" data-applies="false">
+              <p class="state-label pixel-label">Foco</p>
+              <p class="state-na">No aplica: la card no es interactiva.</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><div class="card" role="group" aria-disabled="true"><h4 class="card__title">Caso en preparación</h4><p class="card__meta">Próximamente</p></div></div>
+              <p class="state-note">Pierde el gradiente al deshabilitarse</p>
+            </div>
+            <div class="state-cell" data-state="reduced" data-applies="false">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <p class="state-na">El grano ya es estático, no cambia.</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Spotlight</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><article class="card card--spotlight fx-spotlight" data-fx-spotlight><h4 class="card__title">Desarrollo con Payload</h4><p class="card__text">Construyo el CMS y la plantilla.</p></article></div>
+              <p class="state-note">La luz queda arriba al centro</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><article class="card card--spotlight fx-spotlight is-hover"><h4 class="card__title">Desarrollo con Payload</h4><p class="card__text">Construyo el CMS y la plantilla.</p></article></div>
+              <p class="state-note">La luz sigue al puntero fino y el borde se aclara</p>
+            </div>
+            <div class="state-cell" data-state="focus" data-applies="false">
+              <p class="state-label pixel-label">Foco</p>
+              <p class="state-na">No aplica: la card no es interactiva.</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><div class="card" role="group" aria-disabled="true"><h4 class="card__title">Caso en preparación</h4><p class="card__meta">Próximamente</p></div></div>
+              <p class="state-note">Sin luz</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><article class="card card--spotlight fx-spotlight is-reduced"><h4 class="card__title">Desarrollo con Payload</h4><p class="card__text">Construyo el CMS y la plantilla.</p></article></div>
+              <p class="state-note">La luz no sigue al puntero</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Pixel</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><article class="card card--pixel fx-pixel fx-pixel-card"><div class="fx-content"><h4 class="card__title">Infraestructura</h4><p class="card__text">Despliego y mido en el servidor.</p></div></article></div>
+              <p class="state-note">Tramado de 6 px sobre el gradiente</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><article class="card card--pixel fx-pixel fx-pixel-card is-hover"><div class="fx-content"><h4 class="card__title">Infraestructura</h4><p class="card__text">Despliego y mido en el servidor.</p></div></article></div>
+              <p class="state-note">El tramado se disuelve</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><article class="card card--pixel fx-pixel fx-pixel-card is-focus-within"><div class="fx-content"><h4 class="card__title">Infraestructura</h4><p class="card__text"><a class="link-inline is-focus" href="#componentes">Ver detalle</a></p></div></article></div>
+              <p class="state-note">El tramado se disuelve y el enlace lleva el anillo</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><div class="card" role="group" aria-disabled="true"><h4 class="card__title">Caso en preparación</h4><p class="card__meta">Próximamente</p></div></div>
+              <p class="state-note">Sin tramado</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><article class="card card--pixel fx-pixel fx-pixel-card is-hover is-reduced"><div class="fx-content"><h4 class="card__title">Infraestructura</h4><p class="card__text">Despliego y mido en el servidor.</p></div></article></div>
+              <p class="state-note">El cambio es inmediato, sin pasos</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Transición</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><article class="card card--transition fx-transition"><div class="fx-transition__cover"><div class="fx-content"><h4 class="card__title">Caso de ecommerce</h4></div></div><div class="fx-transition__detail"><p class="card__text">Datos medidos y el código que cambié.</p><a class="link-inline" href="#componentes">Ver detalle</a></div></article></div>
+              <p class="state-note">Muestra la portada</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><article class="card card--transition fx-transition is-hover"><div class="fx-transition__cover"><div class="fx-content"><h4 class="card__title">Caso de ecommerce</h4></div></div><div class="fx-transition__detail"><p class="card__text">Datos medidos y el código que cambié.</p><a class="link-inline" href="#componentes">Ver detalle</a></div></article></div>
+              <p class="state-note">La portada se disuelve y aparece el detalle</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><article class="card card--transition fx-transition is-focus-within"><div class="fx-transition__cover"><div class="fx-content"><h4 class="card__title">Caso de ecommerce</h4></div></div><div class="fx-transition__detail"><p class="card__text">Datos medidos y el código que cambié.</p><a class="link-inline is-focus" href="#componentes">Ver detalle</a></div></article></div>
+              <p class="state-note">Enfocar el enlace muestra el detalle</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><div class="card" role="group" aria-disabled="true"><h4 class="card__title">Caso en preparación</h4><p class="card__meta">Próximamente</p></div></div>
+              <p class="state-note">Sin portada ni detalle</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><article class="card card--transition fx-transition is-hover is-reduced"><div class="fx-transition__cover"><div class="fx-content"><h4 class="card__title">Caso de ecommerce</h4></div></div><div class="fx-transition__detail"><p class="card__text">Datos medidos y el código que cambié.</p><a class="link-inline" href="#componentes">Ver detalle</a></div></article></div>
+              <p class="state-note">El cambio es inmediato</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Enlace</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><article class="card card--link"><h4 class="card__title"><a href="#componentes">Cómo corregí el LCP de un ecommerce</a></h4><p class="card__text">El caso con datos medidos.</p></article></div>
+              <p class="state-note">Toda la card es el área de clic</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><article class="card card--link is-hover"><h4 class="card__title"><a href="#componentes">Cómo corregí el LCP de un ecommerce</a></h4><p class="card__text">El caso con datos medidos.</p></article></div>
+              <p class="state-note">Borde violeta y título subrayado</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><article class="card card--link is-focus"><h4 class="card__title"><a href="#componentes">Cómo corregí el LCP de un ecommerce</a></h4><p class="card__text">El caso con datos medidos.</p></article></div>
+              <p class="state-note">Anillo ámbar de 2 px alrededor de la card</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><div class="card card--link" role="group" aria-disabled="true"><h4 class="card__title">Caso en preparación</h4><p class="card__meta">Próximamente</p></div></div>
+              <p class="state-note">Sin enlace, borde discontinuo</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><article class="card card--link is-hover is-reduced"><h4 class="card__title"><a href="#componentes">Cómo corregí el LCP de un ecommerce</a></h4><p class="card__text">El caso con datos medidos.</p></article></div>
+              <p class="state-note">Sin transición de borde</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="live" data-live="card">
+        <p class="live-title pixel-label">En vivo</p>
+        <div class="live-grid">
+          <article class="card"><h4 class="card__title">Auditoría técnica SEO</h4><p class="card__text">Reviso rastreo, indexación y plantillas.</p></article>
+          <article class="card card--gradient fx-grain"><div class="fx-content"><h4 class="card__title">Rendimiento web</h4><p class="card__text">Mido LCP, CLS e INP.</p></div></article>
+          <article class="card card--spotlight fx-spotlight" data-fx-spotlight><h4 class="card__title">Desarrollo con Payload</h4><p class="card__text">Pasa el puntero: la luz te sigue.</p></article>
+          <article class="card card--pixel fx-pixel fx-pixel-card"><div class="fx-content"><h4 class="card__title">Infraestructura</h4><p class="card__text"><a class="link-inline" href="#componentes">Enfoca este enlace</a></p></div></article>
+          <article class="card card--transition fx-transition"><div class="fx-transition__cover"><div class="fx-content"><h4 class="card__title">Caso de ecommerce</h4></div></div><div class="fx-transition__detail"><p class="card__text">Datos medidos y el código que cambié.</p><a class="link-inline" href="#componentes">Ver detalle</a></div></article>
+          <article class="card card--link"><h4 class="card__title"><a href="#componentes">Cómo corregí el LCP de un ecommerce</a></h4><p class="card__text">El caso con datos medidos.</p></article>
+          <div class="card" role="group" aria-disabled="true"><h4 class="card__title">Caso en preparación</h4><p class="card__meta">Próximamente</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp" data-component="badge">
+      <h3 id="comp-badges">Badges</h3>
+      <p class="doc-note">Etiquetas cortas en Pixel Label a 12 px o más. Pendiente marca un dato que falta y nunca se rellena con una cifra inventada.</p>
+      <ul class="state-list">
+        <li class="state-row">
+          <p class="state-name">Todas las variantes</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><span class="badge pixel-label">Base</span> <span class="badge badge--state pixel-label">Estado ok</span> <span class="badge badge--warn pixel-label">Aviso</span> <span class="badge badge--violet pixel-label">Violeta</span> <span class="badge badge--pending pixel-label">Pendiente</span></div>
+              <p class="state-note">Base, estado, aviso, violeta y pendiente</p>
+            </div>
+            <div class="state-cell" data-state="hover" data-applies="false">
+              <p class="state-label pixel-label">Hover</p>
+              <p class="state-na">No aplica: el badge no es interactivo.</p>
+            </div>
+            <div class="state-cell" data-state="focus" data-applies="false">
+              <p class="state-label pixel-label">Foco</p>
+              <p class="state-na">No aplica: el badge no es interactivo.</p>
+            </div>
+            <div class="state-cell" data-state="disabled" data-applies="false">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <p class="state-na">No aplica: el badge no es interactivo.</p>
+            </div>
+            <div class="state-cell" data-state="reduced" data-applies="false">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <p class="state-na">Sin movimiento, no cambia.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="live" data-live="badge">
+        <p class="live-title pixel-label">En vivo</p>
+        <div class="live-row">
+          <span class="badge pixel-label">Base</span>
+          <span class="badge badge--state pixel-label">Estado ok</span>
+          <span class="badge badge--warn pixel-label">Aviso</span>
+          <span class="badge badge--violet pixel-label">Violeta</span>
+          <span class="badge badge--pending pixel-label">Pendiente</span>
+        </div>
+        <p class="doc-note">Plazo de respuesta del formulario: <span class="badge badge--pending pixel-label">Pendiente</span> Lo confirmo antes de publicar.</p>
+      </div>
+    </div>
+
+    <div class="comp" data-component="nav">
+      <h3 id="comp-navegacion">Navegación</h3>
+      <p class="doc-note">Marca, enlaces, selector de idioma y el control Pausar animaciones. Bajo 768 px los enlaces pasan a un menú details que funciona sin JavaScript.</p>
+      <ul class="state-list">
+        <li class="state-row">
+          <p class="state-name">Enlace</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><div class="nav"><ul class="nav__list"><li><a href="#componentes">Servicios</a></li></ul></div></div>
+              <p class="state-note">Estado base</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><div class="nav"><ul class="nav__list"><li><a href="#componentes" class="is-hover">Servicios</a></li></ul></div></div>
+              <p class="state-note">Subrayado en silencio</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><div class="nav"><ul class="nav__list"><li><a href="#componentes" class="is-focus">Servicios</a></li></ul></div></div>
+              <p class="state-note">Anillo ámbar de 2 px</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><div class="nav"><ul class="nav__list"><li><a href="#componentes" aria-disabled="true">Blog</a></li></ul></div></div>
+              <p class="state-note">Texto en silencio, sin subrayado</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><div class="is-reduced"><div class="nav"><ul class="nav__list"><li><a href="#componentes" class="is-hover">Servicios</a></li></ul></div></div></div>
+              <p class="state-note">Sin transición</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Enlace de la página actual</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><div class="nav"><ul class="nav__list"><li><a href="#componentes" aria-current="page">Casos</a></li></ul></div></div>
+              <p class="state-note">aria-current page y subrayado fósforo</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><div class="nav"><ul class="nav__list"><li><a href="#componentes" class="is-hover" aria-current="page">Casos</a></li></ul></div></div>
+              <p class="state-note">Conserva el subrayado fósforo</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><div class="nav"><ul class="nav__list"><li><a href="#componentes" class="is-focus" aria-current="page">Casos</a></li></ul></div></div>
+              <p class="state-note">Anillo ámbar de 2 px</p>
+            </div>
+            <div class="state-cell" data-state="disabled" data-applies="false">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <p class="state-na">No aplica: la página actual no se deshabilita.</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><div class="is-reduced"><div class="nav"><ul class="nav__list"><li><a href="#componentes" aria-current="page">Casos</a></li></ul></div></div></div>
+              <p class="state-note">Sin transición</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Menú colapsado</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><div class="nav nav--collapsed"><details class="nav__menu"><summary>Menú</summary></details></div></div>
+              <p class="state-note">details y summary, sin JavaScript</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><div class="nav nav--collapsed"><details class="nav__menu"><summary class="is-hover">Menú</summary></details></div></div>
+              <p class="state-note">Fondo elevado y borde papel</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><div class="nav nav--collapsed"><details class="nav__menu"><summary class="is-focus">Menú</summary></details></div></div>
+              <p class="state-note">Anillo ámbar de 2 px</p>
+            </div>
+            <div class="state-cell" data-state="disabled" data-applies="false">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <p class="state-na">No aplica: el menú siempre está disponible.</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><div class="is-reduced"><div class="nav nav--collapsed"><details class="nav__menu"><summary>Menú</summary></details></div></div></div>
+              <p class="state-note">Sin transición</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="live" data-live="nav">
+        <p class="live-title pixel-label">En vivo</p>
+        <div class="demo-frame">
+          <header class="site-header">
+            <a class="brand" href="#componentes">Juan Carlos Angulo</a>
+            <nav class="nav" aria-label="Navegación de ejemplo"><ul class="nav__list nav__list--bar"><li><a href="#componentes">Servicios</a></li><li><a href="#componentes" aria-current="page">Casos</a></li><li><a href="#componentes">Blog</a></li><li><a href="#componentes">Contacto</a></li></ul><details class="nav__menu"><summary>Menú</summary><ul class="nav__list"><li><a href="#componentes">Servicios</a></li><li><a href="#componentes" aria-current="page">Casos</a></li><li><a href="#componentes">Blog</a></li><li><a href="#componentes">Contacto</a></li></ul></details></nav>
+            <div class="site-header__tools"><ul class="lang"><li><a href="#componentes" lang="es" hreflang="es" aria-label="Español" aria-current="true">ES</a></li><li><a href="#componentes" lang="en" hreflang="en" aria-label="English">EN</a></li></ul></div>
+          </header>
+        </div>
+        <p class="doc-note">Versión colapsada forzada con <code>.nav--collapsed</code>. Abre el menú con el teclado o el puntero.</p>
+        <div class="demo-frame">
+          <header class="site-header">
+            <a class="brand" href="#componentes">Juan Carlos Angulo</a>
+            <nav class="nav nav--collapsed" aria-label="Navegación colapsada de ejemplo"><ul class="nav__list nav__list--bar"><li><a href="#componentes">Servicios</a></li><li><a href="#componentes" aria-current="page">Casos</a></li><li><a href="#componentes">Blog</a></li><li><a href="#componentes">Contacto</a></li></ul><details class="nav__menu"><summary>Menú</summary><ul class="nav__list"><li><a href="#componentes">Servicios</a></li><li><a href="#componentes" aria-current="page">Casos</a></li><li><a href="#componentes">Blog</a></li><li><a href="#componentes">Contacto</a></li></ul></details></nav>
+            <div class="site-header__tools"><ul class="lang"><li><a href="#componentes" lang="es" hreflang="es" aria-label="Español" aria-current="true">ES</a></li><li><a href="#componentes" lang="en" hreflang="en" aria-label="English">EN</a></li></ul></div>
+          </header>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp" data-component="footer">
+      <h3 id="comp-pie">Pie de página</h3>
+      <p class="doc-note">Columnas de enlaces, selector de idioma y datos legales. Lo que falta se marca como pendiente.</p>
+      <ul class="state-list">
+        <li class="state-row">
+          <p class="state-name">Enlace del pie</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><div class="demo-frame"><div class="site-footer"><ul><li><a href="#componentes">Servicios</a></li></ul></div></div></div>
+              <p class="state-note">Texto papel sin subrayado</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><div class="demo-frame"><div class="site-footer"><ul><li><a href="#componentes" class="is-hover">Servicios</a></li></ul></div></div></div>
+              <p class="state-note">Subrayado</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><div class="demo-frame"><div class="site-footer"><ul><li><a href="#componentes" class="is-focus">Servicios</a></li></ul></div></div></div>
+              <p class="state-note">Anillo ámbar de 2 px</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><div class="demo-frame"><div class="site-footer"><ul><li><a href="#componentes" aria-disabled="true">Aviso legal</a></li></ul></div></div></div>
+              <p class="state-note">Texto en silencio, sin hover</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><div class="is-reduced"><div class="demo-frame"><div class="site-footer"><ul><li><a href="#componentes" class="is-hover">Servicios</a></li></ul></div></div></div></div>
+              <p class="state-note">Sin transición</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="live" data-live="footer">
+        <p class="live-title pixel-label">En vivo</p>
+        <div class="demo-frame">
+          <footer class="site-footer">
+            <div class="site-footer__cols">
+              <nav aria-label="Sitio, pie de ejemplo">
+                <p class="site-footer__title pixel-label">Sitio</p>
+                <ul><li><a href="#componentes">Servicios</a></li><li><a href="#componentes">Casos</a></li><li><a href="#componentes">Blog</a></li><li><a href="#componentes">Contacto</a></li></ul>
+              </nav>
+              <nav aria-label="Idioma, pie de ejemplo">
+                <p class="site-footer__title pixel-label">Idioma</p>
+                <ul><li><a href="#componentes" lang="es" hreflang="es" aria-current="true">Español</a></li><li><a href="#componentes" lang="en" hreflang="en">English</a></li></ul>
+              </nav>
+              <div>
+                <p class="site-footer__title pixel-label">Datos legales</p>
+                <p>Responsable: Juan Carlos Angulo.</p>
+                <p>Documento fiscal: <span class="badge badge--pending pixel-label">Pendiente</span></p>
+              </div>
+            </div>
+            <div class="site-footer__legal">
+              <p>Mockup estático del sistema visual v3.</p>
+              <a href="#componentes" aria-disabled="true">Aviso legal</a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <div class="comp" data-component="form">
+      <h3 id="comp-formulario">Formulario</h3>
+      <p class="doc-note">Etiqueta visible, ayuda fuera del campo y errores con icono de texto, mensaje y color. El formulario no envía datos a ningún lado.</p>
+      <ul class="state-list">
+        <li class="state-row">
+          <p class="state-name">Campo de texto</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><div class="field"><label for="mx-texto-normal">Nombre</label><input class="input" id="mx-texto-normal" type="text"></div></div>
+              <p class="state-note">Borde en silencio, 3 a 1 contra el fondo</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><div class="field"><label for="mx-texto-hover">Nombre</label><input class="input is-hover" id="mx-texto-hover" type="text"></div></div>
+              <p class="state-note">Borde papel</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><div class="field"><label for="mx-texto-focus">Nombre</label><input class="input is-focus" id="mx-texto-focus" type="text"></div></div>
+              <p class="state-note">Anillo ámbar de 2 px</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><div class="field"><label for="mx-texto-disabled">Nombre</label><input class="input" id="mx-texto-disabled" type="text" disabled></div></div>
+              <p class="state-note">Fondo elevado y texto en silencio</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><div class="is-reduced"><div class="field"><label for="mx-texto-reduced">Nombre</label><input class="input is-hover" id="mx-texto-reduced" type="text"></div></div></div>
+              <p class="state-note">Sin transición de borde</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Área de texto</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><div class="field"><label for="mx-area-normal">Mensaje</label><textarea class="input" id="mx-area-normal" rows="3"></textarea></div></div>
+              <p class="state-note">Borde en silencio, 3 a 1 contra el fondo</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><div class="field"><label for="mx-area-hover">Mensaje</label><textarea class="input is-hover" id="mx-area-hover" rows="3"></textarea></div></div>
+              <p class="state-note">Borde papel</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><div class="field"><label for="mx-area-focus">Mensaje</label><textarea class="input is-focus" id="mx-area-focus" rows="3"></textarea></div></div>
+              <p class="state-note">Anillo ámbar de 2 px</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><div class="field"><label for="mx-area-disabled">Mensaje</label><textarea class="input" id="mx-area-disabled" rows="3" disabled></textarea></div></div>
+              <p class="state-note">Fondo elevado y texto en silencio</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><div class="is-reduced"><div class="field"><label for="mx-area-reduced">Mensaje</label><textarea class="input is-hover" id="mx-area-reduced" rows="3"></textarea></div></div></div>
+              <p class="state-note">Sin transición de borde</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Selector</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><div class="field"><label for="mx-select-normal">Servicio</label><select class="input" id="mx-select-normal"><option>Auditoría técnica SEO</option><option>Rendimiento web</option></select></div></div>
+              <p class="state-note">Borde en silencio, 3 a 1 contra el fondo</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><div class="field"><label for="mx-select-hover">Servicio</label><select class="input is-hover" id="mx-select-hover"><option>Auditoría técnica SEO</option><option>Rendimiento web</option></select></div></div>
+              <p class="state-note">Borde papel</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><div class="field"><label for="mx-select-focus">Servicio</label><select class="input is-focus" id="mx-select-focus"><option>Auditoría técnica SEO</option><option>Rendimiento web</option></select></div></div>
+              <p class="state-note">Anillo ámbar de 2 px</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><div class="field"><label for="mx-select-disabled">Servicio</label><select class="input" id="mx-select-disabled" disabled><option>Auditoría técnica SEO</option><option>Rendimiento web</option></select></div></div>
+              <p class="state-note">Fondo elevado y texto en silencio</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><div class="is-reduced"><div class="field"><label for="mx-select-reduced">Servicio</label><select class="input is-hover" id="mx-select-reduced"><option>Auditoría técnica SEO</option><option>Rendimiento web</option></select></div></div></div>
+              <p class="state-note">Sin transición de borde</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Casilla</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><label class="check"><input type="checkbox" id="mx-check-normal"><span>Respóndeme por correo</span></label></div>
+              <p class="state-note">Área de clic de 44 px de alto</p>
+            </div>
+            <div class="state-cell" data-state="hover" data-applies="false">
+              <p class="state-label pixel-label">Hover</p>
+              <p class="state-na">Sin cambio: el navegador pinta la casilla.</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><label class="check"><input class="is-focus" type="checkbox" id="mx-check-focus"><span>Respóndeme por correo</span></label></div>
+              <p class="state-note">Anillo ámbar de 2 px</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><label class="check"><input type="checkbox" id="mx-check-disabled" disabled><span>Respóndeme por correo</span></label></div>
+              <p class="state-note">Casilla y texto apagados</p>
+            </div>
+            <div class="state-cell" data-state="reduced" data-applies="false">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <p class="state-na">Sin movimiento, no cambia.</p>
+            </div>
+          </div>
+        </li>
+        <li class="state-row">
+          <p class="state-name">Campo con error</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><div class="field"><label for="ej-correo">Correo</label><input class="input" id="ej-correo" type="email" autocomplete="email" aria-invalid="true" aria-describedby="ej-correo-error"><p class="field-error" id="ej-correo-error"><span class="field-error__icon" aria-hidden="true">[!]</span><span><strong>Error.</strong> Falta el correo. Escríbelo para poder responderte.</span></p></div></div>
+              <p class="state-note">Borde coral, icono de texto y mensaje</p>
+            </div>
+            <div class="state-cell" data-state="hover" data-applies="false">
+              <p class="state-label pixel-label">Hover</p>
+              <p class="state-na">Conserva el borde coral.</p>
+            </div>
+            <div class="state-cell" data-state="focus" data-applies="false">
+              <p class="state-label pixel-label">Foco</p>
+              <p class="state-na">Conserva el borde coral y suma el anillo ámbar.</p>
+            </div>
+            <div class="state-cell" data-state="disabled" data-applies="false">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <p class="state-na">No aplica: un campo con error sigue activo.</p>
+            </div>
+            <div class="state-cell" data-state="reduced" data-applies="false">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <p class="state-na">Sin movimiento, no cambia.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="live" data-live="form">
+        <p class="live-title pixel-label">En vivo</p>
+        <form class="form" id="form-ejemplo" aria-labelledby="titulo-form-vivo" novalidate>
+          <p id="titulo-form-vivo" class="state-name">Formulario de contacto de ejemplo</p>
+          <div class="field">
+            <label for="f-nombre">Nombre</label>
+            <p class="field-help" id="f-nombre-ayuda">Cómo quieres que te llame.</p>
+            <input class="input" id="f-nombre" name="nombre" type="text" autocomplete="name" aria-describedby="f-nombre-ayuda">
+          </div>
+          <div class="field">
+            <label for="f-correo">Correo</label>
+            <p class="field-help" id="f-correo-ayuda">Aquí te respondo.</p>
+            <input class="input" id="f-correo" name="correo" type="email" autocomplete="email" aria-describedby="f-correo-ayuda">
+          </div>
+          <div class="field">
+            <label for="f-servicio">Servicio</label>
+            <select class="input" id="f-servicio" name="servicio">
+              <option>Auditoría técnica SEO</option>
+              <option>Rendimiento web</option>
+              <option>Desarrollo con Next.js y Payload</option>
+              <option>Otro tema</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-mensaje">Mensaje</label>
+            <p class="field-help" id="f-mensaje-ayuda">Cuéntame qué sitio tienes y qué te preocupa.</p>
+            <textarea class="input" id="f-mensaje" name="mensaje" rows="4" aria-describedby="f-mensaje-ayuda"></textarea>
+          </div>
+          <label class="check"><input type="checkbox" id="f-copia" name="copia"><span>Respóndeme por correo</span></label>
+          <div class="field">
+            <button type="submit" class="btn btn--primary">Enviar mensaje</button>
+          </div>
+          <p class="form-status" role="status"></p>
+        </form>
+      </div>
+    </div>
+
+    <div class="comp" data-component="crt">
+      <h3 id="comp-crt">Bloque terminal CRT</h3>
+      <p class="doc-note">Terminal con texto real y cursor de bloque fósforo. El cursor parpadea una vez cada 1.2 s y solo con movimiento permitido.</p>
+      <ul class="state-list">
+        <li class="state-row">
+          <p class="state-name">Bloque terminal</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><figure class="crt fx-crt"><pre class="crt-screen fx-crt-text">&gt; tokens ok
+&gt; contraste ok
+&gt; fuentes ok
+&gt; listo <span class="crt-cursor" aria-hidden="true"></span></pre></figure></div>
+              <p class="state-note">El cursor parpadea cada 1.2 s</p>
+            </div>
+            <div class="state-cell" data-state="hover" data-applies="false">
+              <p class="state-label pixel-label">Hover</p>
+              <p class="state-na">No aplica: el bloque no es interactivo.</p>
+            </div>
+            <div class="state-cell" data-state="focus" data-applies="false">
+              <p class="state-label pixel-label">Foco</p>
+              <p class="state-na">No aplica: el bloque no es interactivo.</p>
+            </div>
+            <div class="state-cell" data-state="disabled" data-applies="false">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <p class="state-na">No aplica: el bloque no es interactivo.</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><figure class="crt fx-crt is-reduced"><pre class="crt-screen fx-crt-text">&gt; tokens ok
+&gt; contraste ok
+&gt; fuentes ok
+&gt; listo <span class="crt-cursor" aria-hidden="true"></span></pre></figure></div>
+              <p class="state-note">Cursor fijo, sin parpadeo ni parpadeo del texto</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="live" data-live="crt">
+        <p class="live-title pixel-label">En vivo</p>
+        <figure class="crt fx-crt" aria-labelledby="crt-leyenda"><pre class="crt-screen fx-crt-text">&gt; tokens ok
+&gt; contraste ok
+&gt; fuentes ok
+&gt; listo <span class="crt-cursor" aria-hidden="true"></span></pre></figure>
+        <p class="doc-note" id="crt-leyenda">Texto real sobre el propio sistema. El cursor es decorativo y lleva <code>aria-hidden</code>.</p>
+      </div>
+    </div>
+
+    <div class="comp" data-component="ascii">
+      <h3 id="comp-ascii">Bloque ASCII</h3>
+      <p class="doc-note">Decoración con aria-hidden que usa solo el juego .:-=+*#%@. Con movimiento reducido o en mobile queda estático.</p>
+      <ul class="state-list">
+        <li class="state-row">
+          <p class="state-name">Bloque ASCII</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><div class="ascii-block"><pre class="fx-ascii" aria-hidden="true">+*#%%%%%##**++++**#%@@@@
+#%%@@@@@%#**++=+++*#####
+#%%@@@%%#*+=------=+++*+
+*######*+=-:....::-==+++
+=+++*++==-:.....::-=+***
+-==++++==--:::::-=+*#%%%
+-=+******+======+*#%@@@@</pre><p class="ascii-block__note">Decorativo, no lleva información.</p></div></div>
+              <p class="state-note">Vista estática. El ticker corre en la muestra en vivo</p>
+            </div>
+            <div class="state-cell" data-state="hover" data-applies="false">
+              <p class="state-label pixel-label">Hover</p>
+              <p class="state-na">No aplica: el bloque no es interactivo.</p>
+            </div>
+            <div class="state-cell" data-state="focus" data-applies="false">
+              <p class="state-label pixel-label">Foco</p>
+              <p class="state-na">No aplica: el bloque no es interactivo.</p>
+            </div>
+            <div class="state-cell" data-state="disabled" data-applies="false">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <p class="state-na">No aplica: el bloque no es interactivo.</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><div class="ascii-block"><pre class="fx-ascii" aria-hidden="true">+*#%%%%%##**++++**#%@@@@
+#%%@@@@@%#**++=+++*#####
+#%%@@@%%#*+=------=+++*+
+*######*+=-:....::-==+++
+=+++*++==-:.....::-=+***
+-==++++==--:::::-=+*#%%%
+-=+******+======+*#%@@@@</pre><p class="ascii-block__note">Decorativo, no lleva información.</p></div></div>
+              <p class="state-note">Con movimiento reducido o en mobile el texto no cambia</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="live" data-live="ascii">
+        <p class="live-title pixel-label">En vivo</p>
+        <div class="ascii-block"><pre class="fx-ascii" data-fx-ascii aria-hidden="true">+*#%%%%%##**++++**#%@@@@
+#%%@@@@@%#**++=+++*#####
+#%%@@@%%#*+=------=+++*+
+*######*+=-:....::-==+++
+=+++*++==-:.....::-=+***
+-==++++==--:::::-=+*#%%%
+-=+******+======+*#%@@@@</pre><p class="ascii-block__note">Decorativo, no lleva información.</p></div>
+      </div>
+    </div>
+
+    <div class="comp" data-component="pause">
+      <h3 id="comp-pausa">Pausar animaciones</h3>
+      <p class="doc-note">WCAG 2.2.2 pide un mecanismo para pausar el movimiento. La etiqueta es fija y aria-pressed comunica el estado.</p>
+      <ul class="state-list">
+        <li class="state-row">
+          <p class="state-name">Control de pausa</p>
+          <div class="state-grid">
+            <div class="state-cell" data-state="normal">
+              <p class="state-label pixel-label">Normal</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--ghost pause-toggle" aria-pressed="false">Pausar animaciones</button></div>
+              <p class="state-note">aria-pressed false, cuadro vacío</p>
+            </div>
+            <div class="state-cell" data-state="hover">
+              <p class="state-label pixel-label">Hover</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--ghost pause-toggle is-hover" aria-pressed="false">Pausar animaciones</button></div>
+              <p class="state-note">Fondo elevado y borde papel</p>
+            </div>
+            <div class="state-cell" data-state="focus">
+              <p class="state-label pixel-label">Foco</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--ghost pause-toggle is-focus" aria-pressed="false">Pausar animaciones</button></div>
+              <p class="state-note">Anillo ámbar de 2 px</p>
+            </div>
+            <div class="state-cell" data-state="disabled">
+              <p class="state-label pixel-label">Deshabilitado</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--ghost pause-toggle" aria-pressed="true" disabled>Pausar animaciones</button></div>
+              <p class="state-note">El sistema ya pidió menos movimiento: queda pulsado y apagado</p>
+            </div>
+            <div class="state-cell" data-state="reduced">
+              <p class="state-label pixel-label">Movimiento reducido</p>
+              <div class="state-sample" inert><button type="button" class="btn btn--ghost pause-toggle is-reduced" aria-pressed="true">Pausar animaciones</button></div>
+              <p class="state-note">aria-pressed true, cuadro fósforo lleno y sin transición</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="live" data-live="pause">
+        <p class="live-title pixel-label">En vivo</p>
+        <div class="live-row">
+          <button type="button" class="btn btn--ghost pause-toggle" data-fx-pause aria-pressed="false">Pausar animaciones</button>
+        </div>
+        <p class="doc-note">Es el mismo control de la cabecera. Apaga el canvas activo, el ticker ASCII, el cursor del CRT y el borde estrella.</p>
+      </div>
+    </div>
+      </div>
+    </section>
+    <!-- components:end -->
+
     <section class="doc-section" id="catalogo" aria-labelledby="titulo-catalogo">
       <div class="doc-inner">
         <h2 id="titulo-catalogo">Catálogo de origen</h2>
@@ -678,9 +1664,9 @@
             </tr>
             <tr>
               <th scope="row"><strong>PatternWaves</strong></th>
-              <td><span class="num">500 B</span></td>
+              <td><span class="num">501 B</span></td>
               <td><span class="num">318 B</span></td>
-              <td><span class="num">818 de 2048 B</span></td>
+              <td><span class="num">819 de 2048 B</span></td>
               <td>Dentro del tope</td>
               <td>sí, demo con slot único</td>
               <td>CSS en producción; shader halftone solo como demo opt-in</td>
@@ -708,9 +1694,9 @@
             </tr>
             <tr>
               <th scope="row"><strong>PixelBlast</strong></th>
-              <td><span class="num">380 B</span></td>
+              <td><span class="num">381 B</span></td>
               <td><span class="num">0 B</span></td>
-              <td><span class="num">380 de 2048 B</span></td>
+              <td><span class="num">381 de 2048 B</span></td>
               <td>Dentro del tope</td>
               <td>no, CSS</td>
               <td>Solo CSS: tramado conic-gradient de 6 px; sin shader</td>
@@ -718,9 +1704,9 @@
             </tr>
             <tr>
               <th scope="row"><strong>PixelCard</strong></th>
-              <td><span class="num">380 B</span></td>
+              <td><span class="num">381 B</span></td>
               <td><span class="num">0 B</span></td>
-              <td><span class="num">380 de 2048 B</span></td>
+              <td><span class="num">381 de 2048 B</span></td>
               <td>Dentro del tope</td>
               <td>no, CSS</td>
               <td>Solo CSS: la disolución en hover y en foco usa steps(); sin canvas 2D</td>
@@ -758,9 +1744,9 @@
             </tr>
             <tr>
               <th scope="row"><strong>Dither</strong></th>
-              <td><span class="num">347 B</span></td>
+              <td><span class="num">346 B</span></td>
               <td><span class="num">0 B</span></td>
-              <td><span class="num">347 de 2048 B</span></td>
+              <td><span class="num">346 de 2048 B</span></td>
               <td>Dentro del tope</td>
               <td>no, CSS</td>
               <td>Tramado Bayer 4x4 estático en tres densidades; sin shader</td>
@@ -873,19 +1859,19 @@
             </tr>
             <tr>
               <th scope="row">assets/css/effects.css (gzip)</th>
-              <td><span class="num">3337 B</span></td>
+              <td><span class="num">3338 B</span></td>
               <td><span class="num">6144 B</span></td>
               <td>Cumple</td>
             </tr>
             <tr>
               <th scope="row">CSS del kit concatenado (gzip)</th>
-              <td><span class="num">5897 B</span></td>
+              <td><span class="num">8449 B</span></td>
               <td><span class="num">14336 B</span></td>
               <td>Cumple</td>
             </tr>
             <tr>
               <th scope="row">JS de producción más CSS del kit (gzip)</th>
-              <td><span class="num">11488 B</span></td>
+              <td><span class="num">14040 B</span></td>
               <td><span class="num">24576 B</span></td>
               <td>Cumple</td>
             </tr>
@@ -933,10 +1919,17 @@
               <td>Kit</td>
             </tr>
             <tr>
+              <th scope="row"><code>assets/css/components.css</code></th>
+              <td><span class="num">14114 B</span></td>
+              <td><span class="num">3277 B</span></td>
+              <td><span class="num">2899 B</span></td>
+              <td>Kit</td>
+            </tr>
+            <tr>
               <th scope="row"><code>assets/css/effects.css</code></th>
-              <td><span class="num">13142 B</span></td>
-              <td><span class="num">3337 B</span></td>
-              <td><span class="num">2952 B</span></td>
+              <td><span class="num">13148 B</span></td>
+              <td><span class="num">3338 B</span></td>
+              <td><span class="num">2947 B</span></td>
               <td>Kit</td>
             </tr>
             <tr>
@@ -969,23 +1962,23 @@
             </tr>
             <tr>
               <th scope="row"><code>assets/css/system-doc.css</code></th>
-              <td><span class="num">8144 B</span></td>
-              <td><span class="num">1895 B</span></td>
-              <td><span class="num">1641 B</span></td>
+              <td><span class="num">9893 B</span></td>
+              <td><span class="num">2210 B</span></td>
+              <td><span class="num">1916 B</span></td>
               <td>Solo documentación, sin tope</td>
             </tr>
             <tr>
               <th scope="row"><code>assets/js/system-demo.js</code></th>
-              <td><span class="num">2162 B</span></td>
-              <td><span class="num">963 B</span></td>
-              <td><span class="num">840 B</span></td>
+              <td><span class="num">3910 B</span></td>
+              <td><span class="num">1502 B</span></td>
+              <td><span class="num">1323 B</span></td>
               <td>Solo documentación, sin tope</td>
             </tr>
             <tr>
               <th scope="row"><code>system.html</code></th>
-              <td><span class="num">81.2 KB</span></td>
-              <td><span class="num">11.4 KB</span></td>
-              <td><span class="num">9.7 KB</span></td>
+              <td><span class="num">154.3 KB</span></td>
+              <td><span class="num">18.3 KB</span></td>
+              <td><span class="num">15.1 KB</span></td>
               <td>Solo documentación, sin tope</td>
             </tr>
             </tbody>
@@ -1011,7 +2004,7 @@
             </tr>
             <tr>
               <th scope="row"><code>effects.css</code> fx:waves</th>
-              <td><span class="num">500 B</span></td>
+              <td><span class="num">501 B</span></td>
             </tr>
             <tr>
               <th scope="row"><code>effects.css</code> fx:crt</th>
@@ -1023,7 +2016,7 @@
             </tr>
             <tr>
               <th scope="row"><code>effects.css</code> fx:pixel</th>
-              <td><span class="num">380 B</span></td>
+              <td><span class="num">381 B</span></td>
             </tr>
             <tr>
               <th scope="row"><code>effects.css</code> fx:ascii</th>
@@ -1035,7 +2028,7 @@
             </tr>
             <tr>
               <th scope="row"><code>effects.css</code> fx:dither</th>
-              <td><span class="num">347 B</span></td>
+              <td><span class="num">346 B</span></td>
             </tr>
             <tr>
               <th scope="row"><code>effects.css</code> fx:blinds</th>
@@ -1384,6 +2377,118 @@
             <td>4.5:1</td>
             <td>Cumple AA</td>
           </tr>
+          <tr data-group="components" data-result="ok">
+            <th scope="row">paper sobre mezcla violet y ink al 22% (hover del boton primario)</th>
+            <td>Estados de componentes (texto)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #4932C3;">Aa</span></td>
+            <td>7.93:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="components" data-result="ok">
+            <th scope="row">ink sobre mezcla coral y paper al 20% (hover del boton coral)</th>
+            <td>Estados de componentes (texto)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--ink); background: #FE7089;">Aa</span></td>
+            <td>7.35:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="components" data-result="ok">
+            <th scope="row">ink sobre mezcla amber y paper al 20% (hover del boton ambar)</th>
+            <td>Estados de componentes (texto)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--ink); background: #FEBF4B;">Aa</span></td>
+            <td>11.90:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="components" data-result="ok">
+            <th scope="row">ink sobre mezcla phosphor y paper al 20% (hover del boton fosforo)</th>
+            <td>Estados de componentes (texto)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--ink); background: #C4FE61;">Aa</span></td>
+            <td>16.51:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="components" data-result="ok">
+            <th scope="row">coral sobre ink-raised (mensaje de error en superficie elevada)</th>
+            <td>Estados de componentes (texto)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--coral); background: var(--ink-raised);">Aa</span></td>
+            <td>5.68:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="components" data-result="ok">
+            <th scope="row">amber sobre ink-raised (badge de aviso o pendiente en superficie elevada)</th>
+            <td>Estados de componentes (texto)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--amber); background: var(--ink-raised);">Aa</span></td>
+            <td>9.98:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="components" data-result="ok">
+            <th scope="row">phosphor sobre mezcla ink y phosphor al 9% (texto del bloque CRT sobre su fondo)</th>
+            <td>Estados de componentes (texto)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--phosphor); background: #1A2116;">Aa</span></td>
+            <td>13.62:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="componentsUi" data-result="ok">
+            <th scope="row">quiet sobre ink-raised (borde de campo sobre su fondo)</th>
+            <td>Estados de componentes (bordes, anillos e indicadores)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: var(--ink-raised);">Aa</span></td>
+            <td>8.07:1</td>
+            <td>3.0:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="componentsUi" data-result="ok">
+            <th scope="row">coral sobre ink (borde de campo con error)</th>
+            <td>Estados de componentes (bordes, anillos e indicadores)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--coral); background: var(--ink);">Aa</span></td>
+            <td>6.10:1</td>
+            <td>3.0:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="componentsUi" data-result="ok">
+            <th scope="row">phosphor sobre ink-top (indicador del interruptor pulsado)</th>
+            <td>Estados de componentes (bordes, anillos e indicadores)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--phosphor); background: var(--ink-top);">Aa</span></td>
+            <td>12.64:1</td>
+            <td>3.0:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="componentsUi" data-result="ok">
+            <th scope="row">amber sobre ink-raised (anillo de foco sobre superficie elevada)</th>
+            <td>Estados de componentes (bordes, anillos e indicadores)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--amber); background: var(--ink-raised);">Aa</span></td>
+            <td>9.98:1</td>
+            <td>3.0:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="componentsUi" data-result="ok">
+            <th scope="row">amber sobre ink-top (anillo de foco sobre la capa superior)</th>
+            <td>Estados de componentes (bordes, anillos e indicadores)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--amber); background: var(--ink-top);">Aa</span></td>
+            <td>8.36:1</td>
+            <td>3.0:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="componentsUi" data-result="ok">
+            <th scope="row">violet-text-raised sobre ink-raised (borde de card en hover)</th>
+            <td>Estados de componentes (bordes, anillos e indicadores)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--violet-text-raised); background: var(--ink-raised);">Aa</span></td>
+            <td>5.60:1</td>
+            <td>3.0:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="componentsUi" data-result="ok">
+            <th scope="row">paper sobre ink-raised (borde del boton fantasma en hover)</th>
+            <td>Estados de componentes (bordes, anillos e indicadores)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: var(--ink-raised);">Aa</span></td>
+            <td>17.46:1</td>
+            <td>3.0:1</td>
+            <td>Cumple AA</td>
+          </tr>
           <tr data-group="prohibited" data-result="ok">
             <th scope="row">paper sobre coral</th>
             <td>Combinaciones prohibidas como texto normal</td>
@@ -1538,7 +2643,28 @@
   </main>
 
   <footer class="site-footer">
-    <p>Sistema visual v3. Mockup estático, sin build y sin CDN.</p>
+    <div class="site-footer__cols">
+      <nav aria-label="Sistema">
+        <p class="site-footer__title pixel-label">Sistema</p>
+        <ul>
+          <li><a href="#paleta">Paleta</a></li>
+          <li><a href="#tipografia">Tipografía</a></li>
+          <li><a href="#espaciado">Espaciado</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Piezas">
+        <p class="site-footer__title pixel-label">Piezas</p>
+        <ul>
+          <li><a href="#efectos">Efectos</a></li>
+          <li><a href="#componentes">Componentes</a></li>
+          <li><a href="#contraste">Contraste</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="site-footer__legal">
+      <p>Sistema visual v3. Mockup estático, sin build y sin CDN.</p>
+      <a href="#main">Volver arriba</a>
+    </div>
   </footer>
 </body>
 </html>

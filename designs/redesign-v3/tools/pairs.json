@@ -59,6 +59,34 @@
         { "fg": "paper", "bg": { "over": { "grain": 0.08, "of": { "mix": ["coral", "amber"], "t": 0.5 } }, "layer": "scrim" } }
       ]
     },
+    "components": {
+      "label": "Estados de componentes (texto)",
+      "threshold": 4.5,
+      "expect": "pass",
+      "pairs": [
+        { "fg": "paper", "bg": { "mix": ["violet", "ink"], "t": 0.22 }, "note": "hover del boton primario" },
+        { "fg": "ink", "bg": { "mix": ["coral", "paper"], "t": 0.2 }, "note": "hover del boton coral" },
+        { "fg": "ink", "bg": { "mix": ["amber", "paper"], "t": 0.2 }, "note": "hover del boton ambar" },
+        { "fg": "ink", "bg": { "mix": ["phosphor", "paper"], "t": 0.2 }, "note": "hover del boton fosforo" },
+        { "fg": "coral", "bg": "ink-raised", "note": "mensaje de error en superficie elevada" },
+        { "fg": "amber", "bg": "ink-raised", "note": "badge de aviso o pendiente en superficie elevada" },
+        { "fg": "phosphor", "bg": { "mix": ["ink", "phosphor"], "t": 0.09 }, "note": "texto del bloque CRT sobre su fondo" }
+      ]
+    },
+    "componentsUi": {
+      "label": "Estados de componentes (bordes, anillos e indicadores)",
+      "threshold": 3.0,
+      "expect": "pass",
+      "pairs": [
+        { "fg": "quiet", "bg": "ink-raised", "note": "borde de campo sobre su fondo" },
+        { "fg": "coral", "bg": "ink", "note": "borde de campo con error" },
+        { "fg": "phosphor", "bg": "ink-top", "note": "indicador del interruptor pulsado" },
+        { "fg": "amber", "bg": "ink-raised", "note": "anillo de foco sobre superficie elevada" },
+        { "fg": "amber", "bg": "ink-top", "note": "anillo de foco sobre la capa superior" },
+        { "fg": "violet-text-raised", "bg": "ink-raised", "note": "borde de card en hover" },
+        { "fg": "paper", "bg": "ink-raised", "note": "borde del boton fantasma en hover" }
+      ]
+    },
     "prohibited": {
       "label": "Combinaciones prohibidas como texto normal",
       "threshold": 4.5,
