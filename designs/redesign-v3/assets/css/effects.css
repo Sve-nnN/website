@@ -1,10 +1,45 @@
 /*
  * effects.css: estado por defecto de cada efecto (fallback CSS, visible sin JS).
  * El JavaScript solo agrega movimiento por encima de lo que pinta este archivo.
- * Los tramos delimitados con fx:NOMBRE:start y fx:NOMBRE:end los mide el script de peso.
+ * Cada tramo fx:NOMBRE:start ... fx:NOMBRE:end lo mide tools/weight.mjs.
+ * Reglas comunes: el movimiento vive solo bajo prefers-reduced-motion: no-preference y
+ * :root sin data-motion="reduced" ni data-saver="on"; solo transform y opacity (salvo
+ * --star-angle); ningun bucle dura menos de 1 s (no supera 3 destellos por segundo).
+ * Sin backdrop-filter, filter: blur ni feDisplacementMap. Cada efecto reserva su tamano.
  */
 
+/* fx:core:start */
+.fx-content {
+  position: relative;
+  z-index: 1;
+  max-width: 44rem;
+  padding: var(--space-5);
+  background: var(--scrim);
+}
+
+.fx-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms;
+}
+
+.fx-canvas.is-on {
+  opacity: 1;
+}
+
+@media (max-width: 767px) {
+  .fx-content {
+    padding: var(--space-4);
+  }
+}
+/* fx:core:end */
+
 /* fx:grain:start */
+/* origen: Grainient */
 .fx-grain {
   position: relative;
   isolation: isolate;
@@ -35,36 +70,483 @@
   opacity: .12;
 }
 
-/* El texto nunca vive directo sobre el gradiente. */
-.fx-content {
-  position: relative;
-  z-index: 1;
-  max-width: 44rem;
-  padding: var(--space-5);
-  background: var(--scrim);
-}
-
-.fx-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 400ms;
-}
-
-.fx-canvas.is-on {
-  opacity: 1;
-}
-
 @media (max-width: 767px) {
   .fx-grain {
     padding: var(--space-4);
   }
-
-  .fx-content {
-    padding: var(--space-4);
-  }
 }
 /* fx:grain:end */
+
+/* fx:waves:start */
+/* origen: PatternWaves */
+.fx-waves {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 12rem;
+  background: var(--ink);
+}
+
+.fx-waves::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--phosphor) 0 1.4px, transparent 1.9px) 0 0 / 8px 8px;
+  mask-image: repeating-radial-gradient(ellipse at 20% 120%, #000 0 14px, rgba(0, 0, 0, .15) 28px 44px);
+  transform: rotate(-8deg);
+}
+
+.fx-waves:has(.fx-canvas.is-on)::before {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion="reduced"]):not([data-saver="on"]) .fx-waves::before {
+    animation: fx-drift 24s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes fx-drift {
+  from { transform: rotate(-8deg) translate3d(0, 0, 0); }
+  to { transform: rotate(-8deg) translate3d(-16px, -16px, 0); }
+}
+/* fx:waves:end */
+
+/* fx:crt:start */
+/* origen: CRTWarp. Faulty Terminal comparte este fallback. */
+.fx-crt {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 12rem;
+  padding: var(--space-5);
+  border-radius: 18px / 22px;
+  background: radial-gradient(ellipse at 50% 45%, color-mix(in srgb, var(--phosphor) 9%, var(--ink)) 0, var(--ink) 80%);
+  box-shadow: inset 0 0 70px color-mix(in srgb, var(--phosphor) 18%, transparent), inset 0 0 0 2px var(--ink-top);
+}
+
+.fx-crt::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .35) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, .6) 100%);
+}
+
+.fx-crt-text {
+  position: relative;
+  margin: 0;
+  color: var(--phosphor);
+  font-family: var(--font-mono);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--phosphor) 60%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion="reduced"]):not([data-saver="on"]) .fx-crt-text {
+    animation: fx-flicker 6s ease-in-out infinite;
+  }
+}
+
+@keyframes fx-flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .92; }
+}
+/* fx:crt:end */
+
+/* fx:slats:start */
+/* origen: MicroSlats */
+.fx-slats {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 14rem;
+  background: var(--ink);
+  perspective: 520px;
+  perspective-origin: 50% 0;
+}
+
+.fx-slats::before {
+  content: "";
+  position: absolute;
+  inset: auto -15% 0;
+  z-index: -1;
+  height: 220%;
+  pointer-events: none;
+  background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--violet) 40%, var(--ink)) 0 7px, var(--ink) 7px 10px);
+  mask-image: linear-gradient(to top, #000 55%, transparent 98%);
+  transform: rotateX(48deg);
+  transform-origin: 50% 100%;
+}
+
+.fx-slats::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 40%, color-mix(in srgb, var(--amber) 40%, transparent) 50%, transparent 60%);
+  mix-blend-mode: screen;
+}
+
+.fx-slats:has(.fx-canvas.is-on)::before,
+.fx-slats:has(.fx-canvas.is-on)::after {
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion="reduced"]):not([data-saver="on"]) .fx-slats::after {
+    animation: fx-glint 9s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes fx-glint {
+  from { transform: translateX(-45%); }
+  to { transform: translateX(45%); }
+}
+/* fx:slats:end */
+
+/* fx:pixel:start */
+/* origen: PixelBlast y PixelCard */
+.fx-pixel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 12rem;
+  background: var(--grad);
+  image-rendering: pixelated;
+}
+
+.fx-pixel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: conic-gradient(var(--ink) 25%, transparent 0 50%, var(--ink) 0 75%, transparent 0) 0 0 / 6px 6px;
+  mask-image: linear-gradient(90deg, #000, transparent 70%);
+}
+
+.fx-pixel-card::after {
+  transition: opacity 360ms steps(6);
+}
+
+.fx-pixel-card:hover::after,
+.fx-pixel-card:focus-within::after {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-pixel-card::after {
+    transition: none;
+  }
+}
+/* fx:pixel:end */
+
+/* fx:ascii:start */
+/* origen: GradientASCII y ASCIIText. Solo el juego .:-=+*#%@ */
+.fx-ascii {
+  margin: 0;
+  min-height: 8rem;
+  padding: var(--space-3);
+  overflow: hidden;
+  background: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink-top);
+  color: var(--phosphor);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1;
+  white-space: pre;
+  opacity: .8;
+  user-select: none;
+}
+/* fx:ascii:end */
+
+/* fx:noise:start */
+/* origen: Noise. Estatico por defecto; la variante viva exige un padre con overflow hidden. */
+.fx-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--grain);
+  opacity: var(--noise-opacity, var(--grain-reading));
+}
+
+.fx-noise--live {
+  inset: -40px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion="reduced"]):not([data-saver="on"]) .fx-noise--live {
+    animation: fx-noise 2s steps(4, jump-none) infinite;
+  }
+}
+
+@keyframes fx-noise {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-32px, 24px); }
+}
+/* fx:noise:end */
+
+/* fx:dither:start */
+/* origen: Dither. Bayer 4x4 en tres bandas de densidad, estatico. */
+.fx-dither {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 12rem;
+  background-color: var(--ink);
+  background-image: var(--dither-50);
+  background-size: 8px 8px;
+  image-rendering: pixelated;
+}
+
+.fx-dither::before,
+.fx-dither::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: 36%;
+  pointer-events: none;
+  background-color: var(--ink);
+  background-size: 8px 8px;
+  image-rendering: pixelated;
+}
+
+.fx-dither::before {
+  top: 0;
+  background-image: var(--dither-25);
+  mask-image: linear-gradient(180deg, #000 70%, transparent);
+}
+
+.fx-dither::after {
+  bottom: 0;
+  background-image: var(--dither-75);
+  mask-image: linear-gradient(0deg, #000 70%, transparent);
+}
+/* fx:dither:end */
+
+/* fx:blinds:start */
+/* origen: Gradient Blinds. El gradiente se ve a traves de persianas verticales. */
+.fx-blinds {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 12rem;
+  background: var(--ink);
+}
+
+.fx-blinds::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--grad);
+  mask-image: repeating-linear-gradient(90deg, #000 0 10px, transparent 10px 14px);
+}
+
+.fx-blinds::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--grain);
+  mix-blend-mode: overlay;
+  opacity: .35;
+}
+/* fx:blinds:end */
+
+/* fx:reveal:start */
+/* origen: Halftone Reveal. La imagen es visible por defecto; .is-pending lo agrega el JS. */
+.fx-reveal {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 8 / 5;
+  background: var(--ink-raised);
+}
+
+.fx-reveal img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fx-reveal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--ink) 0 4.4px, transparent 4.8px) 0 0 / 8px 8px;
+  opacity: 0;
+}
+
+.fx-reveal.is-pending::after {
+  opacity: 1;
+}
+
+.fx-reveal.is-in::after {
+  opacity: 0;
+  transition: opacity 900ms steps(6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-reveal.is-pending::after {
+    opacity: 0;
+  }
+}
+
+:root[data-motion="reduced"] .fx-reveal.is-pending::after,
+:root[data-saver="on"] .fx-reveal.is-pending::after {
+  opacity: 0;
+}
+/* fx:reveal:end */
+
+/* fx:transition:start */
+/* origen: Pixel Transition. Portada y detalle; el cambio se dispara con hover y con foco. */
+.fx-transition {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 12rem;
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-top);
+}
+
+.fx-transition__cover,
+.fx-transition__detail {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+.fx-transition__cover {
+  z-index: 3;
+  background: var(--grad);
+  pointer-events: none;
+  transition: opacity 360ms steps(4);
+}
+
+.fx-transition__detail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: conic-gradient(var(--ink-raised) 25%, transparent 0 50%, var(--ink-raised) 0 75%, transparent 0) 0 0 / 12px 12px;
+  transition: opacity 360ms steps(4);
+}
+
+.fx-transition__detail > * {
+  position: relative;
+  z-index: 1;
+}
+
+.fx-transition:hover .fx-transition__cover,
+.fx-transition:focus-within .fx-transition__cover {
+  opacity: 0;
+}
+
+.fx-transition:hover .fx-transition__detail::after,
+.fx-transition:focus-within .fx-transition__detail::after {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-transition__cover,
+  .fx-transition__detail::after {
+    transition: none;
+  }
+}
+/* fx:transition:end */
+
+/* fx:spotlight:start */
+/* origen: Spotlight Card. La posicion por defecto es fija; el JS escribe --mx y --my. */
+.fx-spotlight {
+  min-height: 12rem;
+  padding: var(--space-4);
+  background:
+    radial-gradient(240px circle at var(--mx, 50%) var(--my, 0%), var(--spot), transparent 70%),
+    var(--ink-raised);
+  border: 1px solid var(--ink-top);
+  border-radius: var(--radius-2);
+}
+/* fx:spotlight:end */
+
+/* fx:star:start */
+/* origen: Star Border. El anillo orbita solo con movimiento permitido; estatico queda fijo. */
+@property --star-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.fx-star-border {
+  display: inline-block;
+  padding: 2px;
+  border-radius: var(--radius-2);
+  background:
+    conic-gradient(from var(--star-angle, 0deg), transparent 0 50%, var(--amber) 72%, var(--coral) 90%, transparent 100%),
+    var(--ink-top);
+}
+
+.fx-star-border > button,
+.fx-star-border > a {
+  display: block;
+  min-height: var(--tap);
+  padding: var(--space-2) var(--space-4);
+  border: 0;
+  border-radius: var(--radius-1);
+  background: var(--violet);
+  color: var(--paper);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion="reduced"]):not([data-saver="on"]) .fx-star-border {
+    animation: fx-orbit 4s linear infinite;
+  }
+}
+
+@keyframes fx-orbit {
+  to { --star-angle: 360deg; }
+}
+/* fx:star:end */
+
+/* fx:dotgrid:start */
+/* origen: Dot Grid (solo la forma estatica) */
+.fx-dotgrid {
+  background-image: radial-gradient(circle, var(--dot) 1px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+/* fx:dotgrid:end */
+
+/* fx:reading:start */
+/* Superficies de lectura: solo grano estatico o dot grid estatico. Sin canvas ni animacion. */
+[data-surface="reading"],
+[data-surface="reading"] *,
+[data-surface="reading"] *::before,
+[data-surface="reading"] *::after {
+  animation: none !important;
+}
+
+[data-surface="reading"] .fx-canvas {
+  display: none;
+}
+
+[data-surface="reading"] .fx-reveal.is-pending::after {
+  opacity: 0;
+}
+
+[data-surface="reading"] .fx-noise {
+  opacity: min(var(--noise-opacity, var(--grain-reading)), var(--grain-reading));
+}
+/* fx:reading:end */

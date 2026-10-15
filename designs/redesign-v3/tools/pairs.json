@@ -85,7 +85,10 @@
         { "fg": "paper", "bg": { "over": { "grain": 0.08, "of": "ink" }, "layer": "dot" }, "note": "con un punto del dot grid debajo" },
         { "fg": "quiet", "bg": { "over": { "grain": 0.08, "of": "ink" }, "layer": "dot" }, "note": "con un punto del dot grid debajo" },
         { "fg": "paper", "bg": { "over": { "grain": 0.08, "of": "ink-raised" }, "layer": "dot" }, "note": "con un punto del dot grid debajo" },
-        { "fg": "quiet", "bg": { "over": { "grain": 0.08, "of": "ink-raised" }, "layer": "dot" }, "note": "con un punto del dot grid debajo" }
+        { "fg": "quiet", "bg": { "over": { "grain": 0.08, "of": "ink-raised" }, "layer": "dot" }, "note": "con un punto del dot grid debajo" },
+        { "fg": "paper", "bg": { "over": "ink-raised", "layer": "spot" }, "note": "peor caso del spotlight: luz papel al 12 por ciento" },
+        { "fg": "quiet", "bg": { "over": "ink-raised", "layer": "spot" }, "note": "peor caso del spotlight: luz papel al 12 por ciento" },
+        { "fg": "paper", "bg": { "over": { "over": { "grain": 0.08, "of": "ink" }, "layer": "dot" }, "layer": "spot" }, "note": "grano de 8 por ciento, punto del dot grid y luz del spotlight" }
       ]
     }
   }

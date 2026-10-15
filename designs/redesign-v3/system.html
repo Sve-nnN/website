@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="assets/css/effects.css">
   <link rel="stylesheet" href="assets/css/system-doc.css">
   <script src="assets/js/effects.js" defer></script>
+  <script src="assets/js/system-demo.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Saltar al contenido</a>
@@ -21,6 +22,9 @@
         <li><a href="#paleta">Paleta</a></li>
         <li><a href="#tipografia">Tipografía</a></li>
         <li><a href="#espaciado">Espaciado</a></li>
+        <li><a href="#efectos">Efectos</a></li>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#pesos">Pesos</a></li>
         <li><a href="#contraste">Contraste</a></li>
       </ul>
     </nav>
@@ -217,6 +221,236 @@
           <li data-token="--radius-2" data-value="4px"><span class="radius-sample" style="border-radius: var(--radius-2);"></span><code>--radius-2</code> 4px</li>
           <li data-token="--radius-3" data-value="8px"><span class="radius-sample" style="border-radius: var(--radius-3);"></span><code>--radius-3</code> 8px</li>
         </ul>
+      </div>
+    </section>
+
+    <section class="doc-section" id="efectos" aria-labelledby="titulo-efectos">
+      <div class="doc-inner">
+        <div class="doc-head">
+          <h2 id="titulo-efectos">Efectos</h2>
+          <button type="button" class="doc-btn" data-fx-pause aria-pressed="false">Pausar animaciones</button>
+        </div>
+        <p class="doc-intro">Cada efecto se ve completo con CSS y sin JavaScript. El script solo suma movimiento. Hay un solo canvas a la vez: activar una demo destruye la anterior. Solo el grano del hero se monta solo; las demás son opt-in por botón. El movimiento exige que el usuario no pidiera reducirlo, que la página no esté en pausa y, para el montaje automático, un ancho de 768 px o más con puntero fino. Las superficies de lectura solo admiten grano estático o dot grid estático.</p>
+        <p class="doc-note">Ninguna animación en bucle dura menos de 1 s, así que nada supera 3 destellos por segundo. El botón Pausar animaciones apaga todo el movimiento de la página.</p>
+
+        <h3>Efectos pedidos</h3>
+        <ul class="fx-cards">
+          <li>
+            <article class="fx-card" data-effect="grain">
+              <h4>Grano degradado</h4>
+              <p class="fx-origin">Origen: <strong>Grainient</strong>, React Bits, Backgrounds.</p>
+              <div class="fx-grain" id="demo-grain" data-preview data-fx-demo="grain">
+                <div class="fx-content"><p>Texto siempre sobre el scrim, nunca directo sobre el gradiente.</p></div>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+              <div class="fx-actions">
+                <button type="button" class="doc-btn" data-fx-demo-for="demo-grain" aria-pressed="false" hidden>Demo con shader</button>
+                <p class="fx-status" role="status"></p>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="waves">
+              <h4>Ondas de patrón</h4>
+              <p class="fx-origin">Origen: <strong>PatternWaves</strong>, React Bits, Backgrounds.</p>
+              <div class="fx-waves" id="demo-waves" data-preview data-fx-demo="halftone">
+                <div class="fx-content"><p>Puntos halftone en fósforo que derivan despacio.</p></div>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+              <div class="fx-actions">
+                <button type="button" class="doc-btn" data-fx-demo-for="demo-waves" aria-pressed="false" hidden>Demo con shader</button>
+                <p class="fx-status" role="status"></p>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="crt">
+              <h4>Pantalla CRT</h4>
+              <p class="fx-origin">Origen: <strong>CRTWarp</strong>, React Bits, Backgrounds. <strong>Faulty Terminal</strong> comparte este fallback.</p>
+              <div class="fx-crt" id="demo-crt" data-preview data-fx-demo="crt">
+                <p class="fx-crt-text">&gt; sistema visual v3<br>&gt; scanlines, viñeta y fósforo<br>&gt; listo_</p>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+              <div class="fx-actions">
+                <button type="button" class="doc-btn" data-fx-demo-for="demo-crt" aria-pressed="false" hidden>Demo con shader</button>
+                <p class="fx-status" role="status"></p>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="slats">
+              <h4>Micro persianas</h4>
+              <p class="fx-origin">Origen: <strong>MicroSlats</strong>, React Bits, Backgrounds.</p>
+              <div class="fx-slats" id="demo-slats" data-preview data-fx-demo="slats">
+                <div class="fx-content slats-label"><p>Franjas en perspectiva.</p></div>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+              <div class="fx-actions">
+                <button type="button" class="doc-btn" data-fx-demo-for="demo-slats" aria-pressed="false" hidden>Demo con shader</button>
+                <p class="fx-status" role="status"></p>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="pixel">
+              <h4>Pixel</h4>
+              <p class="fx-origin">Origen: <strong>PixelBlast</strong> (Backgrounds) y <strong>PixelCard</strong> (Components), React Bits.</p>
+              <div class="fx-pixel fx-pixel-card" data-preview>
+                <div class="fx-content">
+                  <p>Tramado de 6 px que se disuelve al pasar el puntero o al enfocar.</p>
+                  <p><a href="#efectos">Enlace de ejemplo</a></p>
+                </div>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="ascii">
+              <h4>ASCII</h4>
+              <p class="fx-origin">Origen: <strong>GradientASCII</strong> (Backgrounds) y <strong>ASCIIText</strong> (Text Animations), React Bits.</p>
+              <pre class="fx-ascii" data-preview data-fx-ascii aria-hidden="true">+**####**+==----==+**####**+==----==+*#####*
+*#%%%%%%#*++====+**#%%%%%%#*++====+**#%%%%%%
+#%@@@@@@%#**++++**#%@@@@@@%#**++++**#%@@@@@%
+#%@@@@@@%#**++++**#%@@@@@@%#**++++**#%@@@@@@
+##%%@@%%##*++==++*##%%@@%%#**++==++*##%@@@%%
++*##%%##*++=----=++*##%%##*+==----=++*##%%##
+=++****++=--::::--=++****++=--::::--=+*****+
+-==++++==-::....::-=+++++==-::....::-=+++++=
+-==++++==-:......:-==++++=--:......:-==++++=</pre>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+              <p class="fx-note">Decorativo y con <code>aria-hidden</code>. Solo el juego <code>.:-=+*#%@</code>. Corre en el DOM a 10 fps, no usa canvas.</p>
+            </article>
+          </li>
+        </ul>
+
+        <h3>Adicionales del scout</h3>
+        <ul class="fx-cards">
+          <li>
+            <article class="fx-card" data-effect="noise">
+              <h4>Ruido</h4>
+              <p class="fx-origin">Origen: <strong>Noise</strong>, React Bits, Animations.</p>
+              <div class="fx-stage" style="--noise-opacity: .5;">
+                <div class="fx-noise" data-preview aria-hidden="true"></div>
+                <div class="fx-content"><p>Versión estática.</p></div>
+              </div>
+              <div class="fx-stage" style="--noise-opacity: .5;">
+                <div class="fx-noise fx-noise--live" aria-hidden="true"></div>
+                <div class="fx-content"><p>Versión viva: cambia 2 veces por segundo.</p></div>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="dither">
+              <h4>Tramado Dither</h4>
+              <p class="fx-origin">Origen: <strong>Dither</strong>, React Bits, Backgrounds.</p>
+              <div class="fx-dither" data-preview>
+                <div class="fx-content dither-label"><p>Bayer 4x4 en tres densidades.</p></div>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+              <p class="fx-note">Estático, sin shader.</p>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="blinds">
+              <h4>Persianas con gradiente</h4>
+              <p class="fx-origin">Origen: <strong>Gradient Blinds</strong>, React Bits, Backgrounds.</p>
+              <div class="fx-blinds" data-preview>
+                <div class="fx-content blinds-label"><p>El gradiente se ve a través de las persianas.</p></div>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+              <p class="fx-note">Estático, sin shader.</p>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="reveal">
+              <h4>Revelado halftone</h4>
+              <p class="fx-origin">Origen: <strong>Halftone Reveal</strong>, React Bits, Animations.</p>
+              <div class="fx-reveal" data-preview data-fx-reveal>
+                <img src="assets/img/sample-halftone.svg" width="640" height="400" alt="Composición abstracta de círculos y bandas en violeta, coral y ámbar">
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+              <p class="fx-note">La imagen existe sin JavaScript. Con movimiento permitido, una trama de puntos se disuelve una sola vez al entrar al viewport.</p>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="transition">
+              <h4>Transición pixel</h4>
+              <p class="fx-origin">Origen: <strong>Pixel Transition</strong>, React Bits, Animations.</p>
+              <div class="fx-transition" data-preview>
+                <div class="fx-transition__cover">
+                  <div class="fx-content"><p>Portada del caso</p></div>
+                </div>
+                <div class="fx-transition__detail">
+                  <p>Detalle del caso con el resultado y los datos clave.</p>
+                  <a href="#efectos">Ver detalle de ejemplo</a>
+                </div>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+              <p class="fx-note">Pasa el puntero o enfoca el enlace con el teclado. Con movimiento reducido el cambio es inmediato.</p>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="spotlight">
+              <h4>Tarjeta con foco de luz</h4>
+              <p class="fx-origin">Origen: <strong>Spotlight Card</strong>, React Bits, Components.</p>
+              <div class="fx-spotlight" data-preview data-fx-spotlight>
+                <p>La luz sigue al puntero fino. Sin puntero queda fija arriba y al centro.</p>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="star">
+              <h4>Borde estrella</h4>
+              <p class="fx-origin">Origen: <strong>Star Border</strong>, React Bits, Animations.</p>
+              <div class="fx-showcase" data-preview>
+                <div class="fx-star-border"><button type="button">Agenda una auditoría</button></div>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+              <p class="fx-note">El anillo ámbar y coral orbita en 4 s solo con movimiento permitido; si no, queda fijo.</p>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="dotgrid">
+              <h4>Dot grid estático</h4>
+              <p class="fx-origin">Mención del scout: <strong>Dot Grid</strong>, React Bits, Backgrounds. Solo la forma estática.</p>
+              <div class="fx-dotgrid dotgrid-sample" data-preview>
+                <p>Rejilla de puntos de 16 px que sostiene la lectura sin moverse.</p>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+            </article>
+          </li>
+          <li>
+            <article class="fx-card" data-effect="reading">
+              <h4>Superficie de lectura</h4>
+              <p class="fx-origin">Blog, FAQ y case study. Marca: <code>data-surface="reading"</code>.</p>
+              <div class="reading-sample fx-dotgrid" data-surface="reading" data-preview>
+                <div class="fx-noise" aria-hidden="true"></div>
+                <p class="reading-text">Aquí el texto manda. Solo se admiten grano estático al 6 por ciento y dot grid estático. No hay canvas, demos, ticker ni animación de ningún tipo.</p>
+                <p class="reading-quiet">Texto secundario en <code>--quiet</code>, también con ratio calculado.</p>
+              </div>
+              <p class="fx-flag">Fallback CSS siempre visible</p>
+              <p class="fx-note">Peor caso de contraste: papel sobre tinta con grano de 8 por ciento y un punto del dot grid, 11.00:1. Papel con la luz del spotlight, 7.67:1. Secundario sobre tinta elevada con grano y punto, 4.52:1, con poca holgura sobre 4.5:1.</p>
+            </article>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="doc-section" id="catalogo" aria-labelledby="titulo-catalogo">
+      <div class="doc-inner">
+        <h2 id="titulo-catalogo">Catálogo de origen</h2>
+        <!-- catalog:start -->
+        <!-- catalog:end -->
+      </div>
+    </section>
+
+    <section class="doc-section" id="pesos" aria-labelledby="titulo-pesos">
+      <div class="doc-inner">
+        <h2 id="titulo-pesos">Pesos</h2>
+        <!-- weights:start -->
+        <!-- weights:end -->
       </div>
     </section>
 
@@ -620,6 +854,30 @@
             <td>Superficies de lectura (blog, FAQ, case studies)</td>
             <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: #3F404C;">Aa</span></td>
             <td>4.52:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="reading" data-result="ok">
+            <th scope="row">paper sobre ink-raised bajo spot (peor caso del spotlight: luz papel al 12 por ciento)</th>
+            <td>Superficies de lectura (blog, FAQ, case studies)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #303039;">Aa</span></td>
+            <td>12.55:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="reading" data-result="ok">
+            <th scope="row">quiet sobre ink-raised bajo spot (peor caso del spotlight: luz papel al 12 por ciento)</th>
+            <td>Superficies de lectura (blog, FAQ, case studies)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--quiet); background: #303039;">Aa</span></td>
+            <td>5.80:1</td>
+            <td>4.5:1</td>
+            <td>Cumple AA</td>
+          </tr>
+          <tr data-group="reading" data-result="ok">
+            <th scope="row">paper sobre ink con grano de 8% bajo dot bajo spot (grano de 8 por ciento, punto del dot grid y luz del spotlight)</th>
+            <td>Superficies de lectura (blog, FAQ, case studies)</td>
+            <td><span class="contrast-sample" aria-hidden="true" style="color: var(--paper); background: #4F5057;">Aa</span></td>
+            <td>7.67:1</td>
             <td>4.5:1</td>
             <td>Cumple AA</td>
           </tr>
