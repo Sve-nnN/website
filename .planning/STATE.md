@@ -1,20 +1,16 @@
 ---
 gsd_state_version: "1.0"
-milestone: v2.1
-status: Awaiting next milestone
-stopped_at: "Phase 50 verificada (post-execution VERIFICATION.md: status passed, 9/9). Milestone v2.1 cerrado en firme y desplegado en produccion."
-last_updated: "2026-09-23T02:28:02.062Z"
-last_activity: 2026-09-22
-last_activity_desc: Milestone v2.1 completed and archived
-state_head: 4010090beeae413ae748e6d7b3ea66b3c841c94d
+milestone: v2.3
+milestone_name: Rediseño Visual v3 (mockups HTML)
+status: planning
+last_updated: "2026-10-15T21:38:44.445Z"
+last_activity: 2026-10-15
 progress:
-  total_phases: 51
-  completed_phases: 35
-  total_plans: 19
-  completed_plans: 19
-milestone_name: Monetizacion del Sitio - Research + Fundaciones
-current_phase: 50
-current_phase_name: Gate de Cierre de Monetización
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -28,10 +24,10 @@ See: .planning/PROJECT.md (updated 2026-07-31)
 
 ## Current Position
 
-Phase: Milestone v2.1 complete
+Phase: Not started (defining requirements)
 Plan: —
-Status: Awaiting next milestone
-Last activity: 2026-09-22 — Milestone v2.1 completed and archived
+Status: Defining requirements
+Last activity: 2026-10-15 — Milestone v2.3 started
 
 ## Performance Metrics
 

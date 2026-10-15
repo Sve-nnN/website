@@ -98,7 +98,22 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | Lead magnet entregado por URL firmada de Cloudinary con expiración (v2.1) | Previene acceso público directo no autorizado sin suscripción | ✓ Good |
 | Doble opt-in propio en el sitio para email capture (v2.1) | Resend no incluye doble opt-in nativo; garantiza que solo direcciones confirmadas lleguen a la audiencia | ✓ Good |
 
-## Current Milestone: v2.2 Productos Digitales y Tienda Polar
+## Current Milestone: v2.3 Rediseño Visual v3 (mockups HTML)
+
+**Goal:** Explorar una nueva visión visual del sitio (ASCII, pixel, grainy gradient, componentes React Bits) como mockups HTML estáticos en `designs/redesign-v3/`, para que Juan itere con feedback antes de cualquier implementación en Payload.
+
+**Target features:**
+- Sistema visual: tokens (paleta negro tinta + gradiente grainy violeta/coral/ámbar + verde fósforo para ASCII/estados), tipografía, componentes base y presupuesto de performance
+- Home en HTML como primera entrega para revisión (Fase A)
+- Resto de páginas en HTML (servicios, landings locales, blog, case studies, autor, contacto, websites, stack, búsqueda, legales), sujeto a la aprobación de Juan sobre la home
+
+**Restricciones clave:**
+- Solo HTML/CSS/JS estático. Prohibido tocar `src/`, Payload, colecciones, schema o base de datos
+- PSI/CWV es requisito: máx 1 shader activo a la vez, fallback CSS estático, `prefers-reduced-motion` respetado, mobile con fallback, H1 real en HTML, ASCII decorativo `aria-hidden`
+- WCAG 2.2 AA + A11Y.md, paridad EN/ES, sin datos inventados
+- La implementación en Payload es un milestone posterior, fuera de alcance
+
+## Milestone en cola: v2.2 Productos Digitales y Tienda Polar
 
 **Goal:** Implementar el catálogo de productos digitales descargables con checkout alojado en Polar (Merchant of Record), entrega segura mediante los helpers ya establecidos en v2.1 (`secure-download.ts`), y webhooks con verificación de firma e idempotencia.
 
