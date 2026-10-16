@@ -1,0 +1,40 @@
+{
+  "es": {
+    "heading": "Empecemos por una auditoría técnica",
+    "description": "Reviso rastreo, indexación, renderizado, Core Web Vitals y datos estructurados sobre tu código, no sobre lo que dice un reporte automático. Te entrego los problemas ordenados por impacto y, al lado de cada uno, la corrección concreta que hay que hacer.",
+    "price": "600 USD",
+    "priceCaption": "Auditoría SEO técnica completa",
+    "deliveryNote": "Entrega en 10 días hábiles",
+    "creditNote": "Si después me contratas la implementación, esos 600 se descuentan del trabajo. La auditoría no es un producto aparte, es por donde empiezo.",
+    "includesLabel": "Qué incluye",
+    "includes": [
+      "Rastreo e indexación: qué ve Google de tu sitio y qué se está perdiendo",
+      "Renderizado: qué contenido depende de JavaScript y qué llega ya en el HTML",
+      "Core Web Vitals medidos en campo, no solo en laboratorio",
+      "Datos estructurados, validados contra lo que realmente emite el sitio",
+      "Cada problema con su corrección concreta, ordenado por impacto"
+    ],
+    "cta": { "label": "Pedir la auditoría", "href": "#contacto" }
+  },
+  "en": {
+    "heading": "Let's start with a technical audit",
+    "description": "I go through crawling, indexing, rendering, Core Web Vitals and structured data against your code, not against whatever an automated report says. You get the problems ranked by impact and, next to each one, the specific fix it needs.",
+    "price": "600 USD",
+    "priceCaption": "Full technical SEO audit",
+    "deliveryNote": "Delivered in 10 working days",
+    "creditNote": "If you hire me for the implementation afterwards, those 600 come off the work. The audit is not a separate product, it is where I start.",
+    "includesLabel": "What it includes",
+    "includes": [
+      "Crawling and indexing: what Google sees of your site and what it is missing",
+      "Rendering: what depends on JavaScript and what already ships in the HTML",
+      "Core Web Vitals measured in the field, not only in the lab",
+      "Structured data, validated against what the site actually emits",
+      "Every problem with its concrete fix, ranked by impact"
+    ],
+    "cta": { "label": "Request the audit", "href": "#contacto" }
+  },
+  "_numbers": [
+    { "value": "600", "source": "seed-home.ts audit.price y memoria del brief (600 USD acreditables)" },
+    { "value": "10", "source": "seed-home.ts audit.deliveryNote" }
+  ]
+}
