@@ -6,24 +6,35 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const ALLOWED =(href) => href.startsWith('#') || href === '/' || href === '/en' || href.startsWith('https://juan-tech.com/');
+// Misma lista cerrada que links.ts: la unica salida fuera de juan-tech.com es el perfil de LinkedIn del pie.
+const ALLOWED = (href) =>
+  href.startsWith('#') || href === '/' || href === '/en' || href.startsWith('https://juan-tech.com/') || href === 'https://linkedin.com/in/juancangulo';
 
 export async function run(ctx) {
   const { check, openPage } = ctx;
-  const open = (lang, viewport) => openPage(ctx.lang(lang), { viewport });
+  // El pie se monta al final (secciones en ocio y chunk propio): se espera antes de medirlo (52-05).
+  // Con la home completa cada pagina deja un canvas de Grainient corriendo con SwiftShader: se cierran las ya medidas.
+  const opened = [];
+  const closeOpened = () => Promise.all(opened.splice(0).map((c) => c.close().catch(() => {})));
+  const withFooter = async (res) => {
+    opened.push(res.context);
+    await res.page.waitForSelector('footer.site-footer', { state: 'attached', timeout: 120_000 });
+    return res;
+  };
+  const open = (lang, viewport) => openPage(ctx.lang(lang), { viewport }).then(withFooter);
 
   for (const lang of ['es', 'en']) {
     // c1
     const { page } = await open(lang);
     const counts = await page.evaluate(() => ({
       header: document.querySelectorAll('header').length,
-      nav: document.querySelectorAll('nav[aria-label]').length,
-      navAll: document.querySelectorAll('nav').length,
+      nav: document.querySelectorAll('header nav[aria-label]').length,
+      navAll: document.querySelectorAll('header nav').length,
       main: document.querySelectorAll('main#contenido').length,
       footer: document.querySelectorAll('footer').length,
     }));
     check(
-      `c1. ${lang}: un header, un nav con aria-label, un main#contenido y un footer`,
+      `c1. ${lang}: un header con un nav con aria-label, un main#contenido y un footer`,
       counts.header === 1 && counts.nav === 1 && counts.navAll === 1 && counts.main === 1 && counts.footer === 1,
       JSON.stringify(counts),
     );
@@ -88,15 +99,16 @@ export async function run(ctx) {
     const hrefs = await page.evaluate(() => [...document.querySelectorAll('header a[href], footer a[href]')].map((a) => a.getAttribute('href')));
     const bad = hrefs.filter((h) => !ALLOWED(h));
     check(`c6. ${lang}: ${hrefs.length} enlaces de cabecera y pie dentro de la lista de destinos permitidos`, hrefs.length > 0 && bad.length === 0, bad.join(' ') || 'todos permitidos');
+    await closeOpened();
   }
 
   // c7 y c8 en desktop y movil
   for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 }]) {
-    const { page } = await openPage(ctx.lang('es'), { viewport });
+    await closeOpened();
+    const { page } = await withFooter(await openPage(ctx.lang('es'), { viewport }));
     const seen = [];
-    for (let i = 0; i < 40; i += 1) {
-      await page.keyboard.press('Tab');
-      const info = await page.evaluate(() => {
+    const probe = () =>
+      page.evaluate(() => {
         const el = document.activeElement;
         if (!el || el === document.body) return null;
         const s = getComputedStyle(el);
@@ -107,7 +119,23 @@ export async function run(ctx) {
           style: s.outlineStyle,
         };
       });
+    // Con la home completa, 40 Tab desde el inicio no llegan al pie: la cabecera va hacia delante y el pie hacia atras.
+    for (let i = 0; i < 12; i += 1) {
+      await page.keyboard.press('Tab');
+      const info = await probe();
       if (!info) break;
+      seen.push(info);
+    }
+    const back = await withFooter(await openPage(ctx.lang('es'), { viewport }));
+    for (let i = 0; i < 40; i += 1) {
+      await back.page.keyboard.press('Shift+Tab');
+      const info = await back.page.evaluate(() => {
+        const el = document.activeElement;
+        if (!el || el === document.body) return null;
+        const s = getComputedStyle(el);
+        return { zone: el.closest('header') ? 'header' : el.closest('footer') ? 'footer' : 'otro', tag: el.tagName.toLowerCase(), outline: Number.parseFloat(s.outlineWidth), style: s.outlineStyle };
+      });
+      if (!info || info.zone !== 'footer') break;
       seen.push(info);
     }
     const chrome = seen.filter((s) => s.zone !== 'otro');

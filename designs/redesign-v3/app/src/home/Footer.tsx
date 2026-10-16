@@ -1,32 +1,15 @@
-import footerJson from './copy/footer.json';
+import { lazy, Suspense } from 'react';
 import type { Lang } from './HomePage';
-import { liveUrl } from './links';
 
-const copy = footerJson as Record<Lang, (typeof footerJson)['es']>;
+// El pie completo (columnas, listas del sitio vivo y su JSON, footer.json) vive en FooterBody, en un chunk aparte:
+// el pie solo se pinta cuando las secciones ya montaron, asi que no debe pesar en la ruta critica del LCP.
+const FooterBody = lazy(() => import('./FooterBody'));
 
-/** Pie de la home. 52-05 agrega encima las columnas y las listas dinamicas. */
+/** Pie de la home (clase site-footer). Ver FooterBody.tsx. */
 export function Footer({ lang }: { lang: Lang }) {
-  const t = copy[lang];
   return (
-    <footer className="site-footer hm-footer">
-      <div className="hm-footer__top">
-        <div>
-          <a className="brand" href={lang === 'en' ? '/en' : '/'}>
-            Juan Carlos Angulo
-          </a>
-          <p className="hm-footer__tagline">{t.tagline}</p>
-        </div>
-        <ul className="hm-footer__legal" aria-label={t.legalLabel}>
-          {t.legal.map((item) => (
-            <li key={item.path}>
-              <a href={liveUrl(lang, item.path)}>{item.label}</a>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="site-footer__legal">
-        <p>{t.copyright}</p>
-      </div>
-    </footer>
+    <Suspense fallback={null}>
+      <FooterBody lang={lang} />
+    </Suspense>
   );
 }
