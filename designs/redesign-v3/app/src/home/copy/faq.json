@@ -1,0 +1,52 @@
+{
+  "es": {
+    "heading": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Cuál es la diferencia entre el SEO tradicional y tu consultoría de SEO técnico?",
+        "answer": "El SEO tradicional se enfoca en redactar contenido y conseguir enlaces. Mi trabajo entra directo a la infraestructura de la web: corrijo el crawl budget, los patrones de renderizado y la arquitectura de la información, que son los cuellos de botella que le impiden a tu sitio indexarse bien."
+      },
+      {
+        "question": "¿Entregas solo la auditoría o también implementas los cambios en el código?",
+        "answer": "Cubro las dos fases. Encuentro los problemas de infraestructura, diseño la solución técnica y después decido contigo si la implemento yo mismo en el código o la documento para que tu equipo la ejecute."
+      },
+      {
+        "question": "¿En qué stack tecnológico y plataformas te especializas?",
+        "answer": "Trabajo sobre todo con arquitecturas modernas y headless. Uso Next.js y React del lado del framework, Payload como gestor de contenido, y plataformas como Shopify o WordPress cuando el proyecto ya vive ahí."
+      },
+      {
+        "question": "¿Cómo mido el éxito de las optimizaciones?",
+        "answer": "Mido con datos, no con impresiones. Reviso la evolución de los Core Web Vitals (LCP, INP, CLS) para el rendimiento y, del lado de los buscadores, los errores que corregí en Search Console y el porcentaje de URLs que Google indexa correctamente."
+      },
+      {
+        "question": "¿Cuál es el proceso para empezar a trabajar contigo?",
+        "answer": "Casi siempre empiezo con una auditoría de SEO técnico. Así veo la salud real de tu infraestructura, encuentro los bloqueos de renderizado y armo una hoja de ruta priorizada antes de tocar una sola línea de desarrollo."
+      }
+    ]
+  },
+  "en": {
+    "heading": "Frequently asked questions",
+    "items": [
+      {
+        "question": "What's the difference between traditional SEO and your technical SEO consulting?",
+        "answer": "Traditional SEO focuses on writing content and building links. My work goes straight into the infrastructure of the site: I fix crawl budget, rendering patterns and information architecture, which are the bottlenecks keeping your site from indexing properly."
+      },
+      {
+        "question": "Do you only deliver the audit or do you also implement the code changes?",
+        "answer": "I cover both phases. I find the infrastructure issues, design the technical fix, and then you and I decide whether I implement it myself in the codebase or document it so your team can run with it."
+      },
+      {
+        "question": "What tech stack and platforms do you specialize in?",
+        "answer": "I mainly work with modern, headless architectures. Next.js and React on the framework side, Payload as the content layer, and platforms like Shopify or WordPress when that's where the project already lives."
+      },
+      {
+        "question": "How do I measure the success of the optimizations?",
+        "answer": "I measure with data, not impressions. I track Core Web Vitals (LCP, INP, CLS) for performance, and on the search side I track the errors I fixed in Search Console and the percentage of URLs Google indexes correctly."
+      },
+      {
+        "question": "What's the process for getting started?",
+        "answer": "I almost always start with a technical SEO audit. That lets me see the real health of your infrastructure, find the rendering blockers, and put together a prioritized roadmap before touching a single line of development."
+      }
+    ]
+  }
+}
