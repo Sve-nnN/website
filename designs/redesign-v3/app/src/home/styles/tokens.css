@@ -1,0 +1,64 @@
+/* Tokens de la home v4. Paleta por defecto: papel-bosque (papel #FAF6EE, tinta, acento verde bosque #0E3B2C, lima #C8F31D solo como subrayado).
+   Las otras cinco paletas son herramienta de prueba y se activan con html[data-palette], ?paleta= o el selector flotante. */
+:root {
+  --bg:#FAF6EE;--surface:#EFEAE0;--fg:#14110F;--muted:#5C5650;--line-c:rgba(20,17,15,.2);
+  --accent:#0E3B2C;--on-accent:#FAF6EE;--accent-inv:#6FCF9F;--on-accent-inv:#0E1511;
+  --inv-bg:#0E1511;--inv-fg:#FAF6EE;--inv-muted:#B5BDB6;--inv-line:rgba(250,246,238,.28);--inv-surface:#17211B;
+  --tile-bg:#FAF6EE;--tile-fg:#14110F;
+  --shd-btn:#0E3B2C;--shd-seal:#14110F;
+  --grain:var(--grain-paper);--img-filter:none;
+  --mark-band:linear-gradient(#C8F31D,#C8F31D);--mark-deco:none;
+  color-scheme:light;
+  --mark-line:#C8F31D;
+}
+html[data-palette="papel-tomate"] {
+  --bg:#FAF6EE;--surface:#EFEAE0;--fg:#14110F;--muted:#5C5650;--line-c:rgba(20,17,15,.2);
+  --accent:#FF5B3A;--on-accent:#14110F;--accent-inv:#FF5B3A;--on-accent-inv:#14110F;
+  --inv-bg:#14110F;--inv-fg:#FAF6EE;--inv-muted:#BDB8B0;--inv-line:rgba(250,246,238,.28);--inv-surface:#1F1B18;
+  --tile-bg:#FAF6EE;--tile-fg:#14110F;
+  --shd-btn:#FF5B3A;--shd-seal:#14110F;
+  --grain:var(--grain-paper);--img-filter:none;
+  --mark-band:none;--mark-deco:underline;--mark-line:transparent;
+  color-scheme:light;
+  --mark-line:transparent;
+}
+html[data-palette="tinta-fosforo"] {
+  --bg:#0B0B12;--surface:#13131E;--fg:#E9ECF2;--muted:#9AA1B5;--line-c:rgba(233,236,242,.2);
+  --accent:#B6FF3B;--on-accent:#0B0B12;--accent-inv:#B6FF3B;--on-accent-inv:#0B0B12;
+  --inv-bg:#050508;--inv-fg:#E9ECF2;--inv-muted:#9AA1B5;--inv-line:rgba(233,236,242,.2);--inv-surface:#0F0F18;
+  --tile-bg:#151521;--tile-fg:#E9ECF2;
+  --shd-btn:color-mix(in srgb,#B6FF3B 55%,#000);--shd-seal:color-mix(in srgb,#B6FF3B 55%,#000);
+  --grain:none;--img-filter:brightness(.88) contrast(1.04);
+  --mark-band:none;--mark-deco:underline;--mark-line:transparent;
+  color-scheme:dark;
+}
+html[data-palette="noche-menta"] {
+  --bg:#0A192F;--surface:#112240;--fg:#CCD6F6;--muted:#8892B0;--line-c:rgba(204,214,246,.2);
+  --accent:#64FFDA;--on-accent:#0A192F;--accent-inv:#64FFDA;--on-accent-inv:#0A192F;
+  --inv-bg:#020C1B;--inv-fg:#CCD6F6;--inv-muted:#8892B0;--inv-line:rgba(204,214,246,.2);--inv-surface:#0A192F;
+  --tile-bg:#112240;--tile-fg:#CCD6F6;
+  --shd-btn:color-mix(in srgb,#64FFDA 55%,#000);--shd-seal:color-mix(in srgb,#64FFDA 55%,#000);
+  --grain:none;--img-filter:brightness(.88) contrast(1.04);
+  --mark-band:none;--mark-deco:underline;--mark-line:transparent;
+  color-scheme:dark;
+}
+html[data-palette="papel-cobalto"] {
+  --bg:#F4F5F7;--surface:#E6E8EE;--fg:#0E1117;--muted:#4D5362;--line-c:rgba(14,17,23,.2);
+  --accent:#2A3BFF;--on-accent:#FFFFFF;--accent-inv:#8B96FF;--on-accent-inv:#0E1117;
+  --inv-bg:#0E1117;--inv-fg:#F4F5F7;--inv-muted:#B3B8C4;--inv-line:rgba(244,245,247,.28);--inv-surface:#1A1F2A;
+  --tile-bg:#F4F5F7;--tile-fg:#0E1117;
+  --shd-btn:#2A3BFF;--shd-seal:#0E1117;
+  --grain:var(--grain-paper);--img-filter:none;
+  --mark-band:none;--mark-deco:underline;--mark-line:transparent;
+  color-scheme:light;
+}
+html[data-palette="tinta-ambar"] {
+  --bg:#14110D;--surface:#1D1914;--fg:#F3EBDD;--muted:#A89F90;--line-c:rgba(243,235,221,.2);
+  --accent:#FFB020;--on-accent:#14110D;--accent-inv:#FFB020;--on-accent-inv:#14110D;
+  --inv-bg:#0A0806;--inv-fg:#F3EBDD;--inv-muted:#A89F90;--inv-line:rgba(243,235,221,.2);--inv-surface:#14110D;
+  --tile-bg:#1D1914;--tile-fg:#F3EBDD;
+  --shd-btn:color-mix(in srgb,#FFB020 55%,#000);--shd-seal:color-mix(in srgb,#FFB020 55%,#000);
+  --grain:none;--img-filter:brightness(.88) contrast(1.04);
+  --mark-band:none;--mark-deco:underline;--mark-line:transparent;
+  color-scheme:dark;
+}

@@ -1,92 +1,105 @@
-import type { AnchorHTMLAttributes, ReactNode } from 'react';
-import { isAllowedHref } from './links';
-import { splitPending } from './pending';
+import { useEffect, useRef, type CSSProperties, type ElementType, type RefObject } from 'react';
+import { SPRITE, type IconName } from './icons';
 
-// Primitivas compartidas de las secciones de la home (fase 52, plan 02).
-// Las secciones de la ola 2 importan solo de aqui; lo que necesiten de mas va dentro de su propio archivo.
-// Solo clases del kit (assets/css): nada de hex ni estilos en linea.
+// Piezas chicas compartidas por las secciones: icono del sprite, titular con palabras que suben, contador y reveals.
 
-/** Idioma de la pagina. Igual por estructura al de HomePage.tsx, que lo declara por su cuenta. */
-export type Lang = 'es' | 'en';
+export function Sprite() {
+  return <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false" dangerouslySetInnerHTML={{ __html: `<defs>${SPRITE}</defs>` }} />;
+}
 
-/** Devuelve la rama del idioma de un bloque de copy. */
-export function pick<T>(copy: { es: T; en: T }, lang: Lang): T {
-  return copy[lang];
+export function Icon({ name, className = 'ic' }: { name: IconName | string; className?: string }) {
+  return (
+    <svg className={className} aria-hidden="true" focusable="false">
+      <use href={`#i-${name}`} />
+    </svg>
+  );
+}
+
+/** Titular en Array: cada palabra sube desde una mascara cuando entra al viewport (clase .sp, ver useReveal). */
+export function Sp({ as: Tag = 'h2', id, className = '', children }: { as?: ElementType; id?: string; className?: string; children: string }) {
+  const words = children.split(/\s+/).filter(Boolean);
+  return (
+    <Tag id={id} className={`sp${className ? ` ${className}` : ''}`}>
+      {words.map((w, i) => (
+        <span key={`${i}-${w}`}>
+          <span className="w">
+            <span style={{ '--i': i } as CSSProperties}>{w}</span>
+          </span>{' '}
+        </span>
+      ))}
+    </Tag>
+  );
+}
+
+const reducedNow = () => typeof window.matchMedia === 'function' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/** Cifra que cuenta de 0 al valor al entrar al viewport. Renderiza el valor final: sin JS o con movimiento reducido se queda asi. */
+export function Count({ value, dec = 0, as: Tag = 'span', className = 'cnt' }: { value: number; dec?: number; as?: 'span' | 'b'; className?: string }) {
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    let raf = 0;
+    const final = value.toFixed(dec);
+    const io = new IntersectionObserver((records) => {
+      if (!records.some((r) => r.isIntersecting)) return;
+      io.disconnect();
+      if (reducedNow() || document.documentElement.classList.contains('paused')) return;
+      const t0 = performance.now();
+      const step = (now: number) => {
+        const f = Math.min(1, (now - t0) / 1400);
+        const eased = 1 - Math.pow(1 - f, 3);
+        el.textContent = (value * eased).toFixed(dec);
+        if (f < 1 && !document.documentElement.classList.contains('paused')) raf = requestAnimationFrame(step);
+        else el.textContent = final;
+      };
+      raf = requestAnimationFrame(step);
+    }, { threshold: 0.18 });
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [value, dec]);
+  return (
+    <Tag ref={ref as never} className={className}>
+      {value.toFixed(dec)}
+    </Tag>
+  );
 }
 
 /**
- * Dato que falta (D-05, regla 8 del kit): insignia .badge--pending con la palabra fija "Pendiente" y,
- * a su lado, la descripcion. Es una anotacion de revision escrita en espanol, tambien dentro de la pagina
- * en ingles, por eso lleva lang propio (A11Y.md). La descripcion queda fuera de la insignia para poder
- * partirse en varias lineas (.badge no corta lineas).
+ * Reveals: observa .rv, .sp y .tl-step dentro de root y les pone .in al entrar. En navegadores con view() los .rv
+ * se animan con scroll-timeline por CSS y esto solo cubre .sp y .tl-step. `deps` re-escanea cuando cambia el contenido.
  */
-export function Pending({ children }: { children: ReactNode }) {
-  return (
-    <span data-pending lang="es">
-      <span className="badge badge--pending pixel-label">Pendiente</span> <span data-pending-detail>{children}</span>
-    </span>
-  );
-}
-
-/** Pinta una cadena de copy: texto plano y, donde hay [PENDIENTE: ...], el componente Pending. Sin HTML crudo. */
-export function Text({ children }: { children: string }) {
-  return (
-    <>
-      {splitPending(children).map((part, i) =>
-        part.type === 'pending' ? <Pending key={i}>{part.value}</Pending> : part.value,
-      )}
-    </>
-  );
-}
-
-type SectionShellProps = {
-  /** Id de la seccion: ancla, data-section y base del id del h2 (`<id>-titulo`). */
-  id: string;
-  heading: ReactNode;
-  /** 'reading' marca una superficie de lectura (FAQ, bloques de codigo): sin efectos (D-10, regla 7 del kit). */
-  surface?: 'reading';
-  className?: string;
-  headingClassName?: string;
-  children?: ReactNode;
-};
-
-/** Seccion con landmark nombrado por su h2. */
-export function SectionShell({ id, heading, surface, className, headingClassName, children }: SectionShellProps) {
-  const headingId = `${id}-titulo`;
-  return (
-    <section id={id} data-section={id} aria-labelledby={headingId} data-surface={surface} className={className}>
-      <h2 id={headingId} className={headingClassName}>
-        {heading}
-      </h2>
-      {children}
-    </section>
-  );
-}
-
-type SafeLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'target'> & {
-  href: string;
-  /** Abre en una pestana nueva. El texto del enlace debe avisarlo (A11Y.md). */
-  newTab?: boolean;
-};
-
-/**
- * Enlace con lista cerrada de destinos (T-52-02). Un destino fuera de la lista lanza un Error: el copy es
- * estatico, asi que el fallo aparece en desarrollo y en la build que sirve el harness en lugar de pintar
- * un enlace roto en silencio. Los https:// agregan rel="noopener noreferrer".
- */
-export function SafeLink({ href, newTab = false, rel, children, ...rest }: SafeLinkProps) {
-  if (!isAllowedHref(href)) {
-    throw new Error(`SafeLink: destino fuera de la lista permitida: ${JSON.stringify(href)}`);
-  }
-  const external = href.startsWith('https://');
-  const relParts = new Set((rel ?? '').split(/\s+/).filter(Boolean));
-  if (external || newTab) {
-    relParts.add('noopener');
-    relParts.add('noreferrer');
-  }
-  return (
-    <a {...rest} href={href} target={newTab ? '_blank' : undefined} rel={relParts.size ? [...relParts].join(' ') : undefined}>
-      {children}
-    </a>
-  );
+export function useReveal(root: RefObject<HTMLElement | null>, deps: readonly unknown[]) {
+  useEffect(() => {
+    const host = root.current;
+    if (!host) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      host.querySelectorAll('.rv,.sp,.tl-step').forEach((el) => el.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (records) => {
+        for (const r of records) {
+          if (!r.isIntersecting) continue;
+          const el = r.target as HTMLElement;
+          el.classList.add('in');
+          if (el.classList.contains('tl-step')) {
+            const steps = host.querySelectorAll('.tl-step');
+            const idx = Array.prototype.indexOf.call(steps, el) + 1;
+            el.closest<HTMLElement>('.tl')?.style.setProperty('--p', String(idx / steps.length));
+          }
+          io.unobserve(el);
+        }
+      },
+      { threshold: 0.18, rootMargin: '0px 0px -8% 0px' },
+    );
+    host.querySelectorAll('.rv,.sp,.tl-step').forEach((el) => {
+      if (!el.classList.contains('in')) io.observe(el);
+    });
+    return () => io.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 }

@@ -1,0 +1,39 @@
+/* Filtro de los logos de clientes: gris en paletas claras, silueta clara en paletas oscuras. El color real aparece en hover y foco. */
+:root{--logo-filter:grayscale(1) contrast(1.15);--logo-blend:multiply}
+html[data-palette="tinta-fosforo"],html[data-palette="noche-menta"],html[data-palette="tinta-ambar"]{--logo-filter:grayscale(1) invert(1) brightness(1.15);--logo-blend:screen}
+
+/* ===== React Bits: fallbacks CSS y ajustes de los originales ===== */
+/* Las superficies llevan su propio fondo y borde. Los originales se montan encima solo en desktop, tras load y LCP. */
+.cell{display:flex;min-width:0}
+.cell>.card,.cell>.ct{flex:1;min-width:0}
+.card.spotlight-card,.ct.spotlight-card{border-radius:0;padding:clamp(22px,2.6vw,38px);box-shadow:none}
+.card.spotlight-card:not(.c-ink){background-color:transparent}
+.ct.spotlight-card{padding:clamp(20px,2.4vw,32px)}
+
+/* Boton principal con StarBorder: mismo tamano que .btn-lg para que el cambio no mueva nada. */
+.btn.star-border{border:2px solid var(--ink);border-radius:0;padding:.95em 1.5em;font-weight:600;font-size:1.1rem;line-height:1.1;gap:.6em;box-shadow:4px 4px 0 var(--shd-btn);background:var(--ink);color:var(--paper);min-height:44px;white-space:nowrap;transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.btn.star-border::before{box-shadow:none}
+.btn.star-border:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--shd-btn)}
+.btn.star-border:focus-visible{outline:3px solid var(--ring);outline-offset:3px}
+.btn-tomato.star-border{background:var(--tomato);color:var(--on-accent);box-shadow:4px 4px 0 var(--paper)}
+.btn-tomato.star-border:hover{box-shadow:7px 7px 0 var(--paper)}
+
+/* Banda del hero: fallback estatico de puntos; el shader Dither la reemplaza en desktop. */
+.fx-band{position:absolute;left:0;right:0;bottom:0;height:clamp(96px,16vh,170px);pointer-events:none;overflow:hidden;-webkit-mask-image:linear-gradient(0deg,#000 20%,transparent);mask-image:linear-gradient(0deg,#000 20%,transparent)}
+.fx-band::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--ink) 1.2px,transparent 1.6px);background-size:12px 12px;opacity:.18;transition:opacity .6s}
+.fx-band .fx-canvas{position:absolute;inset:0;opacity:0;transition:opacity .8s}
+.fx-band .fx-canvas.is-on{opacity:.6}
+.fx-band:has(.fx-canvas.is-on)::before{opacity:0}
+.fx-band canvas{display:block;width:100%!important;height:100%!important}
+
+/* Grano de papel: Noise (canvas estatico) reemplaza al grano CSS cuando monta. */
+html[data-noise="on"]{--grain:none}
+
+/* Capturas de websites: HalftoneReveal se monta solo bajo el puntero y no cambia el layout. */
+.dev{isolation:isolate}
+.fx-halftone{position:absolute;left:0;right:0;top:30px;bottom:0;z-index:2;opacity:0;transition:opacity .35s}
+.fx-halftone.is-on{opacity:1}
+.fx-halftone>div{width:100%;height:100%}
+
+/* Aviso de noscript */
+.hm-noscript{padding:24px var(--pad);font-family:var(--f-body);color:#14110F;background:#FAF6EE}
