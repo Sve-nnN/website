@@ -93,3 +93,148 @@ Resueltos
 Auditoría 360
 - Se quitó todo precio y mención de crédito en servicios, FAQ, CTA del footer y contacto, ES y EN. El servicio se llama Auditoría 360 (EN: 360 Audit) y los botones dicen "Pedir auditoría 360". Cubre rastreo, indexación, Core Web Vitals, datos estructurados, contenido y SEO para IA, con un plan ordenado por impacto. Se conservan los 10 días hábiles, que ya están en `scripts/seed-home.ts` (deliveryNote). No hay meta ni JSON-LD con precio.
 - grep final sobre index.html y manual.js: 0 resultados de 600, USD, acredit y credited. Para lograrlo cambié el alto de las imágenes de 960x600 a 1280x800 (misma proporción). En manual.css salen 16 coincidencias de "600" que son font-weight:600.
+
+
+## Iteración 4 (adición): selector de paletas y franja de clientes
+
+Selector de paleta de prueba
+- Tokens en `:root` y `html[data-palette="<id>"]` dentro de la misma hoja. El selector flotante (44 px, botón con menú, rótulo "Paleta de prueba") cambia la paleta al instante, acepta `?paleta=<id>`, recuerda la elección en localStorage dentro de try/catch (verificado sin storage) y se puede reducir a icono o ocultar del todo (`?selector=1` lo trae de vuelta). Teclado: Escape cierra y devuelve el foco, flechas recorren el menú.
+- Ids: papel-tomate (por defecto), tinta-fosforo, noche-menta, papel-cobalto, tinta-ambar, papel-bosque (con lima solo como banda de subrayado en enlaces).
+- Los gráficos usan variables o currentColor: bloques isométricos con color-mix sobre fg y fondo, medidores, dial, sello, líneas del bento. En oscuras, el grano se apaga y las capturas reales bajan un 12 % de brillo dentro de su marco, la sombra dura usa el acento atenuado.
+- El código fuente legible está en `assets/src/` y lo que carga la página es la versión minificada con esbuild.
+
+Contraste por paleta (WCAG 2.2, luminancia relativa; 4.5 AA texto, 3.0 UI)
+```
+
+papel-tomate (Papel y tomate)
+   17.44  AAA  texto / fondo
+    6.71  AA  texto secundario / fondo
+   15.68  AAA  texto / superficie
+    6.04  AA  secundario / superficie
+    6.10  AA  texto sobre acento
+    2.86  FALLA  acento / fondo (iconos, foco)
+   17.44  AAA  texto / fondo inverso
+    9.53  AAA  secundario / fondo inverso
+    6.10  AA  acento / fondo inverso
+    6.10  AA  texto sobre acento inverso
+   17.44  AAA  texto / tarjeta
+   17.44  AAA  foco (texto / fondo)
+
+tinta-fosforo (Tinta y fósforo)
+   16.57  AAA  texto / fondo
+    7.60  AAA  texto secundario / fondo
+   15.57  AAA  texto / superficie
+    7.14  AAA  secundario / superficie
+   16.21  AAA  texto sobre acento
+   16.21  AAA  acento / fondo (iconos, foco)
+   17.20  AAA  texto / fondo inverso
+    7.89  AAA  secundario / fondo inverso
+   16.82  AAA  acento / fondo inverso
+   16.21  AAA  texto sobre acento inverso
+   15.28  AAA  texto / tarjeta
+   16.57  AAA  foco (texto / fondo)
+
+noche-menta (Noche y menta)
+   12.17  AAA  texto / fondo
+    5.69  AA  texto secundario / fondo
+   10.94  AAA  texto / superficie
+    5.11  AA  secundario / superficie
+   14.13  AAA  texto sobre acento
+   14.13  AAA  acento / fondo (iconos, foco)
+   13.55  AAA  texto / fondo inverso
+    6.34  AA  secundario / fondo inverso
+   15.74  AAA  acento / fondo inverso
+   14.13  AAA  texto sobre acento inverso
+   10.94  AAA  texto / tarjeta
+   12.17  AAA  foco (texto / fondo)
+
+papel-cobalto (Papel y cobalto)
+   17.32  AAA  texto / fondo
+    7.05  AAA  texto secundario / fondo
+   15.43  AAA  texto / superficie
+    6.28  AA  secundario / superficie
+    6.63  AA  texto sobre acento
+    6.08  AA  acento / fondo (iconos, foco)
+   17.32  AAA  texto / fondo inverso
+    9.51  AAA  secundario / fondo inverso
+    7.11  AAA  acento / fondo inverso
+    7.11  AAA  texto sobre acento inverso
+   17.32  AAA  texto / tarjeta
+   17.32  AAA  foco (texto / fondo)
+
+tinta-ambar (Tinta y ámbar)
+   15.90  AAA  texto / fondo
+    7.19  AAA  texto secundario / fondo
+   14.76  AAA  texto / superficie
+    6.68  AA  secundario / superficie
+   10.29  AAA  texto sobre acento
+   10.29  AAA  acento / fondo (iconos, foco)
+   16.89  AAA  texto / fondo inverso
+    7.64  AAA  secundario / fondo inverso
+   10.93  AAA  acento / fondo inverso
+   10.29  AAA  texto sobre acento inverso
+   14.76  AAA  texto / tarjeta
+   15.90  AAA  foco (texto / fondo)
+
+papel-bosque (Papel y bosque)
+   17.44  AAA  texto / fondo
+    6.71  AA  texto secundario / fondo
+   15.68  AAA  texto / superficie
+    6.04  AA  secundario / superficie
+   11.59  AAA  texto sobre acento
+   11.59  AAA  acento / fondo (iconos, foco)
+   17.18  AAA  texto / fondo inverso
+    9.63  AAA  secundario / fondo inverso
+    9.79  AAA  acento / fondo inverso
+    9.79  AAA  texto sobre acento inverso
+   17.44  AAA  texto / tarjeta
+   17.44  AAA  foco (texto / fondo)
+```
+Solo el acento tomate sobre papel (2.86) queda por debajo de 3, y solo se usa en gráficos con borde de tinta, nunca en texto, foco ni estados. Foco: anillo en el color de texto de cada paleta (>= 12.17). Hover y estados reutilizan los mismos pares.
+
+Cuál veo más fuerte: tinta-fosforo. Es la única donde el acento se lee como acento aun en la franja más pequeña (16.2 de contraste sobre el fondo y sobre el texto), el hero y los casos ganan un aire de terminal sin perder legibilidad, y la tarjeta de Auditoría 360 se vuelve el punto más fuerte de la página. La segunda es papel-cobalto: la más seria y la que mejor funciona con la identidad de ingeniería, con 6.08 en acento sobre fondo.
+
+Franja de clientes (debajo del hero, antes de la medición)
+- Fuente: bloque de clientes del sitio vivo `https://juan-tech.com` (28 nombres en dos grupos, 15 de SEO y 13 de desarrollo, los mismos conteos), confirmados en `52-COPY-MAP.md`. Juan confirmó permiso para mostrar nombres y logos, así que no hay marcador PENDIENTE de permiso.
+- Tratamiento: máscara en monocromo con el color de texto de la paleta (currentColor), color real al pasar el cursor o enfocar, con una placa clara detrás. Dos marquees lentos en sentidos opuestos, con pausa al hover y al foco, controlados por el botón global de pausa. Con prefers-reduced-motion o pausa pasa a una cuadrícula quieta con los 28 visibles. Sin eyebrow y sin puntuación final: "Con quiénes trabajé" / "Who I have worked with".
+- Para cuidar el LCP: las máscaras se piden cuando la franja entra en pantalla y el color solo al primer hover.
+
+| Cliente | Grupo | Logo | Peso |
+|---|---|---|---|
+| money.com | SEO | logo real del sitio vivo (Cloudinary), modo alfa | 1476 B mascara + 4658 B color |
+| Miami Herald | SEO | nombre en texto: el logo responde 404 en el sitio vivo | 0 B |
+| Holafly | SEO | logo real del sitio vivo (Cloudinary), modo alfa | 1312 B mascara + 3624 B color |
+| Souma Hotel | SEO | logo real del sitio vivo (Cloudinary), modo luminancia | 484 B mascara + 510 B color |
+| TheSmokyRolling | SEO | logo real del sitio vivo (Cloudinary), modo alfa | 3038 B mascara + 3272 B color |
+| DSLX | SEO | logo real del sitio vivo (Cloudinary), modo luminancia | 1020 B mascara + 1520 B color |
+| Vallas Venezuela | SEO | logo real del sitio vivo (Cloudinary), modo alfa | 918 B mascara + 2770 B color |
+| TheSmokyBox | SEO | logo real del sitio vivo (Cloudinary), modo fondo | 1220 B mascara + 1392 B color |
+| Florida Health Care Academy | SEO | logo real del sitio vivo (Cloudinary), modo fondo | 3092 B mascara + 2478 B color |
+| Delta Cloudz | SEO | logo real del sitio vivo (Cloudinary), modo luminancia | 3372 B mascara + 1666 B color |
+| Tursi Digital Nomads | SEO | logo real del sitio vivo (Cloudinary), modo alfa | 1466 B mascara + 1490 B color |
+| The Sosa Team | SEO | logo real del sitio vivo (Cloudinary), modo luminancia | 540 B mascara + 436 B color |
+| Florida Top Roofs | SEO | logo real del sitio vivo (Cloudinary), modo alfa | 454 B mascara + 602 B color |
+| Felipe Vergara | SEO | logo real del sitio vivo (Cloudinary), modo fondo | 604 B mascara + 514 B color |
+| Storybook app | SEO | logo real del sitio vivo (Cloudinary), modo luminancia | 1588 B mascara + 2428 B color |
+| Luxembourg Philharmonie | Desarrollo | logo real del sitio vivo (Cloudinary), modo alfa | 1882 B mascara + 2044 B color |
+| Arianna Lupi | Desarrollo | nombre en texto: el logo responde 404 en el sitio vivo | 0 B |
+| Apturio | Desarrollo | logo real del sitio vivo (Cloudinary), modo alfa | 618 B mascara + 1296 B color |
+| Childrenchic | Desarrollo | logo real del sitio vivo (Cloudinary), modo luminancia | 542 B mascara + 556 B color |
+| TuMundoSalud | Desarrollo | logo real del sitio vivo (Cloudinary), modo alfa | 2414 B mascara + 4122 B color |
+| Crédito USS | Desarrollo | logo real del sitio vivo (Cloudinary), modo alfa | 3002 B mascara + 4816 B color |
+| Wiñaypaq | Desarrollo | logo real del sitio vivo (Cloudinary), modo alfa | 1468 B mascara + 2174 B color |
+| Dr. Manuel A. Vargas Hidalgo | Desarrollo | logo real del sitio vivo (Cloudinary), modo alfa | 620 B mascara + 1732 B color |
+| Puntada con Amor | Desarrollo | logo real del sitio vivo (Cloudinary), modo fondo | 1024 B mascara + 516 B color |
+| Aprendoclub | Desarrollo | logo real del sitio vivo (Cloudinary), modo alfa | 2290 B mascara + 2914 B color |
+| Pro Torque Diesel | Desarrollo | logo real del sitio vivo (Cloudinary), modo alfa | 1450 B mascara + 2408 B color |
+| Cresory | Desarrollo | logo real del sitio vivo (Cloudinary), modo luminancia | 876 B mascara + 1294 B color |
+| Estylopia | Desarrollo | logo real del sitio vivo (Cloudinary), modo alfa | 2262 B mascara + 3236 B color |
+
+TOTAL logos: 93500 B (91.3 KB) en 26 clientes con logo
+
+Sin logo disponible, para que Juan lo aporte: Miami Herald y Arianna Lupi. En el sitio vivo ambos archivos responden 404 en Cloudinary, así que quedan como nombre en texto, sin inventar marca. "Souma Hotel Lima" aparece como "Souma Hotel" porque el copy evita ciudades.
+
+Lighthouse mobile (3 corridas, mediana, http local)
+- papel-tomate: performance 98, 98, 98; accesibilidad 100; best practices 100; LCP 1.96 s; CLS 0; TBT 84 ms.
+- tinta-fosforo: performance 98, 98, 99; accesibilidad 100; LCP 1.96 s; CLS 0; TBT 80 ms.
+- Aclaración: con la franja de clientes cargando todo al inicio, el LCP subió a 2.26 s frente a 1.81 s sin ella. Se corrigió con carga diferida de máscaras y color. El margen frente a 2.0 s es de unos 40 ms y el equipo estaba con carga alta, así que conviene repetir la medición en una máquina tranquila.
