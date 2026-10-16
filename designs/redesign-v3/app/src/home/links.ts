@@ -34,3 +34,11 @@ export function isAllowedHref(href: string): boolean {
   }
   return false;
 }
+
+// Destinos del sitio vivo (52-01). Sin importaciones: el tipo de idioma se declara aqui.
+export const LIVE_ORIGIN = 'https://juan-tech.com';
+
+/** URL de una pagina del sitio vivo; en ingles lleva el prefijo /en. */
+export function liveUrl(lang: 'es' | 'en', path: string): string {
+  return `${LIVE_ORIGIN}${lang === 'en' ? '/en' : ''}${path}`;
+}

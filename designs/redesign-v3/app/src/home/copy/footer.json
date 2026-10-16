@@ -1,0 +1,24 @@
+{
+  "es": {
+    "tagline": "Ingeniero de software y consultor SEO técnico. Lima, Perú.",
+    "legalLabel": "Legal",
+    "legal": [
+      { "label": "Privacidad", "path": "/privacy" },
+      { "label": "Términos", "path": "/terms" },
+      { "label": "Sitemap", "path": "/sitemap.html" },
+      { "label": "Mi stack", "path": "/stack" }
+    ],
+    "copyright": "© 2026 Juan Carlos Angulo. Todos los derechos reservados."
+  },
+  "en": {
+    "tagline": "Software engineer and technical SEO consultant. Lima, Peru.",
+    "legalLabel": "Legal",
+    "legal": [
+      { "label": "Privacy", "path": "/privacy" },
+      { "label": "Terms", "path": "/terms" },
+      { "label": "Sitemap", "path": "/sitemap.html" },
+      { "label": "My stack", "path": "/stack" }
+    ],
+    "copyright": "© 2026 Juan Carlos Angulo. All rights reserved."
+  }
+}
