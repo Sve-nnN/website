@@ -1,0 +1,121 @@
+/* app.css: diseño de la galería. Solo variables de tokens.css, sin literales hexadecimales. */
+
+.page {
+  padding: var(--space-6);
+  display: grid;
+  gap: var(--space-5);
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.page h1 {
+  max-width: 32ch;
+  font-size: var(--text-2xl);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+  gap: var(--space-5);
+}
+
+.card {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-top);
+  border-radius: var(--radius-3);
+  align-content: start;
+}
+
+.card .pixel-label {
+  color: var(--quiet);
+}
+
+/* Escenario de altura fija: el fallback ocupa el 100 por ciento y el original lo cubre. */
+.stage {
+  position: relative;
+  height: 22rem;
+  overflow: hidden;
+  border-radius: var(--radius-2);
+  background: var(--ink);
+}
+
+.stage .fx-grain {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  height: 100%;
+  padding: 0;
+}
+
+.stage-original {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.stage-panel {
+  position: absolute;
+  left: var(--space-3);
+  bottom: var(--space-3);
+  z-index: 2;
+  max-width: min(26rem, calc(100% - var(--space-5)));
+  padding: var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.props {
+  margin: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.props > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: baseline;
+}
+
+.props dt {
+  color: var(--quiet);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.props dd {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.toggle {
+  min-height: var(--tap);
+  min-width: var(--tap);
+  padding: 0 var(--space-4);
+  justify-self: start;
+  font: inherit;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper);
+  border: 0;
+  border-radius: var(--radius-2);
+  cursor: pointer;
+}
+
+.toggle[aria-pressed="true"] {
+  background: var(--phosphor);
+}
+
+@media (max-width: 767px) {
+  .page {
+    padding: var(--space-4);
+  }
+
+  .stage {
+    height: 18rem;
+  }
+}

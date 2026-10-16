@@ -1,0 +1,30 @@
+{
+  "components": [
+    {
+      "catalogId": "grain",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 204,
+          "path": "Grainient/Grainient.css",
+          "sha256Body": "7d0f38ba834b1473c201a596199fe4a029723f28c27556a93f33edcf8a9b478d"
+        },
+        {
+          "bytes": 22901,
+          "path": "Grainient/Grainient.tsx",
+          "sha256Body": "afa571b5c622ec4edfcb1046218c7fafc7c918ba14860ff638922ce5a6e21a4c"
+        }
+      ],
+      "http": 200,
+      "name": "Grainient",
+      "registryUrl": "https://reactbits.dev/r/Grainient-TS-CSS.json"
+    }
+  ],
+  "license": {
+    "holder": "David Haz",
+    "name": "MIT + Commons Clause License Condition v1.0",
+    "url": "https://raw.githubusercontent.com/DavidHDev/react-bits/main/LICENSE.md"
+  },
+  "source": "https://reactbits.dev/r/",
+  "variant": "TS-CSS"
+}
