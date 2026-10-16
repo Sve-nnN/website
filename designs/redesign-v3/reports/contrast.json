@@ -1,7 +1,7 @@
 {
   "method": "WCAG 2.2: luminancia relativa sRGB, ratio truncado a dos decimales hacia abajo. Pares leidos de tools/pairs.json, colores de assets/css/tokens.css.",
   "summary": {
-    "totalPairs": 51,
+    "totalPairs": 65,
     "problems": 0
   },
   "groups": {
@@ -485,6 +485,216 @@
           "expected": "pass",
           "ok": true,
           "note": null
+        }
+      ]
+    },
+    "components": {
+      "label": "Estados de componentes (texto)",
+      "threshold": 4.5,
+      "expect": "pass",
+      "results": [
+        {
+          "fg": "paper",
+          "bg": "mezcla violet y ink al 22%",
+          "fgHex": "#FAFAF7",
+          "bgHex": "#4932C3",
+          "fgToken": "paper",
+          "bgToken": null,
+          "ratio": 7.93,
+          "threshold": 4.5,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "hover del boton primario"
+        },
+        {
+          "fg": "ink",
+          "bg": "mezcla coral y paper al 20%",
+          "fgHex": "#0B0B12",
+          "bgHex": "#FE7089",
+          "fgToken": "ink",
+          "bgToken": null,
+          "ratio": 7.35,
+          "threshold": 4.5,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "hover del boton coral"
+        },
+        {
+          "fg": "ink",
+          "bg": "mezcla amber y paper al 20%",
+          "fgHex": "#0B0B12",
+          "bgHex": "#FEBF4B",
+          "fgToken": "ink",
+          "bgToken": null,
+          "ratio": 11.9,
+          "threshold": 4.5,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "hover del boton ambar"
+        },
+        {
+          "fg": "ink",
+          "bg": "mezcla phosphor y paper al 20%",
+          "fgHex": "#0B0B12",
+          "bgHex": "#C4FE61",
+          "fgToken": "ink",
+          "bgToken": null,
+          "ratio": 16.51,
+          "threshold": 4.5,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "hover del boton fosforo"
+        },
+        {
+          "fg": "coral",
+          "bg": "ink-raised",
+          "fgHex": "#FF4D6D",
+          "bgHex": "#14141F",
+          "fgToken": "coral",
+          "bgToken": "ink-raised",
+          "ratio": 5.68,
+          "threshold": 4.5,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "mensaje de error en superficie elevada"
+        },
+        {
+          "fg": "amber",
+          "bg": "ink-raised",
+          "fgHex": "#FFB020",
+          "bgHex": "#14141F",
+          "fgToken": "amber",
+          "bgToken": "ink-raised",
+          "ratio": 9.98,
+          "threshold": 4.5,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "badge de aviso o pendiente en superficie elevada"
+        },
+        {
+          "fg": "phosphor",
+          "bg": "mezcla ink y phosphor al 9%",
+          "fgHex": "#B6FF3B",
+          "bgHex": "#1A2116",
+          "fgToken": "phosphor",
+          "bgToken": null,
+          "ratio": 13.62,
+          "threshold": 4.5,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "texto del bloque CRT sobre su fondo"
+        }
+      ]
+    },
+    "componentsUi": {
+      "label": "Estados de componentes (bordes, anillos e indicadores)",
+      "threshold": 3,
+      "expect": "pass",
+      "results": [
+        {
+          "fg": "quiet",
+          "bg": "ink-raised",
+          "fgHex": "#A8ACBB",
+          "bgHex": "#14141F",
+          "fgToken": "quiet",
+          "bgToken": "ink-raised",
+          "ratio": 8.07,
+          "threshold": 3,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "borde de campo sobre su fondo"
+        },
+        {
+          "fg": "coral",
+          "bg": "ink",
+          "fgHex": "#FF4D6D",
+          "bgHex": "#0B0B12",
+          "fgToken": "coral",
+          "bgToken": "ink",
+          "ratio": 6.1,
+          "threshold": 3,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "borde de campo con error"
+        },
+        {
+          "fg": "phosphor",
+          "bg": "ink-top",
+          "fgHex": "#B6FF3B",
+          "bgHex": "#23233A",
+          "fgToken": "phosphor",
+          "bgToken": "ink-top",
+          "ratio": 12.64,
+          "threshold": 3,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "indicador del interruptor pulsado"
+        },
+        {
+          "fg": "amber",
+          "bg": "ink-raised",
+          "fgHex": "#FFB020",
+          "bgHex": "#14141F",
+          "fgToken": "amber",
+          "bgToken": "ink-raised",
+          "ratio": 9.98,
+          "threshold": 3,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "anillo de foco sobre superficie elevada"
+        },
+        {
+          "fg": "amber",
+          "bg": "ink-top",
+          "fgHex": "#FFB020",
+          "bgHex": "#23233A",
+          "fgToken": "amber",
+          "bgToken": "ink-top",
+          "ratio": 8.36,
+          "threshold": 3,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "anillo de foco sobre la capa superior"
+        },
+        {
+          "fg": "violet-text-raised",
+          "bg": "ink-raised",
+          "fgHex": "#8F7BFF",
+          "bgHex": "#14141F",
+          "fgToken": "violet-text-raised",
+          "bgToken": "ink-raised",
+          "ratio": 5.6,
+          "threshold": 3,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "borde de card en hover"
+        },
+        {
+          "fg": "paper",
+          "bg": "ink-raised",
+          "fgHex": "#FAFAF7",
+          "bgHex": "#14141F",
+          "fgToken": "paper",
+          "bgToken": "ink-raised",
+          "ratio": 17.46,
+          "threshold": 3,
+          "meetsThreshold": true,
+          "expected": "pass",
+          "ok": true,
+          "note": "borde del boton fantasma en hover"
         }
       ]
     },

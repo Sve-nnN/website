@@ -94,7 +94,7 @@
   z-index: -1;
   pointer-events: none;
   background: radial-gradient(circle, var(--phosphor) 0 1.4px, transparent 1.9px) 0 0 / 8px 8px;
-  mask-image: repeating-radial-gradient(ellipse at 20% 120%, #000 0 14px, rgba(0, 0, 0, .15) 28px 44px);
+  mask-image: repeating-radial-gradient(ellipse at 20% 120%, black 0 14px, rgba(0, 0, 0, .15) 28px 44px);
   transform: rotate(-8deg);
 }
 
@@ -177,7 +177,7 @@
   height: 220%;
   pointer-events: none;
   background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--violet) 40%, var(--ink)) 0 7px, var(--ink) 7px 10px);
-  mask-image: linear-gradient(to top, #000 55%, transparent 98%);
+  mask-image: linear-gradient(to top, black 55%, transparent 98%);
   transform: rotateX(48deg);
   transform-origin: 50% 100%;
 }
@@ -225,7 +225,7 @@
   inset: 0;
   pointer-events: none;
   background: conic-gradient(var(--ink) 25%, transparent 0 50%, var(--ink) 0 75%, transparent 0) 0 0 / 6px 6px;
-  mask-image: linear-gradient(90deg, #000, transparent 70%);
+  mask-image: linear-gradient(90deg, black, transparent 70%);
 }
 
 .fx-pixel-card::after {
@@ -317,13 +317,13 @@
 .fx-dither::before {
   top: 0;
   background-image: var(--dither-25);
-  mask-image: linear-gradient(180deg, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, black 70%, transparent);
 }
 
 .fx-dither::after {
   bottom: 0;
   background-image: var(--dither-75);
-  mask-image: linear-gradient(0deg, #000 70%, transparent);
+  mask-image: linear-gradient(0deg, black 70%, transparent);
 }
 /* fx:dither:end */
 
@@ -343,7 +343,7 @@
   inset: 0;
   z-index: -1;
   background: var(--grad);
-  mask-image: repeating-linear-gradient(90deg, #000 0 10px, transparent 10px 14px);
+  mask-image: repeating-linear-gradient(90deg, black 0 10px, transparent 10px 14px);
 }
 
 .fx-blinds::after {

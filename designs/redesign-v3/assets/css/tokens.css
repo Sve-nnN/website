@@ -53,7 +53,8 @@
   --leading-tight: 1.1;
 
   /* Medida de lectura y objetivo tactil minimo (A11Y.md) */
-  --measure: 80ch;
+  /* En rem y no en ch: la unidad ch cambia 17 por ciento al cargar Geist (medido) y reacomoda los renglones, CLS. 42rem son unas 80 letras de texto corrido. */
+  --measure: 42rem;
   --tap: 44px;
 
   /* Escala de espaciado */

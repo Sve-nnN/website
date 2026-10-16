@@ -61,4 +61,52 @@
   });
 
   document.addEventListener('fx:change', refresh);
+
+  /*
+   * Simulador de estados (componentes). El de movimiento llama FX.setPaused, asi los botones de
+   * pausa siguen sincronizados; el de saveData pone y quita data-saver. Un MutationObserver
+   * mantiene aria-pressed de los dos interruptores aunque el atributo cambie desde otro lado
+   * (por ejemplo, el boton Pausar animaciones de la cabecera).
+   */
+  var root = document.documentElement;
+  var sims = Array.prototype.slice.call(document.querySelectorAll('[data-sim]'));
+
+  function syncSims() {
+    sims.forEach(function (b) {
+      var on = b.getAttribute('data-sim') === 'motion'
+        ? root.getAttribute('data-motion') === 'reduced'
+        : root.getAttribute('data-saver') === 'on';
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  sims.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var next = b.getAttribute('aria-pressed') !== 'true';
+      if (b.getAttribute('data-sim') === 'motion') {
+        FX.setPaused(next);
+      } else if (next) {
+        root.setAttribute('data-saver', 'on');
+      } else {
+        root.removeAttribute('data-saver');
+      }
+      syncSims();
+    });
+  });
+
+  new window.MutationObserver(syncSims).observe(root, { attributes: true, attributeFilter: ['data-motion', 'data-saver'] });
+  syncSims();
+
+  /*
+   * Formulario de ejemplo: no tiene action, el envio se intercepta y no sale ningun dato.
+   * Solo textContent.
+   */
+  var demoForm = document.getElementById('form-ejemplo');
+  if (demoForm) {
+    demoForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var out = demoForm.querySelector('[role="status"]');
+      if (out) { out.textContent = 'Formulario de ejemplo: no se envía ningún dato.'; }
+    });
+  }
 })();

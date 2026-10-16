@@ -27,19 +27,24 @@
       "brotli": 4980
     },
     "assets/css/tokens.css": {
-      "raw": 3834,
-      "gzip": 1605,
-      "brotli": 1444
+      "raw": 3996,
+      "gzip": 1694,
+      "brotli": 1531
     },
     "assets/css/base.css": {
-      "raw": 3777,
-      "gzip": 1432,
-      "brotli": 1260
+      "raw": 3778,
+      "gzip": 1430,
+      "brotli": 1262
+    },
+    "assets/css/components.css": {
+      "raw": 14706,
+      "gzip": 3544,
+      "brotli": 3138
     },
     "assets/css/effects.css": {
-      "raw": 13142,
-      "gzip": 3337,
-      "brotli": 2952
+      "raw": 13148,
+      "gzip": 3338,
+      "brotli": 2947
     }
   },
   "fonts": {
@@ -65,23 +70,23 @@
     }
   },
   "kitCss": {
-    "raw": 20753,
-    "gzip": 5897,
-    "brotli": 5242
+    "raw": 35628,
+    "gzip": 8754,
+    "brotli": 7770
   },
-  "jsPlusCssGzip": 11488,
+  "jsPlusCssGzip": 14345,
   "fontsRaw": 59644,
   "segments": {
     "css": {
       "core": 235,
       "grain": 474,
-      "waves": 500,
+      "waves": 501,
       "crt": 598,
       "slats": 585,
-      "pixel": 380,
+      "pixel": 381,
       "ascii": 272,
       "noise": 362,
-      "dither": 347,
+      "dither": 346,
       "blinds": 329,
       "reveal": 435,
       "transition": 503,
@@ -109,19 +114,19 @@
     },
     {
       "name": "assets/css/effects.css (gzip)",
-      "value": 3337,
+      "value": 3338,
       "limit": 6144,
       "ok": true
     },
     {
       "name": "CSS del kit concatenado (gzip)",
-      "value": 5897,
+      "value": 8754,
       "limit": 14336,
       "ok": true
     },
     {
       "name": "JS de producción más CSS del kit (gzip)",
-      "value": 11488,
+      "value": 14345,
       "limit": 24576,
       "ok": true
     },
@@ -146,9 +151,9 @@
     {
       "id": "waves",
       "name": "PatternWaves",
-      "css": 500,
+      "css": 501,
       "js": 318,
-      "total": 818,
+      "total": 819,
       "cap": 2048,
       "ok": true,
       "missing": []
@@ -176,9 +181,9 @@
     {
       "id": "pixel-blast",
       "name": "PixelBlast",
-      "css": 380,
+      "css": 381,
       "js": 0,
-      "total": 380,
+      "total": 381,
       "cap": 2048,
       "ok": true,
       "missing": []
@@ -186,9 +191,9 @@
     {
       "id": "pixel-card",
       "name": "PixelCard",
-      "css": 380,
+      "css": 381,
       "js": 0,
-      "total": 380,
+      "total": 381,
       "cap": 2048,
       "ok": true,
       "missing": []
@@ -226,9 +231,9 @@
     {
       "id": "dither",
       "name": "Dither",
-      "css": 347,
+      "css": 346,
       "js": 0,
-      "total": 347,
+      "total": 346,
       "cap": 2048,
       "ok": true,
       "missing": []

@@ -16,10 +16,13 @@ import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import os from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const STAGE_ORDER = ['tracer', 'fonts', 'tokens', 'fallbacks', 'effects', 'components'];
+/* Capturas de evidencia por etapa: fuera del repo. El conjunto final vive en reports/shots (ver finalShots). */
+const STAGE_SHOTS = path.join(os.tmpdir(), 'redesign-v3-stage-shots');
 const MIME = {
   '.html': 'text/html; charset=utf-8',
   '.css': 'text/css; charset=utf-8',
@@ -260,14 +263,14 @@ STAGES.tracer = async (env) => {
 
   /* Capturas. */
   if (env.shots) {
-    fs.mkdirSync(path.join(ROOT, 'reports/shots'), { recursive: true });
+    fs.mkdirSync(STAGE_SHOTS, { recursive: true });
     const d = await visit(env, httpUrl(env, page0), { ctx: { viewport: { width: 1440, height: 900 } }, wait: 3500 });
-    await d.page.screenshot({ path: path.join(ROOT, 'reports/shots/tracer-desktop.jpg'), type: 'jpeg', quality: 60 });
+    await d.page.screenshot({ path: path.join(STAGE_SHOTS, 'tracer-desktop.jpg'), type: 'jpeg', quality: 60 });
     await d.context.close();
     const m = await visit(env, httpUrl(env, page0), { ctx: { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 1 }, wait: 1500 });
-    await m.page.screenshot({ path: path.join(ROOT, 'reports/shots/tracer-mobile.jpg'), type: 'jpeg', quality: 60 });
+    await m.page.screenshot({ path: path.join(STAGE_SHOTS, 'tracer-mobile.jpg'), type: 'jpeg', quality: 60 });
     await m.context.close();
-    check('tracer: capturas guardadas en reports/shots', true);
+    check('tracer: capturas guardadas fuera del repo (STAGE_SHOTS)', true);
   }
 };
 
@@ -455,8 +458,8 @@ STAGES.tokens = async (env) => {
     const { sw, iw } = await v.page.evaluate(() => ({ sw: document.documentElement.scrollWidth, iw: window.innerWidth }));
     check(`tokens: ${label} px sin desborde horizontal en toda la pagina`, sw <= iw, `scrollWidth=${sw} innerWidth=${iw}`);
     if (env.shots && (w === 1440 || w === 390)) {
-      fs.mkdirSync(path.join(ROOT, 'reports/shots'), { recursive: true });
-      await v.page.screenshot({ path: path.join(ROOT, `reports/shots/system-${w === 1440 ? 'desktop' : 'mobile'}.jpg`), type: 'jpeg', quality: 60, fullPage: true });
+      fs.mkdirSync(STAGE_SHOTS, { recursive: true });
+      await v.page.screenshot({ path: path.join(STAGE_SHOTS, `system-${w === 1440 ? 'desktop' : 'mobile'}.jpg`), type: 'jpeg', quality: 60, fullPage: true });
     }
     await v.context.close();
   }
@@ -575,10 +578,10 @@ STAGES.fallbacks = async (env) => {
 
     /* Foco por teclado en la tarjeta transition. */
     await page.locator('[data-effect="transition"] a').scrollIntoViewIfNeeded();
-    const before = await page.locator('.fx-transition__cover').evaluate((e) => getComputedStyle(e).opacity);
+    const before = await page.locator('[data-effect="transition"] .fx-transition__cover').evaluate((e) => getComputedStyle(e).opacity);
     await page.locator('[data-effect="transition"] a').focus();
     await page.waitForTimeout(600);
-    const after = await page.locator('.fx-transition__cover').evaluate((e) => getComputedStyle(e).opacity);
+    const after = await page.locator('[data-effect="transition"] .fx-transition__cover').evaluate((e) => getComputedStyle(e).opacity);
     check('fallbacks: al enfocar el enlace de transition la portada baja de opacidad en 600 ms', before === '1' && Number(after) < 1, `antes=${before} despues=${after}`);
     await context.close();
   }
@@ -617,13 +620,13 @@ STAGES.fallbacks = async (env) => {
 
   /* Capturas del fallback puro (sin JavaScript). */
   if (env.shots) {
-    fs.mkdirSync(path.join(ROOT, 'reports/shots'), { recursive: true });
+    fs.mkdirSync(STAGE_SHOTS, { recursive: true });
     for (const [name, ctx] of [['desktop', { ...DESKTOP, javaScriptEnabled: false }], ['mobile', { ...MOBILE, deviceScaleFactor: 1, javaScriptEnabled: false }]]) {
       const v = await visit(env, httpUrl(env, page0), { ctx, wait: 300 });
-      await v.page.locator('#efectos').screenshot({ path: path.join(ROOT, `reports/shots/fallbacks-${name}.jpg`), type: 'jpeg', quality: 60 });
+      await v.page.locator('#efectos').screenshot({ path: path.join(STAGE_SHOTS, `fallbacks-${name}.jpg`), type: 'jpeg', quality: 60 });
       await v.context.close();
     }
-    check('fallbacks: capturas guardadas en reports/shots', true);
+    check('fallbacks: capturas guardadas fuera del repo (STAGE_SHOTS)', true);
   }
 };
 
@@ -678,14 +681,14 @@ STAGES.effects = async (env) => {
 
     /* Capturas de cada demo con su shader activo (evidencia visual, solo con --shots). */
     if (env.shots) {
-      fs.mkdirSync(path.join(ROOT, 'reports/shots'), { recursive: true });
+      fs.mkdirSync(STAGE_SHOTS, { recursive: true });
       for (const [name, id] of [['grain', 'demo-grain'], ['waves', 'demo-waves'], ['crt', 'demo-crt'], ['slats', 'demo-slats']]) {
         await page.locator(`#${id}`).scrollIntoViewIfNeeded();
         await page.locator(`[data-fx-demo-for="${id}"]`).click();
         await page.waitForTimeout(1200);
-        await page.locator(`#${id}`).screenshot({ path: path.join(ROOT, `reports/shots/demo-${name}.jpg`), type: 'jpeg', quality: 70 });
+        await page.locator(`#${id}`).screenshot({ path: path.join(STAGE_SHOTS, `demo-${name}.jpg`), type: 'jpeg', quality: 70 });
       }
-      check('effects: capturas de las cuatro demos guardadas en reports/shots', true);
+      check('effects: capturas de las cuatro demos guardadas fuera del repo (STAGE_SHOTS)', true);
     }
     await context.close();
   }
@@ -693,14 +696,14 @@ STAGES.effects = async (env) => {
   /* 2. ASCII, estados bloqueados y region de estado. */
   {
     const { context, page } = await visit(env, httpUrl(env, page0), { ctx: DESKTOP, wait: 3000 });
-    await page.locator('pre.fx-ascii').scrollIntoViewIfNeeded();
+    await page.locator('[data-effect="ascii"] pre.fx-ascii').scrollIntoViewIfNeeded();
     await page.waitForTimeout(300);
-    const t0 = await page.locator('pre.fx-ascii').textContent();
+    const t0 = await page.locator('[data-effect="ascii"] pre.fx-ascii').textContent();
     await page.waitForTimeout(1500);
-    const t1 = await page.locator('pre.fx-ascii').textContent();
+    const t1 = await page.locator('[data-effect="ascii"] pre.fx-ascii').textContent();
     check('effects: el texto del ASCII cambia en 1500 ms con el elemento en el viewport', t0 !== t1, '');
     check('effects: el ASCII sigue dentro de .:-=+*#%@ y conserva filas y columnas', /^[.:\-=+*#%@\n]+$/.test(t1) && t1.split('\n').length === t0.split('\n').length && t1.split('\n')[0].length === t0.split('\n')[0].length, '');
-    const aria = await page.locator('pre.fx-ascii').getAttribute('aria-hidden');
+    const aria = await page.locator('[data-effect="ascii"] pre.fx-ascii').getAttribute('aria-hidden');
     check('effects: el ticker no cambia aria-hidden ni agrega canvas', aria === 'true' && (await canvasCount(page)) <= 1);
     await context.close();
   }
@@ -712,11 +715,11 @@ STAGES.effects = async (env) => {
   for (const [label, cfg] of blocked) {
     const { context, page } = await visit(env, httpUrl(env, page0), { ctx: cfg.ctx, wait: 2500 });
     if (cfg.setup) await cfg.setup(page);
-    await page.locator('pre.fx-ascii').scrollIntoViewIfNeeded();
+    await page.locator('[data-effect="ascii"] pre.fx-ascii').scrollIntoViewIfNeeded();
     await page.waitForTimeout(400);
-    const a = await page.locator('pre.fx-ascii').textContent();
+    const a = await page.locator('[data-effect="ascii"] pre.fx-ascii').textContent();
     await page.waitForTimeout(1500);
-    const b = await page.locator('pre.fx-ascii').textContent();
+    const b = await page.locator('[data-effect="ascii"] pre.fx-ascii').textContent();
     check(`effects: con ${label} el ASCII no cambia`, a === b);
     await page.locator('#demo-waves').scrollIntoViewIfNeeded();
     await page.locator('[data-fx-demo-for="demo-waves"]').click();
@@ -732,10 +735,10 @@ STAGES.effects = async (env) => {
     const { context, page } = await visit(env, httpUrl(env, page0), { ctx: MOBILE, wait: 3500 });
     const n = await canvasCount(page);
     check('effects: a 390 px de ancho el montaje automatico deja 0 canvas', n === 0, `canvas=${n}`);
-    const a = await page.locator('pre.fx-ascii').textContent();
-    await page.locator('pre.fx-ascii').scrollIntoViewIfNeeded();
+    const a = await page.locator('[data-effect="ascii"] pre.fx-ascii').textContent();
+    await page.locator('[data-effect="ascii"] pre.fx-ascii').scrollIntoViewIfNeeded();
     await page.waitForTimeout(1500);
-    check('effects: a 390 px el ASCII queda estatico', a === (await page.locator('pre.fx-ascii').textContent()));
+    check('effects: a 390 px el ASCII queda estatico', a === (await page.locator('[data-effect="ascii"] pre.fx-ascii').textContent()));
     await page.locator('[data-fx-demo-for="demo-crt"]').scrollIntoViewIfNeeded();
     await page.evaluate(() => document.querySelector('[data-fx-demo-for="demo-crt"]').click());
     await page.waitForTimeout(500);
@@ -747,7 +750,7 @@ STAGES.effects = async (env) => {
   /* 4. Spotlight. */
   for (const [label, reduce] of [['con movimiento permitido', false], ['con reduced-motion', true]]) {
     const { context, page } = await visit(env, httpUrl(env, page0), { ctx: { ...DESKTOP, ...(reduce ? { reducedMotion: 'reduce' } : {}) }, wait: 2500 });
-    const card = page.locator('.fx-spotlight');
+    const card = page.locator('[data-effect="spotlight"] .fx-spotlight');
     await card.scrollIntoViewIfNeeded();
     const box = await card.boundingBox();
     await page.mouse.move(box.x + 40, box.y + 30);
@@ -901,6 +904,300 @@ STAGES.effects = async (env) => {
   }
 };
 
+/* ---------- stage: components ---------- */
+
+const FAMILIES = ['button', 'card', 'badge', 'nav', 'footer', 'form', 'crt', 'ascii', 'pause'];
+const STATE_KEYS = ['normal', 'hover', 'focus', 'disabled', 'reduced'];
+
+STAGES.components = async (env) => {
+  const page0 = 'system.html';
+
+  /* 1. Estructura: familias, matriz de estados, ejemplos en vivo, etiquetas, formulario y scrim. */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: DESKTOP, wait: 2500 });
+    const info = await page.evaluate(({ fams, states }) => {
+      const out = { fams: [], inputsNoLabel: [], invalid: [], formsWithAction: [], scrimBad: [], h1: document.querySelectorAll('h1').length };
+      for (const f of fams) {
+        const box = document.querySelector(`[data-component="${f}"]`);
+        const keys = box ? new Set([...box.querySelectorAll('.state-cell')].map((c) => c.getAttribute('data-state'))) : new Set();
+        out.fams.push({
+          f,
+          exists: Boolean(box),
+          h3: box ? box.querySelectorAll('h3').length : 0,
+          states: states.filter((s) => keys.has(s)).length,
+          live: box ? box.querySelectorAll('.live').length : 0,
+          samples: box ? box.querySelectorAll('.state-cell:not([data-applies="false"]) .state-sample').length : 0,
+        });
+      }
+      for (const el of document.querySelectorAll('input:not([type="hidden"]), select, textarea')) {
+        if (!el.labels || el.labels.length === 0) out.inputsNoLabel.push(el.id || el.name || el.tagName);
+      }
+      for (const el of document.querySelectorAll('[aria-invalid="true"]')) {
+        const ids = (el.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
+        const ok = ids.length > 0 && ids.every((id) => {
+          const t = document.getElementById(id);
+          return t && t.textContent.trim().length > 0;
+        });
+        out.invalid.push({ id: el.id, ok });
+      }
+      for (const f of document.forms) {
+        if (f.hasAttribute('action') || /post/i.test(f.getAttribute('method') || '')) out.formsWithAction.push(f.id || 'form');
+      }
+      for (const card of document.querySelectorAll('.card--gradient, .card--pixel')) {
+        for (const t of card.querySelectorAll('h4, p, a')) {
+          if (!t.closest('.fx-content')) out.scrimBad.push(t.textContent.trim().slice(0, 20));
+        }
+        const c = card.querySelector('.fx-content');
+        const bg = c ? getComputedStyle(c).backgroundColor : '';
+        const m = /rgba\([^)]*,\s*([\d.]+)\)/.exec(bg);
+        if (!m || Number(m[1]) < 0.5) out.scrimBad.push(`scrim ${bg}`);
+      }
+      out.disabledBtn = document.querySelectorAll('button[disabled]').length;
+      out.ariaDisabled = document.querySelectorAll('[aria-disabled="true"]').length;
+      out.sims = document.querySelectorAll('[data-sim]').length;
+      out.simGroup = Boolean(document.querySelector('#titulo-simulador'));
+      out.headerPause = document.querySelectorAll('body > header [data-fx-pause]').length;
+      out.pauseLabels = [...document.querySelectorAll('[data-fx-pause]')].map((b) => b.textContent.trim());
+      out.componentsH2 = Boolean(document.querySelector('#componentes h2'));
+      out.canvasKinds = document.querySelectorAll('.card [data-fx], .crt [data-fx]').length;
+      return out;
+    }, { fams: FAMILIES, states: STATE_KEYS });
+
+    check('components: existen los nueve data-component con un h3 cada uno', info.fams.every((x) => x.exists && x.h3 === 1), info.fams.filter((x) => !x.exists || x.h3 !== 1).map((x) => x.f).join(','));
+    check('components: cada familia tiene la matriz Normal, Hover, Foco, Deshabilitado y Movimiento reducido', info.fams.every((x) => x.states === 5), info.fams.map((x) => `${x.f}=${x.states}`).join(' '));
+    check('components: cada familia tiene una muestra en vivo y al menos una muestra de estado en la matriz', info.fams.every((x) => x.live === 1 && x.samples >= 1), info.fams.map((x) => `${x.f}:${x.live}/${x.samples}`).join(' '));
+    check('components: hay un solo h1 en toda la pagina y un h2 Componentes', info.h1 === 1 && info.componentsH2, `h1=${info.h1}`);
+    check('components: hay al menos un button[disabled] y un [aria-disabled="true"]', info.disabledBtn >= 1 && info.ariaDisabled >= 1, `disabled=${info.disabledBtn} aria=${info.ariaDisabled}`);
+    check('components: el simulador tiene sus dos interruptores', info.sims === 2 && info.simGroup, `sims=${info.sims}`);
+    check('components: la cabecera tiene un unico boton de pausa y todas las etiquetas son "Pausar animaciones"', info.headerPause === 1 && info.pauseLabels.length >= 3 && info.pauseLabels.every((l) => l === 'Pausar animaciones'), JSON.stringify(info.pauseLabels));
+    check('components: todo input, select y textarea tiene al menos una etiqueta asociada', info.inputsNoLabel.length === 0, info.inputsNoLabel.join(','));
+    check('components: cada campo invalido tiene aria-describedby hacia un id existente con texto', info.invalid.length >= 1 && info.invalid.every((x) => x.ok), JSON.stringify(info.invalid));
+    check('components: ningun form tiene action ni method post', info.formsWithAction.length === 0, info.formsWithAction.join(','));
+    check('components: el texto de las cards sobre gradiente vive dentro de .fx-content con scrim de 50 por ciento o mas', info.scrimBad.length === 0, info.scrimBad.join(' ; '));
+    check('components: ningun componente registra un efecto automatico (sin data-fx en cards ni CRT)', info.canvasKinds === 0, `data-fx=${info.canvasKinds}`);
+
+    /* Objetivos tactiles: 44 px (24 px para .link-inline). Los elementos ocultos miden 0 y se omiten. */
+    const sizes = await page.evaluate(() => {
+      const bad = [];
+      let seen = 0;
+      const test = (sel, min) =>
+        document.querySelectorAll(sel).forEach((el) => {
+          const r = el.getBoundingClientRect();
+          if (r.width === 0 || r.height === 0) return;
+          seen += 1;
+          if (r.width < min - 0.5 || r.height < min - 0.5) bad.push(`${sel} "${el.textContent.trim().slice(0, 18)}" ${Math.round(r.width)}x${Math.round(r.height)}`);
+        });
+      test('.btn', 44);
+      test('.input', 44);
+      test('select', 44);
+      test('textarea', 44);
+      test('summary', 44);
+      test('.nav a', 44);
+      test('.link-inline', 24);
+      return { bad, seen };
+    });
+    check(`components: ${sizes.seen} objetivos visibles miden 44 px (24 px los enlaces en linea) o mas`, sizes.bad.length === 0 && sizes.seen > 40, sizes.bad.slice(0, 5).join(' ; '));
+
+    /* Recorrido con la tecla Tab: cada elemento enfocado muestra un contorno de 2 px o mas. */
+    const walk = [];
+    for (let i = 0; i < 150; i += 1) {
+      await page.keyboard.press('Tab');
+      const r = await page.evaluate(() => {
+        const el = document.activeElement;
+        if (!el || el === document.body) return null;
+        const cs = getComputedStyle(el);
+        return {
+          tag: el.tagName.toLowerCase(),
+          label: (el.textContent || el.getAttribute('aria-label') || el.id || '').trim().slice(0, 22),
+          style: cs.outlineStyle,
+          width: parseFloat(cs.outlineWidth),
+          comp: Boolean(el.closest('#componentes')),
+        };
+      });
+      if (r) walk.push(r);
+    }
+    const noRing = walk.filter((w) => w.style === 'none' || w.width < 2);
+    const inComp = walk.filter((w) => w.comp).length;
+    check(`components: ${walk.length} elementos enfocados con Tab (${inComp} en #componentes) con outline de 2 px o mas`, walk.length >= 100 && inComp >= 30 && noRing.length === 0, noRing.slice(0, 5).map((w) => `${w.tag} "${w.label}" ${w.style} ${w.width}px`).join(' ; ') || `visitados=${walk.length}`);
+    await context.close();
+  }
+
+  /* 2. Pausa de cabecera, simuladores y movimiento permitido. */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: DESKTOP, wait: 3000 });
+    const durations = await page.evaluate(() => {
+      const a = document.getAnimations().filter((x) => x.animationName === 'crt-blink');
+      return a.map((x) => ({ d: x.effect.getComputedTiming().duration, it: x.effect.getComputedTiming().iterations }));
+    });
+    check('components: con movimiento permitido el cursor CRT anima con 1000 ms o mas', durations.length >= 1 && durations.every((x) => x.d >= 1000 && x.it === Infinity), JSON.stringify(durations));
+    const forced = await page.evaluate(() => {
+      const name = (sel) => {
+        const el = document.querySelector(sel);
+        return el ? getComputedStyle(el).animationName : 'sin-elemento';
+      };
+      return {
+        cursor: name('[data-component="crt"] [data-state="normal"] .crt-cursor'),
+        cursorReduced: name('[data-component="crt"] [data-state="reduced"] .crt-cursor'),
+        star: name('[data-component="button"] [data-state="normal"] .fx-star-border'),
+        starReduced: name('[data-component="button"] [data-state="reduced"] .fx-star-border'),
+      };
+    });
+    check('components: la clase .is-reduced apaga el cursor CRT y el borde estrella que animan en Normal', forced.cursor === 'crt-blink' && forced.cursorReduced === 'none' && forced.star !== 'none' && forced.starReduced === 'none', JSON.stringify(forced));
+
+    const hero = await canvasCount(page);
+    await page.locator('body > header [data-fx-pause]').click();
+    await page.waitForTimeout(400);
+    const p = await page.evaluate(() => ({
+      pressed: document.querySelector('body > header [data-fx-pause]').getAttribute('aria-pressed'),
+      motion: document.documentElement.dataset.motion,
+      count: window.FX.count(),
+      cursor: getComputedStyle(document.querySelector('.crt-cursor')).animationName,
+      anims: document.getAnimations().length,
+    }));
+    check('components: Pausar animaciones de la cabecera deja aria-pressed true, data-motion reduced, FX.count() 0, cursor sin animacion y cero animaciones', hero === 1 && p.pressed === 'true' && p.motion === 'reduced' && p.count === 0 && p.cursor === 'none' && p.anims === 0, JSON.stringify({ hero, ...p }));
+    await page.locator('body > header [data-fx-pause]').click();
+    const back = await poll(page, () => window.FX.count() === 1, null, 2000);
+    const p2 = await page.evaluate(() => ({ pressed: document.querySelector('body > header [data-fx-pause]').getAttribute('aria-pressed'), motion: document.documentElement.dataset.motion, cursor: getComputedStyle(document.querySelector('.crt-cursor')).animationName }));
+    check('components: al soltar la pausa de la cabecera vuelve el canvas del hero en 2000 ms y el cursor anima', back && p2.pressed === 'false' && p2.motion === undefined && p2.cursor === 'crt-blink', JSON.stringify(p2));
+
+    for (const [sim, attr, value, label] of [['motion', 'data-motion', 'reduced', 'prefers-reduced-motion'], ['saver', 'data-saver', 'on', 'saveData']]) {
+      const btn = page.locator(`[data-sim="${sim}"]`);
+      await btn.scrollIntoViewIfNeeded();
+      await btn.click();
+      const gone = await poll(page, () => window.FX.count() === 0, null, 1000);
+      const s = await page.evaluate(([a, sm]) => ({
+        pressed: document.querySelector(`[data-sim="${sm}"]`).getAttribute('aria-pressed'),
+        attr: document.documentElement.getAttribute(a),
+        cursor: getComputedStyle(document.querySelector('.crt-cursor')).animationName,
+        pause: document.querySelector('body > header [data-fx-pause]').getAttribute('aria-pressed'),
+      }), [attr, sim]);
+      check(`components: el simulador de ${label} deja ${attr}="${value}", 0 canvas y el cursor sin animacion`, gone && s.attr === value && s.pressed === 'true' && s.cursor === 'none', JSON.stringify(s));
+      if (sim === 'motion') check('components: el simulador de movimiento mantiene sincronizado el boton de pausa de la cabecera', s.pause === 'true', s.pause);
+      await btn.click();
+      await page.evaluate(() => window.scrollTo(0, 0));
+      const returned = await poll(page, () => window.FX.count() === 1, null, 2000);
+      const off = await page.evaluate(([a, sm]) => ({ attr: document.documentElement.getAttribute(a), pressed: document.querySelector(`[data-sim="${sm}"]`).getAttribute('aria-pressed') }), [attr, sim]);
+      check(`components: al apagar el simulador de ${label} regresa el canvas del hero en 2000 ms`, returned && off.attr === null && off.pressed === 'false', JSON.stringify(off));
+    }
+
+    /* Formulario de ejemplo: enviarlo no cambia la URL ni sale a ninguna parte. */
+    const before = page.url();
+    const posts = [];
+    page.on('request', (r) => r.method() !== 'GET' && posts.push(r.method() + ' ' + r.url()));
+    await page.locator('#form-ejemplo button[type="submit"]').scrollIntoViewIfNeeded();
+    await page.locator('#form-ejemplo button[type="submit"]').click();
+    await page.waitForTimeout(200);
+    const status = await page.locator('#form-ejemplo [role="status"]').textContent();
+    check('components: enviar el formulario no cambia la URL, no hace peticiones y escribe el estado', page.url() === before && posts.length === 0 && /no se env/.test(status), `url=${page.url() === before} posts=${posts.length} estado="${status}"`);
+    await context.close();
+  }
+
+  /* 3. prefers-reduced-motion real: el boton de pausa nace pulsado y apagado. */
+  {
+    const { context, page } = await visit(env, httpUrl(env, page0), { ctx: { ...DESKTOP, reducedMotion: 'reduce' }, wait: 1500 });
+    const r = await page.evaluate(() => {
+      const b = document.querySelector('body > header [data-fx-pause]');
+      return {
+        pressed: b.getAttribute('aria-pressed'),
+        disabled: b.disabled,
+        cursor: getComputedStyle(document.querySelector('.crt-cursor')).animationName,
+        anims: document.getAnimations().length,
+        canvas: window.FX.count(),
+      };
+    });
+    check('components: con prefers-reduced-motion la pausa arranca aria-pressed true y disabled, sin animaciones ni canvas', r.pressed === 'true' && r.disabled === true && r.cursor === 'none' && r.anims === 0 && r.canvas === 0, JSON.stringify(r));
+    await context.close();
+  }
+
+  /* 4. Mobile: menu details, pausa visible y sin desborde. */
+  for (const [label, w, h] of [['390', 390, 844], ['320', 320, 640]]) {
+    const v = await visit(env, httpUrl(env, page0), { ctx: { viewport: { width: w, height: h }, isMobile: true, hasTouch: true }, wait: 800 });
+    const r = await v.page.evaluate(() => {
+      const vis = (el) => {
+        if (!el) return false;
+        const rc = el.getBoundingClientRect();
+        return rc.width > 0 && rc.height > 0;
+      };
+      const header = document.querySelector('body > header');
+      const pause = header.querySelector('[data-fx-pause]');
+      const pr = pause.getBoundingClientRect();
+      return {
+        sw: document.documentElement.scrollWidth,
+        iw: window.innerWidth,
+        menu: vis(header.querySelector('.nav__menu summary')),
+        bar: vis(header.querySelector('.nav__list--bar')),
+        pause: vis(pause) && pr.right <= window.innerWidth + 0.5 && !pause.closest('.nav__menu'),
+      };
+    });
+    check(`components: a ${label} px sin desborde horizontal`, r.sw <= r.iw, `scrollWidth=${r.sw} innerWidth=${r.iw}`);
+    check(`components: a ${label} px la cabecera muestra el menu colapsado, oculta la barra y deja Pausar animaciones visible fuera del menu`, r.menu && !r.bar && r.pause, JSON.stringify(r));
+    if (w === 390) {
+      await v.page.locator('body > header .nav__menu summary').click();
+      const open = await v.page.evaluate(() => {
+        const d = document.querySelector('body > header .nav__menu');
+        const links = [...d.querySelectorAll('a')].filter((a) => a.getBoundingClientRect().height > 0);
+        return { open: d.open, links: links.length };
+      });
+      check('components: el menu colapsado abre con summary y muestra los enlaces', open.open && open.links === 8, JSON.stringify(open));
+    }
+    await v.context.close();
+  }
+
+  /* 5. Sin JavaScript el menu colapsado funciona (details nativo). */
+  {
+    const v = await visit(env, httpUrl(env, page0), { ctx: { viewport: { width: 390, height: 844 }, isMobile: true, javaScriptEnabled: false }, wait: 300 });
+    await v.page.locator('body > header .nav__menu summary').click();
+    const open = await v.page.evaluate(() => document.querySelector('body > header .nav__menu').open);
+    check('components: sin JavaScript el menu details se abre', open === true);
+    await v.context.close();
+  }
+};
+
+/* ---------- capturas finales (--shots) ---------- */
+
+const FINAL_SHOT_DIR = path.join(ROOT, 'reports/shots');
+const FINAL_SHOT_LIMIT = 400 * 1024;
+
+async function finalShots(env) {
+  fs.mkdirSync(FINAL_SHOT_DIR, { recursive: true });
+  const target = (name) => path.join(FINAL_SHOT_DIR, name);
+  const jobs = [
+    { name: 'system-desktop-hero.jpg', ctx: DESKTOP, hero: true },
+    { name: 'system-mobile-hero.jpg', ctx: MOBILE, hero: true },
+    { name: 'system-desktop-componentes.jpg', ctx: DESKTOP, section: '#componentes' },
+    { name: 'system-mobile-componentes.jpg', ctx: MOBILE, section: '#componentes' },
+    { name: 'system-desktop-efectos.jpg', ctx: DESKTOP, section: '#efectos' },
+    { name: 'system-mobile-efectos.jpg', ctx: MOBILE, section: '#efectos' },
+    { name: 'system-desktop-efectos-sinjs.jpg', ctx: { ...DESKTOP, javaScriptEnabled: false }, section: '#efectos' },
+    { name: 'system-mobile-efectos-reducido.jpg', ctx: { ...MOBILE, reducedMotion: 'reduce' }, section: '#efectos' },
+  ];
+  for (const job of jobs) {
+    const v = await visit(env, httpUrl(env, 'system.html'), { ctx: { ...job.ctx, deviceScaleFactor: 1 }, wait: 2800 });
+    const vp = job.ctx.viewport;
+    let size = 0;
+    let used = '';
+    if (job.hero) {
+      await v.page.screenshot({ path: target(job.name), type: 'jpeg', quality: 60, clip: { x: 0, y: 0, width: vp.width, height: vp.height } });
+      size = fs.statSync(target(job.name)).size;
+      used = `${vp.width}x${vp.height}`;
+    } else {
+      const box = await v.page.evaluate((sel) => {
+        const r = document.querySelector(sel).getBoundingClientRect();
+        return { top: r.top + window.scrollY, height: r.height };
+      }, job.section);
+      for (const maxH of [2600, 2200, 1800, 1400, 1000]) {
+        const height = Math.min(box.height, maxH);
+        await v.page.screenshot({ path: target(job.name), type: 'jpeg', quality: 60, fullPage: true, clip: { x: 0, y: box.top, width: vp.width, height } });
+        size = fs.statSync(target(job.name)).size;
+        used = `${vp.width}x${Math.round(height)}`;
+        if (size < FINAL_SHOT_LIMIT) break;
+      }
+    }
+    check(`shots: ${job.name} (${used}, ${(size / 1024).toFixed(0)} KB) pesa menos de 400 KB`, size > 0 && size < FINAL_SHOT_LIMIT);
+    await v.context.close();
+  }
+}
+
 /* ---------- main ---------- */
 
 async function main() {
@@ -924,6 +1221,10 @@ async function main() {
       console.log(`--- stage: ${s}`);
       hygiene();
       await STAGES[s](env);
+      if (s === 'components' && shots) {
+        console.log('--- capturas finales');
+        await finalShots(env);
+      }
     }
   } finally {
     await browser.close();
