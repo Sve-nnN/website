@@ -1,0 +1,74 @@
+{
+  "es": {
+    "heading": "Casos de éxito",
+    "lede": "Cada caso muestra qué estaba fallando, qué corregí en el código y qué cambió después. Los números salen de Search Console y los clientes quedan anónimos.",
+    "ctaLabel": "Leer el caso completo",
+    "cases": [
+      {
+        "title": "De casi cero visibilidad a un año de crecimiento sostenido para un urólogo",
+        "sector": "Salud, urología",
+        "metric": "+406% clics interanuales",
+        "href": "https://juan-tech.com/case-studies/urologo-seo-local-salud-santiago-rd"
+      },
+      {
+        "title": "Cuadruplicar el tráfico orgánico de un despacho de inmigración en Atlanta en un año",
+        "sector": "Servicios legales, inmigración",
+        "metric": "+309% clics interanuales",
+        "href": "https://juan-tech.com/case-studies/immigration-law-atlanta-seo"
+      },
+      {
+        "title": "Escalar el contenido legal educativo a más de 86 000 clics orgánicos anuales para un despacho de defensa criminal",
+        "sector": "Servicios legales, defensa criminal",
+        "metric": "+83% clics interanuales",
+        "href": "https://juan-tech.com/case-studies/pittsburgh-criminal-defense-legal-content-seo"
+      }
+    ],
+    "allLabel": "Ver todos los casos",
+    "allHref": "https://juan-tech.com/case-studies"
+  },
+  "en": {
+    "heading": "Case studies",
+    "lede": "Every case shows what was failing, what I fixed in the code and what changed afterwards. The numbers come from Search Console, and I keep the clients anonymous.",
+    "ctaLabel": "Read the full case",
+    "cases": [
+      {
+        "title": "From near-zero visibility to a year of sustained growth for a urologist",
+        "sector": "Healthcare, urology",
+        "metric": "+406% YoY clicks",
+        "href": "https://juan-tech.com/en/case-studies/urologo-seo-local-salud-santiago-rd"
+      },
+      {
+        "title": "Quadrupling organic traffic for an Atlanta immigration law firm in one year",
+        "sector": "Legal services, immigration",
+        "metric": "+309% YoY clicks",
+        "href": "https://juan-tech.com/en/case-studies/immigration-law-atlanta-seo"
+      },
+      {
+        "title": "Scaling educational legal content to over 86 000 annual organic clicks for a criminal defense firm",
+        "sector": "Legal services, criminal defense",
+        "metric": "+83% YoY clicks",
+        "href": "https://juan-tech.com/en/case-studies/pittsburgh-criminal-defense-legal-content-seo"
+      }
+    ],
+    "allLabel": "See all case studies",
+    "allHref": "https://juan-tech.com/en/case-studies"
+  },
+  "_numbers": [
+    {
+      "value": "406",
+      "source": "juan-tech.com/case-studies, métricas de Search Console según la propia página"
+    },
+    {
+      "value": "309",
+      "source": "juan-tech.com/case-studies, métricas de Search Console según la propia página"
+    },
+    {
+      "value": "83",
+      "source": "juan-tech.com/case-studies, métricas de Search Console según la propia página"
+    },
+    {
+      "value": "86000",
+      "source": "juan-tech.com/case-studies, métricas de Search Console según la propia página"
+    }
+  ]
+}

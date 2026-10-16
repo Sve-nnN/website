@@ -193,3 +193,61 @@
     grid-area: figure;
   }
 }
+
+/* ---------- Casos y websites ---------- */
+
+.hm-grid {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Tarjetas del mismo alto: el li estira y la tarjeta llena el li. */
+.hm-grid > li {
+  display: flex;
+  min-width: 0;
+}
+
+.hm-grid > li > .card {
+  flex: 1;
+  min-height: 12rem;
+}
+
+.hm-case .card__title,
+.hm-site .card__title {
+  overflow-wrap: anywhere;
+}
+
+/* La metrica va en texto dentro de la insignia; puede partir linea en 320 px. */
+.hm-metric {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* La invitacion a leer queda al pie de la tarjeta; el enlace del titulo ya cubre toda la tarjeta. */
+.hm-case__cta {
+  margin-top: auto;
+}
+
+.hm-site__score {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+.hm-site__value {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  line-height: var(--leading-tight);
+}
+
+@media (min-width: 64rem) {
+  .hm-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

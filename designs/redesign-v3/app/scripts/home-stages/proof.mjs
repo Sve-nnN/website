@@ -7,8 +7,15 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 /** Secciones propias de este plan, en el orden que debe verse en la pagina. */
-const OWN = ['clientes', 'errores-reales'];
-const COPY_FILES = ['clientes', 'errores-reales'];
+const OWN = ['clientes', 'errores-reales', 'casos', 'websites'];
+const COPY_FILES = ['clientes', 'errores-reales', 'casos', 'websites'];
+
+const CASE_SLUGS = ['urologo-seo-local-salud-santiago-rd', 'immigration-law-atlanta-seo', 'pittsburgh-criminal-defense-legal-content-seo'];
+const SITES = [
+  { name: 'Apturio', score: '83' },
+  { name: 'Arianna Lupi', score: '73' },
+  { name: 'Estylopia', score: '67' },
+];
 
 const CLIENTS_SEO = ['money.com', 'Miami Herald', 'Holafly', 'Souma Hotel Lima', 'TheSmokyRolling', 'DSLX', 'Vallas Venezuela', 'TheSmokyBox', 'Florida Health Care Academy', 'Delta Cloudz', 'Tursi Digital Nomads', 'The Sosa Team', 'Florida Top Roofs', 'Felipe Vergara', 'Storybook app'];
 const CLIENTS_DEV = ['Luxembourg Philharmonie', 'Arianna Lupi', 'Apturio', 'Childrenchic', 'TuMundoSalud', 'Crédito USS', 'Wiñaypaq', 'Dr. Manuel A. Vargas Hidalgo', 'Puntada con Amor', 'Aprendoclub', 'Pro Torque Diesel', 'Cresory', 'Estylopia'];
@@ -143,6 +150,59 @@ export async function run(ctx) {
       `p3. ${lang}: tres articulos con pre[lang=en] identico al seed, enlace exacto al commit, data-surface=reading y 0 canvas`,
       !!fixes && fixes.articles.length === 3 && codeOk && fixes.surface === 'reading' && fixes.canvas === 0,
       fixes ? `articulos=${fixes.articles.length} surface=${fixes.surface} canvas=${fixes.canvas} ${codeDetail}` : 'sin seccion',
+    );
+
+    // p9
+    const prefix = lang === 'en' ? 'https://juan-tech.com/en/case-studies/' : 'https://juan-tech.com/case-studies/';
+    const casos = await page.evaluate((s) => {
+      const root = document.querySelector(s);
+      if (!root) return null;
+      return {
+        text: root.textContent,
+        cards: [...root.querySelectorAll('article')].map((a) => ({
+          title: a.querySelector('h3')?.textContent ?? '',
+          links: [...a.querySelectorAll('a')].map((l) => l.getAttribute('href')),
+          titleLink: a.querySelector('h3 a')?.getAttribute('href') ?? null,
+          metric: a.querySelector('.badge')?.textContent ?? '',
+        })),
+      };
+    }, sel('casos'));
+    const expectedMetrics = ['+406', '+309', '+83'];
+    const casosOk =
+      !!casos &&
+      casos.cards.length === 3 &&
+      casos.cards.every((c, i) => c.titleLink === prefix + CASE_SLUGS[i] && c.links.length === 1 && c.metric.includes(expectedMetrics[i]) && !/[.,]/.test(c.title)) &&
+      !/(?<!\d)(68|143|104)(?!\d)/.test(casos.text);
+    check(
+      `p9. ${lang}: casos tiene 3 tarjetas con enlace de slug permitido, metricas +406, +309 y +83, titulos sin . ni , y sin 68, 143 ni 104`,
+      casosOk,
+      casos ? casos.cards.map((c) => `${c.metric.trim()} -> ${c.titleLink}`).join(' | ') : 'sin seccion',
+    );
+
+    // p10
+    const websites = await page.evaluate((s) => {
+      const root = document.querySelector(s);
+      if (!root) return null;
+      return {
+        pending: root.querySelectorAll('.badge--pending').length,
+        cards: [...root.querySelectorAll('article')].map((a) => ({
+          name: a.querySelector('h3')?.textContent.trim() ?? '',
+          score: a.querySelector('.hm-site__value')?.textContent.trim() ?? '',
+        })),
+      };
+    }, sel('websites'));
+    check(
+      `p10. ${lang}: websites tiene 3 tarjetas (Apturio 83, Arianna Lupi 73, Estylopia 67) y exactamente un .badge--pending`,
+      !!websites && websites.pending === 1 && websites.cards.length === 3 && websites.cards.every((c, i) => c.name === SITES[i].name && c.score === SITES[i].score),
+      websites ? `pendientes=${websites.pending} ${websites.cards.map((c) => `${c.name} ${c.score}`).join(' | ')}` : 'sin seccion',
+    );
+
+    // p11
+    const order = structure.order;
+    check(
+      `p11. ${lang}: casos y websites van despues de errores-reales, en ese orden`,
+      order.indexOf('errores-reales') < order.indexOf('casos') && order.indexOf('casos') < order.indexOf('websites') && order.indexOf('casos') > -1,
+      order.join(','),
     );
 
     // p5 y p6
