@@ -1,27 +1,88 @@
 /* app.css: diseño de la galería. Solo variables de tokens.css, sin literales hexadecimales. */
 
-.page {
-  padding: var(--space-6);
-  display: grid;
-  gap: var(--space-5);
-  max-width: 80rem;
-  margin: 0 auto;
+body {
+  background: var(--ink);
+  color: var(--paper);
 }
 
-.page h1 {
-  max-width: 32ch;
+/* Enlaces: violeta claro sobre tinta, con contraste de texto normal. */
+.card-docs,
+.site-footer a,
+.page-nav a,
+.page a {
+  color: var(--violet-text-raised);
+  text-underline-offset: 3px;
+}
+
+.page-header {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-5);
+}
+
+.page-header h1 {
+  max-width: 28ch;
   font-size: var(--text-2xl);
+  line-height: var(--leading-tight);
+}
+
+.page-header .lede {
+  margin: 0;
+  max-width: 62ch;
+}
+
+.page {
+  display: grid;
+  gap: var(--space-6);
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-5) var(--space-6);
+}
+
+.page h2 {
+  margin-bottom: var(--space-4);
+}
+
+/* Barra de control: pausa, estado del cupo y aviso de bloqueo. */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+.toolbar-status,
+.toolbar-blocked {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.toolbar-status {
+  color: var(--quiet);
+}
+
+.toolbar-blocked {
+  flex-basis: 100%;
+  padding: var(--space-2) var(--space-3);
+  border-left: 4px solid var(--amber);
+  background: var(--ink-raised);
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
   gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .card {
   display: grid;
   gap: var(--space-3);
+  height: 100%;
   padding: var(--space-4);
   background: var(--ink-raised);
   border: 1px solid var(--ink-top);
@@ -29,43 +90,101 @@
   align-content: start;
 }
 
-.card .pixel-label {
+.card h3 {
+  font-size: var(--text-lg);
+}
+
+.card-origin {
+  margin: 0;
   color: var(--quiet);
-}
-
-/* Escenario de altura fija: el fallback ocupa el 100 por ciento y el original lo cubre. */
-.stage {
-  position: relative;
-  height: 22rem;
-  overflow: hidden;
-  border-radius: var(--radius-2);
-  background: var(--ink);
-}
-
-.stage .fx-grain {
-  position: absolute;
-  inset: 0;
-  min-height: 0;
-  height: 100%;
-  padding: 0;
-}
-
-.stage-original {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-.stage-panel {
-  position: absolute;
-  left: var(--space-3);
-  bottom: var(--space-3);
-  z-index: 2;
-  max-width: min(26rem, calc(100% - var(--space-5)));
-  padding: var(--space-3);
   font-size: var(--text-sm);
 }
 
+.card-docs {
+  justify-self: start;
+  font-size: var(--text-sm);
+}
+
+/* Escenario de altura fija (la fija el estilo en linea de cada entrada): reserva el espacio y evita CLS. */
+.stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-3);
+  background: var(--ink);
+}
+
+/* Fallback de la fase 51 u original: ocupan el 100 por ciento del escenario. */
+.stage > [data-fallback],
+.stage > .stage-original,
+.stage > .stage-fill {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+}
+
+.stage > [data-fallback] {
+  padding: var(--space-3);
+}
+
+.stage > [data-fallback].fx-reveal {
+  padding: 0;
+  aspect-ratio: auto;
+}
+
+.stage > [data-fallback].fx-spotlight {
+  border-radius: 0;
+}
+
+.stage > [data-fallback].fx-stage {
+  padding: var(--space-3);
+}
+
+/* Los originales con tamano propio quedan centrados en el escenario. */
+.stage[data-placement="center"] > .stage-original {
+  display: grid;
+  place-items: center;
+}
+
+.stage > [data-fallback].fx-pixel-card,
+.stage > [data-fallback].fx-transition {
+  inset: var(--space-3) auto;
+  left: 50%;
+  width: min(100%, 20rem);
+  height: calc(100% - var(--space-5));
+  transform: translateX(-50%);
+}
+
+.stage > [data-fallback].fx-showcase {
+  padding: 0;
+}
+
+.stage-overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  z-index: 2;
+  padding: var(--space-3);
+  pointer-events: none;
+}
+
+.stage-overlay--crt {
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: var(--space-5);
+}
+
+.stage-panel-fill {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+}
+
+/* Rejilla de props leidas de tokens.css. */
 .props {
   margin: 0;
   display: grid;
@@ -92,7 +211,15 @@
   gap: var(--space-2);
 }
 
-.toggle {
+.props code {
+  overflow-wrap: anywhere;
+}
+
+/* Botones: alto minimo de 44 px; el estado pulsado no depende solo del color. */
+.btn-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   min-height: var(--tap);
   min-width: var(--tap);
   padding: 0 var(--space-4);
@@ -101,21 +228,145 @@
   font-weight: 600;
   color: var(--ink);
   background: var(--paper);
-  border: 0;
+  border: 2px solid var(--paper);
   border-radius: var(--radius-2);
   cursor: pointer;
 }
 
-.toggle[aria-pressed="true"] {
+.btn-toggle::before {
+  content: "";
+  width: .6em;
+  height: .6em;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+}
+
+.btn-toggle[aria-pressed="true"] {
   background: var(--phosphor);
+  border-color: var(--phosphor);
+}
+
+.btn-toggle[aria-pressed="true"]::before {
+  background: currentColor;
+}
+
+.btn-toggle[aria-disabled="true"] {
+  color: var(--quiet);
+  background: var(--ink-higher);
+  border-color: var(--ink-top);
+  cursor: not-allowed;
+}
+
+/* Superficie de lectura: solo grano y dot grid estaticos. */
+.reading-sample {
+  position: relative;
+  min-height: 9rem;
+  padding: var(--space-4);
+  overflow: hidden;
+  background-color: var(--ink);
+  border: 1px solid var(--ink-top);
+  border-radius: var(--radius-3);
+}
+
+.reading-text {
+  position: relative;
+  max-width: 36rem;
+  margin: 0;
+}
+
+/* Estados de fallbacks que la fase 51 resuelve en system-doc.css y la galeria necesita. */
+.fx-stage {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: 9rem;
+  padding: var(--space-3);
+  overflow: hidden;
+  background: var(--grad);
+}
+
+.fx-showcase {
+  display: grid;
+  place-items: center;
+  min-height: 9rem;
+  background: var(--ink);
+  border: 1px solid var(--ink-top);
+}
+
+.site-footer {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+/* Pagina /rendimiento */
+.data-table-wrap {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.data-table caption {
+  padding-bottom: var(--space-2);
+  color: var(--quiet);
+  text-align: left;
+}
+
+.data-table th,
+.data-table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--ink-top);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.data-table th:first-child,
+.data-table td:first-child,
+.data-table th[scope="row"] {
+  text-align: left;
+}
+
+.data-table .is-over {
+  color: var(--coral);
+  font-weight: 600;
+}
+
+.page-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.page-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding: 0 var(--space-3);
 }
 
 @media (max-width: 767px) {
-  .page {
-    padding: var(--space-4);
+  .page,
+  .page-header {
+    padding-inline: var(--space-3);
   }
 
-  .stage {
-    height: 18rem;
+  .page-header {
+    gap: var(--space-2);
+    padding-block: var(--space-3);
+  }
+
+  .page {
+    gap: var(--space-5);
+  }
+
+  .card {
+    padding: var(--space-3);
   }
 }

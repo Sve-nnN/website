@@ -1,93 +1,76 @@
-import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
-import { catalog, type CatalogEntry } from './catalog';
-import { originals } from './originals';
-import { readTokens } from './tokens';
+import { catalog } from './catalog';
+import { EffectCard } from './EffectCard';
+import { SlotProvider } from './slot';
+import { Toolbar } from './Toolbar';
 
-/** Hijo sonda: su efecto corre solo cuando el original diferido ya se renderizo dentro del mismo Suspense. */
-function Probe({ onReady }: { onReady: () => void }) {
-  useEffect(() => {
-    onReady();
-  }, [onReady]);
-  return null;
-}
-
-function formatValue(value: unknown): string[] {
-  if (Array.isArray(value)) return value.map(String);
-  return [String(value)];
-}
-
-function EffectCard({ entry }: { entry: CatalogEntry }) {
-  const [wanted, setWanted] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const props = useMemo(() => entry.buildProps(readTokens()), [entry]);
-  const Original = useMemo(() => lazy(originals[entry.name]), [entry.name]);
-  const slug = entry.name.toLowerCase();
-
-  const toggle = () => {
-    setWanted((prev) => !prev);
-    setMounted(false);
-  };
-
-  return (
-    <article className="card" data-effect={slug} data-mounted={mounted ? 'true' : 'false'}>
-      <h3>{entry.title}</h3>
-      <p className="pixel-label">Origen: {entry.name}, React Bits, {entry.category}.</p>
-
-      <div className="stage">
-        <div className="fx-grain" />
-        {wanted ? (
-          <div className="stage-original">
-            <Suspense fallback={null}>
-              <Original {...props} />
-              <Probe onReady={() => setMounted(true)} />
-            </Suspense>
-          </div>
-        ) : null}
-        <div className="fx-content stage-panel">
-          <p>Fallback CSS de la fase 51 debajo, componente original encima al montarlo.</p>
-        </div>
-      </div>
-
-      <dl data-props className="props">
-        {Object.entries(props).map(([key, value]) => (
-          <div key={key}>
-            <dt>{key}</dt>
-            <dd data-prop={key}>
-              {formatValue(value).map((v) => (
-                <code key={v}>{v}</code>
-              ))}
-            </dd>
-          </div>
-        ))}
-      </dl>
-
-      <button type="button" className="toggle" data-toggle aria-pressed={wanted} onClick={toggle}>
-        {wanted ? 'Desmontar original' : 'Montar original'}
-      </button>
-    </article>
-  );
-}
+const base = catalog.filter((e) => e.group === 'base');
+const scout = catalog.filter((e) => e.group === 'scout');
 
 export function SystemPage() {
   return (
-    <>
-      <header className="site-header">
+    <SlotProvider>
+      <a className="skip-link" href="#contenido">
+        Saltar al contenido
+      </a>
+      <header className="site-header page-header">
         <span className="brand">Juan Tech</span>
-      </header>
-      <main className="page">
         <h1>Mi sistema visual con los componentes originales de React Bits</h1>
         <p className="lede">
-          Cada tarjeta carga su original solo cuando lo pido y conserva debajo el fallback CSS de la fase 51.
+          Cada tarjeta muestra el fallback CSS de la fase 51. Con el botón monto el componente original de React Bits en el
+          mismo espacio y lo comparo con mi porte vanilla.
         </p>
-        <div className="grid">
-          {catalog.map((entry) => (
-            <EffectCard key={entry.name} entry={entry} />
-          ))}
-        </div>
+        <p className="lede">
+          Monto un solo original a la vez, lo cargo después del primer pintado y lo desmonto cuando sale de la pantalla. Si tu
+          sistema pide menos movimiento o si pausas las animaciones, solo ves el fallback.
+        </p>
+        <Toolbar />
+      </header>
+
+      <main id="contenido" className="page">
+        <section aria-labelledby="t-pedidos">
+          <h2 id="t-pedidos">Efectos pedidos</h2>
+          <ul className="grid">
+            {base.map((entry) => (
+              <li key={entry.name}>
+                <EffectCard entry={entry} />
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="t-scout">
+          <h2 id="t-scout">Adicionales del scout</h2>
+          <ul className="grid">
+            {scout.map((entry) => (
+              <li key={entry.name}>
+                <EffectCard entry={entry} />
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section data-surface="reading" aria-labelledby="t-lectura">
+          <h2 id="t-lectura">Superficie de lectura</h2>
+          <div className="reading-sample fx-dotgrid">
+            <div className="fx-noise" aria-hidden="true" />
+            <p className="reading-text">
+              Aquí el texto manda. Los originales no se montan en esta superficie. Solo hay grano estático y dot grid estático.
+            </p>
+          </div>
+        </section>
       </main>
+
       <footer className="site-footer">
-        <p>Entorno de mockups, fase 51.1. Los originales son de React Bits, licencia MIT más Commons Clause.</p>
+        <p>
+          Entorno de mockups de la fase 51.1. Los originales son de React Bits, con licencia MIT más Commons Clause. Los avisos
+          y los hashes viven en <code>designs/redesign-v3/app/LICENSES.md</code>.
+        </p>
+        <p>
+          <a href="https://reactbits.dev" rel="noreferrer">
+            Documentación de React Bits
+          </a>
+        </p>
       </footer>
-    </>
+    </SlotProvider>
   );
 }
