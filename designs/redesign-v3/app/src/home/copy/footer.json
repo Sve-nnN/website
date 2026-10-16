@@ -1,24 +1,327 @@
 {
   "es": {
     "tagline": "Ingeniero de software y consultor SEO técnico. Lima, Perú.",
+    "columns": [
+      {
+        "title": "Servicios",
+        "ariaLabel": "Servicios en el pie",
+        "links": [
+          {
+            "label": "Auditoría SEO técnica",
+            "href": "https://juan-tech.com/servicios/seo-technical-audit"
+          },
+          {
+            "label": "Consultoría SEO",
+            "href": "https://juan-tech.com/servicios/seo-consulting"
+          },
+          {
+            "label": "Desarrollo full-stack con SEO integrado",
+            "href": "https://juan-tech.com/servicios/fullstack-development"
+          },
+          {
+            "label": "SEO para IA / GEO",
+            "href": "https://juan-tech.com/servicios/ai-seo-geo"
+          },
+          {
+            "label": "Todos los servicios",
+            "href": "https://juan-tech.com/servicios"
+          },
+          {
+            "label": "SEO técnico en Lima",
+            "href": "https://juan-tech.com/seo-tecnico-lima"
+          },
+          {
+            "label": "SEO técnico en Madrid / España",
+            "href": "https://juan-tech.com/seo-tecnico-madrid"
+          }
+        ]
+      },
+      {
+        "title": "Sitio",
+        "ariaLabel": "Sitio en el pie",
+        "links": [
+          {
+            "label": "Blog",
+            "href": "https://juan-tech.com/blog"
+          },
+          {
+            "label": "Casos de éxito",
+            "href": "https://juan-tech.com/case-studies"
+          },
+          {
+            "label": "Autores",
+            "href": "https://juan-tech.com/authors"
+          }
+        ]
+      },
+      {
+        "title": "Contacto",
+        "ariaLabel": "Contacto en el pie",
+        "links": [
+          {
+            "label": "Contáctame",
+            "href": "https://juan-tech.com/contact"
+          },
+          {
+            "label": "Buscar",
+            "href": "https://juan-tech.com/search"
+          }
+        ]
+      }
+    ],
+    "linkedin": {
+      "label": "LinkedIn",
+      "href": "https://linkedin.com/in/juancangulo"
+    },
+    "latest": {
+      "articles": {
+        "title": "Últimos artículos",
+        "pendingTitle": "título en inglés",
+        "items": [
+          {
+            "label": "Tablas hash: Estructuras clave para un manejo eficiente de datos",
+            "href": "https://juan-tech.com/blog/cs-fundamentals/tablas-hash",
+            "spanishTitle": false
+          },
+          {
+            "label": "Pilas y Colas",
+            "href": "https://juan-tech.com/blog/cs-fundamentals/pilas-y-colas",
+            "spanishTitle": false
+          },
+          {
+            "label": "Recursividad",
+            "href": "https://juan-tech.com/blog/cs-fundamentals/recursividad",
+            "spanishTitle": false
+          },
+          {
+            "label": "Hidratación Web",
+            "href": "https://juan-tech.com/blog/development/hidratacion-web",
+            "spanishTitle": false
+          },
+          {
+            "label": "React 19",
+            "href": "https://juan-tech.com/blog/development/react-19",
+            "spanishTitle": false
+          }
+        ]
+      },
+      "cases": {
+        "title": "Últimos casos de éxito",
+        "items": [
+          {
+            "label": "Escalar el contenido legal educativo a más de 86 000 clics orgánicos anuales para un despacho de defensa criminal",
+            "href": "https://juan-tech.com/case-studies/pittsburgh-criminal-defense-legal-content-seo"
+          },
+          {
+            "label": "Más que duplicar el tráfico orgánico de un fabricante artesanal de baldosas hidráulicas en España",
+            "href": "https://juan-tech.com/case-studies/fabricante-baldosa-hidraulica-seo-espana"
+          },
+          {
+            "label": "Cuadruplicar el tráfico orgánico de un despacho de inmigración en Atlanta en un año",
+            "href": "https://juan-tech.com/case-studies/immigration-law-atlanta-seo"
+          },
+          {
+            "label": "De cero a los primeros clics orgánicos reales para un negocio local de talleres",
+            "href": "https://juan-tech.com/case-studies/talleres-costura-miami-lanzamiento-seo-local"
+          },
+          {
+            "label": "De casi cero visibilidad a un año de crecimiento sostenido para un urólogo",
+            "href": "https://juan-tech.com/case-studies/urologo-seo-local-salud-santiago-rd"
+          }
+        ]
+      }
+    },
     "legalLabel": "Legal",
     "legal": [
-      { "label": "Privacidad", "path": "/privacy" },
-      { "label": "Términos", "path": "/terms" },
-      { "label": "Sitemap", "path": "/sitemap.html" },
-      { "label": "Mi stack", "path": "/stack" }
+      {
+        "label": "Privacidad",
+        "href": "https://juan-tech.com/privacy"
+      },
+      {
+        "label": "Términos",
+        "href": "https://juan-tech.com/terms"
+      },
+      {
+        "label": "Sitemap",
+        "href": "https://juan-tech.com/sitemap.html"
+      },
+      {
+        "label": "Mi stack",
+        "href": "https://juan-tech.com/stack"
+      }
     ],
     "copyright": "© 2026 Juan Carlos Angulo. Todos los derechos reservados."
   },
   "en": {
     "tagline": "Software engineer and technical SEO consultant. Lima, Peru.",
+    "columns": [
+      {
+        "title": "Services",
+        "ariaLabel": "Services in the footer",
+        "links": [
+          {
+            "label": "Technical SEO audit",
+            "href": "https://juan-tech.com/en/services/seo-technical-audit"
+          },
+          {
+            "label": "SEO consulting",
+            "href": "https://juan-tech.com/en/services/seo-consulting"
+          },
+          {
+            "label": "Full-stack development with SEO built in",
+            "href": "https://juan-tech.com/en/services/fullstack-development"
+          },
+          {
+            "label": "AI SEO / GEO",
+            "href": "https://juan-tech.com/en/services/ai-seo-geo"
+          },
+          {
+            "label": "All services",
+            "href": "https://juan-tech.com/en/services"
+          },
+          {
+            "label": "Technical SEO in Lima",
+            "href": "https://juan-tech.com/en/seo-tecnico-lima"
+          },
+          {
+            "label": "Technical SEO in Madrid / Spain",
+            "href": "https://juan-tech.com/en/seo-tecnico-madrid"
+          }
+        ]
+      },
+      {
+        "title": "Site",
+        "ariaLabel": "Site in the footer",
+        "links": [
+          {
+            "label": "Blog",
+            "href": "https://juan-tech.com/en/blog"
+          },
+          {
+            "label": "Case studies",
+            "href": "https://juan-tech.com/en/case-studies"
+          },
+          {
+            "label": "Authors",
+            "href": "https://juan-tech.com/en/authors"
+          }
+        ]
+      },
+      {
+        "title": "Contact",
+        "ariaLabel": "Contact in the footer",
+        "links": [
+          {
+            "label": "Contact me",
+            "href": "https://juan-tech.com/en/contact"
+          },
+          {
+            "label": "Search",
+            "href": "https://juan-tech.com/en/search"
+          }
+        ]
+      }
+    ],
+    "linkedin": {
+      "label": "LinkedIn",
+      "href": "https://linkedin.com/in/juancangulo"
+    },
+    "latest": {
+      "articles": {
+        "title": "Latest articles",
+        "pendingTitle": "título en inglés",
+        "items": [
+          {
+            "label": "Tablas hash: Estructuras clave para un manejo eficiente de datos",
+            "href": "https://juan-tech.com/en/blog/cs-fundamentals/tablas-hash",
+            "spanishTitle": true
+          },
+          {
+            "label": "Stacks and queues",
+            "href": "https://juan-tech.com/en/blog/cs-fundamentals/pilas-y-colas",
+            "spanishTitle": false
+          },
+          {
+            "label": "Recursion algorithms",
+            "href": "https://juan-tech.com/en/blog/cs-fundamentals/recursividad",
+            "spanishTitle": false
+          },
+          {
+            "label": "Web hydration SEO",
+            "href": "https://juan-tech.com/en/blog/development/hidratacion-web",
+            "spanishTitle": false
+          },
+          {
+            "label": "React 19 new features",
+            "href": "https://juan-tech.com/en/blog/development/react-19",
+            "spanishTitle": false
+          }
+        ]
+      },
+      "cases": {
+        "title": "Latest case studies",
+        "items": [
+          {
+            "label": "Scaling educational legal content to over 86 000 annual organic clicks for a criminal defense firm",
+            "href": "https://juan-tech.com/en/case-studies/pittsburgh-criminal-defense-legal-content-seo"
+          },
+          {
+            "label": "More than doubling organic traffic for a family-run artisan hydraulic tile manufacturer in Spain",
+            "href": "https://juan-tech.com/en/case-studies/fabricante-baldosa-hidraulica-seo-espana"
+          },
+          {
+            "label": "Quadrupling organic traffic for an Atlanta immigration law firm in one year",
+            "href": "https://juan-tech.com/en/case-studies/immigration-law-atlanta-seo"
+          },
+          {
+            "label": "From zero to the first real organic clicks for a local workshop business",
+            "href": "https://juan-tech.com/en/case-studies/talleres-costura-miami-lanzamiento-seo-local"
+          },
+          {
+            "label": "From near-zero visibility to a year of sustained growth for a urologist",
+            "href": "https://juan-tech.com/en/case-studies/urologo-seo-local-salud-santiago-rd"
+          }
+        ]
+      }
+    },
     "legalLabel": "Legal",
     "legal": [
-      { "label": "Privacy", "path": "/privacy" },
-      { "label": "Terms", "path": "/terms" },
-      { "label": "Sitemap", "path": "/sitemap.html" },
-      { "label": "My stack", "path": "/stack" }
+      {
+        "label": "Privacy",
+        "href": "https://juan-tech.com/en/privacy"
+      },
+      {
+        "label": "Terms",
+        "href": "https://juan-tech.com/en/terms"
+      },
+      {
+        "label": "Sitemap",
+        "href": "https://juan-tech.com/en/sitemap.html"
+      },
+      {
+        "label": "My stack",
+        "href": "https://juan-tech.com/en/stack"
+      }
     ],
     "copyright": "© 2026 Juan Carlos Angulo. All rights reserved."
-  }
+  },
+  "_numbers": [
+    {
+      "value": "2026",
+      "source": "pie vivo de juan-tech.com, 2026-10-15"
+    },
+    {
+      "value": "19",
+      "source": "título vivo del artículo React 19 en el pie, 2026-10-15"
+    },
+    {
+      "value": "86000",
+      "source": "título vivo del caso del despacho de defensa criminal, pie 2026-10-15"
+    }
+  ],
+  "_sameAllowed": [
+    "linkedin.label",
+    "legalLabel",
+    "latest.articles.pendingTitle"
+  ]
 }
