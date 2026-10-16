@@ -1,0 +1,64 @@
+{
+  "es": {
+    "heading": "Cómo puedo ayudarte",
+    "services": [
+      {
+        "title": "Auditoría SEO técnica",
+        "text": "Reviso el rastreo, la indexación, los Core Web Vitals y los datos estructurados de tu sitio, y te entrego un plan de corrección ordenado por impacto real.",
+        "href": "https://juan-tech.com/servicios/seo-technical-audit",
+        "linkLabel": "Explorar servicio"
+      },
+      {
+        "title": "Consultoría SEO",
+        "text": "Acompaño a equipos que necesitan a alguien que entienda el código y el posicionamiento, sin traducir entre marketing y desarrollo.",
+        "href": "https://juan-tech.com/servicios/seo-consulting",
+        "linkLabel": "Explorar servicio"
+      },
+      {
+        "title": "Desarrollo full-stack con SEO integrado",
+        "text": "Construyo con Next.js y Payload CMS y diseño el SEO desde el primer commit, para que el sitio rinda bien y se indexe sin parches después.",
+        "href": "https://juan-tech.com/servicios/fullstack-development",
+        "linkLabel": "Explorar servicio"
+      },
+      {
+        "title": "SEO para IA / GEO",
+        "text": "Preparo tu contenido para que ChatGPT, Perplexity y las respuestas de IA de Google lo citen, además de trabajar el posicionamiento en los buscadores tradicionales.",
+        "href": "https://juan-tech.com/servicios/ai-seo-geo",
+        "linkLabel": "Explorar servicio"
+      }
+    ],
+    "allLabel": "Todos los servicios",
+    "allHref": "https://juan-tech.com/servicios"
+  },
+  "en": {
+    "heading": "How I can help",
+    "services": [
+      {
+        "title": "Technical SEO audit",
+        "text": "I review crawling, indexing, Core Web Vitals and structured data on your site, and hand you a fix plan ordered by real impact.",
+        "href": "https://juan-tech.com/en/services/seo-technical-audit",
+        "linkLabel": "Explore service"
+      },
+      {
+        "title": "SEO consulting",
+        "text": "I work with teams that need someone who understands both the code and the rankings, with no translation layer between marketing and development.",
+        "href": "https://juan-tech.com/en/services/seo-consulting",
+        "linkLabel": "Explore service"
+      },
+      {
+        "title": "Full-stack development with SEO built in",
+        "text": "I build with Next.js and Payload CMS and design the SEO from the first commit, so the site performs well and stays indexable without patches later.",
+        "href": "https://juan-tech.com/en/services/fullstack-development",
+        "linkLabel": "Explore service"
+      },
+      {
+        "title": "SEO for AI search (GEO)",
+        "text": "I prepare your content so ChatGPT, Perplexity and Google's AI answers cite it, on top of ranking in traditional search.",
+        "href": "https://juan-tech.com/en/services/ai-seo-geo",
+        "linkLabel": "Explore service"
+      }
+    ],
+    "allLabel": "All services",
+    "allHref": "https://juan-tech.com/en/services"
+  }
+}
