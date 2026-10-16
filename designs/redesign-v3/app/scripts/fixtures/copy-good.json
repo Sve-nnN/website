@@ -1,0 +1,46 @@
+{
+  "es": {
+    "meta": {
+      "title": "SEO técnico y rendimiento web | Juan Carlos Angulo",
+      "description": "Audito el rastreo y la velocidad de tu sitio y corrijo el código yo mismo."
+    },
+    "hero": {
+      "h1": "Audito tu sitio y corrijo el código",
+      "lead": "Primero reviso qué ve Googlebot. Luego decido qué tocar, así sea el servidor, la plantilla o el contenido. Cumplo A11Y y dejo el commit 23646a1 como prueba.",
+      "terminal": "> contacto",
+      "cta": { "label": "Pedir auditoría", "href": "#contacto" }
+    },
+    "faq": {
+      "question": "¿Cuánto dura una auditoría?",
+      "answer": "Entrego el informe en 10 días hábiles. [PENDIENTE: plazo de respuesta real del formulario]"
+    },
+    "links": {
+      "label": "Perfil en LinkedIn",
+      "href": "https://linkedin.com/in/juancangulo"
+    }
+  },
+  "en": {
+    "meta": {
+      "title": "Technical SEO and web performance | Juan Carlos Angulo",
+      "description": "I audit the crawl and the speed of your site and fix the code myself."
+    },
+    "hero": {
+      "h1": "I audit your site and fix the code",
+      "lead": "First I check what Googlebot sees. Then I decide what to touch, whether it is the server, the template or the content. I meet A11Y and leave commit 23646a1 as proof.",
+      "terminal": "> contact",
+      "cta": { "label": "Request an audit", "href": "#contacto" }
+    },
+    "faq": {
+      "question": "How long does an audit take?",
+      "answer": "I deliver the report in 10 business days. [PENDIENTE: plazo de respuesta real del formulario]"
+    },
+    "links": {
+      "label": "LinkedIn profile",
+      "href": "https://linkedin.com/in/juancangulo"
+    }
+  },
+  "_numbers": [
+    { "value": "10", "source": "fixture de prueba, sin valor editorial" }
+  ],
+  "_sameAllowed": []
+}

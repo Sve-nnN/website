@@ -1,0 +1,59 @@
+{
+  "_expect": ["V01", "V02", "V03", "V04", "V05", "V06", "V07", "V08", "V09", "V10", "V11", "V12", "V13", "V14", "V15", "V16"],
+  "es": {
+    "meta": {
+      "title": "Auditoría técnica SEO para sitios con muchas plantillas y problemas de rastreo | Juan Carlos Angulo"
+    },
+    "v01": { "text": "Audito el rastreo \u2014 y corrijo el código" },
+    "v02": { "h2": "Auditoría técnica, la base de todo" },
+    "v03": { "text": "Contanos qué necesitás y te respondo" },
+    "v04": { "text": "El rastreo es auditado cada semana" },
+    "v05": { "text": "Una solución robusta para tu sitio" },
+    "v06": { "text": "Nuestro equipo revisa tu sitio" },
+    "v07": { "text": "Tardo 10 días y mejoré 4821 clics" },
+    "v08": {
+      "malformed": "Falta [PENDIENTE: dato",
+      "count": "Uno [PENDIENTE: a] y [PENDIENTE: b]"
+    },
+    "v09": {
+      "onlyEs": "Solo en español",
+      "empty": "",
+      "h3": "Blog"
+    },
+    "v11": { "text": "Escríbeme hoy!" },
+    "v12": { "terminal": "> escribe tu mensaje ahora mismo" },
+    "v13": { "h3": "Mi enfoque en consultoría técnica" },
+    "v14": { "label": "Ir al sitio", "href": "https://evil.example/x" },
+    "v15": { "text": "Reviso el rastreo, la indexación y la velocidad de cada plantilla del sitio, anoto lo que encuentro en una lista ordenada por impacto, corrijo primero lo que más tráfico cuesta, mido el resultado después de cada cambio y te explico por qué tomé cada decisión para que puedas repetir el método en otros sitios sin depender de nadie más." },
+    "v16": { "text": "Audito the site and the code" }
+  },
+  "en": {
+    "meta": {
+      "title": "Technical SEO audit for sites with many templates and crawl problems | Juan Carlos Angulo"
+    },
+    "v01": { "text": "I audit crawling \u2013 and fix the code" },
+    "v02": { "h2": "Technical audit, the base of everything" },
+    "v03": { "text": "Tell me what you need and I reply" },
+    "v04": { "text": "The crawl is audited every week" },
+    "v05": { "text": "A robust setup for your site" },
+    "v06": { "text": "Our team reviews your site" },
+    "v07": { "text": "It takes 10 days and I gained 4821 clicks" },
+    "v08": {
+      "malformed": "Missing [PENDIENTE: data",
+      "count": "One [PENDIENTE: a]"
+    },
+    "v09": {
+      "empty": "",
+      "h3": "Blog"
+    },
+    "v11": { "text": "Write to me today!" },
+    "v12": { "terminal": "> write your message right now" },
+    "v13": { "h3": "My Approach to Technical Consulting" },
+    "v14": { "label": "Go to the site", "href": "https://evil.example/x" },
+    "v15": { "text": "I review crawling, indexing and speed on every template of the site, I write what I find in a list sorted by impact, I fix first what costs the most traffic, I measure the result after each change and I explain why I made each decision so you can repeat the method on other sites without depending on anyone else." },
+    "v16": { "text": "Reviso el sitio y la plantilla" }
+  },
+  "_numbers": [
+    { "value": "10", "source": "fixture de prueba, sin valor editorial" }
+  ]
+}
