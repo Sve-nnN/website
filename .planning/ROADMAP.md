@@ -78,7 +78,18 @@ Plans:
   4. El reporte de Lighthouse mobile guardado en `designs/redesign-v3/reports/` muestra performance >= 90, CLS 0 y LCP < 2.0 s, y la home cumple las reglas de A11Y.md (H1 único, landmarks, foco visible, objetivos táctiles, reduced-motion, ASCII oculto a lectores de pantalla).
   5. **Gate humano:** Juan revisa la home y la aprueba o entrega feedback; el feedback se aplica y se vuelve a presentar dentro de esta fase, y las Phases 53 a 55 no empiezan hasta que Juan apruebe explícitamente.
 
-**Plans**: TBD
+**Plans**: 7 plans
+
+Plans:
+
+- [ ] 52-01-PLAN.md: tracer de la home (ruta `/` y `/en`, hero con H1, ASCII y CTA, Grainient diferido, cabecera y pie, medición Lighthouse del hero)
+- [ ] 52-02-PLAN.md: guía de voz ejecutable (lint de copy con selftest, parser de pendientes y primitivas compartidas)
+- [ ] 52-03-PLAN.md: secciones de prueba (clientes, errores reales con commit, casos, websites y testimonio)
+- [ ] 52-04-PLAN.md: secciones de método (servicios, auditor propio, about, oferta de auditoría y FAQ)
+- [ ] 52-05-PLAN.md: contacto con formulario sin envío, banda CRTWarp como segundo efecto y pie completo
+- [ ] 52-06-PLAN.md: verificación de i18n, accesibilidad, presupuesto de efectos y aislamiento, con correcciones
+- [ ] 52-07-PLAN.md: medición final, reporte para Juan, README y gate humano (checkpoint de decisión)
+
 **UI hint**: yes
 
 ### Phase 53: Servicios y landings locales
@@ -131,7 +142,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 51. Sistema visual | 3/3 | Complete (human_needed) | 2026-10-15 |
-| 52. Home mockup y gate de revisión | 0/TBD | Not started | - |
+| 52. Home mockup y gate de revisión | 0/7 | Planned | - |
 | 53. Servicios y landings locales | 0/TBD | Not started | - |
 | 54. Blog y case studies | 0/TBD | Not started | - |
 | 55. Páginas restantes e índice | 0/TBD | Not started | - |
