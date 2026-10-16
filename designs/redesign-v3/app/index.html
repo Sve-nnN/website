@@ -4,14 +4,31 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
+    <meta name="description" content="Mockup de la home v4 de Juan Carlos Angulo con componentes originales de React Bits." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Sistema visual v3 con componentes originales</title>
+    <script>
+      // Solo la home (/ y /en) usa Array y Geist: se precargan para que el LCP no espere al CSS. /system y /rendimiento no las piden.
+      (function (p) {
+        if (!/^\/(en)?\/?$/.test(p)) return;
+        ['Array-Regular', 'Geist-latin-var'].forEach(function (n) {
+          var l = document.createElement('link');
+          l.rel = 'preload';
+          l.as = 'font';
+          l.type = 'font/woff2';
+          l.crossOrigin = 'anonymous';
+          l.href = '/home/fonts/' + n + '.woff2';
+          document.head.appendChild(l);
+        });
+      })(location.pathname);
+    </script>
   </head>
   <body>
     <noscript>
       <div class="hm-noscript" role="note">
-        <p lang="es">Este mockup necesita JavaScript porque la home es una app React. El sitio real no lo necesita: el servidor entrega el HTML completo.</p>
-        <p lang="en">This mockup needs JavaScript because the home page is a React app. The real site does not need it: the server delivers the full HTML.</p>
+        <h1 lang="es">Juan Carlos Angulo: SEO técnico e ingeniería de software</h1>
+        <p lang="es">Esta maqueta necesita JavaScript porque la home es una app React renderizada en el navegador (CSR), así que el H1 no viene en el HTML crudo. El sitio real servirá el HTML completo desde el servidor.</p>
+        <p lang="en">This mockup needs JavaScript because the home page is a client-side rendered React app, so the H1 is not in the raw HTML. The real site will serve the full HTML from the server.</p>
       </div>
     </noscript>
     <div id="root"></div>

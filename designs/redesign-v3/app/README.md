@@ -35,16 +35,21 @@ npm run measure
 
 ## Direcciones
 
-Servidor de desarrollo (`npm run dev`):
+Servidor de desarrollo (`npm run dev`, puerto 5173) y build servido (`npm run preview`, puerto 4173):
 
-- http://127.0.0.1:5173/system
-- http://127.0.0.1:5173/rendimiento
+- Home v4 en español: `/` (por defecto papel-bosque)
+- Home v4 en inglés: `/en`
+- Otra paleta de prueba: `/?paleta=papel-tomate`, `tinta-fosforo`, `noche-menta`, `papel-cobalto`, `tinta-ambar` o `papel-bosque`
+- Vista de testimonios: `/?testimonios=1`, `3` u `8`; el selector de paletas vuelve con `?selector=1`
+- `/system` y `/rendimiento`: la galería y el informe de la fase 51.1 (siguen igual)
 
-Build de producción servido (`npm run preview`):
+## La home v4
 
-- http://127.0.0.1:4173/system
-- http://127.0.0.1:4173/system?mount=grainient
-- http://127.0.0.1:4173/rendimiento
+Es el diseño aprobado `designs/redesign-v4/c-manual` portado a React: componentes por sección en `src/home/sections/`,
+copy ES/EN en `src/home/copy/*.json`, tokens y paletas en `src/home/styles/tokens.css` y sprite Lucide en `src/home/icons.ts`.
+Es una app CSR: el H1 no viene en el HTML crudo y `index.html` lleva un aviso `noscript`.
+Los originales de React Bits viven en `src/home/fx/index.tsx` (solo props, todos con `React.lazy`).
+`npm run verify:home` comprueba las reglas del diseño y el cupo de efectos sobre `dist/`, y `npm run measure:home` corre Lighthouse (3 corridas, mediana) y escribe en `designs/redesign-v3/reports/home-v4/`.
 
 ## Qué abrir
 

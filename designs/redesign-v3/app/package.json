@@ -17,10 +17,8 @@
     "verify": "node scripts/verify-app.mjs --stage=all",
     "measure:weights": "node scripts/measure-weights.mjs",
     "measure:lighthouse": "node scripts/measure-lighthouse.mjs",
-    "verify:home": "node scripts/verify-home.mjs --stage=all",
+    "verify:home": "node scripts/verify-home.mjs",
     "measure:home": "node scripts/measure-home.mjs",
-    "check:copy": "node scripts/check-copy.mjs",
-    "test:pending": "node --test scripts/test-pending.mjs",
     "measure": "npm run build && npm run measure:weights && npm run measure:lighthouse"
   },
   "dependencies": {
