@@ -6,43 +6,148 @@
 <title>SEO técnico e ingeniería de software | Juan Carlos Angulo</title>
 <meta name="description" content="Soy ingeniero de software y consultor de SEO técnico: auditorías, rendimiento web y arquitectura Next.js/Payload para posicionar tu sitio en Google.">
 <meta name="robots" content="noindex">
+<meta property="og:title" content="SEO técnico e ingeniería de software | Juan Carlos Angulo">
+<meta property="og:description" content="Soy ingeniero de software y consultor de SEO técnico: auditorías, rendimiento web y arquitectura Next.js/Payload.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="assets/css/manual.css">
 <script>
 (function(d){d.classList.add('js');try{if(CSS.supports('animation-timeline: view()'))d.classList.add('sda')}catch(e){}
-var q=location.search.match(/lang=(en|es)/);if(q){d.dataset.lang=q[1];d.lang=q[1]}})(document.documentElement);
+var q=location.search.match(/lang=(en|es)/);if(q){d.dataset.lang=q[1];d.lang=q[1]}
+var t=location.search.match(/testimonios=(1|3|8)/);d.dataset.tn=t?t[1]:'3';
+if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forEach(function(n){var l=document.createElement('link');l.rel='preload';l.as='font';l.type='font/woff2';l.crossOrigin='anonymous';l.href='assets/fonts/'+n+'.woff2';document.head.appendChild(l)})}})(document.documentElement);
 </script>
+<style>
+@font-face{font-family:"Array";src:url("assets/fonts/Array-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist";src:url("assets/fonts/Geist-latin-var.woff2") format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url("assets/fonts/GeistMono-400-latin.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Array Fallback";src:local("Arial");size-adjust:92.63%;ascent-override:94.46%;descent-override:20.24%;line-gap-override:9.45%}
+@font-face{font-family:"Geist Fallback";src:local("Arial");size-adjust:102.14%;ascent-override:98.39%;descent-override:28.88%;line-gap-override:0%}
+</style>
+<link rel="stylesheet" href="assets/css/manual.css">
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+<symbol id="i-activity" viewBox="0 0 24 24"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></symbol>
+<symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+<symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+<symbol id="i-badge-check" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-bot" viewBox="0 0 24 24"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect width="20" height="14" x="2" y="6" rx="2"/></symbol>
+<symbol id="i-chart-column" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></symbol>
+<symbol id="i-chart-line" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></symbol>
+<symbol id="i-circle-question-mark" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+<symbol id="i-clipboard-check" viewBox="0 0 24 24"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+<symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></symbol>
+<symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></symbol>
+<symbol id="i-cpu" viewBox="0 0 24 24"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
+<symbol id="i-file-search" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><circle cx="11.5" cy="14.5" r="2.5"/><path d="M13.3 16.3 15 18"/></symbol>
+<symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></symbol>
+<symbol id="i-layout-dashboard" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+<symbol id="i-list-checks" viewBox="0 0 24 24"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/></symbol>
+<symbol id="i-list-ordered" viewBox="0 0 24 24"><path d="M11 5h10"/><path d="M11 12h10"/><path d="M11 19h10"/><path d="M4 4h1v5"/><path d="M4 9h2"/><path d="M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></symbol>
+<symbol id="i-message-square" viewBox="0 0 24 24"><path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z"/></symbol>
+<symbol id="i-monitor" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></symbol>
+<symbol id="i-network" viewBox="0 0 24 24"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/></symbol>
+<symbol id="i-newspaper" viewBox="0 0 24 24"><path d="M15 18h-5"/><path d="M18 14h-8"/><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="10" y="6" rx="1"/></symbol>
+<symbol id="i-pause" viewBox="0 0 24 24"><rect x="14" y="3" width="5" height="18" rx="1"/><rect x="5" y="3" width="5" height="18" rx="1"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></symbol>
+<symbol id="i-quote" viewBox="0 0 24 24"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></symbol>
+<symbol id="i-rocket" viewBox="0 0 24 24"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></symbol>
+<symbol id="i-rss" viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></symbol>
+<symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18"/><path d="m19 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1"/><path d="m5 8 3 8a5 5 0 0 1-6 0zV7"/><path d="M7 21h10"/></symbol>
+<symbol id="i-scan-search" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3"/><path d="m16 16-1.9-1.9"/></symbol>
+<symbol id="i-scroll-text" viewBox="0 0 24 24"><path d="M15 12h-5"/><path d="M15 8h-5"/><path d="M19 17V5a2 2 0 0 0-2-2H4"/><path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></symbol>
+<symbol id="i-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></symbol>
+<symbol id="i-tag" viewBox="0 0 24 24"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></symbol>
+<symbol id="i-telescope" viewBox="0 0 24 24"><path d="m10.065 12.493-6.18 1.318a.934.934 0 0 1-1.108-.702l-.537-2.15a1.07 1.07 0 0 1 .691-1.265l13.504-4.44"/><path d="m13.56 11.747 4.332-.924"/><path d="m16 21-3.105-6.21"/><path d="M16.485 5.94a2 2 0 0 1 1.455-2.425l1.09-.272a1 1 0 0 1 1.212.727l1.515 6.06a1 1 0 0 1-.727 1.213l-1.09.272a2 2 0 0 1-2.425-1.455z"/><path d="m6.158 8.633 1.114 4.456"/><path d="m8 21 3.105-6.21"/><circle cx="12" cy="13" r="2"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></symbol>
+<symbol id="i-workflow" viewBox="0 0 24 24"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></symbol>
+<symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+<symbol id="i-zap" viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+<symbol id="g-dash" viewBox="0 0 180 124">
+  <rect x="2" y="2" width="176" height="120" class="fp si w3"/>
+  <path d="M2 24H178" class="si w3"/>
+  <circle cx="14" cy="13" r="4" class="ft"/><circle cx="27" cy="13" r="4" class="fs"/><circle cx="40" cy="13" r="4" class="ff"/>
+  <rect x="14" y="84" width="20" height="28" class="ff"/><rect x="42" y="72" width="20" height="40" class="fs si w2"/><rect x="70" y="92" width="20" height="20" class="ff"/><rect x="98" y="62" width="20" height="50" class="ft si w2"/><rect x="126" y="76" width="20" height="36" class="ff"/>
+  <polyline points="14,64 46,52 78,58 108,36 140,44 166,30" fill="none" class="si w4"/>
+  <path d="M158 28l8 2-3 8" fill="none" class="si w3"/>
+</symbol>
+<symbol id="g-arrow" viewBox="0 0 130 80">
+  <path d="M6 62C28 14 74 6 114 40" fill="none" class="si w4" stroke-linecap="round"/>
+  <path d="M96 40l20 2-6 20" fill="none" class="si w4" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+<symbol id="g-squig" viewBox="0 0 120 24">
+  <path d="M4 12q10-14 20 0t20 0 20 0 20 0 20 0 12 0" fill="none" class="si w4" stroke-linecap="round"/>
+</symbol>
+<symbol id="g-spark" viewBox="0 0 160 50">
+  <path d="M4 44L28 38 48 41 72 28 94 31 118 16 138 18 156 6" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</symbol>
+</defs>
+</svg>
+
 <a class="skip" href="#main"><span lang="es">Saltar al contenido</span><span lang="en">Skip to content</span></a>
 
 <header class="nav" id="nav">
-  <a class="brand" href="#top" aria-label="Juan Carlos Angulo">
+  <a class="brand" href="#top">
     <span class="brand-mark" aria-hidden="true">JA</span>
     <span class="brand-name">Juan Carlos Angulo</span>
   </a>
   <nav class="nav-links" aria-label="Principal">
-    <a href="#servicios"><span lang="es">Servicios</span><span lang="en">Services</span></a>
-    <a href="#casos"><span lang="es">Casos</span><span lang="en">Case studies</span></a>
-    <a href="#proceso"><span lang="es">Proceso</span><span lang="en">Process</span></a>
-    <a href="#contacto"><span lang="es">Contacto</span><span lang="en">Contact</span></a>
+    <a href="#servicios" data-nav="servicios"><span lang="es">Servicios</span><span lang="en">Services</span></a>
+    <a href="#casos" data-nav="casos"><span lang="es">Casos</span><span lang="en">Case studies</span></a>
+    <a href="#proceso" data-nav="proceso"><span lang="es">Proceso</span><span lang="en">Process</span></a>
+    <a href="#testimonios" data-nav="testimonios"><span lang="es">Testimonios</span><span lang="en">Testimonials</span></a>
+    <a href="#contacto" data-nav="contacto"><span lang="es">Contacto</span><span lang="en">Contact</span></a>
   </nav>
   <div class="nav-right">
     <div class="lang" role="group" aria-label="Idioma / Language">
       <button type="button" data-set-lang="es" lang="es" aria-label="ES, Español" aria-pressed="true">ES</button>
       <button type="button" data-set-lang="en" lang="en" aria-label="EN, English" aria-pressed="false">EN</button>
     </div>
-    <a class="btn btn-sm" href="#contacto"><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></a>
+    <button type="button" class="icobtn pausebtn" id="pause" aria-pressed="false">
+      <svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg>
+      <span class="pause-txt"><span lang="es">Pausar animaciones</span><span lang="en">Pause animations</span></span>
+    </button>
+    <a class="btn btn-sm nav-cta" href="#contacto"><span><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></span></a>
+    <button type="button" class="icobtn menubtn" id="menubtn" aria-expanded="false" aria-controls="mnav">
+      <svg class="ic ic-open" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg><svg class="ic ic-close" aria-hidden="true" focusable="false"><use href="#i-x"/></svg>
+      <span class="sr"><span lang="es">Menú</span><span lang="en">Menu</span></span>
+    </button>
   </div>
 </header>
 
-<div class="rail" aria-hidden="true"><i></i></div>
-<div class="chip-ch" aria-hidden="true"><b id="chNum">00</b><span>/ 09</span></div>
+<div class="mnav" id="mnav" role="dialog" aria-modal="true" aria-label="Menú / Menu" hidden>
+  <ul>
+    <li><a href="#servicios"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-wrench"/></svg><span><span lang="es">Servicios</span><span lang="en">Services</span></span></a></li>
+    <li><a href="#casos"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chart-line"/></svg><span><span lang="es">Casos</span><span lang="en">Case studies</span></span></a></li>
+    <li><a href="#proceso"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-workflow"/></svg><span><span lang="es">Proceso</span><span lang="en">Process</span></span></a></li>
+    <li><a href="#websites"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-monitor"/></svg><span>Websites</span></a></li>
+    <li><a href="#sobre"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span><span lang="es">Sobre mí</span><span lang="en">About me</span></span></a></li>
+    <li><a href="#testimonios"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg><span><span lang="es">Testimonios</span><span lang="en">Testimonials</span></span></a></li>
+    <li><a href="#faq"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-circle-question-mark"/></svg><span><span lang="es">Preguntas</span><span lang="en">Questions</span></span></a></li>
+    <li><a href="#contacto"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg><span><span lang="es">Contacto</span><span lang="en">Contact</span></span></a></li>
+  </ul>
+  <a class="btn btn-lg" href="#contacto"><span><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
+</div>
 
-<button type="button" class="pause" id="pause" aria-pressed="false">
-  <span class="pause-ico" aria-hidden="true"></span>
-  <span class="pause-txt"><span lang="es">Pausar animaciones</span><span lang="en">Pause animations</span></span>
-</button>
+<div class="rail" aria-hidden="true"><i></i></div>
 
 <main id="main">
 
@@ -51,15 +156,16 @@ var q=location.search.match(/lang=(en|es)/);if(q){d.dataset.lang=q[1];d.lang=q[1
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="wrap hero-in">
     <div class="hero-copy">
-      <p class="tag"><span class="tag-ico" aria-hidden="true"></span><span><span lang="es">Ingeniero de software y consultor SEO técnico</span><span lang="en">Software engineer and technical SEO consultant</span></span></p>
+      <p class="tag"><svg class="ic tag-ico" aria-hidden="true" focusable="false"><use href="#i-telescope"/></svg><span><span lang="es">Ingeniero de software y consultor SEO técnico</span><span lang="en">Software engineer and technical SEO consultant</span></span></p>
       <h1 id="h1">
-        <span lang="es"><span class="ln"><span class="wd" style="--i:0">Arreglo</span> <span class="wd" style="--i:1">el</span> <span class="wd hl" style="--i:2">SEO</span></span><span class="ln"><span class="wd" style="--i:3">desde</span> <span class="wd" style="--i:4">el</span> <span class="wd" style="--i:5">código</span></span></span>
-        <span lang="en"><span class="ln"><span class="wd" style="--i:0">I</span> <span class="wd" style="--i:1">fix</span> <span class="wd hl" style="--i:2">SEO</span></span><span class="ln"><span class="wd" style="--i:3">from</span> <span class="wd" style="--i:4">the</span> <span class="wd" style="--i:5">code</span></span></span>
+        <span lang="es"><span class="ln"><span class="wd">Arreglo</span> <span class="wd">el</span> <span class="wd hl">SEO</span></span><span class="ln"><span class="wd">desde</span> <span class="wd">el</span> <span class="wd">código</span></span></span>
+        <span lang="en"><span class="ln"><span class="wd">I</span> <span class="wd">fix</span> <span class="wd hl">SEO</span></span><span class="ln"><span class="wd">from</span> <span class="wd">the</span> <span class="wd">code</span></span></span>
       </h1>
-      <p class="lede"><span lang="es">Soy ingeniero y arreglo lo que frena a Google en tu sitio. Trabajo desde Lima y Madrid.</span><span lang="en">I am an engineer and I fix what holds Google back on your site. I work from Lima and Madrid.</span></p>
+      <p class="lede"><span lang="es">Soy ingeniero y arreglo lo que frena a Google en tu sitio. Audito, corrijo en el código y mido el resultado.</span><span lang="en">I am an engineer and I fix what holds Google back on your site. I audit, I fix the code and I measure the result.</span></p>
       <div class="cta-row">
-        <a class="btn btn-lg" href="#contacto"><span><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></span><i class="arr" aria-hidden="true"></i></a>
+        <a class="btn btn-lg" href="#contacto"><span><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
         <a class="btn btn-ghost btn-lg" href="#casos"><span><span lang="es">Ver casos</span><span lang="en">See case studies</span></span></a>
+        <svg class="hand-arrow" aria-hidden="true" focusable="false"><use href="#g-arrow"/></svg>
       </div>
     </div>
     <div class="hero-orbit" aria-hidden="true">
@@ -75,9 +181,8 @@ var q=location.search.match(/lang=(en|es)/);if(q){d.dataset.lang=q[1];d.lang=q[1
         </svg>
         <svg viewBox="0 0 200 200" class="star-svg"><path d="M100 52 L112 88 L148 100 L112 112 L100 148 L88 112 L52 100 L88 88Z"/></svg>
       </div>
-      <div class="audit-row">
-        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-      </div>
+      <div class="dashcard"><i class="tape"></i><svg viewBox="0 0 180 124"><use href="#g-dash"/></svg></div>
+      <div class="audit-row"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     </div>
   </div>
 </section>
@@ -94,18 +199,18 @@ var q=location.search.match(/lang=(en|es)/);if(q){d.dataset.lang=q[1];d.lang=q[1
   </div>
 </section>
 
-<!-- 01 INSTRUMENTOS -->
-<section class="ch ch-forest" id="medicion" data-ch="01" aria-labelledby="t-med">
+<!-- MEDICION -->
+<section class="ch ch-forest" id="medicion" aria-labelledby="t-med">
   <div class="wrap">
     <header class="ch-head">
-      <span class="num" aria-hidden="true">01</span>
+      <p class="eyebrow"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-gauge"/></svg><span><span lang="es">Medición</span><span lang="en">Measurement</span></span></p>
       <h2 id="t-med" class="sp"><span lang="es">Lo que mido antes de tocar nada</span><span lang="en">What I measure before touching anything</span></h2>
     </header>
     <p class="intro rv"><span lang="es">Cuatro lecturas me dicen dónde duele un sitio. Aprende a leerlas: la barra marca el rango que Google considera bueno, mejorable y pobre.</span><span lang="en">Four readings tell me where a site hurts. Learn to read them: the bar shows the range Google rates good, needs improvement and poor.</span></p>
     <p class="sample-note rv"><b class="stamp stamp-warn"><span lang="es">PENDIENTE medir</span><span lang="en">PENDING measurement</span></b> <span><span lang="es">Los valores de esta franja son de muestra e ilustrativos. No son mediciones reales de ningún sitio.</span><span lang="en">The values in this strip are samples and illustrative. They are not real measurements of any site.</span></span></p>
     <ul class="gauges">
       <li class="gauge rv" style="--d:0;--pos:36%;--g:50%;--m:80%">
-        <h3>LCP</h3>
+        <div class="gh"><svg class="ic gi" aria-hidden="true" focusable="false"><use href="#i-gauge"/></svg><h3>LCP</h3></div>
         <p class="what"><span lang="es">Cuánto tarda en pintarse el elemento principal</span><span lang="en">How long the main element takes to paint</span></p>
         <p class="val"><span class="cnt" data-count="1.8" data-dec="1">1.8</span><small> s</small></p>
         <div class="bar" aria-hidden="true"><span class="z z1"></span><span class="z z2"></span><span class="z z3"></span><i class="mk"></i></div>
@@ -113,7 +218,7 @@ var q=location.search.match(/lang=(en|es)/);if(q){d.dataset.lang=q[1];d.lang=q[1
         <p class="ill"><span lang="es">Muestra ilustrativa</span><span lang="en">Illustrative sample</span></p>
       </li>
       <li class="gauge rv" style="--d:1;--pos:10%;--g:20%;--m:50%">
-        <h3>CLS</h3>
+        <div class="gh"><svg class="ic gi" aria-hidden="true" focusable="false"><use href="#i-layout-dashboard"/></svg><h3>CLS</h3></div>
         <p class="what"><span lang="es">Cuánto se mueve el diseño mientras carga</span><span lang="en">How much the layout shifts while loading</span></p>
         <p class="val"><span class="cnt" data-count="0.05" data-dec="2">0.05</span></p>
         <div class="bar" aria-hidden="true"><span class="z z1"></span><span class="z z2"></span><span class="z z3"></span><i class="mk"></i></div>
@@ -121,7 +226,7 @@ var q=location.search.match(/lang=(en|es)/);if(q){d.dataset.lang=q[1];d.lang=q[1
         <p class="ill"><span lang="es">Muestra ilustrativa</span><span lang="en">Illustrative sample</span></p>
       </li>
       <li class="gauge rv" style="--d:2;--pos:15%;--g:25%;--m:62.5%">
-        <h3>INP</h3>
+        <div class="gh"><svg class="ic gi" aria-hidden="true" focusable="false"><use href="#i-zap"/></svg><h3>INP</h3></div>
         <p class="what"><span lang="es">Cuánto tarda la página en responder a un toque</span><span lang="en">How long the page takes to respond to a tap</span></p>
         <p class="val"><span class="cnt" data-count="120" data-dec="0">120</span><small> ms</small></p>
         <div class="bar" aria-hidden="true"><span class="z z1"></span><span class="z z2"></span><span class="z z3"></span><i class="mk"></i></div>
@@ -129,7 +234,7 @@ var q=location.search.match(/lang=(en|es)/);if(q){d.dataset.lang=q[1];d.lang=q[1
         <p class="ill"><span lang="es">Muestra ilustrativa</span><span lang="en">Illustrative sample</span></p>
       </li>
       <li class="gauge rv" style="--d:3;--pos:13%;--g:27%;--m:60%">
-        <h3>TTFB</h3>
+        <div class="gh"><svg class="ic gi" aria-hidden="true" focusable="false"><use href="#i-server"/></svg><h3>TTFB</h3></div>
         <p class="what"><span lang="es">Cuánto tarda el servidor en dar el primer byte</span><span lang="en">How long the server takes to send the first byte</span></p>
         <p class="val"><span class="cnt" data-count="0.4" data-dec="1">0.4</span><small> s</small></p>
         <div class="bar" aria-hidden="true"><span class="z z1"></span><span class="z z2"></span><span class="z z3"></span><i class="mk"></i></div>
@@ -138,66 +243,103 @@ var q=location.search.match(/lang=(en|es)/);if(q){d.dataset.lang=q[1];d.lang=q[1
       </li>
     </ul>
     <p class="legend rv" aria-hidden="true"><span><i class="z1"></i><span lang="es">Bueno</span><span lang="en">Good</span></span><span><i class="z2"></i><span lang="es">Mejorable</span><span lang="en">Needs work</span></span><span><i class="z3"></i><span lang="es">Pobre</span><span lang="en">Poor</span></span></p>
+    <figure class="fig fig-dash rv">
+      <div class="corners"><svg viewBox="0 0 180 124" aria-hidden="true" focusable="false"><use href="#g-dash"/></svg></div>
+      <figcaption>
+        <p class="fig-k"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chart-column"/></svg><span><span lang="es">Esquema de panel</span><span lang="en">Dashboard sketch</span></span></p>
+        <p><span lang="es">Dibujo esquemático de cómo leo Search Console: barras para clics por página y una línea para la tendencia. No contiene datos reales.</span><span lang="en">A schematic of how I read Search Console: bars for clicks per page and a line for the trend. It holds no real data.</span></p>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
-<!-- 02 SERVICIOS -->
-<section class="ch ch-paper" id="servicios" data-ch="02" aria-labelledby="t-srv">
+<!-- SERVICIOS -->
+<section class="ch ch-paper" id="servicios" aria-labelledby="t-srv">
   <div class="wrap">
     <header class="ch-head">
-      <span class="num" aria-hidden="true">02</span>
+      <p class="eyebrow"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-wrench"/></svg><span><span lang="es">Servicios</span><span lang="en">Services</span></span></p>
       <h2 id="t-srv" class="sp"><span lang="es">Qué arreglo y cómo lo arreglo</span><span lang="en">What I fix and how I fix it</span></h2>
     </header>
     <ul class="bento">
       <li class="card c-tomato b7 rv" style="--d:0">
-        <span class="k" aria-hidden="true">A</span>
-        <h3><span lang="es">SEO técnico</span><span lang="en">Technical SEO</span></h3>
+        <svg class="ic k" aria-hidden="true" focusable="false"><use href="#i-scan-search"/></svg>
+        <div class="ctitle"><span class="ibox"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-scan-search"/></svg></span><h3><span lang="es">SEO técnico</span><span lang="en">Technical SEO</span></h3></div>
         <p><span lang="es">Audito rastreo, indexación y datos estructurados. Primero miro qué ve Googlebot y después decido qué tocar.</span><span lang="en">I audit crawling, indexation and structured data. First I look at what Googlebot sees, then I decide what to touch.</span></p>
         <ul class="chips"><li>hreflang</li><li>canonical</li><li>sitemap</li><li>schema</li></ul>
       </li>
       <li class="card c-forest b5 rv" style="--d:1">
-        <span class="k" aria-hidden="true">B</span>
-        <h3><span lang="es">Desarrollo Next.js y Payload</span><span lang="en">Next.js and Payload development</span></h3>
+        <svg class="ic k" aria-hidden="true" focusable="false"><use href="#i-code"/></svg>
+        <div class="ctitle"><span class="ibox"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-code"/></svg></span><h3><span lang="es">Desarrollo Next.js y Payload</span><span lang="en">Next.js and Payload development</span></h3></div>
         <p><span lang="es">Construyo con Next.js y Payload CMS. El SEO entra desde el primer commit y no como parche al final.</span><span lang="en">I build with Next.js and Payload CMS. SEO goes in from the first commit, not as a patch at the end.</span></p>
       </li>
       <li class="card c-paper b4 rv" style="--d:0">
-        <span class="k" aria-hidden="true">C</span>
-        <h3><span lang="es">Infraestructura y servidores</span><span lang="en">Infrastructure and servers</span></h3>
+        <svg class="ic k" aria-hidden="true" focusable="false"><use href="#i-server"/></svg>
+        <div class="ctitle"><span class="ibox"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-server"/></svg></span><h3><span lang="es">Infraestructura y servidores</span><span lang="en">Infrastructure and servers</span></h3></div>
         <p><span lang="es">Configuro el servidor, los headers y la caché. Un TTFB alto empieza en el servidor, no en el diseño.</span><span lang="en">I set up the server, headers and cache. A high TTFB starts at the server, not in the design.</span></p>
       </li>
       <li class="card c-sun b4 rv" style="--d:1">
-        <span class="k" aria-hidden="true">D</span>
-        <h3><span lang="es">Rendimiento web</span><span lang="en">Web performance</span></h3>
+        <svg class="ic k" aria-hidden="true" focusable="false"><use href="#i-gauge"/></svg>
+        <div class="ctitle"><span class="ibox"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-gauge"/></svg></span><h3><span lang="es">Rendimiento web</span><span lang="en">Web performance</span></h3></div>
         <p><span lang="es">Mido LCP, CLS e INP y corrijo lo que más pesa: imágenes, fuentes y JavaScript.</span><span lang="en">I measure LCP, CLS and INP and fix what weighs most: images, fonts and JavaScript.</span></p>
       </li>
       <li class="card c-paper b4 rv" style="--d:2">
-        <span class="k" aria-hidden="true">E</span>
-        <h3><span lang="es">SEO para IA y GEO</span><span lang="en">AI SEO and GEO</span></h3>
+        <svg class="ic k" aria-hidden="true" focusable="false"><use href="#i-bot"/></svg>
+        <div class="ctitle"><span class="ibox"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-bot"/></svg></span><h3><span lang="es">SEO para IA y GEO</span><span lang="en">AI SEO and GEO</span></h3></div>
         <p><span lang="es">Estructuro el contenido para que ChatGPT, Perplexity y las respuestas de IA de Google lo citen.</span><span lang="en">I structure content so ChatGPT, Perplexity and Google AI answers cite it.</span></p>
       </li>
       <li class="card c-ink b12 rv" style="--d:0">
-        <span class="k" aria-hidden="true">F</span>
         <div class="card-split">
           <div>
-            <h3><span lang="es">Auditoría técnica</span><span lang="en">Technical audit</span></h3>
+            <div class="ctitle"><span class="ibox ibox-sun"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-clipboard-check"/></svg></span><h3><span lang="es">Auditoría técnica</span><span lang="en">Technical audit</span></h3></div>
             <p><span lang="es">Revisión completa de rastreo, indexación, Core Web Vitals y datos estructurados, con un plan priorizado por impacto. La entrego en 10 días hábiles.</span><span lang="en">Full review of crawling, indexation, Core Web Vitals and structured data, with a plan ranked by impact. I deliver it in 10 business days.</span></p>
           </div>
           <div class="offer">
             <p class="price"><span class="cnt" data-count="600" data-dec="0">600</span> USD</p>
-            <p class="credit"><span lang="es">Se descuentan del trabajo posterior</span><span lang="en">Credited toward the work that follows</span></p>
-            <a class="btn btn-tomato" href="#contacto"><span><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></span><i class="arr" aria-hidden="true"></i></a>
+            <p class="credit"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-badge-check"/></svg><span><span lang="es">Se descuentan del trabajo posterior</span><span lang="en">Credited toward the work that follows</span></span></p>
+            <a class="btn btn-tomato" href="#contacto"><span><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
           </div>
         </div>
       </li>
     </ul>
+
+    <figure class="fig fig-tree rv">
+      <div class="corners">
+        <svg viewBox="0 0 720 330" aria-hidden="true" focusable="false">
+          <g class="si w3" fill="none">
+            <path d="M360 46V74M120 74H600M120 74V106M360 74V106M600 74V106"/>
+            <path d="M120 140V166M60 166H180M60 166V196M180 166V196"/>
+            <path d="M360 140V166M300 166H420M300 166V196M420 166V196"/>
+            <path d="M600 140V166M540 166H660M540 166V196M660 166V196"/>
+            <path d="M180 230V256" stroke-dasharray="6 6"/>
+          </g>
+          <g class="nd">
+            <rect x="310" y="12" width="100" height="34" class="ff"/><text x="360" y="34" class="tw">/</text>
+            <rect x="70" y="106" width="100" height="34" class="fp"/><text x="120" y="128">/blog</text>
+            <rect x="300" y="106" width="120" height="34" class="fp"/><text x="360" y="128">/servicios</text>
+            <rect x="550" y="106" width="100" height="34" class="fp"/><text x="600" y="128">/casos</text>
+            <rect x="10" y="196" width="100" height="34" class="ff"/><text x="60" y="218" class="tw">/blog/a</text>
+            <rect x="130" y="196" width="100" height="34" class="fs"/><text x="180" y="218">301</text>
+            <rect x="250" y="196" width="100" height="34" class="ff"/><text x="300" y="218" class="tw">/serv/a</text>
+            <rect x="370" y="196" width="100" height="34" class="ff"/><text x="420" y="218" class="tw">/serv/b</text>
+            <rect x="490" y="196" width="100" height="34" class="ff"/><text x="540" y="218" class="tw">/caso/a</text>
+            <rect x="610" y="196" width="100" height="34" class="ft"/><text x="660" y="218">noindex</text>
+            <rect x="130" y="256" width="100" height="34" class="fp dash"/><text x="180" y="278">/vieja</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>
+        <p class="fig-k"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-network"/></svg><span><span lang="es">Árbol de rastreo</span><span lang="en">Crawl tree</span></span></p>
+        <p><span lang="es">Así sigue Googlebot los enlaces de un sitio. El verde se indexa, el amarillo pasa por una redirección, el tomate lleva noindex y la página con borde punteado queda huérfana: nadie la enlaza.</span><span lang="en">This is how Googlebot follows a site's links. Green gets indexed, yellow goes through a redirect, tomato carries noindex and the dashed page is orphaned: nobody links to it.</span></p>
+      </figcaption>
+    </figure>
   </div>
 </section>
 
-<!-- 03 CASOS -->
-<section class="ch ch-tomato" id="casos" data-ch="03" aria-labelledby="t-cas">
+<!-- CASOS -->
+<section class="ch ch-tomato" id="casos" aria-labelledby="t-cas">
   <div class="wrap">
     <header class="ch-head">
-      <span class="num" aria-hidden="true">03</span>
+      <p class="eyebrow"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chart-line"/></svg><span><span lang="es">Casos</span><span lang="en">Case studies</span></span></p>
       <h2 id="t-cas" class="sp"><span lang="es">Tres casos con números de Search Console</span><span lang="en">Three cases with Search Console numbers</span></h2>
     </header>
     <p class="intro rv"><span lang="es">Cada número compara los clics del año contra el año anterior, en el mismo periodo. Los clientes van anonimizados.</span><span lang="en">Each number compares clicks year over year, over the same period. Clients stay anonymous.</span></p>
@@ -205,152 +347,197 @@ var q=location.search.match(/lang=(en|es)/);if(q){d.dataset.lang=q[1];d.lang=q[1
       <li class="case rv">
         <p class="big" aria-hidden="true">+<span class="cnt" data-count="406" data-dec="0">406</span><span class="u">%</span></p>
         <div class="case-body">
-          <p class="sector"><span lang="es">Salud, urología</span><span lang="en">Healthcare, urology</span></p>
+          <p class="sector"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-activity"/></svg><span><span lang="es">Salud, urología</span><span lang="en">Healthcare, urology</span></span></p>
           <h3><span lang="es">De casi cero visibilidad a un año de crecimiento sostenido para un urólogo</span><span lang="en">From near-zero visibility to a year of sustained growth for a urologist</span></h3>
           <p class="metric"><span class="sr">+406%</span><span lang="es">clics interanuales</span><span lang="en">year over year clicks</span></p>
-          <a class="more" href="https://juan-tech.com/case-studies"><span><span lang="es">Leer el caso completo</span><span lang="en">Read the full case</span></span><i class="arr" aria-hidden="true"></i></a>
+          <a class="more" href="https://juan-tech.com/case-studies"><span><span lang="es">Leer el caso completo</span><span lang="en">Read the full case</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
         </div>
+        <svg class="spark" aria-hidden="true" focusable="false"><use href="#g-spark"/></svg>
       </li>
       <li class="case rv">
         <p class="big" aria-hidden="true">+<span class="cnt" data-count="309" data-dec="0">309</span><span class="u">%</span></p>
         <div class="case-body">
-          <p class="sector"><span lang="es">Servicios legales, inmigración</span><span lang="en">Legal services, immigration</span></p>
+          <p class="sector"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-scale"/></svg><span><span lang="es">Servicios legales, inmigración</span><span lang="en">Legal services, immigration</span></span></p>
           <h3><span lang="es">Cuadruplicar el tráfico orgánico de un despacho de inmigración en un año</span><span lang="en">Quadrupling organic traffic for an immigration law firm in one year</span></h3>
           <p class="metric"><span class="sr">+309%</span><span lang="es">clics interanuales</span><span lang="en">year over year clicks</span></p>
-          <a class="more" href="https://juan-tech.com/case-studies"><span><span lang="es">Leer el caso completo</span><span lang="en">Read the full case</span></span><i class="arr" aria-hidden="true"></i></a>
+          <a class="more" href="https://juan-tech.com/case-studies"><span><span lang="es">Leer el caso completo</span><span lang="en">Read the full case</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
         </div>
+        <svg class="spark" aria-hidden="true" focusable="false"><use href="#g-spark"/></svg>
       </li>
       <li class="case rv">
         <p class="big" aria-hidden="true">+<span class="cnt" data-count="83" data-dec="0">83</span><span class="u">%</span></p>
         <div class="case-body">
-          <p class="sector"><span lang="es">Servicios legales, defensa criminal</span><span lang="en">Legal services, criminal defense</span></p>
+          <p class="sector"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-shield"/></svg><span><span lang="es">Servicios legales, defensa criminal</span><span lang="en">Legal services, criminal defense</span></span></p>
           <h3><span lang="es">Escalar el contenido legal educativo a más de 86&nbsp;000 clics orgánicos anuales para un despacho de defensa criminal</span><span lang="en">Scaling educational legal content to over 86&nbsp;000 annual organic clicks for a criminal defense firm</span></h3>
           <p class="metric"><span class="sr">+83%</span><span lang="es">clics interanuales</span><span lang="en">year over year clicks</span></p>
-          <a class="more" href="https://juan-tech.com/case-studies"><span><span lang="es">Leer el caso completo</span><span lang="en">Read the full case</span></span><i class="arr" aria-hidden="true"></i></a>
+          <a class="more" href="https://juan-tech.com/case-studies"><span><span lang="es">Leer el caso completo</span><span lang="en">Read the full case</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
         </div>
+        <svg class="spark" aria-hidden="true" focusable="false"><use href="#g-spark"/></svg>
       </li>
     </ol>
   </div>
 </section>
 
-<!-- 04 PROCESO -->
-<section class="ch ch-paper" id="proceso" data-ch="04" aria-labelledby="t-pro">
+<!-- PROCESO -->
+<section class="ch ch-paper" id="proceso" aria-labelledby="t-pro">
   <div class="wrap">
     <header class="ch-head">
-      <span class="num" aria-hidden="true">04</span>
+      <p class="eyebrow"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-workflow"/></svg><span><span lang="es">Proceso</span><span lang="en">Process</span></span></p>
       <h2 id="t-pro" class="sp"><span lang="es">Cómo trabajo en cuatro pasos</span><span lang="en">How I work in four steps</span></h2>
     </header>
+    <ul class="flow" aria-hidden="true">
+      <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-search"/></svg><b><span lang="es">Rastreo</span><span lang="en">Crawl</span></b></li><li class="fa"><svg><use href="#g-squig"/></svg></li>
+      <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-list-checks"/></svg><b><span lang="es">Hallazgos</span><span lang="en">Findings</span></b></li><li class="fa"><svg><use href="#g-squig"/></svg></li>
+      <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-code"/></svg><b><span lang="es">Cambio</span><span lang="en">Change</span></b></li><li class="fa"><svg><use href="#g-squig"/></svg></li>
+      <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chart-line"/></svg><b><span lang="es">Medición</span><span lang="en">Measure</span></b></li>
+    </ul>
     <ol class="tl">
-      <li class="tl-step rv"><span class="tl-n" aria-hidden="true">01</span><div><h3><span lang="es">Audito</span><span lang="en">Audit</span></h3><p><span lang="es">Reviso rastreo, indexación, Core Web Vitals y datos estructurados. Empiezo por lo que Google ve hoy.</span><span lang="en">I review crawling, indexation, Core Web Vitals and structured data. I start with what Google sees today.</span></p></div></li>
-      <li class="tl-step rv"><span class="tl-n" aria-hidden="true">02</span><div><h3><span lang="es">Priorizo</span><span lang="en">Prioritize</span></h3><p><span lang="es">Ordeno los hallazgos por impacto real y no por cantidad de avisos.</span><span lang="en">I rank findings by real impact, not by the number of warnings.</span></p></div></li>
-      <li class="tl-step rv"><span class="tl-n" aria-hidden="true">03</span><div><h3><span lang="es">Corrijo</span><span lang="en">Fix</span></h3><p><span lang="es">Aplico el cambio en el código yo mismo, o dejo el cambio exacto para que tu equipo lo aplique.</span><span lang="en">I apply the change in the code myself, or I leave the exact change for your team to apply.</span></p></div></li>
-      <li class="tl-step rv"><span class="tl-n" aria-hidden="true">04</span><div><h3><span lang="es">Mido</span><span lang="en">Measure</span></h3><p><span lang="es">Comparo contra Search Console y Core Web Vitals reales, antes y después.</span><span lang="en">I compare against Search Console and real Core Web Vitals, before and after.</span></p></div></li>
+      <li class="tl-step rv"><span class="tl-n" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-search"/></svg></span><div><h3><span lang="es">Audito</span><span lang="en">Audit</span></h3><p><span lang="es">Reviso rastreo, indexación, Core Web Vitals y datos estructurados. Empiezo por lo que Google ve hoy.</span><span lang="en">I review crawling, indexation, Core Web Vitals and structured data. I start with what Google sees today.</span></p></div></li>
+      <li class="tl-step rv"><span class="tl-n" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-list-ordered"/></svg></span><div><h3><span lang="es">Priorizo</span><span lang="en">Prioritize</span></h3><p><span lang="es">Ordeno los hallazgos por impacto real y no por cantidad de avisos.</span><span lang="en">I rank findings by real impact, not by the number of warnings.</span></p></div></li>
+      <li class="tl-step rv"><span class="tl-n" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-wrench"/></svg></span><div><h3><span lang="es">Corrijo</span><span lang="en">Fix</span></h3><p><span lang="es">Aplico el cambio en el código yo mismo, o dejo el cambio exacto para que tu equipo lo aplique.</span><span lang="en">I apply the change in the code myself, or I leave the exact change for your team to apply.</span></p></div></li>
+      <li class="tl-step rv"><span class="tl-n" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chart-line"/></svg></span><div><h3><span lang="es">Mido</span><span lang="en">Measure</span></h3><p><span lang="es">Comparo contra Search Console y Core Web Vitals reales, antes y después.</span><span lang="en">I compare against Search Console and real Core Web Vitals, before and after.</span></p></div></li>
     </ol>
   </div>
 </section>
 
-<!-- 05 WEBSITES -->
-<section class="ch ch-sun" id="websites" data-ch="05" aria-labelledby="t-web">
+<!-- WEBSITES -->
+<section class="ch ch-sun" id="websites" aria-labelledby="t-web">
   <div class="wrap">
     <header class="ch-head">
-      <span class="num" aria-hidden="true">05</span>
+      <p class="eyebrow"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-monitor"/></svg><span>Websites</span></p>
       <h2 id="t-web" class="sp"><span lang="es">Sitios web que construí</span><span lang="en">Websites I built</span></h2>
     </header>
     <p class="sample-note rv"><b class="stamp stamp-warn"><span lang="es">PENDIENTE</span><span lang="en">PENDING</span></b> <span><span lang="es">Fecha y herramienta de la medición de cada puntaje. Capturas reales de los sitios.</span><span lang="en">Date and tool for each score. Real screenshots of the sites.</span></span></p>
     <ul class="sites">
       <li class="site rv" style="--d:0">
-        <div class="shot s1" aria-hidden="true"><span><span lang="es">captura pendiente</span><span lang="en">screenshot pending</span></span></div>
-        <div class="site-t"><h3>Apturio</h3><p><span lang="es">Software y SaaS</span><span lang="en">Software and SaaS</span></p></div>
+        <a class="devlink" href="https://apturio.com" target="_blank" rel="noopener"><span class="dev"><span class="dev-bar" aria-hidden="true"><i></i><i></i><i></i><b>apturio.com</b></span><img lang="es" src="assets/img/apturio-desktop.webp" width="960" height="600" loading="lazy" decoding="async" alt="Página de inicio de Apturio, un CRM con IA: fondo oscuro, titular y dos botones"><img lang="en" src="assets/img/apturio-desktop.webp" width="960" height="600" loading="lazy" decoding="async" alt="Apturio home page, an AI CRM: dark background, headline and two buttons"><span class="phone" aria-hidden="true"><img src="assets/img/apturio-mobile.webp" width="260" height="563" loading="lazy" decoding="async" alt=""></span></span><span class="sr"><span lang="es">Abrir apturio.com en otra pestaña</span><span lang="en">Open apturio.com in a new tab</span></span></a>
+        <div class="site-t"><h3>Apturio</h3><p><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-layers"/></svg><span><span lang="es">Software y SaaS</span><span lang="en">Software and SaaS</span></span></p></div>
         <p class="score"><b class="cnt" data-count="83" data-dec="0">83</b><span>Performance</span></p>
       </li>
       <li class="site rv" style="--d:1">
-        <div class="shot s2" aria-hidden="true"><span><span lang="es">captura pendiente</span><span lang="en">screenshot pending</span></span></div>
-        <div class="site-t"><h3>Arianna Lupi</h3><p><span lang="es">Marca personal y coaching</span><span lang="en">Personal brand and coaching</span></p></div>
+        <a class="devlink" href="https://ariannalupi.com" target="_blank" rel="noopener"><span class="dev"><span class="dev-bar" aria-hidden="true"><i></i><i></i><i></i><b>ariannalupi.com</b></span><img lang="es" src="assets/img/arianna-desktop.webp" width="960" height="600" loading="lazy" decoding="async" alt="Página de inicio de Arianna Lupi: titular de presentación y retrato"><img lang="en" src="assets/img/arianna-desktop.webp" width="960" height="600" loading="lazy" decoding="async" alt="Arianna Lupi home page: introduction headline and portrait"><span class="phone" aria-hidden="true"><img src="assets/img/arianna-mobile.webp" width="260" height="563" loading="lazy" decoding="async" alt=""></span></span><span class="sr"><span lang="es">Abrir ariannalupi.com en otra pestaña</span><span lang="en">Open ariannalupi.com in a new tab</span></span></a>
+        <div class="site-t"><h3>Arianna Lupi</h3><p><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg><span><span lang="es">Marca personal y coaching</span><span lang="en">Personal brand and coaching</span></span></p></div>
         <p class="score"><b class="cnt" data-count="73" data-dec="0">73</b><span>Performance</span></p>
       </li>
       <li class="site rv" style="--d:2">
-        <div class="shot s3" aria-hidden="true"><span><span lang="es">captura pendiente</span><span lang="en">screenshot pending</span></span></div>
-        <div class="site-t"><h3>Estylopia</h3><p><span lang="es">Retail y estilo personal</span><span lang="en">Retail and personal styling</span></p></div>
+        <a class="devlink" href="https://estylopia.com" target="_blank" rel="noopener"><span class="dev"><span class="dev-bar" aria-hidden="true"><i></i><i></i><i></i><b>estylopia.com</b></span><img lang="es" src="assets/img/estylopia-desktop.webp" width="960" height="600" loading="lazy" decoding="async" alt="Página de inicio de Estylopia: bienvenida y explicación del servicio de asesoría de estilo"><img lang="en" src="assets/img/estylopia-desktop.webp" width="960" height="600" loading="lazy" decoding="async" alt="Estylopia home page: welcome and explanation of the personal styling service"><span class="phone" aria-hidden="true"><img src="assets/img/estylopia-mobile.webp" width="260" height="563" loading="lazy" decoding="async" alt=""></span></span><span class="sr"><span lang="es">Abrir estylopia.com en otra pestaña</span><span lang="en">Open estylopia.com in a new tab</span></span></a>
+        <div class="site-t"><h3>Estylopia</h3><p><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-tag"/></svg><span><span lang="es">Retail y estilo personal</span><span lang="en">Retail and personal styling</span></span></p></div>
         <p class="score"><b class="cnt" data-count="67" data-dec="0">67</b><span>Performance</span></p>
       </li>
     </ul>
-    <p class="after rv"><a class="more" href="https://juan-tech.com/websites"><span><span lang="es">Ver todos los sitios</span><span lang="en">See all websites</span></span><i class="arr" aria-hidden="true"></i></a></p>
+    <p class="after rv"><a class="more" href="https://juan-tech.com/websites"><span><span lang="es">Ver todos los sitios</span><span lang="en">See all websites</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a></p>
   </div>
 </section>
 
-<!-- 06 SOBRE -->
-<section class="ch ch-paper" id="sobre" data-ch="06" aria-labelledby="t-sob">
+<!-- SOBRE -->
+<section class="ch ch-paper" id="sobre" aria-labelledby="t-sob">
   <div class="wrap about">
     <div class="portrait rv">
+      <i class="tape tape-l"></i>
       <div class="frame">
         <div class="ph"><span><span lang="es">RETRATO PENDIENTE</span><span lang="en">PORTRAIT PENDING</span></span><small><span lang="es">Se carga desde Media</span><span lang="en">Loaded from Media</span></small></div>
       </div>
+      <svg viewBox="0 0 200 200" class="sticker" aria-hidden="true" focusable="false">
+        <circle cx="100" cy="100" r="96" class="fs si w4"/>
+        <defs><path id="cir3" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"/></defs>
+        <text lang="es"><textPath href="#cir3" textLength="430" lengthAdjust="spacing">SIN INTERMEDIARIOS + SIN INTERMEDIARIOS +</textPath></text>
+        <text lang="en"><textPath href="#cir3" textLength="430" lengthAdjust="spacing">NO MIDDLEMEN + NO MIDDLEMEN + NO MIDDLEMEN +</textPath></text>
+        <path d="M100 66L110 92 136 100 110 108 100 134 90 108 64 100 90 92Z" class="fi"/>
+      </svg>
     </div>
     <div class="about-copy">
       <header class="ch-head">
-        <span class="num" aria-hidden="true">06</span>
+        <p class="eyebrow"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span><span lang="es">Sobre mí</span><span lang="en">About me</span></span></p>
         <h2 id="t-sob" class="sp"><span lang="es">Soy Juan y esto es lo que hago</span><span lang="en">I am Juan and this is what I do</span></h2>
       </header>
       <p class="rv"><span lang="es">Soy ingeniero de software y trabajo el SEO desde el código. Construyo con Next.js y con un CMS headless como Payload, diseño el SEO desde el primer commit y audito antes de construir.</span><span lang="en">I am a software engineer and I work on SEO from the code. I build with Next.js and a headless CMS like Payload, I design SEO from the first commit and I audit before I build.</span></p>
-      <p class="rv"><span lang="es">Cuido la accesibilidad y el diseño mobile-first. Trabajo desde Lima y Madrid, en español e inglés.</span><span lang="en">I care about accessibility and mobile-first design. I work from Lima and Madrid, in Spanish and English.</span></p>
+      <p class="rv"><span lang="es">Cuido la accesibilidad y el diseño mobile-first. Trabajo en español e inglés.</span><span lang="en">I care about accessibility and mobile-first design. I work in Spanish and English.</span></p>
       <ul class="facts rv">
         <li><span class="cnt" data-count="15" data-dec="0">15</span><span><span lang="es">proyectos de SEO</span><span lang="en">SEO projects</span></span></li>
         <li><span class="cnt" data-count="13" data-dec="0">13</span><span><span lang="es">proyectos de desarrollo</span><span lang="en">development projects</span></span></li>
       </ul>
-      <ul class="chips chips-ink rv"><li><span lang="es">SEO técnico</span><span lang="en">Technical SEO</span></li><li><span lang="es">Rendimiento web</span><span lang="en">Web performance</span></li><li><span lang="es">Infraestructura</span><span lang="en">Infrastructure</span></li><li><span lang="es">Arquitectura escalable</span><span lang="en">Scalable architecture</span></li><li><span lang="es">Accesibilidad</span><span lang="en">Accessibility</span></li></ul>
+      <ul class="chips chips-ink rv">
+        <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-scan-search"/></svg><span><span lang="es">SEO técnico</span><span lang="en">Technical SEO</span></span></li>
+        <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-gauge"/></svg><span><span lang="es">Rendimiento web</span><span lang="en">Web performance</span></span></li>
+        <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-server"/></svg><span><span lang="es">Infraestructura</span><span lang="en">Infrastructure</span></span></li>
+        <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-layers"/></svg><span><span lang="es">Arquitectura escalable</span><span lang="en">Scalable architecture</span></span></li>
+        <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-users"/></svg><span><span lang="es">Accesibilidad</span><span lang="en">Accessibility</span></span></li>
+      </ul>
+      <figure class="iso rv">
+        <svg viewBox="0 0 520 300" aria-hidden="true" focusable="false" class="isosvg"><polygon points="130,182 230,232 130,282 30,232" fill="#4B4036" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,232 130,282 130,308 30,258" fill="#4B4036" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="230,232 130,282 130,308 230,258" fill="#2a221b" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><path d="M232 238H300" stroke="#16120E" stroke-width="3" stroke-dasharray="5 5"/><text x="312" y="244" lang="es" class="isot">Servidor</text><text x="312" y="244" lang="en" class="isot">Server</text><polygon points="130,124 230,174 130,224 30,174" fill="#0E3B2C" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,174 130,224 130,250 30,200" fill="#0a2a1f" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="230,174 130,224 130,250 230,200" fill="#134d39" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><path d="M232 180H300" stroke="#16120E" stroke-width="3" stroke-dasharray="5 5"/><text x="312" y="186" lang="es" class="isot">PostgreSQL</text><text x="312" y="186" lang="en" class="isot">PostgreSQL</text><polygon points="130,66 230,116 130,166 30,116" fill="#FFC83D" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,116 130,166 130,192 30,142" fill="#d9a420" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="230,116 130,166 130,192 230,142" fill="#f0b72c" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><path d="M232 122H300" stroke="#16120E" stroke-width="3" stroke-dasharray="5 5"/><text x="312" y="128" lang="es" class="isot">Payload CMS</text><text x="312" y="128" lang="en" class="isot">Payload CMS</text><polygon points="130,8 230,58 130,108 30,58" fill="#FF5B3A" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,58 130,108 130,134 30,84" fill="#d94626" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="230,58 130,108 130,134 230,84" fill="#ee4f30" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><path d="M232 64H300" stroke="#16120E" stroke-width="3" stroke-dasharray="5 5"/><text x="312" y="70" lang="es" class="isot">Next.js</text><text x="312" y="70" lang="en" class="isot">Next.js</text></svg>
+        <figcaption><p class="fig-k"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-layers"/></svg><span><span lang="es">Capas de mi stack</span><span lang="en">Layers of my stack</span></span></p><p><span lang="es">Así apilo un proyecto: Next.js al frente, Payload como CMS, PostgreSQL debajo y el servidor en la base.</span><span lang="en">This is how I stack a project: Next.js up front, Payload as the CMS, PostgreSQL below and the server at the base.</span></p></figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
-<!-- 07 TESTIMONIO -->
-<section class="ch ch-forest ch-quote" id="testimonio" data-ch="07" aria-labelledby="t-tes">
+<!-- TESTIMONIOS -->
+<section class="ch ch-forest ch-quote" id="testimonios" aria-labelledby="t-tes">
   <div class="wrap">
     <header class="ch-head">
-      <span class="num" aria-hidden="true">07</span>
-      <h2 id="t-tes" class="sp"><span lang="es">Lo que dice una clienta</span><span lang="en">What a client says</span></h2>
+      <p class="eyebrow"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg><span><span lang="es">Testimonios</span><span lang="en">Testimonials</span></span></p>
+      <h2 id="t-tes" class="sp"><span lang="es">Lo que dicen quienes trabajaron conmigo</span><span lang="en">What people who worked with me say</span></h2>
     </header>
+    <div class="tpv" role="group" aria-label="Vista de maqueta: cantidad de testimonios / Mockup view: number of testimonials">
+      <span class="tpv-l"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-layout-dashboard"/></svg><span><span lang="es">Previsualizar con</span><span lang="en">Preview with</span></span></span>
+      <button type="button" data-tn="1" aria-pressed="false">1</button>
+      <button type="button" data-tn="3" aria-pressed="true">3</button>
+      <button type="button" data-tn="8" aria-pressed="false">8</button>
+    </div>
     <figure class="quote">
-      <blockquote><p class="sp"><span lang="es">Trabajar con Juan fue lo mejor.</span><span lang="en">Working with Juan was the best.</span></p></blockquote>
-      <figcaption class="rv"><b>Patricia Ibarra</b><span><span lang="es">CEO de Estylopia</span><span lang="en">CEO of Estylopia</span></span></figcaption>
+      <svg class="ic qmark" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg>
+      <blockquote><p><span lang="es">Trabajar con Juan fue lo mejor.</span><span lang="en">Working with Juan was the best.</span></p></blockquote>
+      <figcaption class="rv"><span class="av" aria-hidden="true">P</span><span class="who"><b>Patricia Ibarra</b><span><span lang="es">CEO de Estylopia</span><span lang="en">CEO of Estylopia</span></span></span></figcaption>
     </figure>
-    <p class="sample-note rv"><b class="stamp stamp-warn"><span lang="es">PENDIENTE</span><span lang="en">PENDING</span></b> <span><span lang="es">Traducción al inglés provisional, falta confirmarla con la clienta. Faltan más citas reales y autorizadas.</span><span lang="en">English translation is provisional and still needs the client's confirmation. More real, authorized quotes are missing.</span></span></p>
+    <ul class="wall" id="wall">
+      <li class="tcard t-a"><i class="tape"></i><svg class="ic qm" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg><p class="stamp stamp-warn"><span lang="es">Testimonio pendiente, ejemplo de maqueta</span><span lang="en">Testimonial pending, mockup example</span></p><div class="sk" aria-hidden="true"><i style="width:96%"></i><i style="width:88%"></i><i style="width:92%"></i><i style="width:55%"></i></div><div class="by"><span class="av" aria-hidden="true">P</span><span class="who"><b>[PENDIENTE]</b><span><span lang="es">Rol</span><span lang="en">Role</span> [PENDIENTE], <span lang="es">empresa</span><span lang="en">company</span> [PENDIENTE]</span></span></div></li>
+      <li class="tcard t-b"><svg class="ic qm" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg><p class="stamp stamp-ink"><span lang="es">Testimonio pendiente, ejemplo de maqueta</span><span lang="en">Testimonial pending, mockup example</span></p><div class="sk" aria-hidden="true"><i style="width:94%"></i><i style="width:62%"></i></div><div class="by"><span class="av" aria-hidden="true">P</span><span class="who"><b>[PENDIENTE]</b><span><span lang="es">Rol</span><span lang="en">Role</span> [PENDIENTE], <span lang="es">empresa</span><span lang="en">company</span> [PENDIENTE]</span></span></div></li>
+      <li class="tcard t-c"><i class="tape"></i><svg class="ic qm" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg><p class="stamp stamp-warn"><span lang="es">Testimonio pendiente, ejemplo de maqueta</span><span lang="en">Testimonial pending, mockup example</span></p><div class="sk" aria-hidden="true"><i style="width:98%"></i><i style="width:90%"></i><i style="width:95%"></i><i style="width:86%"></i><i style="width:93%"></i><i style="width:40%"></i></div><div class="by"><span class="av" aria-hidden="true">P</span><span class="who"><b>[PENDIENTE]</b><span><span lang="es">Rol</span><span lang="en">Role</span> [PENDIENTE], <span lang="es">empresa</span><span lang="en">company</span> [PENDIENTE]</span></span></div></li>
+      <li class="tcard t-d"><svg class="ic qm" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg><p class="stamp stamp-warn"><span lang="es">Testimonio pendiente, ejemplo de maqueta</span><span lang="en">Testimonial pending, mockup example</span></p><div class="sk" aria-hidden="true"><i style="width:90%"></i><i style="width:97%"></i><i style="width:70%"></i></div><div class="by"><span class="av" aria-hidden="true">P</span><span class="who"><b>[PENDIENTE]</b><span><span lang="es">Rol</span><span lang="en">Role</span> [PENDIENTE], <span lang="es">empresa</span><span lang="en">company</span> [PENDIENTE]</span></span></div></li>
+      <li class="tcard t-b"><i class="tape"></i><svg class="ic qm" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg><p class="stamp stamp-ink"><span lang="es">Testimonio pendiente, ejemplo de maqueta</span><span lang="en">Testimonial pending, mockup example</span></p><div class="sk" aria-hidden="true"><i style="width:95%"></i><i style="width:91%"></i><i style="width:94%"></i><i style="width:30%"></i></div><div class="by"><span class="av" aria-hidden="true">P</span><span class="who"><b>[PENDIENTE]</b><span><span lang="es">Rol</span><span lang="en">Role</span> [PENDIENTE], <span lang="es">empresa</span><span lang="en">company</span> [PENDIENTE]</span></span></div></li>
+      <li class="tcard t-a"><svg class="ic qm" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg><p class="stamp stamp-warn"><span lang="es">Testimonio pendiente, ejemplo de maqueta</span><span lang="en">Testimonial pending, mockup example</span></p><div class="sk" aria-hidden="true"><i style="width:92%"></i><i style="width:58%"></i></div><div class="by"><span class="av" aria-hidden="true">P</span><span class="who"><b>[PENDIENTE]</b><span><span lang="es">Rol</span><span lang="en">Role</span> [PENDIENTE], <span lang="es">empresa</span><span lang="en">company</span> [PENDIENTE]</span></span></div></li>
+      <li class="tcard t-c"><svg class="ic qm" aria-hidden="true" focusable="false"><use href="#i-quote"/></svg><p class="stamp stamp-warn"><span lang="es">Testimonio pendiente, ejemplo de maqueta</span><span lang="en">Testimonial pending, mockup example</span></p><div class="sk" aria-hidden="true"><i style="width:97%"></i><i style="width:89%"></i><i style="width:96%"></i><i style="width:84%"></i><i style="width:45%"></i></div><div class="by"><span class="av" aria-hidden="true">P</span><span class="who"><b>[PENDIENTE]</b><span><span lang="es">Rol</span><span lang="en">Role</span> [PENDIENTE], <span lang="es">empresa</span><span lang="en">company</span> [PENDIENTE]</span></span></div></li>
+    </ul>
+    <p class="sample-note rv"><b class="stamp stamp-warn"><span lang="es">PENDIENTE</span><span lang="en">PENDING</span></b> <span><span lang="es">Solo existe una cita real. Las demás tarjetas son ranuras de muestra para ver cómo escala la sección. La traducción al inglés de la cita real es provisional y falta confirmarla con la clienta.</span><span lang="en">Only one quote is real. The other cards are sample slots to show how the section scales. The English translation of the real quote is provisional and still needs the client's confirmation.</span></span></p>
   </div>
 </section>
 
-<!-- 08 FAQ -->
-<section class="ch ch-paper" id="faq" data-ch="08" aria-labelledby="t-faq">
+<!-- FAQ -->
+<section class="ch ch-paper" id="faq" aria-labelledby="t-faq">
   <div class="wrap faq-wrap">
     <header class="ch-head">
-      <span class="num" aria-hidden="true">08</span>
+      <p class="eyebrow"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-circle-question-mark"/></svg><span>FAQ</span></p>
       <h2 id="t-faq" class="sp"><span lang="es">Preguntas frecuentes</span><span lang="en">Frequently asked questions</span></h2>
     </header>
     <div class="faq">
-      <details class="rv"><summary><span><span lang="es">¿Qué incluye la auditoría técnica?</span><span lang="en">What does the technical audit include?</span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Reviso rastreo, indexación, Core Web Vitals y datos estructurados. Entrego un plan de corrección ordenado por impacto.</span><span lang="en">I review crawling, indexation, Core Web Vitals and structured data. I deliver a fix plan ranked by impact.</span></p></div></div></details>
-      <details class="rv"><summary><span><span lang="es">¿Cuánto cuesta y cuánto tarda?</span><span lang="en">How much does it cost and how long does it take?</span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">La auditoría cuesta 600 USD y la entrego en 10 días hábiles. Esos 600 se descuentan del trabajo posterior.</span><span lang="en">The audit costs 600 USD and I deliver it in 10 business days. Those 600 are credited toward the work that follows.</span></p></div></div></details>
-      <details class="rv"><summary><span><span lang="es">¿Trabajas con mi equipo de desarrollo?</span><span lang="en">Do you work with my development team?</span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Sí. Corrijo el código yo mismo o dejo el cambio exacto para que tu equipo lo aplique.</span><span lang="en">Yes. I fix the code myself or I leave the exact change for your team to apply.</span></p></div></div></details>
-      <details class="rv"><summary><span><span lang="es">¿Cómo mido el éxito de las optimizaciones?</span><span lang="en">How do I measure the success of the optimizations?</span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Comparo Search Console y Core Web Vitals reales antes y después. Los números de los casos salen de ahí.</span><span lang="en">I compare Search Console and real Core Web Vitals before and after. The numbers in the cases come from there.</span></p></div></div></details>
-      <details class="rv"><summary><span><span lang="es">¿En qué idiomas y mercados trabajas?</span><span lang="en">Which languages and markets do you work in?</span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Trabajo en español e inglés, con base en Lima y Madrid.</span><span lang="en">I work in Spanish and English, based in Lima and Madrid.</span></p></div></div></details>
+      <details class="rv"><summary><span class="q"><svg class="ic qi" aria-hidden="true" focusable="false"><use href="#i-file-search"/></svg><span><span lang="es">¿Qué incluye la auditoría técnica?</span><span lang="en">What does the technical audit include?</span></span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Reviso rastreo, indexación, Core Web Vitals y datos estructurados. Entrego un plan de corrección ordenado por impacto.</span><span lang="en">I review crawling, indexation, Core Web Vitals and structured data. I deliver a fix plan ranked by impact.</span></p></div></div></details>
+      <details class="rv"><summary><span class="q"><svg class="ic qi" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg><span><span lang="es">¿Cuánto cuesta y cuánto tarda?</span><span lang="en">How much does it cost and how long does it take?</span></span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">La auditoría cuesta 600 USD y la entrego en 10 días hábiles. Esos 600 se descuentan del trabajo posterior.</span><span lang="en">The audit costs 600 USD and I deliver it in 10 business days. Those 600 are credited toward the work that follows.</span></p></div></div></details>
+      <details class="rv"><summary><span class="q"><svg class="ic qi" aria-hidden="true" focusable="false"><use href="#i-users"/></svg><span><span lang="es">¿Trabajas con mi equipo de desarrollo?</span><span lang="en">Do you work with my development team?</span></span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Sí. Corrijo el código yo mismo o dejo el cambio exacto para que tu equipo lo aplique.</span><span lang="en">Yes. I fix the code myself or I leave the exact change for your team to apply.</span></p></div></div></details>
+      <details class="rv"><summary><span class="q"><svg class="ic qi" aria-hidden="true" focusable="false"><use href="#i-chart-line"/></svg><span><span lang="es">¿Cómo mido el éxito de las optimizaciones?</span><span lang="en">How do I measure the success of the optimizations?</span></span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Comparo Search Console y Core Web Vitals reales antes y después. Los números de los casos salen de ahí.</span><span lang="en">I compare Search Console and real Core Web Vitals before and after. The numbers in the cases come from there.</span></p></div></div></details>
+      <details class="rv"><summary><span class="q"><svg class="ic qi" aria-hidden="true" focusable="false"><use href="#i-globe"/></svg><span><span lang="es">¿En qué idiomas trabajas?</span><span lang="en">Which languages do you work in?</span></span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Trabajo en español e inglés. Audito, escribo y construyo en los dos idiomas.</span><span lang="en">I work in Spanish and English. I audit, write and build in both languages.</span></p></div></div></details>
     </div>
   </div>
 </section>
 
-<!-- 09 CONTACTO -->
-<section class="ch ch-tomato" id="contacto" data-ch="09" aria-labelledby="t-con">
+<!-- CONTACTO -->
+<section class="ch ch-tomato" id="contacto" aria-labelledby="t-con">
+  <svg class="cubes" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><polygon points="60,9 94,26 60,43 26,26" fill="#FFC83D" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="26,26 60,43 60,61 26,44" fill="#d9a420" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="94,26 60,43 60,61 94,44" fill="#f0b72c" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,61 56,74 30,87 4,74" fill="#FFF6EA" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="4,74 30,87 30,101 4,88" fill="#d9cdb9" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="56,74 30,87 30,101 56,88" fill="#efe3d0" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="88,73 110,84 88,95 66,84" fill="#0E3B2C" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="66,84 88,95 88,107 66,96" fill="#0a2a1f" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="110,84 88,95 88,107 110,96" fill="#134d39" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/></svg>
   <div class="wrap contact">
     <div>
       <header class="ch-head">
-        <span class="num" aria-hidden="true">09</span>
+        <p class="eyebrow"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg><span><span lang="es">Contacto</span><span lang="en">Contact</span></span></p>
         <h2 id="t-con" class="sp"><span lang="es">Hablemos de tu sitio</span><span lang="en">Let's talk about your site</span></h2>
       </header>
       <p class="rv"><span lang="es">¿Tienes un proyecto en mente? Cuéntame de qué se trata y empiezo por mirar qué ve Google hoy.</span><span lang="en">Got a project in mind? Tell me about it and I start by looking at what Google sees today.</span></p>
-      <p class="mail rv"><span class="mono" aria-hidden="true">&gt; <span lang="es">contacto</span><span lang="en">contact</span></span><a href="mailto:hello@juan-tech.com">hello@juan-tech.com</a></p>
+      <p class="mail rv"><span class="mono" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-send"/></svg><span><span lang="es">contacto</span><span lang="en">contact</span></span></span><a href="mailto:hello@juan-tech.com">hello@juan-tech.com</a></p>
       <p class="sample-note rv"><b class="stamp stamp-ink"><span lang="es">PENDIENTE</span><span lang="en">PENDING</span></b> <span><span lang="es">Plazo de respuesta real.</span><span lang="en">Real response time.</span></span></p>
     </div>
     <form class="form rv" id="form" novalidate>
-      <div class="f"><label for="f-name"><span lang="es">Nombre</span><span lang="en">Name</span></label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
-      <div class="f"><label for="f-mail"><span lang="es">Correo electrónico</span><span lang="en">Email</span></label><input id="f-mail" name="email" type="email" autocomplete="email" required></div>
-      <div class="f"><label for="f-msg"><span lang="es">Mensaje</span><span lang="en">Message</span></label><textarea id="f-msg" name="message" rows="5" required></textarea></div>
-      <button class="btn btn-ink btn-lg" type="submit"><span><span lang="es">Enviar mensaje</span><span lang="en">Send message</span></span><i class="arr" aria-hidden="true"></i></button>
+      <i class="tape tape-r"></i>
+      <div class="f"><label for="f-name"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span><span lang="es">Nombre</span><span lang="en">Name</span></span></label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+      <div class="f"><label for="f-mail"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg><span><span lang="es">Correo electrónico</span><span lang="en">Email</span></span></label><input id="f-mail" name="email" type="email" autocomplete="email" required></div>
+      <div class="f"><label for="f-msg"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-message-square"/></svg><span><span lang="es">Mensaje</span><span lang="en">Message</span></span></label><textarea id="f-msg" name="message" rows="5" required></textarea></div>
+      <button class="btn btn-ink btn-lg" type="submit"><span><span lang="es">Enviar mensaje</span><span lang="en">Send message</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-send"/></svg></button>
       <p id="form-status" class="status" role="status"></p>
     </form>
   </div>
@@ -359,20 +546,87 @@ var q=location.search.match(/lang=(en|es)/);if(q){d.dataset.lang=q[1];d.lang=q[1
 </main>
 
 <footer class="foot">
-  <div class="wrap foot-in">
-    <div>
-      <p class="foot-brand">Juan Carlos Angulo</p>
-      <p><span lang="es">Ingeniero de software y consultor SEO técnico. Lima, Perú.</span><span lang="en">Software engineer and technical SEO consultant. Lima, Peru.</span></p>
+  <div class="wrap">
+    <div class="foot-cta">
+      <div class="fc-copy">
+        <p class="fc-k"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-rocket"/></svg><span><span lang="es">Siguiente paso</span><span lang="en">Next step</span></span></p>
+        <h2><span lang="es">Empieza con una auditoría que se acredita al trabajo</span><span lang="en">Start with an audit that is credited to the work</span></h2>
+        <p><span lang="es">600 USD acreditables al trabajo posterior. Te la entrego en 10 días hábiles.</span><span lang="en">600 USD credited toward the work that follows. I deliver it in 10 business days.</span></p>
+      </div>
+      <div class="fc-act">
+        <a class="btn btn-tomato btn-lg" href="#contacto"><span><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
+        <a class="fc-mail" href="mailto:hello@juan-tech.com"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg><span>hello@juan-tech.com</span></a>
+      </div>
     </div>
-    <nav aria-label="Pie / Footer">
-      <ul>
-        <li><a href="https://juan-tech.com/blog">Blog</a></li>
-        <li><a href="https://juan-tech.com/case-studies"><span lang="es">Casos de éxito</span><span lang="en">Case studies</span></a></li>
-        <li><a href="https://juan-tech.com/servicios"><span lang="es">Todos los servicios</span><span lang="en">All services</span></a></li>
-        <li><a href="https://linkedin.com/in/juancangulo">LinkedIn</a></li>
-      </ul>
+
+    <nav class="dir" aria-label="Directorio del sitio / Site directory">
+      <div class="dc">
+        <h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-newspaper"/></svg><span><span lang="es">Artículos del blog</span><span lang="en">Blog articles</span></span></h3>
+        <ul>
+          <li><a lang="es" href="https://juan-tech.com/blog/tech-seo/headless-cms-seo">Headless CMS SEO: guía práctica completa para 2026</a><a lang="en" href="https://juan-tech.com/en/blog/tech-seo/headless-cms-seo">Headless CMS SEO: Complete Guide for Better Search Visibility</a></li>
+          <li><a lang="es" href="https://juan-tech.com/blog/development/payload-cms-guide">Payload CMS: guía práctica completa para 2026</a><a lang="en" href="https://juan-tech.com/en/blog/development/payload-cms-guide">Payload CMS: A Modern Solution for Content Management</a></li>
+          <li><a lang="es" href="https://juan-tech.com/blog/tech-seo/core-web-vitals-guide">Guía de Core Web Vitals 2026: La Métrica de Oro del SEO</a><a lang="en" href="https://juan-tech.com/en/blog/tech-seo/core-web-vitals-guide">Core Web Vitals Guide 2026: Optimizing LCP, CLS, and INP</a></li>
+          <li><a lang="es" href="https://juan-tech.com/blog/tech-seo/javascript-seo">Buenas prácticas de SEO para JavaScript</a><a lang="en" href="https://juan-tech.com/en/blog/tech-seo/javascript-seo">JavaScript SEO Best Practices</a></li>
+          <li><a lang="es" href="https://juan-tech.com/blog/seo/canibalizacion-seo">Canibalización SEO</a><a lang="en" href="https://juan-tech.com/en/blog/seo/canibalizacion-seo">SEO Cannibalization</a></li>
+          <li class="all"><a lang="es" href="https://juan-tech.com/blog"><span>Ver todo el blog</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a><a lang="en" href="https://juan-tech.com/en/blog"><span>See the whole blog</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="dc">
+        <h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-tag"/></svg><span><span lang="es">Categorías del blog</span><span lang="en">Blog categories</span></span></h3>
+        <ul>
+          <li><a lang="es" href="https://juan-tech.com/blog/tech-seo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-scan-search"/></svg><span>SEO Técnico</span></a><a lang="en" href="https://juan-tech.com/en/blog/tech-seo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-scan-search"/></svg><span>Technical SEO</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/blog/seo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-compass"/></svg><span>Estrategia SEO</span></a><a lang="en" href="https://juan-tech.com/en/blog/seo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-compass"/></svg><span>SEO Strategy</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/blog/development"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-code"/></svg><span>Desarrollo</span></a><a lang="en" href="https://juan-tech.com/en/blog/development"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-code"/></svg><span>Development</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/blog/cs-fundamentals"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cpu"/></svg><span>Ciencias de la Computación</span></a><a lang="en" href="https://juan-tech.com/en/blog/cs-fundamentals"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cpu"/></svg><span>CS Fundamentals</span></a></li>
+        </ul>
+      </div>
+      <div class="dc">
+        <h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-wrench"/></svg><span><span lang="es">Servicios</span><span lang="en">Services</span></span></h3>
+        <ul>
+          <li><a lang="es" href="https://juan-tech.com/servicios/seo-technical-audit"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-clipboard-check"/></svg><span>Auditoría SEO técnica</span></a><a lang="en" href="https://juan-tech.com/en/services/seo-technical-audit"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-clipboard-check"/></svg><span>Technical SEO audit</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/servicios/seo-consulting"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telescope"/></svg><span>Consultoría SEO</span></a><a lang="en" href="https://juan-tech.com/en/services/seo-consulting"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-telescope"/></svg><span>SEO consulting</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/servicios/fullstack-development"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-code"/></svg><span>Desarrollo full-stack</span></a><a lang="en" href="https://juan-tech.com/en/services/fullstack-development"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-code"/></svg><span>Full-stack development</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/servicios/ai-seo-geo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-bot"/></svg><span>SEO para IA y GEO</span></a><a lang="en" href="https://juan-tech.com/en/services/ai-seo-geo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-bot"/></svg><span>AI SEO and GEO</span></a></li>
+          <li class="all"><a lang="es" href="https://juan-tech.com/servicios"><span>Todos los servicios</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a><a lang="en" href="https://juan-tech.com/en/services"><span>All services</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="dc">
+        <h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-briefcase"/></svg><span><span lang="es">Casos de estudio</span><span lang="en">Case studies</span></span></h3>
+        <ul>
+          <li><a lang="es" href="https://juan-tech.com/case-studies/migracion-ecommerce-nextjs-seo-tecnico"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-rocket"/></svg><span>Migración a Next.js sin perder tráfico orgánico</span></a><a lang="en" href="https://juan-tech.com/en/case-studies/migracion-ecommerce-nextjs-seo-tecnico"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-rocket"/></svg><span>Migrating to Next.js without losing organic traffic</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/case-studies/edtech-financiera-infantil-crecimiento-organico-seo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chart-line"/></svg><span>Duplicar el tráfico orgánico de una plataforma de educación financiera infantil</span></a><a lang="en" href="https://juan-tech.com/en/case-studies/edtech-financiera-infantil-crecimiento-organico-seo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chart-line"/></svg><span>Doubling organic traffic for a kids' financial-literacy platform</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/case-studies/fabricante-baldosa-hidraulica-seo-espana"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-layers"/></svg><span>Más que duplicar el tráfico orgánico de un fabricante de baldosas hidráulicas</span></a><a lang="en" href="https://juan-tech.com/en/case-studies/fabricante-baldosa-hidraulica-seo-espana"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-layers"/></svg><span>More than doubling organic traffic for an artisan hydraulic tile maker</span></a></li>
+          <li class="all"><a lang="es" href="https://juan-tech.com/case-studies"><span>Ver todos los casos</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a><a lang="en" href="https://juan-tech.com/en/case-studies"><span>See all case studies</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a></li>
+        </ul>
+      </div>
+      <div class="dc">
+        <h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-compass"/></svg><span><span lang="es">Páginas del sitio</span><span lang="en">Site pages</span></span></h3>
+        <ul class="two">
+          <li><a lang="es" href="https://juan-tech.com/servicios"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-wrench"/></svg><span>Servicios</span></a><a lang="en" href="https://juan-tech.com/en/services"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-wrench"/></svg><span>Services</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/case-studies"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-briefcase"/></svg><span>Casos</span></a><a lang="en" href="https://juan-tech.com/en/case-studies"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-briefcase"/></svg><span>Case studies</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/websites"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-monitor"/></svg><span>Websites</span></a><a lang="en" href="https://juan-tech.com/en/websites"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-monitor"/></svg><span>Websites</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/stack"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-layers"/></svg><span>Stack</span></a><a lang="en" href="https://juan-tech.com/en/stack"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-layers"/></svg><span>Stack</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/authors/juan-carlos-angulo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span>Sobre mí</span></a><a lang="en" href="https://juan-tech.com/en/authors/juan-carlos-angulo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-user"/></svg><span>About me</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/contact"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg><span>Contacto</span></a><a lang="en" href="https://juan-tech.com/en/contact"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg><span>Contact</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/search"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-search"/></svg><span>Búsqueda</span></a><a lang="en" href="https://juan-tech.com/en/search"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-search"/></svg><span>Search</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/privacy"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg><span>Privacidad</span></a><a lang="en" href="https://juan-tech.com/en/privacy"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-lock"/></svg><span>Privacy</span></a></li>
+          <li><a lang="es" href="https://juan-tech.com/terms"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-scroll-text"/></svg><span>Términos</span></a><a lang="en" href="https://juan-tech.com/en/terms"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-scroll-text"/></svg><span>Terms</span></a></li>
+        </ul>
+      </div>
+      <div class="dc">
+        <h3><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-network"/></svg><span><span lang="es">Para máquinas y redes</span><span lang="en">For machines and networks</span></span></h3>
+        <ul>
+          <li><a href="https://juan-tech.com/sitemap.xml"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-rss"/></svg><span>Sitemap XML</span></a></li>
+          <li><a href="https://linkedin.com/in/juancangulo"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-link"/></svg><span>LinkedIn</span></a></li>
+        </ul>
+      </div>
     </nav>
-    <p class="copy"><span lang="es">© 2026 Juan Carlos Angulo. Todos los derechos reservados.</span><span lang="en">© 2026 Juan Carlos Angulo. All rights reserved.</span></p>
+
+    <div class="foot-bar">
+      <p class="foot-brand"><span class="brand-mark" aria-hidden="true">JA</span><span>Juan Carlos Angulo</span></p>
+      <p class="copy"><span lang="es">Ingeniero de software y consultor SEO técnico. © 2026 Juan Carlos Angulo. Todos los derechos reservados.</span><span lang="en">Software engineer and technical SEO consultant. © 2026 Juan Carlos Angulo. All rights reserved.</span></p>
+      <a class="totop" href="#top"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-up-right"/></svg><span><span lang="es">Volver arriba</span><span lang="en">Back to top</span></span></a>
+    </div>
   </div>
 </footer>
 
