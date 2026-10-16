@@ -1,0 +1,84 @@
+/*
+ * home.css: estilos propios de la home (prefijo hm-). Solo var(--token), cero hex, anchos en rem (regla 11).
+ * Las clases del kit (fx-grain, fx-content, btn, ascii-block, site-header) vienen de assets/css.
+ */
+
+/* ---------- Cabecera ---------- */
+
+.hm-header .brand {
+  /* Regla 12: la marca fija su caja para que el cambio a Array no mueva a la navegacion. */
+  min-width: 11rem;
+}
+
+.hm-header .pause-toggle {
+  /* Etiqueta fija; el ancho no depende de la fuente. */
+  min-width: 11.5rem;
+}
+
+/* ---------- Hero ---------- */
+
+.hm-hero {
+  /* El efecto y el grano se apilan dentro de este contexto; el contenido va por encima. */
+  align-items: center;
+}
+
+.hm-hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--space-4);
+  width: 100%;
+  align-items: end;
+}
+
+.hm-hero__panel h1 {
+  /* Reserva el alto de los renglones: el cambio de fuente de respaldo a Array reacomoda el H1. */
+  min-height: calc(var(--text-display) * 1.1 * 2);
+}
+
+.hm-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.hm-hero__ascii {
+  justify-self: start;
+}
+
+.hm-hero__ascii .fx-ascii {
+  padding: var(--space-2);
+  min-height: 0;
+}
+
+.hm-effect {
+  z-index: 0;
+}
+
+@media (min-width: 48rem) {
+  .hm-hero__grid {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--space-6);
+  }
+
+  .hm-hero__ascii {
+    justify-self: end;
+  }
+
+  .hm-hero__ascii .fx-ascii {
+    padding: var(--space-3);
+  }
+}
+
+/* ---------- Pie ---------- */
+
+/* app.css (galeria) centra .site-footer a 80rem y pinta sus enlaces en violeta; la home usa el pie del kit. */
+.site-footer.hm-footer {
+  max-width: none;
+  margin: 0;
+}
+
+.site-footer.hm-footer a {
+  color: var(--paper);
+}
