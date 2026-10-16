@@ -111,7 +111,7 @@ Se ajustaron las reglas, no los fixtures.
 - **Commit:** 543bc14
 
 **3. [Detalle de implementación] Escapes Unicode en los archivos nuevos**
-- La herramienta de escritura convirtió las secuencias `—` y `–` en los caracteres reales. Se reemplazaron con `perl` por las secuencias de escape en `check-copy.mjs`, `voice-rules.mjs` y `copy-bad.json`, y el selftest quedó verificando que no haya caracteres reales en los fixtures.
+- La herramienta de escritura convirtió las secuencias `U+2014` y `U+2013` en los caracteres reales. Se reemplazaron con `perl` por las secuencias de escape en `check-copy.mjs`, `voice-rules.mjs` y `copy-bad.json`, y el selftest quedó verificando que no haya caracteres reales en los fixtures.
 
 Sin otras desviaciones. `designs/redesign-v3/app/package.json`, `src/gallery` y los archivos de 52-01 no se tocaron. No se instaló ningún paquete (`npm install` en la app solo restauró las dependencias ya declaradas).
 
