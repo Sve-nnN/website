@@ -58,11 +58,12 @@ Plans:
 3. Una página `/rendimiento` o el propio `/system` registra el build de producción medido con Lighthouse (mobile y desktop) y documenta el peso real de cada componente original frente al porte vanilla de la fase 51.
 4. El aviso de licencia MIT + Commons Clause está en `designs/redesign-v3/app/LICENSES.md` y cada componente conserva su cabecera de origen.
 5. Se respeta 1 efecto pesado activo a la vez, carga diferida después de LCP, fallback estático y `prefers-reduced-motion`, y Juan puede pausar las animaciones.
-**Plans:** 0 plans
+**Plans:** 2 plans
 
 Plans:
 
-- [ ] TBD (run /gsd-plan-phase 51.1 to break down)
+- [ ] 51.1-01-PLAN.md: cimiento Vite + React + TS aislado, instalador del registro, tracer Grainient y 16 originales
+- [ ] 51.1-02-PLAN.md: galeria /system, medicion Lighthouse y peso, README
 
 ### Phase 52: Home mockup y gate de revisión
 
