@@ -44,6 +44,7 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
 <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></symbol>
 <symbol id="i-cpu" viewBox="0 0 24 24"><path d="M12 20v2"/><path d="M12 2v2"/><path d="M17 20v2"/><path d="M17 2v2"/><path d="M2 12h2"/><path d="M2 17h2"/><path d="M2 7h2"/><path d="M20 12h2"/><path d="M20 17h2"/><path d="M20 7h2"/><path d="M7 20v2"/><path d="M7 2v2"/><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
 <symbol id="i-file-search" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><circle cx="11.5" cy="14.5" r="2.5"/><path d="M13.3 16.3 15 18"/></symbol>
+<symbol id="i-file-text" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
 <symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
 <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol>
 <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></symbol>
@@ -117,7 +118,7 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
       <svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg>
       <span class="pause-txt"><span lang="es">Pausar animaciones</span><span lang="en">Pause animations</span></span>
     </button>
-    <a class="btn btn-sm nav-cta" href="#contacto"><span><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></span></a>
+    <a class="btn btn-sm nav-cta" href="#contacto"><span><span lang="es">Pedir auditoría 360</span><span lang="en">Request a 360 audit</span></span></a>
     <button type="button" class="icobtn menubtn" id="menubtn" aria-expanded="false" aria-controls="mnav">
       <svg class="ic ic-open" aria-hidden="true" focusable="false"><use href="#i-menu"/></svg><svg class="ic ic-close" aria-hidden="true" focusable="false"><use href="#i-x"/></svg>
       <span class="sr"><span lang="es">Menú</span><span lang="en">Menu</span></span>
@@ -136,7 +137,7 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
     <li><a href="#faq"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-circle-question-mark"/></svg><span><span lang="es">Preguntas</span><span lang="en">Questions</span></span></a></li>
     <li><a href="#contacto"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg><span><span lang="es">Contacto</span><span lang="en">Contact</span></span></a></li>
   </ul>
-  <a class="btn btn-lg" href="#contacto"><span><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
+  <a class="btn btn-lg" href="#contacto"><span><span lang="es">Pedir auditoría 360</span><span lang="en">Request a 360 audit</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
 </div>
 
 <div class="rail" aria-hidden="true"><i></i></div>
@@ -153,12 +154,23 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
       </h1>
       <p class="lede"><span lang="es">Soy ingeniero de software y consultor SEO técnico. Entro al código, corrijo lo que frena a Google en tu sitio y mido el resultado en Search Console.</span><span lang="en">I am a software engineer and technical SEO consultant. I go into the code, fix what holds Google back on your site and measure the result in Search Console.</span></p>
       <div class="cta-row">
-        <a class="btn btn-lg" href="#contacto"><span><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
+        <a class="btn btn-lg" href="#contacto"><span><span lang="es">Pedir auditoría 360</span><span lang="en">Request a 360 audit</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
         <a class="btn btn-ghost btn-lg" href="#casos"><span><span lang="es">Ver casos</span><span lang="en">See case studies</span></span></a>
       </div>
     </div>
-    <div class="hero-orbit" aria-hidden="true">
-      <div class="badge">
+    <div class="hero-orbit">
+      <figure class="scope">
+        <div class="scope-bar" aria-hidden="true"><i></i><i></i><i></i><b>auditoria-360</b></div>
+        <ul>
+          <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-search"/></svg><b><span lang="es">Rastreo</span><span lang="en">Crawling</span></b><span><span lang="es">robots, sitemap, enlaces</span><span lang="en">robots, sitemap, links</span></span></li>
+          <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-file-search"/></svg><b><span lang="es">Indexación</span><span lang="en">Indexation</span></b><span><span lang="es">canonical, noindex, hreflang</span><span lang="en">canonical, noindex, hreflang</span></span></li>
+          <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-gauge"/></svg><b>Core Web Vitals</b><span>LCP, CLS, INP</span></li>
+          <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-code"/></svg><b><span lang="es">Datos estructurados</span><span lang="en">Structured data</span></b><span>schema.org JSON-LD</span></li>
+          <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-file-text"/></svg><b><span lang="es">Contenido</span><span lang="en">Content</span></b><span><span lang="es">intención y duplicados</span><span lang="en">intent and duplicates</span></span></li>
+          <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-bot"/></svg><b><span lang="es">SEO para IA</span><span lang="en">AI SEO</span></b><span><span lang="es">citas en ChatGPT y Perplexity</span><span lang="en">citations in ChatGPT and Perplexity</span></span></li>
+        </ul>
+      </figure>
+      <div class="badge" aria-hidden="true">
         <svg viewBox="0 0 200 200" class="spin" lang="es">
           <defs><path id="cir1" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
           <text><textPath href="#cir1" textLength="486" lengthAdjust="spacing">AUDITO + CORRIJO + MIDO + PUBLICO +</textPath></text>
@@ -169,8 +181,6 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
         </svg>
         <svg viewBox="0 0 200 200" class="star-svg"><path d="M100 52 L112 88 L148 100 L112 112 L100 148 L88 112 L52 100 L88 88Z"/></svg>
       </div>
-      <div class="dashcard"><svg viewBox="0 0 180 124"><use href="#g-dash"/></svg></div>
-      <div class="audit-row"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     </div>
   </div>
 </section>
@@ -188,13 +198,13 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
 </section>
 
 <!-- MEDICION -->
-<section class="ch ch-sun" id="medicion" aria-labelledby="t-med">
+<section class="ch ch-paper" id="medicion" aria-labelledby="t-med">
   <div class="wrap">
     <header class="ch-head">
       <h2 id="t-med" class="sp"><span lang="es">Medición antes de tocar el código</span><span lang="en">Measurement before I touch the code</span></h2>
     </header>
     <p class="intro rv"><span lang="es">Cuatro lecturas me dicen dónde duele un sitio. La barra de cada una marca el rango que Google considera bueno, mejorable y pobre.</span><span lang="en">Four readings tell me where a site hurts. The bar on each one shows the range Google rates good, needs improvement and poor.</span></p>
-    <p class="sample-note rv"><b class="stamp stamp-ink"><span lang="es">PENDIENTE medir</span><span lang="en">PENDING measurement</span></b> <span><span lang="es">Los valores de esta franja son de muestra. No son mediciones reales de ningún sitio.</span><span lang="en">The values in this strip are samples. They are not real measurements of any site.</span></span></p>
+    <p class="sample-note rv"><b class="stamp stamp-warn"><span lang="es">PENDIENTE medir</span><span lang="en">PENDING measurement</span></b> <span><span lang="es">Los valores de esta franja son de muestra. No son mediciones reales de ningún sitio.</span><span lang="en">The values in this strip are samples. They are not real measurements of any site.</span></span></p>
     <ul class="gauges">
       <li class="gauge g-lcp rv" style="--d:0;--pos:36%;--g:50%;--m:80%">
         <h3>LCP</h3>
@@ -230,58 +240,48 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
 </section>
 
 <!-- SERVICIOS -->
-<section class="ch ch-paper" id="servicios" aria-labelledby="t-srv">
+<section class="ch ch-alt" id="servicios" aria-labelledby="t-srv">
   <div class="wrap">
     <header class="ch-head">
       <h2 id="t-srv" class="sp"><span lang="es">Servicios de SEO técnico y desarrollo</span><span lang="en">Technical SEO and development services</span></h2>
     </header>
     <ul class="bento">
-      <li class="card c-tomato b5 rv" style="--d:0">
+      <li class="card c-ink b5 rv">
         <h3><span lang="es">SEO técnico</span><span lang="en">Technical SEO</span></h3>
         <p><span lang="es">Audito rastreo, indexación y datos estructurados. Empiezo por lo que ve Googlebot y de ahí decido qué tocar.</span><span lang="en">I audit crawling, indexation and structured data. I start with what Googlebot sees and decide from there what to touch.</span></p>
         <ul class="chips"><li>hreflang</li><li>canonical</li><li>sitemap</li><li>schema</li></ul>
       </li>
-      <li class="card c-paper b7 card-stack rv" style="--d:1">
+      <li class="card card-stack b7 rv" style="--d:1">
         <div class="cs-copy">
           <h3><span lang="es">Desarrollo Next.js y Payload</span><span lang="en">Next.js and Payload development</span></h3>
           <p><span lang="es">Construyo con Next.js y Payload CMS y dejo el SEO resuelto desde el primer commit: rutas, metadatos, sitemap y datos estructurados.</span><span lang="en">I build with Next.js and Payload CMS and settle the SEO from the first commit: routes, metadata, sitemap and structured data.</span></p>
         </div>
         <div class="cs-fig">
-          <svg viewBox="0 0 520 300" aria-hidden="true" focusable="false" class="isosvg"><polygon points="130,182 230,232 130,282 30,232" fill="#4B4036" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,232 130,282 130,308 30,258" fill="#4B4036" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="230,232 130,282 130,308 230,258" fill="#2a221b" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><path d="M232 238H300" stroke="#16120E" stroke-width="3" stroke-dasharray="5 5"/><text x="312" y="244" lang="es" class="isot">Servidor</text><text x="312" y="244" lang="en" class="isot">Server</text><polygon points="130,124 230,174 130,224 30,174" fill="#0E3B2C" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,174 130,224 130,250 30,200" fill="#0a2a1f" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="230,174 130,224 130,250 230,200" fill="#134d39" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><path d="M232 180H300" stroke="#16120E" stroke-width="3" stroke-dasharray="5 5"/><text x="312" y="186" lang="es" class="isot">PostgreSQL</text><text x="312" y="186" lang="en" class="isot">PostgreSQL</text><polygon points="130,66 230,116 130,166 30,116" fill="#FFC83D" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,116 130,166 130,192 30,142" fill="#d9a420" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="230,116 130,166 130,192 230,142" fill="#f0b72c" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><path d="M232 122H300" stroke="#16120E" stroke-width="3" stroke-dasharray="5 5"/><text x="312" y="128" lang="es" class="isot">Payload CMS</text><text x="312" y="128" lang="en" class="isot">Payload CMS</text><polygon points="130,8 230,58 130,108 30,58" fill="#FF5B3A" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,58 130,108 130,134 30,84" fill="#d94626" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="230,58 130,108 130,134 230,84" fill="#ee4f30" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><path d="M232 64H300" stroke="#16120E" stroke-width="3" stroke-dasharray="5 5"/><text x="312" y="70" lang="es" class="isot">Next.js</text><text x="312" y="70" lang="en" class="isot">Next.js</text></svg>
+          <svg viewBox="0 0 520 300" aria-hidden="true" focusable="false" class="isosvg"><polygon points="130,182 230,232 130,282 30,232" fill="#8A847C" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,232 130,282 130,308 30,258" fill="#6B655D" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="230,232 130,282 130,308 230,258" fill="#787169" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><path d="M232 238H300" stroke="#16120E" stroke-width="3" stroke-dasharray="5 5"/><text x="312" y="244" lang="es" class="isot">Servidor</text><text x="312" y="244" lang="en" class="isot">Server</text><polygon points="130,124 230,174 130,224 30,174" fill="#14110F" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,174 130,224 130,250 30,200" fill="#0A0807" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="230,174 130,224 130,250 230,200" fill="#2A2623" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><path d="M232 180H300" stroke="#16120E" stroke-width="3" stroke-dasharray="5 5"/><text x="312" y="186" lang="es" class="isot">PostgreSQL</text><text x="312" y="186" lang="en" class="isot">PostgreSQL</text><polygon points="130,66 230,116 130,166 30,116" fill="#E7E1D6" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,116 130,166 130,192 30,142" fill="#CFC8BB" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="230,116 130,166 130,192 230,142" fill="#DCD5C8" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><path d="M232 122H300" stroke="#16120E" stroke-width="3" stroke-dasharray="5 5"/><text x="312" y="128" lang="es" class="isot">Payload CMS</text><text x="312" y="128" lang="en" class="isot">Payload CMS</text><polygon points="130,8 230,58 130,108 30,58" fill="#FF5B3A" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="30,58 130,108 130,134 30,84" fill="#D9431F" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><polygon points="230,58 130,108 130,134 230,84" fill="#EE4F30" stroke="#16120E" stroke-width="3" stroke-linejoin="round"/><path d="M232 64H300" stroke="#16120E" stroke-width="3" stroke-dasharray="5 5"/><text x="312" y="70" lang="es" class="isot">Next.js</text><text x="312" y="70" lang="en" class="isot">Next.js</text></svg>
           <ul class="sr"><li>Next.js</li><li>Payload CMS</li><li>PostgreSQL</li><li><span lang="es">Servidor</span><span lang="en">Server</span></li></ul>
         </div>
       </li>
-      <li class="card c-forest b4 rv" style="--d:0">
-        <h3><span lang="es">Infraestructura y servidores</span><span lang="en">Infrastructure and servers</span></h3>
-        <p><span lang="es">Configuro el servidor, los headers y la caché. Cuando el TTFB sube, casi siempre el problema está en el servidor.</span><span lang="en">I configure the server, headers and cache. When TTFB goes up, the problem is almost always on the server.</span></p>
+      <li class="rows rv">
+        <ul>
+          <li class="row"><h3><span lang="es">Infraestructura y servidores</span><span lang="en">Infrastructure and servers</span></h3><p><span lang="es">Configuro el servidor, los headers y la caché. Cuando el TTFB sube, casi siempre el problema está en el servidor.</span><span lang="en">I configure the server, headers and cache. When TTFB goes up, the problem is almost always on the server.</span></p><p class="k">TTFB · headers · <span lang="es">caché</span><span lang="en">cache</span></p></li>
+          <li class="row"><h3><span lang="es">Rendimiento web</span><span lang="en">Web performance</span></h3><p><span lang="es">Mido LCP, CLS e INP y ataco primero lo que más pesa: imágenes, fuentes y JavaScript.</span><span lang="en">I measure LCP, CLS and INP and go first after what weighs most: images, fonts and JavaScript.</span></p><p class="k">LCP · CLS · INP</p></li>
+          <li class="row"><h3><span lang="es">SEO para IA y GEO</span><span lang="en">AI SEO and GEO</span></h3><p><span lang="es">Estructuro el contenido para que ChatGPT, Perplexity y las respuestas de IA de Google puedan citarlo.</span><span lang="en">I structure content so ChatGPT, Perplexity and Google AI answers can cite it.</span></p><p class="k">ChatGPT · Perplexity · Google AI</p></li>
+        </ul>
       </li>
-      <li class="card c-sun b4 rv" style="--d:1">
-        <h3><span lang="es">Rendimiento web</span><span lang="en">Web performance</span></h3>
-        <p><span lang="es">Mido LCP, CLS e INP y ataco primero lo que más pesa: imágenes, fuentes y JavaScript.</span><span lang="en">I measure LCP, CLS and INP and go first after what weighs most: images, fonts and JavaScript.</span></p>
-      </li>
-      <li class="card c-paper b4 rv" style="--d:2">
-        <h3><span lang="es">SEO para IA y GEO</span><span lang="en">AI SEO and GEO</span></h3>
-        <p><span lang="es">Estructuro el contenido para que ChatGPT, Perplexity y las respuestas de IA de Google puedan citarlo.</span><span lang="en">I structure content so ChatGPT, Perplexity and Google AI answers can cite it.</span></p>
-      </li>
-      <li class="card c-ink b12 rv" style="--d:0">
-        <div class="card-split">
-          <div>
-            <h3><span lang="es">Auditoría técnica</span><span lang="en">Technical audit</span></h3>
-            <p><span lang="es">Reviso rastreo, indexación, Core Web Vitals y datos estructurados, y te entrego un plan ordenado por impacto en 10 días hábiles.</span><span lang="en">I review crawling, indexation, Core Web Vitals and structured data, and I hand you a plan ranked by impact in 10 business days.</span></p>
-          </div>
-          <div class="offer">
-            <p class="price"><span class="cnt" data-count="600" data-dec="0">600</span> USD</p>
-            <p class="credit"><span lang="es">Se descuentan del trabajo posterior</span><span lang="en">Credited toward the work that follows</span></p>
-            <a class="btn btn-tomato" href="#contacto"><span><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
-          </div>
+      <li class="audit rv">
+        <div>
+          <h3><span lang="es">Auditoría 360</span><span lang="en">360 Audit</span></h3>
+          <p><span lang="es">Reviso rastreo, indexación, Core Web Vitals, datos estructurados, contenido y SEO para IA en un solo informe. Recibes un plan ordenado por impacto, listo para aplicar, en 10 días hábiles.</span><span lang="en">I review crawling, indexation, Core Web Vitals, structured data, content and AI SEO in one report. You receive a plan ranked by impact, ready to apply, in 10 business days.</span></p>
+          <a class="btn btn-ink btn-lg" href="#contacto"><span><span lang="es">Pedir auditoría 360</span><span lang="en">Request a 360 audit</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
         </div>
+        <svg class="dial" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><circle class="d1" cx="100" cy="100" r="92"/><circle class="d2" cx="100" cy="100" r="58"/><path class="d1" d="M100.0 8.0L100.0 22.0M116.0 9.4L114.8 16.3M131.5 13.5L129.1 20.1M146.0 20.3L139.0 32.5M159.1 29.5L154.6 34.9M170.5 40.9L165.1 45.4M179.7 54.0L167.5 61.0M186.5 68.5L179.9 70.9M190.6 84.0L183.7 85.2M192.0 100.0L178.0 100.0M190.6 116.0L183.7 114.8M186.5 131.5L179.9 129.1M179.7 146.0L167.5 139.0M170.5 159.1L165.1 154.6M159.1 170.5L154.6 165.1M146.0 179.7L139.0 167.5M131.5 186.5L129.1 179.9M116.0 190.6L114.8 183.7M100.0 192.0L100.0 178.0M84.0 190.6L85.2 183.7M68.5 186.5L70.9 179.9M54.0 179.7L61.0 167.5M40.9 170.5L45.4 165.1M29.5 159.1L34.9 154.6M20.3 146.0L32.5 139.0M13.5 131.5L20.1 129.1M9.4 116.0L16.3 114.8M8.0 100.0L22.0 100.0M9.4 84.0L16.3 85.2M13.5 68.5L20.1 70.9M20.3 54.0L32.5 61.0M29.5 40.9L34.9 45.4M40.9 29.5L45.4 34.9M54.0 20.3L61.0 32.5M68.5 13.5L70.9 20.1M84.0 9.4L85.2 16.3"/><path class="d2" d="M100 8V192M8 100H192"/><g class="sweep"><path d="M100 100L100 12A88 88 0 0 1 162 38Z" fill="#14110F" opacity=".14"/><path class="d1" d="M100 100V10"/></g><circle class="d3" cx="100" cy="100" r="5"/></svg>
       </li>
     </ul>
   </div>
 </section>
 
 <!-- CASOS -->
-<section class="ch ch-forest" id="casos" aria-labelledby="t-cas">
+<section class="ch ch-ink" id="casos" aria-labelledby="t-cas">
   <div class="wrap">
     <header class="ch-head">
       <h2 id="t-cas" class="sp"><span lang="es">Resultados en Search Console</span><span lang="en">Results in Search Console</span></h2>
@@ -297,7 +297,7 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
           <circle cx="414" cy="12" r="7" class="cdot"/>
         </svg>
         <h3><a class="stretch" href="https://juan-tech.com/case-studies"><span lang="es">De casi cero visibilidad a un año de crecimiento sostenido para un urólogo</span><span lang="en">From near-zero visibility to a year of sustained growth for a urologist</span></a></h3>
-        <p class="metric"><span class="sr">+406%</span><span lang="es">clics interanuales</span><span lang="en">year over year clicks</span></p>
+        <p class="sr">+406% <span lang="es">clics interanuales</span><span lang="en">year over year clicks</span></p>
       </article>
       <article class="ct ct-mid rv" style="--d:1">
         <p class="sector"><span lang="es">Servicios legales, inmigración</span><span lang="en">Legal services, immigration</span></p>
@@ -307,17 +307,18 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
           <rect x="20" y="58" width="30" height="20" class="b0"/><rect x="70" y="2" width="30" height="76" class="b1"/>
         </svg>
         <h3><a class="stretch" href="https://juan-tech.com/case-studies"><span lang="es">Cuadruplicar el tráfico orgánico de un despacho de inmigración en un año</span><span lang="en">Quadrupling organic traffic for an immigration law firm in one year</span></a></h3>
-        <p class="metric"><span class="sr">+309%</span><span lang="es">clics interanuales</span><span lang="en">year over year clicks</span></p>
+        <p class="sr">+309% <span lang="es">clics interanuales</span><span lang="en">year over year clicks</span></p>
       </article>
       <article class="ct ct-sm rv" style="--d:2">
         <p class="sector"><span lang="es">Servicios legales, defensa criminal</span><span lang="en">Legal services, criminal defense</span></p>
         <p class="big" aria-hidden="true">+<span class="cnt" data-count="83" data-dec="0">83</span><span class="u">%</span></p>
-        <svg class="cfig cfig-bars" viewBox="0 0 120 80" aria-hidden="true" focusable="false">
+        <svg class="cfig cfig-steps" viewBox="0 0 120 80" aria-hidden="true" focusable="false">
           <path d="M0 78H120" class="cgrid"/>
-          <rect x="20" y="42" width="30" height="36" class="b0"/><rect x="70" y="12" width="30" height="66" class="b1"/>
+          <path d="M6 70H36V50H66V30H96V10" class="cstep" pathLength="1"/>
+          <circle cx="96" cy="10" r="5" class="cdot"/>
         </svg>
         <h3><a class="stretch" href="https://juan-tech.com/case-studies"><span lang="es">Escalar el contenido legal educativo a más de 86&nbsp;000 clics orgánicos anuales</span><span lang="en">Scaling educational legal content to over 86&nbsp;000 annual organic clicks</span></a></h3>
-        <p class="metric"><span class="sr">+83%</span><span lang="es">clics interanuales</span><span lang="en">year over year clicks</span></p>
+        <p class="sr">+83% <span lang="es">clics interanuales</span><span lang="en">year over year clicks</span></p>
       </article>
       <aside class="ct ct-note rv" style="--d:1">
         <p><span lang="es">Cada cifra compara los clics de un año contra el año anterior, en el mismo periodo, con datos de Search Console. Mantengo anónimos a los clientes.</span><span lang="en">Each figure compares one year of clicks against the previous year, over the same period, with Search Console data. I keep clients anonymous.</span></p>
@@ -343,25 +344,25 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
 </section>
 
 <!-- WEBSITES -->
-<section class="ch ch-tomato" id="websites" aria-labelledby="t-web">
+<section class="ch ch-alt" id="websites" aria-labelledby="t-web">
   <div class="wrap">
     <header class="ch-head">
       <h2 id="t-web" class="sp"><span lang="es">Sitios web que construí</span><span lang="en">Websites I built</span></h2>
     </header>
-    <p class="sample-note rv"><b class="stamp stamp-ink"><span lang="es">PENDIENTE</span><span lang="en">PENDING</span></b> <span><span lang="es">Fecha y herramienta de la medición de cada puntaje.</span><span lang="en">Date and tool for each score.</span></span></p>
+    <p class="sample-note rv"><b class="stamp stamp-warn"><span lang="es">PENDIENTE</span><span lang="en">PENDING</span></b> <span><span lang="es">Fecha y herramienta de la medición de cada puntaje.</span><span lang="en">Date and tool for each score.</span></span></p>
     <ul class="sites">
       <li class="site rv" style="--d:0">
-        <a class="devlink" href="https://apturio.com" target="_blank" rel="noopener"><span class="dev"><span class="dev-bar" aria-hidden="true"><i></i><i></i><i></i><b>apturio.com</b></span><img lang="es" src="assets/img/apturio-desktop.webp" width="960" height="600" loading="lazy" decoding="async" alt="Página de inicio de Apturio, un CRM con IA: fondo oscuro, titular y dos botones"><img lang="en" src="assets/img/apturio-desktop.webp" width="960" height="600" loading="lazy" decoding="async" alt="Apturio home page, an AI CRM: dark background, headline and two buttons"><span class="phone" aria-hidden="true"><img src="assets/img/apturio-mobile.webp" width="260" height="563" loading="lazy" decoding="async" alt=""></span></span><span class="sr"><span lang="es">Abrir apturio.com en otra pestaña</span><span lang="en">Open apturio.com in a new tab</span></span></a>
+        <a class="devlink" href="https://apturio.com" target="_blank" rel="noopener"><span class="dev"><span class="dev-bar" aria-hidden="true"><i></i><i></i><i></i><b>apturio.com</b></span><img lang="es" src="assets/img/apturio-desktop.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Página de inicio de Apturio, un CRM con IA: fondo oscuro, titular y dos botones"><img lang="en" src="assets/img/apturio-desktop.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Apturio home page, an AI CRM: dark background, headline and two buttons"><span class="phone" aria-hidden="true"><img src="assets/img/apturio-mobile.webp" width="260" height="563" loading="lazy" decoding="async" alt=""></span></span><span class="sr"><span lang="es">Abrir apturio.com en otra pestaña</span><span lang="en">Open apturio.com in a new tab</span></span></a>
         <div class="site-t"><h3>Apturio</h3><p><span lang="es">Software y SaaS</span><span lang="en">Software and SaaS</span></p></div>
         <p class="score"><b class="cnt" data-count="83" data-dec="0">83</b><span>Performance</span></p>
       </li>
       <li class="site rv" style="--d:1">
-        <a class="devlink" href="https://ariannalupi.com" target="_blank" rel="noopener"><span class="dev"><span class="dev-bar" aria-hidden="true"><i></i><i></i><i></i><b>ariannalupi.com</b></span><img lang="es" src="assets/img/arianna-desktop.webp" width="960" height="600" loading="lazy" decoding="async" alt="Página de inicio de Arianna Lupi: titular de presentación y retrato"><img lang="en" src="assets/img/arianna-desktop.webp" width="960" height="600" loading="lazy" decoding="async" alt="Arianna Lupi home page: introduction headline and portrait"><span class="phone" aria-hidden="true"><img src="assets/img/arianna-mobile.webp" width="260" height="563" loading="lazy" decoding="async" alt=""></span></span><span class="sr"><span lang="es">Abrir ariannalupi.com en otra pestaña</span><span lang="en">Open ariannalupi.com in a new tab</span></span></a>
+        <a class="devlink" href="https://ariannalupi.com" target="_blank" rel="noopener"><span class="dev"><span class="dev-bar" aria-hidden="true"><i></i><i></i><i></i><b>ariannalupi.com</b></span><img lang="es" src="assets/img/arianna-desktop.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Página de inicio de Arianna Lupi: titular de presentación y retrato"><img lang="en" src="assets/img/arianna-desktop.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Arianna Lupi home page: introduction headline and portrait"><span class="phone" aria-hidden="true"><img src="assets/img/arianna-mobile.webp" width="260" height="563" loading="lazy" decoding="async" alt=""></span></span><span class="sr"><span lang="es">Abrir ariannalupi.com en otra pestaña</span><span lang="en">Open ariannalupi.com in a new tab</span></span></a>
         <div class="site-t"><h3>Arianna Lupi</h3><p><span lang="es">Marca personal y coaching</span><span lang="en">Personal brand and coaching</span></p></div>
         <p class="score"><b class="cnt" data-count="73" data-dec="0">73</b><span>Performance</span></p>
       </li>
       <li class="site rv" style="--d:2">
-        <a class="devlink" href="https://estylopia.com" target="_blank" rel="noopener"><span class="dev"><span class="dev-bar" aria-hidden="true"><i></i><i></i><i></i><b>estylopia.com</b></span><img lang="es" src="assets/img/estylopia-desktop.webp" width="960" height="600" loading="lazy" decoding="async" alt="Página de inicio de Estylopia: bienvenida y explicación del servicio de asesoría de estilo"><img lang="en" src="assets/img/estylopia-desktop.webp" width="960" height="600" loading="lazy" decoding="async" alt="Estylopia home page: welcome and explanation of the personal styling service"><span class="phone" aria-hidden="true"><img src="assets/img/estylopia-mobile.webp" width="260" height="563" loading="lazy" decoding="async" alt=""></span></span><span class="sr"><span lang="es">Abrir estylopia.com en otra pestaña</span><span lang="en">Open estylopia.com in a new tab</span></span></a>
+        <a class="devlink" href="https://estylopia.com" target="_blank" rel="noopener"><span class="dev"><span class="dev-bar" aria-hidden="true"><i></i><i></i><i></i><b>estylopia.com</b></span><img lang="es" src="assets/img/estylopia-desktop.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Página de inicio de Estylopia: bienvenida y explicación del servicio de asesoría de estilo"><img lang="en" src="assets/img/estylopia-desktop.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Estylopia home page: welcome and explanation of the personal styling service"><span class="phone" aria-hidden="true"><img src="assets/img/estylopia-mobile.webp" width="260" height="563" loading="lazy" decoding="async" alt=""></span></span><span class="sr"><span lang="es">Abrir estylopia.com en otra pestaña</span><span lang="en">Open estylopia.com in a new tab</span></span></a>
         <div class="site-t"><h3>Estylopia</h3><p><span lang="es">Retail y estilo personal</span><span lang="en">Retail and personal styling</span></p></div>
         <p class="score"><b class="cnt" data-count="67" data-dec="0">67</b><span>Performance</span></p>
       </li>
@@ -400,7 +401,7 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
 </section>
 
 <!-- TESTIMONIOS -->
-<section class="ch ch-forest ch-quote" id="testimonios" aria-labelledby="t-tes">
+<section class="ch ch-ink ch-quote" id="testimonios" aria-labelledby="t-tes">
   <div class="wrap">
     <header class="ch-head">
       <h2 id="t-tes" class="sp"><span lang="es">Clientes que trabajaron conmigo</span><span lang="en">Clients who worked with me</span></h2>
@@ -436,8 +437,8 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
       <h2 id="t-faq" class="sp"><span lang="es">Preguntas frecuentes</span><span lang="en">Frequently asked questions</span></h2>
     </header>
     <div class="faq">
-      <details class="rv"><summary><span class="q"><svg class="ic qi" aria-hidden="true" focusable="false"><use href="#i-file-search"/></svg><span><span lang="es">¿Qué incluye la auditoría técnica?</span><span lang="en">What does the technical audit include?</span></span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Reviso rastreo, indexación, Core Web Vitals y datos estructurados. Entrego un plan de corrección ordenado por impacto.</span><span lang="en">I review crawling, indexation, Core Web Vitals and structured data. I deliver a fix plan ranked by impact.</span></p></div></div></details>
-      <details class="rv"><summary><span class="q"><svg class="ic qi" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg><span><span lang="es">¿Cuánto cuesta y cuánto tarda?</span><span lang="en">How much does it cost and how long does it take?</span></span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">La auditoría cuesta 600 USD y la entrego en 10 días hábiles. Esos 600 se descuentan del trabajo posterior.</span><span lang="en">The audit costs 600 USD and I deliver it in 10 business days. Those 600 are credited toward the work that follows.</span></p></div></div></details>
+      <details class="rv"><summary><span class="q"><svg class="ic qi" aria-hidden="true" focusable="false"><use href="#i-file-search"/></svg><span><span lang="es">¿Qué incluye la Auditoría 360?</span><span lang="en">What does the 360 Audit include?</span></span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Reviso rastreo, indexación, Core Web Vitals, datos estructurados, contenido y SEO para IA. Entrego un plan de corrección ordenado por impacto.</span><span lang="en">I review crawling, indexation, Core Web Vitals, structured data, content and AI SEO. I deliver a fix plan ranked by impact.</span></p></div></div></details>
+      <details class="rv"><summary><span class="q"><svg class="ic qi" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg><span><span lang="es">¿Qué recibo y cuánto tarda?</span><span lang="en">What do I receive and how long does it take?</span></span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Recibes un informe con el plan de corrección ordenado por impacto, y lo entrego en 10 días hábiles. Escríbeme y te cuento cómo lo adapto al tamaño de tu sitio.</span><span lang="en">You receive a report with the fix plan ranked by impact, and I deliver it in 10 business days. Write to me and I tell you how I adapt it to the size of your site.</span></p></div></div></details>
       <details class="rv"><summary><span class="q"><svg class="ic qi" aria-hidden="true" focusable="false"><use href="#i-users"/></svg><span><span lang="es">¿Trabajas con mi equipo de desarrollo?</span><span lang="en">Do you work with my development team?</span></span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Sí. Corrijo el código yo mismo o dejo el cambio exacto para que tu equipo lo aplique.</span><span lang="en">Yes. I fix the code myself or I leave the exact change for your team to apply.</span></p></div></div></details>
       <details class="rv"><summary><span class="q"><svg class="ic qi" aria-hidden="true" focusable="false"><use href="#i-chart-line"/></svg><span><span lang="es">¿Cómo mido el éxito de las optimizaciones?</span><span lang="en">How do I measure the success of the optimizations?</span></span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Comparo Search Console y Core Web Vitals reales antes y después. Las cifras de los casos salen de ahí.</span><span lang="en">I compare Search Console and real Core Web Vitals before and after. The figures in the cases come from there.</span></p></div></div></details>
       <details class="rv"><summary><span class="q"><svg class="ic qi" aria-hidden="true" focusable="false"><use href="#i-globe"/></svg><span><span lang="es">¿En qué idiomas trabajas?</span><span lang="en">Which languages do you work in?</span></span></span><i class="pm" aria-hidden="true"></i></summary><div class="ans"><div><p><span lang="es">Trabajo en español e inglés. Audito, escribo y construyo en los dos idiomas.</span><span lang="en">I work in Spanish and English. I audit, write and build in both languages.</span></p></div></div></details>
@@ -446,7 +447,7 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
 </section>
 
 <!-- CONTACTO -->
-<section class="ch ch-sun" id="contacto" aria-labelledby="t-con">
+<section class="ch ch-tomato" id="contacto" aria-labelledby="t-con">
   <div class="wrap contact">
     <div>
       <header class="ch-head">
@@ -472,11 +473,11 @@ if(/^https?:$/.test(location.protocol)){['Array-Regular','Geist-latin-var'].forE
   <div class="wrap">
     <div class="foot-cta">
       <div class="fc-copy">
-        <h2><span lang="es">Auditoría técnica por 600 USD acreditables</span><span lang="en">Technical audit with 600 USD credited</span></h2>
-        <p><span lang="es">Se descuentan del trabajo posterior y la entrego en 10 días hábiles.</span><span lang="en">The 600 USD come off the work that follows and I deliver the audit in 10 business days.</span></p>
+        <h2><span lang="es">Auditoría 360 de tu sitio</span><span lang="en">360 Audit of your site</span></h2>
+        <p><span lang="es">Reviso rastreo, indexación, Core Web Vitals, datos estructurados, contenido y SEO para IA. Recibes un plan ordenado por impacto.</span><span lang="en">I review crawling, indexation, Core Web Vitals, structured data, content and AI SEO. You receive a plan ranked by impact.</span></p>
       </div>
       <div class="fc-act">
-        <a class="btn btn-tomato btn-lg" href="#contacto"><span><span lang="es">Pedir auditoría</span><span lang="en">Request an audit</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
+        <a class="btn btn-tomato btn-lg" href="#contacto"><span><span lang="es">Pedir auditoría 360</span><span lang="en">Request a 360 audit</span></span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
         <a class="fc-mail" href="mailto:hello@juan-tech.com"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-mail"/></svg><span>hello@juan-tech.com</span></a>
       </div>
     </div>

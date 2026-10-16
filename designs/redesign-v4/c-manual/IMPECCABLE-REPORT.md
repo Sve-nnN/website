@@ -65,3 +65,31 @@ Primera pasada: frases de longitud pareja y arranque idéntico ("Reviso... Entre
 Revisar en Juan
 - Las cuatro tarjetas del bento de servicios siguen siendo cuatro colores planos. Lo cambiaría si hay una paleta secundaria.
 - La J de Array se lee como "l" en "Juan" dentro de titulares.
+
+## Iteración 4: paleta de un acento y Auditoría 360
+
+Paleta: papel #FAF6EE, papel-2 #EFEAE0 (gris derivado), tinta #14110F, tomate #FF5B3A como único acento, gris secundario #5C5650 y #BDB8B0 sobre tinta. Girasol y verde bosque ya no existen en el CSS. La jerarquía sale de escala, líneas finas de 1.5 px, rejilla y alternancia papel, papel-2, tinta. El tomate rellena solo: el resaltado de SEO, el sello, la pieza de +406, la franja Auditoría 360 y el contacto. Sombra dura solo en botones y en el sello del hero.
+
+Contraste WCAG 2.2 AA (luminancia relativa)
+| Par | Ratio | Resultado |
+|---|---|---|
+| tinta sobre papel | 17.44 | AAA |
+| tinta sobre papel-2 | 15.68 | AAA |
+| papel sobre tinta | 17.44 | AAA |
+| tinta sobre tomate (botones, sellos, franja 360, contacto, casos) | 6.10 | AA |
+| tomate sobre tinta (iconos y enlaces del footer, comillas) | 6.10 | AA |
+| gris secundario sobre papel | 6.71 | AA |
+| gris secundario sobre papel-2 | 6.04 | AA |
+| gris sobre tinta (#BDB8B0) | 9.53 | AAA |
+| tomate sobre papel | 2.86 | Solo gráfico con borde de tinta, nunca texto |
+
+Resueltos
+- Fila de 8 casillas tras el sello: eliminada. El sello (138 px) monta la esquina de una tarjeta funcional "auditoria-360" que lista las seis áreas que cubre, con su detalle. La mitad derecha del hero tiene una composición con función.
+- Servicios sin cuatro tarjetas repetidas: SEO técnico en tinta y escala grande, Desarrollo con el stack isométrico, tres filas tipo tabla (el hover invierte a tinta) para infraestructura, rendimiento e IA, y una franja tomate para Auditoría 360 con un dial de 360 grados en trazo.
+- Casos: tres figuras distintas (línea con área para +406, comparación punteado contra relleno para +309, escalera para +83). Se quitó la leyenda repetida: queda en la nota única y como texto para lectores de pantalla.
+- Medidores en trazo: bueno en tinta sólida, mejorable en rayado, pobre en tomate.
+- Isométrico en grises, tinta y tomate. Capturas reales de sitios con marcos de línea fina.
+
+Auditoría 360
+- Se quitó todo precio y mención de crédito en servicios, FAQ, CTA del footer y contacto, ES y EN. El servicio se llama Auditoría 360 (EN: 360 Audit) y los botones dicen "Pedir auditoría 360". Cubre rastreo, indexación, Core Web Vitals, datos estructurados, contenido y SEO para IA, con un plan ordenado por impacto. Se conservan los 10 días hábiles, que ya están en `scripts/seed-home.ts` (deliveryNote). No hay meta ni JSON-LD con precio.
+- grep final sobre index.html y manual.js: 0 resultados de 600, USD, acredit y credited. Para lograrlo cambié el alto de las imágenes de 960x600 a 1280x800 (misma proporción). En manual.css salen 16 coincidencias de "600" que son font-weight:600.
