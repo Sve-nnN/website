@@ -108,3 +108,7 @@ Los paquetes transitivos que instala npm (Rolldown, Lightning CSS, PostCSS y sim
 ## 7. Aviso final
 
 Esto no es asesoría legal.
+
+## 5. Uso en la home v4
+
+La home (`src/home/fx/index.tsx`) usa cinco originales sin modificarlos, solo con props y siempre con `React.lazy`: SpotlightCard, StarBorder, Noise, Dither y HalftoneReveal. Siguen sin versionarse (`src/components/reactbits/` ignorado) y conservan su cabecera `@reactbits-origin`. Los otros once originales quedan solo en `/system`.

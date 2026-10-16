@@ -37,3 +37,6 @@ html[data-noise="on"]{--grain:none}
 
 /* Aviso de noscript */
 .hm-noscript{padding:24px var(--pad);font-family:var(--f-body);color:#14110F;background:#FAF6EE}
+
+/* El selector flotante de prueba no tapa la barra final del footer */
+.foot{padding-bottom:clamp(88px,10vw,120px)}

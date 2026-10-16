@@ -135,7 +135,7 @@ export function PaperNoise() {
   return (
     <Boundary>
       <Suspense fallback={null}>
-        <LNoise fixed opacity={0.05} fps={0} size={1.4} blendMode="multiply" contrast={0.35} zIndex={45} />
+        <LNoise fixed opacity={0.03} fps={0} size={1.4} blendMode="multiply" contrast={0.35} zIndex={45} />
         <Probe onReady={setReady} />
       </Suspense>
     </Boundary>

@@ -5,12 +5,12 @@
  * Uso: node scripts/measure-home.mjs [--lang=es|en|all] [--factor=mobile|desktop|all] [--runs=N] [--label=hero|final]
  * Por defecto: --lang=all --factor=all --runs=3 --label=hero.
  * Lighthouse: variable LIGHTHOUSE_BIN o node_modules/.bin/lighthouse del primer ancestro que lo tenga.
- * Escribe en designs/redesign-v3/reports/: lighthouse-home-<lang>-<factor>.report.html (corrida mediana)
- * y lighthouse-home-summary.json. Con filtros fusiona: reemplaza solo las combinaciones medidas, siempre que
+ * Escribe en designs/redesign-v3/reports/home-v4/: lighthouse-<lang>-<factor>.report.html (corrida mediana)
+ * y lighthouse-summary.json. Con filtros fusiona: reemplaza solo las combinaciones medidas, siempre que
  * el hash del build sea el mismo (si cambio, descarta las anteriores).
- * Compuertas (D-11, salida 1 si alguna falla): accesibilidad >= 95 en todas las corridas, CLS 0 en las corridas mobile,
- * mediana mobile de performance >= 90 y de LCP < 2000 ms, color-contrast aprobado, ningun chunk de original pedido en mobile
- * y chunk pedido en todas las corridas de desktop. El TBT y el LCP de desktop son informativos.
+ * Compuertas (salida 1 si alguna falla): accesibilidad 100 en todas las corridas, CLS 0 en las corridas mobile,
+ * mediana mobile de performance >= 90 y de LCP < 2000 ms, color-contrast aprobado y ningun chunk de React Bits pedido en mobile.
+ * El TBT, el LCP de desktop y el peso de JS son informativos (WebGL por software exagera el TBT).
  * Salida 2 si falta dist/, Lighthouse o Chrome. El servidor estatico vive en este proceso: las corridas son asincronas.
  */
 import fs from 'node:fs';
@@ -22,13 +22,13 @@ import { buildSha256, median, originalChunkFiles, readManifest } from './lib/man
 
 const APP = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(APP, 'dist');
-const REPORTS = path.resolve(APP, '..', 'reports');
+const REPORTS = path.resolve(APP, '..', 'reports', 'home-v4');
 const TMP = path.join(APP, 'reports', '.tmp');
-const OUT = path.join(REPORTS, 'lighthouse-home-summary.json');
+const OUT = path.join(REPORTS, 'lighthouse-summary.json');
 // Render por software: sin esto Chromium headless no crea contexto WebGL y el original no pinta.
 const CHROME_FLAGS = '--headless=new --use-angle=swiftshader --enable-unsafe-swiftshader --ignore-gpu-blocklist';
 const TARGETS = { es: '/', en: '/en' };
-const THRESHOLDS = { accessibility: 95, cls: 0, performanceMobileMedian: 90, lcpMobileMedianMs: 2000 };
+const THRESHOLDS = { accessibility: 100, cls: 0, performanceMobileMedian: 90, lcpMobileMedianMs: 2000 };
 
 const arg = (name, fallback) => (process.argv.find((a) => a.startsWith(`--${name}=`)) ?? `--${name}=${fallback}`).slice(name.length + 3);
 const langArg = arg('lang', 'all');
@@ -117,6 +117,9 @@ function extract(base) {
     cls: Math.round(a['cumulative-layout-shift'].numericValue * 1000) / 1000,
     tbtMs: Math.round(a['total-blocking-time'].numericValue),
     transferBytes: Math.round(a['total-byte-weight']?.numericValue ?? 0),
+    jsBytes: requests.filter((r) => r.resourceType === 'Script').reduce((n, r) => n + (r.transferSize ?? 0), 0),
+    cssBytes: requests.filter((r) => r.resourceType === 'Stylesheet').reduce((n, r) => n + (r.transferSize ?? 0), 0),
+    chunksRequested: requests.map((r) => String(r.url).split('/').pop()).filter((f) => chunkFiles.some((c) => c.endsWith(f))),
     requests: requests.length,
     originalChunkRequested: requests.some((r) => chunkFiles.some((f) => String(r.url).endsWith(f))),
     colorContrast: a['color-contrast']?.score === 1 ? 'pass' : a['color-contrast']?.score === null ? 'n/a' : 'fail',
@@ -147,13 +150,13 @@ try {
         userAgent ??= r.chromium;
         runs.push(r);
         console.log(
-          `${lang} ${factor} ${i}/${RUNS}: perf ${r.performance}, a11y ${r.accessibility}, bp ${r.bestPractices}, LCP ${r.lcpMs} ms, CLS ${r.cls}, TBT ${r.tbtMs} ms, ${(r.transferBytes / 1024).toFixed(0)} KB, ${r.requests} peticiones, contraste ${r.colorContrast}, chunk ${r.originalChunkRequested ? 'si' : 'no'}, LCP en ${r.lcpElement ?? '?'}`,
+          `${lang} ${factor} ${i}/${RUNS}: perf ${r.performance}, a11y ${r.accessibility}, bp ${r.bestPractices}, LCP ${r.lcpMs} ms, CLS ${r.cls}, TBT ${r.tbtMs} ms, ${(r.transferBytes / 1024).toFixed(0)} KB (JS ${(r.jsBytes / 1024).toFixed(1)}), ${r.requests} peticiones, contraste ${r.colorContrast}, chunk ${r.originalChunkRequested ? 'si' : 'no'}, LCP en ${r.lcpElement ?? '?'}`,
         );
       }
       const ordered = [...runs].sort((a, b) => a.performance - b.performance || a.lcpMs - b.lcpMs);
       const rep = ordered[Math.floor(ordered.length / 2)];
       const m = (f) => median(runs.map((r) => r[f]));
-      fs.copyFileSync(rep.html, path.join(REPORTS, `lighthouse-home-${lang}-${factor}.report.html`));
+      fs.copyFileSync(rep.html, path.join(REPORTS, `lighthouse-${lang}-${factor}.report.html`));
       fresh.push({
         lang,
         factor,
@@ -167,10 +170,12 @@ try {
           cls: m('cls'),
           tbtMs: m('tbtMs'),
           transferBytes: m('transferBytes'),
+          jsBytes: m('jsBytes'),
+          cssBytes: m('cssBytes'),
           requests: m('requests'),
         },
         representativeRun: { performance: rep.performance, lcpMs: rep.lcpMs },
-        report: `lighthouse-home-${lang}-${factor}.report.html`,
+        report: `lighthouse-${lang}-${factor}.report.html`,
       });
     }
   }
@@ -188,16 +193,14 @@ if (fs.existsSync(OUT)) {
 const combos = [...kept, ...fresh].sort((a, b) => a.lang.localeCompare(b.lang) || a.factor.localeCompare(b.factor));
 
 const mobile = combos.filter((c) => c.factor === 'mobile');
-const desktop = combos.filter((c) => c.factor === 'desktop');
 const runsOf = (list) => list.flatMap((c) => c.runs);
 const gates = {
-  'accesibilidad >= 95 en todas las corridas': runsOf(combos).every((r) => r.accessibility >= THRESHOLDS.accessibility),
+  'accesibilidad 100 en todas las corridas': runsOf(combos).every((r) => r.accessibility >= THRESHOLDS.accessibility),
   'CLS 0 en todas las corridas mobile': runsOf(mobile).every((r) => r.cls === THRESHOLDS.cls),
   'performance mobile, mediana >= 90': mobile.every((c) => c.median.performance >= THRESHOLDS.performanceMobileMedian),
   'LCP mobile, mediana < 2000 ms': mobile.every((c) => c.median.lcpMs < THRESHOLDS.lcpMobileMedianMs),
   'color-contrast aprobado en todas las corridas': runsOf(combos).every((r) => r.colorContrast !== 'fail'),
-  'ningun chunk de original pedido en mobile': runsOf(mobile).every((r) => !r.originalChunkRequested),
-  'chunk de original pedido en todas las corridas de desktop': runsOf(desktop).every((r) => r.originalChunkRequested),
+  'ningun chunk de React Bits pedido en mobile': runsOf(mobile).every((r) => !r.originalChunkRequested),
 };
 const failed = Object.entries(gates).filter(([, ok]) => !ok).map(([k]) => k);
 
