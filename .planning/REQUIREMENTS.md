@@ -17,10 +17,10 @@ Alcance del milestone v2.3: mockups HTML estáticos en `designs/redesign-v3/`. N
 
 ### Entorno React de mockups (REACT)
 
-- [ ] **REACT-01**: Juan puede levantar con un comando un dev server en `designs/redesign-v3/app/` y ver la galería `/system` con los componentes originales de React Bits.
-- [ ] **REACT-02**: La app tiene su propio `package.json` y `node_modules`, y no modifica el `package.json`, los lockfiles ni `src/` del proyecto.
-- [ ] **REACT-03**: Cada componente original conserva su cabecera de origen y el aviso de licencia MIT + Commons Clause está documentado.
-- [ ] **REACT-04**: El build de producción de la app se mide con Lighthouse y el peso real de cada componente original queda comparado con el porte vanilla de la fase 51.
+- [x] **REACT-01**: Juan puede levantar con un comando un dev server en `designs/redesign-v3/app/` y ver la galería `/system` con los componentes originales de React Bits.
+- [x] **REACT-02**: La app tiene su propio `package.json` y `node_modules`, y no modifica el `package.json`, los lockfiles ni `src/` del proyecto.
+- [x] **REACT-03**: Cada componente original conserva su cabecera de origen y el aviso de licencia MIT + Commons Clause está documentado.
+- [x] **REACT-04**: El build de producción de la app se mide con Lighthouse y el peso real de cada componente original queda comparado con el porte vanilla de la fase 51.
 
 ### Home (HOME)
 
@@ -69,10 +69,10 @@ Cada requirement pertenece a exactamente una fase. PERF-01 a PERF-04 se establec
 | SYS-03 | Phase 51 | Complete |
 | SYS-04 | Phase 51 | Complete |
 | SYS-05 | Phase 51 | Complete |
-| REACT-01 | Phase 51.1 | Pending |
-| REACT-02 | Phase 51.1 | Pending |
-| REACT-03 | Phase 51.1 | Pending |
-| REACT-04 | Phase 51.1 | Pending |
+| REACT-01 | Phase 51.1 | Complete |
+| REACT-02 | Phase 51.1 | Complete |
+| REACT-03 | Phase 51.1 | Complete |
+| REACT-04 | Phase 51.1 | Complete |
 | HOME-01 | Phase 52 | Pending |
 | HOME-02 | Phase 52 | Pending |
 | HOME-03 | Phase 52 | Pending |

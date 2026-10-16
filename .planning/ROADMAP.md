@@ -62,8 +62,8 @@ Plans:
 
 Plans:
 
-- [ ] 51.1-01-PLAN.md: cimiento Vite + React + TS aislado, instalador del registro, tracer Grainient y 16 originales
-- [ ] 51.1-02-PLAN.md: galeria /system, medicion Lighthouse y peso, README
+- [x] 51.1-01-PLAN.md: cimiento Vite + React + TS aislado, instalador del registro, tracer Grainient y 16 originales
+- [x] 51.1-02-PLAN.md: galeria /system, medicion Lighthouse y peso, README
 
 ### Phase 52: Home mockup y gate de revisión
 
