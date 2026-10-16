@@ -23,14 +23,20 @@ body {
 }
 
 .page-header h1 {
-  max-width: 28ch;
+  max-width: 48rem;
+  min-height: calc(2 * var(--leading-tight) * 1em);
   font-size: var(--text-2xl);
   line-height: var(--leading-tight);
 }
 
+/*
+ * Ancho en rem y alto minimo de tres lineas: al cambiar de la fuente de respaldo a Geist el texto se reacomoda
+ * dentro de un bloque que no cambia de tamano, asi el cambio de fuente no mueve la toolbar ni las tarjetas (CLS).
+ */
 .page-header .lede {
   margin: 0;
-  max-width: 62ch;
+  max-width: 40rem;
+  min-height: calc(3 * var(--leading-body) * 1em);
 }
 
 .page {

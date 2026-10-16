@@ -19,6 +19,7 @@ import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { startStaticServer } from './lib/static-server.mjs';
 import { sha256, splitOrigin } from './lib/origin-header.mjs';
+import { buildSha256 } from './lib/manifest.mjs';
 
 const APP = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(APP, 'dist');
@@ -657,13 +658,141 @@ async function stageGallery({ chromium }) {
   }
 }
 
+/* ---------- stage: report ---------- */
+
+async function stageReport({ chromium }) {
+  const mDir = path.join(APP, 'public', 'measurements');
+  const weightsPath = path.join(mDir, 'original-vs-vanilla.json');
+  const lhPath = path.join(mDir, 'lighthouse-summary.json');
+  const names = JSON.parse(fs.readFileSync(path.join(APP, 'scripts', 'originals.json'), 'utf8')).map((o) => o.name);
+
+  const exist = fs.existsSync(weightsPath) && fs.existsSync(lhPath);
+  check('r1. existen original-vs-vanilla.json y lighthouse-summary.json en public/measurements', exist);
+  if (!exist) return;
+  const weights = JSON.parse(fs.readFileSync(weightsPath, 'utf8'));
+  const lh = JSON.parse(fs.readFileSync(lhPath, 'utf8'));
+
+  // buildSha256 igual al recalculado desde el dist/ vigente.
+  const hash = buildSha256(DIST);
+  check('r2. buildSha256 de ambos JSON coincide con el dist/ vigente', weights.buildSha256 === hash && lh.buildSha256 === hash, `dist=${hash.slice(0, 12)} pesos=${String(weights.buildSha256).slice(0, 12)} lighthouse=${String(lh.buildSha256).slice(0, 12)}`);
+
+  // original-vs-vanilla.json
+  const numericFields = ['ownJsGzip', 'ownCssGzip', 'sharedGzip', 'totalGzip', 'totalBrotli', 'vanillaGzip', 'ratio'];
+  const rowsOk =
+    Array.isArray(weights.rows) &&
+    weights.rows.length === 16 &&
+    names.every((n) => weights.rows.some((r) => r.original === n)) &&
+    weights.rows.every((r) => numericFields.every((f) => typeof r[f] === 'number' && Number.isFinite(r[f])));
+  const baseOk = typeof weights.base?.gzip === 'number' && Array.isArray(weights.shared) && typeof weights.budgets?.perEffect === 'number';
+  check('r3. original-vs-vanilla.json trae 16 filas con los nombres de originals.json, valores numericos, base, shared y budgets', rowsOk && baseOk);
+
+  // lighthouse-summary.json
+  const combos = lh.combos ?? [];
+  const shape =
+    combos.length === 4 &&
+    combos.every((c) => c.runs?.length === 3 && typeof c.median?.performance === 'number') &&
+    ['baseline', 'mounted'].every((t) => ['mobile', 'desktop'].every((f) => combos.some((c) => c.target === t && c.factor === f)));
+  const runs = combos.flatMap((c) => c.runs.map((r) => ({ ...r, target: c.target })));
+  const gatesOk =
+    runs.length === 12 &&
+    runs.every((r) => r.accessibility >= 95) &&
+    runs.filter((r) => r.target === 'baseline').every((r) => r.cls <= 0.01 && r.originalChunkRequested === false) &&
+    runs.filter((r) => r.target === 'mounted').every((r) => r.originalChunkRequested === true);
+  check('r4. lighthouse-summary.json: 4 objetivos por 3 corridas y las compuertas se cumplen', shape && gatesOk, `combos=${combos.length} corridas=${runs.length}`);
+
+  // HTML de Lighthouse
+  const htmlDetail = [];
+  for (const f of ['lighthouse-system-mobile.report.html', 'lighthouse-system-desktop.report.html']) {
+    const p = path.join(APP, 'reports', f);
+    htmlDetail.push(`${f}=${fs.existsSync(p) ? fs.statSync(p).size : 'falta'}`);
+  }
+  const htmlOk = ['mobile', 'desktop'].every((f) => {
+    const p = path.join(APP, 'reports', `lighthouse-system-${f}.report.html`);
+    return fs.existsSync(p) && fs.statSync(p).size > 100 * 1024;
+  });
+  check('r5. los dos informes HTML de Lighthouse existen y pesan mas de 100 KB', htmlOk, htmlDetail.join(' '));
+
+  // /rendimiento en el build servido
+  const served = fs.existsSync(path.join(DIST, 'measurements', 'original-vs-vanilla.json'));
+  if (!served) {
+    check('r6. dist/ incluye measurements/ (ejecuta npm run build despues de medir)', false);
+    return;
+  }
+  const server = await startStaticServer({ root: DIST, compress: true });
+  const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+  try {
+    const { context, page, log } = await openPage(browser, `${server.url}/rendimiento`);
+    await page.waitForSelector('table.data-table tbody tr', { timeout: 10_000 });
+    const info = await page.evaluate(() => {
+      const tables = [...document.querySelectorAll('table.data-table')];
+      return {
+        h1: document.querySelectorAll('h1').length,
+        weightRows: tables[0]?.querySelectorAll('tbody tr').length ?? 0,
+        lhRows: tables[1]?.querySelectorAll('tbody tr').length ?? 0,
+        mediana: document.body.textContent?.includes('Mediana') ?? false,
+        captions: tables.map((t) => t.querySelector('caption')?.textContent ?? ''),
+      };
+    });
+    check(
+      'r6. /rendimiento: 1 h1, 16 filas de pesos, 4 filas de Lighthouse y la palabra Mediana',
+      info.h1 === 1 && info.weightRows === 16 && info.lhRows === 4 && info.mediana,
+      JSON.stringify({ h1: info.h1, weightRows: info.weightRows, lhRows: info.lhRows, mediana: info.mediana }),
+    );
+    check('r7. /rendimiento sin errores de consola ni pageerror', log.console.length === 0 && log.pageerrors.length === 0 && log.external.length === 0, `consola=${log.console.length} pageerror=${log.pageerrors.length}`);
+    if (wantShots) {
+      fs.mkdirSync(SHOTS, { recursive: true });
+      await page.screenshot({ path: path.join(SHOTS, 'rendimiento-desktop.jpg'), type: 'jpeg', quality: 80, fullPage: true });
+      console.log('INFO captura reports/shots/rendimiento-desktop.jpg');
+    }
+    await context.close();
+  } finally {
+    await browser.close();
+    await server.close();
+  }
+}
+
+/* ---------- stage: readme ---------- */
+
+async function stageReadme() {
+  const file = path.join(APP, 'README.md');
+  const exists = fs.existsSync(file);
+  check('d1. README.md existe', exists);
+  if (!exists) return;
+  const text = fs.readFileSync(file, 'utf8');
+  const required = [
+    'npm install',
+    'npm run dev',
+    'npm run build',
+    'npm run preview',
+    'http://127.0.0.1:5173/system',
+    'http://127.0.0.1:5173/rendimiento',
+    'http://127.0.0.1:4173/system',
+    'http://127.0.0.1:4173/system?mount=grainient',
+    'http://127.0.0.1:4173/rendimiento',
+    'Pausar animaciones',
+    'LICENSES.md',
+    '/rendimiento',
+  ];
+  const missing = required.filter((s) => !text.includes(s));
+  check('d2. el README contiene comandos, direcciones, Pausar animaciones, LICENSES.md y /rendimiento', missing.length === 0, missing.join(' | '));
+
+  const m = /##\s+Qu[eé] abrir\s*\n([\s\S]*?)(?:\n##\s|$)/.exec(text);
+  const items = m ? (m[1].match(/^\s*\d+\.\s+\S/gm) ?? []).length : 0;
+  check('d3. la seccion "Que abrir" tiene al menos 8 elementos numerados', items >= 8, `elementos=${items}`);
+
+  const dashes = (text.match(/[–—]/g) ?? []).length;
+  check('d4. el README no contiene guiones largos ni medios (U+2013, U+2014)', dashes === 0, `encontrados=${dashes}`);
+}
+
 /* ---------- registro de stages ---------- */
 
 const STAGES = {
   tracer: stageTracer,
   gallery: stageGallery,
+  report: stageReport,
+  readme: stageReadme,
 };
-const STAGE_ORDER = ['tracer', 'gallery'];
+const STAGE_ORDER = ['tracer', 'gallery', 'report', 'readme'];
 
 /* ---------- main ---------- */
 

@@ -14,7 +14,10 @@
     "postinstall": "node scripts/install-reactbits.mjs",
     "originals:install": "node scripts/install-reactbits.mjs",
     "originals:verify": "node scripts/verify-originals.mjs",
-    "verify": "node scripts/verify-app.mjs --stage=all"
+    "verify": "node scripts/verify-app.mjs --stage=all",
+    "measure:weights": "node scripts/measure-weights.mjs",
+    "measure:lighthouse": "node scripts/measure-lighthouse.mjs",
+    "measure": "npm run build && npm run measure:weights && npm run measure:lighthouse"
   },
   "dependencies": {
     "ogl": "^1.0.11",

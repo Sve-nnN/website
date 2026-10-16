@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T01:22:13.700Z",
+  "generatedAt": "2026-10-16T01:36:03.861Z",
   "chromiumArgs": [
     "--use-angle=swiftshader",
     "--enable-unsafe-swiftshader",
@@ -9,7 +9,7 @@
     {
       "original": "Grainient",
       "mounted": true,
-      "durationMs": 1763,
+      "durationMs": 1545,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -22,7 +22,7 @@
     {
       "original": "PatternWaves",
       "mounted": true,
-      "durationMs": 412,
+      "durationMs": 391,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -35,7 +35,7 @@
     {
       "original": "CRTWarp",
       "mounted": true,
-      "durationMs": 348,
+      "durationMs": 850,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -48,7 +48,7 @@
     {
       "original": "MicroSlats",
       "mounted": true,
-      "durationMs": 2636,
+      "durationMs": 2183,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -61,7 +61,7 @@
     {
       "original": "PixelBlast",
       "mounted": true,
-      "durationMs": 368,
+      "durationMs": 855,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -74,7 +74,7 @@
     {
       "original": "PixelCard",
       "mounted": true,
-      "durationMs": 339,
+      "durationMs": 828,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -87,7 +87,7 @@
     {
       "original": "GradientASCII",
       "mounted": true,
-      "durationMs": 1110,
+      "durationMs": 820,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -100,7 +100,7 @@
     {
       "original": "ASCIIText",
       "mounted": true,
-      "durationMs": 904,
+      "durationMs": 814,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -113,7 +113,7 @@
     {
       "original": "Noise",
       "mounted": true,
-      "durationMs": 816,
+      "durationMs": 820,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -126,7 +126,7 @@
     {
       "original": "Dither",
       "mounted": true,
-      "durationMs": 853,
+      "durationMs": 835,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -139,7 +139,7 @@
     {
       "original": "HalftoneReveal",
       "mounted": true,
-      "durationMs": 850,
+      "durationMs": 847,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -152,7 +152,7 @@
     {
       "original": "PixelTransition",
       "mounted": true,
-      "durationMs": 865,
+      "durationMs": 852,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -165,7 +165,7 @@
     {
       "original": "FaultyTerminal",
       "mounted": true,
-      "durationMs": 859,
+      "durationMs": 848,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -178,7 +178,7 @@
     {
       "original": "SpotlightCard",
       "mounted": true,
-      "durationMs": 338,
+      "durationMs": 823,
       "mountedCount": 1,
       "canvases": 0,
       "expectCanvas": 0,
@@ -191,7 +191,7 @@
     {
       "original": "GradientBlinds",
       "mounted": true,
-      "durationMs": 475,
+      "durationMs": 851,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,
@@ -204,7 +204,7 @@
     {
       "original": "StarBorder",
       "mounted": true,
-      "durationMs": 829,
+      "durationMs": 826,
       "mountedCount": 1,
       "canvases": 1,
       "expectCanvas": 1,

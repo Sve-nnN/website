@@ -1,0 +1,430 @@
+{
+  "generatedAt": "2026-10-16T01:31:06.158Z",
+  "buildSha256": "e9e9cc8d71deb2a87d96a2d60c87868f6fd8ee3c07ac52e5aeddd401fa7276de",
+  "method": "gzip nivel 9 y brotli calidad 11 con node:zlib sobre los archivos de dist/ (build de produccion de Vite)",
+  "base": {
+    "entryFile": "assets/index-Dt0v7EbQ.js",
+    "gzip": 83326,
+    "brotli": 72128,
+    "files": [
+      {
+        "file": "assets/index-Dt0v7EbQ.js",
+        "gzip": 75837,
+        "brotli": 65501
+      },
+      {
+        "file": "assets/index-BiLM_jlA.css",
+        "gzip": 7489,
+        "brotli": 6627
+      }
+    ],
+    "react": "19.3.1",
+    "reactDom": "19.3.1",
+    "note": "Cascaron de la app: React, la galeria y el CSS de la fase 51. El porte vanilla no necesita React."
+  },
+  "shared": [
+    {
+      "file": "assets/Triangle-CC7-iyWY.js",
+      "gzip": 14510,
+      "brotli": 12271,
+      "usedBy": [
+        "PatternWaves",
+        "MicroSlats"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "original": "Grainient",
+      "catalogId": "grain",
+      "group": "base",
+      "ownJsGzip": 5819,
+      "ownCssGzip": 124,
+      "sharedGzip": 0,
+      "totalGzip": 5943,
+      "ownJsBrotli": 5251,
+      "ownCssBrotli": 72,
+      "sharedBrotli": 0,
+      "totalBrotli": 5323,
+      "shared": [],
+      "ownFiles": [
+        "assets/Grainient-Cykzf5I2.js",
+        "assets/Grainient-CN9Fx1Uv.css"
+      ],
+      "vanillaGzip": 862,
+      "ratio": 6.89,
+      "ratioOwn": 6.89,
+      "exceedsCap": true,
+      "registryGzipKB": 5.8,
+      "note": ""
+    },
+    {
+      "original": "PatternWaves",
+      "catalogId": "waves",
+      "group": "base",
+      "ownJsGzip": 7063,
+      "ownCssGzip": 88,
+      "sharedGzip": 14510,
+      "totalGzip": 21661,
+      "ownJsBrotli": 6389,
+      "ownCssBrotli": 44,
+      "sharedBrotli": 12271,
+      "totalBrotli": 18704,
+      "shared": [
+        "assets/Triangle-CC7-iyWY.js"
+      ],
+      "ownFiles": [
+        "assets/PatternWaves-B65yCRAt.js",
+        "assets/PatternWaves-C-RXlBnP.css"
+      ],
+      "vanillaGzip": 819,
+      "ratio": 26.45,
+      "ratioOwn": 8.73,
+      "exceedsCap": true,
+      "registryGzipKB": 7.1,
+      "note": ""
+    },
+    {
+      "original": "CRTWarp",
+      "catalogId": "crt",
+      "group": "base",
+      "ownJsGzip": 7417,
+      "ownCssGzip": 124,
+      "sharedGzip": 0,
+      "totalGzip": 7541,
+      "ownJsBrotli": 6739,
+      "ownCssBrotli": 70,
+      "sharedBrotli": 0,
+      "totalBrotli": 6809,
+      "shared": [],
+      "ownFiles": [
+        "assets/CRTWarp-DaLN8ohf.js",
+        "assets/CRTWarp-DXP8mZPb.css"
+      ],
+      "vanillaGzip": 998,
+      "ratio": 7.56,
+      "ratioOwn": 7.56,
+      "exceedsCap": true,
+      "registryGzipKB": 7.5,
+      "note": "Faulty Terminal comparte este fallback."
+    },
+    {
+      "original": "MicroSlats",
+      "catalogId": "slats",
+      "group": "base",
+      "ownJsGzip": 6634,
+      "ownCssGzip": 86,
+      "sharedGzip": 14510,
+      "totalGzip": 21230,
+      "ownJsBrotli": 6018,
+      "ownCssBrotli": 48,
+      "sharedBrotli": 12271,
+      "totalBrotli": 18337,
+      "shared": [
+        "assets/Triangle-CC7-iyWY.js"
+      ],
+      "ownFiles": [
+        "assets/MicroSlats-DLG4AiKq.js",
+        "assets/MicroSlats-DImEAj1L.css"
+      ],
+      "vanillaGzip": 889,
+      "ratio": 23.88,
+      "ratioOwn": 7.56,
+      "exceedsCap": true,
+      "registryGzipKB": 6.7,
+      "note": ""
+    },
+    {
+      "original": "PixelBlast",
+      "catalogId": "pixel-blast",
+      "group": "base",
+      "ownJsGzip": 8028,
+      "ownCssGzip": 126,
+      "sharedGzip": 0,
+      "totalGzip": 8154,
+      "ownJsBrotli": 7284,
+      "ownCssBrotli": 73,
+      "sharedBrotli": 0,
+      "totalBrotli": 7357,
+      "shared": [],
+      "ownFiles": [
+        "assets/PixelBlast-C-NtVL8q.js",
+        "assets/PixelBlast-Bg3YN6Nd.css"
+      ],
+      "vanillaGzip": 381,
+      "ratio": 21.4,
+      "ratioOwn": 21.4,
+      "exceedsCap": true,
+      "registryGzipKB": 8.1,
+      "note": "Comparte el CSS del fallback con pixel-card."
+    },
+    {
+      "original": "PixelCard",
+      "catalogId": "pixel-card",
+      "group": "base",
+      "ownJsGzip": 4168,
+      "ownCssGzip": 558,
+      "sharedGzip": 0,
+      "totalGzip": 4726,
+      "ownJsBrotli": 3771,
+      "ownCssBrotli": 461,
+      "sharedBrotli": 0,
+      "totalBrotli": 4232,
+      "shared": [],
+      "ownFiles": [
+        "assets/PixelCard-D4esAZPl.js",
+        "assets/PixelCard-CIwDNGr2.css"
+      ],
+      "vanillaGzip": 381,
+      "ratio": 12.4,
+      "ratioOwn": 12.4,
+      "exceedsCap": true,
+      "registryGzipKB": 4.2,
+      "note": "Comparte el CSS del fallback con pixel-blast."
+    },
+    {
+      "original": "GradientASCII",
+      "catalogId": "gradient-ascii",
+      "group": "base",
+      "ownJsGzip": 7728,
+      "ownCssGzip": 128,
+      "sharedGzip": 0,
+      "totalGzip": 7856,
+      "ownJsBrotli": 6958,
+      "ownCssBrotli": 76,
+      "sharedBrotli": 0,
+      "totalBrotli": 7034,
+      "shared": [],
+      "ownFiles": [
+        "assets/GradientASCII-G-CfOHAQ.js",
+        "assets/GradientASCII-B_79ZVJz.css"
+      ],
+      "vanillaGzip": 717,
+      "ratio": 10.96,
+      "ratioOwn": 10.96,
+      "exceedsCap": true,
+      "registryGzipKB": 7.7,
+      "note": "Comparte el pre y el ticker del fallback con ascii-text."
+    },
+    {
+      "original": "ASCIIText",
+      "catalogId": "ascii-text",
+      "group": "base",
+      "ownJsGzip": 5328,
+      "ownCssGzip": 0,
+      "sharedGzip": 0,
+      "totalGzip": 5328,
+      "ownJsBrotli": 4878,
+      "ownCssBrotli": 0,
+      "sharedBrotli": 0,
+      "totalBrotli": 4878,
+      "shared": [],
+      "ownFiles": [
+        "assets/ASCIIText-DdelBFBK.js"
+      ],
+      "vanillaGzip": 717,
+      "ratio": 7.43,
+      "ratioOwn": 7.43,
+      "exceedsCap": true,
+      "registryGzipKB": 5.3,
+      "note": "Comparte el pre y el ticker del fallback con gradient-ascii."
+    },
+    {
+      "original": "Noise",
+      "catalogId": "noise",
+      "group": "scout",
+      "ownJsGzip": 2296,
+      "ownCssGzip": 211,
+      "sharedGzip": 0,
+      "totalGzip": 2507,
+      "ownJsBrotli": 2085,
+      "ownCssBrotli": 157,
+      "sharedBrotli": 0,
+      "totalBrotli": 2242,
+      "shared": [],
+      "ownFiles": [
+        "assets/Noise-Cu3br35m.js",
+        "assets/Noise-1ihRq-dN.css"
+      ],
+      "vanillaGzip": 362,
+      "ratio": 6.93,
+      "ratioOwn": 6.93,
+      "exceedsCap": true,
+      "registryGzipKB": 3.3,
+      "note": ""
+    },
+    {
+      "original": "Dither",
+      "catalogId": "dither",
+      "group": "scout",
+      "ownJsGzip": 6051,
+      "ownCssGzip": 122,
+      "sharedGzip": 0,
+      "totalGzip": 6173,
+      "ownJsBrotli": 5510,
+      "ownCssBrotli": 69,
+      "sharedBrotli": 0,
+      "totalBrotli": 5579,
+      "shared": [],
+      "ownFiles": [
+        "assets/Dither-C2NMclyy.js",
+        "assets/Dither-C5uArhRq.css"
+      ],
+      "vanillaGzip": 346,
+      "ratio": 17.84,
+      "ratioOwn": 17.84,
+      "exceedsCap": true,
+      "registryGzipKB": 7.1,
+      "note": ""
+    },
+    {
+      "original": "HalftoneReveal",
+      "catalogId": "halftone-reveal",
+      "group": "scout",
+      "ownJsGzip": 7301,
+      "ownCssGzip": 124,
+      "sharedGzip": 0,
+      "totalGzip": 7425,
+      "ownJsBrotli": 6628,
+      "ownCssBrotli": 75,
+      "sharedBrotli": 0,
+      "totalBrotli": 6703,
+      "shared": [],
+      "ownFiles": [
+        "assets/HalftoneReveal-B-UF-T8c.js",
+        "assets/HalftoneReveal-zn6FqNYG.css"
+      ],
+      "vanillaGzip": 565,
+      "ratio": 13.14,
+      "ratioOwn": 13.14,
+      "exceedsCap": true,
+      "registryGzipKB": 8.6,
+      "note": ""
+    },
+    {
+      "original": "PixelTransition",
+      "catalogId": "pixel-transition",
+      "group": "scout",
+      "ownJsGzip": 3158,
+      "ownCssGzip": 255,
+      "sharedGzip": 0,
+      "totalGzip": 3413,
+      "ownJsBrotli": 2829,
+      "ownCssBrotli": 167,
+      "sharedBrotli": 0,
+      "totalBrotli": 2996,
+      "shared": [],
+      "ownFiles": [
+        "assets/PixelTransition-CSAzpj3h.js",
+        "assets/PixelTransition-CwcG4s6C.css"
+      ],
+      "vanillaGzip": 503,
+      "ratio": 6.79,
+      "ratioOwn": 6.79,
+      "exceedsCap": true,
+      "registryGzipKB": 4.5,
+      "note": ""
+    },
+    {
+      "original": "FaultyTerminal",
+      "catalogId": "faulty-terminal",
+      "group": "scout",
+      "ownJsGzip": 7717,
+      "ownCssGzip": 129,
+      "sharedGzip": 0,
+      "totalGzip": 7846,
+      "ownJsBrotli": 6956,
+      "ownCssBrotli": 81,
+      "sharedBrotli": 0,
+      "totalBrotli": 7037,
+      "shared": [],
+      "ownFiles": [
+        "assets/FaultyTerminal-3RRtBTFJ.js",
+        "assets/FaultyTerminal-GIdCaMIu.css"
+      ],
+      "vanillaGzip": 998,
+      "ratio": 7.86,
+      "ratioOwn": 7.86,
+      "exceedsCap": true,
+      "registryGzipKB": 8.8,
+      "note": "Comparte el fallback CSS con crt."
+    },
+    {
+      "original": "SpotlightCard",
+      "catalogId": "spotlight-card",
+      "group": "scout",
+      "ownJsGzip": 2594,
+      "ownCssGzip": 344,
+      "sharedGzip": 0,
+      "totalGzip": 2938,
+      "ownJsBrotli": 2349,
+      "ownCssBrotli": 274,
+      "sharedBrotli": 0,
+      "totalBrotli": 2623,
+      "shared": [],
+      "ownFiles": [
+        "assets/SpotlightCard-BnfFD_Mm.js",
+        "assets/SpotlightCard-DYVtI0ff.css"
+      ],
+      "vanillaGzip": 589,
+      "ratio": 4.99,
+      "ratioOwn": 4.99,
+      "exceedsCap": true,
+      "registryGzipKB": 3.6,
+      "note": ""
+    },
+    {
+      "original": "GradientBlinds",
+      "catalogId": "gradient-blinds",
+      "group": "scout",
+      "ownJsGzip": 5301,
+      "ownCssGzip": 128,
+      "sharedGzip": 0,
+      "totalGzip": 5429,
+      "ownJsBrotli": 4879,
+      "ownCssBrotli": 78,
+      "sharedBrotli": 0,
+      "totalBrotli": 4957,
+      "shared": [],
+      "ownFiles": [
+        "assets/GradientBlinds-CvcZ3gNK.js",
+        "assets/GradientBlinds-1ypBZHEQ.css"
+      ],
+      "vanillaGzip": 329,
+      "ratio": 16.5,
+      "ratioOwn": 16.5,
+      "exceedsCap": true,
+      "registryGzipKB": 6.2,
+      "note": ""
+    },
+    {
+      "original": "StarBorder",
+      "catalogId": "star-border",
+      "group": "scout",
+      "ownJsGzip": 4292,
+      "ownCssGzip": 446,
+      "sharedGzip": 0,
+      "totalGzip": 4738,
+      "ownJsBrotli": 3946,
+      "ownCssBrotli": 330,
+      "sharedBrotli": 0,
+      "totalBrotli": 4276,
+      "shared": [],
+      "ownFiles": [
+        "assets/StarBorder-CcqFu3De.js",
+        "assets/StarBorder-DKyPqfZK.css"
+      ],
+      "vanillaGzip": 520,
+      "ratio": 9.11,
+      "ratioOwn": 9.11,
+      "exceedsCap": true,
+      "registryGzipKB": 6.3,
+      "note": ""
+    }
+  ],
+  "budgets": {
+    "perEffect": 2048,
+    "source": "tools/catalog.json budgets.perEffect",
+    "vanillaSource": "reports/weights.json effects[].total"
+  }
+}

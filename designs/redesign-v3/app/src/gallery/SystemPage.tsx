@@ -14,6 +14,18 @@ export function SystemPage() {
       </a>
       <header className="site-header page-header">
         <span className="brand">Juan Tech</span>
+        <nav className="page-nav" aria-label="Principal">
+          <ul>
+            <li>
+              <a href="/system" aria-current="page">
+                Galería /system
+              </a>
+            </li>
+            <li>
+              <a href="/rendimiento">Rendimiento</a>
+            </li>
+          </ul>
+        </nav>
         <h1>Mi sistema visual con los componentes originales de React Bits</h1>
         <p className="lede">
           Cada tarjeta muestra el fallback CSS de la fase 51. Con el botón monto el componente original de React Bits en el
