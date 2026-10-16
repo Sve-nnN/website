@@ -1,0 +1,24 @@
+{
+  "es": {
+    "heading": "Testimonios",
+    "quote": "Trabajar con Juan fue lo mejor.",
+    "author": "Patricia Ibarra",
+    "role": "CEO",
+    "company": "Estylopia",
+    "pending": [
+      "[PENDIENTE: más citas reales y autorizadas]",
+      "[PENDIENTE: confirmar con la clienta la cita y su traducción]"
+    ]
+  },
+  "en": {
+    "heading": "Testimonials",
+    "quote": "Working with Juan was the best.",
+    "author": "Patricia Ibarra",
+    "role": "CEO",
+    "company": "Estylopia",
+    "pending": [
+      "[PENDIENTE: más citas reales y autorizadas]",
+      "[PENDIENTE: confirmar con la clienta la cita y su traducción]"
+    ]
+  }
+}

@@ -7,8 +7,8 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 /** Secciones propias de este plan, en el orden que debe verse en la pagina. */
-const OWN = ['clientes', 'errores-reales', 'casos', 'websites'];
-const COPY_FILES = ['clientes', 'errores-reales', 'casos', 'websites'];
+const OWN = ['clientes', 'errores-reales', 'casos', 'websites', 'testimonio'];
+const COPY_FILES = ['clientes', 'errores-reales', 'casos', 'websites', 'testimonio'];
 
 const CASE_SLUGS = ['urologo-seo-local-salud-santiago-rd', 'immigration-law-atlanta-seo', 'pittsburgh-criminal-defense-legal-content-seo'];
 const SITES = [
@@ -205,6 +205,34 @@ export async function run(ctx) {
       order.join(','),
     );
 
+    // p13
+    const quote = await page.evaluate((s) => {
+      const root = document.querySelector(s);
+      if (!root) return null;
+      return {
+        figures: root.querySelectorAll('figure').length,
+        blockquote: root.querySelectorAll('figure blockquote').length,
+        text: root.textContent,
+        pending: root.querySelectorAll('.badge--pending').length,
+      };
+    }, sel('testimonio'));
+    check(
+      `p13. ${lang}: testimonio tiene un figure con blockquote, a Patricia Ibarra y exactamente dos .badge--pending`,
+      !!quote && quote.figures === 1 && quote.blockquote === 1 && quote.text.includes('Patricia Ibarra') && quote.pending === 2,
+      quote ? `figure=${quote.figures} blockquote=${quote.blockquote} pendientes=${quote.pending}` : 'sin seccion',
+    );
+
+    // p14
+    const body = await page.evaluate(() => document.body.textContent);
+    check(`p14. ${lang}: el texto de la pagina no contiene Marcela ni Ibáñez`, !/Marcela|Ib[aá]ñez/i.test(body));
+
+    // p15
+    check(
+      `p15. ${lang}: orden final de las secciones propias: ${OWN.join(', ')}`,
+      JSON.stringify(structure.order) === JSON.stringify(OWN),
+      structure.order.join(','),
+    );
+
     // p5 y p6
     const texts = await page.evaluate((ids) => {
       return ids.map((id) => {
@@ -241,6 +269,30 @@ export async function run(ctx) {
       o.doc <= 0 && o.sections.every((s) => s.endsWith(':0')) && o.pre === 0,
       `pagina=${o.doc} ${o.sections.join(' ')} pre=${o.pre}`,
     );
+  }
+
+  // p17: capturas de la zona de pruebas (solo con --shots)
+  if (ctx.shots) {
+    const dir = paths.REPORTS_HOME;
+    fs.mkdirSync(dir, { recursive: true });
+    for (const [name, viewport] of [
+      ['proof-desktop.jpg', { width: 1440, height: 900 }],
+      ['proof-mobile.jpg', { width: 390, height: 844 }],
+    ]) {
+      const { page } = await open('es', viewport);
+      await page.waitForTimeout(500);
+      const clip = await page.evaluate((ids) => {
+        const boxes = ids.map((id) => document.querySelector(`section[data-section="${id}"]`)?.getBoundingClientRect()).filter(Boolean);
+        if (!boxes.length) return null;
+        const top = Math.min(...boxes.map((b) => b.top)) + window.scrollY;
+        const bottom = Math.max(...boxes.map((b) => b.bottom)) + window.scrollY;
+        return { x: 0, y: Math.floor(top), width: document.documentElement.clientWidth, height: Math.ceil(bottom - top) };
+      }, OWN);
+      const file = path.join(dir, name);
+      if (clip) await page.screenshot({ path: file, type: 'jpeg', quality: 50, fullPage: true, clip });
+      const size = clip ? fs.statSync(file).size : 0;
+      check(`p17. captura ${name} (< 400 KB)`, !!clip && size > 0 && size < 400 * 1024, `${Math.round(size / 1024)} KB, ${clip ? clip.height : 0} px de alto`);
+    }
   }
 
   // p7: lint de copy como proceso hijo
