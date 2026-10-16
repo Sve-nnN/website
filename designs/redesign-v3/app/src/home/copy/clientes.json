@@ -1,0 +1,107 @@
+{
+  "es": {
+    "heading": "Con quiénes trabajé",
+    "groups": [
+      {
+        "heading": "SEO",
+        "countNoun": "clientes",
+        "clients": [
+          "money.com",
+          "Miami Herald",
+          "Holafly",
+          "Souma Hotel Lima",
+          "TheSmokyRolling",
+          "DSLX",
+          "Vallas Venezuela",
+          "TheSmokyBox",
+          "Florida Health Care Academy",
+          "Delta Cloudz",
+          "Tursi Digital Nomads",
+          "The Sosa Team",
+          "Florida Top Roofs",
+          "Felipe Vergara",
+          "Storybook app"
+        ]
+      },
+      {
+        "heading": "Desarrollo",
+        "countNoun": "clientes",
+        "clients": [
+          "Luxembourg Philharmonie",
+          "Arianna Lupi",
+          "Apturio",
+          "Childrenchic",
+          "TuMundoSalud",
+          "Crédito USS",
+          "Wiñaypaq",
+          "Dr. Manuel A. Vargas Hidalgo",
+          "Puntada con Amor",
+          "Aprendoclub",
+          "Pro Torque Diesel",
+          "Cresory",
+          "Estylopia"
+        ]
+      }
+    ],
+    "pending": "[PENDIENTE: logos de clientes como imagen desde Media]"
+  },
+  "en": {
+    "heading": "Who I have worked with",
+    "groups": [
+      {
+        "heading": "SEO",
+        "countNoun": "clients",
+        "clients": [
+          "money.com",
+          "Miami Herald",
+          "Holafly",
+          "Souma Hotel Lima",
+          "TheSmokyRolling",
+          "DSLX",
+          "Vallas Venezuela",
+          "TheSmokyBox",
+          "Florida Health Care Academy",
+          "Delta Cloudz",
+          "Tursi Digital Nomads",
+          "The Sosa Team",
+          "Florida Top Roofs",
+          "Felipe Vergara",
+          "Storybook app"
+        ]
+      },
+      {
+        "heading": "Development",
+        "countNoun": "clients",
+        "clients": [
+          "Luxembourg Philharmonie",
+          "Arianna Lupi",
+          "Apturio",
+          "Childrenchic",
+          "TuMundoSalud",
+          "Crédito USS",
+          "Wiñaypaq",
+          "Dr. Manuel A. Vargas Hidalgo",
+          "Puntada con Amor",
+          "Aprendoclub",
+          "Pro Torque Diesel",
+          "Cresory",
+          "Estylopia"
+        ]
+      }
+    ],
+    "pending": "[PENDIENTE: logos de clientes como imagen desde Media]"
+  },
+  "_numbers": [
+    {
+      "value": "15",
+      "source": "Bloque vivo de logos de juan-tech.com, grupo SEO (conteo calculado de la lista)"
+    },
+    {
+      "value": "13",
+      "source": "Bloque vivo de logos de juan-tech.com, grupo Desarrollo (conteo calculado de la lista)"
+    }
+  ],
+  "_sameAllowed": [
+    "groups.0.heading"
+  ]
+}
