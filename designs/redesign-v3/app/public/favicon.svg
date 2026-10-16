@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Colores de designs/redesign-v3/assets/css/tokens.css: --ink, --violet, --coral y --amber. Si cambian alla, cambian aqui. -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5B3DF5"/>
+      <stop offset=".55" stop-color="#FF4D6D"/>
+      <stop offset="1" stop-color="#FFB020"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" fill="#0B0B12"/>
+  <rect x="4" y="4" width="24" height="24" fill="url(#g)"/>
+  <g fill="#0B0B12" shape-rendering="crispEdges">
+    <rect x="11" y="9" width="12" height="3"/>
+    <rect x="17" y="12" width="3" height="9"/>
+    <rect x="11" y="21" width="9" height="3"/>
+    <rect x="11" y="18" width="3" height="3"/>
+  </g>
+</svg>

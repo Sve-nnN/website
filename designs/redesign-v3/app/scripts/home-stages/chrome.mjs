@@ -3,7 +3,10 @@
  * Chequeos c1 a c9 (ver 52-01-PLAN.md, tarea 2).
  */
 
-const ALLOWED = (href) => href.startsWith('#') || href === '/' || href === '/en' || href.startsWith('https://juan-tech.com/');
+import fs from 'node:fs';
+import path from 'node:path';
+
+const ALLOWED =(href) => href.startsWith('#') || href === '/' || href === '/en' || href.startsWith('https://juan-tech.com/');
 
 export async function run(ctx) {
   const { check, openPage } = ctx;
@@ -123,6 +126,24 @@ export async function run(ctx) {
         .map(({ el, r }) => `${el.tagName.toLowerCase()}"${(el.textContent ?? '').trim().slice(0, 18)}" ${r.width.toFixed(0)}x${r.height.toFixed(0)}`),
     );
     check(`c8. ${viewport.width} px: cada enlace y boton visible de cabecera y pie mide al menos 44x44`, small.length === 0, small.join(' | ') || 'todos de 44x44 o mas');
+  }
+
+  // c10: favicon declarado (D-13) con los colores de tokens.css
+  {
+    const res = await fetch(`${ctx.server.url}/favicon.svg`);
+    const svg = res.status === 200 ? await res.text() : '';
+    const tokens = fs.readFileSync(path.join(ctx.paths.APP, '..', 'assets', 'css', 'tokens.css'), 'utf8');
+    const hex = (text) => new Set((text.match(/#[0-9a-f]{6}\b/gi) ?? []).map((h) => h.toLowerCase()));
+    const tokenHex = hex(tokens);
+    const svgHex = hex(svg);
+    const stray = [...svgHex].filter((h) => !tokenHex.has(h));
+    const { page } = await open('es');
+    const declared = await page.evaluate(() => document.querySelector('link[rel="icon"]')?.getAttribute('href'));
+    check(
+      'c10. /favicon.svg responde 200 como image/svg+xml, esta declarado y sus colores salen de tokens.css',
+      res.status === 200 && (res.headers.get('content-type') ?? '').startsWith('image/svg+xml') && declared === '/favicon.svg' && svgHex.size > 0 && stray.length === 0,
+      `estado=${res.status} tipo=${res.headers.get('content-type')} declarado=${declared} colores=${[...svgHex].join(',')} ajenos=${stray.join(',') || 'ninguno'}`,
+    );
   }
 
   // c9
