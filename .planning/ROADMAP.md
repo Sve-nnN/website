@@ -16,7 +16,7 @@
 
 **Restricción dura del milestone:** todos los entregables son HTML estático bajo `designs/redesign-v3/`. Ninguna fase toca `src/`, Payload, colecciones, schema ni la base de datos. La implementación en Payload es un milestone posterior.
 
-- [ ] **Phase 51: Sistema visual** - Tokens, tipografía, componentes base, catálogo de efectos contra reactbits.dev y fallbacks estáticos en `system.html`
+- [x] **Phase 51: Sistema visual** - Tokens, tipografía, componentes base, catálogo de efectos contra reactbits.dev y fallbacks estáticos en `system.html`
 - [ ] **Phase 52: Home mockup y gate de revisión** - Home completa en EN/ES con presupuesto de performance y accesibilidad cumplido, más aprobación explícita de Juan antes de seguir
 - [ ] **Phase 53: Servicios y landings locales** - Índice de servicios, una landing representativa y las landings locales de Lima y Madrid
 - [ ] **Phase 54: Blog y case studies** - Listado y detalle de blog y de case studies, con modo lectura
@@ -41,9 +41,9 @@
 
 Plans:
 
-- [ ] 51-01-PLAN.md: Cimientos (tracer del grainy gradient, fuentes autohospedadas, tokens y tabla de contraste por script)
-- [ ] 51-02-PLAN.md: Efectos (fallbacks CSS de los 6 efectos y de los 8 adicionales del scout, motor de slot único, catálogo contra reactbits.dev y pesos)
-- [ ] 51-03-PLAN.md: Componentes con estados, verificación final (chequeo estático, Lighthouse, capturas) y commit de designs/redesign-v3
+- [x] 51-01-PLAN.md: Cimientos (tracer del grainy gradient, fuentes autohospedadas, tokens y tabla de contraste por script)
+- [x] 51-02-PLAN.md: Efectos (fallbacks CSS de los 6 efectos y de los 8 adicionales del scout, motor de slot único, catálogo contra reactbits.dev y pesos)
+- [x] 51-03-PLAN.md: Componentes con estados, verificación final (chequeo estático, Lighthouse, capturas) y commit de designs/redesign-v3
 
 **UI hint**: yes
 
@@ -130,7 +130,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 51. Sistema visual | 0/TBD | Not started | - |
+| 51. Sistema visual | 3/3 | Complete (human_needed) | 2026-10-15 |
 | 52. Home mockup y gate de revisión | 0/TBD | Not started | - |
 | 53. Servicios y landings locales | 0/TBD | Not started | - |
 | 54. Blog y case studies | 0/TBD | Not started | - |

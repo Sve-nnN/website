@@ -9,11 +9,11 @@ Alcance del milestone v2.3: mockups HTML estáticos en `designs/redesign-v3/`. N
 
 ### Sistema visual (SYS)
 
-- [ ] **SYS-01**: Juan puede abrir `designs/redesign-v3/system.html` y ver los tokens del sistema: paleta (negro tinta `#0B0B12`, gradiente grainy violeta `#5B3DF5` a coral `#FF4D6D` a ámbar `#FFB020`, verde fósforo `#B6FF3B` solo para ASCII y estados), tipografía y escala de espaciado.
-- [ ] **SYS-02**: El sistema documenta cada par texto/fondo con su ratio de contraste calculado y todos cumplen WCAG 2.2 AA.
-- [ ] **SYS-03**: Existe una biblioteca de componentes en HTML (botones, cards, badges, nav, footer, formulario, bloque terminal CRT, bloque ASCII) con estados hover, focus, disabled y reduced-motion.
-- [ ] **SYS-04**: Cada efecto inspirado en React Bits (grainy gradient, pattern waves, CRT warp, micro slats, pixel, ASCII) está identificado contra el catálogo real de reactbits.dev, con nombre exacto del componente de origen y su costo de peso.
-- [ ] **SYS-05**: Cada efecto tiene un fallback estático en CSS (gradiente + ruido SVG) que se ve bien sin JavaScript y es lo que ve mobile, `prefers-reduced-motion` y `saveData`.
+- [x] **SYS-01**: Juan puede abrir `designs/redesign-v3/system.html` y ver los tokens del sistema: paleta (negro tinta `#0B0B12`, gradiente grainy violeta `#5B3DF5` a coral `#FF4D6D` a ámbar `#FFB020`, verde fósforo `#B6FF3B` solo para ASCII y estados), tipografía y escala de espaciado.
+- [x] **SYS-02**: El sistema documenta cada par texto/fondo con su ratio de contraste calculado y todos cumplen WCAG 2.2 AA.
+- [x] **SYS-03**: Existe una biblioteca de componentes en HTML (botones, cards, badges, nav, footer, formulario, bloque terminal CRT, bloque ASCII) con estados hover, focus, disabled y reduced-motion.
+- [x] **SYS-04**: Cada efecto inspirado en React Bits (grainy gradient, pattern waves, CRT warp, micro slats, pixel, ASCII) está identificado contra el catálogo real de reactbits.dev, con nombre exacto del componente de origen y su costo de peso.
+- [x] **SYS-05**: Cada efecto tiene un fallback estático en CSS (gradiente + ruido SVG) que se ve bien sin JavaScript y es lo que ve mobile, `prefers-reduced-motion` y `saveData`.
 
 ### Entorno React de mockups (REACT)
 
@@ -64,11 +64,11 @@ Cada requirement pertenece a exactamente una fase. PERF-01 a PERF-04 se establec
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SYS-01 | Phase 51 | Pending |
-| SYS-02 | Phase 51 | Pending |
-| SYS-03 | Phase 51 | Pending |
-| SYS-04 | Phase 51 | Pending |
-| SYS-05 | Phase 51 | Pending |
+| SYS-01 | Phase 51 | Complete |
+| SYS-02 | Phase 51 | Complete |
+| SYS-03 | Phase 51 | Complete |
+| SYS-04 | Phase 51 | Complete |
+| SYS-05 | Phase 51 | Complete |
 | REACT-01 | Phase 51.1 | Pending |
 | REACT-02 | Phase 51.1 | Pending |
 | REACT-03 | Phase 51.1 | Pending |

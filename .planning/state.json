@@ -1,0 +1,38 @@
+{
+  "contract": "1.0.0",
+  "flavor": "core",
+  "milestone": "v2.3 — Rediseño Visual v3 (mockups HTML)",
+  "phases": [
+    {
+      "number": "51",
+      "name": "Sistema visual",
+      "status": "pending"
+    },
+    {
+      "number": "52",
+      "name": "Home mockup y gate de revisión",
+      "status": "pending"
+    },
+    {
+      "number": "53",
+      "name": "Servicios y landings locales",
+      "status": "pending"
+    },
+    {
+      "number": "54",
+      "name": "Blog y case studies",
+      "status": "pending"
+    },
+    {
+      "number": "55",
+      "name": "Páginas restantes e índice",
+      "status": "pending"
+    }
+  ],
+  "next": {
+    "command": "/gsd:progress",
+    "label": "Show progress",
+    "reason": "Unsure of state — showing progress"
+  },
+  "updated_at": "2026-10-15T23:09:33.033Z"
+}
