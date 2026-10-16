@@ -9,6 +9,17 @@
       "langLabel": "Idioma",
       "pause": "Pausar animaciones"
     },
+    "nav": {
+      "label": "Principal",
+      "menu": "Menú",
+      "items": [
+        { "label": "Servicios", "href": "#servicios" },
+        { "label": "Casos de éxito", "href": "#casos" },
+        { "label": "Blog", "live": "/blog" },
+        { "label": "Autores", "live": "/authors" },
+        { "label": "Contacto", "href": "#contacto" }
+      ]
+    },
     "hero": {
       "h1": "Construyo software rápido y hago que se encuentre en Google",
       "lede": "Escribo el código y reviso cómo lo ve Google. Para mí, ingeniería de software y SEO técnico son una sola disciplina.",
@@ -25,6 +36,17 @@
     "header": {
       "langLabel": "Language",
       "pause": "Pause animations"
+    },
+    "nav": {
+      "label": "Main",
+      "menu": "Menu",
+      "items": [
+        { "label": "Services", "href": "#servicios" },
+        { "label": "Case studies", "href": "#casos" },
+        { "label": "Blog", "live": "/blog" },
+        { "label": "Authors", "live": "/authors" },
+        { "label": "Contact", "href": "#contacto" }
+      ]
     },
     "hero": {
       "h1": "I build fast software and get it found on Google",

@@ -242,7 +242,7 @@ export async function run(ctx) {
     const dir = paths.REPORTS_HOME;
     const desktop = await open(ctx.lang('es'));
     await waitCanvas(desktop.page, 1, 6000);
-    await desktop.page.waitForTimeout(1200);
+    await desktop.page.waitForTimeout(4000);
     await desktop.page.screenshot({ path: path.join(dir, 'tracer-desktop.jpg'), type: 'jpeg', quality: 70 });
     const mobile = await open(ctx.lang('es'), { viewport: { width: 390, height: 844 }, contextOptions: { isMobile: true, hasTouch: true, deviceScaleFactor: 1 } });
     await mobile.page.waitForTimeout(800);

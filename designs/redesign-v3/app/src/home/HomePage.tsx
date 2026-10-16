@@ -1,7 +1,9 @@
 import { useLayoutEffect } from 'react';
 import { ASCII_ART } from '../gallery/fallbacks';
 import { HomeEffect, HomeEffectProvider, useHomeEffects } from './home-effect';
+import { Footer } from './Footer';
 import { HomeSections } from './HomeSections';
+import { liveUrl } from './links';
 import copyJson from './copy/page.json';
 import './home.css';
 
@@ -29,11 +31,24 @@ function useDocumentMeta(lang: Lang) {
 function Header({ lang }: { lang: Lang }) {
   const { paused, togglePause } = useHomeEffects();
   const t = copy[lang].header;
+  const nav = copy[lang].nav;
+  const links = nav.items.map((item) => (
+    <li key={item.label}>
+      <a href={'href' in item ? item.href : liveUrl(lang, item.live)}>{item.label}</a>
+    </li>
+  ));
   return (
     <header className="site-header hm-header">
       <a className="brand" href={HOME_PATH[lang]}>
         Juan Carlos Angulo
       </a>
+      <nav className="nav" aria-label={nav.label}>
+        <ul className="nav__list nav__list--bar">{links}</ul>
+        <details className="nav__menu">
+          <summary>{nav.menu}</summary>
+          <ul className="nav__list">{links}</ul>
+        </details>
+      </nav>
       <div className="site-header__tools">
         <ul className="lang" aria-label={t.langLabel}>
           <li>
@@ -85,13 +100,7 @@ function Hero({ lang }: { lang: Lang }) {
 
 function Page({ lang }: { lang: Lang }) {
   useDocumentMeta(lang);
-  const after = (
-    <footer className="site-footer hm-footer">
-      <a className="brand" href={HOME_PATH[lang]}>
-        Juan Carlos Angulo
-      </a>
-    </footer>
-  );
+  const after = <Footer lang={lang} />;
   return (
     <>
       <a className="skip-link" href="#contenido">

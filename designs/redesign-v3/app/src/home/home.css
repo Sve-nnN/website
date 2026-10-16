@@ -82,3 +82,27 @@
 .site-footer.hm-footer a {
   color: var(--paper);
 }
+
+.hm-footer__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.hm-footer__tagline {
+  max-width: var(--measure);
+  margin-top: var(--space-1);
+}
+
+.hm-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+}
+
+/* Marca del pie: misma caja fija que la de la cabecera (regla 12). */
+.hm-footer .brand {
+  min-width: 11rem;
+}
