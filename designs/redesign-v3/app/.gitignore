@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.vite/
+reports/.tmp/
+# Los originales de React Bits no se versionan: el repositorio es publico y la Commons Clause no permite redistribuir los componentes (ver LICENSES.md).
+src/components/reactbits/
