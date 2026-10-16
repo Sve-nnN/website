@@ -238,3 +238,17 @@ Lighthouse mobile (3 corridas, mediana, http local)
 - papel-tomate: performance 98, 98, 98; accesibilidad 100; best practices 100; LCP 1.96 s; CLS 0; TBT 84 ms.
 - tinta-fosforo: performance 98, 98, 99; accesibilidad 100; LCP 1.96 s; CLS 0; TBT 80 ms.
 - Aclaración: con la franja de clientes cargando todo al inicio, el LCP subió a 2.26 s frente a 1.81 s sin ella. Se corrigió con carga diferida de máscaras y color. El margen frente a 2.0 s es de unos 40 ms y el equipo estaba con carga alta, así que conviene repetir la medición en una máquina tranquila.
+
+## Iteración 5: papel-bosque por defecto y logos visibles sin hover
+
+Causa confirmada: al abrir `index.html` por `file://`, Chrome trata `mask-image` como una petición con CORS y bloquea los 26 archivos de máscara (la consola mostraba "Access to image at file:///... has been blocked by CORS policy", `net::ERR_FAILED`). Por eso solo se veían los dos nombres en texto. En hover aparecía el color porque ese `<img>` sí carga por `file://`. Verificado con Playwright por `file://`, no solo por http.
+
+Corrección
+- Los logos son ahora `<img>` reales. El monocromo sale de un PNG/WebP de silueta (alfa de cada logo, normalizado por tipo de fondo) más un filtro CSS por paleta: `--logo-filter: none` en las claras e `invert(1)` en las oscuras. Así un logo oscuro sobre fondo oscuro o uno claro sobre claro no desaparece: todos son siluetas con el color de texto de la paleta. El color real sigue en hover y foco.
+- Verificado por `file://` y sin hover en papel-bosque, tinta-fosforo, noche-menta, tinta-ambar y papel-cobalto: 26 logos cargados, 0 rotos, consola limpia, más 2 nombres en texto (Miami Herald y Arianna Lupi).
+- Los `<img>` se piden cuando la franja entra en pantalla (queda debajo del hero), para no restar al LCP. Los HTML cargados antes con todas las imágenes dieron LCP de 2.3 s.
+- Marquee con pausa al hover y foco, botón global de pausa y cuadrícula quieta con reduced-motion: sin cambios y verificados.
+
+Paleta por defecto: papel-bosque (sin `?paleta` ni storage). El selector conserva las otras cinco. La lima se ve solo como banda de subrayado en enlaces (por ejemplo el correo del contacto). AA sin cambios: texto 17.44, secundario 6.71, texto sobre acento 11.59, acento inverso 9.79.
+
+Medición Lighthouse mobile (papel-bosque, http local, 3 corridas, mediana): performance 98 a 99, accesibilidad 100, best practices 100, LCP 1.95 s, CLS 0, TBT 0 ms. La máquina estaba muy cargada (load 8 a 15 por builds ajenos), así que descarté corridas contaminadas. Una referencia sin la franja dio LCP 1.81 s en las mismas condiciones.

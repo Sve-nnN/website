@@ -154,24 +154,30 @@
   tBtns.forEach(function (b) { b.addEventListener('click', function () { setTn(b.dataset.tn); }); });
   tBtns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.tn === root.dataset.tn)); });
 
-  /* Franja de clientes: el segundo conjunto del marquee se clona aqui (aria-hidden) y las mascaras se piden al acercarse */
+  /* Franja de clientes: los logos son <img> reales (monocromo con filtro CSS), se arman desde data-l y se piden cuando la franja entra en pantalla */
   var strip = d.getElementById('clientes');
   if (strip) {
+    var mk = function (li, mono) {
+      var p = li.getAttribute('data-l').split('|'), w = p[1];
+      li.removeAttribute('data-l');
+      var m = d.createElement('img'); m.className = 'lm'; m.width = +w; m.height = 34; m.alt = p[2]; m.decoding = 'async'; m.setAttribute('data-src', 'assets/logos/' + p[0] + '-m.webp');
+      var c = d.createElement('img'); c.className = 'lc'; c.width = +w; c.height = 34; c.alt = ''; c.decoding = 'async'; c.setAttribute('data-src', 'assets/logos/' + p[0] + '.webp');
+      li.appendChild(m); li.appendChild(c);
+    };
+    strip.querySelectorAll('li[data-l]').forEach(mk);
     strip.querySelectorAll('.ctrack').forEach(function (t) {
       var set = t.querySelector('.cset'); if (!set) return;
       var c = set.cloneNode(true); c.setAttribute('aria-hidden', 'true'); c.removeAttribute('role');
-      c.querySelectorAll('[aria-label]').forEach(function (e) { e.removeAttribute('aria-label'); e.removeAttribute('role'); });
+      c.querySelectorAll('img.lm').forEach(function (e) { e.setAttribute('alt', ''); });
       t.appendChild(c);
     });
-    var loadMasks = function () {
-      strip.querySelectorAll('.lg[data-m]').forEach(function (e) {
-        var u = 'url(' + e.getAttribute('data-m') + ')'; e.style.webkitMaskImage = u; e.style.maskImage = u; e.removeAttribute('data-m');
-      });
+    var showLogos = function () {
+      strip.querySelectorAll('img.lm[data-src]').forEach(function (im) { im.src = im.getAttribute('data-src'); im.removeAttribute('data-src'); });
     };
     if ('IntersectionObserver' in window) {
-      var mo = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { loadMasks(); mo.disconnect(); } }, { rootMargin: '0px' });
-      mo.observe(strip);
-    } else { loadMasks(); }
+      var lo = new IntersectionObserver(function (es) { if (es[0].isIntersecting) { showLogos(); lo.disconnect(); } }, { rootMargin: '0px 0px -24px 0px' });
+      lo.observe(strip);
+    } else if (d.readyState === 'complete') showLogos(); else window.addEventListener('load', showLogos);
     /* el color real solo se pide al pasar el cursor o enfocar */
     var loadColor = function (e) {
       var cl = e.target.closest ? e.target.closest('.cl') : null; if (!cl) return;
@@ -186,7 +192,7 @@
   var palMin = d.getElementById('palmin'), palHide = d.getElementById('palhide');
   function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function applyPal(id, save) {
-    if (id === 'papel-tomate') root.removeAttribute('data-palette'); else root.dataset.palette = id;
+    if (id === 'papel-bosque') root.removeAttribute('data-palette'); else root.dataset.palette = id;
     palItems.forEach(function (b) {
       var on = b.dataset.pal === id;
       b.setAttribute('aria-pressed', String(on));
@@ -197,7 +203,7 @@
       try { var u = new URL(location.href); u.searchParams.set('paleta', id); history.replaceState(null, '', u); } catch (e) {}
     }
   }
-  applyPal(root.dataset.palette || 'papel-tomate', false);
+  applyPal(root.dataset.palette || 'papel-bosque', false);
   palItems.forEach(function (b) { b.addEventListener('click', function () { applyPal(b.dataset.pal, true); }); });
   function palOpen(o) {
     palMenu.hidden = !o; palBtn.setAttribute('aria-expanded', String(o));
