@@ -1,0 +1,145 @@
+{
+  "fecha": "2026-10-21T02:24:43.109Z",
+  "totals": {
+    "es": 5,
+    "en": 5
+  },
+  "claves": {
+    "es": [
+      {
+        "clave": "es.medicion.pending",
+        "seccion": "medicion",
+        "texto": "PENDIENTE medir"
+      },
+      {
+        "clave": "es.websites.pending",
+        "seccion": "websites",
+        "texto": "PENDIENTE"
+      },
+      {
+        "clave": "es.sobre.portrait",
+        "seccion": "sobre",
+        "texto": "RETRATO PENDIENTE"
+      },
+      {
+        "clave": "es.testimonios.pending",
+        "seccion": "testimonios",
+        "texto": "PENDIENTE"
+      },
+      {
+        "clave": "es.contacto.pending",
+        "seccion": "contacto",
+        "texto": "PENDIENTE"
+      }
+    ],
+    "en": [
+      {
+        "clave": "en.medicion.pending",
+        "seccion": "medicion",
+        "texto": "PENDING measurement"
+      },
+      {
+        "clave": "en.websites.pending",
+        "seccion": "websites",
+        "texto": "PENDING"
+      },
+      {
+        "clave": "en.sobre.portrait",
+        "seccion": "sobre",
+        "texto": "PORTRAIT PENDING"
+      },
+      {
+        "clave": "en.testimonios.pending",
+        "seccion": "testimonios",
+        "texto": "PENDING"
+      },
+      {
+        "clave": "en.contacto.pending",
+        "seccion": "contacto",
+        "texto": "PENDING"
+      }
+    ]
+  },
+  "secciones": [
+    {
+      "seccion": "medicion",
+      "lang": "es",
+      "marcas": 1,
+      "textos": [
+        "PENDIENTE medir Los valores de esta franja son de muestra"
+      ]
+    },
+    {
+      "seccion": "websites",
+      "lang": "es",
+      "marcas": 1,
+      "textos": [
+        "Sitios web que construí PENDIENTE Fecha y herramienta de la medición de cada puntaje"
+      ]
+    },
+    {
+      "seccion": "sobre",
+      "lang": "es",
+      "marcas": 1,
+      "textos": [
+        "RETRATO PENDIENTE Se carga desde Media Ingeniero de software que trabaja el SEO Trabajo el SEO desde el código"
+      ]
+    },
+    {
+      "seccion": "testimonios",
+      "lang": "es",
+      "marcas": 9,
+      "textos": [
+        "Patricia Ibarra CEO de Estylopia Testimonio pendiente, ejemplo de maqueta [ PENDIENTE ] Rol [ PENDIENTE ], empresa [ PENDIENTE ] Testimonio pendiente, ejemplo de maqueta [ PENDIENTE ] Rol [ PENDIENTE ], empresa [ PENDIENTE ] PENDIENTE Solo existe una cita real"
+      ]
+    },
+    {
+      "seccion": "contacto",
+      "lang": "es",
+      "marcas": 1,
+      "textos": [
+        "com PENDIENTE Plazo de respuesta real"
+      ]
+    },
+    {
+      "seccion": "medicion",
+      "lang": "en",
+      "marcas": 1,
+      "textos": [
+        "PENDING measurement The values in this strip are samples"
+      ]
+    },
+    {
+      "seccion": "websites",
+      "lang": "en",
+      "marcas": 1,
+      "textos": [
+        "Websites I built PENDING Date and tool for each score"
+      ]
+    },
+    {
+      "seccion": "sobre",
+      "lang": "en",
+      "marcas": 1,
+      "textos": [
+        "PORTRAIT PENDING Loaded from Media Software engineer who works on SEO I work on SEO from the code"
+      ]
+    },
+    {
+      "seccion": "testimonios",
+      "lang": "en",
+      "marcas": 9,
+      "textos": [
+        "Patricia Ibarra CEO of Estylopia Testimonial pending, mockup example [ PENDING ] Role [ PENDING ], company [ PENDING ] Testimonial pending, mockup example [ PENDING ] Role [ PENDING ], company [ PENDING ] PENDING Only one quote is real"
+      ]
+    },
+    {
+      "seccion": "contacto",
+      "lang": "en",
+      "marcas": 1,
+      "textos": [
+        "com PENDING Real response time"
+      ]
+    }
+  ]
+}
