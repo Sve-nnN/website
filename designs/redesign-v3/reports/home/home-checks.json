@@ -1,0 +1,114 @@
+{
+  "fecha": "2026-10-21T02:19:43.581Z",
+  "buildSha256": "7625f3782a4ef7c3b4892dacac46842b39b886991798750d9350b4688d8bd199",
+  "etapas": {
+    "i18n": {
+      "pass": 17,
+      "fail": 0
+    }
+  },
+  "checks": [
+    {
+      "etapa": "i18n",
+      "name": "i1. / y /en tienen las mismas secciones en el mismo orden",
+      "ok": true,
+      "detail": "es=top,clientes,Temas que trabajo / Topics I work on,medicion,servicios,casos,proceso,websites,sobre,testimonios,faq,contacto | en=top,clientes,Temas que trabajo / Topics I work on,medicion,servicios,casos,proceso,websites,sobre,testimonios,faq,contacto"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i2. mismos conteos de h1, h2, h3, a, li, details, summary, button, input, textarea y pendientes",
+      "ok": true,
+      "detail": "{\"h1\":1,\"h2\":11,\"h3\":26,\"a\":62,\"li\":165,\"details\":5,\"summary\":5,\"button\":17,\"input\":2,\"textarea\":1,\"pending\":4}"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i3h1. h1: ningun texto igual entre ES y EN salvo SAME_ALLOWED",
+      "ok": true,
+      "detail": "1 textos"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i3h2. h2: ningun texto igual entre ES y EN salvo SAME_ALLOWED",
+      "ok": true,
+      "detail": "11 textos"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i3h3. h3: ningun texto igual entre ES y EN salvo SAME_ALLOWED",
+      "ok": true,
+      "detail": "26 textos"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i3nav. cabecera: ningun texto igual entre ES y EN salvo SAME_ALLOWED",
+      "ok": true,
+      "detail": "11 textos"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i3footer. pie: ningun texto igual entre ES y EN salvo SAME_ALLOWED",
+      "ok": true,
+      "detail": "39 textos"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i4a. /en: como maximo 2 palabras vacias del espanol",
+      "ok": true,
+      "detail": "hallazgos=0 "
+    },
+    {
+      "etapa": "i18n",
+      "name": "i4b. /: como maximo 2 palabras vacias del ingles",
+      "ok": true,
+      "detail": "hallazgos=0 "
+    },
+    {
+      "etapa": "i18n",
+      "name": "i5a. html[lang] es \"es\" en / y \"en\" en /en",
+      "ok": true,
+      "detail": "es=es en=en"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i5b. los titulos difieren, miden 60 o menos, terminan en \" | Juan Carlos Angulo\" y no llevan punto ni coma final",
+      "ok": true,
+      "detail": "es=\"SEO técnico e ingeniería de software | Juan Carlos Angulo\" (57) en=\"Technical SEO Consultant | Juan Carlos Angulo\" (45)"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i5c. la meta description mide entre 110 y 160 caracteres y difiere entre idiomas",
+      "ok": true,
+      "detail": "es=148 en=140"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i6a. clic en EN cambia html lang, H1, titulo, descripcion, URL /en y aria-pressed",
+      "ok": true,
+      "detail": "{\"lang\":\"en\",\"h1\":\"I fix SEO from the code\",\"title\":\"Technical SEO Consultant | Juan Carlos Angulo\",\"desc\":\"I am a software engineer and technical SEO consultant: audits, web performance and Next.js/Payload architecture to rank your site on"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i6b. clic en ES devuelve lang, titulo, URL / y aria-pressed",
+      "ok": true,
+      "detail": "{\"lang\":\"es\",\"title\":\"SEO técnico e ingeniería de software | Juan Carlos Angulo\",\"path\":\"/\",\"pressed\":\"true\"}"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i6c. la carga directa de /en rinde lang=\"en\" con el H1 y titulo de EN",
+      "ok": true,
+      "detail": "{\"lang\":\"en\",\"title\":\"Technical SEO Consultant | Juan Carlos Angulo\",\"h1\":\"I fix SEO from the code\"}"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i7. i18n-es-desktop.jpg pesa menos de 400 KB",
+      "ok": true,
+      "detail": "176 KB (i18n-es-desktop.jpg)"
+    },
+    {
+      "etapa": "i18n",
+      "name": "i7. i18n-en-desktop.jpg pesa menos de 400 KB",
+      "ok": true,
+      "detail": "162 KB (i18n-en-desktop.jpg)"
+    }
+  ]
+}

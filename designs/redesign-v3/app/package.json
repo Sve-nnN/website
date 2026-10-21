@@ -18,6 +18,7 @@
     "measure:weights": "node scripts/measure-weights.mjs",
     "measure:lighthouse": "node scripts/measure-lighthouse.mjs",
     "verify:home": "node scripts/verify-home.mjs",
+    "verify:home:checks": "node scripts/verify-home-checks.mjs",
     "measure:home": "node scripts/measure-home.mjs",
     "measure": "npm run build && npm run measure:weights && npm run measure:lighthouse"
   },
