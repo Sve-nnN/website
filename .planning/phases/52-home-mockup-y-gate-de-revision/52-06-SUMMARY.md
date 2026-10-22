@@ -229,3 +229,19 @@ None - no external service configuration required.
 
 *Phase: 52-home-mockup-y-gate-de-revision*
 *Completed: 2026-10-22*
+
+## Self-Check: PASSED
+
+- FOUND: `189db6a` (Tarea 1: harness de etapas + etapa i18n)
+- FOUND: `9ab501f` (Tarea 2: etapa copy de cifras)
+- FOUND: `b1a9ac0` (Tarea 3: a11y, budget, isolation)
+- FOUND: `5cbf659` (Metadatos del plan: SUMMARY, STATE, ROADMAP, REQUIREMENTS)
+- FOUND: `designs/redesign-v3/app/scripts/home-stages/a11y.mjs`
+- FOUND: `designs/redesign-v3/app/scripts/home-stages/budget.mjs`
+- FOUND: `designs/redesign-v3/app/scripts/home-stages/isolation.mjs`
+- FOUND: `designs/redesign-v3/app/scripts/lib/a11y-probe.mjs`
+- FOUND: `designs/redesign-v3/reports/home/budget.json`
+- No commit deleted tracked files (deletion check empty on all four commits)
+- `verify:home:checks --stage=all` → 129 PASS, 0 FAIL (exit 0)
+- `verify:home` → 37/37
+- Root cleanliness (`git status --short -- package.json package-lock.json pnpm-lock.yaml yarn.lock src`) → empty
