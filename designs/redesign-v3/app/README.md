@@ -25,6 +25,10 @@ npm run typecheck
 npm run originals:verify
 npm run verify
 npm run measure
+npm run verify:home
+npm run verify:home:checks
+npm run measure:home
+npm run originals:verify -- --online
 ```
 
 - `npm run dev` levanta el servidor de desarrollo en el puerto 5173.
@@ -32,6 +36,10 @@ npm run measure
 - `npm run preview` sirve ese build en el puerto 4173.
 - `npm run verify` corre el harness de Playwright (tracer, gallery, report y readme). Necesita `dist/`.
 - `npm run measure` construye, mide pesos y corre 12 corridas de Lighthouse. Tarda entre 5 y 10 minutos.
+- `npm run verify:home` comprueba las reglas del diseño de la home, el cupo de efectos y el presupuesto sobre `dist/`.
+- `npm run verify:home:checks` corre el harness por etapas de la home (i18n, copy, accesibilidad, presupuesto y aislamiento).
+- `npm run measure:home` corre Lighthouse sobre la home (3 corridas por combinacion, mediana) y escribe en `designs/redesign-v3/reports/home-v4/`.
+- `npm run originals:verify -- --online` vuelve a comprobar los hashes de los originales contra el registro.
 
 ## Direcciones
 
@@ -41,7 +49,16 @@ Servidor de desarrollo (`npm run dev`, puerto 5173) y build servido (`npm run pr
 - Home v4 en inglés: `/en`
 - Otra paleta de prueba: `/?paleta=papel-tomate`, `tinta-fosforo`, `noche-menta`, `papel-cobalto`, `tinta-ambar` o `papel-bosque`
 - Vista de testimonios: `/?testimonios=1`, `3` u `8`; el selector de paletas vuelve con `?selector=1`
-- `/system` y `/rendimiento`: la galería y el informe de la fase 51.1 (siguen igual)
+
+Direcciones exactas de la galeria y el informe de la fase 51.1, en desarrollo y en el build servido:
+
+- `http://127.0.0.1:5173/system` (dev): la galeria de originales de la fase 51.1.
+- `http://127.0.0.1:5173/rendimiento` (dev): el informe de pesos y medianas.
+- `http://127.0.0.1:4173/system` (build): la misma galeria sobre `dist/`.
+- `http://127.0.0.1:4173/system?mount=grainient` (build): un original montado en produccion.
+- `http://127.0.0.1:4173/rendimiento` (build): el mismo informe sobre `dist/`.
+
+Estas dos vistas (`/system` y `/rendimiento`) siguen igual que en la fase 51.1 y no forman parte de la home v4.
 
 ## La home v4
 
@@ -61,6 +78,10 @@ Los originales de React Bits viven en `src/home/fx/index.tsx` (solo props, todos
 6. Abre `/rendimiento` y revisa el peso de cada original contra el porte vanilla y las medianas de Lighthouse.
 7. Elige cuáles originales pasan a las páginas de las fases 52 a 55.
 8. Confirma la política de no versionar los originales que describe `LICENSES.md`.
+9. Revisa la home v4 para el gate de la fase 52: abre `/` y `/en` en desarrollo y en el build servido, en escritorio y en móvil.
+10. Abre `designs/redesign-v3/reports/home/REPORT.md` para ver el detalle de la medición final, los supuestos y los pendientes.
+11. Corre `npm run verify:home:checks -- --stage=all --final-shots --json=designs/redesign-v3/reports/home/home-checks.json` y revisa las capturas `final-es-desktop.jpg`, `final-es-mobile.jpg`, `final-en-desktop.jpg` y `final-en-mobile.jpg`.
+12. Da tu decisión en el gate: `approve`, `approve-with-notes` o `changes` (con notas numeradas).
 
 ## Cómo funciona el cupo
 

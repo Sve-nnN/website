@@ -9,8 +9,8 @@
     "webglContextsCreated": 3,
     "maxLiveWebglContexts": 1,
     "timeline": {
-      "firstLcp": 228,
-      "lastLcp": 6224
+      "firstLcp": 1892,
+      "lastLcp": 15688
     }
   },
   "readingSections": [

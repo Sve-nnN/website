@@ -131,6 +131,40 @@ for (const n of names) {
   await mod.run(ctx);
 }
 
+/* ---------- capturas finales (--final-shots) ---------- */
+
+// Escribe las cuatro capturas finales del gate en designs/redesign-v3/reports/home/:
+// final-es-desktop.jpg, final-en-desktop.jpg, final-es-mobile.jpg y final-en-mobile.jpg.
+// Cada una sale por debajo de 400 KB; se baja la calidad por pasos si hace falta, nunca se edita la imagen a mano.
+if (wantShots) {
+  currentStage = 'shots';
+  console.log('--- capturas finales ---');
+  const FINAL_VIEWPORTS = {
+    desktop: { width: 1440, height: 900 },
+    mobile: { width: 390, height: 844 },
+  };
+  const MOBILE_CONTEXT = { isMobile: true, hasTouch: true, deviceScaleFactor: 2 };
+  for (const l of ['es', 'en']) {
+    for (const factor of ['desktop', 'mobile']) {
+      const contextOptions = factor === 'mobile' ? MOBILE_CONTEXT : {};
+      const { context, page } = await openPage(lang(l), { viewport: FINAL_VIEWPORTS[factor], contextOptions });
+      await page.waitForFunction(() => document.documentElement.dataset.fx && document.documentElement.dataset.fx !== 'wait', null, { timeout: 20000 }).catch(() => {});
+      await page.waitForTimeout(1200);
+      const name = `final-${l}-${factor}.jpg`;
+      let file = '';
+      let size = 0;
+      for (const quality of [75, 60, 45]) {
+        file = path.join(REPORTS_HOME, name);
+        await page.screenshot({ path: file, type: 'jpeg', quality });
+        size = fs.statSync(file).size;
+        if (size < 400 * 1024) break;
+      }
+      check(`sh1. ${name} pesa menos de 400 KB`, size < 400 * 1024, `${(size / 1024).toFixed(0)} KB (${name})`);
+      await context.close();
+    }
+  }
+}
+
 await browser.close();
 await server.close();
 

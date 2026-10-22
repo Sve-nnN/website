@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-10-22T00:13:01.273Z",
+  "fecha": "2026-10-22T01:22:43.718Z",
   "buildSha256": "1a7c933d8fd7237f31eb85cafb0a92fcf7cfb74f369d7fbcf6addb71926750af",
   "etapas": {
     "i18n": {
@@ -19,7 +19,11 @@
       "fail": 0
     },
     "isolation": {
-      "pass": 9,
+      "pass": 6,
+      "fail": 3
+    },
+    "shots": {
+      "pass": 4,
       "fail": 0
     }
   },
@@ -118,13 +122,13 @@
       "etapa": "i18n",
       "name": "i7. i18n-es-desktop.jpg pesa menos de 400 KB",
       "ok": true,
-      "detail": "173 KB (i18n-es-desktop.jpg)"
+      "detail": "167 KB (i18n-es-desktop.jpg)"
     },
     {
       "etapa": "i18n",
       "name": "i7. i18n-en-desktop.jpg pesa menos de 400 KB",
       "ok": true,
-      "detail": "164 KB (i18n-en-desktop.jpg)"
+      "detail": "157 KB (i18n-en-desktop.jpg)"
     },
     {
       "etapa": "copy",
@@ -694,7 +698,7 @@
       "etapa": "budget",
       "name": "b3. cada chunk de original (Dither, HalftoneReveal) se pide despues de loadEventEnd (no bloquea la carga inicial)",
       "ok": true,
-      "detail": "chunks=Dither-D6vutHxJ.js@317 Dither-C5uArhRq.css@317 HalftoneReveal-ChkMdQYM.js@35571 HalftoneReveal-zn6FqNYG.css@35571 loadEventEnd=82 primerLCP=224 ultimoLCP=6144"
+      "detail": "chunks=Dither-D6vutHxJ.js@2627 Dither-C5uArhRq.css@2627 HalftoneReveal-ChkMdQYM.js@46947 HalftoneReveal-zn6FqNYG.css@46948 loadEventEnd=314 primerLCP=1892 ultimoLCP=15688"
     },
     {
       "etapa": "budget",
@@ -712,13 +716,13 @@
       "etapa": "budget",
       "name": "b2. con el puntero sobre la captura de websites el hero deja de estar montado y al volver arriba vuelve a montarse el del hero",
       "ok": true,
-      "detail": "hero@951ms halftone@731ms enCaptura=halftone(1 canvas banda) arriba=dither"
+      "detail": "hero@1447ms halftone@1002ms enCaptura=halftone(1 canvas banda) arriba=dither"
     },
     {
       "etapa": "budget",
       "name": "b9. Pausar animaciones en mitad del recorrido deja 0 canvas, y al soltar vuelve el efecto de la zona visible en menos de 3000 ms",
       "ok": true,
-      "detail": "pausa en 10ms, sigue en 0=true, vuelve en 21ms (previo 416ms)"
+      "detail": "pausa en 26ms, sigue en 0=true, vuelve en 39ms (previo 387ms)"
     },
     {
       "etapa": "budget",
@@ -746,15 +750,15 @@
     },
     {
       "etapa": "isolation",
-      "name": "s1. la base 48e7857 existe, HEAD (99b721a) es distinto de la base y la base es ancestro de HEAD",
+      "name": "s1. la base 48e7857 existe, HEAD (38008a7) es distinto de la base y la base es ancestro de HEAD",
       "ok": true,
       "detail": "cat-file=true rev-parseDistinto=true ancestro=true"
     },
     {
       "etapa": "isolation",
       "name": "s2. la union de diff y estado no esta vacia y todas las rutas viven bajo designs/redesign-v3/ o .planning/ (los directorios del pivot v4 y los sin seguimiento de la lista blanca son INFO); ninguna en src/, package.json, lockfiles, payload.config.ts o database/ de la raiz",
-      "ok": true,
-      "detail": "375 rutas (254 INFO: pivot v4 y lista blanca sin seguimiento)"
+      "ok": false,
+      "detail": "391 rutas (254 INFO: pivot v4 y lista blanca sin seguimiento) | fuera: reports/home/home-checks.json"
     },
     {
       "etapa": "isolation",
@@ -783,20 +787,44 @@
     {
       "etapa": "isolation",
       "name": "s6. ningun archivo de texto nuevo o modificado bajo la app contiene guion largo ni corto (excluye scripts/verify-home.mjs, protegido por el plan y con guiones solo en su regex de deteccion)",
-      "ok": true,
-      "detail": "50 archivos revisados"
+      "ok": false,
+      "detail": "designs/redesign-v3/app/scripts/verify-app.mjs"
     },
     {
       "etapa": "isolation",
       "name": "s7. ningun reporte nuevo o modificado contiene una ruta absoluta de inicio de usuario ni correos distintos de hello@juan-tech.com (T-52-04)",
       "ok": true,
-      "detail": "7 reportes de texto revisados"
+      "detail": "10 reportes de texto revisados"
     },
     {
       "etapa": "isolation",
       "name": "s8. los archivos sin seguimiento fuera de las raices permitidas coinciden con la lista blanca del repositorio (INFO); cualquier otra ruta es FAIL",
+      "ok": false,
+      "detail": "reports/home/home-checks.json"
+    },
+    {
+      "etapa": "shots",
+      "name": "sh1. final-es-desktop.jpg pesa menos de 400 KB",
       "ok": true,
-      "detail": "52 sin seguimiento fuera, todos en la lista blanca"
+      "detail": "168 KB (final-es-desktop.jpg)"
+    },
+    {
+      "etapa": "shots",
+      "name": "sh1. final-es-mobile.jpg pesa menos de 400 KB",
+      "ok": true,
+      "detail": "122 KB (final-es-mobile.jpg)"
+    },
+    {
+      "etapa": "shots",
+      "name": "sh1. final-en-desktop.jpg pesa menos de 400 KB",
+      "ok": true,
+      "detail": "156 KB (final-en-desktop.jpg)"
+    },
+    {
+      "etapa": "shots",
+      "name": "sh1. final-en-mobile.jpg pesa menos de 400 KB",
+      "ok": true,
+      "detail": "116 KB (final-en-mobile.jpg)"
     }
   ]
 }

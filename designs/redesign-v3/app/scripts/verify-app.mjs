@@ -183,19 +183,23 @@ async function stageTracer({ chromium }) {
     const base = `http://127.0.0.1:${port}`;
     devOk = await waitFor200(`${base}/system`);
     if (devOk) {
-      const main = await (await fetch(`${base}/src/main.tsx`)).text();
-      const m = /["'](\/@fs\/[^"']*assets\/css\/tokens\.css)["']/.exec(main);
+      // El pivote v4 movio el import de tokens.css de main.tsx a la ruta legacy que monta /system.
+      // Se buscan los dos modulos conocidos; basta con que uno referencie tokens.css por /@fs/.
+      const mods = await Promise.all(
+        ['/src/main.tsx', '/src/legacy/LegacyRoutes.tsx'].map(async (p) => (await fetch(`${base}${p}`)).text()),
+      );
+      const m = mods.map((t) => /["'](\/@fs\/[^"']*assets\/css\/tokens\.css)["']/.exec(t)).find(Boolean);
       if (m) {
         const res = await fetch(`${base}${m[1]}`);
         fsOk = res.status === 200;
         devDetail = `${m[1]} -> ${res.status}`;
-      } else devDetail = 'main.tsx no referencia tokens.css por /@fs/';
+      } else devDetail = 'ningun modulo (main.tsx ni legacy/LegacyRoutes.tsx) referencia tokens.css por /@fs/';
     } else devDetail = `vite dev no respondio 200 en /system: ${devLog.slice(-300)}`;
   } finally {
     dev.kill('SIGTERM');
   }
   check('d1. vite dev en puerto libre responde 200 a /system', devOk, `puerto ${port}`);
-  check('d2. la URL /@fs/ de tokens.css que aparece en /src/main.tsx responde 200', fsOk, devDetail);
+  check('d2. la URL /@fs/ de tokens.css que aparece en el modulo que la importa (main.tsx o legacy/LegacyRoutes.tsx) responde 200', fsOk, devDetail);
 
   // (e) a (h) sobre el build servido
   const server = await startStaticServer({ root: DIST, compress: true });
