@@ -5,11 +5,11 @@ milestone_name: Rediseño Visual v3 (mockups HTML)
 current_phase: 52
 current_phase_name: Home mockup y gate de revisión
 status: in_progress
-stopped_at: Completed 52-06-PLAN.md
-last_updated: "2026-10-22T00:22:00.000Z"
+stopped_at: 52-07 tareas 1-2 completas; tarea 3 = GATE HUMANO D-14 esperando respuesta de Juan (approve / approve-with-notes / changes)
+last_updated: "2026-10-22T01:24:55.999Z"
 last_activity: 2026-10-22
-last_activity_desc: 52-06 completado (harness de etapas de la home: i18n, copy, a11y, budget, isolation)
-state_head: b1a9ac059f7b42384e3daac7803ee2fa0193e045
+last_activity_desc: "52-06 completado (harness de etapas de la home: i18n, copy, a11y, budget, isolation)"
+state_head: caf417fd1de5ae6eabb7586306aa8a12c2099ab8
 progress:
   total_phases: 6
   completed_phases: 0
@@ -144,6 +144,7 @@ Progress: [░░░░░░░░░░] 0% (0/5 fases; Phase 52 en curso, 51 
 | Phase 49 P03 | 75min | 2 tasks | 4 files |
 | Phase 50 P02 | 120min | 3 tasks | 2 files |
 | Phase 52 P06 | ~2h | 3 tasks | 19 files |
+| Phase 52 P07 | 105m | 2 tasks | 19 files |
 
 ## Accumulated Context
 
@@ -300,6 +301,9 @@ Recent decisions affecting current work:
 - [Phase 52-06]: El cupo de efectos (D-08) se mide sobre el motor pesado (div[data-fx] canvas); Noise, StarBorder y SpotlightCard son acentos decorativos fuera del presupuesto y Noise sobrevive a reduced-motion por diseno (staticFxOk)
 - [Phase 52-06]: Isolation valida la base por hash explicito (cat-file + rev-parse HEAD != BASE + merge-base --is-ancestor), nunca por asunto ni git log -n 1
 - [Phase 52-06]: Cada excepcion a un chequeo vive en una constante nombrada (SAME_ALLOWED, ALLOW, S6_EXEMPT, S7_LOG_EXEMPT) y se documenta; nunca se borra un chequeo ni se baja un umbral
+- [Phase 52]: La medicion final se corre sobre un resumen limpio (sin fusion de buildSha256 previo) y ninguna palanca L1-L4 se aplico
+- [Phase 52]: TBT y LCP de desktop son informativos (SwiftShader) y se confirman en la GPU real de Juan (D-11)
+- [Phase 52]: El runner --final-shots se implemento y el chequeo d2 del tracer se corrigio para el pivote v4 (desviaciones Rule 3 y Rule 1)
 
 ### Pending Todos
 
@@ -355,8 +359,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-10-22T00:21:15.318Z
-Stopped at: Completed 52-06-PLAN.md
+Last session: 2026-10-22T01:24:55.774Z
+Stopped at: Completed 52-07-PLAN.md (2/3 tareas; tarea 3 = gate humano D-14 pendiente)
 Resume file: None
 
 ## Operator Next Steps

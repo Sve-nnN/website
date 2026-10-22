@@ -1,15 +1,15 @@
 ---
 schema_version: 1
-open_count: 4
+open_count: 6
 waived_count: 0
 fixed_count: 4
-total_count: 8
-last_updated: 2026-08-03T01:46:03.075Z
+total_count: 10
+last_updated: 2026-10-22T01:25:07.480Z
 ---
 
 # Broken Windows Ledger
 
-> Cross-phase defect register. `/gsd-ship` blocks while `open_count > 0`.
+> Cross-phase defect register. With `workflow.windows_enforce` enabled, `/gsd-ship` blocks while `open_count > 0`.
 > Waive with `gsd-tools windows waive <id> "<reason>"` (reason required).
 > Mark fixed with `gsd-tools windows fixed <id>`.
 
@@ -23,6 +23,8 @@ last_updated: 2026-08-03T01:46:03.075Z
 | 6 | 43 | unrun-verify | .planning/phases/43-performance-response-time-html-size/43-01-SUMMARY.md |  | Live before/after Home response-time + HTML-size measurement (npm run start + curl timing/wc -c) blocked by intermittent local Neon ECONNRESET — deferred to production confirmation post-deploy | open |  | 2026-08-03T01:24:20.043Z |  |
 | 7 | 43 | unrun-verify | .planning/phases/43-performance-response-time-html-size/43-02-SUMMARY.md |  | Live before/after Servicios+Blog listing response-time/HTML-size measurement (npm run start / node .next/standalone/server.js + curl timing) blocked by same session-wide intermittent local Neon ECONNRESET as WINDOWS id 6 — deferred to production confirmation post-deploy | open |  | 2026-08-03T01:39:35.297Z |  |
 | 8 | 43 | unrun-verify | .planning/phases/43-performance-response-time-html-size/lh-phase43-post.json |  | Live curl timing/HTML-size + Lighthouse mobile comparison against lh-phase36-post.json could not run: local Neon Postgres connect fails with read ECONNRESET (same session-wide pattern as WINDOWS ids 1-4,6). Deferred to production confirmation post-deploy. | open |  | 2026-08-03T01:46:03.075Z |  |
+| 9 | 52 | deviation | designs/redesign-v3/app/scripts/verify-home-checks.mjs |  | Rule 3: --final-shots no estaba implementado; se anadio el bloque que escribe las cuatro capturas finales | open |  | 2026-10-22T01:25:07.227Z |  |
+| 10 | 52 | deviation | designs/redesign-v3/app/scripts/verify-app.mjs |  | Rule 1: el chequeo d2 del tracer quedo obsoleto tras el pivote v4; ahora busca tokens.css en el modulo que la importa | open |  | 2026-10-22T01:25:07.480Z |  |
 
 ````json
 [
@@ -120,6 +122,30 @@ last_updated: 2026-08-03T01:46:03.075Z
     "status": "open",
     "reason": "",
     "recorded_at": "2026-08-03T01:46:03.075Z",
+    "resolved_at": null
+  },
+  {
+    "id": 9,
+    "kind": "deviation",
+    "phase": "52",
+    "file": "designs/redesign-v3/app/scripts/verify-home-checks.mjs",
+    "line": null,
+    "description": "Rule 3: --final-shots no estaba implementado; se anadio el bloque que escribe las cuatro capturas finales",
+    "status": "open",
+    "reason": "",
+    "recorded_at": "2026-10-22T01:25:07.227Z",
+    "resolved_at": null
+  },
+  {
+    "id": 10,
+    "kind": "deviation",
+    "phase": "52",
+    "file": "designs/redesign-v3/app/scripts/verify-app.mjs",
+    "line": null,
+    "description": "Rule 1: el chequeo d2 del tracer quedo obsoleto tras el pivote v4; ahora busca tokens.css en el modulo que la importa",
+    "status": "open",
+    "reason": "",
+    "recorded_at": "2026-10-22T01:25:07.480Z",
     "resolved_at": null
   }
 ]

@@ -90,7 +90,7 @@ Plans:
 - [x] 52-04-PLAN.md: secciones de método (servicios, auditor propio, about, oferta de auditoría y FAQ)
 - [x] 52-05-PLAN.md: contacto con formulario sin envío, banda CRTWarp como segundo efecto y pie completo
 - [x] 52-06-PLAN.md: verificación de i18n, accesibilidad, presupuesto de efectos y aislamiento, con correcciones
-- [ ] 52-07-PLAN.md: medición final, reporte para Juan, README y gate humano (checkpoint de decisión)
+- [ ] 52-07-PLAN.md: medición final, reporte para Juan, README y gate humano (checkpoint de decisión) — tareas 1 y 2 completas; **tarea 3 (gate humano D-14) pendiente de la respuesta de Juan**
 
 **UI hint**: yes
 
