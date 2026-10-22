@@ -20,6 +20,7 @@ import { fileURLToPath } from 'node:url';
 import { startStaticServer } from './lib/static-server.mjs';
 import { sha256, splitOrigin } from './lib/origin-header.mjs';
 import { buildSha256 } from './lib/manifest.mjs';
+import { launch } from './lib/browser.mjs';
 
 const APP = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(APP, 'dist');
@@ -198,7 +199,7 @@ async function stageTracer({ chromium }) {
 
   // (e) a (h) sobre el build servido
   const server = await startStaticServer({ root: DIST, compress: true });
-  const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+  const browser = await launch(chromium);
   try {
     const { context, page, log } = await openPage(browser, `${server.url}/system`);
     const card = page.locator('article[data-effect="grainient"]');
@@ -321,7 +322,7 @@ async function stageGallery({ chromium }) {
   const chunkFiles = originalChunkFiles();
   const isChunkUrl = (u) => chunkFiles.some((f) => u.endsWith(f));
   const server = await startStaticServer({ root: DIST, compress: true });
-  const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+  const browser = await launch(chromium);
   const url = `${server.url}/system`;
   const expectedNames = ORIGINALS.map((o) => o.name);
   try {
@@ -719,7 +720,7 @@ async function stageReport({ chromium }) {
     return;
   }
   const server = await startStaticServer({ root: DIST, compress: true });
-  const browser = await chromium.launch({ args: CHROMIUM_ARGS });
+  const browser = await launch(chromium);
   try {
     const { context, page, log } = await openPage(browser, `${server.url}/rendimiento`);
     await page.waitForSelector('table.data-table tbody tr', { timeout: 10_000 });

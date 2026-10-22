@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-16T01:35:12.134Z",
+  "generatedAt": "2026-10-22T00:31:04.222Z",
   "lighthouseVersion": "13.4.1",
   "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
   "chromeFlags": "--headless=new --use-angle=swiftshader --enable-unsafe-swiftshader --ignore-gpu-blocklist",
   "server": "servidor estatico propio con brotli calidad 11 en 127.0.0.1",
-  "buildSha256": "e9e9cc8d71deb2a87d96a2d60c87868f6fd8ee3c07ac52e5aeddd401fa7276de",
+  "buildSha256": "1a7c933d8fd7237f31eb85cafb0a92fcf7cfb74f369d7fbcf6addb71926750af",
   "runsPerCombination": 3,
   "combos": [
     {
@@ -14,56 +14,56 @@
       "factor": "mobile",
       "runs": [
         {
-          "performance": 78,
+          "performance": 93,
           "accessibility": 100,
-          "bestPractices": 96,
-          "lcpMs": 2058,
+          "bestPractices": 100,
+          "lcpMs": 2408,
           "cls": 0,
-          "tbtMs": 843,
-          "transferBytes": 131004,
-          "scriptBytes": 65743,
-          "requests": 12,
+          "tbtMs": 0,
+          "transferBytes": 161926,
+          "scriptBytes": 84826,
+          "requests": 14,
           "originalChunkRequested": false
         },
         {
-          "performance": 98,
+          "performance": 97,
           "accessibility": 100,
-          "bestPractices": 96,
-          "lcpMs": 1867,
+          "bestPractices": 100,
+          "lcpMs": 2186,
           "cls": 0,
-          "tbtMs": 35,
-          "transferBytes": 131004,
-          "scriptBytes": 65743,
-          "requests": 12,
+          "tbtMs": 0,
+          "transferBytes": 161926,
+          "scriptBytes": 84826,
+          "requests": 14,
           "originalChunkRequested": false
         },
         {
-          "performance": 94,
+          "performance": 95,
           "accessibility": 100,
-          "bestPractices": 96,
-          "lcpMs": 1893,
+          "bestPractices": 100,
+          "lcpMs": 2236,
           "cls": 0,
-          "tbtMs": 9,
-          "transferBytes": 131004,
-          "scriptBytes": 65743,
-          "requests": 12,
+          "tbtMs": 0,
+          "transferBytes": 161926,
+          "scriptBytes": 84826,
+          "requests": 14,
           "originalChunkRequested": false
         }
       ],
       "median": {
-        "performance": 94,
+        "performance": 95,
         "accessibility": 100,
-        "bestPractices": 96,
-        "lcpMs": 1893,
+        "bestPractices": 100,
+        "lcpMs": 2236,
         "cls": 0,
-        "tbtMs": 35,
-        "transferBytes": 131004,
-        "scriptBytes": 65743,
-        "requests": 12
+        "tbtMs": 0,
+        "transferBytes": 161926,
+        "scriptBytes": 84826,
+        "requests": 14
       },
       "representativeRun": {
-        "performance": 94,
-        "lcpMs": 1893
+        "performance": 95,
+        "lcpMs": 2236
       },
       "originalChunkRequestedInAllRuns": false,
       "originalChunkRequestedInAnyRun": false
@@ -75,56 +75,56 @@
       "factor": "desktop",
       "runs": [
         {
-          "performance": 95,
+          "performance": 93,
           "accessibility": 100,
-          "bestPractices": 96,
-          "lcpMs": 405,
+          "bestPractices": 100,
+          "lcpMs": 476,
           "cls": 0,
           "tbtMs": 0,
-          "transferBytes": 131004,
-          "scriptBytes": 65743,
-          "requests": 12,
+          "transferBytes": 161926,
+          "scriptBytes": 84826,
+          "requests": 14,
           "originalChunkRequested": false
         },
         {
-          "performance": 91,
+          "performance": 94,
           "accessibility": 100,
-          "bestPractices": 96,
-          "lcpMs": 409,
+          "bestPractices": 100,
+          "lcpMs": 486,
           "cls": 0,
           "tbtMs": 0,
-          "transferBytes": 131004,
-          "scriptBytes": 65743,
-          "requests": 12,
+          "transferBytes": 161926,
+          "scriptBytes": 84826,
+          "requests": 14,
           "originalChunkRequested": false
         },
         {
-          "performance": 95,
+          "performance": 92,
           "accessibility": 100,
-          "bestPractices": 96,
-          "lcpMs": 407,
+          "bestPractices": 100,
+          "lcpMs": 486,
           "cls": 0,
           "tbtMs": 0,
-          "transferBytes": 131004,
-          "scriptBytes": 65743,
-          "requests": 12,
+          "transferBytes": 161926,
+          "scriptBytes": 84826,
+          "requests": 14,
           "originalChunkRequested": false
         }
       ],
       "median": {
-        "performance": 95,
+        "performance": 93,
         "accessibility": 100,
-        "bestPractices": 96,
-        "lcpMs": 407,
+        "bestPractices": 100,
+        "lcpMs": 486,
         "cls": 0,
         "tbtMs": 0,
-        "transferBytes": 131004,
-        "scriptBytes": 65743,
-        "requests": 12
+        "transferBytes": 161926,
+        "scriptBytes": 84826,
+        "requests": 14
       },
       "representativeRun": {
-        "performance": 95,
-        "lcpMs": 405
+        "performance": 93,
+        "lcpMs": 476
       },
       "originalChunkRequestedInAllRuns": false,
       "originalChunkRequestedInAnyRun": false
@@ -136,56 +136,56 @@
       "factor": "mobile",
       "runs": [
         {
+          "performance": 45,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 4589,
+          "cls": 0,
+          "tbtMs": 4886,
+          "transferBytes": 167723,
+          "scriptBytes": 90319,
+          "requests": 16,
+          "originalChunkRequested": true
+        },
+        {
           "performance": 41,
           "accessibility": 100,
-          "bestPractices": 96,
-          "lcpMs": 5833,
+          "bestPractices": 100,
+          "lcpMs": 4986,
           "cls": 0,
-          "tbtMs": 7463,
-          "transferBytes": 136800,
-          "scriptBytes": 71235,
-          "requests": 14,
+          "tbtMs": 5596,
+          "transferBytes": 167723,
+          "scriptBytes": 90319,
+          "requests": 16,
           "originalChunkRequested": true
         },
         {
-          "performance": 52,
+          "performance": 39,
           "accessibility": 100,
-          "bestPractices": 96,
-          "lcpMs": 4040,
+          "bestPractices": 100,
+          "lcpMs": 5708,
           "cls": 0,
-          "tbtMs": 3895,
-          "transferBytes": 136800,
-          "scriptBytes": 71235,
-          "requests": 14,
-          "originalChunkRequested": true
-        },
-        {
-          "performance": 54,
-          "accessibility": 100,
-          "bestPractices": 96,
-          "lcpMs": 3955,
-          "cls": 0,
-          "tbtMs": 3726,
-          "transferBytes": 136800,
-          "scriptBytes": 71235,
-          "requests": 14,
+          "tbtMs": 7034,
+          "transferBytes": 167723,
+          "scriptBytes": 90319,
+          "requests": 16,
           "originalChunkRequested": true
         }
       ],
       "median": {
-        "performance": 52,
+        "performance": 41,
         "accessibility": 100,
-        "bestPractices": 96,
-        "lcpMs": 4040,
+        "bestPractices": 100,
+        "lcpMs": 4986,
         "cls": 0,
-        "tbtMs": 3895,
-        "transferBytes": 136800,
-        "scriptBytes": 71235,
-        "requests": 14
+        "tbtMs": 5596,
+        "transferBytes": 167723,
+        "scriptBytes": 90319,
+        "requests": 16
       },
       "representativeRun": {
-        "performance": 52,
-        "lcpMs": 4040
+        "performance": 41,
+        "lcpMs": 4986
       },
       "originalChunkRequestedInAllRuns": true,
       "originalChunkRequestedInAnyRun": true
@@ -197,56 +197,56 @@
       "factor": "desktop",
       "runs": [
         {
-          "performance": 65,
+          "performance": 54,
           "accessibility": 100,
-          "bestPractices": 96,
-          "lcpMs": 1203,
+          "bestPractices": 100,
+          "lcpMs": 1752,
           "cls": 0,
-          "tbtMs": 1330,
-          "transferBytes": 136800,
-          "scriptBytes": 71235,
-          "requests": 14,
+          "tbtMs": 2497,
+          "transferBytes": 167723,
+          "scriptBytes": 90319,
+          "requests": 16,
           "originalChunkRequested": true
         },
         {
-          "performance": 68,
+          "performance": 62,
           "accessibility": 100,
-          "bestPractices": 96,
-          "lcpMs": 1013,
-          "cls": 0.001,
-          "tbtMs": 947,
-          "transferBytes": 136800,
-          "scriptBytes": 71235,
-          "requests": 14,
+          "bestPractices": 100,
+          "lcpMs": 1144,
+          "cls": 0,
+          "tbtMs": 1277,
+          "transferBytes": 167723,
+          "scriptBytes": 90319,
+          "requests": 16,
           "originalChunkRequested": true
         },
         {
-          "performance": 64,
+          "performance": 62,
           "accessibility": 100,
-          "bestPractices": 96,
-          "lcpMs": 1142,
+          "bestPractices": 100,
+          "lcpMs": 1062,
           "cls": 0,
-          "tbtMs": 1203,
-          "transferBytes": 136800,
-          "scriptBytes": 71235,
-          "requests": 14,
+          "tbtMs": 1044,
+          "transferBytes": 167723,
+          "scriptBytes": 90319,
+          "requests": 16,
           "originalChunkRequested": true
         }
       ],
       "median": {
-        "performance": 65,
+        "performance": 62,
         "accessibility": 100,
-        "bestPractices": 96,
-        "lcpMs": 1142,
+        "bestPractices": 100,
+        "lcpMs": 1144,
         "cls": 0,
-        "tbtMs": 1203,
-        "transferBytes": 136800,
-        "scriptBytes": 71235,
-        "requests": 14
+        "tbtMs": 1277,
+        "transferBytes": 167723,
+        "scriptBytes": 90319,
+        "requests": 16
       },
       "representativeRun": {
-        "performance": 65,
-        "lcpMs": 1203
+        "performance": 62,
+        "lcpMs": 1062
       },
       "originalChunkRequestedInAllRuns": true,
       "originalChunkRequestedInAnyRun": true
@@ -261,11 +261,11 @@
   "verdicts": {
     "mobile baseline: performance mediana >= 90": {
       "result": "PASS",
-      "value": 94
+      "value": 95
     },
     "mobile baseline: LCP mediano < 2000 ms": {
-      "result": "PASS",
-      "value": 1893
+      "result": "NO CUMPLE",
+      "value": 2236
     }
   },
   "caveat": "Chromium headless renderiza WebGL por software (SwiftShader): el tiempo de hilo principal y el TBT salen exagerados. Hay que confirmarlo en una GPU real."
