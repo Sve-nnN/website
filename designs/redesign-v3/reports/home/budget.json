@@ -1,0 +1,219 @@
+{
+  "generatedBy": "verify-home-checks --stage=budget",
+  "effects": {
+    "maxSimultaneousCanvas": 4,
+    "idsSeen": [
+      "dither",
+      "halftone"
+    ],
+    "webglContextsCreated": 3,
+    "maxLiveWebglContexts": 1,
+    "timeline": {
+      "firstLcp": 228,
+      "lastLcp": 6224
+    }
+  },
+  "readingSections": [
+    "#faq",
+    "#contacto",
+    "#sobre",
+    "#testimonios",
+    "#proceso",
+    "#medicion"
+  ],
+  "notes": "Vite agrupa las secciones de la home en el chunk de entrada; sectionChunks solo se llena si hubiera splitting real.",
+  "weights": {
+    "entry": {
+      "file": "assets/index-DKDF3SV8.js",
+      "bytes": 304449,
+      "gzip": 92363,
+      "brotli": 79317
+    },
+    "manifestChunks": [
+      {
+        "key": "../assets/fonts/Array-Regular.woff2",
+        "file": "assets/Array-Regular-DpqtFAPH.woff2",
+        "bytes": 20832,
+        "gzip": 20860,
+        "brotli": 20832
+      },
+      {
+        "key": "src/components/reactbits/ASCIIText/ASCIIText.tsx",
+        "file": "assets/ASCIIText-D9s7UVo_.js",
+        "bytes": 12840,
+        "gzip": 5332,
+        "brotli": 4874
+      },
+      {
+        "key": "src/components/reactbits/CRTWarp/CRTWarp.tsx",
+        "file": "assets/CRTWarp-2OlZTUux.js",
+        "bytes": 19549,
+        "gzip": 7418,
+        "brotli": 6737
+      },
+      {
+        "key": "src/components/reactbits/Dither/Dither.tsx",
+        "file": "assets/Dither-D6vutHxJ.js",
+        "bytes": 16380,
+        "gzip": 6050,
+        "brotli": 5503
+      },
+      {
+        "key": "src/components/reactbits/FaultyTerminal/FaultyTerminal.tsx",
+        "file": "assets/FaultyTerminal-D4GEh7C0.js",
+        "bytes": 22256,
+        "gzip": 7715,
+        "brotli": 6972
+      },
+      {
+        "key": "../assets/fonts/Geist-latin-var.woff2",
+        "file": "assets/Geist-latin-var-BGnTDqni.woff2",
+        "bytes": 29288,
+        "gzip": 29316,
+        "brotli": 29291
+      },
+      {
+        "key": "../assets/fonts/GeistMono-400-latin.woff2",
+        "file": "assets/GeistMono-400-latin-CoUIvY-_.woff2",
+        "bytes": 7140,
+        "gzip": 7163,
+        "brotli": 7144
+      },
+      {
+        "key": "src/components/reactbits/GradientASCII/GradientASCII.tsx",
+        "file": "assets/GradientASCII-vkrMk9FC.js",
+        "bytes": 20728,
+        "gzip": 7728,
+        "brotli": 6950
+      },
+      {
+        "key": "src/components/reactbits/GradientBlinds/GradientBlinds.tsx",
+        "file": "assets/GradientBlinds-jAxc5Nw_.js",
+        "bytes": 13605,
+        "gzip": 5304,
+        "brotli": 4903
+      },
+      {
+        "key": "src/components/reactbits/Grainient/Grainient.tsx",
+        "file": "assets/Grainient-Y8Jgr4bI.js",
+        "bytes": 13824,
+        "gzip": 5819,
+        "brotli": 5252
+      },
+      {
+        "key": "src/components/reactbits/HalftoneReveal/HalftoneReveal.tsx",
+        "file": "assets/HalftoneReveal-ChkMdQYM.js",
+        "bytes": 19958,
+        "gzip": 7303,
+        "brotli": 6626
+      },
+      {
+        "key": "index.html",
+        "file": "assets/index-DKDF3SV8.js",
+        "bytes": 304449,
+        "gzip": 92363,
+        "brotli": 79317
+      },
+      {
+        "key": "src/legacy/LegacyRoutes.tsx",
+        "file": "assets/LegacyRoutes-C5AwCpUg.js",
+        "bytes": 18986,
+        "gzip": 5616,
+        "brotli": 5026
+      },
+      {
+        "key": "src/components/reactbits/MicroSlats/MicroSlats.tsx",
+        "file": "assets/MicroSlats-CfUIzuPp.js",
+        "bytes": 18561,
+        "gzip": 6637,
+        "brotli": 6036
+      },
+      {
+        "key": "src/components/reactbits/Noise/Noise.tsx",
+        "file": "assets/Noise-D6KsuDAr.js",
+        "bytes": 4918,
+        "gzip": 2297,
+        "brotli": 2091
+      },
+      {
+        "key": "src/components/reactbits/PatternWaves/PatternWaves.tsx",
+        "file": "assets/PatternWaves-CSb16B4K.js",
+        "bytes": 18944,
+        "gzip": 7066,
+        "brotli": 6373
+      },
+      {
+        "key": "src/components/reactbits/PixelBlast/PixelBlast.tsx",
+        "file": "assets/PixelBlast-B-53MDpb.js",
+        "bytes": 22493,
+        "gzip": 8027,
+        "brotli": 7268
+      },
+      {
+        "key": "src/components/reactbits/PixelCard/PixelCard.tsx",
+        "file": "assets/PixelCard-Dj16iVml.js",
+        "bytes": 10110,
+        "gzip": 4169,
+        "brotli": 3774
+      },
+      {
+        "key": "src/components/reactbits/PixelTransition/PixelTransition.tsx",
+        "file": "assets/PixelTransition-BC-iiPso.js",
+        "bytes": 6551,
+        "gzip": 3161,
+        "brotli": 2827
+      },
+      {
+        "key": "src/pages/RendimientoPage.tsx",
+        "file": "assets/RendimientoPage-USOps5Xc.js",
+        "bytes": 6164,
+        "gzip": 2038,
+        "brotli": 1812
+      },
+      {
+        "key": "src/components/reactbits/SpotlightCard/SpotlightCard.tsx",
+        "file": "assets/SpotlightCard-CINnH8K7.js",
+        "bytes": 5914,
+        "gzip": 2596,
+        "brotli": 2355
+      },
+      {
+        "key": "src/components/reactbits/StarBorder/StarBorder.tsx",
+        "file": "assets/StarBorder-DfjcLlWG.js",
+        "bytes": 10053,
+        "gzip": 4294,
+        "brotli": 3953
+      },
+      {
+        "key": "_Triangle-CC7-iyWY.js",
+        "file": "assets/Triangle-CC7-iyWY.js",
+        "bytes": 53012,
+        "gzip": 14510,
+        "brotli": 12271
+      }
+    ],
+    "sectionChunks": [],
+    "originals": [
+      {
+        "original": "Dither",
+        "files": [
+          "assets/Dither-D6vutHxJ.js",
+          "assets/Dither-C5uArhRq.css"
+        ],
+        "bytes": 16534,
+        "gzip": 6172,
+        "brotli": 5572
+      },
+      {
+        "original": "HalftoneReveal",
+        "files": [
+          "assets/HalftoneReveal-ChkMdQYM.js",
+          "assets/HalftoneReveal-zn6FqNYG.css"
+        ],
+        "bytes": 20120,
+        "gzip": 7427,
+        "brotli": 6701
+      }
+    ]
+  }
+}

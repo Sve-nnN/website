@@ -118,7 +118,7 @@ const ctx = {
   openPage,
   shots,
   wantShots,
-  paths: { APP, DIST, REPORTS_HOME },
+  paths: { APP, DIST, REPORTS_HOME, REPO },
   originalNames,
   chunkFiles,
 };

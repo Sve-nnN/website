@@ -1,9 +1,25 @@
 {
-  "fecha": "2026-10-21T02:19:43.581Z",
-  "buildSha256": "7625f3782a4ef7c3b4892dacac46842b39b886991798750d9350b4688d8bd199",
+  "fecha": "2026-10-22T00:13:01.273Z",
+  "buildSha256": "1a7c933d8fd7237f31eb85cafb0a92fcf7cfb74f369d7fbcf6addb71926750af",
   "etapas": {
     "i18n": {
       "pass": 17,
+      "fail": 0
+    },
+    "copy": {
+      "pass": 8,
+      "fail": 0
+    },
+    "a11y": {
+      "pass": 81,
+      "fail": 0
+    },
+    "budget": {
+      "pass": 14,
+      "fail": 0
+    },
+    "isolation": {
+      "pass": 9,
       "fail": 0
     }
   },
@@ -102,13 +118,685 @@
       "etapa": "i18n",
       "name": "i7. i18n-es-desktop.jpg pesa menos de 400 KB",
       "ok": true,
-      "detail": "176 KB (i18n-es-desktop.jpg)"
+      "detail": "173 KB (i18n-es-desktop.jpg)"
     },
     {
       "etapa": "i18n",
       "name": "i7. i18n-en-desktop.jpg pesa menos de 400 KB",
       "ok": true,
-      "detail": "162 KB (i18n-en-desktop.jpg)"
+      "detail": "164 KB (i18n-en-desktop.jpg)"
+    },
+    {
+      "etapa": "copy",
+      "name": "c1a. numbers-ledger.json: cada cifra trae valor, seccion, idiomas, fuente y estado validos",
+      "ok": true,
+      "detail": "23 cifras"
+    },
+    {
+      "etapa": "copy",
+      "name": "c1b. toda cifra confirmed del ledger cita una fuente no vacia",
+      "ok": true,
+      "detail": "16 confirmed"
+    },
+    {
+      "etapa": "copy",
+      "name": "c1c. toda cifra visible de / y /en existe en el ledger",
+      "ok": true,
+      "detail": "sin cifras fuera del ledger"
+    },
+    {
+      "etapa": "copy",
+      "name": "c1d. toda cifra pending tiene un marcador de pendiente visible en su seccion",
+      "ok": true,
+      "detail": "7 pending"
+    },
+    {
+      "etapa": "copy",
+      "name": "c2. lintRendered de la voz sobre el DOM renderizado: 0 FAIL salvo ALLOW declarado",
+      "ok": true,
+      "detail": "28 bloques, 0 permitidos"
+    },
+    {
+      "etapa": "copy",
+      "name": "c3a. cada clave pending del copy tiene su marcador visible en su seccion",
+      "ok": true,
+      "detail": "ES=5 EN=5"
+    },
+    {
+      "etapa": "copy",
+      "name": "c3b. pending-inventory.json se escribe con totales ES/EN (5 por idioma) y sin rutas locales",
+      "ok": true,
+      "detail": "es=5 en=5 localPaths=false"
+    },
+    {
+      "etapa": "copy",
+      "name": "c4. el detalle de cada FAIL de cifras y de voz lleva la seccion y el texto exacto",
+      "ok": true,
+      "detail": "c1c: \"<lang> <seccion>: \"<cifra>\"\" ; c2: \"<regla> <lang>.render.<seccion>.<i>: <motivo>\""
+    },
+    {
+      "etapa": "a11y",
+      "name": "a1. es 1440x900: un solo h1 y jerarquia de encabezados sin saltos",
+      "ok": true,
+      "detail": "h1=1 saltos=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a2. es 1440x900: un header, un main#main, un footer, todo nav con nombre y 12 secciones con label (aria-labelledby a su encabezado o aria-label)",
+      "ok": true,
+      "detail": "header=1 main=1 footer=1 navSinNombre=0 secciones=12 malas=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a3a. es 1440x900: el enlace de salto es el primer elemento enfocable",
+      "ok": true,
+      "detail": "a.skip \"Saltar al contenido\""
+    },
+    {
+      "etapa": "a11y",
+      "name": "a4a. es 1440x900: Tab recorre 69 elementos sin trampas de foco (tope 400) y no deja visibles sin alcanzar",
+      "ok": true,
+      "detail": "trampa=false sin alcanzar=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a4b. es 1440x900: cada elemento enfocado muestra contorno de 2px o mas con estilo distinto de none",
+      "ok": true,
+      "detail": "69 elementos"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a4c. es 1440x900: cada elemento enfocado queda dentro del viewport y ningun otro elemento lo tapa",
+      "ok": true,
+      "detail": "visibles y libres"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a3b. es 1440x900: el enlace de salto se ve al recibir foco y su destino (main#main) recibe el foco",
+      "ok": true,
+      "detail": "visible=true foco=main hash=#main"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a5a. es 1440x900: 69 objetivos de 44x44 o mas (24px en enlaces dentro de un parrafo)",
+      "ok": true,
+      "detail": "todos cumplen"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a5b. es 1440x900: vecinos de un mismo grupo con los centros a 24px o mas (WCAG 2.5.8)",
+      "ok": true,
+      "detail": "sin vecinos pegados"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a6. es 1440x900: con reduced-motion hay 0 canvas de banda, 0 animaciones CSS infinitas y la pausa sigue operable",
+      "ok": true,
+      "detail": "canvasBanda=0 canvasTotal=0 infinitas=0 pausa=false>true>false"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a8a. es 1440x900: las 1 bandas [data-fx] llevan aria-hidden=\"true\" y no tienen texto visible",
+      "ok": true,
+      "detail": "bandas=1 sinOcultar=0 conTexto=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a9. es 1440x900: ninguna img sin alt y ningun svg informativo sin nombre (los decorativos con aria-hidden)",
+      "ok": true,
+      "detail": "imgSinAlt=0 svgSinNombre=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a10. es 1440x900: formulario con etiqueta visible por campo, autocomplete en nombre y correo, sin placeholder como etiqueta y estado en role=\"status\"",
+      "ok": true,
+      "detail": "campos=3 problemas=0 status=1"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a11. es 1440x900: todo lang es \"es\" o \"en\" y html.lang coincide con la ruta",
+      "ok": true,
+      "detail": "langs=es,en html=es"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a13a. es 1440x900: contraste de texto 4.5:1 (3:1 en texto grande) calculado sobre 258 elementos; peor caso 6.04:1",
+      "ok": true,
+      "detail": "todos cumplen"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a13b. es 1440x900: ningun texto sobre gradiente, canvas o imagen sin capa solida en medio",
+      "ok": true,
+      "detail": "ninguno"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a13c. es 1440x900: componentes 3:1 (borde de campos y anillo de foco 17.44:1 contra el papel)",
+      "ok": true,
+      "detail": "cumplen"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a12b. es 1440x900: con el espaciado de texto de WCAG 1.4.12 ningun p, li, summary, a o button con overflow oculto recorta su contenido",
+      "ok": true,
+      "detail": "sin recortes"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a1. es 390x844: un solo h1 y jerarquia de encabezados sin saltos",
+      "ok": true,
+      "detail": "h1=1 saltos=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a2. es 390x844: un header, un main#main, un footer, todo nav con nombre y 12 secciones con label (aria-labelledby a su encabezado o aria-label)",
+      "ok": true,
+      "detail": "header=1 main=1 footer=1 navSinNombre=0 secciones=12 malas=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a3a. es 390x844: el enlace de salto es el primer elemento enfocable",
+      "ok": true,
+      "detail": "a.skip \"Saltar al contenido\""
+    },
+    {
+      "etapa": "a11y",
+      "name": "a4a. es 390x844: Tab recorre 64 elementos sin trampas de foco (tope 400) y no deja visibles sin alcanzar",
+      "ok": true,
+      "detail": "trampa=false sin alcanzar=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a4b. es 390x844: cada elemento enfocado muestra contorno de 2px o mas con estilo distinto de none",
+      "ok": true,
+      "detail": "64 elementos"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a4c. es 390x844: cada elemento enfocado queda dentro del viewport y ningun otro elemento lo tapa",
+      "ok": true,
+      "detail": "visibles y libres"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a3b. es 390x844: el enlace de salto se ve al recibir foco y su destino (main#main) recibe el foco",
+      "ok": true,
+      "detail": "visible=true foco=main hash=#main"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a5a. es 390x844: 64 objetivos de 44x44 o mas (24px en enlaces dentro de un parrafo)",
+      "ok": true,
+      "detail": "todos cumplen"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a5b. es 390x844: vecinos de un mismo grupo con los centros a 24px o mas (WCAG 2.5.8)",
+      "ok": true,
+      "detail": "sin vecinos pegados"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a6. es 390x844: con reduced-motion hay 0 canvas de banda, 0 animaciones CSS infinitas y la pausa sigue operable",
+      "ok": true,
+      "detail": "canvasBanda=0 canvasTotal=0 infinitas=0 pausa=false>true>false"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a8a. es 390x844: las 1 bandas [data-fx] llevan aria-hidden=\"true\" y no tienen texto visible",
+      "ok": true,
+      "detail": "bandas=1 sinOcultar=0 conTexto=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a9. es 390x844: ninguna img sin alt y ningun svg informativo sin nombre (los decorativos con aria-hidden)",
+      "ok": true,
+      "detail": "imgSinAlt=0 svgSinNombre=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a10. es 390x844: formulario con etiqueta visible por campo, autocomplete en nombre y correo, sin placeholder como etiqueta y estado en role=\"status\"",
+      "ok": true,
+      "detail": "campos=3 problemas=0 status=1"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a11. es 390x844: todo lang es \"es\" o \"en\" y html.lang coincide con la ruta",
+      "ok": true,
+      "detail": "langs=es,en html=es"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a13a. es 390x844: contraste de texto 4.5:1 (3:1 en texto grande) calculado sobre 252 elementos; peor caso 6.04:1",
+      "ok": true,
+      "detail": "todos cumplen"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a13b. es 390x844: ningun texto sobre gradiente, canvas o imagen sin capa solida en medio",
+      "ok": true,
+      "detail": "ninguno"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a13c. es 390x844: componentes 3:1 (borde de campos y anillo de foco 17.44:1 contra el papel)",
+      "ok": true,
+      "detail": "cumplen"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a12b. es 390x844: con el espaciado de texto de WCAG 1.4.12 ningun p, li, summary, a o button con overflow oculto recorta su contenido",
+      "ok": true,
+      "detail": "sin recortes"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a7. es: Pausar animaciones esta en la cabecera, conserva su etiqueta, alterna aria-pressed con Enter y con Espacio",
+      "ok": true,
+      "detail": "etiqueta=\"Pausar animaciones\" enter=true espacio=false"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a8b. es: el aria-snapshot de main no contiene el texto de las bandas decorativas del hero",
+      "ok": true,
+      "detail": "2 textos decorativos, filtrados=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a12. es: reflow a 320px, scrollWidth 320 no supera 320 y ningun elemento (fuera de pre) se sale por la derecha",
+      "ok": true,
+      "detail": "scrollWidth=320 body=320 desbordan=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a1. en 1440x900: un solo h1 y jerarquia de encabezados sin saltos",
+      "ok": true,
+      "detail": "h1=1 saltos=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a2. en 1440x900: un header, un main#main, un footer, todo nav con nombre y 12 secciones con label (aria-labelledby a su encabezado o aria-label)",
+      "ok": true,
+      "detail": "header=1 main=1 footer=1 navSinNombre=0 secciones=12 malas=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a3a. en 1440x900: el enlace de salto es el primer elemento enfocable",
+      "ok": true,
+      "detail": "a.skip \"Skip to content\""
+    },
+    {
+      "etapa": "a11y",
+      "name": "a4a. en 1440x900: Tab recorre 69 elementos sin trampas de foco (tope 400) y no deja visibles sin alcanzar",
+      "ok": true,
+      "detail": "trampa=false sin alcanzar=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a4b. en 1440x900: cada elemento enfocado muestra contorno de 2px o mas con estilo distinto de none",
+      "ok": true,
+      "detail": "69 elementos"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a4c. en 1440x900: cada elemento enfocado queda dentro del viewport y ningun otro elemento lo tapa",
+      "ok": true,
+      "detail": "visibles y libres"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a3b. en 1440x900: el enlace de salto se ve al recibir foco y su destino (main#main) recibe el foco",
+      "ok": true,
+      "detail": "visible=true foco=main hash=#main"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a5a. en 1440x900: 69 objetivos de 44x44 o mas (24px en enlaces dentro de un parrafo)",
+      "ok": true,
+      "detail": "todos cumplen"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a5b. en 1440x900: vecinos de un mismo grupo con los centros a 24px o mas (WCAG 2.5.8)",
+      "ok": true,
+      "detail": "sin vecinos pegados"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a6. en 1440x900: con reduced-motion hay 0 canvas de banda, 0 animaciones CSS infinitas y la pausa sigue operable",
+      "ok": true,
+      "detail": "canvasBanda=0 canvasTotal=0 infinitas=0 pausa=false>true>false"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a8a. en 1440x900: las 1 bandas [data-fx] llevan aria-hidden=\"true\" y no tienen texto visible",
+      "ok": true,
+      "detail": "bandas=1 sinOcultar=0 conTexto=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a9. en 1440x900: ninguna img sin alt y ningun svg informativo sin nombre (los decorativos con aria-hidden)",
+      "ok": true,
+      "detail": "imgSinAlt=0 svgSinNombre=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a10. en 1440x900: formulario con etiqueta visible por campo, autocomplete en nombre y correo, sin placeholder como etiqueta y estado en role=\"status\"",
+      "ok": true,
+      "detail": "campos=3 problemas=0 status=1"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a11. en 1440x900: todo lang es \"es\" o \"en\" y html.lang coincide con la ruta",
+      "ok": true,
+      "detail": "langs=en,es html=en"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a13a. en 1440x900: contraste de texto 4.5:1 (3:1 en texto grande) calculado sobre 258 elementos; peor caso 6.04:1",
+      "ok": true,
+      "detail": "todos cumplen"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a13b. en 1440x900: ningun texto sobre gradiente, canvas o imagen sin capa solida en medio",
+      "ok": true,
+      "detail": "ninguno"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a13c. en 1440x900: componentes 3:1 (borde de campos y anillo de foco 17.44:1 contra el papel)",
+      "ok": true,
+      "detail": "cumplen"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a12b. en 1440x900: con el espaciado de texto de WCAG 1.4.12 ningun p, li, summary, a o button con overflow oculto recorta su contenido",
+      "ok": true,
+      "detail": "sin recortes"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a1. en 390x844: un solo h1 y jerarquia de encabezados sin saltos",
+      "ok": true,
+      "detail": "h1=1 saltos=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a2. en 390x844: un header, un main#main, un footer, todo nav con nombre y 12 secciones con label (aria-labelledby a su encabezado o aria-label)",
+      "ok": true,
+      "detail": "header=1 main=1 footer=1 navSinNombre=0 secciones=12 malas=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a3a. en 390x844: el enlace de salto es el primer elemento enfocable",
+      "ok": true,
+      "detail": "a.skip \"Skip to content\""
+    },
+    {
+      "etapa": "a11y",
+      "name": "a4a. en 390x844: Tab recorre 64 elementos sin trampas de foco (tope 400) y no deja visibles sin alcanzar",
+      "ok": true,
+      "detail": "trampa=false sin alcanzar=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a4b. en 390x844: cada elemento enfocado muestra contorno de 2px o mas con estilo distinto de none",
+      "ok": true,
+      "detail": "64 elementos"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a4c. en 390x844: cada elemento enfocado queda dentro del viewport y ningun otro elemento lo tapa",
+      "ok": true,
+      "detail": "visibles y libres"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a3b. en 390x844: el enlace de salto se ve al recibir foco y su destino (main#main) recibe el foco",
+      "ok": true,
+      "detail": "visible=true foco=main hash=#main"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a5a. en 390x844: 64 objetivos de 44x44 o mas (24px en enlaces dentro de un parrafo)",
+      "ok": true,
+      "detail": "todos cumplen"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a5b. en 390x844: vecinos de un mismo grupo con los centros a 24px o mas (WCAG 2.5.8)",
+      "ok": true,
+      "detail": "sin vecinos pegados"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a6. en 390x844: con reduced-motion hay 0 canvas de banda, 0 animaciones CSS infinitas y la pausa sigue operable",
+      "ok": true,
+      "detail": "canvasBanda=0 canvasTotal=0 infinitas=0 pausa=false>true>false"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a8a. en 390x844: las 1 bandas [data-fx] llevan aria-hidden=\"true\" y no tienen texto visible",
+      "ok": true,
+      "detail": "bandas=1 sinOcultar=0 conTexto=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a9. en 390x844: ninguna img sin alt y ningun svg informativo sin nombre (los decorativos con aria-hidden)",
+      "ok": true,
+      "detail": "imgSinAlt=0 svgSinNombre=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a10. en 390x844: formulario con etiqueta visible por campo, autocomplete en nombre y correo, sin placeholder como etiqueta y estado en role=\"status\"",
+      "ok": true,
+      "detail": "campos=3 problemas=0 status=1"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a11. en 390x844: todo lang es \"es\" o \"en\" y html.lang coincide con la ruta",
+      "ok": true,
+      "detail": "langs=en,es html=en"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a13a. en 390x844: contraste de texto 4.5:1 (3:1 en texto grande) calculado sobre 252 elementos; peor caso 6.04:1",
+      "ok": true,
+      "detail": "todos cumplen"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a13b. en 390x844: ningun texto sobre gradiente, canvas o imagen sin capa solida en medio",
+      "ok": true,
+      "detail": "ninguno"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a13c. en 390x844: componentes 3:1 (borde de campos y anillo de foco 17.44:1 contra el papel)",
+      "ok": true,
+      "detail": "cumplen"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a12b. en 390x844: con el espaciado de texto de WCAG 1.4.12 ningun p, li, summary, a o button con overflow oculto recorta su contenido",
+      "ok": true,
+      "detail": "sin recortes"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a7. en: Pausar animaciones esta en la cabecera, conserva su etiqueta, alterna aria-pressed con Enter y con Espacio",
+      "ok": true,
+      "detail": "etiqueta=\"Pause animations\" enter=true espacio=false"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a8b. en: el aria-snapshot de main no contiene el texto de las bandas decorativas del hero",
+      "ok": true,
+      "detail": "2 textos decorativos, filtrados=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a12. en: reflow a 320px, scrollWidth 320 no supera 320 y ningun elemento (fuera de pre) se sale por la derecha",
+      "ok": true,
+      "detail": "scrollWidth=320 body=320 desbordan=0"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a15. sin pageerror ni console.error en la carga de / y /en en escritorio y movil",
+      "ok": true,
+      "detail": "sin errores"
+    },
+    {
+      "etapa": "a11y",
+      "name": "a16. el titulo no esta vacio y es distinto entre / y /en",
+      "ok": true,
+      "detail": "es=\"SEO técnico e ingeniería de software | Juan Carlos Angulo\" en=\"Technical SEO Consultant | Juan Carlos Angulo\""
+    },
+    {
+      "etapa": "a11y",
+      "name": "a14. ninguna regla de las hojas de la home (4) quita el outline sin sustituto",
+      "ok": true,
+      "detail": "sin outline: none"
+    },
+    {
+      "etapa": "budget",
+      "name": "b0. MAX_EFFECTS_PER_PAGE es 2 y claimEffectId aguanta repetidos y lanza al tercer id distinto nombrando el id",
+      "ok": true,
+      "detail": "max=2 lanzaAlTercero=true"
+    },
+    {
+      "etapa": "budget",
+      "name": "b4. ningun original esta en el cierre estatico del chunk de entrada del manifiesto ni referenciado desde index.html",
+      "ok": true,
+      "detail": "entrada=1 chunks, en la entrada=0, en html=0"
+    },
+    {
+      "etapa": "budget",
+      "name": "b10. ningun archivo de src/home/sections/ importa originales de React Bits directamente (todos pasan por src/home/fx/)",
+      "ok": true,
+      "detail": "13 secciones revisadas"
+    },
+    {
+      "etapa": "budget",
+      "name": "b1. recorrido completo (85 pasos): maximo 1 canvas de banda simultaneos (limite 1) y ids de efecto dither,halftone (maximo 2: dither y halftone)",
+      "ok": true,
+      "detail": "maxBandCanvas=1 maxCanvasTotal=4 ids=dither,halftone contextosWebGL=3 maxVivosWebGL=1"
+    },
+    {
+      "etapa": "budget",
+      "name": "b1b. contextos WebGL vivos a la vez: como maximo 1 (informa el solape de desmontaje y montaje)",
+      "ok": true,
+      "detail": "maxVivos=1 creados=3"
+    },
+    {
+      "etapa": "budget",
+      "name": "b3. cada chunk de original (Dither, HalftoneReveal) se pide despues de loadEventEnd (no bloquea la carga inicial)",
+      "ok": true,
+      "detail": "chunks=Dither-D6vutHxJ.js@317 Dither-C5uArhRq.css@317 HalftoneReveal-ChkMdQYM.js@35571 HalftoneReveal-zn6FqNYG.css@35571 loadEventEnd=82 primerLCP=224 ultimoLCP=6144"
+    },
+    {
+      "etapa": "budget",
+      "name": "b5. las 6 secciones de lectura (#faq, #contacto, #sobre, #testimonios, #proceso, #medicion) no contienen canvas durante todo el recorrido (D-10)",
+      "ok": true,
+      "detail": "maximoVisto=0 ahora=0"
+    },
+    {
+      "etapa": "budget",
+      "name": "b0b. 0 pageerror y 0 console.error durante el recorrido en escritorio",
+      "ok": true,
+      "detail": "pageerror=0 consola=0"
+    },
+    {
+      "etapa": "budget",
+      "name": "b2. con el puntero sobre la captura de websites el hero deja de estar montado y al volver arriba vuelve a montarse el del hero",
+      "ok": true,
+      "detail": "hero@951ms halftone@731ms enCaptura=halftone(1 canvas banda) arriba=dither"
+    },
+    {
+      "etapa": "budget",
+      "name": "b9. Pausar animaciones en mitad del recorrido deja 0 canvas, y al soltar vuelve el efecto de la zona visible en menos de 3000 ms",
+      "ok": true,
+      "detail": "pausa en 10ms, sigue en 0=true, vuelve en 21ms (previo 416ms)"
+    },
+    {
+      "etapa": "budget",
+      "name": "b7. movil 390x844 con isMobile y hasTouch: recorrido completo (99 pasos) con 0 canvas de banda, 0 efectos montados y 0 peticiones a chunks del motor pesado (Dither, HalftoneReveal)",
+      "ok": true,
+      "detail": "maxBandCanvas=0 maxCanvasTotal=0 ids=0 contextosWebGL=0 chunksPesados=0 (todos los originales=0)"
+    },
+    {
+      "etapa": "budget",
+      "name": "b8a. prefers-reduced-motion: reduce: recorrido completo (89 pasos) con 0 canvas de banda, 0 efectos montados y 0 peticiones a chunks del motor pesado (Dither, HalftoneReveal)",
+      "ok": true,
+      "detail": "maxBandCanvas=0 maxCanvasTotal=1 ids=0 contextosWebGL=0 chunksPesados=0 (todos los originales=2)"
+    },
+    {
+      "etapa": "budget",
+      "name": "b8b. navigator.connection.saveData: recorrido completo (85 pasos) con 0 canvas de banda, 0 efectos montados y 0 peticiones a chunks del motor pesado (Dither, HalftoneReveal)",
+      "ok": true,
+      "detail": "maxBandCanvas=0 maxCanvasTotal=0 ids=0 contextosWebGL=0 chunksPesados=0 (todos los originales=0)"
+    },
+    {
+      "etapa": "budget",
+      "name": "b11. budget.json guardado con maximo de canvas, ids, contextos WebGL y pesos gzip y brotli de entrada, chunks del manifiesto y originales, sin rutas locales",
+      "ok": true,
+      "detail": "entrada 90.2 KB gzip, 77.5 KB brotli; chunksManifiesto=23; secciones=0; Dither 6.0 KB gzip, HalftoneReveal 7.3 KB gzip"
+    },
+    {
+      "etapa": "isolation",
+      "name": "s1. la base 48e7857 existe, HEAD (99b721a) es distinto de la base y la base es ancestro de HEAD",
+      "ok": true,
+      "detail": "cat-file=true rev-parseDistinto=true ancestro=true"
+    },
+    {
+      "etapa": "isolation",
+      "name": "s2. la union de diff y estado no esta vacia y todas las rutas viven bajo designs/redesign-v3/ o .planning/ (los directorios del pivot v4 y los sin seguimiento de la lista blanca son INFO); ninguna en src/, package.json, lockfiles, payload.config.ts o database/ de la raiz",
+      "ok": true,
+      "detail": "375 rutas (254 INFO: pivot v4 y lista blanca sin seguimiento)"
+    },
+    {
+      "etapa": "isolation",
+      "name": "s3a. package.json de la app conserva dependencies y devDependencies identicos a la base (solo scripts puede cambiar)",
+      "ok": true,
+      "detail": "dependencies=true devDependencies=true"
+    },
+    {
+      "etapa": "isolation",
+      "name": "s3b. package-lock.json de la app no cambio desde la base",
+      "ok": true,
+      "detail": "sin cambios"
+    },
+    {
+      "etapa": "isolation",
+      "name": "s4. los originales de React Bits no estan versionados y la ruta esta ignorada por git (T-52-01)",
+      "ok": true,
+      "detail": "ignorada=true"
+    },
+    {
+      "etapa": "isolation",
+      "name": "s5. el kit de la fase 51 (assets, system.html, tools) no cambia contra la base",
+      "ok": true,
+      "detail": "sin diferencias"
+    },
+    {
+      "etapa": "isolation",
+      "name": "s6. ningun archivo de texto nuevo o modificado bajo la app contiene guion largo ni corto (excluye scripts/verify-home.mjs, protegido por el plan y con guiones solo en su regex de deteccion)",
+      "ok": true,
+      "detail": "50 archivos revisados"
+    },
+    {
+      "etapa": "isolation",
+      "name": "s7. ningun reporte nuevo o modificado contiene una ruta absoluta de inicio de usuario ni correos distintos de hello@juan-tech.com (T-52-04)",
+      "ok": true,
+      "detail": "7 reportes de texto revisados"
+    },
+    {
+      "etapa": "isolation",
+      "name": "s8. los archivos sin seguimiento fuera de las raices permitidas coinciden con la lista blanca del repositorio (INFO); cualquier otra ruta es FAIL",
+      "ok": true,
+      "detail": "52 sin seguimiento fuera, todos en la lista blanca"
     }
   ]
 }

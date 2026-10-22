@@ -35,7 +35,7 @@ function Body() {
         {t.a11y.skip}
       </a>
       <Nav />
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         <Hero />
         <Clients />
         <Marquee />
