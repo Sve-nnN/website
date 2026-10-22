@@ -53,11 +53,13 @@ Plans:
 **Requirements**: REACT-01, REACT-02, REACT-03, REACT-04
 **Depends on:** Phase 51
 **Success criteria:**
+
 1. `npm install && npm run dev` dentro de `designs/redesign-v3/app/` levanta un dev server y `/system` muestra los componentes originales (Grainient, PatternWaves, CRTWarp, MicroSlats, PixelBlast, PixelCard, GradientASCII, ASCIIText y los del top 8 del scout que Juan elija) con la paleta y los tokens de la fase 51.
 2. El `package.json` y `src/` del proyecto no tienen cambios (`git status` limpio fuera de `designs/redesign-v3/`).
 3. Una página `/rendimiento` o el propio `/system` registra el build de producción medido con Lighthouse (mobile y desktop) y documenta el peso real de cada componente original frente al porte vanilla de la fase 51.
 4. El aviso de licencia MIT + Commons Clause está en `designs/redesign-v3/app/LICENSES.md` y cada componente conserva su cabecera de origen.
 5. Se respeta 1 efecto pesado activo a la vez, carga diferida después de LCP, fallback estático y `prefers-reduced-motion`, y Juan puede pausar las animaciones.
+
 **Plans:** 2 plans
 
 Plans:
@@ -82,12 +84,12 @@ Plans:
 
 Plans:
 
-- [ ] 52-01-PLAN.md: tracer de la home (ruta `/` y `/en`, hero con H1, ASCII y CTA, Grainient diferido, cabecera y pie, medición Lighthouse del hero)
-- [ ] 52-02-PLAN.md: guía de voz ejecutable (lint de copy con selftest, parser de pendientes y primitivas compartidas)
-- [ ] 52-03-PLAN.md: secciones de prueba (clientes, errores reales con commit, casos, websites y testimonio)
-- [ ] 52-04-PLAN.md: secciones de método (servicios, auditor propio, about, oferta de auditoría y FAQ)
-- [ ] 52-05-PLAN.md: contacto con formulario sin envío, banda CRTWarp como segundo efecto y pie completo
-- [ ] 52-06-PLAN.md: verificación de i18n, accesibilidad, presupuesto de efectos y aislamiento, con correcciones
+- [x] 52-01-PLAN.md: tracer de la home (ruta `/` y `/en`, hero con H1, ASCII y CTA, Grainient diferido, cabecera y pie, medición Lighthouse del hero)
+- [x] 52-02-PLAN.md: guía de voz ejecutable (lint de copy con selftest, parser de pendientes y primitivas compartidas)
+- [x] 52-03-PLAN.md: secciones de prueba (clientes, errores reales con commit, casos, websites y testimonio)
+- [x] 52-04-PLAN.md: secciones de método (servicios, auditor propio, about, oferta de auditoría y FAQ)
+- [x] 52-05-PLAN.md: contacto con formulario sin envío, banda CRTWarp como segundo efecto y pie completo
+- [x] 52-06-PLAN.md: verificación de i18n, accesibilidad, presupuesto de efectos y aislamiento, con correcciones
 - [ ] 52-07-PLAN.md: medición final, reporte para Juan, README y gate humano (checkpoint de decisión)
 
 **UI hint**: yes

@@ -1,20 +1,20 @@
 ---
-gsd_state_version: "1.0"
+gsd_state_version: 1.0
 milestone: v2.3
 milestone_name: Rediseño Visual v3 (mockups HTML)
-current_phase: 51
-current_phase_name: Sistema visual
-status: ready_to_plan
-stopped_at: Roadmap v2.3 creado (Phases 51-55), listo para discutir/planificar Phase 51
-last_updated: "2026-10-15T23:09:33.191Z"
-last_activity: 2026-10-15
-last_activity_desc: Roadmap v2.3 creado (5 fases, 17/17 requirements mapeados)
-state_head: e47c7819be81a6e867c34436b4f74f36ac61ba39
+current_phase: 52
+current_phase_name: Home mockup y gate de revisión
+status: in_progress
+stopped_at: Completed 52-06-PLAN.md
+last_updated: "2026-10-22T00:22:00.000Z"
+last_activity: 2026-10-22
+last_activity_desc: 52-06 completado (harness de etapas de la home: i18n, copy, a11y, budget, isolation)
+state_head: b1a9ac059f7b42384e3daac7803ee2fa0193e045
 progress:
   total_phases: 6
   completed_phases: 0
-  total_plans: 3
-  completed_plans: 2
+  total_plans: 12
+  completed_plans: 12
   percent: 0
 ---
 
@@ -29,12 +29,12 @@ See: .planning/PROJECT.md (updated 2026-10-15)
 
 ## Current Position
 
-Phase: 51 (Sistema visual), not started
-Plan: —
-Status: Roadmap creado, listo para planificar Phase 51
-Last activity: 2026-10-15 — Roadmap v2.3 creado (5 fases, 17/17 requirements mapeados)
+Phase: 52 (Home mockup y gate de revisión), in progress
+Plan: 07 of 7 (52-06 completado; pendiente 52-07: medición final, reporte para Juan, README y gate humano)
+Status: Ejecutando Phase 52; 52-06 completado (harness de etapas en verde)
+Last activity: 2026-10-22 — 52-06 completado (verify:home:checks con 129 PASS en 5 etapas; verify:home 37/37 intacto)
 
-Progress: [░░░░░░░░░░] 0% (0/5 fases)
+Progress: [░░░░░░░░░░] 0% (0/5 fases; Phase 52 en curso, 51 completa)
 
 ## Performance Metrics
 
@@ -143,6 +143,7 @@ Progress: [░░░░░░░░░░] 0% (0/5 fases)
 | Phase 49 P02 | 62min | 2 tasks | 11 files |
 | Phase 49 P03 | 75min | 2 tasks | 4 files |
 | Phase 50 P02 | 120min | 3 tasks | 2 files |
+| Phase 52 P06 | ~2h | 3 tasks | 19 files |
 
 ## Accumulated Context
 
@@ -295,6 +296,10 @@ Recent decisions affecting current work:
 - [Phase 49]: [Phase 49] 49-03: revalidate=60 fijo + lectura incondicional de searchParams -> DYNAMIC_SERVER_USAGE, 500 real en todas las rutas de post en produccion; corregido con dynamic='force-dynamic' explicito
 - [Phase 49]: [Phase 50-02] GATE-02: PASS (5/5 aserciones) verificado sobre HTML real y grep de codigo. Hallazgo critico: codigo de Phases 46-49 (rama docs/seo-handoff) nunca se desplego a produccion -- 106 commits por delante de master, Dokploy solo construye desde master. Crawl hecho contra next build+start local tunelado a la Postgres real de Dokploy (mismo patron ya usado en Phase 48.5-03). Registrado en WINDOWS.md id 9 para visibilidad en /gsd:ship.
 - [Phase 50]: [Phase 50]: 50-03 sintetizo GATE-01 (PASS con salvedad de medicion por contencion de CPU, CLS 0.00 y JS-cliente 0KB limpios) y GATE-02 (PASS limpio) en MILESTONE GATE: PASS -- REQUIREMENTS.md cerrado (GATE-01/GATE-02 Complete); milestone v2.1 tecnicamente cerrado pero docs/seo-handoff sigue sin mergear a master, asi que el deploy real a juan-tech.com queda como accion pendiente fuera de esta fase
+- [Phase 52-06]: El montaje de una banda de efecto se detecta con data-mounted="true" (Dither) o la clase .is-on (Halftone): el DOM v4 no pone data-mounted en el halftone
+- [Phase 52-06]: El cupo de efectos (D-08) se mide sobre el motor pesado (div[data-fx] canvas); Noise, StarBorder y SpotlightCard son acentos decorativos fuera del presupuesto y Noise sobrevive a reduced-motion por diseno (staticFxOk)
+- [Phase 52-06]: Isolation valida la base por hash explicito (cat-file + rev-parse HEAD != BASE + merge-base --is-ancestor), nunca por asunto ni git log -n 1
+- [Phase 52-06]: Cada excepcion a un chequeo vive en una constante nombrada (SAME_ALLOWED, ALLOW, S6_EXEMPT, S7_LOG_EXEMPT) y se documenta; nunca se borra un chequeo ni se baja un umbral
 
 ### Pending Todos
 
@@ -350,8 +355,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-10-15T22:10:00.000Z
-Stopped at: Roadmap v2.3 creado (Phases 51-55), listo para discutir/planificar Phase 51
+Last session: 2026-10-22T00:21:15.318Z
+Stopped at: Completed 52-06-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

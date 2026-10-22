@@ -26,15 +26,15 @@ Alcance del milestone v2.3: mockups HTML estáticos en `designs/redesign-v3/`. N
 
 - [ ] **HOME-01**: Juan puede abrir `designs/redesign-v3/home.html` en desktop y mobile y ver la home completa con todas las secciones actuales (hero, servicios, case studies, websites, about, testimonios, FAQ, contacto).
 - [ ] **HOME-02**: El primer viewport muestra un H1 real en HTML sobre gradiente grainy, un bloque ASCII decorativo `aria-hidden` y un CTA de contacto visible sin scroll.
-- [ ] **HOME-03**: El contenido es el de la home actual en EN y ES, sin cifras, clientes ni credenciales inventadas; los datos faltantes quedan visibles como pendientes.
-- [ ] **HOME-04**: Juan puede alternar EN/ES en el mockup con paridad total de contenido.
+- [x] **HOME-03**: El contenido es el de la home actual en EN y ES, sin cifras, clientes ni credenciales inventadas; los datos faltantes quedan visibles como pendientes.
+- [x] **HOME-04**: Juan puede alternar EN/ES en el mockup con paridad total de contenido.
 
 ### Performance y accesibilidad (PERF)
 
-- [ ] **PERF-01**: Cada mockup activa como máximo 1 efecto WebGL/canvas a la vez y 2 por página; el resto es CSS o SVG.
-- [ ] **PERF-02**: Todo efecto pesado se carga después de LCP y solo cuando entra al viewport, y se pausa al salir.
+- [x] **PERF-01**: Cada mockup activa como máximo 1 efecto WebGL/canvas a la vez y 2 por página; el resto es CSS o SVG.
+- [x] **PERF-02**: Todo efecto pesado se carga después de LCP y solo cuando entra al viewport, y se pausa al salir.
 - [ ] **PERF-03**: Lighthouse sobre cada mockup (servido localmente) reporta performance mobile >= 90, CLS 0 y LCP < 2.0 s, con el reporte guardado en `designs/redesign-v3/reports/`.
-- [ ] **PERF-04**: Cada mockup pasa las reglas de A11Y.md: H1 único, landmarks, foco visible, objetivos táctiles, `prefers-reduced-motion`, ASCII decorativo oculto a lectores de pantalla.
+- [x] **PERF-04**: Cada mockup pasa las reglas de A11Y.md: H1 único, landmarks, foco visible, objetivos táctiles, `prefers-reduced-motion`, ASCII decorativo oculto a lectores de pantalla.
 
 ### Resto de páginas (PAGE), sujeto a aprobación de Juan sobre la home
 
@@ -75,12 +75,12 @@ Cada requirement pertenece a exactamente una fase. PERF-01 a PERF-04 se establec
 | REACT-04 | Phase 51.1 | Complete |
 | HOME-01 | Phase 52 | Pending |
 | HOME-02 | Phase 52 | Pending |
-| HOME-03 | Phase 52 | Pending |
-| HOME-04 | Phase 52 | Pending |
-| PERF-01 | Phase 52 | Pending |
-| PERF-02 | Phase 52 | Pending |
+| HOME-03 | Phase 52 | Complete |
+| HOME-04 | Phase 52 | Complete |
+| PERF-01 | Phase 52 | Complete |
+| PERF-02 | Phase 52 | Complete |
 | PERF-03 | Phase 52 | Pending |
-| PERF-04 | Phase 52 | Pending |
+| PERF-04 | Phase 52 | Complete |
 | PAGE-01 | Phase 53 | Pending |
 | PAGE-02 | Phase 54 | Pending |
 | PAGE-03 | Phase 55 | Pending |
