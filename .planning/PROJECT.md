@@ -98,20 +98,27 @@ El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de s
 | Lead magnet entregado por URL firmada de Cloudinary con expiración (v2.1) | Previene acceso público directo no autorizado sin suscripción | ✓ Good |
 | Doble opt-in propio en el sitio para email capture (v2.1) | Resend no incluye doble opt-in nativo; garantiza que solo direcciones confirmadas lleguen a la audiencia | ✓ Good |
 
-## Current Milestone: v2.3 Rediseño Visual v3 (mockups HTML)
+## Current Milestone: v2.4 Rediseño MUI en producción
 
-**Goal:** Explorar una nueva visión visual del sitio (ASCII, pixel, grainy gradient, componentes React Bits) como mockups HTML estáticos en `designs/redesign-v3/`, para que Juan itere con feedback antes de cualquier implementación en Payload.
+**Goal:** Llevar al sitio real el diseño MUI que Juan aprobó (sandbox `designs/design-system-mui/`), conectado a Payload, con un único corte a producción tras validar en un preview.
 
 **Target features:**
-- Sistema visual: tokens (paleta negro tinta + gradiente grainy violeta/coral/ámbar + verde fósforo para ASCII/estados), tipografía, componentes base y presupuesto de performance
-- Home en HTML como primera entrega para revisión (Fase A)
-- Resto de páginas en HTML (servicios, landings locales, blog, case studies, autor, contacto, websites, stack, búsqueda, legales), sujeto a la aprobación de Juan sobre la home
+- Migrar la capa de presentación de `src/app/(frontend)` de Tailwind + shadcn/Radix a MUI v9 (solo modo oscuro) en todas las páginas: home, servicios, sobre mí, casos de éxito, websites, blog, categorías, post, contacto, stack, legales, 404, autores y selector de idioma
+- Conectar cada página a Payload como fuente de verdad (Posts, CaseStudies, Websites, Authors, Categories, Pages, globals Header/Footer, i18n `[locale]` EN/ES); los datos hardcodeados del sandbox se reemplazan por consultas
+- Preview en Dokploy (`dev.juan-tech.com`) desde la rama `feat/mui-redesign`, leyendo la DB de producción en SOLO lectura
+- Gate de SEO y accesibilidad contra el preview, y confirmación explícita de Juan antes del único merge a master
 
 **Restricciones clave:**
-- Mockups en `designs/redesign-v3/`: HTML/CSS/JS estático más una app Vite + React aislada (`designs/redesign-v3/app/`, su propio `package.json`) para ver los componentes originales de React Bits. Prohibido tocar `src/`, el `package.json` raíz, Payload, colecciones, schema o base de datos
-- PSI/CWV es requisito: máx 1 shader activo a la vez, fallback CSS estático, `prefers-reduced-motion` respetado, mobile con fallback, H1 real en HTML, ASCII decorativo `aria-hidden`
-- WCAG 2.2 AA + A11Y.md, paridad EN/ES, sin datos inventados
-- La implementación en Payload es un milestone posterior, fuera de alcance
+- Estrategia: rama única con corte total (sin convivir Tailwind y MUI en producción)
+- Conservar las invariantes de SEO ya cerradas: hreflang, canonicals, JSON-LD, metadata, sitemap, redirects, ISR/revalidate, llms.txt, robots
+- WCAG 2.2 AA según A11Y.md; Lighthouse mobile sin regresión; paridad EN/ES
+- Sin cambios de schema salvo migraciones aditivas. DB de producción única: correr `scripts/db/04-which-database.ts` antes de cualquier escritura
+- Borradores que Juan debe resolver antes del corte: marcadores `{{pendiente}}` y `case-lessons.ts` del sandbox; textos CTA que Juan aún no aprobó
+- Fuera de alcance: SEO programático IA-bots (backlog), nuevos lead magnets, contenido real en inglés
+
+## Milestone Anterior: v2.3 Rediseño Visual v3 (mockups HTML), reemplazado por v2.4 (2026-11-06)
+
+Los mockups HTML en `designs/redesign-v3/` se reemplazaron por el sandbox MUI. La aprobación de Juan del diseño MUI resolvió el gate 52-07. Fases 51 y 52 archivadas.
 
 ## Milestone en cola: v2.2 Productos Digitales y Tienda Polar
 
@@ -213,4 +220,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-09-22 after milestone v2.1 completion (Monetización del Sitio — Research + Fundaciones); 42/42 requirements verificados y desplegados*
+*Last updated: 2026-11-06 after starting milestone v2.4 (Rediseño MUI en producción)*

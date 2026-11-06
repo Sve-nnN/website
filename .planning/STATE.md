@@ -1,20 +1,15 @@
 ---
-gsd_state_version: 1.0
-milestone: v2.3
-milestone_name: Rediseño Visual v3 (mockups HTML)
-current_phase: 52
-current_phase_name: Home mockup y gate de revisión
-status: in_progress
-stopped_at: 52-07 tareas 1-2 completas; tarea 3 = GATE HUMANO D-14 esperando respuesta de Juan (approve / approve-with-notes / changes)
-last_updated: "2026-10-22T01:24:55.999Z"
-last_activity: 2026-10-22
-last_activity_desc: "52-06 completado (harness de etapas de la home: i18n, copy, a11y, budget, isolation)"
-state_head: caf417fd1de5ae6eabb7586306aa8a12c2099ab8
+gsd_state_version: "1.0"
+milestone: v2.4
+milestone_name: Rediseño MUI en producción
+status: planning
+last_updated: "2026-11-06T20:26:11.201Z"
+last_activity: 2026-11-06
 progress:
-  total_phases: 6
+  total_phases: 0
   completed_phases: 0
-  total_plans: 12
-  completed_plans: 12
+  total_plans: 0
+  completed_plans: 0
   percent: 0
 ---
 
@@ -29,12 +24,10 @@ See: .planning/PROJECT.md (updated 2026-10-15)
 
 ## Current Position
 
-Phase: 52 (Home mockup y gate de revisión), in progress
-Plan: 07 of 7 (52-06 completado; pendiente 52-07: medición final, reporte para Juan, README y gate humano)
-Status: Ejecutando Phase 52; 52-06 completado (harness de etapas en verde)
-Last activity: 2026-10-22 — 52-06 completado (verify:home:checks con 129 PASS en 5 etapas; verify:home 37/37 intacto)
-
-Progress: [░░░░░░░░░░] 0% (0/5 fases; Phase 52 en curso, 51 completa)
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-11-06 — Milestone v2.4 started
 
 ## Performance Metrics
 
