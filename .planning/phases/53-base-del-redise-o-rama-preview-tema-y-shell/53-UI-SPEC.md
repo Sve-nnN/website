@@ -68,9 +68,8 @@ Unidad MUI `theme.spacing(1) = 8px`. Valores declarados (múltiplos de 4):
 | Token | Value | Usage |
 |-------|-------|-------|
 | xs | 4px | Padding horizontal del enlace de marca en el pill, separación entre filas de enlaces del footer |
-| sm | 8px | Padding del pill de nav, gap entre elementos del pill, padding vertical de enlaces |
-| sm+ | 12px | Padding horizontal de cada enlace de nav (`px: 1.5`) y del botón de idioma (`px: 1.5`), padding del skip link, gap del menú de idioma |
-| md | 16px | Distancia del header al borde superior, padding horizontal del contenedor, padding del Drawer |
+| sm | 8px | Padding del pill de nav, gap entre elementos del pill, padding vertical de enlaces, padding horizontal de cada enlace de nav (`px: 1`) y del botón de idioma (`px: 1`), gap del menú de idioma |
+| md | 16px | Distancia del header al borde superior, padding horizontal del contenedor, padding del Drawer, padding del skip link (`p: 2`) |
 | lg | 24px | `padding-top` de la barra inferior del footer, gap entre enlaces legales |
 | xl | 32px | Gap de la grilla del footer |
 | 2xl | 48px | Margen entre la grilla del footer y su barra inferior |
@@ -88,12 +87,12 @@ Medidas fijas del shell:
 | Toggle de movimiento | `position: fixed`, `left: 16px`, `bottom: 16px`, `z-index: 1200`, `min-height: 40px` |
 | Enlace del footer y enlace legal | `min-height: 32px`, `display: inline-flex`, `align-items: center`. Meta táctil real 32 px, por encima del mínimo de 24 px del SC 2.5.8 |
 | Enlace social del footer | 44 x 44 px |
-| Menú de idioma | `min-width: 160px`, `gap: 12px` entre texto y marca de selección |
+| Menú de idioma | `min-width: 160px`, `gap: 8px` entre texto y marca de selección |
 | Ancho máximo del footer | `Container maxWidth="lg"` (1200 px) |
 | Offset de scroll | `scroll-padding-top: 96px` (header fijo) y `scroll-padding-bottom: 72px` (toggle fijo), para cumplir SC 2.4.11 (foco no oculto) |
 | Breakpoint de nav | `md` (900 px). Debajo de 900 px aparece solo el botón de menú |
 
-Sin excepciones: todo valor de espaciado es múltiplo de 4. Los tamaños 40, 44 y 52 son alturas de objetivo táctil y también son múltiplos de 4.
+Sin excepciones: todos los tokens de espaciado pertenecen al conjunto estándar (4, 8, 16, 24, 32, 48, 64). Los tamaños 40, 44, 52 y 56 son alturas de objetivo táctil, no tokens de espaciado, y también son múltiplos de 4. El padding horizontal de 8 px de enlaces y del botón de idioma no reduce la meta táctil: la altura se mantiene con `min-height` de 40 px (44 px en botones de icono), muy por encima del mínimo de 24 px del SC 2.5.8.
 
 ---
 
@@ -173,7 +172,7 @@ Landmarks y nombres (A11Y.md): `header` con `aria-label` ES "Cabecera" / EN "Hea
 
 ### Skip link y estructura
 
-- Primer elemento enfocable del documento. Fuera de pantalla (`top: -64px`) y en foco baja a `top: 8px`, `left: 8px`, `z-index: 1300`, fondo `background.paper`, padding 12 px, radio 4 px, texto `accentText`.
+- Primer elemento enfocable del documento. Fuera de pantalla (`top: -64px`) y en foco baja a `top: 8px`, `left: 8px`, `z-index: 1300`, fondo `background.paper`, padding 16 px, radio 4 px, texto `accentText`.
 - Destino: `<main id="main-content" tabIndex={-1}>` con `outline: none` (el foco se asigna al activar el enlace, el anillo global sigue disponible para teclado). Se conserva el id `main-content` actual para no romper anclas existentes.
 - Orden en el DOM: skip link, `header`, `main`, `footer`, toggle de movimiento. El shell aporta el único `<main>` y las páginas no deben declarar otro.
 - `<html lang={locale}>` correcto en `es` y `en`. El `<html>` lleva `suppressHydrationWarning`.
@@ -249,7 +248,7 @@ Applicable state considerations resolved: 9 covered, 3 backstop, 1 unresolved
 | empty | Footer sin columnas, social o legales | ✅ covered | Cada bloque solo se renderiza si su array tiene datos. La barra inferior y la marca siempre aparecen |
 | error | Falla de Local API al leer Header o Footer | ✅ covered | Shell mínimo sin mensaje y sin 500, error registrado en servidor (ver Copywriting, Error state) |
 | loading | Hidratación del toggle de movimiento y el tema | ✅ covered | Script inline fija `data-motion` y `InitColorSchemeScript` fija `data-dark` antes del pintado: sin parpadeo de estado ni de esquema |
-| populated | Nav con 6 enlaces a 900 px | 🧪 backstop | Verificar en el preview a 900, 1024 y 1280 px que el pill no desborda ni hace scroll horizontal. El `px` de enlace ya es 12 px. Si desborda, bajar `px` de enlace de 12 a 8 px (`px: 1`) y el gap del pill de 8 a 4 px |
+| populated | Nav con 6 enlaces a 900 px | 🧪 backstop | Verificar en el preview a 900, 1024 y 1280 px que el pill no desborda ni hace scroll horizontal. El `px` de enlace ya es 8 px (`px: 1`). Si desborda, bajar el gap del pill de 8 a 4 px. Si no desborda pero los objetivos se sienten apretados, subir `px` de enlace a 16 px (`px: 2`) solo si sigue cabiendo a 900 px |
 | long-text | Etiquetas largas en EN o ES del CTA y de los enlaces de nav | ✅ covered | El CTA cambia de línea dentro de su botón sin romper el pill (`white-space: normal` por debajo de `md`). En el Drawer el texto envuelve |
 | overflow | Footer con más de 3 columnas (columns más dynamicColumns) | ✅ covered | `auto-fit minmax(160px, 1fr)` reparte las columnas. Los títulos de columna envuelven |
 | partial | Locale sin traducción de un enlace de nav (`label` EN vacío) | ✅ covered | Se omite el enlace en ese locale. Nunca se muestra una etiqueta vacía ni el slug |
