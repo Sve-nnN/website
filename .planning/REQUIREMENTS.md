@@ -1,92 +1,77 @@
-# Requirements: Rediseño Visual v3 (mockups HTML)
+# Requirements: Rediseño MUI en producción (v2.4)
 
-**Defined:** 2026-10-15
+**Defined:** 2026-11-06
 **Core Value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO, en contenido y en ejecución técnica (rendimiento y SEO impecables).
 
 ## v1 Requirements
 
-Alcance del milestone v2.3: mockups HTML estáticos en `designs/redesign-v3/`. Nada de este milestone toca `src/`, Payload, schema ni base de datos.
+Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Juan (`designs/design-system-mui/`), conectado a Payload. Rama única `feat/mui-redesign`, preview en `dev.juan-tech.com`, un solo merge a master al final.
 
-### Sistema visual (SYS)
+### Base e infraestructura (BASE)
 
-- [x] **SYS-01**: Juan puede abrir `designs/redesign-v3/system.html` y ver los tokens del sistema: paleta (negro tinta `#0B0B12`, gradiente grainy violeta `#5B3DF5` a coral `#FF4D6D` a ámbar `#FFB020`, verde fósforo `#B6FF3B` solo para ASCII y estados), tipografía y escala de espaciado.
-- [x] **SYS-02**: El sistema documenta cada par texto/fondo con su ratio de contraste calculado y todos cumplen WCAG 2.2 AA.
-- [x] **SYS-03**: Existe una biblioteca de componentes en HTML (botones, cards, badges, nav, footer, formulario, bloque terminal CRT, bloque ASCII) con estados hover, focus, disabled y reduced-motion.
-- [x] **SYS-04**: Cada efecto inspirado en React Bits (grainy gradient, pattern waves, CRT warp, micro slats, pixel, ASCII) está identificado contra el catálogo real de reactbits.dev, con nombre exacto del componente de origen y su costo de peso.
-- [x] **SYS-05**: Cada efecto tiene un fallback estático en CSS (gradiente + ruido SVG) que se ve bien sin JavaScript y es lo que ve mobile, `prefers-reduced-motion` y `saveData`.
+- [ ] **BASE-01**: Existe la rama `feat/mui-redesign` y un preview en `dev.juan-tech.com` (Dokploy) que lee la DB de producción en solo lectura, con `noindex` y fuera del sitemap.
+- [ ] **BASE-02**: El tema MUI v9 (solo oscuro, tokens y Geist del sandbox) está montado en el layout de `(frontend)` sin afectar el admin de Payload.
+- [ ] **BASE-03**: Nav, footer, selector de idioma y toggle de movimiento funcionan con los globals Header y Footer de Payload y con `[locale]` real EN/ES.
 
-### Entorno React de mockups (REACT)
+### Páginas conectadas a Payload (PAG)
 
-- [x] **REACT-01**: Juan puede levantar con un comando un dev server en `designs/redesign-v3/app/` y ver la galería `/system` con los componentes originales de React Bits.
-- [x] **REACT-02**: La app tiene su propio `package.json` y `node_modules`, y no modifica el `package.json`, los lockfiles ni `src/` del proyecto.
-- [x] **REACT-03**: Cada componente original conserva su cabecera de origen y el aviso de licencia MIT + Commons Clause está documentado.
-- [x] **REACT-04**: El build de producción de la app se mide con Lighthouse y el peso real de cada componente original queda comparado con el porte vanilla de la fase 51.
+- [ ] **PAG-01**: La home muestra todas sus secciones con datos de Pages y globals.
+- [ ] **PAG-02**: Servicios (índice y detalle) se renderizan desde Payload.
+- [ ] **PAG-03**: Casos de éxito (índice y detalle) muestran estadísticas, contexto, solución, lecciones aprendidas, casos comparativos y conclusiones (campos nuevos en CaseStudies vía migración aditiva).
+- [ ] **PAG-04**: Websites (portafolio y detalle) se renderizan desde la colección Websites.
+- [ ] **PAG-05**: El blog (índice con búsqueda, categorías con "ver más" y post con TOC y progreso de lectura) sirve los 58 posts con su rich text.
+- [ ] **PAG-06**: Sobre mí con timeline y foto nueva se renderiza desde Payload (página nueva, migración aditiva).
+- [ ] **PAG-07**: Contacto conserva el formulario actual (Resend, honeypot) y su FAQ con el diseño MUI.
+- [ ] **PAG-08**: Stack muestra logos de herramientas y conserva los enlaces de afiliado `/go` con su divulgación.
+- [ ] **PAG-09**: Privacy y Terms se renderizan con índice lateral.
+- [ ] **PAG-10**: Autores (índice y perfil) se renderizan desde la colección Authors.
+- [ ] **PAG-11**: La 404 vive dentro del shell del sitio y devuelve estado 404 real.
+- [ ] **PAG-12**: Las landings SEO técnico Lima y Madrid y la página de búsqueda usan el diseño MUI.
 
-### Home (HOME)
+### SEO (SEO)
 
-- [x] **HOME-01**: Juan puede abrir `designs/redesign-v3/home.html` en desktop y mobile y ver la home completa con todas las secciones actuales (hero, servicios, case studies, websites, about, testimonios, FAQ, contacto).
-- [x] **HOME-02**: El primer viewport muestra un H1 real en HTML sobre gradiente grainy, un bloque ASCII decorativo `aria-hidden` y un CTA de contacto visible sin scroll.
-- [x] **HOME-03**: El contenido es el de la home actual en EN y ES, sin cifras, clientes ni credenciales inventadas; los datos faltantes quedan visibles como pendientes.
-- [x] **HOME-04**: Juan puede alternar EN/ES en el mockup con paridad total de contenido.
+- [ ] **SEO-01**: Cada URL del sitemap conserva title, meta description, canonical, hreflang, Open Graph y JSON-LD idénticos a producción (verificado con un crawl comparativo preview contra live).
+- [ ] **SEO-02**: Sitemap, robots, `llms.txt`, redirects y revalidación ISR funcionan igual que hoy.
+- [ ] **SEO-03**: Cada página mantiene un único H1, la jerarquía de encabezados y no reduce el contenido indexable actual.
 
-### Performance y accesibilidad (PERF)
+### Accesibilidad y rendimiento (CAL)
 
-- [x] **PERF-01**: Cada mockup activa como máximo 1 efecto WebGL/canvas a la vez y 2 por página; el resto es CSS o SVG.
-- [x] **PERF-02**: Todo efecto pesado se carga después de LCP y solo cuando entra al viewport, y se pausa al salir.
-- [x] **PERF-03**: Lighthouse sobre cada mockup (servido localmente) reporta performance mobile >= 90, CLS 0 y LCP < 2.0 s, con el reporte guardado en `designs/redesign-v3/reports/`.
-- [x] **PERF-04**: Cada mockup pasa las reglas de A11Y.md: H1 único, landmarks, foco visible, objetivos táctiles, `prefers-reduced-motion`, ASCII decorativo oculto a lectores de pantalla.
+- [ ] **CAL-01**: Cada plantilla cumple WCAG 2.2 AA según A11Y.md, con Lighthouse a11y 100 y revisión manual de teclado.
+- [ ] **CAL-02**: El Lighthouse mobile de cada plantilla no empeora frente al baseline de producción (LCP, CLS, INP).
+- [ ] **CAL-03**: No queda código de Tailwind ni shadcn/Radix sin usar en el bundle final.
 
-### Resto de páginas (PAGE), sujeto a aprobación de Juan sobre la home
+### Contenido pendiente de Juan (CONT)
 
-- [ ] **PAGE-01**: Mockups de servicios (índice + una landing representativa) y de las landings locales Lima y Madrid.
-- [ ] **PAGE-02**: Mockups de blog (listado + detalle) y case studies (listado + detalle), con modo lectura donde el efecto cede ante el texto.
-- [ ] **PAGE-03**: Mockups de autor, contacto, websites (listado + detalle), stack y búsqueda.
-- [ ] **PAGE-04**: Mockups de privacy y terms, más un índice `designs/redesign-v3/index.html` que enlaza todas las páginas.
+- [ ] **CONT-01**: Juan resuelve los `{{pendiente}}`: fecha de la marca aprendoclub, stack de Arianna Lupi, datos de Loops Growth, fecha legal y testimonios.
+- [ ] **CONT-02**: Juan aprueba el texto de los CTA y las lecciones aprendidas de los casos.
+- [ ] **CONT-03**: Juan confirma el texto legal (hosting dice Hostinger y hoy usa Dokploy).
+
+### Corte a producción (GO)
+
+- [ ] **GO-01**: Existe un reporte de gate con SEO, accesibilidad y rendimiento contra el preview.
+- [ ] **GO-02**: Juan da confirmación explícita antes del merge a master.
+- [ ] **GO-03**: Tras el deploy se valida contra juan-tech.com live y queda documentado el rollback.
 
 ## v2 Requirements
 
-- **IMPL-01**: Implementar el sistema aprobado en Next.js + Payload (milestone posterior, requiere aprobación explícita de Juan sobre los mockups).
-- **IMPL-02**: Migrar los bloques de `src/blocks` al nuevo sistema visual.
+- **PROG-01**: SEO programático "Quién bloquea a la IA" (backlog, ver memoria backlog-programmatic-ia-bots).
+- **LEAD-01**: Mini auditoría de URL y nuevos lead magnets.
+- **I18N-01**: Contenido real en inglés para las páginas nuevas.
 
 ## Out of Scope
 
 | Feature | Reason |
 |---------|--------|
-| Cualquier cambio en `src/`, Payload, colecciones, schema o DB | Juan pidió ver la visión primero en HTML; la base es la de producción |
-| Reemplazar fuentes de contenido o copy factual | Es un rediseño visual, no editorial |
-| Dependencia nueva en el `package.json` raíz | La app React de mockups lleva su propio `package.json` aislado en `designs/redesign-v3/app/` |
-| Instalar React Bits en el proyecto Next.js | Los componentes viven solo en la app de mockups; llegan al proyecto con el milestone de implementación |
-| Tienda Polar y productos digitales | Pertenece al milestone v2.2, en cola |
+| Cambios de schema destructivos | Producción comparte una sola DB; solo migraciones aditivas |
+| Modo claro | Juan decidió dejar el sitio siempre en modo oscuro |
+| Convivencia gradual Tailwind y MUI en producción | Juan eligió corte total para evitar dos sistemas de diseño |
+| SEO programático y nuevos lead magnets | Backlog, no bloquean el rediseño |
 
 ## Traceability
 
-Cada requirement pertenece a exactamente una fase. PERF-01 a PERF-04 se establecen y miden en Phase 52 sobre la home y las Phases 53 a 55 los heredan como criterio de aceptación por página.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| SYS-01 | Phase 51 | Complete |
-| SYS-02 | Phase 51 | Complete |
-| SYS-03 | Phase 51 | Complete |
-| SYS-04 | Phase 51 | Complete |
-| SYS-05 | Phase 51 | Complete |
-| REACT-01 | Phase 51.1 | Complete |
-| REACT-02 | Phase 51.1 | Complete |
-| REACT-03 | Phase 51.1 | Complete |
-| REACT-04 | Phase 51.1 | Complete |
-| HOME-01 | Phase 52 | Complete |
-| HOME-02 | Phase 52 | Complete |
-| HOME-03 | Phase 52 | Complete |
-| HOME-04 | Phase 52 | Complete |
-| PERF-01 | Phase 52 | Complete |
-| PERF-02 | Phase 52 | Complete |
-| PERF-03 | Phase 52 | Complete |
-| PERF-04 | Phase 52 | Complete |
-| PAGE-01 | Phase 53 | Pending |
-| PAGE-02 | Phase 54 | Pending |
-| PAGE-03 | Phase 55 | Pending |
-| PAGE-04 | Phase 55 | Pending |
-
-**Cobertura:** 21/21 requirements mapeados, 0 huérfanos, 0 duplicados.
+| (lo completa el roadmapper) | | Pending |
 
 ---
-*Requirements defined: 2026-10-15*
+*Requirements defined: 2026-11-06*
