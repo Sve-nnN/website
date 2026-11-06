@@ -71,7 +71,36 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (lo completa el roadmapper) | | Pending |
+| BASE-01 | Phase 53 | Pending |
+| BASE-02 | Phase 53 | Pending |
+| BASE-03 | Phase 53 | Pending |
+| PAG-01 | Phase 54 | Pending |
+| PAG-02 | Phase 54 | Pending |
+| PAG-03 | Phase 55 | Pending |
+| PAG-04 | Phase 55 | Pending |
+| PAG-05 | Phase 55 | Pending |
+| PAG-06 | Phase 54 | Pending |
+| PAG-07 | Phase 54 | Pending |
+| PAG-08 | Phase 54 | Pending |
+| PAG-09 | Phase 54 | Pending |
+| PAG-10 | Phase 55 | Pending |
+| PAG-11 | Phase 54 | Pending |
+| PAG-12 | Phase 54 | Pending |
+| SEO-01 | Phase 57 | Pending |
+| SEO-02 | Phase 57 | Pending |
+| SEO-03 | Phase 57 | Pending |
+| CAL-01 | Phase 57 | Pending |
+| CAL-02 | Phase 57 | Pending |
+| CAL-03 | Phase 57 | Pending |
+| CONT-01 | Phase 56 | Pending |
+| CONT-02 | Phase 56 | Pending |
+| CONT-03 | Phase 56 | Pending |
+| GO-01 | Phase 57 | Pending |
+| GO-02 | Phase 57 | Pending |
+| GO-03 | Phase 57 | Pending |
+
+**Coverage:** 27/27 requirements mapeados, sin huérfanos ni duplicados.
 
 ---
 *Requirements defined: 2026-11-06*
+*Traceability updated: 2026-11-06 (roadmap v2.4, fases 53-57)*

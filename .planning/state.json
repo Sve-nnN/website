@@ -1,7 +1,7 @@
 {
   "contract": "1.0.0",
   "flavor": "core",
-  "milestone": "v2.3 — Rediseño Visual v3 (mockups HTML)",
+  "milestone": "v2.4",
   "phases": [
     {
       "number": "51",
@@ -30,9 +30,9 @@
     }
   ],
   "next": {
-    "command": "/gsd:progress --next",
-    "label": "Advance to the next step",
-    "reason": "Phase 52 of 6 · 0% · executing"
+    "command": "/gsd:discuss-phase",
+    "label": "Discuss the first phase",
+    "reason": "Project initialized — plan your first phase"
   },
-  "updated_at": "2026-10-22T01:24:47.561Z"
+  "updated_at": "2026-11-06T20:26:11.204Z"
 }

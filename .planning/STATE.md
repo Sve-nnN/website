@@ -2,11 +2,15 @@
 gsd_state_version: "1.0"
 milestone: v2.4
 milestone_name: Rediseño MUI en producción
-status: planning
-last_updated: "2026-11-06T20:26:11.201Z"
+current_phase: 53
+current_phase_name: "Base del rediseño: rama, preview, tema y shell"
+status: Roadmap creado, listo para planificar la Phase 53
+stopped_at: Roadmap v2.4 aprobado por Juan; siguiente /gsd-plan-phase 53
+last_updated: "2026-11-06T20:31:30.055Z"
 last_activity: 2026-11-06
+state_head: e5f4373e629e33262c7e499f04e095a1595fb63f
 progress:
-  total_phases: 0
+  total_phases: 5
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,17 +21,17 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-10-15)
+See: .planning/PROJECT.md (updated 2026-11-06)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Milestone v2.3 Rediseño Visual v3 (mockups HTML, Phases 51-55). Entregables solo HTML estático en `designs/redesign-v3/`; sin cambios en `src/`, Payload, schema ni DB. Milestone v2.1 (Phases 44-50) cerrado y desplegado; v2.2 (Tienda Polar) en cola.
+**Current focus:** Milestone v2.4 Rediseño MUI en producción (Phases 53-57). Rama única `feat/mui-redesign`, preview en `dev.juan-tech.com` leyendo la DB de producción en solo lectura, un solo merge a master con confirmación explícita de Juan (GO-02). Solo migraciones aditivas; correr `scripts/db/04-which-database.ts` antes de escribir en la DB. v2.3 (mockups HTML) quedó reemplazado por v2.4; v2.1 cerrado y desplegado; v2.2 (Tienda Polar) en cola.
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-11-06 — Milestone v2.4 started
+Phase: 53 (Base del rediseño: rama, preview, tema y shell), no iniciada
+Plan: ninguno
+Status: Roadmap creado, listo para planificar la Phase 53
+Last activity: 2026-11-06
 
 ## Performance Metrics
 
@@ -338,6 +342,8 @@ None yet.
 ### Roadmap Evolution
 
 - Phase 51.1 inserted after Phase 51: Entorno React de mockups con componentes originales de React Bits (pedido de Juan: ver los componentes tal cual)
+- 2026-11-06: v2.3 reemplazado por v2.4 (sandbox MUI aprobado). Fases 51, 51.1 y 52 archivadas; las 53 a 55 de v2.3 nunca se crearon y los números 53 a 57 pasan a v2.4
+- 2026-11-06: v2.4 define 5 fases: 53 base, 54 páginas de conversión y utilidad, 55 casos/websites/blog/autores, 56 contenido pendiente de Juan (paralela, bloquea solo el corte), 57 gate de calidad y corte
 
 ## Deferred Items
 
@@ -358,4 +364,4 @@ Resume file: None
 
 ## Operator Next Steps
 
-- Planificar la primera fase del milestone v2.3 con /gsd-discuss-phase 51 o /gsd-plan-phase 51
+- Planificar la primera fase del milestone v2.4 con /gsd-discuss-phase 53 o /gsd-plan-phase 53
