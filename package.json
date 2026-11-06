@@ -14,6 +14,11 @@
     "doctor": "npx react-doctor@latest"
   },
   "dependencies": {
+    "@emotion/cache": "11.14.0",
+    "@emotion/react": "11.14.0",
+    "@emotion/styled": "11.14.1",
+    "@mui/material": "9.5.0",
+    "@mui/material-nextjs": "9.5.0",
     "@paper-design/shaders-react": "^0.0.77",
     "@payloadcms/db-postgres": "3.85.2",
     "@payloadcms/email-resend": "3.85.2",
