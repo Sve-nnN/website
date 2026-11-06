@@ -23,7 +23,7 @@ created: "2026-11-06"
 |----------|-------|
 | Tool | none (shadcn queda congelado en esta fase y se retira en la fase 57, CAL-03). El shell nuevo no importa nada de `@/components/ui` |
 | Preset | not applicable. Tema propio en `src/theme/{tokens,theme,augment.d}.ts`, copiado tal cual del sandbox |
-| Component library | Material UI `@mui/material` 9.5.0 con `@mui/material-nextjs` 9.5.0 (`v15-appRouter`) y Emotion 11.14. `@mui/lab` 9.0.0-beta.10 solo para `Timeline` (no se usa en el shell) |
+| Component library | Material UI `@mui/material` 9.5.0 con `@mui/material-nextjs` 9.5.0 (`v15-appRouter`) y Emotion 11.14. En la fase 53 se instalan solo `@mui/material`, `@mui/material-nextjs` y Emotion. `@mui/lab` (9.0.0-beta.10, solo `Timeline`) NO se instala en esta fase: lo incorpora la fase 54 si la necesita |
 | Icon library | `lucide-react` (ya instalado), siempre con `aria-hidden="true"`. Íconos de marca social con `src/components/SocialIcon.tsx` |
 | Font | Geist (sans) y Geist Mono por `next/font/google`, variables `--font-geist-sans` y `--font-geist-mono`. Geist Sans ya existe en `src/fonts.ts`. Geist Mono se agrega solo si algún componente la declara. El shell no la usa |
 
@@ -40,7 +40,7 @@ Notas de integración que el ejecutor debe respetar:
 
 ## Component Inventory
 
-Enumerated by `cd designs/design-system-mui && node -p "Object.keys(require('@mui/material/package.json').exports || {}).length"` — 156 export entries — @mui/material@9.5.0 (resuelto de `node -p "require('@mui/material/package.json').version"`; `@mui/material-nextjs@9.5.0`, `@mui/lab@9.0.0-beta.10`) — 2026-11-06.
+Enumerated by `cd designs/design-system-mui && node -p "Object.keys(require('@mui/material/package.json').exports || {}).length"` — 156 export entries — @mui/material@9.5.0 (resuelto de `node -p "require('@mui/material/package.json').version"`; `@mui/material-nextjs@9.5.0`; `@mui/lab@9.0.0-beta.10` existe en el sandbox pero no se instala en la fase 53) — 2026-11-06.
 
 Medido sobre el sandbox porque `juan-payload` aún no instala MUI (lo hace el primer plan de esta fase). Tras instalar, repetir el mismo comando en la raíz y corregir esta línea si la versión resuelta cambia. La tabla es una lista no exhaustiva de componentes conocidos y probados en el sandbox, nunca una lista cerrada: el ejecutor puede usar cualquier export de `@mui/material` y debe verificarlo con el comando anterior.
 
@@ -69,6 +69,7 @@ Unidad MUI `theme.spacing(1) = 8px`. Valores declarados (múltiplos de 4):
 |-------|-------|-------|
 | xs | 4px | Padding horizontal del enlace de marca en el pill, separación entre filas de enlaces del footer |
 | sm | 8px | Padding del pill de nav, gap entre elementos del pill, padding vertical de enlaces |
+| sm+ | 12px | Padding horizontal de cada enlace de nav (`px: 1.5`) y del botón de idioma (`px: 1.5`), padding del skip link, gap del menú de idioma |
 | md | 16px | Distancia del header al borde superior, padding horizontal del contenedor, padding del Drawer |
 | lg | 24px | `padding-top` de la barra inferior del footer, gap entre enlaces legales |
 | xl | 32px | Gap de la grilla del footer |
@@ -92,7 +93,7 @@ Medidas fijas del shell:
 | Offset de scroll | `scroll-padding-top: 96px` (header fijo) y `scroll-padding-bottom: 72px` (toggle fijo), para cumplir SC 2.4.11 (foco no oculto) |
 | Breakpoint de nav | `md` (900 px). Debajo de 900 px aparece solo el botón de menú |
 
-Exceptions (heredadas del diseño aprobado, no se normalizan): `14px` de padding horizontal en cada enlace de nav (`px: 1.75`) para que 6 enlaces quepan al llegar a 900 px; `10px` de padding horizontal en el botón de idioma (`px: 1.25`); los tamaños 40, 44 y 52 son alturas de objetivo táctil, no pasos de la escala.
+Sin excepciones: todo valor de espaciado es múltiplo de 4. Los tamaños 40, 44 y 52 son alturas de objetivo táctil y también son múltiplos de 4.
 
 ---
 
@@ -103,11 +104,11 @@ Tema único `theme.ts`. Todos los tamaños en `rem` sobre base de 16 px.
 | Role | Size | Weight | Line Height |
 |------|------|--------|-------------|
 | Body (enlaces de footer, marca, texto del Drawer) | 16px | 400 (marca: 600) | 1.5 (24px) |
-| Label (enlaces de nav, botón CTA pequeño, botón de idioma, toggle de movimiento, ítems del menú de idioma) | 14px | 500 (botones: 600) | 1.43 (20px) |
+| Label (enlaces de nav, ítems del menú de idioma, botón CTA pequeño, botón de idioma, toggle de movimiento) | 14px | 400 (enlaces de nav e ítems del menú de idioma); 600 (botones: CTA, idioma, toggle) | 1.43 (20px) |
 | Heading (enlaces del menú móvil dentro del Drawer) | 24px | 600 | 1.25 (30px) |
 | Caption (barra inferior del footer, copyright, enlaces legales) y `overline` (títulos de columna del footer, mayúsculas, `letter-spacing: 0.08em`) | 12px | 400 (overline: 600) | 1.33 (16px) |
 
-Cuatro tamaños: 12, 14, 16 y 24. No hay Display en el shell. Pesos usados: 400, 500 y 600. El 500 solo aparece en los enlaces de nav y viene del diseño aprobado de Juan. Si el checker lo marca como tercer peso, se acepta como excepción documentada y no se cambia sin una decisión de Juan. Familia: Geist Sans en todo el shell. El tema declara `textWrap: 'pretty'` en `body`.
+Cuatro tamaños: 12, 14, 16 y 24. No hay Display en el shell. Dos pesos: 400 y 600. Los enlaces de nav y los ítems del menú de idioma pasan de 500 (diseño del sandbox) a 400. El tema no declara 500 en ningún rol del shell (`fontWeightMedium` no se usa). El enlace activo de la nav se distingue por fondo `raised`, `text.primary` y `aria-current`, no por peso. Familia: Geist Sans en todo el shell. El tema declara `textWrap: 'pretty'` en `body`.
 
 Zoom y reflujo: todo tamaño en `rem`. A 200 % de zoom y 320 px de ancho no hay scroll horizontal ni texto cortado. El Drawer cubre el caso de ancho estrecho.
 
@@ -136,6 +137,8 @@ Accent reserved for:
 Nada más usa naranja en el shell. El enlace activo de la nav se distingue con `raised` y `text.primary` (no por color solo: lleva `aria-current`). Los enlaces del footer usan `text.primary` con subrayado al hover y al foco.
 
 Contraste medido (de `A11Y-DECISIONS.md`, modo oscuro): texto principal 16.98:1, secundario 8.47:1 sobre fondo y 7.12:1 sobre `raised`, acento como texto 6.87:1, borde de campo 5.49:1, botón sobre acento 7.11:1. Verificación pendiente para esta fase (gate): el texto `text.secondary` de los enlaces de nav sobre el pill translúcido cuando pasa sobre blobs claros del hero. Medir en el preview con el blob de mayor luminancia detrás. Si baja de 4.5:1, subir la opacidad del fondo del pill de 72 % a 88 %.
+
+Ancla visual primaria del shell: el botón CTA relleno de acento dentro del pill del header. Es el único elemento relleno de naranja sobre el fondo oscuro y ocupa el extremo derecho del pill. El orden de lectura es marca (extremo izquierdo, texto "Juan Angulo" en 600), enlaces de nav, selector de idioma y, al final, el CTA. La marca abre la lectura y el CTA la cierra con la acción. En móvil el CTA vive en el Drawer como `size="large"` y sigue siendo el único botón relleno de la pantalla abierta junto al idioma activo.
 
 Nota sobre el borde del toggle: SC 1.4.11 exige 3:1 para identificar un control solo cuando el borde es el único indicador. El toggle tiene texto visible y fondo `background.paper`, así que el borde `divider` es decorativo.
 
@@ -246,7 +249,7 @@ Applicable state considerations resolved: 9 covered, 3 backstop, 1 unresolved
 | empty | Footer sin columnas, social o legales | ✅ covered | Cada bloque solo se renderiza si su array tiene datos. La barra inferior y la marca siempre aparecen |
 | error | Falla de Local API al leer Header o Footer | ✅ covered | Shell mínimo sin mensaje y sin 500, error registrado en servidor (ver Copywriting, Error state) |
 | loading | Hidratación del toggle de movimiento y el tema | ✅ covered | Script inline fija `data-motion` y `InitColorSchemeScript` fija `data-dark` antes del pintado: sin parpadeo de estado ni de esquema |
-| populated | Nav con 6 enlaces a 900 px | 🧪 backstop | Verificar en el preview a 900, 1024 y 1280 px que el pill no desborda ni hace scroll horizontal. Si desborda, bajar `px` de enlace de 14 a 12 px |
+| populated | Nav con 6 enlaces a 900 px | 🧪 backstop | Verificar en el preview a 900, 1024 y 1280 px que el pill no desborda ni hace scroll horizontal. El `px` de enlace ya es 12 px. Si desborda, bajar `px` de enlace de 12 a 8 px (`px: 1`) y el gap del pill de 8 a 4 px |
 | long-text | Etiquetas largas en EN o ES del CTA y de los enlaces de nav | ✅ covered | El CTA cambia de línea dentro de su botón sin romper el pill (`white-space: normal` por debajo de `md`). En el Drawer el texto envuelve |
 | overflow | Footer con más de 3 columnas (columns más dynamicColumns) | ✅ covered | `auto-fit minmax(160px, 1fr)` reparte las columnas. Los títulos de columna envuelven |
 | partial | Locale sin traducción de un enlace de nav (`label` EN vacío) | ✅ covered | Se omite el enlace en ese locale. Nunca se muestra una etiqueta vacía ni el slug |
@@ -264,7 +267,7 @@ Applicable state considerations resolved: 9 covered, 3 backstop, 1 unresolved
 |----------|-------------|-------------|
 | shadcn official | ninguno (shadcn congelado y ajeno al shell nuevo) | not required |
 | Third-party shadcn registries | ninguno | not applicable, none declared |
-| npm (MUI) | `@mui/material@9.5.0`, `@mui/material-nextjs@9.5.0`, `@emotion/react` y `@emotion/styled` 11.14, `@mui/lab@9.0.0-beta.10` (beta, solo Timeline, fase 54) | Paquetes oficiales de MUI, versiones ya instaladas y medidas en el sandbox el 2026-11-06. Antes de instalar en la rama: `npm view @mui/material@9.5.0 version` y revisar `npm audit` |
+| npm (MUI) | `@mui/material@9.5.0`, `@mui/material-nextjs@9.5.0`, `@emotion/react` y `@emotion/styled` 11.14. `@mui/lab` (beta) no se instala en la fase 53 | Paquetes oficiales de MUI, versiones ya instaladas y medidas en el sandbox el 2026-11-06. Antes de instalar en la rama: `npm view @mui/material@9.5.0 version` y revisar `npm audit` |
 
 ---
 
