@@ -113,6 +113,37 @@ export function getCachedBlogPromo(locale: Locale) {
   )()
 }
 
+// --- Header y Footer globals (fase 53, D-10 y D-12: el shell los lee en cada
+// render; los hooks de src/lib/cache-tags.ts los invalidan al publicar).
+//
+// NOT overrideAccess:false en estos dos, mismo criterio que
+// getCachedFeaturedContent: no tienen versions/drafts, así que no hay borrador
+// que filtrar, y su `access` por defecto (el de los globals sin bloque
+// explícito) niega la lectura anónima -> `overrideAccess:false` lanzaría. Son
+// navegación pública (T-53-21, aceptado). ---
+
+export function getCachedHeader(locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      return payload.findGlobal({ slug: 'header', depth: 1, locale })
+    },
+    ['header', locale],
+    { tags: [CACHE_TAGS.header()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+export function getCachedFooter(locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      return payload.findGlobal({ slug: 'footer', depth: 1, locale })
+    },
+    ['footer', locale],
+    { tags: [CACHE_TAGS.footer()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
 // --- Categories (blog URL structure: /blog/<category>/<post>) ---
 
 export type CategoryData = Pick<Category, 'id' | 'title' | 'slug' | 'description'>

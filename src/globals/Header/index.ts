@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { link } from '@/fields/link'
+import { revalidateHeaderCache } from '@/lib/cache-tags'
 
 export const Header: GlobalConfig = {
   slug: 'header',
@@ -8,6 +9,9 @@ export const Header: GlobalConfig = {
   admin: {
     group: 'Site',
     description: 'Site-wide navigation, logo, and CTA button — editable without touching code.',
+  },
+  hooks: {
+    afterChange: [revalidateHeaderCache],
   },
   fields: [
     {

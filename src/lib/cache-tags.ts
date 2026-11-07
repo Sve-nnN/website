@@ -80,6 +80,8 @@ export const CACHE_TAGS = {
   categories: () => 'categories:all',
   featuredContent: () => 'featured-content',
   blogPromo: () => 'blog-promo',
+  header: () => 'header',
+  footer: () => 'footer',
   redirects: () => 'redirects',
   affiliateLinks: () => 'affiliate-links:all',
 }
@@ -164,6 +166,24 @@ export const revalidateFeaturedContentCache: GlobalAfterChangeHook = ({ doc }) =
 
 export const revalidateBlogPromoCache: GlobalAfterChangeHook = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.blogPromo())
+  safeRevalidateAllPaths()
+  return doc
+}
+
+// --- Header y Footer (fase 53, D-12 — globals del shell. Aparecen en TODAS las
+// rutas, así que además de su tag invalidan el HTML ISR de todas las rutas, igual
+// que BlogPromo. En el preview no llega este `revalidateTag` (el admin de
+// producción es otro proceso): ahí un cambio se refleja por el TTL de 60 s de
+// `unstable_cache` más el de 60 s del ISR de cada página, entre 60 y 120 s) ---
+
+export const revalidateHeaderCache: GlobalAfterChangeHook = ({ doc }) => {
+  safeRevalidateTag(CACHE_TAGS.header())
+  safeRevalidateAllPaths()
+  return doc
+}
+
+export const revalidateFooterCache: GlobalAfterChangeHook = ({ doc }) => {
+  safeRevalidateTag(CACHE_TAGS.footer())
   safeRevalidateAllPaths()
   return doc
 }
