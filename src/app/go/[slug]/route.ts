@@ -6,6 +6,7 @@ import { getCachedAffiliateLinks } from '@/lib/cache'
 import { pickDestination } from '@/lib/affiliate'
 import { isBotUserAgent } from '@/lib/bot-detection'
 import { createIpThrottle, extractClientIp } from '@/lib/ip-throttle'
+import { isPreviewReadonly } from '@/lib/preview'
 
 // GO-01: Local API + driver de Postgres, runtime Node, nunca Edge — mismo
 // motivo que src/app/api/newsletter/confirm/route.ts.
@@ -71,7 +72,11 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   // nunca si el redirect se emite.
   const userAgent = request.headers.get('user-agent')
   const clientIp = extractClientIp(request.headers)
-  const shouldLog = !isBotUserAgent(userAgent) && !clickThrottle.isThrottled(clientIp)
+  // Preview de solo lectura (fase 53, D-03): el redirect sale igual, pero el
+  // clic no se registra. `!isPreviewReadonly()` va primero para que ni siquiera
+  // se consuma el throttle.
+  const shouldLog =
+    !isPreviewReadonly() && !isBotUserAgent(userAgent) && !clickThrottle.isThrottled(clientIp)
 
   if (shouldLog) {
     after(async () => {

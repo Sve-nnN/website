@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
+import { isPreviewReadonly } from '@/lib/preview'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -83,6 +84,13 @@ export async function sendContactMessage(formData: FormData): Promise<void> {
 
   if (!name || !email || !message || !EMAIL_REGEX.test(email)) {
     redirect(`${redirectBase}?sent=false`)
+  }
+
+  // Preview de solo lectura (fase 53, D-03): mismo éxito visible que el envío
+  // real, sin mandar correo. Va después de validar y antes de CONTACT_TO_EMAIL
+  // y del sendEmail.
+  if (isPreviewReadonly()) {
+    redirect(`${redirectBase}?sent=true`)
   }
 
   const toAddress = process.env.CONTACT_TO_EMAIL

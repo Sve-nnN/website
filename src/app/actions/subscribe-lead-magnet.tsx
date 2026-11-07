@@ -8,6 +8,7 @@ import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import { ConfirmLeadMagnet } from '@/emails/ConfirmLeadMagnet'
+import { isPreviewReadonly } from '@/lib/preview'
 import { resolveSiteUrl } from '@/lib/resolve-site-url'
 import { isResendConfigured } from '@/lib/resend-configured'
 import { mintDownloadToken } from '@/lib/download-token'
@@ -84,6 +85,14 @@ export async function subscribeToLeadMagnetAction(formData: FormData): Promise<v
 
   if (await isRateLimited()) {
     redirect(`${postPath}?subscribed=error`)
+  }
+
+  // Preview de solo lectura (fase 53, D-03): mismo destino que el camino feliz
+  // con Resend. Va antes de cualquier find/create/update/sendEmail y fuera del
+  // try. Sin esta compuerta, la rama MAIL-04 (sin RESEND_API_KEY) marcaría al
+  // suscriptor `confirmed` y escribiría en la base (RESEARCH Pitfall 7).
+  if (isPreviewReadonly()) {
+    redirect(`${postPath}?subscribed=pending`)
   }
 
   // `redirect()` throws internamente (NEXT_REDIRECT) — todo el trabajo de
