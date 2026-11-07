@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 53
 current_phase_name: "Base del rediseño: rama, preview, tema y shell"
 status: executing
-stopped_at: Completed 53-04-PLAN.md
-last_updated: "2026-11-07T16:48:44.963Z"
+stopped_at: Completed 53-05-PLAN.md
+last_updated: "2026-11-07T16:59:21.231Z"
 last_activity: 2026-11-06
 last_activity_desc: Phase 53 execution started
-state_head: b5d1b3839a92085dd23e069e6847f2abbda84b02
+state_head: e1d4430fb344e539498534f40d2b0b4089c5b3ad
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 6
-  completed_plans: 4
+  completed_plans: 5
   percent: 0
 ---
 
@@ -30,7 +30,7 @@ See: .planning/PROJECT.md (updated 2026-11-06)
 ## Current Position
 
 Phase: 53 (Base del rediseño: rama, preview, tema y shell) — EXECUTING
-Plan: 5 of 6
+Plan: 6 of 6
 Status: Ready to execute
 Last activity: 2026-11-06 — Phase 53 execution started
 
@@ -147,6 +147,7 @@ Last activity: 2026-11-06 — Phase 53 execution started
 | Phase 53 P02 | 30min | 3 tasks | 14 files |
 | Phase 53 P03 | 25min | 4 tasks | 14 files |
 | Phase 53 P04 | 20min | 2 tasks | 8 files |
+| Phase 53 P05 | 30min | 2 tasks | 29 files |
 
 ## Accumulated Context
 
@@ -307,6 +308,7 @@ Recent decisions affecting current work:
 - [Phase 52]: TBT y LCP de desktop son informativos (SwiftShader) y se confirman en la GPU real de Juan (D-11)
 - [Phase 52]: El runner --final-shots se implemento y el chequeo d2 del tracer se corrigio para el pivote v4 (desviaciones Rule 3 y Rule 1)
 - [Phase 53]: Phase 53-01: capas CSS con plugin PostCSS (@layer tailwind, mui) en vez de receta Tailwind v4; Next se queda en 15.4.11
+- [Phase 53]: 53-05: el layout posee el unico main#main-content; las 22 paginas usan div. Etiqueta del toggle de movimiento constante, estado solo en aria-pressed
 
 ### Pending Todos
 
@@ -364,8 +366,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-07T16:48:44.942Z
-Stopped at: Completed 53-04-PLAN.md
+Last session: 2026-11-07T16:59:21.083Z
+Stopped at: Completed 53-05-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
