@@ -3,6 +3,14 @@ import createNextIntlPlugin from 'next-intl/plugin'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
+// Fase 53 (D-04, D-05): el preview del rediseño (dev.juan-tech.com) corre este
+// mismo código contra la base de producción. `PREVIEW_READONLY=true` debe estar
+// presente AL CONSTRUIR: `headers()` y `rewrites()` se evalúan en el build y
+// quedan fijos en el manifiesto. Sin la variable (producción) ambas funciones
+// devuelven exactamente lo de antes. El código de servidor lee la misma bandera
+// en runtime con `isPreviewReadonly()` (src/lib/preview.ts).
+const isPreview = process.env.PREVIEW_READONLY === 'true'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
@@ -50,9 +58,40 @@ const nextConfig = {
           // SAMEORIGIN y no DENY: el admin de Payload usa iframes de mismo
           // origen para las vistas de preview.
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          // Preview: ninguna respuesta se indexa. Cubre también las rutas que el
+          // matcher del middleware excluye a propósito (robots.txt, sitemaps,
+          // assets), donde el middleware nunca corre.
+          ...(isPreview ? [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] : []),
         ],
       },
     ]
+  },
+  // Preview (D-04, D-05): 404 plano para el admin, la API de Payload y los
+  // sitemaps. `beforeFiles` corre antes de resolver rutas, así que alcanza lo
+  // que el matcher del middleware deja fuera. Sin la bandera no hay rewrites.
+  async rewrites() {
+    if (!isPreview) return []
+
+    const blocked = '/preview-blocked'
+
+    return {
+      beforeFiles: [
+        { source: '/admin', destination: blocked },
+        { source: '/admin/:path*', destination: blocked },
+        { source: '/api', destination: blocked },
+        // Todo /api salvo dos prefijos que deben seguir vivos: /api/redirects-lookup
+        // (el middleware lo llama por loopback en cada petición; bloquearlo
+        // rompería los redirects de todo el sitio) y /api/newsletter/* (los
+        // enlaces de los correos; son inertes por código, ver isPreviewReadonly).
+        {
+          source: '/api/:path((?!redirects-lookup(?:/|$)|newsletter(?:/|$)).+)',
+          destination: blocked,
+        },
+        // El preview no anuncia sitemap (robots.txt tampoco lo menciona).
+        { source: '/sitemap.xml', destination: blocked },
+        { source: '/sitemap.html', destination: blocked },
+      ],
+    }
   },
   async redirects() {
     return [
