@@ -10,7 +10,7 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 ### Base e infraestructura (BASE)
 
 - [ ] **BASE-01**: Existe la rama `feat/mui-redesign` y un preview en `dev.juan-tech.com` (Dokploy) que lee la DB de producción en solo lectura, con `noindex` y fuera del sitemap.
-- [ ] **BASE-02**: El tema MUI v9 (solo oscuro, tokens y Geist del sandbox) está montado en el layout de `(frontend)` sin afectar el admin de Payload.
+- [x] **BASE-02**: El tema MUI v9 (solo oscuro, tokens y Geist del sandbox) está montado en el layout de `(frontend)` sin afectar el admin de Payload.
 - [ ] **BASE-03**: Nav, footer, selector de idioma y toggle de movimiento funcionan con los globals Header y Footer de Payload y con `[locale]` real EN/ES.
 
 ### Páginas conectadas a Payload (PAG)
@@ -72,7 +72,7 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | BASE-01 | Phase 53 | Pending |
-| BASE-02 | Phase 53 | Pending |
+| BASE-02 | Phase 53 | Complete |
 | BASE-03 | Phase 53 | Pending |
 | PAG-01 | Phase 54 | Pending |
 | PAG-02 | Phase 54 | Pending |

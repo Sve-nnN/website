@@ -1,38 +1,38 @@
 {
   "contract": "1.0.0",
   "flavor": "core",
-  "milestone": "v2.4",
+  "milestone": "v2.4 — Rediseño MUI en producción",
   "phases": [
     {
-      "number": "51",
-      "name": "Sistema visual",
-      "status": "pending"
-    },
-    {
-      "number": "52",
-      "name": "Home mockup y gate de revisión",
-      "status": "pending"
-    },
-    {
       "number": "53",
-      "name": "Servicios y landings locales",
+      "name": "Base del rediseño: rama, preview, tema y shell",
       "status": "pending"
     },
     {
       "number": "54",
-      "name": "Blog y case studies",
+      "name": "Páginas de conversión y utilidad",
       "status": "pending"
     },
     {
       "number": "55",
-      "name": "Páginas restantes e índice",
+      "name": "Casos, websites, blog y autores",
+      "status": "pending"
+    },
+    {
+      "number": "56",
+      "name": "Contenido pendiente de Juan",
+      "status": "pending"
+    },
+    {
+      "number": "57",
+      "name": "Gate de calidad y corte a producción",
       "status": "pending"
     }
   ],
   "next": {
-    "command": "/gsd:discuss-phase",
-    "label": "Discuss the first phase",
-    "reason": "Project initialized — plan your first phase"
+    "command": "/gsd:progress --next",
+    "label": "Advance to the next step",
+    "reason": "Phase 53 of 5 · 0% · executing"
   },
-  "updated_at": "2026-11-06T20:26:11.204Z"
+  "updated_at": "2026-11-07T16:32:17.156Z"
 }
