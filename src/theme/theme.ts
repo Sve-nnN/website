@@ -54,7 +54,7 @@ const options: ThemeOptions = {
       styleOverrides: {
         root: ({ theme }) => ({
           borderRadius: radius.sm, minHeight: 44, padding: '8px 16px',
-          transition: `transform ${motion.base}ms ${motion.ease}, background-color ${motion.base}ms ${motion.ease}`,
+          transition: `transform var(--jt-motion-base, ${motion.base}ms) ${motion.ease}, background-color var(--jt-motion-base, ${motion.base}ms) ${motion.ease}`,
           '&:hover': { transform: 'translateY(-2px)', [reduced]: { transform: 'none' } },
           '&:active': { transform: 'scale(0.98)' },
           variants: [

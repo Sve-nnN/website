@@ -154,12 +154,18 @@
   }
 }
 
-/* Phase 7 / D-02 / UI-02: global reduced-motion safety net — unscoped, applies
-   to any existing or future element, not gated behind a class. */
+/* Phase 7 / D-02 / UI-02: red de seguridad global de movimiento reducido.
+   Fase 53 (D-15, SC 2.2.2): el script inicial siempre fija `data-motion` en
+   <html> (paused si hay preferencia de reducir, running si no), y quien pulsa
+   "reanudar" eligio explicitamente mover la pagina. Esa eleccion se respeta, asi
+   que la regla solo aplica cuando data-motion NO es running. Dentro de una capa,
+   `!important` invierte la precedencia (gana la capa de menor prioridad), por
+   eso la regla no puede seguir matando animaciones despues de reanudar.
+   Sin script (JS desactivado) no hay atributo y la regla sigue activa. */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  html:not([data-motion='running']) *,
+  html:not([data-motion='running']) *::before,
+  html:not([data-motion='running']) *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

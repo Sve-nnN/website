@@ -4,6 +4,8 @@ import { Component, useEffect, useMemo, useState, useSyncExternalStore, type Rea
 
 import { GrainGradient } from '@paper-design/shaders-react'
 
+import { useMotion } from '@/theme/motion'
+
 /**
  * Hero `variant: 'home'` background shader (HERO-ANIM-01/02/04). Colors are
  * hardcoded copies of the resolved hex values from `src/app/globals.css`
@@ -170,6 +172,8 @@ export default function HeroGrainGradientShader({ variant = 'default' }: HeroGra
   // update, not part of the hydration pass) instead of a useState lazy
   // initializer.
   const [reducedMotion, setReducedMotion] = useState(false)
+  // Fase 53 (D-16): el toggle global de movimiento tambien detiene el shader.
+  const { paused } = useMotion()
   // SSR-safe and flicker-safe: `useSyncExternalStore` reads the real dark-mode
   // snapshot as part of React's normal render/commit instead of a follow-up
   // `useEffect` state flip (see PERF comment above `subscribeToDarkClass`).
@@ -208,7 +212,7 @@ export default function HeroGrainGradientShader({ variant = 'default' }: HeroGra
 
   const colors = isDark ? DARK_COLORS : LIGHT_COLORS
 
-  const motionProps = reducedMotion ? { speed: 0, frame: 0 } : { speed: variantConfig.speed }
+  const motionProps = reducedMotion || paused ? { speed: 0, frame: 0 } : { speed: variantConfig.speed }
 
   return (
     <div
