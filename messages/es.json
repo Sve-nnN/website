@@ -84,5 +84,30 @@
     "alreadyHeading": "Ya estás suscrito",
     "alreadyBody": "Revisa tu bandeja — ya deberías tener el checklist.",
     "errorBody": "Algo salió mal. No pudimos registrar tu correo — intenta de nuevo en un momento."
+  },
+  "shell": {
+    "skipLink": "Saltar al contenido",
+    "brandAria": "Juan Angulo, inicio",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "langButtonAria": "Idioma: Español",
+    "langGroup": "Idioma",
+    "motionToggle": "Pausar animaciones",
+    "ctaFallback": "Pedir auditoría 360",
+    "tagline": "Ingeniero de software y consultor SEO técnico",
+    "opensInNewTab": "(se abre en otra pestaña)",
+    "servicesTitle": "Servicios",
+    "servicesIndex": "Todos los servicios",
+    "groupLabel": "Enlaces de {title}",
+    "legalLabel": "Enlaces legales",
+    "socialLabel": "Redes",
+    "landmarks": {
+      "header": "Cabecera",
+      "navMain": "Principal",
+      "menu": "Menú",
+      "navFooter": "Enlaces del pie",
+      "footer": "Pie de página",
+      "main": "Contenido principal"
+    }
   }
 }

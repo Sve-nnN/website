@@ -84,5 +84,30 @@
     "alreadyHeading": "You're already subscribed",
     "alreadyBody": "Check your inbox — you should already have the checklist.",
     "errorBody": "Something went wrong. We couldn't register your email — please try again in a moment."
+  },
+  "shell": {
+    "skipLink": "Skip to content",
+    "brandAria": "Juan Angulo, home",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "langButtonAria": "Language: English",
+    "langGroup": "Language",
+    "motionToggle": "Pause animations",
+    "ctaFallback": "Request a 360 audit",
+    "tagline": "Software engineer and technical SEO consultant",
+    "opensInNewTab": "(opens in a new tab)",
+    "servicesTitle": "Services",
+    "servicesIndex": "All services",
+    "groupLabel": "{title} links",
+    "legalLabel": "Legal links",
+    "socialLabel": "Social",
+    "landmarks": {
+      "header": "Header",
+      "navMain": "Main",
+      "menu": "Menu",
+      "navFooter": "Footer links",
+      "footer": "Site footer",
+      "main": "Main content"
+    }
   }
 }
