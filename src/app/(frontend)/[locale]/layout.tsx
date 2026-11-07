@@ -13,6 +13,7 @@ import { SiteFooter } from '@/components/SiteFooter'
 import { MotionProvider } from '@/components/MotionProvider'
 import { Providers } from '@/theme/Providers'
 import { SITE_URL } from '@/lib/sitemap-data'
+import { isPreviewReadonly } from '@/lib/preview'
 import { BRAND, BRAND_SUFFIX } from '@/lib/page-title'
 import '../../globals.css'
 
@@ -50,6 +51,11 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
   },
   manifest: '/site.webmanifest',
+  // Preview del rediseño (fase 53, D-05): noindex, nofollow en el meta robots.
+  // Las páginas que declaran su propio `robots` con `index: false` siguen siendo
+  // noindex; la cabecera X-Robots-Tag cubre cualquier caso restante. Sin la
+  // bandera (producción) no agrega nada.
+  ...(isPreviewReadonly() ? { robots: { index: false, follow: false } } : {}),
 }
 
 // themeColor lives on the dedicated `viewport` export, NOT inside `metadata`
