@@ -74,7 +74,7 @@ export default async function WebsitesListPage({
   const trail = buildWebsitesTrail(locale as 'es' | 'en')
 
   return (
-    <main>
+    <div>
       <PageHero
         variant="index"
         trail={trail}
@@ -109,6 +109,6 @@ export default async function WebsitesListPage({
         )}
       </Container>
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </main>
+    </div>
   )
 }

@@ -98,9 +98,9 @@ export default async function SeoTecnicoMadridPage({
   })
 
   return (
-    <main>
+    <div>
       <JsonLd data={serviceData} />
       <RenderBlocks blocks={doc.content?.layout ?? []} />
-    </main>
+    </div>
   )
 }

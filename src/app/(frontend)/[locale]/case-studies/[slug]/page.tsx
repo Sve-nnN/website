@@ -193,7 +193,7 @@ export default async function CaseStudyPage({
   }
 
   return (
-    <main>
+    <div>
       <PageHero
         variant="detail"
         trail={trail}
@@ -339,6 +339,6 @@ export default async function CaseStudyPage({
 
       <JsonLd data={creativeWorkData} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </main>
+    </div>
   )
 }

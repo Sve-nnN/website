@@ -137,7 +137,7 @@ export default async function WebsitePage({
   }
 
   return (
-    <main>
+    <div>
       <PageHero
         variant="detail"
         trail={trail}
@@ -245,6 +245,6 @@ export default async function WebsitePage({
 
       <JsonLd data={creativeWorkData} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </main>
+    </div>
   )
 }

@@ -2,16 +2,19 @@ import type React from 'react'
 import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript'
 
 import { array, khand, geistSans } from '@/fonts'
 import { routing } from '@/i18n/routing'
-import { SiteHeader } from '@/components/SiteHeader'
-import { SiteFooter } from '@/components/SiteFooter'
+import { SiteHeader } from '@/components/shell/SiteHeader'
+import { SiteFooter } from '@/components/shell/SiteFooter'
+import { SkipLink } from '@/components/shell/SkipLink'
+import { MotionToggle } from '@/components/shell/MotionToggle'
 import { MotionProvider } from '@/components/MotionProvider'
 import { Providers } from '@/theme/Providers'
+import { MOTION_INIT_SCRIPT } from '@/theme/motion-init'
 import { SITE_URL } from '@/lib/sitemap-data'
 import { isPreviewReadonly } from '@/lib/preview'
 import { BRAND, BRAND_SUFFIX } from '@/lib/page-title'
@@ -83,6 +86,7 @@ export default async function RootLayout({
   }
 
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'shell' })
 
   return (
     <html
@@ -90,28 +94,29 @@ export default async function RootLayout({
       suppressHydrationWarning
       className={`${array.variable} ${khand.variable} ${geistSans.variable}`}
     >
+      <head>
+        {/* Estado inicial de movimiento (D-15). Cadena constante, sin datos de
+            usuario (T-53-41). Corre en el head, antes del primer pintado, para
+            que data-motion no parpadee tras hidratar. */}
+        <script dangerouslySetInnerHTML={{ __html: MOTION_INIT_SCRIPT }} />
+      </head>
       <body>
         <InitColorSchemeScript attribute="data" defaultMode="dark" />
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
           <Providers>
             <NextIntlClientProvider>
               <MotionProvider>
-                {/* POLISH: there was no bypass mechanism — measured 8 tab stops
-                    between page load and the first focusable element inside the
-                    content, repeated on every page. That is WCAG 2.4.1 (Bypass
-                    Blocks), a level A criterion. The link is off-screen until it
-                    takes focus, then lands as a normal ember button. */}
-                <a
-                  href="#main-content"
-                  className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:inline-flex focus:h-10 focus:items-center focus:rounded-md focus:bg-primary focus:px-4 focus:text-label focus:text-primary-foreground focus:shadow-lg focus:outline-none focus:ring-1 focus:ring-ring"
-                >
-                  {locale === 'en' ? 'Skip to content' : 'Saltar al contenido'}
-                </a>
+                <SkipLink />
                 <SiteHeader locale={locale} />
-                <div id="main-content" tabIndex={-1}>
+                {/* El layout posee el único landmark main (D-13). Las páginas
+                    renderizan div: dos main anidados rompen la navegación por
+                    landmarks. tabIndex -1 permite que el enlace de salto
+                    deje el foco aquí. */}
+                <main id="main-content" tabIndex={-1} aria-label={t('landmarks.main')} style={{ outline: 'none' }}>
                   {children}
-                </div>
+                </main>
                 <SiteFooter locale={locale} />
+                <MotionToggle />
               </MotionProvider>
             </NextIntlClientProvider>
           </Providers>

@@ -54,7 +54,7 @@ export default async function ServicePage({
   const trail = buildTrail(locale as 'es' | 'en', { slug: doc.slug ?? slug, title: doc.title })
 
   return (
-    <main>
+    <div>
       <JsonLd
         data={buildServiceJsonLd(
           locale as 'es' | 'en',
@@ -68,6 +68,6 @@ export default async function ServicePage({
         blocks={doc.content?.layout ?? []}
         blockProps={{ hero: { breadcrumbs: trail } }}
       />
-    </main>
+    </div>
   )
 }

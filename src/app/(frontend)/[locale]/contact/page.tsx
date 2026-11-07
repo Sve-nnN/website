@@ -96,7 +96,7 @@ export default async function ContactPage({
   }
 
   return (
-    <main>
+    <div>
       <JsonLd data={contactPageData} />
       {!hasHeroTitle && (
         <h1 className="sr-only">
@@ -114,6 +114,6 @@ export default async function ContactPage({
           },
         }}
       />
-    </main>
+    </div>
   )
 }

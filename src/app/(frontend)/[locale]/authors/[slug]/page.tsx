@@ -256,7 +256,7 @@ export default async function AuthorProfilePage({
   })
 
   return (
-    <main>
+    <div>
       <Container className="py-16">
         <Breadcrumbs trail={trail} className="mb-8" />
         <AuthorCard author={doc} asPageHeading />
@@ -452,6 +452,6 @@ export default async function AuthorProfilePage({
 
       <JsonLd data={personData} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </main>
+    </div>
   )
 }

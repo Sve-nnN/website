@@ -144,7 +144,7 @@ export default async function BlogCategoryPage({
   const trail = buildBlogTrail(locale, { slug: categorySlug, title: category.title })
 
   return (
-    <main>
+    <div>
       <PageHero
         variant="index"
         trail={trail}
@@ -198,6 +198,6 @@ export default async function BlogCategoryPage({
       <BlogClosing locale={locale} categoryId={category.id} />
 
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </main>
+    </div>
   )
 }

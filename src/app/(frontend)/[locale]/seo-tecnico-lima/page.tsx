@@ -93,9 +93,9 @@ export default async function SeoTecnicoLimaPage({
   })
 
   return (
-    <main>
+    <div>
       <JsonLd data={serviceData} />
       <RenderBlocks blocks={doc.content?.layout ?? []} />
-    </main>
+    </div>
   )
 }

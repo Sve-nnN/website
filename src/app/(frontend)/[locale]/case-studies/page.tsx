@@ -71,7 +71,7 @@ export default async function CaseStudiesListPage({
   const [featured, ...rest] = caseStudies
 
   return (
-    <main>
+    <div>
       <PageHero
         variant="index"
         trail={trail}
@@ -121,6 +121,6 @@ export default async function CaseStudiesListPage({
         )}
       </Container>
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </main>
+    </div>
   )
 }

@@ -69,10 +69,10 @@ export default async function StackPage({ params }: { params: Promise<{ locale: 
   ]
 
   return (
-    <main>
+    <div>
       <PageHero variant="index" title={doc.title} trail={trail} />
       <RenderBlocks blocks={doc.content?.layout ?? []} blockProps={{ toolStack: { locale } }} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </main>
+    </div>
   )
 }

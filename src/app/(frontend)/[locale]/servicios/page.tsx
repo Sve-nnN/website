@@ -65,7 +65,7 @@ export default async function ServicesIndexPage({
   )
 
   return (
-    <main>
+    <div>
       {services.length > 0 && (
         <JsonLd data={buildServicesIndexJsonLd(locale as 'es' | 'en', services)} />
       )}
@@ -74,6 +74,6 @@ export default async function ServicesIndexPage({
         blocks={doc.content?.layout ?? []}
         blockProps={{ hero: { breadcrumbs: trail } }}
       />
-    </main>
+    </div>
   )
 }

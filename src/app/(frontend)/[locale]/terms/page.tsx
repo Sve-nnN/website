@@ -73,12 +73,12 @@ export default async function TermsPage({ params }: { params: Promise<{ locale: 
   }
 
   return (
-    <main>
+    <div>
       <PageHero variant="index" title={doc.title} />
 
       <Container className="py-12 md:py-16 max-w-3xl">
         <RenderBlocks blocks={doc.content?.layout ?? []} />
       </Container>
-    </main>
+    </div>
   )
 }

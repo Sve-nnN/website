@@ -265,7 +265,7 @@ export default async function PostPage({
   }
 
   return (
-    <main>
+    <div>
       {/* POLISH: the hero used to stack a 21/9 image band ABOVE the copy, the
           same shape a case study already moved away from — on a 1440x812
           viewport it ate the whole fold and pushed the h1 below it. The image
@@ -380,6 +380,6 @@ export default async function PostPage({
 
       <JsonLd data={articleData} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </main>
+    </div>
   )
 }

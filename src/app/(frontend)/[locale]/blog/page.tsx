@@ -121,7 +121,7 @@ export default async function BlogPage({
   }
 
   return (
-    <main>
+    <div>
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
       <RenderBlocks blocks={before} sharedProps={sharedProps} />
 
@@ -152,6 +152,6 @@ export default async function BlogPage({
       <RenderBlocks blocks={after} sharedProps={sharedProps} />
 
       <BlogClosing locale={locale as 'es' | 'en'} />
-    </main>
+    </div>
   )
 }

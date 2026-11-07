@@ -85,7 +85,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const businessData = buildProfessionalService(locale as 'es' | 'en')
 
   return (
-    <main>
+    <div>
       <RenderBlocks
         blocks={doc.content?.layout ?? []}
         blockProps={{
@@ -104,6 +104,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <JsonLd data={personData} />
       <JsonLd data={websiteData} />
       <JsonLd data={businessData} />
-    </main>
+    </div>
   )
 }

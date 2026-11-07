@@ -117,7 +117,7 @@ export default async function SearchPage({
   }
 
   return (
-    <main>
+    <div>
       <PageHero variant="index" title={t.title} />
 
       <Container className="py-12 md:py-16">
@@ -159,7 +159,7 @@ export default async function SearchPage({
           </div>
         )}
       </Container>
-    </main>
+    </div>
   )
 }
 

@@ -63,7 +63,7 @@ export default async function AuthorsListPage({ params }: { params: Promise<{ lo
   const trail = buildAuthorsTrail(locale as 'es' | 'en')
 
   return (
-    <main>
+    <div>
       <PageHero
         variant="index"
         trail={trail}
@@ -104,6 +104,6 @@ export default async function AuthorsListPage({ params }: { params: Promise<{ lo
         </div>
       </Container>
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </main>
+    </div>
   )
 }

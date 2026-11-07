@@ -91,7 +91,7 @@ export default async function BlogConfirmPage({
   const downloadUrl = await resolveDownloadUrl(token)
 
   return (
-    <main>
+    <div>
       <Container className="py-16">
         <div className="mx-auto max-w-md text-center">
           {downloadUrl ? (
@@ -112,6 +112,6 @@ export default async function BlogConfirmPage({
           )}
         </div>
       </Container>
-    </main>
+    </div>
   )
 }
