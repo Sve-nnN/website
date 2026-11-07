@@ -52,7 +52,7 @@ Plans:
 - [x] 53-01-PLAN.md — Rama feat/mui-redesign, MUI 9.5 con control de legitimidad, tema en (frontend) y capas CSS Tailwind v3 bajo MUI
 - [x] 53-02-PLAN.md — Preview de solo lectura en código: PREVIEW_READONLY, noindex, robots, 404 de admin y api, escrituras inertes
 - [x] 53-03-PLAN.md — Fundaciones del shell: estado de movimiento, helpers de enlaces y caché con hooks de Header y Footer
-- [ ] 53-04-PLAN.md — Header y footer MUI conectados a los globals de Payload, selector de idioma y mensajes shell
+- [x] 53-04-PLAN.md — Header y footer MUI conectados a los globals de Payload, selector de idioma y mensajes shell
 - [ ] 53-05-PLAN.md — Ensamblado del layout: enlace de salto, un solo main, toggle de movimiento y scripts de contrato del shell
 - [ ] 53-06-PLAN.md — Rol Postgres de solo lectura, DNS y token (pasos de Juan), despliegue en Dokploy y verificación en vivo de los 5 criterios
 
