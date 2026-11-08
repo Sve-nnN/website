@@ -92,6 +92,13 @@ if (unlayered.length === 0) {
   fail('control negativo: sin el plugin no hay reglas sin capa, el script no discrimina')
 }
 
+// CR-01: la capa `mui` gana a `tailwind`, asi que un reset global de listas en
+// MuiCssBaseline aplastaria list-disc/pl-6/mb-4 del contenido heredado.
+const themeSrc = readFileSync(resolve(ROOT, 'src/theme/theme.ts'), 'utf8')
+if (/['"`]\s*(ul|ol)\s*(,\s*(ul|ol)\s*)?['"`]\s*:/.test(themeSrc)) {
+  fail('theme.ts declara un reset global `ul, ol` en MuiCssBaseline (la capa mui aplasta las utilidades Tailwind de listas)')
+}
+
 console.log(
   `OK (capa tailwind con ${layer.nodes.length} nodos; control negativo: ${unlayered.length} reglas sin capa sin el plugin)`,
 )

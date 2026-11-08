@@ -130,7 +130,7 @@ export function HeaderView({ items, cta, logo }: Props) {
         </Link>
 
         {items.length > 0 && (
-          <Stack component="ul" direction="row" sx={{ display: { xs: 'none', md: 'flex' }, ml: 1 }}>
+          <Stack component="ul" direction="row" sx={{ display: { xs: 'none', md: 'flex' }, listStyle: 'none', m: 0, p: 0, ml: 1 }}>
             {items.map((item) => {
               const attrs = linkAttrs(item.href, item.newTab)
               const isActive = !attrs.external && normalizeNavPath(item.href) === currentPath

@@ -46,7 +46,9 @@ const options: ThemeOptions = {
         html: { scrollBehavior: 'smooth', scrollPaddingTop: 96, scrollPaddingBottom: 72, [reduced]: { scrollBehavior: 'auto' } },
         body: { WebkitFontSmoothing: 'antialiased', textWrap: 'pretty', overflowX: 'hidden' },
         ':focus-visible': { outline: `2px solid ${theme.vars.palette.accentText}`, outlineOffset: 2, borderRadius: 4 },
-        'ul, ol': { listStyle: 'none', margin: 0, padding: 0 },
+        // Sin reset global de listas: la capa `mui` gana a `tailwind`, asi que un `ul, ol` aqui
+        // aplastaria list-disc, pl-6 y mb-4 del contenido heredado (Prose, case studies).
+        // Preflight de Tailwind ya resetea las listas; las del shell lo declaran en su propio sx.
       }),
     },
     MuiButton: {

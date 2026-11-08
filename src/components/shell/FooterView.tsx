@@ -127,7 +127,7 @@ export function FooterView({ columns, socialLinks, legalLinks, copyrightText, lo
                       {column.title}
                     </Typography>
                   )}
-                  <Box component="ul" sx={{ display: 'grid', gap: 0.5 }}>
+                  <Box component="ul" sx={{ display: 'grid', gap: 0.5, listStyle: 'none', m: 0, p: 0 }}>
                     {column.items.map((item) => {
                       const attrs = linkAttrs(item.href)
                       return (
@@ -175,7 +175,7 @@ export function FooterView({ columns, socialLinks, legalLinks, copyrightText, lo
 
           {legalLinks.length > 0 && (
             <Box component="nav" aria-label={t('legalLabel')}>
-              <Box component="ul" sx={{ display: 'flex', flexWrap: 'wrap', gap: 3 }}>
+              <Box component="ul" sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, listStyle: 'none', m: 0, p: 0 }}>
                 {legalLinks.map((legal) => {
                   const attrs = linkAttrs(legal.href)
                   return (
