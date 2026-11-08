@@ -259,3 +259,76 @@ export function missingCloudinaryVars(env: Record<string, string | undefined>): 
     (k) => !env[k],
   )
 }
+
+// ---------------------------------------------------------------------------
+// Imágenes (scripts 21 y 22)
+// ---------------------------------------------------------------------------
+
+export function formatBytes(n: number): string {
+  return n >= 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(2)} MB` : `${(n / 1024).toFixed(1)} KB`
+}
+
+/**
+ * Prepara el archivo que se sube. Siempre lo deja en `tmpDir` (que el llamador
+ * crea con fs.mkdtemp bajo el directorio temporal del sistema) con el nombre
+ * `outBase` más la extensión. Un nombre propio y específico (p54-...) hace que
+ * la búsqueda de un asset ya subido no se confunda con otro doc de Media.
+ *
+ * Si `convert` es verdadero pasa a WebP con sharp (ancho máximo `maxWidth`,
+ * misma proporción, sin ampliar); si no, copia el original. Nunca escribe
+ * dentro del repo.
+ */
+export async function prepareImage(
+  srcPath: string,
+  convert: boolean,
+  tmpDir: string,
+  outBase: string,
+  maxWidth = 1600,
+): Promise<{ path: string; converted: boolean; bytes: number }> {
+  const { copyFileSync, statSync } = await import('node:fs')
+  const { extname, join } = await import('node:path')
+  if (!convert) {
+    const out = join(tmpDir, `${outBase}${extname(srcPath)}`)
+    copyFileSync(srcPath, out)
+    return { path: out, converted: false, bytes: statSync(out).size }
+  }
+  const { default: sharp } = await import('sharp')
+  const out = join(tmpDir, `${outBase}.webp`)
+  await sharp(srcPath)
+    .resize({ width: maxWidth, withoutEnlargement: true })
+    .webp({ quality: 82 })
+    .toFile(out)
+  return { path: out, converted: true, bytes: statSync(out).size }
+}
+
+/**
+ * Sube un archivo a Media (Cloudinary) y devuelve el id. Reutiliza un doc que
+ * ya tenga ese nombre de archivo, para que repetir tras un corte a medias no
+ * duplique el asset. `payload` llega como parámetro: este módulo no importa Payload.
+ */
+export async function findOrCreateMedia(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  payload: any,
+  opts: { alt: string; filePath: string; baseName: string },
+): Promise<{ id: number | string; reused: boolean }> {
+  const existing = await payload.find({
+    collection: 'media',
+    where: { filename: { like: opts.baseName } },
+    limit: 2,
+    depth: 0,
+    fallbackLocale: false,
+  })
+  if (existing.docs.length === 1) return { id: existing.docs[0].id, reused: true }
+  if (existing.docs.length > 1) {
+    throw new Error(
+      `Hay ${existing.docs.length} docs de Media con nombre parecido a "${opts.baseName}": resuélvelo a mano antes de subir.`,
+    )
+  }
+  const doc = await payload.create({
+    collection: 'media',
+    data: { alt: opts.alt },
+    locale: 'es',
+    filePath: opts.filePath,
+  })
+  return { id: doc.id, reused: false }
+}

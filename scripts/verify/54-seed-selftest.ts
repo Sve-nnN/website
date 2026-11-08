@@ -8,8 +8,9 @@
  *
  * Imprime PASS o FAIL motivo por caso y sale con 1 ante cualquier FAIL.
  */
-import { readFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
+import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { dirname, join, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import {
@@ -17,10 +18,14 @@ import {
   assertPendingMarkersOnlyIn,
   assertSafeTarget,
   buildDiff,
+  layoutDiffIgnoring,
   mergeGroup,
+  missingCloudinaryVars,
   normalizeName,
+  prepareImage,
   safeTarget,
 } from '../db/data/54-seed-lib'
+import { MEDIA_MANIFEST } from '../db/data/54-media-manifest'
 import { ABOUT_COPY_ES, ABOUT_PENDING_PATHS } from '../db/data/54-about-copy'
 import { HOME_COPY_ES, ON_DARK_FILES, SANDBOX_LOGOS } from '../db/data/54-home-copy'
 import { SERVICE_SLUGS } from '../../src/lib/service-slugs'
@@ -291,6 +296,121 @@ check('el mapeo por nombre normalizado enlaza los logos del sandbox con nombres 
   assert(hit('credito-uss.webp').join() === 'Crédito USS', 'credito-uss')
   assert(hit('dr-manuel-a-vargas-hidalgo.webp').length === 1, 'dr vargas')
 })
+
+// ---------------------------------------------------------------------------
+// Manifiesto de medios y guardia de diff del doc stack
+// ---------------------------------------------------------------------------
+check('el manifiesto tiene 4 fotos y 9 logos con alt', () => {
+  assert(MEDIA_MANIFEST.photos.length === 4, `fotos = ${MEDIA_MANIFEST.photos.length}`)
+  assert(MEDIA_MANIFEST.logos.length === 9, `logos = ${MEDIA_MANIFEST.logos.length}`)
+  for (const e of [...MEDIA_MANIFEST.photos, ...MEDIA_MANIFEST.logos]) assert(e.alt.trim().length > 0, `alt vacío en ${e.file}`)
+  const heroes = MEDIA_MANIFEST.photos.filter((p) => p.target.global === 'about-page')
+  assert(heroes.length === 1 && heroes[0].width === 1122 && heroes[0].height === 1402, 'foto de Sobre mí 1122x1402')
+  const idx = MEDIA_MANIFEST.photos.filter((p) => p.target.global === 'home-page').map((p) => (p.target as { index: number }).index)
+  assert(idx.join() === '0,1,2', `índices de la home: ${idx.join()}`)
+})
+
+check('cada ruta de origen del manifiesto existe en disco (el sandbox debe estar en esta máquina)', () => {
+  const missing = [...MEDIA_MANIFEST.photos, ...MEDIA_MANIFEST.logos].map((e) => e.file).filter((f) => !existsSync(join(ROOT, f)))
+  assert(missing.length === 0, `faltan: ${missing.join(', ')}`)
+})
+
+check('los nombres de herramienta del manifiesto coinciden con los del seed del stack', () => {
+  const src = readFileSync(join(ROOT, 'scripts/seed-phase48-stack-content.ts'), 'utf8')
+  const missing = MEDIA_MANIFEST.logos.map((l) => l.toolName).filter((n) => !src.includes(`name: '${n}'`))
+  assert(missing.length === 0, `sin herramienta con ese nombre: ${missing.join(', ')}`)
+  const norms = MEDIA_MANIFEST.logos.map((l) => normalizeName(l.toolName))
+  assert(new Set(norms).size === norms.length, 'dos logos con el mismo nombre normalizado')
+})
+
+check('el alt de la foto de Sobre mí coincide con el borrador de A11Y-DECISIONS (si el sandbox lo trae)', () => {
+  const f = join(ROOT, 'designs/design-system-mui/A11Y-DECISIONS.md')
+  if (!existsSync(f)) return
+  const hero = MEDIA_MANIFEST.photos.find((p) => p.key === 'about-hero')
+  assert(hero && readFileSync(f, 'utf8').includes(hero.alt), 'el alt del manifiesto no aparece en A11Y-DECISIONS')
+})
+
+const heavyConversion = (async () => {
+  const heavy = MEDIA_MANIFEST.photos.filter((p) => p.heavy)
+  assert(heavy.length === 1 && heavy[0].file.endsWith('escritorio.png'), 'solo escritorio.png debe estar marcado como pesado')
+  const tmp = mkdtempSync(join(tmpdir(), 'p54-selftest-'))
+  try {
+    const out = await prepareImage(join(ROOT, heavy[0].file), true, tmp, 'p54-test')
+    assert(out.converted && out.path.endsWith('.webp'), 'no se convirtió a WebP')
+    assert(out.path.startsWith(tmpdir() + sep) || out.path.startsWith(tmp), 'escribió fuera del directorio temporal')
+    assert(!out.path.startsWith(ROOT + sep), 'escribió dentro del repo')
+    assert(out.bytes < 600 * 1024, `pesa ${out.bytes} bytes tras convertir`)
+    const { default: sharp } = await import('sharp')
+    const meta = await sharp(out.path).metadata()
+    assert((meta.width ?? 9999) <= 1600, `ancho ${meta.width}`)
+  } finally {
+    rmSync(tmp, { recursive: true, force: true })
+  }
+})()
+
+check('missingCloudinaryVars detecta la ausencia sin imprimir valores', () => {
+  assert(missingCloudinaryVars({}).length === 3, 'debía faltar las tres')
+  assert(missingCloudinaryVars({ CLOUDINARY_CLOUD_NAME: 'a', CLOUDINARY_API_KEY: 'b' }).join() === 'CLOUDINARY_API_SECRET', 'solo el secreto')
+  assert(missingCloudinaryVars({ CLOUDINARY_CLOUD_NAME: 'a', CLOUDINARY_API_KEY: 'b', CLOUDINARY_API_SECRET: 'c' }).length === 0, 'completas')
+})
+
+check('layoutDiffIgnoring ignora logo y detecta texto, id y orden', () => {
+  const base = [
+    {
+      id: 'b1',
+      blockType: 'toolStack',
+      categoryGroups: [{ id: 'g1', heading: 'SEO', tools: [{ id: 't1', name: 'Ahrefs', pro: 'rápido' }, { id: 't2', name: 'DinoRANK', pro: 'barato' }] }],
+    },
+  ]
+  const withLogo = JSON.parse(JSON.stringify(base))
+  withLogo[0].categoryGroups[0].tools[0].logo = 42
+  assert(layoutDiffIgnoring(base, withLogo, ['logo']).length === 0, 'agregar logo contó como diferencia')
+  const text = JSON.parse(JSON.stringify(withLogo))
+  text[0].categoryGroups[0].tools[1].pro = 'otro texto'
+  assert(layoutDiffIgnoring(base, text, ['logo']).length > 0, 'no detectó la diferencia de texto')
+  const id = JSON.parse(JSON.stringify(withLogo))
+  id[0].categoryGroups[0].tools[0].id = 'nuevo'
+  assert(layoutDiffIgnoring(base, id, ['logo']).length > 0, 'no detectó el cambio de id')
+  const order = JSON.parse(JSON.stringify(withLogo))
+  order[0].categoryGroups[0].tools.reverse()
+  assert(layoutDiffIgnoring(base, order, ['logo']).length > 0, 'no detectó el cambio de orden')
+  const extra = JSON.parse(JSON.stringify(withLogo))
+  extra[0].categoryGroups[0].tools[0].campoNuevo = 'x'
+  assert(layoutDiffIgnoring(base, extra, ['logo']).length > 0, 'no detectó una clave extra')
+  const fewer = JSON.parse(JSON.stringify(withLogo))
+  fewer[0].categoryGroups[0].tools.pop()
+  assert(layoutDiffIgnoring(base, fewer, ['logo']).length > 0, 'no detectó una herramienta de menos')
+})
+
+check('revisión estática de los scripts 20, 21 y 22: guardias presentes y sin operaciones de borrado', () => {
+  const names = ['20-phase54-seed-shadow-content.ts', '21-phase54-upload-media.ts', '22-phase54-stack-logos.ts']
+  for (const n of names) {
+    const src = readFileSync(join(ROOT, 'scripts/db', n), 'utf8')
+    assert(src.includes('db-checked'), `${n}: falta --db-checked`)
+    assert(src.includes('assertSafeTarget'), `${n}: falta assertSafeTarget`)
+    assert(src.includes('fallbackLocale'), `${n}: falta fallbackLocale`)
+    assert(!/payload\.(delete|deleteGlobal)\b|\bdeleteByID\b/.test(src), `${n}: contiene una operación de borrado`)
+    assert(!/git\s+clean|DROP\s|TRUNCATE/i.test(src.replace(/\/\*[\s\S]*?\*\//g, '')), `${n}: contiene DROP o TRUNCATE`)
+    assert(!src.includes("from '../../src/payload.config'") , `${n}: importa payload.config de forma estática (debe ser dinámico tras la guardia)`)
+  }
+  const s21 = readFileSync(join(ROOT, 'scripts/db', names[1]), 'utf8')
+  assert(s21.includes('missingCloudinaryVars'), 'script 21: falta la guardia de Cloudinary')
+  assert(readFileSync(join(ROOT, 'scripts/db', names[2]), 'utf8').includes('missingCloudinaryVars'), 'script 22: falta la guardia de Cloudinary')
+  assert(s21.includes('alts-confirmed'), 'script 21: falta --alts-confirmed')
+  const s22 = readFileSync(join(ROOT, 'scripts/db', names[2]), 'utf8')
+  assert(s22.includes('_status') && s22.includes('draft: false'), 'script 22: faltan _status o draft false')
+  assert(s22.indexOf("['en', 'es']") !== -1, 'script 22: el orden de escritura debe ser EN y luego ES')
+  const s20 = readFileSync(join(ROOT, 'scripts/db', names[0]), 'utf8')
+  assert(s20.includes('draft: false'), 'script 20: falta draft false en el update de clientes')
+})
+
+await heavyConversion.then(
+  () => console.log('PASS escritorio.png se convierte a WebP de 1600 px o menos en un directorio temporal del sistema'),
+  (err: Error) => {
+    failures++
+    console.log(`FAIL escritorio.png se convierte a WebP: ${err.message}`)
+  },
+)
 
 if (failures > 0) {
   console.log(`\n${failures} caso(s) en FAIL`)
