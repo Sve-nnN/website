@@ -31,9 +31,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '.
 // Namespaces que esta guardia mira.
 export const REVIEWED = ['common', 'home', 'services', 'about', 'contact', 'stack', 'legal', 'search', 'notFound']
 
-// Namespaces que ya deben existir con contenido en esta etapa del plan. Se amplia
-// a los nueve cuando la tarea 2 los escribe.
-export const REQUIRED = ['common', 'search', 'notFound']
+// Namespaces que no pueden faltar: los nueve de la fase.
+export const REQUIRED = [...REVIEWED]
 
 // Claves cuyo nombre termina en Heading o Title pero cuyo valor es una oracion
 // de copy existente movida tal cual desde search/page.tsx, no un encabezado.

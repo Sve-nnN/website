@@ -7,7 +7,35 @@
   },
   "home": {
     "heroTitle": "Juan Carlos Angulo: Software Engineering & Technical SEO",
-    "heroSubtitle": "High-performance architectures and organic growth strategies"
+    "heroSubtitle": "High-performance architectures and organic growth strategies",
+    "areasLabel": "Areas",
+    "taglineLabel": "What I promise",
+    "heroPortraitLabel": "Portrait of Juan Carlos Angulo drawn with ASCII characters",
+    "marquee": {
+      "groupLabel": "Client logos"
+    },
+    "vitals": {
+      "groupLabel": "Measurement readings",
+      "ariaLabel": "{name} for juan-tech.com: {label}, within the good range"
+    },
+    "codeFixes": {
+      "regionLabel": "Code for the fix {name}"
+    },
+    "sites": {
+      "screenshotAlt": "Screenshot of {domain}",
+      "note": "PageSpeed Insights mobile scores, measured on {date}. The technologies come from each site's headers and code.",
+      "scoresLabel": "PageSpeed mobile scores",
+      "scoreSuffix": "out of 100",
+      "rings": {
+        "performance": "Performance",
+        "accessibility": "Accessibility",
+        "bestPractices": "Best practices",
+        "seo": "SEO"
+      }
+    },
+    "testimonials": {
+      "roleAt": "{role} at {company}"
+    }
   },
   "common": {
     "readMore": "Read more",
@@ -167,5 +195,84 @@
       "case-studies": "Case Study",
       "authors": "Author"
     }
+  },
+  "services": {
+    "index": {
+      "eyebrow": "What I do",
+      "listLabel": "List of services",
+      "compareTitle": "Which service is for you",
+      "compareLabel": "Which service fits you depending on what is happening to you",
+      "columns": {
+        "service": "Service",
+        "fitsIf": "It fits if",
+        "outcome": "What you will achieve",
+        "time": "Estimated time"
+      },
+      "unsure": "Not sure which service you need? Tell me what problem you have and I'll tell you where to start.",
+      "talkCta": "Talk to Juan"
+    },
+    "detail": {
+      "eyebrow": "Service",
+      "durationLabel": "Duration",
+      "faqTitle": "Frequently asked questions",
+      "otherTitle": "Other services"
+    }
+  },
+  "about": {
+    "crumb": "About me",
+    "seeServices": "View services",
+    "myStack": "My stack",
+    "timelineLabel": "Professional timeline",
+    "by": "by {name}",
+    "dateRange": "{from} to {to}",
+    "dateRangeOpen": "{from} to today",
+    "attendees": "{count, plural, one {# attendee} other {# attendees}}"
+  },
+  "contact": {
+    "eyebrow": "Let's talk",
+    "sectionLabel": "Contact form and details",
+    "emailLabel": "Email",
+    "writeEmail": "Write an email",
+    "servicesPrompt": "Still don't know which service you need?",
+    "servicesLink": "See the services",
+    "form": {
+      "title": "Tell me about your project",
+      "name": "Name",
+      "email": "Email address",
+      "message": "Message",
+      "submit": "Send message",
+      "honeypotLabel": "Company website",
+      "errors": {
+        "name": "Enter your name.",
+        "email": "Enter a valid email, for example name@domain.com.",
+        "message": "Tell me what your project is about.",
+        "summary": "Check the marked fields."
+      },
+      "success": {
+        "title": "Message sent",
+        "body": "Thanks for writing. I usually reply within 48 hours.",
+        "again": "Send another message"
+      },
+      "failure": "Something went wrong sending your message. Please try again, or email {email} directly."
+    },
+    "cta": {
+      "sectionLabel": "Contact",
+      "formLabel": "Contact form",
+      "responseNote": "I usually reply within 48 hours."
+    }
+  },
+  "stack": {
+    "eyebrow": "Tools",
+    "categoriesLabel": "Stack categories",
+    "toolsLabel": "Tools for {category}",
+    "chip": {
+      "active": "Affiliate link",
+      "none": "No affiliate program"
+    }
+  },
+  "legal": {
+    "eyebrow": "Legal",
+    "tocLabel": "In this document",
+    "tocAria": "Document index"
   }
 }

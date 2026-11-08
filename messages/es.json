@@ -7,7 +7,35 @@
   },
   "home": {
     "heroTitle": "Juan Carlos Angulo: Ingeniería de Software y SEO Técnico",
-    "heroSubtitle": "Arquitecturas de alto rendimiento y estrategias de crecimiento orgánico"
+    "heroSubtitle": "Arquitecturas de alto rendimiento y estrategias de crecimiento orgánico",
+    "areasLabel": "Áreas",
+    "taglineLabel": "Lo que prometo",
+    "heroPortraitLabel": "Retrato de Juan Carlos Angulo dibujado con caracteres ASCII",
+    "marquee": {
+      "groupLabel": "Logos de clientes"
+    },
+    "vitals": {
+      "groupLabel": "Lecturas de medición",
+      "ariaLabel": "{name} de juan-tech.com: {label}, dentro del rango bueno"
+    },
+    "codeFixes": {
+      "regionLabel": "Código del arreglo {name}"
+    },
+    "sites": {
+      "screenshotAlt": "Captura de {domain}",
+      "note": "Puntajes de PageSpeed Insights en móvil, medidos el {date}. Las tecnologías salen de los encabezados y el código de cada sitio.",
+      "scoresLabel": "Puntajes de PageSpeed en móvil",
+      "scoreSuffix": "de 100",
+      "rings": {
+        "performance": "Rendimiento",
+        "accessibility": "Accesibilidad",
+        "bestPractices": "Buenas prácticas",
+        "seo": "SEO"
+      }
+    },
+    "testimonials": {
+      "roleAt": "{role} de {company}"
+    }
   },
   "common": {
     "readMore": "Leer más",
@@ -167,5 +195,84 @@
       "case-studies": "Caso de éxito",
       "authors": "Autor"
     }
+  },
+  "services": {
+    "index": {
+      "eyebrow": "Lo que hago",
+      "listLabel": "Lista de servicios",
+      "compareTitle": "Qué servicio es para ti",
+      "compareLabel": "Qué servicio te conviene según lo que te está pasando",
+      "columns": {
+        "service": "Servicio",
+        "fitsIf": "Te sirve si",
+        "outcome": "Qué vas a lograr",
+        "time": "Tiempo estimado"
+      },
+      "unsure": "¿No estás seguro de cuál servicio necesitas? Cuéntame qué problema tienes y te digo por dónde empezar.",
+      "talkCta": "Hablar con Juan"
+    },
+    "detail": {
+      "eyebrow": "Servicio",
+      "durationLabel": "Duración",
+      "faqTitle": "Preguntas frecuentes",
+      "otherTitle": "Otros servicios"
+    }
+  },
+  "about": {
+    "crumb": "Sobre mí",
+    "seeServices": "Ver servicios",
+    "myStack": "Mi stack",
+    "timelineLabel": "Recorrido profesional",
+    "by": "por {name}",
+    "dateRange": "{from} a {to}",
+    "dateRangeOpen": "{from} a hoy",
+    "attendees": "{count, plural, one {# asistente} other {# asistentes}}"
+  },
+  "contact": {
+    "eyebrow": "Hablemos",
+    "sectionLabel": "Formulario y datos de contacto",
+    "emailLabel": "Correo",
+    "writeEmail": "Escribir un correo",
+    "servicesPrompt": "¿Todavía no sabes cuál servicio necesitas?",
+    "servicesLink": "Mira los servicios",
+    "form": {
+      "title": "Cuéntame de tu proyecto",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "message": "Mensaje",
+      "submit": "Enviar mensaje",
+      "honeypotLabel": "Sitio web de la empresa",
+      "errors": {
+        "name": "Escribe tu nombre.",
+        "email": "Escribe un correo válido, por ejemplo nombre@dominio.com.",
+        "message": "Cuéntame de qué trata tu proyecto.",
+        "summary": "Revisa los campos marcados."
+      },
+      "success": {
+        "title": "Mensaje enviado",
+        "body": "Gracias por escribir. Suelo responder en menos de 48 horas.",
+        "again": "Enviar otro mensaje"
+      },
+      "failure": "Algo salió mal al enviar tu mensaje. Intenta de nuevo, o escribe directamente a {email}."
+    },
+    "cta": {
+      "sectionLabel": "Contacto",
+      "formLabel": "Formulario de contacto",
+      "responseNote": "Suelo responder en menos de 48 horas."
+    }
+  },
+  "stack": {
+    "eyebrow": "Herramientas",
+    "categoriesLabel": "Categorías del stack",
+    "toolsLabel": "Herramientas de {category}",
+    "chip": {
+      "active": "Enlace de afiliado",
+      "none": "Sin programa de afiliados"
+    }
+  },
+  "legal": {
+    "eyebrow": "Legal",
+    "tocLabel": "En este documento",
+    "tocAria": "Índice del documento"
   }
 }
