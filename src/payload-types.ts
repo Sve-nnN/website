@@ -129,6 +129,7 @@ export interface Config {
     'featured-content': FeaturedContent;
     'blog-promo': BlogPromo;
     'home-page': HomePage;
+    'about-page': AboutPage;
   };
   globalsSelect: {
     llms: LlmsSelect<false> | LlmsSelect<true>;
@@ -137,6 +138,7 @@ export interface Config {
     'featured-content': FeaturedContentSelect<false> | FeaturedContentSelect<true>;
     'blog-promo': BlogPromoSelect<false> | BlogPromoSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
   };
   locale: 'es' | 'en';
   widgets: {
@@ -3656,7 +3658,208 @@ export interface BlogPromo {
  */
 export interface HomePage {
   id: number;
+  hero?: {
+    eyebrow?: string | null;
+    titleLine1?: string | null;
+    titleLine2?: string | null;
+    lead?: string | null;
+    ctaLabel?: string | null;
+    ctaHref?: string | null;
+    statValue?: string | null;
+    statCaption?: string | null;
+  };
   tagline?: string | null;
+  vitals?: {
+    title?: string | null;
+    lead?: string | null;
+    measurementNote?: string | null;
+    items?:
+      | {
+          name?: string | null;
+          desc?: string | null;
+          value?: string | null;
+          label?: string | null;
+          goodPct?: number | null;
+          midPct?: number | null;
+          poorPct?: number | null;
+          markerPct?: number | null;
+          note?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  services?: {
+    title?: string | null;
+    lead?: string | null;
+    ctaLabel?: string | null;
+    items?:
+      | {
+          icon?: ('search' | 'code' | 'server' | 'gauge' | 'sparkles' | 'list' | 'wrench' | 'chart') | null;
+          title?: string | null;
+          body?: string | null;
+          tags?:
+            | {
+                tag?: string | null;
+                id?: string | null;
+              }[]
+            | null;
+          servicePage?: ('seo-technical-audit' | 'seo-consulting' | 'fullstack-development' | 'ai-seo-geo') | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  cases?: {
+    title?: string | null;
+    lead?: string | null;
+    ctaLabel?: string | null;
+    metricSuffix?: string | null;
+    note?: string | null;
+  };
+  process?: {
+    title?: string | null;
+    steps?:
+      | {
+          icon?: ('search' | 'code' | 'server' | 'gauge' | 'sparkles' | 'list' | 'wrench' | 'chart') | null;
+          title?: string | null;
+          body?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  sites?: {
+    title?: string | null;
+    ctaLabel?: string | null;
+    note?: string | null;
+  };
+  about?: {
+    title?: string | null;
+    seoLabel?: string | null;
+    devLabel?: string | null;
+    paragraphs?:
+      | {
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    chips?:
+      | {
+          label?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * El texto alternativo de cada foto sale del campo alt de Media.
+     */
+    photos?:
+      | {
+          image?: (number | null) | Media;
+          caption?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  testimonials?: {
+    title?: string | null;
+  };
+  faq?: {
+    title?: string | null;
+    items?:
+      | {
+          question?: string | null;
+          answer?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  cta?: {
+    title?: string | null;
+    lead?: string | null;
+  };
+  contact?: {
+    stepsTitle?: string | null;
+    faqTitle?: string | null;
+    steps?:
+      | {
+          title?: string | null;
+          body?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    infoRows?:
+      | {
+          icon?: ('clock' | 'map-pin' | 'globe') | null;
+          title?: string | null;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Copy del rediseño de Sobre mí. Privado hasta el corte.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page".
+ */
+export interface AboutPage {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    lead?: string | null;
+    /**
+     * El texto alternativo sale del campo alt de Media.
+     */
+    photo?: (number | null) | Media;
+    chips?:
+      | {
+          icon?: ('map-pin' | 'globe') | null;
+          label?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  bio?: {
+    title?: string | null;
+  };
+  counters?: {
+    seoLabel?: string | null;
+    devLabel?: string | null;
+    yearsLabel?: string | null;
+  };
+  specialties?: {
+    title?: string | null;
+    items?:
+      | {
+          title?: string | null;
+          detail?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  experience?: {
+    title?: string | null;
+    lead?: string | null;
+    stages?:
+      | {
+          when?: string | null;
+          role?: string | null;
+          org?: string | null;
+          body?: string | null;
+          current?: boolean | null;
+          linkLabel?: string | null;
+          linkHref?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  education?: {
+    title?: string | null;
+  };
+  talks?: {
+    title?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3849,7 +4052,236 @@ export interface BlogPromoSelect<T extends boolean = true> {
  * via the `definition` "home-page_select".
  */
 export interface HomePageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        titleLine1?: T;
+        titleLine2?: T;
+        lead?: T;
+        ctaLabel?: T;
+        ctaHref?: T;
+        statValue?: T;
+        statCaption?: T;
+      };
   tagline?: T;
+  vitals?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+        measurementNote?: T;
+        items?:
+          | T
+          | {
+              name?: T;
+              desc?: T;
+              value?: T;
+              label?: T;
+              goodPct?: T;
+              midPct?: T;
+              poorPct?: T;
+              markerPct?: T;
+              note?: T;
+              id?: T;
+            };
+      };
+  services?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+        ctaLabel?: T;
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              body?: T;
+              tags?:
+                | T
+                | {
+                    tag?: T;
+                    id?: T;
+                  };
+              servicePage?: T;
+              id?: T;
+            };
+      };
+  cases?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+        ctaLabel?: T;
+        metricSuffix?: T;
+        note?: T;
+      };
+  process?:
+    | T
+    | {
+        title?: T;
+        steps?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              body?: T;
+              id?: T;
+            };
+      };
+  sites?:
+    | T
+    | {
+        title?: T;
+        ctaLabel?: T;
+        note?: T;
+      };
+  about?:
+    | T
+    | {
+        title?: T;
+        seoLabel?: T;
+        devLabel?: T;
+        paragraphs?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        chips?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+        photos?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              id?: T;
+            };
+      };
+  testimonials?:
+    | T
+    | {
+        title?: T;
+      };
+  faq?:
+    | T
+    | {
+        title?: T;
+        items?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  cta?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+      };
+  contact?:
+    | T
+    | {
+        stepsTitle?: T;
+        faqTitle?: T;
+        steps?:
+          | T
+          | {
+              title?: T;
+              body?: T;
+              id?: T;
+            };
+        infoRows?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page_select".
+ */
+export interface AboutPageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        lead?: T;
+        photo?: T;
+        chips?:
+          | T
+          | {
+              icon?: T;
+              label?: T;
+              id?: T;
+            };
+      };
+  bio?:
+    | T
+    | {
+        title?: T;
+      };
+  counters?:
+    | T
+    | {
+        seoLabel?: T;
+        devLabel?: T;
+        yearsLabel?: T;
+      };
+  specialties?:
+    | T
+    | {
+        title?: T;
+        items?:
+          | T
+          | {
+              title?: T;
+              detail?: T;
+              id?: T;
+            };
+      };
+  experience?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+        stages?:
+          | T
+          | {
+              when?: T;
+              role?: T;
+              org?: T;
+              body?: T;
+              current?: T;
+              linkLabel?: T;
+              linkHref?: T;
+              id?: T;
+            };
+      };
+  education?:
+    | T
+    | {
+        title?: T;
+      };
+  talks?:
+    | T
+    | {
+        title?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

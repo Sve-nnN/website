@@ -23,7 +23,7 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
-import type { Post, CaseStudy, Category, AffiliateLink, HomePage } from '@/payload-types'
+import type { Post, CaseStudy, Category, AffiliateLink, HomePage, AboutPage } from '@/payload-types'
 import { CACHE_TAGS, CACHE_TTL_SECONDS } from './cache-tags'
 import { resolvePrimaryCategorySlug } from './blog-paths'
 
@@ -181,6 +181,31 @@ export function getCachedHomePage(locale: Locale): Promise<ShadowPageResult<Home
     },
     ['home-page', locale],
     { tags: [CACHE_TAGS.homePage()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+export function getCachedAboutPage(locale: Locale): Promise<ShadowPageResult<AboutPage>> {
+  return unstable_cache(
+    async (): Promise<ShadowPageResult<AboutPage>> => {
+      const payload = await getPayload({ config })
+      if (locale === 'es') {
+        const data = await payload.findGlobal({ slug: 'about-page', depth: 1, locale })
+        return { data, isFallback: false }
+      }
+      const strict = await payload.findGlobal({
+        slug: 'about-page',
+        depth: 1,
+        locale,
+        fallbackLocale: false,
+      })
+      if (strict.hero?.lead && strict.hero.lead.trim() !== '') {
+        return { data: strict, isFallback: false }
+      }
+      const data = await payload.findGlobal({ slug: 'about-page', depth: 1, locale })
+      return { data, isFallback: true }
+    },
+    ['about-page', locale],
+    { tags: [CACHE_TAGS.aboutPage()], revalidate: CACHE_TTL_SECONDS },
   )()
 }
 

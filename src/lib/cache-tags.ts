@@ -83,6 +83,7 @@ export const CACHE_TAGS = {
   header: () => 'header',
   footer: () => 'footer',
   homePage: () => 'home-page',
+  aboutPage: () => 'about-page',
   redirects: () => 'redirects',
   affiliateLinks: () => 'affiliate-links:all',
 }
@@ -194,6 +195,12 @@ export const revalidateFooterCache: GlobalAfterChangeHook = ({ doc }) => {
 
 export const revalidateHomePageCache: GlobalAfterChangeHook = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.homePage())
+  safeRevalidateAllPaths()
+  return doc
+}
+
+export const revalidateAboutPageCache: GlobalAfterChangeHook = ({ doc }) => {
+  safeRevalidateTag(CACHE_TAGS.aboutPage())
   safeRevalidateAllPaths()
   return doc
 }
