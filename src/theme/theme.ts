@@ -38,7 +38,7 @@ const options: ThemeOptions = {
     caption: { fontSize: '0.75rem', lineHeight: '1rem' },
     overline: { fontSize: '0.75rem', lineHeight: '1rem', fontWeight: 600, letterSpacing: '0.08em' },
     button: { textTransform: 'none', fontWeight: 600, fontSize: '1rem', lineHeight: '1.5rem' },
-    mono: { fontFamily: font.mono, fontWeight: 500, fontSize: '0.875rem', lineHeight: '1.25rem' },
+    mono: { fontFamily: font.mono, fontWeight: 400, fontSize: '0.875rem', lineHeight: '1.25rem' },
   },
   components: {
     MuiCssBaseline: {
@@ -78,7 +78,7 @@ const options: ThemeOptions = {
     },
     MuiChip: {
       styleOverrides: {
-        root: ({ theme }) => ({ fontFamily: font.mono, fontWeight: 500, fontSize: '0.75rem', backgroundColor: theme.vars.palette.raised, color: theme.vars.palette.text.primary, border: `1px solid ${theme.vars.palette.divider}` }),
+        root: ({ theme }) => ({ fontFamily: font.mono, fontWeight: 400, fontSize: '0.75rem', backgroundColor: theme.vars.palette.raised, color: theme.vars.palette.text.primary, border: `1px solid ${theme.vars.palette.divider}` }),
       },
     },
     MuiOutlinedInput: {
