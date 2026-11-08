@@ -64,7 +64,10 @@ function relationId(value: number | { id: number } | null | undefined): number |
 }
 
 export async function subscribeToLeadMagnetAction(formData: FormData): Promise<void> {
-  const postPath = String(formData.get('postPath') ?? '/blog')
+  // WR-05: solo rutas internas. Un valor como `//otro.sitio/x` o `https://...`
+  // redirigiria a otro origen, y sin limite de largo se guardaria tal cual en `source`.
+  const rawPath = String(formData.get('postPath') ?? '/blog')
+  const postPath = /^\/(?!\/)[^\s\\]*$/.test(rawPath) ? rawPath.slice(0, 200) : '/blog'
   const locale = String(formData.get('locale') ?? 'es') === 'en' ? 'en' : 'es'
 
   // Honeypot: lo llenan los bots que completan todos los campos. Se descarta
