@@ -80,7 +80,7 @@ Plans:
 - [x] 54-02-PLAN.md — Esquema sombra aditivo: globals home-page y about-page, clientes.onDark, logo del stack y migración leída
 - [x] 54-03-PLAN.md — Mensajes de interfaz ES y EN de la fase, guardia de paridad y arnés de render de servidor
 - [x] 54-04-PLAN.md — Scripts de datos sombra, fotos y logos del stack con guardias de base y dry-run
-- [ ] 54-05-PLAN.md — Primitivas de layout MUI: Section, PageHero, Crumbs, IconTile, ScoreRing, FaqAccordion y aviso de traducción
+- [x] 54-05-PLAN.md — Primitivas de layout MUI: Section, PageHero, Crumbs, IconTile, ScoreRing, FaqAccordion y aviso de traducción
 - [ ] 54-06-PLAN.md — Primitivas de conversión y MuiRichText con índice: marquesina, testimonios, caso, formulario único y cierre
 - [ ] 54-07-PLAN.md — Aplicar la migración, sembrar con Juan y despliegue de humo con el esquema nuevo
 - [ ] 54-08-PLAN.md — Home primera mitad: Hero, marquesina, Tagline, Vitals y Servicios desde Payload
