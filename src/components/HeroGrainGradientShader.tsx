@@ -212,7 +212,10 @@ export default function HeroGrainGradientShader({ variant = 'default' }: HeroGra
 
   const colors = isDark ? DARK_COLORS : LIGHT_COLORS
 
-  const motionProps = reducedMotion || paused ? { speed: 0, frame: 0 } : { speed: variantConfig.speed }
+  // WR-01: `paused` ya incorpora la preferencia del sistema como valor inicial
+  // (motion-init.ts) y respeta la eleccion explicita de reanudar. No se combina con
+  // `reducedMotion`, que congelaria el shader aunque la persona haya pulsado reanudar.
+  const motionProps = paused ? { speed: 0, frame: 0 } : { speed: variantConfig.speed }
 
   return (
     <div
