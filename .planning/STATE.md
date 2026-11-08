@@ -373,3 +373,9 @@ Resume file: None
 ## Operator Next Steps
 
 - Planificar la primera fase del milestone v2.4 con /gsd-discuss-phase 53 o /gsd-plan-phase 53
+
+## Deferred Verification
+
+| Phase | State | Resume |
+|-------|-------|--------|
+| 53 | verification_deferred_human | /gsd-verify-work 53 |
