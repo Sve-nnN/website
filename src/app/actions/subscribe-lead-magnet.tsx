@@ -138,13 +138,32 @@ export async function subscribeToLeadMagnetAction(formData: FormData): Promise<v
         // se reenvía nada — igual que `subscribeAction` con un `confirmed`.
         target = `${postPath}?subscribed=already`
       } else {
-        const token = randomBytes(32).toString('hex')
+        // WR-04: un suscriptor `confirmed` conserva estado, fechas y token. Cambiarlos
+        // con solo conocer su correo lo dejaría sin newsletter hasta reconfirmar y
+        // invalidaría los enlaces de baja de correos anteriores (`subscribeAction`
+        // evita lo mismo con su retorno temprano). El magnet se entrega por correo
+        // con su token actual: el enlace solo le llega a quien controla el buzón.
+        const keepConfirmed = current?.status === 'confirmed'
+        const token =
+          keepConfirmed && current?.token ? current.token : randomBytes(32).toString('hex')
         const resendReady = isResendConfigured()
         const nowIso = new Date().toISOString()
 
         let subscriberId: number
 
-        if (current) {
+        if (current && keepConfirmed) {
+          const updated = await payload.update({
+            collection: 'subscribers',
+            id: current.id,
+            data: {
+              optInReason: 'lead-magnet',
+              leadMagnet: leadMagnet.id,
+              // Solo si la ficha no tenia token (no hay enlaces previos que invalidar).
+              ...(current.token ? {} : { token }),
+            },
+          })
+          subscriberId = updated.id
+        } else if (current) {
           // Cualquier otro caso (nuevo pending reenviando, solo-newsletter
           // sumando el magnet, o reactivando desde `unsubscribed`) arranca de
           // cero: las fechas/estado de un ciclo anterior no describen este
