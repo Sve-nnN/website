@@ -25,7 +25,7 @@
 - Cada fase de páginas conserva head, hreflang, canonical y JSON-LD de las páginas que migra. Las fases 54 y 55 hacen revisiones rápidas por página; la verificación formal de SEO, a11y y rendimiento vive en la Phase 57.
 - Idiomas EN y ES con paridad, modo oscuro único, WCAG 2.2 AA según A11Y.md.
 
-- [ ] **Phase 53: Base del rediseño: rama, preview, tema y shell** - Rama `feat/mui-redesign`, preview seguro en `dev.juan-tech.com`, tema MUI v9 oscuro y shell (nav, footer, idioma, movimiento) conectado a Payload
+- [x] **Phase 53: Base del rediseño: rama, preview, tema y shell** - Rama `feat/mui-redesign`, preview seguro en `dev.juan-tech.com`, tema MUI v9 oscuro y shell (nav, footer, idioma, movimiento) conectado a Payload (completed 2026-11-07)
 - [ ] **Phase 54: Páginas de conversión y utilidad** - Home, servicios, landings Lima y Madrid, búsqueda, sobre mí, contacto, stack, legales y 404 en MUI desde Payload
 - [ ] **Phase 55: Casos, websites, blog y autores** - Las superficies de prueba y contenido editorial en MUI desde Payload, incluidos los 58 posts
 - [ ] **Phase 56: Contenido pendiente de Juan** - Resolución de marcadores `{{pendiente}}`, textos CTA, lecciones de casos y texto legal; corre en paralelo y bloquea solo el corte
@@ -49,12 +49,13 @@
 **Plans**: 6 plans
 
 Plans:
+
 - [x] 53-01-PLAN.md — Rama feat/mui-redesign, MUI 9.5 con control de legitimidad, tema en (frontend) y capas CSS Tailwind v3 bajo MUI
 - [x] 53-02-PLAN.md — Preview de solo lectura en código: PREVIEW_READONLY, noindex, robots, 404 de admin y api, escrituras inertes
 - [x] 53-03-PLAN.md — Fundaciones del shell: estado de movimiento, helpers de enlaces y caché con hooks de Header y Footer
 - [x] 53-04-PLAN.md — Header y footer MUI conectados a los globals de Payload, selector de idioma y mensajes shell
 - [x] 53-05-PLAN.md — Ensamblado del layout: enlace de salto, un solo main, toggle de movimiento y scripts de contrato del shell
-- [ ] 53-06-PLAN.md — Rol Postgres de solo lectura, DNS y token (pasos de Juan), despliegue en Dokploy y verificación en vivo de los 5 criterios
+- [x] 53-06-PLAN.md — Rol Postgres de solo lectura, DNS y token (pasos de Juan), despliegue en Dokploy y verificación en vivo de los 5 criterios
 
 **UI hint**: yes
 
@@ -122,7 +123,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 53. Base del rediseño: rama, preview, tema y shell | 0/TBD | Not started | - |
+| 53. Base del rediseño: rama, preview, tema y shell | 6/6 | Complete    | 2026-11-07 |
 | 54. Páginas de conversión y utilidad | 0/TBD | Not started | - |
 | 55. Casos, websites, blog y autores | 0/TBD | Not started | - |
 | 56. Contenido pendiente de Juan | 0/TBD | Not started | - |
