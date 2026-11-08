@@ -14,7 +14,13 @@
  *
  * El rol Postgres sin INSERT, UPDATE ni DELETE (plan 06) es la barrera real;
  * esta bandera es la segunda capa y evita errores de permisos visibles.
+ *
+ * La regla de lectura vive en `preview-flag.mjs` (falla cerrado) y la comparte
+ * `next.config.mjs`. Es un modulo puro sin dependencias, asi que sigue cargando
+ * en el sandbox Edge.
  */
+import { parsePreviewFlag } from './preview-flag.mjs'
+
 export function isPreviewReadonly(): boolean {
-  return process.env.PREVIEW_READONLY === 'true'
+  return parsePreviewFlag(process.env.PREVIEW_READONLY)
 }

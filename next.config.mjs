@@ -1,6 +1,8 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 import createNextIntlPlugin from 'next-intl/plugin'
 
+import { parsePreviewFlag } from './src/lib/preview-flag.mjs'
+
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 // Fase 53 (D-04, D-05): el preview del rediseño (dev.juan-tech.com) corre este
@@ -9,7 +11,8 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 // quedan fijos en el manifiesto. Sin la variable (producción) ambas funciones
 // devuelven exactamente lo de antes. El código de servidor lee la misma bandera
 // en runtime con `isPreviewReadonly()` (src/lib/preview.ts).
-const isPreview = process.env.PREVIEW_READONLY === 'true'
+// La regla de lectura es la misma que usa `isPreviewReadonly()` (falla cerrado).
+const isPreview = parsePreviewFlag(process.env.PREVIEW_READONLY)
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
