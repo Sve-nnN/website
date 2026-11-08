@@ -18,11 +18,15 @@ import * as React from 'react'
 import { createElement } from 'react'
 
 import { CaseMetricCard } from '../../src/components/mui/CaseMetricCard'
+import { ContactForm } from '../../src/components/mui/ContactForm'
+import { CtaPanel } from '../../src/components/mui/CtaPanel'
+import { CtaSection } from '../../src/components/mui/CtaSection'
 import { LogoMarquee, LogoStaticGrid, fitLogo, type MarqueeLogo } from '../../src/components/mui/LogoMarquee'
 import { TestimonialCards } from '../../src/components/mui/TestimonialCards'
 import { Toc } from '../../src/components/mui/rich-text/Toc'
 import { formatSector, splitHeroMetric } from '../../src/components/mui/split-hero-metric'
-import { countOf, hasId, headingLevels, renderToHtml } from './54-ssr-harness'
+import { emailFromContactPage } from '../../src/lib/cta-data'
+import { countOf, hasId, headingLevels, renderToHtml, textOf } from './54-ssr-harness'
 
 // tsx no transforma JSX con `jsx: preserve` y cae al runtime clasico, que busca
 // `React` global al renderizar los componentes .tsx. Solo se usa en esta autoprueba.
@@ -194,6 +198,78 @@ const ARROW = String.fromCharCode(0x2192)
 
   const single = renderToHtml(createElement(Toc, { items: items.slice(0, 1), label: 'En este documento' }), 'es')
   check('Toc con un solo item devuelve cadena vacia', markup(single) === '', `devolvio ${markup(single).length} caracteres`)
+}
+
+// ---------------------------------------------------------------------------
+// Tarea 3: ContactForm
+// ---------------------------------------------------------------------------
+{
+  const html = renderToHtml(createElement(ContactForm, { variant: 'card', email: 'correo@ejemplo.com', headingId: 'form-t' }), 'es')
+  const text = textOf(html)
+  check('ContactForm: etiquetas visibles Nombre, Correo electronico y Mensaje', text.includes('Nombre') && text.includes('Correo electr\u00f3nico') && text.includes('Mensaje'), 'falta alguna etiqueta')
+  for (const name of ['name', 'email', 'message']) {
+    check(`ContactForm: campo ${name} requerido`, new RegExp(`<(input|textarea)[^>]*name="${name}"[^>]*required`).test(html) || new RegExp(`<(input|textarea)[^>]*required[^>]*name="${name}"`).test(html), `el campo ${name} no es required`)
+  }
+  const labelFors = [...html.matchAll(/<label[^>]*\sfor="([^"]+)"/g)].map((m) => m[1])
+  check('ContactForm: cada etiqueta apunta a un id existente', labelFors.length === 4 && labelFors.every((id) => hasId(html, id)), `labels = ${JSON.stringify(labelFors)}`)
+  check('ContactForm: autocomplete name y email', /autoComplete="name"/i.test(html) && /autoComplete="email"/i.test(html), 'falta autoComplete')
+  check('ContactForm: type email en el correo', /<input[^>]*name="email"[^>]*type="email"|<input[^>]*type="email"[^>]*name="email"/.test(html), 'el correo no es type email')
+  check('ContactForm: campo oculto locale con valor es', /<input[^>]*type="hidden"[^>]*name="locale"[^>]*value="es"/.test(html), 'falta el campo oculto locale=es')
+  const honeypotTag = /<input[^>]*name="company_website"[^>]*>/.exec(html)?.[0] ?? ''
+  check(
+    'ContactForm: honeypot company_website en contenedor aria-hidden, tabindex -1 y autocomplete off',
+    /aria-hidden="true"[^>]*>(<style[\s\S]*?<\/style>)?<label[^>]*>Sitio web de la empresa<\/label><input[^>]*name="company_website"/.test(html) &&
+      /tabindex="-1"/i.test(honeypotTag) &&
+      /autoComplete="off"/i.test(honeypotTag),
+    `el honeypot no cumple el contrato: ${honeypotTag}`,
+  )
+  check('ContactForm: sin campos de servicio ni de sitio web', !/name="(service|website)"/.test(html) && !/<select/.test(html), 'aparece un campo del sandbox')
+  check('ContactForm: form noValidate con aria-labelledby al titulo', /<form[^>]*aria-labelledby="form-t"/.test(html) && hasId(html, 'form-t') && /<h2[^>]*id="form-t"/.test(html), 'el formulario no se nombra por su h2')
+  check('ContactForm: boton de envio', /<button[^>]*type="submit"[^>]*>Enviar mensaje<\/button>/.test(html), 'falta el boton Enviar mensaje')
+  check('ContactForm sin estado: ni status ni alert', !/role="status"/.test(html) && !/role="alert"/.test(html), 'muestra un estado sin que lo haya')
+
+  const en = renderToHtml(createElement(ContactForm, { variant: 'card', email: 'correo@ejemplo.com' }), 'en')
+  check('ContactForm en EN: locale en y etiquetas en ingles', /<input[^>]*name="locale"[^>]*value="en"/.test(en) && textOf(en).includes('Email address') && textOf(en).includes('Send message'), 'locale o etiquetas incorrectos')
+
+  const ok = renderToHtml(createElement(ContactForm, { variant: 'card', status: 'success', email: 'correo@ejemplo.com' }), 'es')
+  check('ContactForm success: role status con titulo, cuerpo y enlace a /contact', /role="status"/.test(ok) && textOf(ok).includes('Mensaje enviado') && textOf(ok).includes('Gracias por escribir') && /<a[^>]*href="\/contact"[^>]*>Enviar otro mensaje<\/a>/.test(ok) && /tabindex="-1"/.test(ok), 'falta role status, el texto, el enlace o tabindex -1')
+  check('ContactForm success: reemplaza el formulario', !/<form/.test(ok), 'sigue mostrando el formulario')
+
+  const bad = renderToHtml(createElement(ContactForm, { variant: 'card', status: 'error', email: 'correo@ejemplo.com' }), 'es')
+  check('ContactForm error: role alert con el correo y el formulario sigue', /role="alert"/.test(bad) && textOf(bad).includes('escribe directamente a correo@ejemplo.com') && /<form/.test(bad) && /tabindex="-1"/.test(bad), 'falta role alert, el correo, el formulario o tabindex -1')
+
+  const panel = renderToHtml(createElement(ContactForm, { variant: 'panel', email: 'correo@ejemplo.com' }), 'es')
+  check('ContactForm panel: nombrado por aria-label y sin h2 propio', /<form[^>]*aria-label="Formulario de contacto"/.test(panel) && !/<h2/.test(panel) && /name="company_website"/.test(panel), 'el panel no se nombra o trae un h2')
+}
+
+// ---------------------------------------------------------------------------
+// Tarea 3: CtaPanel y CtaSection
+// ---------------------------------------------------------------------------
+{
+  const props = { title: 'Hablemos de tu sitio', lead: 'Lead del cierre', email: 'otro@ejemplo.org', avatarUrl: 'https://res.cloudinary.com/demo/avatar.jpg', name: 'Nombre del autor' }
+  const html = renderToHtml(createElement(CtaPanel, props), 'es')
+  check('CtaPanel: h2 con el titulo recibido y section nombrada por ese h2', /<h2[^>]*id="cta-title"[^>]*>Hablemos de tu sitio<\/h2>/.test(html) && /<section[^>]*aria-labelledby="cta-title"/.test(html), 'falta el h2 o el aria-labelledby')
+  check('CtaPanel: correo visible y boton Copiar correo', textOf(html).includes('otro@ejemplo.org') && /<button[^>]*>Copiar correo<\/button>/.test(html), 'falta el correo o el boton')
+  check('CtaPanel: region aria-live polite oculta que no repite nada al inicio', /aria-live="polite"/.test(html), 'falta la region aria-live')
+  check('CtaPanel: avatar decorativo y nombre', /<img[^>]*alt=""[^>]*src="https:\/\/res\.cloudinary\.com\/demo\/avatar\.jpg"|<img[^>]*src="https:\/\/res\.cloudinary\.com\/demo\/avatar\.jpg"[^>]*alt=""/.test(html) && textOf(html).includes('Nombre del autor'), 'el avatar no es decorativo o falta el nombre')
+  check('CtaPanel: lleva el formulario de panel con honeypot y locale', /name="company_website"/.test(html) && /name="locale"/.test(html), 'falta el formulario')
+  check('CtaPanel: dos blobs decorativos y el texto del prototipo ausente', countOf(html, /aria-hidden="true"/) >= 3 && !/Resend/.test(html), 'faltan blobs o aparece el texto del prototipo')
+  check('CtaPanel: el correo es el recibido, no uno del codigo', !html.includes('hello@juan-tech.com'), 'aparece un correo fijo')
+
+  const sec = renderToHtml(createElement(CtaSection, props), 'es')
+  check('CtaSection: contenedor con id contacto y sin landmark main', hasId(sec, 'contacto') && !/<main/.test(sec) && /id="cta-title"/.test(sec), 'falta id contacto, aparece main o falta el panel')
+  const none = renderToHtml(createElement(CtaSection, { lead: 'x', email: 'a@b.c' }), 'es')
+  check('CtaSection sin titulo no renderiza nada', markup(none) === '', `devolvio ${markup(none).length} caracteres`)
+}
+
+// ---------------------------------------------------------------------------
+// Tarea 3: lector de datos (parte pura)
+// ---------------------------------------------------------------------------
+{
+  const page = (info: Array<{ href?: string | null }>) =>
+    ({ content: { layout: [{ blockType: 'contactFormBlock', contactInfo: info }] } }) as never
+  check('emailFromContactPage toma la entrada mailto y quita la query', emailFromContactPage(page([{ href: 'https://x.com' }, { href: 'mailto:a@b.co?subject=hola' }])) === 'a@b.co', 'no extrajo el correo')
+  check('emailFromContactPage sin mailto devuelve null', emailFromContactPage(page([{ href: 'tel:+51' }])) === null && emailFromContactPage(undefined) === null, 'devolvio algo sin mailto')
 }
 
 if (failed > 0) {
