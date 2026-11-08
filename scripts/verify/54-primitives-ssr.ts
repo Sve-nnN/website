@@ -18,7 +18,13 @@ import * as React from 'react'
 import { createElement } from 'react'
 
 import { Crumbs } from '../../src/components/mui/Crumbs'
+import { FaqAccordion } from '../../src/components/mui/FaqAccordion'
+import { IconTile } from '../../src/components/mui/IconTile'
 import { PageHero } from '../../src/components/mui/PageHero'
+import { ScoreRing } from '../../src/components/mui/ScoreRing'
+import { TechChips } from '../../src/components/mui/TechChips'
+import { TranslationNotice } from '../../src/components/mui/TranslationNotice'
+import { CONTACT_ICON_NAMES, SERVICE_ICON_NAMES } from '../../src/lib/shadow-icons'
 import { Section } from '../../src/components/mui/Section'
 import { countOf, hasId, headingLevels, renderToHtml, textOf } from './54-ssr-harness'
 
@@ -38,6 +44,11 @@ function check(name: string, ok: boolean, reason: string) {
     failed += 1
     console.log(`FAIL ${name}: ${reason}`)
   }
+}
+
+/** HTML sin las etiquetas style que Emotion inyecta con el CSS global del tema. */
+function markup(html: string): string {
+  return html.replace(/<style[\s\S]*?<\/style>/g, '')
 }
 
 /** Valores de aria-labelledby y aria-controls del HTML y si cada uno resuelve a un id existente. */
@@ -126,6 +137,80 @@ function dangling(html: string, attr: 'aria-labelledby' | 'aria-controls'): stri
 
   const all = html + htmlEn + sec
   check('Ninguna salida abre o cierra un main', !/<\/?main[\s>]/.test(all), 'una salida contiene <main>')
+}
+
+// ---------------------------------------------------------------------------
+// Tarea 2: IconTile, TechChips, ScoreRing, TranslationNotice y FaqAccordion
+// ---------------------------------------------------------------------------
+{
+  const faq = renderToHtml(
+    createElement(FaqAccordion, {
+      idPrefix: 'faq',
+      items: [
+        { question: 'Pregunta uno', answer: 'RESPUESTA_ABIERTA_UNO' },
+        { question: 'Pregunta dos', answer: 'RESPUESTA_CERRADA_DOS' },
+        { question: 'Pregunta tres', answer: 'RESPUESTA_CERRADA_TRES' },
+      ],
+    }),
+    'es',
+  )
+  check(
+    'FaqAccordion: el texto de los tres paneles esta en el HTML aunque dos esten cerrados',
+    ['RESPUESTA_ABIERTA_UNO', 'RESPUESTA_CERRADA_DOS', 'RESPUESTA_CERRADA_TRES'].every((x) => faq.includes(x)),
+    'falta el texto de algun panel en el HTML servido (Pitfall 7)',
+  )
+  const summaryIds = [0, 1, 2].map((i) => `faq-${i}-h`)
+  const panelIds = [0, 1, 2].map((i) => `faq-${i}-c`)
+  check(
+    'FaqAccordion: resumenes con id y aria-controls que apuntan a paneles existentes',
+    summaryIds.every((id) => hasId(faq, id)) &&
+      panelIds.every((id) => hasId(faq, id) && new RegExp(`aria-controls="${id}"`).test(faq)) &&
+      dangling(faq, 'aria-controls').length === 0,
+    `ids ausentes o aria-controls colgando: ${dangling(faq, 'aria-controls').join(', ')}`,
+  )
+  check(
+    'FaqAccordion: los encabezados de resumen son h3',
+    JSON.stringify(headingLevels(faq)) === '[3,3,3]',
+    `niveles ${JSON.stringify(headingLevels(faq))}`,
+  )
+  check(
+    'FaqAccordion: solo el primero abierto por defecto',
+    countOf(faq, /aria-expanded="true"/) === 1 && /id="faq-0-h"[^>]*aria-expanded="true"|aria-expanded="true"[^>]*id="faq-0-h"/.test(faq),
+    'el estado abierto inicial no es solo el primer panel',
+  )
+  const faqH2 = renderToHtml(
+    createElement(FaqAccordion, { idPrefix: 'toc', headingLevel: 2, items: [{ question: 'Indice', answer: 'x' }] }),
+    'es',
+  )
+  check('FaqAccordion: headingLevel 2 emite h2', JSON.stringify(headingLevels(faqH2)) === '[2]', `niveles ${JSON.stringify(headingLevels(faqH2))}`)
+
+  const ringNull = renderToHtml(createElement(ScoreRing, { value: null, label: 'Rendimiento', srSuffix: 'de 100', as: 'div' }), 'es')
+  check('ScoreRing: con null no produce marcado', markup(ringNull).trim() === '', `salida: ${markup(ringNull).slice(0, 120)}`)
+  const ring = renderToHtml(createElement(ScoreRing, { value: 96, label: 'Rendimiento', srSuffix: 'de 100', as: 'div' }), 'es')
+  const ringText = textOf(ring)
+  check('ScoreRing: con 96 produce el numero y el sufijo', ringText.includes('96') && ringText.includes('de 100'), `texto: ${ringText}`)
+  check('ScoreRing: la leyenda no usa 11px', !/0\.6875rem|11px/.test(markup(ring)), 'la leyenda sigue en 11px')
+
+  const names = [...SERVICE_ICON_NAMES, ...CONTACT_ICON_NAMES]
+  const badNames = names.filter((n) => {
+    const h = renderToHtml(createElement(IconTile, { name: n }), 'es')
+    return !/<svg[^>]*aria-hidden="true"/.test(h)
+  })
+  check('IconTile: resuelve los 11 nombres de shadow-icons con svg aria-hidden', names.length === 11 && badNames.length === 0, `sin svg: ${badNames.join(', ')} (total nombres ${names.length})`)
+  check('IconTile: un nombre desconocido produce cadena vacia', markup(renderToHtml(createElement(IconTile, { name: 'no-existe' }), 'es')).trim() === '', 'el nombre desconocido produjo marcado')
+
+  const notice = renderToHtml(createElement(TranslationNotice, { esHref: '/sobre-mi' }), 'en')
+  check('TranslationNotice: role note', /role="note"/.test(notice), 'falta role="note"')
+  check('TranslationNotice: texto en un span lang en', /<span lang="en">This page is not available in English yet/.test(notice), 'falta el span lang="en" con el texto de messages')
+  check(
+    'TranslationNotice: enlace con lang es y hreflang es',
+    /<a [^>]*lang="es"[^>]*>Ver en español<\/a>/.test(notice) && /hrefLang="es"|hreflang="es"/.test(notice),
+    'falta el enlace Ver en español con lang="es" y hreflang="es"',
+  )
+  check('TranslationNotice: el enlace va a la ruta en espanol sin prefijo en', /href="\/sobre-mi"/.test(notice), `enlace: ${(notice.match(/<a [^>]*>/) ?? [''])[0]}`)
+
+  const chips = renderToHtml(createElement(TechChips, { items: ['Next.js', 'Payload'], label: 'Temas' }), 'es')
+  check('TechChips: un ul con aria-label', /<ul[^>]*aria-label="Temas"/.test(chips) && countOf(chips, /<li[\s>]/) === 2, 'falta el ul etiquetado o los dos li')
 }
 
 // ---------------------------------------------------------------------------
