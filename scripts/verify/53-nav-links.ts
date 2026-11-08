@@ -34,7 +34,7 @@ const groups: Array<[string, () => void]> = [
     '2 esquemas peligrosos y vacios',
     () => {
       assert.strictEqual(resolveLinkHref({ type: 'custom', url: 'https://example.com/x' }, 'es'), 'https://example.com/x')
-      for (const bad of ['javascript:alert(1)', 'data:text/html,x', '//evil.com', '/\\evil.com', '', '   ', 'JaVaScRiPt:alert(1)', 'java\tscript:alert(1)']) {
+      for (const bad of ['javascript:alert(1)', 'data:text/html,x', '//evil.com', '/\\evil.com', '', '   ', 'JaVaScRiPt:alert(1)', 'java\tscript:alert(1)', '/\t/evil.com', '/\n/evil.com']) {
         assert.strictEqual(resolveLinkHref({ type: 'custom', url: bad }, 'es'), null, `debia ser null: ${JSON.stringify(bad)}`)
       }
       assert.strictEqual(resolveLinkHref(null, 'es'), null)

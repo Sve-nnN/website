@@ -36,6 +36,10 @@ export function sanitizeHref(raw: string | null | undefined, locale: NavLocale):
   if (typeof raw !== 'string') return null
   const href = raw.trim()
   if (href === '') return null
+  // Los navegadores eliminan tabulaciones y saltos de linea dentro de una URL antes de
+  // parsearla: `/<TAB>/evil.com` se resolveria como `//evil.com`. Se rechaza todo
+  // caracter de control (WR-06).
+  if (/[\u0000-\u001f\u007f]/.test(href)) return null
   if (href.startsWith('#')) return href
   if (href.startsWith('//') || href.startsWith('/\\')) return null
   if (href.startsWith('/')) return normalizeServiceHref(href, locale)
