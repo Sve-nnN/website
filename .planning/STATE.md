@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: planning
-stopped_at: Phase 53 complete, ready to plan Phase 6
-last_updated: "2026-11-08T02:23:29.183Z"
+stopped_at: Completed 54-01-PLAN.md
+last_updated: "2026-11-08T04:29:59.099Z"
 last_activity: 2026-11-07
 last_activity_desc: Phase 53 complete, transitioned to Phase 6
-state_head: 2345549e2268589643665fcf5cdbc839375a352c
+state_head: 96347758a9d24f53bd7ed83b2719338fbc14cd82
 progress:
   total_phases: 5
   completed_phases: 1
-  total_plans: 6
-  completed_plans: 6
+  total_plans: 22
+  completed_plans: 7
   percent: 20
 ---
 
@@ -149,6 +149,7 @@ Last activity: 2026-11-07 — Phase 53 complete, transitioned to Phase 6
 | Phase 53 P03 | 25min | 4 tasks | 14 files |
 | Phase 53 P04 | 20min | 2 tasks | 8 files |
 | Phase 53 P05 | 30min | 2 tasks | 29 files |
+| Phase 54 P01 | 42min | 3 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -310,6 +311,8 @@ Recent decisions affecting current work:
 - [Phase 52]: El runner --final-shots se implemento y el chequeo d2 del tracer se corrigio para el pivote v4 (desviaciones Rule 3 y Rule 1)
 - [Phase 53]: Phase 53-01: capas CSS con plugin PostCSS (@layer tailwind, mui) en vez de receta Tailwind v4; Next se queda en 15.4.11
 - [Phase 53]: 53-05: el layout posee el unico main#main-content; las 22 paginas usan div. Etiqueta del toggle de movimiento constante, estado solo en aria-pressed
+- [Phase 6]: 54-01: la 404 de URL sin ruta usa global-not-found (experimental.globalNotFound) y SiteDocument compartido, porque en Next 15.4 un notFound() de pagina o catch-all no trae shell en el HTML
+- [Phase 6]: 54-01: un not-found de segmento no puede leer headers (getLocale ni getTranslations sin locale): las paginas con ISR responden 500
 
 ### Pending Todos
 
@@ -367,8 +370,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-07T16:59:21.083Z
-Stopped at: Phase 53 complete, ready to plan Phase 6
+Last session: 2026-11-08T04:29:42.354Z
+Stopped at: Completed 54-01-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

@@ -76,7 +76,7 @@ Plans:
 
 Plans:
 
-- [ ] 54-01-PLAN.md — 404 dentro del shell con estado real (tracer) y primer despliegue en el preview
+- [x] 54-01-PLAN.md — 404 dentro del shell con estado real (tracer) y primer despliegue en el preview
 - [ ] 54-02-PLAN.md — Esquema sombra aditivo: globals home-page y about-page, clientes.onDark, logo del stack y migración leída
 - [ ] 54-03-PLAN.md — Mensajes de interfaz ES y EN de la fase, guardia de paridad y arnés de render de servidor
 - [ ] 54-04-PLAN.md — Scripts de datos sombra, fotos y logos del stack con guardias de base y dry-run
