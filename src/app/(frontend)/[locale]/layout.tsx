@@ -1,20 +1,11 @@
 import type React from 'react'
 import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
-import { hasLocale, NextIntlClientProvider } from 'next-intl'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
-import InitColorSchemeScript from '@mui/material/InitColorSchemeScript'
+import { hasLocale } from 'next-intl'
+import { setRequestLocale } from 'next-intl/server'
 
-import { array, khand, geistSans } from '@/fonts'
 import { routing } from '@/i18n/routing'
-import { SiteHeader } from '@/components/shell/SiteHeader'
-import { SiteFooter } from '@/components/shell/SiteFooter'
-import { SkipLink } from '@/components/shell/SkipLink'
-import { MotionToggle } from '@/components/shell/MotionToggle'
-import { MotionProvider } from '@/components/MotionProvider'
-import { Providers } from '@/theme/Providers'
-import { MOTION_INIT_SCRIPT } from '@/theme/motion-init'
+import { SiteDocument } from '@/components/shell/SiteDocument'
 import { SITE_URL } from '@/lib/sitemap-data'
 import { isPreviewReadonly } from '@/lib/preview'
 import { BRAND, BRAND_SUFFIX } from '@/lib/page-title'
@@ -86,42 +77,8 @@ export default async function RootLayout({
   }
 
   setRequestLocale(locale)
-  const t = await getTranslations({ locale, namespace: 'shell' })
 
-  return (
-    <html
-      lang={locale}
-      suppressHydrationWarning
-      className={`${array.variable} ${khand.variable} ${geistSans.variable}`}
-    >
-      <head>
-        {/* Estado inicial de movimiento (D-15). Cadena constante, sin datos de
-            usuario (T-53-41). Corre en el head, antes del primer pintado, para
-            que data-motion no parpadee tras hidratar. */}
-        <script dangerouslySetInnerHTML={{ __html: MOTION_INIT_SCRIPT }} />
-      </head>
-      <body>
-        <InitColorSchemeScript attribute="data" defaultMode="dark" />
-        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <Providers>
-            <NextIntlClientProvider>
-              <MotionProvider>
-                <SkipLink />
-                <SiteHeader locale={locale} />
-                {/* El layout posee el único landmark main (D-13). Las páginas
-                    renderizan div: dos main anidados rompen la navegación por
-                    landmarks. tabIndex -1 permite que el enlace de salto
-                    deje el foco aquí. */}
-                <main id="main-content" tabIndex={-1} aria-label={t('landmarks.main')} style={{ outline: 'none' }}>
-                  {children}
-                </main>
-                <SiteFooter locale={locale} />
-                <MotionToggle />
-              </MotionProvider>
-            </NextIntlClientProvider>
-          </Providers>
-        </AppRouterCacheProvider>
-      </body>
-    </html>
-  )
+  // El documento (html, proveedores, header, main y footer) vive en
+  // SiteDocument porque `global-not-found.tsx` necesita el mismo.
+  return <SiteDocument locale={locale}>{children}</SiteDocument>
 }

@@ -17,6 +17,14 @@ const isPreview = parsePreviewFlag(process.env.PREVIEW_READONLY)
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  // Fase 54 (PAG-11): habilita `src/app/global-not-found.tsx`, la unica 404 que
+  // Next 15.4 renderiza completa en el servidor (header, footer y h1 dentro del
+  // HTML). Ver el comentario de ese archivo. Es experimental en 15.4: si una
+  // actualizacion de Next lo cambia, scripts/verify/54-notfound-status.mjs lo
+  // detecta.
+  experimental: {
+    globalNotFound: true,
+  },
   images: {
     remotePatterns: [
       {

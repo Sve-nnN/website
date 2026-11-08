@@ -109,5 +109,32 @@
       "footer": "Pie de página",
       "main": "Contenido principal"
     }
+  },
+  "notFound": {
+    "metaTitle": "Página no encontrada",
+    "heading": "Esta página no existe",
+    "body": "La dirección que escribiste no corresponde a ninguna página del sitio. Puede que la hayamos movido o que el enlace tenga un error.",
+    "backHome": "Volver al inicio",
+    "writeToJuan": "Escribir a Juan",
+    "suggestedLabel": "Páginas sugeridas",
+    "suggestedHeading": "Quizá buscabas",
+    "links": {
+      "services": {
+        "label": "Servicios",
+        "description": "Auditoría, consultoría, desarrollo y SEO para IA"
+      },
+      "cases": {
+        "label": "Casos de éxito",
+        "description": "Resultados reales medidos en Search Console"
+      },
+      "blog": {
+        "label": "Blog",
+        "description": "Artículos de SEO técnico y software"
+      },
+      "contact": {
+        "label": "Contacto",
+        "description": "Cuéntame de tu proyecto"
+      }
+    }
   }
 }

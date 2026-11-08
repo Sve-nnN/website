@@ -109,5 +109,32 @@
       "footer": "Site footer",
       "main": "Main content"
     }
+  },
+  "notFound": {
+    "metaTitle": "Page not found",
+    "heading": "This page does not exist",
+    "body": "The address you typed does not match any page on the site. We may have moved it, or the link may have a mistake.",
+    "backHome": "Back to home",
+    "writeToJuan": "Write to Juan",
+    "suggestedLabel": "Suggested pages",
+    "suggestedHeading": "Maybe you were looking for",
+    "links": {
+      "services": {
+        "label": "Services",
+        "description": "Audit, consulting, development and SEO for AI"
+      },
+      "cases": {
+        "label": "Case studies",
+        "description": "Real results measured in Search Console"
+      },
+      "blog": {
+        "label": "Blog",
+        "description": "Articles on technical SEO and software"
+      },
+      "contact": {
+        "label": "Contact",
+        "description": "Tell me about your project"
+      }
+    }
   }
 }
