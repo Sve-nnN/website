@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: planning
-stopped_at: Completed 54-02-PLAN.md
-last_updated: "2026-11-08T04:44:33.664Z"
+stopped_at: Completed 54-03-PLAN.md
+last_updated: "2026-11-08T04:52:02.525Z"
 last_activity: 2026-11-07
 last_activity_desc: Phase 53 complete, transitioned to Phase 6
-state_head: 877823ceebe42051cf202a9739609a8bbfd5705f
+state_head: 5b49ccd7bf7d43e372771ac74facc094bd1c5c76
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 22
-  completed_plans: 8
+  completed_plans: 9
   percent: 20
 ---
 
@@ -151,6 +151,7 @@ Last activity: 2026-11-07 — Phase 53 complete, transitioned to Phase 6
 | Phase 53 P05 | 30min | 2 tasks | 29 files |
 | Phase 54 P01 | 42min | 3 tasks | 12 files |
 | Phase 54 P02 | 17min | 3 tasks | 13 files |
+| Phase 54 P03 | 25min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -315,6 +316,7 @@ Recent decisions affecting current work:
 - [Phase 6]: 54-01: la 404 de URL sin ruta usa global-not-found (experimental.globalNotFound) y SiteDocument compartido, porque en Next 15.4 un notFound() de pagina o catch-all no trae shell en el HTML
 - [Phase 6]: 54-01: un not-found de segmento no puede leer headers (getLocale ni getTranslations sin locale): las paginas con ISR responden 500
 - [Phase 6]: 54-02: globals home-page y about-page privados (sin access ni versions), fetchers con isFallback; tablas del bloque toolStack son groups_tools y _groups_v_tools
+- [Phase 6]: 54-03: namespaces de interfaz de la fase en es y en con guardia de paridad (54-messages-parity.mjs) y arnes de render (54-ssr-harness.ts); search.errorHeading exento de la regla de encabezados por ser una oracion existente
 
 ### Pending Todos
 
@@ -372,8 +374,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-08T04:44:33.638Z
-Stopped at: Completed 54-02-PLAN.md
+Last session: 2026-11-08T04:52:02.422Z
+Stopped at: Completed 54-03-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
