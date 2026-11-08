@@ -194,7 +194,7 @@ export function HeaderView({ items, cta, logo }: Props) {
         anchor="top"
         open={open}
         onClose={closeMenu}
-        slotProps={{ paper: { id: 'menu-movil', 'aria-label': t('landmarks.menu') } }}
+        slotProps={{ paper: { id: 'menu-movil', role: 'dialog', 'aria-modal': true, 'aria-label': t('landmarks.menu') } }}
       >
         <Box sx={{ p: 2, display: 'grid', gap: 1 }}>
           <IconButton aria-label={t('closeMenu')} onClick={closeMenu} sx={{ justifySelf: 'end' }}>
