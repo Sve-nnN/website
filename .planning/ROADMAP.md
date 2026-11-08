@@ -72,7 +72,27 @@ Plans:
   4. Contacto envía el correo real con Resend y el honeypot descarta el spam, con su FAQ en MUI; Stack muestra los logos de herramientas y sus enlaces `/go` con la divulgación de afiliación visible y `rel="sponsored"`.
   5. Privacy y Terms muestran el índice lateral, y una URL inexistente muestra la 404 dentro del shell del sitio con estado HTTP 404 real.
 
-**Plans**: TBD
+**Plans**: 16 plans
+
+Plans:
+
+- [ ] 54-01-PLAN.md — 404 dentro del shell con estado real (tracer) y primer despliegue en el preview
+- [ ] 54-02-PLAN.md — Esquema sombra aditivo: globals home-page y about-page, clientes.onDark, logo del stack y migración leída
+- [ ] 54-03-PLAN.md — Mensajes de interfaz ES y EN de la fase, guardia de paridad y arnés de render de servidor
+- [ ] 54-04-PLAN.md — Scripts de datos sombra, fotos y logos del stack con guardias de base y dry-run
+- [ ] 54-05-PLAN.md — Primitivas de layout MUI: Section, PageHero, Crumbs, IconTile, ScoreRing, FaqAccordion y aviso de traducción
+- [ ] 54-06-PLAN.md — Primitivas de conversión y MuiRichText con índice: marquesina, testimonios, caso, formulario único y cierre
+- [ ] 54-07-PLAN.md — Aplicar la migración, sembrar con Juan y despliegue de humo con el esquema nuevo
+- [ ] 54-08-PLAN.md — Home primera mitad: Hero, marquesina, Tagline, Vitals y Servicios desde Payload
+- [ ] 54-09-PLAN.md — Detalle de las cuatro landings de servicio por ranuras sobre los bloques reales
+- [ ] 54-10-PLAN.md — Privacy y Terms con índice lateral sticky
+- [ ] 54-11-PLAN.md — Búsqueda con la consulta conservada y vista MUI
+- [ ] 54-12-PLAN.md — Contacto con formulario real y FAQ, y Stack con logos y afiliados con divulgación
+- [ ] 54-13-PLAN.md — Sobre mí con timeline de @mui/lab (tras checkpoint de legitimidad), foto y enlace de nav solo en el preview
+- [ ] 54-14-PLAN.md — Home segunda mitad: Casos, Proceso, Sitios, Sobre mí, Testimonios, FAQ, cierre y los tres bloques existentes
+- [ ] 54-15-PLAN.md — Índice de servicios con tabla comparativa y landings SEO técnico Lima y Madrid
+- [ ] 54-16-PLAN.md — Contrato por ruta con paridad de SEO, auditoría sin datos del sandbox, batería en vivo y despliegue final
+
 **UI hint**: yes
 
 ### Phase 55: Casos, websites, blog y autores
@@ -124,7 +144,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 53. Base del rediseño: rama, preview, tema y shell | 6/6 | Complete    | 2026-11-07 |
-| 54. Páginas de conversión y utilidad | 0/TBD | Not started | - |
+| 54. Páginas de conversión y utilidad | 0/16 | Planned | - |
 | 55. Casos, websites, blog y autores | 0/TBD | Not started | - |
 | 56. Contenido pendiente de Juan | 0/TBD | Not started | - |
 | 57. Gate de calidad y corte a producción | 0/TBD | Not started | - |
