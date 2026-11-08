@@ -8,6 +8,10 @@
  *
  * Imprime PASS o FAIL motivo por caso y sale con 1 ante cualquier FAIL.
  */
+import { readFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 import {
   assertNoForbiddenChars,
   assertPendingMarkersOnlyIn,
@@ -17,7 +21,16 @@ import {
   normalizeName,
   safeTarget,
 } from '../db/data/54-seed-lib'
-import { HOME_COPY_ES } from '../db/data/54-home-copy'
+import { ABOUT_COPY_ES, ABOUT_PENDING_PATHS } from '../db/data/54-about-copy'
+import { HOME_COPY_ES, ON_DARK_FILES, SANDBOX_LOGOS } from '../db/data/54-home-copy'
+import { SERVICE_SLUGS } from '../../src/lib/service-slugs'
+import {
+  ABOUT_CHIP_ICON_NAMES,
+  CONTACT_ICON_NAMES,
+  SERVICE_ICON_NAMES,
+} from '../../src/lib/shadow-icons'
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 
 let failures = 0
 
@@ -172,6 +185,111 @@ check('HOME_COPY_ES.tagline y hero no contienen caracteres prohibidos ni marcado
   for (const k of ['eyebrow', 'titleLine1', 'titleLine2', 'lead', 'ctaLabel', 'ctaHref', 'statValue', 'statCaption']) {
     assert(typeof (HOME_COPY_ES.hero as Record<string, unknown>)[k] === 'string', `hero.${k} falta`)
   }
+})
+
+check('el copy de la home pasa assertNoForbiddenChars y assertPendingMarkersOnlyIn (sin marcadores)', () => {
+  assertNoForbiddenChars(HOME_COPY_ES)
+  assertPendingMarkersOnlyIn(HOME_COPY_ES, [])
+})
+
+check('el copy de Sobre mí pasa los chequeos y el único marcador es la fecha de aprendoclub', () => {
+  assertNoForbiddenChars(ABOUT_COPY_ES, ABOUT_PENDING_PATHS)
+  assertPendingMarkersOnlyIn(ABOUT_COPY_ES, ABOUT_PENDING_PATHS)
+  const aprendo = ABOUT_COPY_ES.experience.stages.filter((s) => s.when.includes(OPEN))
+  assert(aprendo.length === 1 && aprendo[0].org === 'aprendoclub', 'el marcador debe estar solo en la etapa de aprendoclub')
+})
+
+/** Recorre el copy y devuelve [ruta, valor] de cada clave cuyo nombre esté en `names`. */
+function collect(obj: unknown, names: string[], path = '', out: [string, string][] = []) {
+  if (Array.isArray(obj)) obj.forEach((v, i) => collect(v, names, `${path}[${i}]`, out))
+  else if (obj && typeof obj === 'object') {
+    for (const [k, v] of Object.entries(obj)) {
+      const p = path ? `${path}.${k}` : k
+      if (names.includes(k) && typeof v === 'string') out.push([p, v])
+      collect(v, names, p, out)
+    }
+  }
+  return out
+}
+
+check('títulos de sección y de grupo sin punto ni coma (los de ítem, sin coma ni punto final)', () => {
+  const copies = { home: HOME_COPY_ES, about: ABOUT_COPY_ES }
+  for (const [label, copy] of Object.entries(copies)) {
+    for (const [p, v] of collect(copy, ['title', 'stepsTitle', 'faqTitle'])) {
+      const isItem = p.includes('[')
+      assert(!v.includes(','), `${label}.${p}: lleva coma ("${v}")`)
+      assert(!v.trimEnd().endsWith('.'), `${label}.${p}: termina en punto ("${v}")`)
+      // Los encabezados de sección y de grupo no admiten ningún punto. En los
+      // ítems se tolera el punto interior de un nombre propio (Next.js).
+      if (!isItem) assert(!v.includes('.'), `${label}.${p}: lleva punto ("${v}")`)
+    }
+    for (const [p, v] of collect(copy, ['titleLine1', 'titleLine2'])) {
+      assert(!/[.,]/.test(v), `${label}.${p}: lleva punto o coma ("${v}")`)
+    }
+  }
+})
+
+check('conteos de ítems del copy', () => {
+  const H = HOME_COPY_ES
+  assert(H.services.items.length === 5, `services.items = ${H.services.items.length}`)
+  assert(H.process.steps.length === 4, `process.steps = ${H.process.steps.length}`)
+  assert(H.vitals.items.length === 4, `vitals.items = ${H.vitals.items.length}`)
+  assert(H.faq.items.length === 5, `faq.items = ${H.faq.items.length}`)
+  assert(H.contact.steps.length === 3, `contact.steps = ${H.contact.steps.length}`)
+  assert(H.contact.infoRows.length === 3, `contact.infoRows = ${H.contact.infoRows.length}`)
+  assert(H.about.chips.length === 5 && H.about.paragraphs.length === 2 && H.about.photos.length === 3, 'about de la home')
+  assert(ABOUT_COPY_ES.experience.stages.length === 5, `experience.stages = ${ABOUT_COPY_ES.experience.stages.length}`)
+  assert(ABOUT_COPY_ES.specialties.items.length === 4, 'specialties.items')
+})
+
+check('no se siembra sites.note ni ranuras de testimonio', () => {
+  assert(!('note' in (HOME_COPY_ES.sites ?? {})), 'sites.note no debe sembrarse')
+  assert(Object.keys(HOME_COPY_ES.testimonials).join() === 'title', 'testimonials solo lleva title')
+})
+
+check('los valores de select existen en las listas cerradas del sistema de diseño', () => {
+  for (const it of HOME_COPY_ES.services.items) {
+    assert((SERVICE_ICON_NAMES as readonly string[]).includes(it.icon), `icono de servicio inválido: ${it.icon}`)
+    if ('servicePage' in it) assert((SERVICE_SLUGS as readonly string[]).includes(it.servicePage as string), `servicePage inválido: ${it.servicePage}`)
+  }
+  for (const st of HOME_COPY_ES.process.steps) assert((SERVICE_ICON_NAMES as readonly string[]).includes(st.icon), `icono de paso inválido: ${st.icon}`)
+  for (const r of HOME_COPY_ES.contact.infoRows) assert((CONTACT_ICON_NAMES as readonly string[]).includes(r.icon), `icono de contacto inválido: ${r.icon}`)
+  for (const c of ABOUT_COPY_ES.hero.chips) if ('icon' in c) assert((ABOUT_CHIP_ICON_NAMES as readonly string[]).includes(c.icon as string), `icono de chip inválido: ${c.icon}`)
+})
+
+check('los nombres de campo del copy existen en src/globals (grupos y subcampos)', () => {
+  const sources = {
+    home: readFileSync(join(ROOT, 'src/globals/HomePage/index.ts'), 'utf8'),
+    about: readFileSync(join(ROOT, 'src/globals/AboutPage/index.ts'), 'utf8'),
+  }
+  const missing: string[] = []
+  function walk(obj: unknown, src: string, label: string, path = '') {
+    if (Array.isArray(obj)) return obj.forEach((v) => walk(v, src, label, path))
+    if (obj && typeof obj === 'object') {
+      for (const [k, v] of Object.entries(obj)) {
+        if (!new RegExp(`['"]${k}['"]`).test(src)) missing.push(`${label}.${path ? path + '.' : ''}${k}`)
+        walk(v, src, label, path ? `${path}.${k}` : k)
+      }
+    }
+  }
+  walk(HOME_COPY_ES, sources.home, 'home')
+  walk(ABOUT_COPY_ES, sources.about, 'about')
+  assert(missing.length === 0, `campos sin declarar en el global: ${missing.join(', ')}`)
+})
+
+check('ON_DARK_FILES no está vacío y sale de SANDBOX_LOGOS', () => {
+  assert(Array.isArray(ON_DARK_FILES) && ON_DARK_FILES.length > 0, 'ON_DARK_FILES vacío')
+  assert(ON_DARK_FILES.every((f) => SANDBOX_LOGOS.some((l) => l.file === f && l.onDark)), 'archivo onDark fuera de la lista')
+  assert(new Set(SANDBOX_LOGOS.map((l) => l.file)).size === SANDBOX_LOGOS.length, 'archivos repetidos en SANDBOX_LOGOS')
+})
+
+check('el mapeo por nombre normalizado enlaza los logos del sandbox con nombres de cliente plausibles', () => {
+  const clientes = ['Money.com', 'Winaypaq', 'Crédito USS', 'Dr. Manuel A. Vargas Hidalgo', 'Apturio']
+  const hit = (file: string) => clientes.filter((c) => normalizeName(c) === normalizeName(file.replace(/\.webp$/, '')))
+  assert(hit('money-com.webp').join() === 'Money.com', 'money-com')
+  assert(hit('winaypaq.webp').join() === 'Winaypaq', 'winaypaq')
+  assert(hit('credito-uss.webp').join() === 'Crédito USS', 'credito-uss')
+  assert(hit('dr-manuel-a-vargas-hidalgo.webp').length === 1, 'dr vargas')
 })
 
 if (failures > 0) {

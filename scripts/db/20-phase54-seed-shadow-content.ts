@@ -36,19 +36,25 @@
  */
 import {
   assertNoForbiddenChars,
+  assertPendingMarkersOnlyIn,
   assertSafeTarget,
   buildDiff,
   mergeGroup,
+  normalizeName,
   safeTarget,
 } from './data/54-seed-lib'
-import { HOME_COPY_ES } from './data/54-home-copy'
+import { ABOUT_COPY_ES, ABOUT_PENDING_PATHS } from './data/54-about-copy'
+import { HOME_COPY_ES, SANDBOX_LOGOS } from './data/54-home-copy'
 
 const APPLY = process.argv.includes('--apply')
 const DB_CHECKED = process.argv.includes('--db-checked')
 
 type Copy = Record<string, unknown>
 
-const GLOBALS: { slug: 'home-page'; copy: Copy }[] = [{ slug: 'home-page', copy: HOME_COPY_ES }]
+const GLOBALS: { slug: 'home-page' | 'about-page'; copy: Copy; pendingPaths: readonly string[] }[] = [
+  { slug: 'home-page', copy: HOME_COPY_ES, pendingPaths: [] },
+  { slug: 'about-page', copy: ABOUT_COPY_ES, pendingPaths: ABOUT_PENDING_PATHS },
+]
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function seedGlobal(payload: any, slug: string, copy: Copy): Promise<boolean> {
@@ -98,6 +104,112 @@ async function seedGlobal(payload: any, slug: string, copy: Copy): Promise<boole
   return remaining.length === 0
 }
 
+/**
+ * Mapeo de `clientes.onDark` por nombre normalizado (supuesto A8 de RESEARCH).
+ * Imprime la tabla COMPLETA para que Juan la revise a mano antes de aplicar.
+ * Un nombre ambiguo (un logo del sandbox que coincide con más de un cliente)
+ * aborta. Solo escribe `onDark: true` en los coincidentes que aún no lo tienen.
+ *
+ * Se divide en plan (solo lectura, corre ANTES de cualquier escritura para que
+ * una ambigüedad aborte sin dejar nada a medias) y escritura.
+ */
+type OnDarkWrite = { id: number | string; name: string }
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function planOnDark(payload: any): Promise<{ ok: boolean; toWrite: OnDarkWrite[] }> {
+  const res = await payload.find({
+    collection: 'clientes',
+    limit: 100,
+    depth: 0,
+    fallbackLocale: false,
+    pagination: false,
+  })
+  const clients = res.docs as { id: number | string; name: string; onDark?: boolean | null }[]
+
+  const byNorm = new Map<string, typeof clients>()
+  for (const c of clients) {
+    const key = normalizeName(c.name)
+    byNorm.set(key, [...(byNorm.get(key) ?? []), c])
+  }
+
+  console.log(`\n--- clientes.onDark (${clients.length} clientes, ${SANDBOX_LOGOS.length} logos del sandbox) ---`)
+  console.log('  Revisa esta tabla a mano antes de aplicar (supuesto A8).')
+
+  const ambiguous: string[] = []
+  const toWrite: OnDarkWrite[] = []
+  const matchedClientIds = new Set<number | string>()
+
+  for (const logo of SANDBOX_LOGOS) {
+    const base = logo.file.replace(/\.[a-z0-9]+$/i, '')
+    // Se prueba por nombre de archivo y por alt; si ambos apuntan a clientes distintos es ambiguo.
+    const hits = new Map<number | string, (typeof clients)[number]>()
+    for (const key of [normalizeName(base), normalizeName(logo.alt)]) {
+      for (const c of byNorm.get(key) ?? []) hits.set(c.id, c)
+    }
+    const list = [...hits.values()]
+    const flag = logo.onDark ? 'onDark' : '      '
+    if (list.length === 0) {
+      console.log(`  ${flag}  ${logo.file.padEnd(36)} SIN COINCIDENCIA`)
+    } else if (list.length > 1) {
+      console.log(`  ${flag}  ${logo.file.padEnd(36)} AMBIGUO -> ${list.map((c) => `${c.name} (#${c.id})`).join(' | ')}`)
+      ambiguous.push(logo.file)
+    } else {
+      const c = list[0]
+      matchedClientIds.add(c.id)
+      const state = c.onDark ? 'ya tiene onDark' : logo.onDark ? 'se marcará onDark' : 'sin cambio'
+      console.log(`  ${flag}  ${logo.file.padEnd(36)} -> ${c.name} (#${c.id}) [${state}]`)
+      if (logo.onDark && !c.onDark) toWrite.push({ id: c.id, name: c.name })
+    }
+  }
+
+  const duplicates = [...byNorm.entries()].filter(([, v]) => v.length > 1)
+  for (const [key, v] of duplicates) {
+    console.log(`  aviso: nombres normalizados repetidos entre clientes (${key}): ${v.map((c) => `#${c.id}`).join(', ')}`)
+  }
+  const unmatched = clients.filter((c) => !matchedClientIds.has(c.id))
+  console.log(`  clientes sin logo del sandbox: ${unmatched.length} (no se tocan)`)
+
+  if (ambiguous.length > 0) {
+    console.error(`ABORT: nombre ambiguo en ${ambiguous.join(', ')}. No se escribe nada.`)
+    return { ok: false, toWrite: [] }
+  }
+  const missingOnDark = SANDBOX_LOGOS.filter((l) => l.onDark).filter((l) => {
+    const base = l.file.replace(/\.[a-z0-9]+$/i, '')
+    return !(byNorm.has(normalizeName(base)) || byNorm.has(normalizeName(l.alt)))
+  })
+  if (missingOnDark.length > 0) {
+    console.log(`  aviso: logo claro sin cliente: ${missingOnDark.map((l) => l.file).join(', ')}`)
+  }
+
+  if (toWrite.length === 0) console.log('  nada que escribir (idempotente)')
+  else if (!APPLY) console.log(`  DRY-RUN: se marcaría onDark en ${toWrite.map((c) => c.name).join(', ')}.`)
+  return { ok: true, toWrite }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function writeOnDark(payload: any, toWrite: OnDarkWrite[]): Promise<boolean> {
+  let ok = true
+  for (const c of toWrite) {
+    await payload.update({
+      collection: 'clientes',
+      id: c.id,
+      data: { onDark: true },
+      draft: false,
+      fallbackLocale: false,
+    })
+    const after = await payload.findByID({
+      collection: 'clientes',
+      id: c.id,
+      depth: 0,
+      fallbackLocale: false,
+    })
+    const good = after.onDark === true
+    ok = ok && good
+    console.log(`  ${good ? 'OK   ' : 'FALLA'} clientes #${c.id} ${c.name}: onDark releído = ${after.onDark}`)
+  }
+  return ok
+}
+
 async function main() {
   console.log(`=== ${APPLY ? 'APLICANDO' : 'DRY-RUN (nada se escribe)'} ===`)
   console.log(`  base: ${safeTarget(process.env.DATABASE_URI)}`)
@@ -109,12 +221,30 @@ async function main() {
     process.exit(1)
   }
 
-  for (const g of GLOBALS) assertNoForbiddenChars(g.copy)
+  // Antes de escribir: sin guiones ni marcadores de ranura del sandbox. El único
+  // marcador pendiente permitido es la fecha de la etapa de aprendoclub.
+  for (const g of GLOBALS) {
+    assertNoForbiddenChars(g.copy, g.pendingPaths)
+    assertPendingMarkersOnlyIn(g.copy, g.pendingPaths)
+  }
 
   // Import dinámico: nada de Payload se carga si la guardia de base aborta.
   const { getPayload } = await import('payload')
   const config = (await import('../../src/payload.config')).default
   const payload = await getPayload({ config })
+
+  // Plan de clientes.onDark (solo lectura) ANTES de cualquier escritura: una
+  // ambigüedad aborta sin dejar los globals sembrados a medias.
+  let onDarkPlan: { ok: boolean; toWrite: OnDarkWrite[] }
+  try {
+    onDarkPlan = await planOnDark(payload)
+  } catch (err) {
+    console.error(
+      `ABORT leyendo clientes: ${(err as Error).message}\n  (¿la migración phase54_shadow_content ya está aplicada?)`,
+    )
+    process.exit(1)
+  }
+  if (!onDarkPlan.ok) process.exit(1)
 
   let allOk = true
   for (const g of GLOBALS) {
@@ -124,6 +254,15 @@ async function main() {
       console.error(
         `ABORT en ${g.slug}: ${(err as Error).message}\n  (¿la migración phase54_shadow_content ya está aplicada?)`,
       )
+      process.exit(1)
+    }
+  }
+
+  if (APPLY && onDarkPlan.toWrite.length > 0) {
+    try {
+      allOk = (await writeOnDark(payload, onDarkPlan.toWrite)) && allOk
+    } catch (err) {
+      console.error(`ABORT escribiendo clientes.onDark: ${(err as Error).message}`)
       process.exit(1)
     }
   }
