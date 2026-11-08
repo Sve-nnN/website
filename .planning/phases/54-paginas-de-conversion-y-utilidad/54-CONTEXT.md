@@ -67,6 +67,12 @@ Tomadas con la opción de menor riesgo porque el preview y producción comparten
 - **Dependencia nueva:** `@mui/lab@9.0.0-beta.10`, con `checkpoint:human-verify` antes de instalar.
 - **Honeypot real** `company_website` y campo oculto `locale` obligatorio; se ignoran `service` y `website` del sandbox.
 
+### Excepciones de diseño aceptadas por Juan (2026-11-08)
+El checker de UI bloqueó la spec en tipografía (13 tamaños de fuente contra un tope de 4) y espaciado (paddings de sección de 80 a 192 px contra un conjunto de 4 a 64). Juan eligió conservar el diseño aprobado del sandbox:
+- **Escala `display`** (24, 30, 36, h2 clamp 32 a 48, h1 clamp 40 a 60, 48, 72, 112 y 176 px) para titulares y cifras se mantiene tal cual.
+- **Escala vertical de sección** (80, 96, 112, 128, 144, 160 y 192 px) para `py`, `pt`, `pb` y offsets `sticky` se mantiene tal cual.
+- La escala de texto de cuerpo queda en 12, 14, 16 y 20 px, con pesos 400 y 600.
+
 ### Claude's Discretion
 Nombres de archivos, estructura interna de `src/components/`, orden de las olas, partición en planes, y el diseño exacto de los campos nuevos de Payload siempre que sean aditivos.
 
