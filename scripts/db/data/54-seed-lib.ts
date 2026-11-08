@@ -332,3 +332,93 @@ export async function findOrCreateMedia(
   })
   return { id: doc.id, reused: false }
 }
+
+// ---------------------------------------------------------------------------
+// Verificación del estado sombra (script 23, plan 54-07)
+// ---------------------------------------------------------------------------
+
+/** Datos leídos por scripts/db/23-phase54-verify-schema.ts. `null` significa "no se pudo leer". */
+export type ShadowState = {
+  home: Record<string, unknown> | null
+  about: Record<string, unknown> | null
+  /** Muestra de `clientes` con solo `onDark` (select). */
+  clientes: { onDark?: boolean | null }[] | null
+  /** Herramientas del doc `stack`: total y cuántas ya tienen `logo`. */
+  stackTools: { total: number; withLogo: number } | null
+}
+
+export type ShadowResult = { name: string; ok: boolean; why: string }
+
+function pick(obj: unknown, path: string): unknown {
+  let cur: unknown = obj
+  for (const key of path.split('.')) {
+    if (typeof cur !== 'object' || cur === null) return undefined
+    cur = (cur as Record<string, unknown>)[key]
+  }
+  return cur
+}
+
+function nonEmptyString(v: unknown): boolean {
+  return typeof v === 'string' && v.trim().length > 0
+}
+
+/**
+ * Evalúa el estado sombra. Sin `expectSeeded` solo exige que el esquema esté
+ * aplicado (los globals se leen aunque estén vacíos, clientes expone onDark y el
+ * doc stack se lee con la columna logo). Con `expectSeeded` exige además el
+ * contenido sembrado por los scripts 20, 21 y 22.
+ */
+export function evaluateShadowState(
+  state: ShadowState,
+  opts: { expectSeeded: boolean },
+): ShadowResult[] {
+  const out: ShadowResult[] = []
+  const add = (name: string, ok: boolean, why: string) => out.push({ name, ok, why })
+
+  // Esquema
+  add('global home-page legible', state.home !== null, state.home ? 'leído' : 'no se pudo leer (¿falta la migración?)')
+  add('global about-page legible', state.about !== null, state.about ? 'leído' : 'no se pudo leer (¿falta la migración?)')
+  const sample = state.clientes
+  const hasOnDark =
+    sample !== null && (sample.length === 0 || sample.every((c) => 'onDark' in c))
+  add(
+    'clientes expone onDark',
+    hasOnDark,
+    sample === null ? 'no se pudo leer clientes' : hasOnDark ? `${sample.length} clientes leídos` : 'algún cliente no trae la clave onDark',
+  )
+  add(
+    'doc stack legible con la columna logo del bloque toolStack',
+    state.stackTools !== null,
+    state.stackTools ? `${state.stackTools.total} herramientas` : 'no se pudo leer el doc stack',
+  )
+
+  if (!opts.expectSeeded) return out
+
+  // Contenido sembrado
+  const H = state.home
+  const A = state.about
+  add('home-page.tagline no vacío', nonEmptyString(H?.tagline), nonEmptyString(H?.tagline) ? 'ok' : 'vacío')
+  add('home-page.hero.titleLine1 no vacío', nonEmptyString(pick(H, 'hero.titleLine1')), nonEmptyString(pick(H, 'hero.titleLine1')) ? 'ok' : 'vacío')
+  const counts: [string, string, number][] = [
+    ['home-page.services.items', 'services.items', 5],
+    ['home-page.process.steps', 'process.steps', 4],
+    ['home-page.vitals.items', 'vitals.items', 4],
+    ['home-page.faq.items', 'faq.items', 5],
+    ['home-page.contact.steps', 'contact.steps', 3],
+    ['home-page.contact.infoRows', 'contact.infoRows', 3],
+  ]
+  for (const [label, path, expected] of counts) {
+    const v = pick(H, path)
+    const n = Array.isArray(v) ? v.length : 0
+    add(`${label} tiene ${expected}`, n === expected, `hay ${n}`)
+  }
+  add('about-page.hero.lead no vacío', nonEmptyString(pick(A, 'hero.lead')), nonEmptyString(pick(A, 'hero.lead')) ? 'ok' : 'vacío')
+  const stages = pick(A, 'experience.stages')
+  const nStages = Array.isArray(stages) ? stages.length : 0
+  add('about-page.experience.stages tiene 5', nStages === 5, `hay ${nStages}`)
+  const nOnDark = (sample ?? []).filter((c) => c.onDark === true).length
+  add('al menos un cliente con onDark verdadero', nOnDark >= 1, `hay ${nOnDark}`)
+  const nLogo = state.stackTools?.withLogo ?? 0
+  add('al menos una herramienta del stack con logo', nLogo >= 1, `hay ${nLogo}`)
+  return out
+}

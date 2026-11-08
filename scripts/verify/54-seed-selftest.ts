@@ -18,12 +18,14 @@ import {
   assertPendingMarkersOnlyIn,
   assertSafeTarget,
   buildDiff,
+  evaluateShadowState,
   layoutDiffIgnoring,
   mergeGroup,
   missingCloudinaryVars,
   normalizeName,
   prepareImage,
   safeTarget,
+  type ShadowState,
 } from '../db/data/54-seed-lib'
 import { MEDIA_MANIFEST } from '../db/data/54-media-manifest'
 import { ABOUT_COPY_ES, ABOUT_PENDING_PATHS } from '../db/data/54-about-copy'
@@ -402,6 +404,51 @@ check('revisión estática de los scripts 20, 21 y 22: guardias presentes y sin 
   assert(s22.indexOf("['en', 'es']") !== -1, 'script 22: el orden de escritura debe ser EN y luego ES')
   const s20 = readFileSync(join(ROOT, 'scripts/db', names[0]), 'utf8')
   assert(s20.includes('draft: false'), 'script 20: falta draft false en el update de clientes')
+})
+
+// ---------------------------------------------------------------------------
+// evaluateShadowState (plan 54-07)
+// ---------------------------------------------------------------------------
+const seededFixture: ShadowState = {
+  home: {
+    tagline: 'Texto',
+    hero: { titleLine1: 'Linea' },
+    services: { items: [1, 2, 3, 4, 5].map((n) => ({ n })) },
+    process: { steps: [1, 2, 3, 4].map((n) => ({ n })) },
+    vitals: { items: [1, 2, 3, 4].map((n) => ({ n })) },
+    faq: { items: [1, 2, 3, 4, 5].map((n) => ({ n })) },
+    contact: { steps: [1, 2, 3].map((n) => ({ n })), infoRows: [1, 2, 3].map((n) => ({ n })) },
+  },
+  about: { hero: { lead: 'Lead' }, experience: { stages: [1, 2, 3, 4, 5].map((n) => ({ n })) } },
+  clientes: [{ onDark: false }, { onDark: true }],
+  stackTools: { total: 25, withLogo: 9 },
+}
+const emptyFixture: ShadowState = { home: {}, about: {}, clientes: [{ onDark: false }], stackTools: { total: 25, withLogo: 0 } }
+
+check('evaluateShadowState: estado vacío válido sin expectSeeded no produce FAIL', () => {
+  const fails = evaluateShadowState(emptyFixture, { expectSeeded: false }).filter((r) => !r.ok)
+  assert(fails.length === 0, `fallos inesperados: ${fails.map((f) => f.name).join(', ')}`)
+})
+
+check('evaluateShadowState: estado sembrado válido con expectSeeded no produce FAIL', () => {
+  const fails = evaluateShadowState(seededFixture, { expectSeeded: true }).filter((r) => !r.ok)
+  assert(fails.length === 0, `fallos inesperados: ${fails.map((f) => f.name).join(', ')}`)
+})
+
+check('evaluateShadowState: estado vacío con expectSeeded produce al menos un FAIL', () => {
+  const fails = evaluateShadowState(emptyFixture, { expectSeeded: true }).filter((r) => !r.ok)
+  assert(fails.length > 0, 'el estado vacío pasó como sembrado')
+})
+
+check('evaluateShadowState: globals ilegibles fallan incluso sin expectSeeded', () => {
+  const fails = evaluateShadowState({ ...emptyFixture, home: null, stackTools: null }, { expectSeeded: false }).filter((r) => !r.ok)
+  assert(fails.length >= 2, 'no detectó la lectura fallida')
+})
+
+check('el script 23 es de solo lectura y menciona permission denied', () => {
+  const src = readFileSync(join(ROOT, 'scripts/db/23-phase54-verify-schema.ts'), 'utf8')
+  assert(src.includes('permission denied'), 'falta el manejo de permission denied')
+  assert(!/payload\.(create|update|updateGlobal|delete)/.test(src), 'contiene una llamada de escritura')
 })
 
 await heavyConversion.then(
