@@ -1,9 +1,7 @@
-import { getPayload } from 'payload'
 import { getTranslations } from 'next-intl/server'
 
-import type { Footer as FooterType, Post, CaseStudy } from '@/payload-types'
+import type { Footer as FooterType } from '@/payload-types'
 
-import config from '@/payload.config'
 import {
   FooterView,
   type FooterViewColumn,
@@ -12,7 +10,12 @@ import {
   type FooterViewSocial,
 } from '@/components/shell/FooterView'
 import { blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
-import { getCachedFooter, getCachedHeader } from '@/lib/cache'
+import {
+  getCachedFooter,
+  getCachedHeader,
+  getCachedLatestCaseStudyLinks,
+  getCachedLatestPostLinks,
+} from '@/lib/cache'
 import { getLocalLandingPage } from '@/lib/local-landing-data'
 import { LOCAL_LANDINGS, buildLocalLandingHref } from '@/lib/local-landing-slugs'
 import { resolveLinkHref, sanitizeHref } from '@/lib/nav-links'
@@ -68,20 +71,13 @@ async function resolveDynamicColumn(
   entry: NonNullable<FooterType['dynamicColumns']>[number],
   locale: 'en' | 'es',
 ): Promise<ColumnResult | null> {
-  const payload = await getPayload({ config })
   const limit = entry.limit ?? 5
   const id = entry.id ?? `dynamic-${entry.source}`
   const title = entry.title?.trim() || null
 
   if (entry.source === 'latestPosts') {
-    const result = await payload.find({
-      collection: 'posts',
-      limit,
-      locale,
-      sort: '-publishedAt',
-      where: { _status: { equals: 'published' } },
-    })
-    const docs = result.docs as Post[]
+    // Un doc sin slug no tiene destino: se descarta en lugar de emitir `/blog/<cat>/`.
+    const docs = (await getCachedLatestPostLinks(locale, limit)).filter((doc) => doc.slug)
     if (docs.length === 0) return null
     return {
       id,
@@ -89,20 +85,14 @@ async function resolveDynamicColumn(
       items: docs.map((doc) => ({
         id: String(doc.id),
         label: doc.title,
-        href: blogPostPath(resolvePrimaryCategorySlug(doc.categories), doc.slug ?? ''),
+        href: blogPostPath(resolvePrimaryCategorySlug(doc.categories), doc.slug as string),
       })),
     }
   }
 
   if (entry.source === 'latestCaseStudies') {
-    const result = await payload.find({
-      collection: 'case-studies',
-      limit,
-      locale,
-      sort: '-createdAt',
-      where: { _status: { equals: 'published' } },
-    })
-    const docs = result.docs as CaseStudy[]
+    // Un doc sin slug daria `/case-studies/null`: se descarta.
+    const docs = (await getCachedLatestCaseStudyLinks(locale, limit)).filter((doc) => doc.slug)
     if (docs.length === 0) return null
     return {
       id,
@@ -142,15 +132,27 @@ export async function SiteFooter({ locale }: { locale: string }) {
   try {
     const [footer, header] = await Promise.all([getCachedFooter(typedLocale), getCachedHeader(typedLocale)])
 
-    const [servicesColumn, dynamicColumns] = await Promise.all([
+    // allSettled: si falla una consulta de columna (servicios o dinamica), el resto del
+    // footer (columnas del CMS, legales, redes) se conserva.
+    const [servicesResult, ...dynamicResults] = await Promise.allSettled([
       resolveServicesColumn(typedLocale, {
         servicesTitle: t('servicesTitle'),
         servicesIndex: t('servicesIndex'),
       }),
-      Promise.all((footer.dynamicColumns ?? []).map((entry) => resolveDynamicColumn(entry, typedLocale))).then(
-        (cols) => cols.filter((col): col is ColumnResult => col !== null),
-      ),
+      ...(footer.dynamicColumns ?? []).map((entry) => resolveDynamicColumn(entry, typedLocale)),
     ])
+
+    if (servicesResult.status === 'rejected') console.error('[shell] footer services column', servicesResult.reason)
+    const servicesColumn = servicesResult.status === 'fulfilled' ? servicesResult.value : null
+
+    const dynamicColumns: ColumnResult[] = []
+    for (const result of dynamicResults) {
+      if (result.status === 'rejected') {
+        console.error('[shell] footer dynamic column', result.reason)
+      } else if (result.value) {
+        dynamicColumns.push(result.value)
+      }
+    }
 
     // Columnas curadas en el admin. Partial: se omite el item sin etiqueta o
     // sin destino, y la columna que se queda sin items.

@@ -144,6 +144,57 @@ export function getCachedFooter(locale: Locale) {
   )()
 }
 
+// --- Enlaces recientes del footer (fase 53, WR-08). Antes SiteFooter llamaba
+// `payload.find` directo, fuera de la disciplina de este modulo: sin
+// `overrideAccess:false`, sin cache y con la profundidad por defecto. ---
+
+export type FooterPostLink = Pick<Post, 'id' | 'title' | 'slug' | 'categories'>
+export type FooterCaseStudyLink = Pick<CaseStudy, 'id' | 'title' | 'slug'>
+
+export function getCachedLatestPostLinks(locale: Locale, limit: number): Promise<FooterPostLink[]> {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'posts',
+        limit,
+        locale,
+        sort: '-publishedAt',
+        where: { _status: { equals: 'published' } },
+        overrideAccess: false,
+        select: { title: true, slug: true, categories: true },
+        populate: { categories: { slug: true } },
+      })
+      return docs as FooterPostLink[]
+    },
+    ['footer-latest-posts', locale, String(limit)],
+    { tags: [CACHE_TAGS.posts()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+export function getCachedLatestCaseStudyLinks(
+  locale: Locale,
+  limit: number,
+): Promise<FooterCaseStudyLink[]> {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'case-studies',
+        limit,
+        locale,
+        sort: '-createdAt',
+        where: { _status: { equals: 'published' } },
+        overrideAccess: false,
+        select: { title: true, slug: true },
+      })
+      return docs as FooterCaseStudyLink[]
+    },
+    ['footer-latest-case-studies', locale, String(limit)],
+    { tags: [CACHE_TAGS.caseStudies()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
 // --- Categories (blog URL structure: /blog/<category>/<post>) ---
 
 export type CategoryData = Pick<Category, 'id' | 'title' | 'slug' | 'description'>
