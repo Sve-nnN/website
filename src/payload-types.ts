@@ -698,6 +698,10 @@ export interface Cliente {
    * Cliente reconocible: se muestra primero y más grande dentro de su grupo. Usalo con avaricia, cuatro o cinco a lo sumo.
    */
   featured?: boolean | null;
+  /**
+   * Marca un logo claro que necesita un chip oscuro detrás cuando se muestra sobre la franja clara.
+   */
+  onDark?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1441,6 +1445,10 @@ export interface ToolStackBlock {
                * Nombre propio de la herramienta — no localizado.
                */
               name: string;
+              /**
+               * Logo de la herramienta. Opcional.
+               */
+              logo?: (number | null) | Media;
               /**
                * Vacío = "sin afiliado todavía" (chip neutral, sin CTA). Nunca fabricar un doc de afiliate-links solo para llenar este campo.
                */
@@ -2785,6 +2793,7 @@ export interface ToolStackBlockSelect<T extends boolean = true> {
           | T
           | {
               name?: T;
+              logo?: T;
               affiliateLink?: T;
               narrative?: T;
               pro?: T;
@@ -3065,6 +3074,7 @@ export interface ClientesSelect<T extends boolean = true> {
   websiteUrl?: T;
   workType?: T;
   featured?: T;
+  onDark?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -60,6 +60,14 @@ export const ToolStack: Block = {
               admin: { description: 'Nombre propio de la herramienta — no localizado.' },
             }, // NO localizado — nombre propio
             {
+              // Fase 54 (aditivo): logo de la herramienta para la tarjeta del stack.
+              name: 'logo',
+              type: 'upload',
+              relationTo: 'media',
+              required: false,
+              admin: { description: 'Logo de la herramienta. Opcional.' },
+            },
+            {
               name: 'affiliateLink',
               type: 'relationship',
               relationTo: 'affiliate-links',
