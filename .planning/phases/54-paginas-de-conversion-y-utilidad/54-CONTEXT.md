@@ -54,6 +54,19 @@ Fuera de alcance: casos de éxito, websites, blog y autores (fase 55), los texto
 - Cada página nueva suma comprobaciones a `scripts/verify/` (contrato HTML por ruta y locale, noindex intacto, `rel="sponsored"` en Stack, estado 404 real) y se corren contra `dev.juan-tech.com` tras cada despliegue. El crawl de paridad de la fase 53 se reutiliza para confirmar que ninguna URL actual cambia de estado.
 - El preview sigue en solo lectura (`PREVIEW_READONLY`). Los cambios de base de datos se hacen únicamente con migraciones aditivas y scripts verificados con `04-which-database.ts`.
 
+### Decisiones tras la investigación (auto, a revisar por Juan)
+Tomadas con la opción de menor riesgo porque el preview y producción comparten filas y `master` sigue en vivo. Juan puede revertir cualquiera en la revisión del preview.
+- **Contenido sombra aditivo.** Copy nuevo en globals privados nuevos (`homePage`, `aboutPage`), la columna `clientes.onDark` y un logo por herramienta en `toolStack`. No se sobrescribe ningún campo existente. Los globals nuevos se leen sin `overrideAccess:false` (con esa opción un global sin `access.read` lanza, como documenta `src/lib/cache.ts`).
+- **Home conserva `codeFixesBlock`, `auditOfferBlock` y `auditorHighlight`.** Se portan a MUI con el lenguaje del sandbox. Quitarlos reduciría contenido indexable (SEO-03).
+- **Sobre mí** vive en un global propio, no como doc de Pages, para que no entre al `sitemap.xml` live. El enlace en el nav se inyecta solo en el preview; el enlace real llega con el corte (fase 57).
+- **"Qué incluye" de servicios** se renderiza desde los párrafos de Payload como lista MUI con marca de verificación, sin inventar tarjetas.
+- **Búsqueda y landings locales** no tienen diseño en el sandbox: se componen con las primitivas MUI existentes (`PageHero`, tarjetas, `CtaSection`), sin diseño nuevo.
+- **Orden de migración:** migrar primero con `juantech_user` y desplegar después; un bloque sin migrar rompe todas las páginas porque el preview lee con rol de solo `SELECT`.
+- **404:** `not-found.tsx` más catch-all `force-dynamic` con script `54-notfound-status.mjs` que exige 404 real.
+- **Afiliados:** se conserva el `rel` real `sponsored nofollow noopener` (más estricto que lo escrito arriba).
+- **Dependencia nueva:** `@mui/lab@9.0.0-beta.10`, con `checkpoint:human-verify` antes de instalar.
+- **Honeypot real** `company_website` y campo oculto `locale` obligatorio; se ignoran `service` y `website` del sandbox.
+
 ### Claude's Discretion
 Nombres de archivos, estructura interna de `src/components/`, orden de las olas, partición en planes, y el diseño exacto de los campos nuevos de Payload siempre que sean aditivos.
 
