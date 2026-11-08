@@ -82,6 +82,7 @@ export const CACHE_TAGS = {
   blogPromo: () => 'blog-promo',
   header: () => 'header',
   footer: () => 'footer',
+  homePage: () => 'home-page',
   redirects: () => 'redirects',
   affiliateLinks: () => 'affiliate-links:all',
 }
@@ -184,6 +185,15 @@ export const revalidateHeaderCache: GlobalAfterChangeHook = ({ doc }) => {
 
 export const revalidateFooterCache: GlobalAfterChangeHook = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.footer())
+  safeRevalidateAllPaths()
+  return doc
+}
+
+// --- Home (contenido nuevo, fase 54). Global privado que lee la home del
+// rediseño y Contacto; mismo patrón que Header y Footer. ---
+
+export const revalidateHomePageCache: GlobalAfterChangeHook = ({ doc }) => {
+  safeRevalidateTag(CACHE_TAGS.homePage())
   safeRevalidateAllPaths()
   return doc
 }

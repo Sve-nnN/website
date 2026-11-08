@@ -128,6 +128,7 @@ export interface Config {
     footer: Footer;
     'featured-content': FeaturedContent;
     'blog-promo': BlogPromo;
+    'home-page': HomePage;
   };
   globalsSelect: {
     llms: LlmsSelect<false> | LlmsSelect<true>;
@@ -135,6 +136,7 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
     'featured-content': FeaturedContentSelect<false> | FeaturedContentSelect<true>;
     'blog-promo': BlogPromoSelect<false> | BlogPromoSelect<true>;
+    'home-page': HomePageSelect<false> | HomePageSelect<true>;
   };
   locale: 'es' | 'en';
   widgets: {
@@ -3647,6 +3649,18 @@ export interface BlogPromo {
   createdAt?: string | null;
 }
 /**
+ * Copy del rediseño de la home y de Contacto. Privado hasta el corte.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page".
+ */
+export interface HomePage {
+  id: number;
+  tagline?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "llms_select".
  */
@@ -3826,6 +3840,16 @@ export interface BlogPromoSelect<T extends boolean = true> {
         secondaryLabel?: T;
         secondaryUrl?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home-page_select".
+ */
+export interface HomePageSelect<T extends boolean = true> {
+  tagline?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

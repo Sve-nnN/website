@@ -23,7 +23,7 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
-import type { Post, CaseStudy, Category, AffiliateLink } from '@/payload-types'
+import type { Post, CaseStudy, Category, AffiliateLink, HomePage } from '@/payload-types'
 import { CACHE_TAGS, CACHE_TTL_SECONDS } from './cache-tags'
 import { resolvePrimaryCategorySlug } from './blog-paths'
 
@@ -141,6 +141,46 @@ export function getCachedFooter(locale: Locale) {
     },
     ['footer', locale],
     { tags: [CACHE_TAGS.footer()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+// --- Home y Sobre mí (fase 54, contenido sombra). Globals privados sin
+// versions ni drafts.
+//
+// NOT overrideAccess:false, misma excepción documentada que getCachedHeader:
+// un global sin acceso de lectura lanza con esa opción, y aquí el acceso por
+// defecto (solo usuarios autenticados) es justo lo que mantiene el copy sin
+// aprobar fuera de la API pública. Se lee por Local API en el servidor y nunca
+// se devuelve un borrador porque no existen.
+//
+// Respaldo de idioma: para EN se lee con fallbackLocale:false y, si el campo
+// centinela viene vacío, se marca isFallback y se relee con el respaldo al
+// español, para que la vista muestre TranslationNotice con lang es. ---
+
+export type ShadowPageResult<T> = { data: T; isFallback: boolean }
+
+export function getCachedHomePage(locale: Locale): Promise<ShadowPageResult<HomePage>> {
+  return unstable_cache(
+    async (): Promise<ShadowPageResult<HomePage>> => {
+      const payload = await getPayload({ config })
+      if (locale === 'es') {
+        const data = await payload.findGlobal({ slug: 'home-page', depth: 1, locale })
+        return { data, isFallback: false }
+      }
+      const strict = await payload.findGlobal({
+        slug: 'home-page',
+        depth: 1,
+        locale,
+        fallbackLocale: false,
+      })
+      if (strict.tagline && strict.tagline.trim() !== '') {
+        return { data: strict, isFallback: false }
+      }
+      const data = await payload.findGlobal({ slug: 'home-page', depth: 1, locale })
+      return { data, isFallback: true }
+    },
+    ['home-page', locale],
+    { tags: [CACHE_TAGS.homePage()], revalidate: CACHE_TTL_SECONDS },
   )()
 }
 
