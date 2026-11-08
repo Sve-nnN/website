@@ -2,6 +2,8 @@
 import type { Metadata } from 'next'
 import config from '@payload-config'
 import { generatePageMetadata, RootPage } from '@payloadcms/next/views'
+import { notFound } from 'next/navigation'
+import { isPreviewReadonly } from '@/lib/preview'
 import { importMap } from '../importMap.js'
 
 type Args = {
@@ -12,6 +14,11 @@ type Args = {
 export const generateMetadata = ({ params, searchParams }: Args): Promise<Metadata> =>
   generatePageMetadata({ config, params, searchParams })
 
-const Page = ({ params, searchParams }: Args) => RootPage({ config, params, searchParams, importMap })
+// Fase 53 (WR-03): en el preview de solo lectura el admin responde 404 en runtime,
+// aunque el build no haya recibido la bandera y falten los rewrites.
+const Page = ({ params, searchParams }: Args) => {
+  if (isPreviewReadonly()) notFound()
+  return RootPage({ config, params, searchParams, importMap })
+}
 
 export default Page
