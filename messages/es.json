@@ -11,7 +11,20 @@
   },
   "common": {
     "readMore": "Leer más",
-    "viewAll": "Ver todos"
+    "viewAll": "Ver todos",
+    "breadcrumbHome": "Inicio",
+    "breadcrumbsLabel": "Ruta de navegación",
+    "opensInNewTab": "se abre en otra pestaña",
+    "opensInNewTabAffiliate": "se abre en otra pestaña, enlace de afiliado",
+    "step": "Paso {n}",
+    "seeService": "Ver servicio",
+    "topicsLabel": "Temas",
+    "copyEmail": "Copiar correo",
+    "emailCopied": "Correo copiado",
+    "translationNotice": {
+      "text": "Esta página todavía no está disponible en inglés. Estás viendo el contenido en español.",
+      "link": "Ver en español"
+    }
   },
   "servicesShowcase": {
     "cta": "Explorar servicio",
@@ -135,6 +148,24 @@
         "label": "Contacto",
         "description": "Cuéntame de tu proyecto"
       }
+    }
+  },
+  "search": {
+    "title": "Buscar",
+    "fieldLabel": "Buscar",
+    "placeholder": "Buscar artículos, casos de éxito, autores...",
+    "submit": "Buscar en el sitio",
+    "formAria": "Búsqueda en el sitio",
+    "resultCount": "{count, plural, one {# resultado} other {# resultados}}",
+    "noResultsHeading": "Sin resultados para \"{q}\"",
+    "noResultsBody": "Prueba con otro término, o explora artículos y casos de estudio directamente.",
+    "errorHeading": "La búsqueda no está disponible por el momento. Intenta de nuevo en unos minutos.",
+    "blogLink": "Blog",
+    "casesLink": "Casos de éxito",
+    "typeLabels": {
+      "posts": "Artículo",
+      "case-studies": "Caso de éxito",
+      "authors": "Autor"
     }
   }
 }

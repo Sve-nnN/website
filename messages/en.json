@@ -11,7 +11,20 @@
   },
   "common": {
     "readMore": "Read more",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "breadcrumbHome": "Home",
+    "breadcrumbsLabel": "Breadcrumb",
+    "opensInNewTab": "opens in a new tab",
+    "opensInNewTabAffiliate": "opens in a new tab, affiliate link",
+    "step": "Step {n}",
+    "seeService": "View service",
+    "topicsLabel": "Topics",
+    "copyEmail": "Copy email",
+    "emailCopied": "Email copied",
+    "translationNotice": {
+      "text": "This page is not available in English yet. You are viewing the Spanish content.",
+      "link": "Ver en español"
+    }
   },
   "servicesShowcase": {
     "cta": "Explore service",
@@ -135,6 +148,24 @@
         "label": "Contact",
         "description": "Tell me about your project"
       }
+    }
+  },
+  "search": {
+    "title": "Search",
+    "fieldLabel": "Search",
+    "placeholder": "Search posts, case studies, authors...",
+    "submit": "Search the site",
+    "formAria": "Site search",
+    "resultCount": "{count, plural, one {# result} other {# results}}",
+    "noResultsHeading": "No results for \"{q}\"",
+    "noResultsBody": "Try a different term, or browse posts and case studies directly.",
+    "errorHeading": "Search is temporarily unavailable. Please try again in a moment.",
+    "blogLink": "Blog",
+    "casesLink": "Case studies",
+    "typeLabels": {
+      "posts": "Post",
+      "case-studies": "Case Study",
+      "authors": "Author"
     }
   }
 }
