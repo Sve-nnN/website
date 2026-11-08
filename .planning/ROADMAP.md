@@ -69,7 +69,7 @@ Plans:
   1. La home muestra todas sus secciones con datos de Pages y globals: Juan edita un campo en el admin y el cambio aparece en la home, sin datos hardcodeados del sandbox.
   2. El índice de servicios, las cuatro landings de servicio, las landings SEO técnico Lima y Madrid y la búsqueda se renderizan en MUI desde Payload bajo las URLs duales actuales (`/servicios` y `/services`), y la búsqueda devuelve resultados reales.
   3. Sobre mí muestra el timeline y la foto nueva desde Payload; la página nueva llega con una migración solo aditiva y no aparece en el sitio live antes del corte.
-  4. Contacto envía el correo real con Resend y el honeypot descarta el spam, con su FAQ en MUI; Stack muestra los logos de herramientas y sus enlaces `/go` con la divulgación de afiliación visible y `rel="sponsored"`.
+  4. Contacto conserva el envío con Resend y el honeypot descarta el spam, con su FAQ en MUI (en el preview el envío es simulado por solo lectura; el correo real se prueba una vez contra producción en la fase 57, desviación aceptada el 2026-11-08); Stack muestra los logos de herramientas y sus enlaces `/go` con la divulgación de afiliación visible y `rel="sponsored"`.
   5. Privacy y Terms muestran el índice lateral, y una URL inexistente muestra la 404 dentro del shell del sitio con estado HTTP 404 real.
 
 **Plans**: 16 plans
