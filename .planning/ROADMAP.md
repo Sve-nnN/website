@@ -77,7 +77,7 @@ Plans:
 Plans:
 
 - [x] 54-01-PLAN.md — 404 dentro del shell con estado real (tracer) y primer despliegue en el preview
-- [ ] 54-02-PLAN.md — Esquema sombra aditivo: globals home-page y about-page, clientes.onDark, logo del stack y migración leída
+- [x] 54-02-PLAN.md — Esquema sombra aditivo: globals home-page y about-page, clientes.onDark, logo del stack y migración leída
 - [ ] 54-03-PLAN.md — Mensajes de interfaz ES y EN de la fase, guardia de paridad y arnés de render de servidor
 - [ ] 54-04-PLAN.md — Scripts de datos sombra, fotos y logos del stack con guardias de base y dry-run
 - [ ] 54-05-PLAN.md — Primitivas de layout MUI: Section, PageHero, Crumbs, IconTile, ScoreRing, FaqAccordion y aviso de traducción
@@ -144,7 +144,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 53. Base del rediseño: rama, preview, tema y shell | 6/6 | Complete    | 2026-11-07 |
-| 54. Páginas de conversión y utilidad | 0/16 | Planned | - |
+| 54. Páginas de conversión y utilidad | 2/16 | In Progress|  |
 | 55. Casos, websites, blog y autores | 0/TBD | Not started | - |
 | 56. Contenido pendiente de Juan | 0/TBD | Not started | - |
 | 57. Gate de calidad y corte a producción | 0/TBD | Not started | - |

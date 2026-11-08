@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: planning
-stopped_at: Completed 54-01-PLAN.md
-last_updated: "2026-11-08T04:29:59.099Z"
+stopped_at: Completed 54-02-PLAN.md
+last_updated: "2026-11-08T04:44:33.664Z"
 last_activity: 2026-11-07
 last_activity_desc: Phase 53 complete, transitioned to Phase 6
-state_head: 96347758a9d24f53bd7ed83b2719338fbc14cd82
+state_head: 877823ceebe42051cf202a9739609a8bbfd5705f
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 22
-  completed_plans: 7
+  completed_plans: 8
   percent: 20
 ---
 
@@ -150,6 +150,7 @@ Last activity: 2026-11-07 — Phase 53 complete, transitioned to Phase 6
 | Phase 53 P04 | 20min | 2 tasks | 8 files |
 | Phase 53 P05 | 30min | 2 tasks | 29 files |
 | Phase 54 P01 | 42min | 3 tasks | 12 files |
+| Phase 54 P02 | 17min | 3 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -313,6 +314,7 @@ Recent decisions affecting current work:
 - [Phase 53]: 53-05: el layout posee el unico main#main-content; las 22 paginas usan div. Etiqueta del toggle de movimiento constante, estado solo en aria-pressed
 - [Phase 6]: 54-01: la 404 de URL sin ruta usa global-not-found (experimental.globalNotFound) y SiteDocument compartido, porque en Next 15.4 un notFound() de pagina o catch-all no trae shell en el HTML
 - [Phase 6]: 54-01: un not-found de segmento no puede leer headers (getLocale ni getTranslations sin locale): las paginas con ISR responden 500
+- [Phase 6]: 54-02: globals home-page y about-page privados (sin access ni versions), fetchers con isFallback; tablas del bloque toolStack son groups_tools y _groups_v_tools
 
 ### Pending Todos
 
@@ -370,8 +372,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-08T04:29:42.354Z
-Stopped at: Completed 54-01-PLAN.md
+Last session: 2026-11-08T04:44:33.638Z
+Stopped at: Completed 54-02-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
