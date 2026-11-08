@@ -49,7 +49,7 @@ export default async function GlobalNotFound() {
   const locale = (await getLocale()) === 'en' ? 'en' : 'es'
   return (
     <SiteDocument locale={locale}>
-      <NotFoundView locale={locale} />
+      <NotFoundView />
     </SiteDocument>
   )
 }

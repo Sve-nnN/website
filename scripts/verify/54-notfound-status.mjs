@@ -12,11 +12,22 @@
 //   --spawn     Arranca .next/standalone/server.js con PREVIEW_READONLY=true,
 //               DATABASE_URI falsa y un puerto libre; corre las URLs que no
 //               leen la base (/pagina-inexistente, /en/foo, /blog/x/y/z,
-//               /index.html) y mata el servidor.
+//               /index.html, y las dos de nivel pagina, que con la base caida
+//               igual deben dar 404 y no 500) y mata el servidor.
 //   --wait      Repite el chequeo contra BASE_URL cada 15 s hasta pasar o
 //               agotar WAIT_SECONDS (por defecto 1200).
 //   (sin modo)  Corre contra BASE_URL (obligatoria) las seis URLs, incluidas
 //               /servicios/nope y /en/services/nope.
+//
+// Dos niveles de exigencia, porque Next 15.4 los trata distinto (medido, ver
+// src/app/global-not-found.tsx):
+//   - URL SIN ruta (/pagina-inexistente, /en/foo, /blog/x/y/z, /index.html):
+//     404 con el shell completo en el HTML (main, h1, header, footer, noindex).
+//   - URL con ruta cuya pagina llama notFound() (/servicios/nope,
+//     /en/services/nope): 404 y noindex. El HTML del servidor es un documento
+//     de error vacio y el cliente dibuja el shell, asi que no se exige shell.
+//     Lo que SI se exige es que no sea 500 (primer despliegue: un not-found que
+//     leia headers rompia las paginas con ISR).
 //
 // Variables: BASE_URL, WAIT_SECONDS, EXPECT_PREVIEW=1 (exige tambien la
 // cabecera x-robots-tag con noindex).
@@ -38,7 +49,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
 
 const LOCAL_URLS = ['/pagina-inexistente', '/en/foo', '/blog/x/y/z', '/index.html']
-const LIVE_URLS = [...LOCAL_URLS, '/servicios/nope', '/en/services/nope']
+// Paginas con ruta que llaman notFound(): solo estado y noindex.
+const PAGE_LEVEL_URLS = ['/servicios/nope', '/en/services/nope']
+const LIVE_URLS = [...LOCAL_URLS, ...PAGE_LEVEL_URLS]
 
 /** Etiquetas de apertura de un elemento (sin cuerpo ni cierre). */
 function openTags(html, name) {
@@ -48,22 +61,28 @@ function openTags(html, name) {
 
 /**
  * @param {{ status: number, html: string, xRobotsTag?: string|null }} res
- * @param {{ expectPreview?: boolean }} opts
+ * @param {{ expectPreview?: boolean, shell?: boolean }} opts `shell: false` omite
+ *   el conteo de main, h1, header y footer (paginas con ruta, ver cabecera).
  * @returns {string[]} lista de fallos (vacia si cumple el contrato)
  */
-export function checkNotFound({ status, html, xRobotsTag = null }, { expectPreview = false } = {}) {
+export function checkNotFound(
+  { status, html, xRobotsTag = null },
+  { expectPreview = false, shell = true } = {},
+) {
   const failures = []
 
   if (status !== 404) failures.push(`estado ${status} (se esperaba 404)`)
 
-  for (const [name, expected] of [
-    ['main', 1],
-    ['h1', 1],
-    ['header', 1],
-    ['footer', 1],
-  ]) {
-    const n = openTags(html, name).length
-    if (n !== expected) failures.push(`hay ${n} <${name}> (se esperaba ${expected})`)
+  if (shell) {
+    for (const [name, expected] of [
+      ['main', 1],
+      ['h1', 1],
+      ['header', 1],
+      ['footer', 1],
+    ]) {
+      const n = openTags(html, name).length
+      if (n !== expected) failures.push(`hay ${n} <${name}> (se esperaba ${expected})`)
+    }
   }
 
   const robots = openTags(html, 'meta').find((tag) => /name\s*=\s*["']robots["']/i.test(tag))
@@ -118,6 +137,18 @@ function selftest() {
   expectBroken('sin noindex', { status: 404, html: VALID_HTML.replace('noindex, nofollow', 'index, follow') })
   expectBroken('preview sin x-robots-tag', { status: 404, html: VALID_HTML }, { expectPreview: true })
 
+  // Nivel de pagina con ruta: documento de error sin shell pero con noindex.
+  const ERROR_SHELL =
+    '<html id="__next_error__"><head><meta name="robots" content="noindex"/></head><body></body></html>'
+  expectClean('pagina con ruta: error sin shell', { status: 404, html: ERROR_SHELL }, { shell: false })
+  expectBroken('pagina con ruta: 500', { status: 500, html: ERROR_SHELL }, { shell: false })
+  expectBroken(
+    'pagina con ruta: sin noindex',
+    { status: 404, html: ERROR_SHELL.replace('noindex', 'index') },
+    { shell: false },
+  )
+  expectBroken('error sin shell no pasa el nivel completo', { status: 404, html: ERROR_SHELL })
+
   return bad > 0 ? 1 : 0
 }
 
@@ -145,7 +176,7 @@ async function runUrls(base, routes, expectPreview) {
   for (const route of routes) {
     try {
       const res = await fetchFinal(base, route)
-      const f = checkNotFound(res, { expectPreview })
+      const f = checkNotFound(res, { expectPreview, shell: !PAGE_LEVEL_URLS.includes(route) })
       if (f.length === 0) console.log(`PASS ${route}`)
       else {
         local += f.length
@@ -216,7 +247,7 @@ async function spawnMode() {
     }
     console.log('PASS servidor standalone arranca')
     // Con PREVIEW_READONLY=true el preview exige x-robots-tag.
-    failures += await runUrls(base, LOCAL_URLS, true)
+    failures += await runUrls(base, LIVE_URLS, true)
   } finally {
     child.kill('SIGTERM')
   }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
@@ -13,11 +13,14 @@ import { linkFor } from '@/components/mui/links'
 import { UL } from '@/components/mui/lists'
 import { buildServicesIndexHref } from '@/lib/service-slugs'
 
-type Props = { locale: 'es' | 'en' }
-
 // Vista de la 404 (PAG-11). Sin landmark main propio: el documento posee el unico.
-export function NotFoundView({ locale }: Props) {
+//
+// El idioma sale de `useLocale()` y no de una prop: `[locale]/not-found.tsx` no
+// puede leer headers (ver su comentario) y `global-not-found.tsx` envuelve la
+// vista en el mismo `NextIntlClientProvider` que el layout.
+export function NotFoundView() {
   const t = useTranslations('notFound')
+  const locale = useLocale() === 'en' ? 'en' : 'es'
 
   const suggested = [
     { key: 'services', href: buildServicesIndexHref(locale) },
