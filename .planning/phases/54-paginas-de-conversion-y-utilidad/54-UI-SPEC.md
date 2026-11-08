@@ -65,19 +65,23 @@ La tabla es una lista no exhaustiva de piezas conocidas y probadas, nunca una li
 
 ## Spacing Scale
 
-Unidad MUI `theme.spacing(1) = 8px`. Valores declarados (múltiplos de 4):
+Unidad MUI `theme.spacing(1) = 8px`. Todo token de espaciado pertenece al conjunto estándar (4, 8, 16, 24, 32, 48, 64). Se redondean al conjunto estándar los gaps intermedios del sandbox (los de entre 8 y 16 suben a 16, los de entre 16 y 24 suben a 24). Una sola escala adicional, declarada abajo, cubre el ritmo vertical de página.
 
 | Token | Value | Usage |
 |-------|-------|-------|
 | xs | 4px | Separación fina entre chips de varias líneas (`spacing: 0.5`), padding vertical de rótulos sobre fondo |
 | sm | 8px | Gap de chips (`spacing: 1`), gap icono y texto, padding de caption sobre foto |
-| md | 16px | Gap de tarjetas en rejilla (`gap: 2`), padding de `AccordionSummary`, separación entre acordeones (12px, `spacing: 1.5`) |
-| lg | 24px | Padding de tarjeta (`p: 3`), gap interno de bloques de texto (`gap: 3`), título a contenido en tarjetas grandes |
-| xl | 32px | Padding de tarjeta grande en escritorio (`p: 4`), gap de formulario (20 a 24px) |
-| 2xl | 48px | Título de sección a contenido (`mb: 6`), gap de columnas en escritorio (`gap: 8` = 64px en `md`) |
-| 3xl | 64px | Padding vertical de sección en móvil (`py: 8`) |
+| md | 16px | Gap de tarjetas en rejilla (`gap: 2`), padding de `AccordionSummary`, separación entre acordeones (`spacing: 2`) |
+| lg | 24px | Padding de tarjeta (`p: 3`), gap interno de bloques de texto (`gap: 3`), gap de campos del formulario (`gap: 3`), título a contenido en tarjetas grandes |
+| xl | 32px | Padding de tarjeta grande en escritorio (`p: 4`) |
+| 2xl | 48px | Título de sección a contenido (`mb: 6`) |
+| 3xl | 64px | Padding vertical de sección en móvil (`py: 8`), gap de columnas en escritorio (`gap: 8` en `md`) |
 
-Ritmo vertical de página (inherente al sandbox, múltiplos de 8 que superan 64):
+### Escala vertical de sección (separada, solo ritmo de página)
+
+Valores: 80, 96, 112, 128, 144, 160 y 192 px. Todos múltiplos de 16. Se aplican **solo** a `py`, `pt` y `pb` del contenedor de una sección, de un hero o de la vista 404, y a los desplazamientos `top` y `max-height` de elementos `sticky` bajo el header. Nunca a gaps, paddings de tarjeta, márgenes internos ni tamaños de componente.
+
+Por qué el conjunto estándar no alcanza: su techo es 64px, que basta en móvil pero no para separar secciones de 1200px en escritorio ni para librar el header fijo. El hero necesita `pt` mayor que la altura del header (96px de `scroll-padding-top` heredado de la fase 53) más aire visual, y el diseño aprobado por Juan en el sandbox fija estos paddings. Reducirlos al estándar comprime las secciones y rompe el ritmo ya aprobado, por eso se heredan sin cambio y se aíslan en esta escala para que no contaminen el resto.
 
 | Elemento | xs | md |
 |----------|----|----|
@@ -87,8 +91,13 @@ Ritmo vertical de página (inherente al sandbox, múltiplos de 8 que superan 64)
 | `PageHero` (`pt`, `pb`) | 128px y 48px | 160px y 80px |
 | 404 (`pt`, `pb`) | 144px y 80px | 192px y 112px |
 | Tagline (`py`) | 80px | 128px |
+| Elementos `sticky` (Servicios de la home, índice legal) | `top: 112px` | `top: 112px`, `max-height: calc(100vh - 144px)` |
 
-Medidas de objetivo y ancho:
+Los valores 48 y 64 del conjunto estándar también aparecen en esta tabla (48px de `pb` móvil de `PageHero`, 64px de sección móvil): son del conjunto estándar, no de la escala vertical.
+
+### Medidas de objetivo y ancho (dimensiones de componente, no tokens de espaciado)
+
+Como en 53, los valores 40, 44, 52 y 56 son alturas de objetivo táctil y todos son múltiplos de 4.
 
 | Elemento | Medida |
 |----------|--------|
@@ -102,35 +111,52 @@ Medidas de objetivo y ancho:
 | Foto de Sobre mí | `maxWidth: 420px`, `aspect-ratio: 4 / 5`, ancho y alto declarados (1122 x 1402) |
 | Offset de anclas | `scroll-padding-top: 96px` heredado. `scroll-margin-top: 96px` en secciones con `id` ancla del stack |
 
-Excepciones: 12 y 20px (`1.5` y `2.5`) aparecen en gaps internos del sandbox y son múltiplos de 4. 96, 128, 160, 192 son múltiplos de 8 y solo se usan como padding vertical de sección y de hero. Ninguna otra.
+Excepciones: ninguna fuera de la escala vertical de sección declarada arriba.
 
 ---
 
 ## Typography
 
-Los roles salen del tema aprobado (`src/theme/theme.ts`). Todo en `rem` sobre base de 16px. El sandbox usa más de cuatro tamaños porque es un sitio de contenido con titulares y cifras grandes: esta spec los agrupa en tres familias y no añade ninguno nuevo.
+Los roles salen del tema aprobado (`src/theme/theme.ts`). Todo en `rem` sobre base de 16px. La spec declara **dos escalas separadas**: una escala de texto de **cuatro tamaños** (12, 14, 16 y 20) para todo lo que se lee como texto corrido o de interfaz, y una escala `display` que solo cubre titulares y cifras. Dos pesos en todo: 400 y 600.
+
+### Escala de texto (4 tamaños: 12, 14, 16, 20)
 
 | Role | Size | Weight | Line Height |
 |------|------|--------|-------------|
-| Body (párrafos de tarjeta, celdas de tabla, texto de formulario, `body1`) | 16px | 400 | 1.5 (24px) |
-| Lead y prosa larga (lead de sección, párrafos de servicio, FAQ, texto legal, citas `blockquote` van en Heading 24) | 18px | 400 | 1.56 (28px) |
-| Lead de `PageHero` | 20px | 400 | 1.5 (30px) |
-| Label y apoyo (`body2`, botón pequeño, migas, chips de enlace) | 14px | 400 (600 en botón, miga actual y enlaces de acento) | 1.43 (20px) |
+| Body (párrafos de tarjeta, prosa larga, párrafos de servicio, bio, FAQ, texto legal, celdas de tabla, texto de formulario, `body1`, `gearIntro`, correo en `mono`) | 16px | 400 (600 en nombres de tarjeta de equipo y títulos de fila de contacto) | 1.5 (24px) |
+| Lead (lead de sección, lead de hero de home, lead de `PageHero`) | 20px | 400 | 1.5 (30px) |
+| Heading card (`h6`: título de tarjeta, título de `AccordionSummary`, título de resultado de búsqueda) | 20px | 600 | 28px |
+| Label y apoyo (`body2`, botón pequeño, migas, chips de enlace, `h4` de "Lo bueno" y "Lo no tan bueno") | 14px | 400 (600 en botón, miga actual, enlaces de acento y `h4` de "Lo bueno") | 1.43 (20px) |
 | Caption y overline (`caption`, eyebrows, "Paso 1", notas de medición) | 12px | 400 (overline 600, `letter-spacing: 0.08em`) | 1.33 (16px) |
-| Heading card (`h6` título de tarjeta, `subtitle1` título de acordeón) | 20px y 18px | 600 | 28px |
-| Heading item (`h5` título de ítem, de timeline y cita) | 24px | 600 | 32px |
-| Heading sección (`h3` del tema, siempre con `component="h2"`) | 36px | 600 | 40px |
-| Heading página (`h1`, `clamp(2.5rem, 6vw, 3.75rem)`; `h2` del hero 404 y CTA: `clamp(2rem, 5vw, 3rem)`) | 40 a 60px / 32 a 48px | 600 | 1.0 y 1.05, `letter-spacing: -0.02em` |
-| Cifra (contadores de Sobre mí y de la home, "+406 %") | 48px (contador), 72px (caso) | 600 | 1.0 |
-| Cifra de Vitals (`mono`) | 30px | 600 | 36px |
-| Numeral de paso (`01`, `02`, mono) | 36px (servicio), 32px (contacto) | 600 | 1.0 |
+
+Cambios respecto al sandbox, todos para quedar dentro de los 4 tamaños y sin tocar ningún rol del tema: el 18/28 de lead y de prosa pasa a 20/30 (lead) o 16/24 (prosa), el 17/28 de `gearIntro` pasa a Body, el 15px del `h4` de "Lo bueno" pasa a Label 14, el 16px del `h2` de las filas de Contacto usa Body con peso 600 (rol existente `body1`), el título de acordeón pasa de `subtitle1` 18px a `h6` 20px, y el correo de Contacto pasa de 18px mono a Body mono. El rol `subtitle1` del tema queda sin uso en esta fase.
+
+### Escala display (solo titulares y cifras, nunca texto corrido)
+
+Se hereda del tema aprobado y del sandbox y no se reduce: cada tamaño es un rol de titular o de cifra con función distinta. Se aísla en esta escala para que no cuente como tamaño de texto. Por qué el conjunto de texto no alcanza: titulares de 24 a 60px y cifras de 48 a 176px son la jerarquía visual que Juan aprobó en el sandbox y en `theme.ts` (`h1` a `h5`). Forzarlos a 20px elimina el contraste de escala que da identidad al sitio y rompe el diseño aprobado.
+
+| Role | Size | Weight | Line Height |
+|------|------|--------|-------------|
+| Heading item (`h5` título de ítem, de timeline y cita `blockquote`) | 24px | 600 | 32px |
+| Heading prosa (`h4`: `h2` de prosa larga) y cifra de Vitals (`mono`) | 30px | 600 | 36px (Vitals mono 600) |
+| Heading sección (`h3` del tema, siempre con `component="h2"`) y numeral de paso (`01`, `02`, mono, servicio y contacto) | 36px | 600 | 40px (numeral: 1.0) |
+| Heading página `h2` (hero 404 y CTA: `clamp(2rem, 5vw, 3rem)`) | 32 a 48px | 600 | 1.05, `letter-spacing: -0.02em` |
+| Heading página `h1` (`clamp(2.5rem, 6vw, 3.75rem)`) | 40 a 60px | 600 | 1.0, `letter-spacing: -0.02em` |
+| Cifra (contadores de Sobre mí y de la home, precio de la oferta, estadística local) | 48px | 600 | 1.0 |
+| Cifra de caso ("+406 %", estadística del hero local) | 72px | 600 | 1.0 |
 | 404 decorativo | 112px móvil, 176px escritorio | 600 | 1.0, `letter-spacing: -0.04em` |
 
-Pesos: 400 y 600. Excepción heredada del tema aprobado: `Chip` y la variante `mono` llevan 500. No se cambia en esta fase (decisión de tema de la fase 53). El peso de énfasis de enlaces y de la miga actual es 600.
+Los numerales de paso de Contacto pasan de 32px a 36px para reutilizar el tamaño de servicio y no abrir un valor display más. Los numerales y las cifras llevan siempre peso 600.
 
-Reglas: `h1` y `h2` con `textWrap: balance`, párrafos con `textWrap: pretty` (del tema). Un `h1` por página. Jerarquía sin saltos: `h1`, `h2` por sección, `h3` por ítem (los títulos de `AccordionSummary` quedan en `h3` automáticamente, `slotProps.heading.component = 'h3'` por defecto). En el índice móvil de las páginas legales el acordeón del índice lleva `slotProps.heading.component = 'h2'`. Cuerpo mínimo 14px. Todo en `rem`: a 200 % de zoom y 320px no hay scroll horizontal ni texto cortado (SC 1.4.10).
+### Pesos (exactamente 2: 400 y 600)
 
-Prosa larga (`MuiRichText`, compartido con la fase 55): párrafo 18/28 en `text.primary`, `margin-bottom: 16px`; `h2` de prosa = tipografía `h4` (30/36), `margin-top: 48px`; `h3` de prosa = `h5` (24/32), `margin-top: 32px`; listas con viñeta explícita, `padding-left: 24px`, `li` con `margin-bottom: 8px`; enlaces subrayados en `accentText`; ancho máximo 760px. Default: la fase 55 lo hereda tal cual.
+El tema aprobado declara 500 en `Chip` (`MuiChip.root`) y en la variante `mono`. Esta fase los fija a 400 y las cifras `mono` se declaran con 600 explícito. Precedente: la fase 53 ya bajó la nav de 500 a 400 con el mismo criterio. El render cambia de forma mínima (chips y texto mono pasan de peso medio a regular, sin efecto en tamaño ni en contraste) y es reversible con una línea. Tarea del plan: editar `src/theme/theme.ts` (`mono.fontWeight` y `MuiChip.styleOverrides.root.fontWeight` de 500 a 400) y marcarlo en la lista de decisiones para Juan. El peso de énfasis de enlaces y de la miga actual es 600.
+
+### Reglas
+
+`h1` y `h2` con `textWrap: balance`, párrafos con `textWrap: pretty` (del tema). Un `h1` por página. Jerarquía sin saltos: `h1`, `h2` por sección, `h3` por ítem (los títulos de `AccordionSummary` quedan en `h3` automáticamente, `slotProps.heading.component = 'h3'` por defecto). En el índice móvil de las páginas legales el acordeón del índice lleva `slotProps.heading.component = 'h2'`. Cuerpo mínimo 14px (el caption de 12px solo en rótulos y notas, nunca en párrafos). Todo en `rem`: a 200 % de zoom y 320px no hay scroll horizontal ni texto cortado (SC 1.4.10).
+
+Prosa larga (`MuiRichText`, compartido con la fase 55): párrafo 16/24 en `text.primary`, `margin-bottom: 16px`; `h2` de prosa = tipografía `h4` (30/36, display), `margin-top: 48px`; `h3` de prosa = `h5` (24/32, display), `margin-top: 32px`; listas con viñeta explícita, `padding-left: 24px`, `li` con `margin-bottom: 8px`; enlaces subrayados en `accentText`; ancho máximo 760px. Default: la fase 55 lo hereda tal cual.
 
 ---
 
@@ -149,7 +175,7 @@ Texto: `text.primary` `#FAFAF7`, `text.secondary` `#B3B3B3`, texto sobre franja 
 
 Accent reserved for (lista cerrada):
 
-1. Botón `variant="contained"` principal: uno por zona visible (CTA del hero, "Ver todos los sitios", "Ver todos los casos", "Enviar mensaje", CTA del aside de alcance, "Hablemos" de la tabla, "Ver servicios" de Sobre mí, "Buscar" del formulario). Texto `#12141C`.
+1. Botón `variant="contained"` principal: uno por zona visible (CTA del hero, "Ver todos los sitios", "Ver todos los casos", "Enviar mensaje", CTA del aside de alcance, "Hablar con Juan" de la tabla, "Ver servicios" de Sobre mí, "Buscar en el sitio" del formulario). Texto `#12141C`.
 2. Anillo de foco global (`accentText`, 2px, offset 2px). Nunca se suprime `outline`. En tarjetas con enlace estirado el foco se dibuja en la tarjeta con `:has(a:focus-visible)` y el enlace pierde su `outline` solo ahí (`gate: outline-none · outline: none`, registrado en `A11Y-DECISIONS.md`).
 3. Cifras destacadas: "+406 %" del hero y de Cases, contadores de Sobre mí y de la home, precio de la oferta del auditor. `accentText` sobre fondo, `primary.main` sobre franja `band`.
 4. Eyebrow (`overline`) de `PageHero` y "Alcance de este trabajo", y la fecha de la etapa actual del timeline.
@@ -182,7 +208,7 @@ Contrato de copy por elemento (texto del sandbox o de Payload; lo que no existe 
 | Primary CTA de la home | `homePage.hero.ctaLabel`, esperado "Pedir auditoría 360" (EN, si falta: "Request a 360 audit", heredado de 53). Enlace `homePage.hero.ctaHref` saneado con `sanitizeHref`, esperado `#contacto` |
 | CTA de cierre | Título "Hablemos de tu sitio", lead `homePage.cta` (sandbox: "¿Tienes un proyecto en mente? Cuéntame de qué se trata y empiezo por mirar qué ve Google hoy."), botón "Enviar mensaje", botón "Copiar correo" y su estado "Correo copiado" |
 | CTA de servicio | `callToAction.links[0].link.label` y `callToAction.richText` del doc de Payload |
-| Botón de búsqueda | "Buscar" / "Search" (copy existente) |
+| Botón de búsqueda | "Buscar en el sitio" / "Search the site" (verbo más sustantivo, cadena nueva sin aprobar, ver Pendiente 3). El `label` del campo y el `h1` siguen en "Buscar" / "Search" (copy existente) |
 | Empty state heading (búsqueda sin resultados) | "Sin resultados para "{q}"" / "No results for "{q}"" (copy existente). Es un `h2` |
 | Empty state body | "Prueba con otro término, o explora artículos y casos de estudio directamente." / "Try a different term, or browse posts and case studies directly." (copy existente) más dos enlaces a `/blog` y `/case-studies` con los nombres del nav |
 | Estado vacío del resto | Sección sin datos no se renderiza ni deja encabezado huérfano: Testimonials sin docs, Sites sin websites, Cases sin destacados, clientes sin logos, speaking-events vacío, etapas vacías, FAQ vacía. Nada de "No hay datos" |
@@ -190,7 +216,7 @@ Contrato de copy por elemento (texto del sandbox o de Payload; lo que no existe 
 | Error state (formulario, servidor, `?sent=false`) | Mensaje existente de `ContactFormBlock`: "Algo salió mal al enviar tu mensaje. Intenta de nuevo, o escribe directamente a {correo}." / "Something went wrong sending your message. Please try again, or email {correo} directly." en `Alert severity="error"` con `role="alert"` |
 | Éxito (formulario, `?sent=true`) | Título "Mensaje enviado", cuerpo "Gracias por escribir. Suelo responder en menos de 48 horas." (sandbox, sin la frase "En el sitio real este paso llama a Resend", que es solo del prototipo). En `role="status"`. El enlace "Enviar otro mensaje" apunta a `/contact` |
 | Errores de campo (cliente) | Nombre: "Escribe tu nombre." Correo: "Escribe un correo válido, por ejemplo nombre@dominio.com." Mensaje: "Cuéntame de qué trata tu proyecto." Resumen: "Revisa los campos marcados." (todo del sandbox) |
-| 404 | `h1` "Esta página no existe". Cuerpo: "La dirección que escribiste no corresponde a ninguna página del sitio. Puede que la hayamos movido o que el enlace tenga un error." Botones "Volver al inicio" y "Escríbeme". Lista "Quizá buscabas": Servicios ("Auditoría, consultoría, desarrollo y SEO para IA"), Casos de éxito ("Resultados reales medidos en Search Console"), Blog ("Artículos de SEO técnico y software"), Contacto ("Cuéntame de tu proyecto") |
+| 404 | `h1` "Esta página no existe". Cuerpo: "La dirección que escribiste no corresponde a ninguna página del sitio. Puede que la hayamos movido o que el enlace tenga un error." Botones "Volver al inicio" y "Escribir a Juan" (antes "Escríbeme", cadena nueva sin aprobar, ver Pendiente 3). Lista "Quizá buscabas": Servicios ("Auditoría, consultoría, desarrollo y SEO para IA"), Casos de éxito ("Resultados reales medidos en Search Console"), Blog ("Artículos de SEO técnico y software"), Contacto ("Cuéntame de tu proyecto") |
 | Aviso de afiliados (Stack) | Texto del componente existente `AffiliateDisclosure` (no se reescribe), visible antes del primer enlace `/go` |
 | Chips de afiliado | Los de `resolveAffiliateCta`: activo "Enlace de afiliado", pendiente y ninguno "Sin programa de afiliados" (sandbox). Sin variante nueva |
 | Enlace externo | Nombre accesible con sufijo ES "(se abre en otra pestaña)", EN "(opens in a new tab)". Afiliado: ES "(se abre en otra pestaña, enlace de afiliado)", EN "(opens in a new tab, affiliate link)" |
@@ -201,7 +227,7 @@ Contrato de copy por elemento (texto del sandbox o de Payload; lo que no existe 
 
 1. Marcadores `{{pendiente}}` que lleguen desde Payload (fecha de aprendoclub, stack de Arianna Lupi, datos de Loops Growth, fecha legal): se renderizan como están. Nunca en `title`, `meta`, `aria-label` ni JSON-LD. Los marcadores solo de ranura del sandbox (`{{testimonio}}`, `{{nombre}}`, `{{rol, empresa}}`) jamás se renderizan. `[PLACEHOLDER]` se filtra siempre con `isPlaceholder` y `withoutPlaceholders`.
 2. Traducción EN de todas las cadenas de interfaz nuevas y del copy sombra: el sandbox solo trae español. Default: `messages/en.json` lleva una traducción literal y simple de las cadenas de interfaz, marcada para que Juan la apruebe; el copy sombra se siembra solo en ES y el EN cae al español con `TranslationNotice` y `lang="es"` en el contenedor afectado.
-3. Contador de resultados de búsqueda en región `aria-live` ("{n} resultados" / "{n} results"): cadena nueva mínima y funcional (SC 4.1.3), no aprobada. Default: se usa tal cual y queda anotada para revisión.
+3. Cadenas nuevas mínimas y funcionales, no aprobadas: contador de resultados de búsqueda en región `aria-live` ("{n} resultados" / "{n} results", SC 4.1.3) y las tres etiquetas de botón con verbo más sustantivo ("Buscar en el sitio", "Escribir a Juan", "Hablar con Juan"), que reemplazan a "Buscar", "Escríbeme" y "Hablemos" del sandbox y respetan la voz que habla de Juan. Default: se usa tal cual y queda anotada para revisión.
 4. `alt` de la foto de Sobre mí: es borrador de `A11Y-DECISIONS.md`, Juan lo confirma antes de subir la foto. Los `alt` de las tres fotos de la home salen del sandbox y Juan los confirma al subirlas.
 5. Contador "4+ años": `authors.yearsExperience` es `null` en live. Default: el contador no se renderiza si no hay valor.
 6. Si `homePage.testimonials` o los testimonios traen un solo documento, se renderiza una sola tarjeta (ver estados).
@@ -218,12 +244,12 @@ Orden de secciones (sandbox más tres bloques existentes que CONTEXT ordena cons
 
 | # | Sección | Composición | Fuente de datos |
 |---|---------|-------------|-----------------|
-| 1 | Hero | Rejilla 2 columnas `1.1fr / 0.9fr` en `md`. Izquierda: eyebrow con punto de 8px, `h1` en dos líneas (cada línea un `span` en bloque, sin `<br>`), lead 18/28 máx. 520px, CTA contained `large` con flecha. Derecha: `GrainBlob feather=18` cuadrado 480px máx., retrato ASCII en canvas con máscara inferior y tarjeta de cifra "+406 %" sobre vidrio (`color-mix` 72 % y `blur(16px)`) | `homePage.hero`, retrato como activo estático del diseño |
+| 1 | Hero | Rejilla 2 columnas `1.1fr / 0.9fr` en `md`. Izquierda: eyebrow con punto de 8px, `h1` en dos líneas (cada línea un `span` en bloque, sin `<br>`), lead 20/30 (rol Lead) máx. 520px, CTA contained `large` con flecha. Derecha: `GrainBlob feather=18` cuadrado 480px máx., retrato ASCII en canvas con máscara inferior y tarjeta de cifra "+406 %" sobre vidrio (`color-mix` 72 % y `blur(16px)`) | `homePage.hero`, retrato como activo estático del diseño |
 | 2 | Marquesina de logos | Título `h2` "Con quiénes trabajé" y dos pistas sobre franja `#FAFAF7` | `clientLogosBlock.title`, colección `clientes` |
 | 3 | Tagline | Frase `h2` visual (`p` con variante `h2`) que se enciende por palabra | `homePage.tagline` |
 | 4 | Vitals | `Section` con lead y nota de medición en caption, `ul` de 4 `Card` (1, 2 y 4 columnas) con nombre `h3`, descripción, cifra mono 30px, barra g/m/p con marcador y nota | `homePage.vitals` |
 | 5 | Errores reales con el commit que los corrige (`codeFixesBlock`) | Ver "Bloques existentes de la home" | doc `home` de Pages |
-| 6 | Servicios | Dos columnas `5fr / 7fr`, izquierda `position: sticky; top: 112px` con `h2`, lead y botón outlined. Derecha: `Accordion` por servicio con `IconTile`, título (18/600), cuerpo 18/28, `TechChips` y "Ver servicio" si hay página | `homePage.services`, `buildServiceHref` |
+| 6 | Servicios | Dos columnas `5fr / 7fr`, izquierda `position: sticky; top: 112px` con `h2`, lead y botón outlined. Derecha: `Accordion` por servicio con `IconTile`, título `h6` (20/600), cuerpo 16/24, `TechChips` y "Ver servicio" si hay página | `homePage.services`, `buildServiceHref` |
 | 7 | Casos | Franja `band`. `ul` de 3 tarjetas con chip de sector, cifra 72px, `h3` con enlace estirado y "clics interanuales". Pie con nota y botón contained "Ver todos los casos" | `featured-content.featuredCaseStudies`, `splitHeroMetric` |
 | 8 | Auditor (`auditorHighlight`) | Ver "Bloques existentes de la home" | doc `home` |
 | 9 | Proceso | `ol` de 4 `Card` (1, 2 y 4 columnas) con `IconTile`, overline "Paso N", `h3` (20/600) y cuerpo `body2` | `homePage.process` |
@@ -248,7 +274,7 @@ Sin diseño en el sandbox. Se componen solo con primitivas existentes y los dato
 
 ### Servicios (PAG-02)
 
-**Índice** (`/servicios`, `/services`): `PageHero` (eyebrow, `h1`, lead de Payload), `ul` de 4 `Card` en 1 y 2 columnas con `IconTile`, `h2` con enlace estirado, descripción, y pie con duración (icono reloj) y "Ver servicio" decorativo (`aria-hidden`). Después `h2` "Qué servicio es para ti" y `Table` dentro de `TableContainer` (`overflow-x: auto`, `tabIndex={0}`, nombre accesible). Columnas "Servicio", "Te sirve si", "Qué vas a lograr", "Tiempo estimado" desde `messages`; celdas desde Payload (título, primer `h2` del primer `content`, `outcome`, `timeline`). Cierre con caja `raised` y botón "Hablemos", y `CtaSection`. Las tarjetas y las filas enlazan con `buildServiceHref`.
+**Índice** (`/servicios`, `/services`): `PageHero` (eyebrow, `h1`, lead de Payload), `ul` de 4 `Card` en 1 y 2 columnas con `IconTile`, `h2` con enlace estirado, descripción, y pie con duración (icono reloj) y "Ver servicio" decorativo (`aria-hidden`). Después `h2` "Qué servicio es para ti" y `Table` dentro de `TableContainer` (`overflow-x: auto`, `tabIndex={0}`, nombre accesible). Columnas "Servicio", "Te sirve si", "Qué vas a lograr", "Tiempo estimado" desde `messages`; celdas desde Payload (título, primer `h2` del primer `content`, `outcome`, `timeline`). Cierre con caja `raised` y botón "Hablar con Juan", y `CtaSection`. Las tarjetas y las filas enlazan con `buildServiceHref`.
 
 **Detalle** (cuatro landings, `/servicios/[slug]` y `/services/[slug]`): composición por ranuras que cae a render genérico para cualquier bloque sin ranura (los editores pueden reordenar sin perder texto):
 
@@ -256,9 +282,9 @@ Sin diseño en el sandbox. Se componen solo con primitivas existentes y los dato
 |--------|-------------------|--------|
 | Cabecera | `hero` | `PageHero` con `Crumbs` (Inicio, Servicios, título), eyebrow "Servicio", `h1`, lead |
 | Aside del hero | `serviceScopeCard` | `Card component="aside"` con `aria-labelledby`, `overline` `h2` como título, tres bloques `h3` ("Qué incluye", "Qué vas a lograr", tiempo estimado en caja `raised`) y CTA contained `large` con flecha |
-| Problema | primer `content` | `h2` y párrafos de 18/28 en `text.secondary`, máx. 760px |
+| Problema | primer `content` | `h2` y párrafos de 16/24 en `text.secondary`, máx. 760px |
 | Qué incluye | segundo `content`, columna 1 | Franja `band`, `h2`, lista `ul` con marca de verificación en círculo de 32px y el párrafo al lado, sin tarjetas ni fondos de ítem (decisión de CONTEXT: no se inventan tarjetas). Se localiza por posición de columna, nunca por texto del encabezado |
-| Cómo trabajo | segundo `content`, columna 2 | `h2`, `ol` con numeral mono `01`, `02` (36px, `accentText`, oculto a lector) y párrafo 18/28, máx. 820px |
+| Cómo trabajo | segundo `content`, columna 2 | `h2`, `ol` con numeral mono `01`, `02` (36px, `accentText`, oculto a lector) y párrafo 16/24, máx. 820px |
 | Extras | `auditorCallout` (solo `seo-technical-audit`) | `Card` `raised` con `h3` (`h5`), narrativa y botones `outlined small` externos |
 | Intermedios | `callToAction`, `clientLogosBlock`, `testimonialsCarousel` | Mismo render que en la home: panel CTA, marquesina, tarjetas de cita |
 | Prueba | `relatedCaseStudyBlock` | `h2`, texto de enmarcado, tarjeta de caso con enlace estirado y cifra 72px |
@@ -286,7 +312,7 @@ El JSON-LD `Service` (`buildLocalService`) se conserva idéntico. Segmento de UR
 
 `PageHero compact` (`Crumbs` Inicio, Buscar; `h1` "Buscar" / "Search"). Debajo, una `Section` sin título propio:
 
-1. `form` con `role="search"`, `method="get"`, `action` a la ruta de búsqueda, y un `TextField type="search" name="q"` con `label` visible igual a "Buscar", `placeholder` existente, `defaultValue` del `q` recortado a 200 caracteres, `autoComplete="off"`. Junto a él, botón contained "Buscar" (`size="large"`, `type="submit"`). En móvil apilados en una columna con `gap: 16px`; desde `sm` en fila (`grid-template-columns: 1fr auto`).
+1. `form` con `role="search"`, `method="get"`, `action` a la ruta de búsqueda, y un `TextField type="search" name="q"` con `label` visible igual a "Buscar", `placeholder` existente, `defaultValue` del `q` recortado a 200 caracteres, `autoComplete="off"`. Junto a él, botón contained "Buscar en el sitio" (`size="large"`, `type="submit"`). En móvil apilados en una columna con `gap: 16px`; desde `sm` en fila (`grid-template-columns: 1fr auto`).
 2. Región de estado `role="status"` `aria-live="polite"` con el conteo (visible, `body2` en `text.secondary`) tras enviar una búsqueda. No existe antes de la primera consulta.
 3. Resultados: `ul` de `Card` en una columna (`gap: 16px`), tarjeta con enlace estirado en el título. Cada tarjeta: `Chip` con el tipo (`typeLabels`), `h2` con la variante `h6` y el enlace estirado, y descripción `body2` en `text.secondary` con máximo 3 líneas (`line-clamp`, el texto completo permanece en el DOM). Foco con `:has(a:focus-visible)`.
 4. Sin resultados: `h2` con `noResultsHeading`, cuerpo `body1` con `noResultsBody` y dos botones `outlined` a Blog y Casos de éxito.
@@ -301,7 +327,7 @@ Ruta `/sobre-mi` y `/en/sobre-mi` (misma en ambos idiomas, default de la investi
 | # | Sección | Composición |
 |---|---------|-------------|
 | 1 | `PageHero` con `aside` | `Crumbs` (Inicio, Sobre mí), eyebrow, `h1` "Juan Carlos Angulo", lead, chips (ubicación e idiomas) con `Chip` de icono. Aside: foto 4:5 con radio 24px y sombra, sobre `GrainBlob feather=22`. La foto es informativa: `alt` descriptivo (borrador de `A11Y-DECISIONS`, pendiente de Juan), ancho y alto declarados, `loading="eager"` y `fetchPriority="high"` (es el LCP de la página) |
-| 2 | Bio y contadores | Dos columnas `1.3fr / 0.7fr`. Izquierda: `h2`, párrafos 18/28 en `text.secondary`, botones "Ver servicios" (contained) y "Mi stack" (outlined). Derecha: `dl` de tarjetas con cifra 48px `accentText` en `dd` y etiqueta en `dt`, orden visual cifra primero. Tarjeta sin valor: no se renderiza |
+| 2 | Bio y contadores | Dos columnas `1.3fr / 0.7fr`. Izquierda: `h2`, párrafos 16/24 en `text.secondary`, botones "Ver servicios" (contained) y "Mi stack" (outlined). Derecha: `dl` de tarjetas con cifra 48px `accentText` en `dd` y etiqueta en `dt`, orden visual cifra primero. Tarjeta sin valor: no se renderiza |
 | 3 | Áreas de especialización | Franja `band`, `ul` de 4 tarjetas (1, 2 y 4 columnas) con `h3` (20/600) y detalle `body2` |
 | 4 | Experiencia | `h2` con icono decorativo de 28px, lead, y `Timeline position="right"` de `@mui/lab` con `aria-label` "Recorrido profesional" (se renderiza como `ul`). Cada ítem: fecha en `overline` (acento si es el actual), `h3` con el rol (24/600), organización en `body1` 600, cuerpo `body1` en `text.secondary`, enlace externo opcional como botón `text small`. La fecha va dentro del contenido, no en el lado opuesto, para que el orden de lectura sea fecha, rol, empresa, texto. Punto decorativo: relleno `primary.main` si es el actual, aro de 3px `divider` si no |
 | 5 | Educación y certificaciones | `h2`, `ul` de `Card` (1 y 2 columnas) con `h3`, institución y fechas |
@@ -316,10 +342,10 @@ Contenido en español en `/en/sobre-mi`: `TranslationNotice` bajo el header y `l
 |---|---------|-------------|
 | 1 | `PageHero` | `Crumbs`, eyebrow, `h1`, lead |
 | 2 | Formulario y datos | Dos columnas `0.8fr / 1.2fr` en `md`. En móvil el formulario va primero (`order`) |
-| 3 | Cómo empezamos | Franja `band`, `h2`, `ol` de 3 tarjetas con numeral mono `01` de 32px (decorativo), `h3` y texto |
+| 3 | Cómo empezamos | Franja `band`, `h2`, `ol` de 3 tarjetas con numeral mono `01` de 36px (decorativo, display), `h3` y texto |
 | 4 | Antes de escribir | `h2`, acordeones 820px desde `homePage.faq` (misma lista que la home), y enlace "Mira los servicios" |
 
-Columna de datos: tarjeta `raised` de correo (overline con icono, correo mono 18px con `user-select: all`, botón contained `small` "Escribir un correo" con `mailto:` y botón outlined `small` "Copiar correo") y tres filas de información (Respuesta, Dónde estoy, Idiomas) con icono de 40px en `raised`, título `h2` de 16px y texto `body2`.
+Columna de datos: tarjeta `raised` de correo (overline con icono, correo `mono` 16px con `user-select: all`, botón contained `small` "Escribir un correo" con `mailto:` y botón outlined `small` "Copiar correo") y tres filas de información (Respuesta, Dónde estoy, Idiomas) con icono de 40px en `raised`, título `h2` con variante `body1` en peso 600 (16px) y texto `body2`.
 
 Formulario (`ContactForm`, compartido con `CtaPanel`): `Card component="form"` con `aria-labelledby`, `noValidate`, `action={sendContactMessage}`. Campos: Nombre, Correo electrónico y Mensaje (`multiline minRows={5}`), los tres `required`, con `id` y `autoComplete` (`name`, `email`). Campos ocultos: `locale` (valor del locale actual, obligatorio) y el honeypot `company_website` (fuera de pantalla, `aria-hidden="true"`, `tabIndex={-1}`, `autoComplete="off"`). **Se omiten** el select de servicio y el campo `website` del sandbox, porque la acción no los lee (decisión de CONTEXT). El estado sale de `searchParams.sent` (`true` o `false`), no de `useState`.
 
@@ -332,7 +358,7 @@ Formulario (`ContactForm`, compartido con `CtaPanel`): `Card component="form"` c
 | 3 | Navegación de categorías | `nav` con `aria-label`, `ul` de enlaces píldora (borde `fieldBorder`, 40px) hacia `#categoria` (más "Mi equipo personal") |
 | 4 | Una sección por categoría | `Section` con `id`, `scroll-margin-top: 96px`, `h2`, y `ul` de `ToolCard` (1 columna móvil, 2 en `md`, 1 si la categoría tiene una sola herramienta). Secciones pares en franja `band` |
 | 5 | Herramientas destacadas | `elegiriaHoy`, `noCommissionPick` y `auditorHighlight.narrative` como `Card` `raised` con `h2` visual en `h5` y texto `body1`, entre las categorías y el equipo personal |
-| 6 | Mi equipo personal | `h2`, `gearIntro` en `body1` 17/28 máx. 760px, y `ul` de `Card` (1, 2 y 3 columnas) con icono mapeado por nombre (cae a `Package`), nombre 16/600 y botón outlined `small` "Ver en Amazon" |
+| 6 | Mi equipo personal | `h2`, `gearIntro` en `body1` 16/24 máx. 760px, y `ul` de `Card` (1, 2 y 3 columnas) con icono mapeado por nombre (cae a `Package`), nombre `body1` 16/600 y botón outlined `small` "Ver en Amazon" |
 
 `ToolCard`: tile de logo de 56px sobre `#FAFAF7` con `img alt=""` (el nombre `h3` ya está al lado). Sin logo no se renderiza el tile (ni letra ni icono inventado). Encabezado con `h3` (`h5`) y chip de afiliado. Bloques "Cómo lo uso" (overline y `body1` 16/28), "Lo bueno" y "Lo no tan bueno" (dos cajas `raised`, `h4` de 15px con icono `Plus` o `Minus` decorativo; colores `success` y `warning` solo en el encabezado, con el texto del icono además de la etiqueta). Si existe `referenceLink`, línea "Dónde lo usé" con chips-enlace de 40px. CTA contained con `href` `/go/<slug>`, `rel="sponsored nofollow noopener"` (valor real de producción, más estricto que `sponsored noopener` de CONTEXT; la verificación exige `sponsored`), `target="_blank"`, y sufijo accesible de otra pestaña y afiliado. Botones de equipo: `rel` igual, `href` directo.
 
@@ -341,14 +367,14 @@ Formulario (`ContactForm`, compartido con `CtaPanel`): `Card component="form"` c
 `PageHero compact` con `Crumbs` (Inicio, título), eyebrow "Legal" y `h1`. La línea de última actualización no se renderiza (sin dato). Debajo, `Container` con rejilla `minmax(0, 760px) 260px` desde `lg` y una columna debajo: texto a la izquierda (`MuiRichText`, prosa larga), índice a la derecha (`Toc`).
 
 - `MuiRichText` agrega `id` a cada `h2` y `h3` con `slugify` y deduplicado `-2`, `-3`. El `Toc` se arma en servidor recorriendo `root.children` con el mismo `slugify`, así las anclas coinciden.
-- `Toc`: de `lg` en adelante `nav` con `aria-label` (nombre visible en `overline`), `position: sticky; top: 112px`, `max-height: calc(100vh - 140px)`, `overflow-y: auto`. Cada enlace `body2` con borde izquierdo de 2px (`primary.main` activo, `divider` el resto), `aria-current="true"` en el activo, activo resaltado por `IntersectionObserver` (`rootMargin: -15% 0 -70% 0`) como refuerzo, nunca como única vía.
+- `Toc`: de `lg` en adelante `nav` con `aria-label` (nombre visible en `overline`), `position: sticky; top: 112px`, `max-height: calc(100vh - 144px)` (escala vertical de sección), `overflow-y: auto`. Cada enlace `body2` con borde izquierdo de 2px (`primary.main` activo, `divider` el resto), `aria-current="true"` en el activo, activo resaltado por `IntersectionObserver` (`rootMargin: -15% 0 -70% 0`) como refuerzo, nunca como única vía.
 - Debajo de `lg`: acordeón colapsado "En este documento" (`h2` en el resumen) arriba del texto, que se cierra al elegir un enlace.
 - Menos de 2 encabezados: el índice no se renderiza y el texto ocupa el ancho de prosa.
 - El texto de Payload no se modifica. Sus `h2` numerados ("1. Información que Recopilamos") y sus signos de puntuación son excepción conocida a la regla de encabezados, que cierra la fase 56.
 
 ### 404 (PAG-11)
 
-`not-found.tsx` dentro de `[locale]/layout` (shell completo) y catch-all `[...rest]/page.tsx` con `force-dynamic` que llama a `notFound()` sin `await` previo, para que el estado sea 404 real y no 200. Vista: `section` con `aria-labelledby`, `GrainBlob feather=30` centrado, el "404" decorativo (`aria-hidden`, color `#12141C` sobre el blob), `h1`, texto, dos botones (contained `large` "Volver al inicio" con flecha y outlined `large` "Escríbeme"), y `nav` "Páginas sugeridas" con overline y `ul` de 2 columnas desde `sm` de enlaces-tarjeta (borde `divider`, `background.paper`, hover `text.primary`). Idioma con `getLocale()`. `metadata`: título propio y `robots: { index: false, follow: false }`. Sin `loading.tsx` ni `Suspense` por encima. Se mide con `54-notfound-status.mjs`.
+`not-found.tsx` dentro de `[locale]/layout` (shell completo) y catch-all `[...rest]/page.tsx` con `force-dynamic` que llama a `notFound()` sin `await` previo, para que el estado sea 404 real y no 200. Vista: `section` con `aria-labelledby`, `GrainBlob feather=30` centrado, el "404" decorativo (`aria-hidden`, color `#12141C` sobre el blob), `h1`, texto, dos botones (contained `large` "Volver al inicio" con flecha y outlined `large` "Escribir a Juan"), y `nav` "Páginas sugeridas" con overline y `ul` de 2 columnas desde `sm` de enlaces-tarjeta (borde `divider`, `background.paper`, hover `text.primary`). Idioma con `getLocale()`. `metadata`: título propio y `robots: { index: false, follow: false }`. Sin `loading.tsx` ni `Suspense` por encima. Se mide con `54-notfound-status.mjs`.
 
 ---
 
@@ -466,6 +492,9 @@ Tomadas en modo autónomo con la opción de menor riesgo y fácil de revertir:
 5. `TranslationNotice` con `lang="es"` por contenedor en lugar de reasignar el `lang` del documento.
 6. Formulario sin select de servicio ni campo `website` (decisión de CONTEXT, se repite aquí para que el planner no los reponga).
 7. Contador "4+ años" oculto mientras `authors.yearsExperience` sea `null`.
+8. Tipografía: escala de texto de 4 tamaños (12, 14, 16 y 20) más escala display separada para titulares y cifras. El 18/28 del sandbox pasa a 20/30 (lead) o 16/24 (prosa), el título de acordeón pasa de 18 a 20px, y el correo de Contacto y `gearIntro` bajan al tamaño Body. Es un cambio visible respecto al sandbox, de 2px como máximo por texto.
+9. Pesos: `Chip` y `mono` pasan de 500 a 400 en `theme.ts` para quedar en 2 pesos (400 y 600). Reversible con una línea.
+10. Espaciado: los gaps intermedios del sandbox (acordeones y formulario) suben a 16 y 24px. Los paddings verticales de sección de 80 a 192px se conservan como escala vertical separada para no alterar el ritmo aprobado.
 
 **Hueco de datos que el planner debe cerrar** (no está en el mapa de `54-RESEARCH.md`): los bloques "Cómo empezamos" (3 pasos) y las tres filas de información de Contacto (Respuesta, Dónde estoy, Idiomas) no tienen fuente en Payload. Default: grupo aditivo `contact` dentro del global `homePage` (`steps[]` y `infoRows[]`, localizados), cargado por script con el copy del sandbox. Misma regla de globals sombra: sin `access.read` abierto y leídos sin `overrideAccess: false`.
 
