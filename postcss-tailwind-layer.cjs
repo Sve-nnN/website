@@ -20,11 +20,17 @@
  * Vida útil: convive con Tailwind en la rama del rediseño y se borra junto con
  * Tailwind en la fase 57 (CAL-03).
  */
+const path = require('node:path')
+
+// Ruta exacta del unico archivo que se envuelve. Un sufijo de nombre (`globals.css$`)
+// tambien capturaria `my-globals.css` o el CSS de una dependencia (WR-10).
+const TARGET = path.resolve(__dirname, 'src/app/globals.css')
+
 module.exports = () => ({
   postcssPlugin: 'wrap-tailwind-in-layer',
   OnceExit(root, { AtRule }) {
     const file = root.source && root.source.input && root.source.input.file
-    if (!file || !/globals\.css$/.test(file)) return
+    if (!file || path.resolve(file) !== TARGET) return
 
     const layer = new AtRule({ name: 'layer', params: 'tailwind' })
     root.nodes.slice().forEach((node) => {
