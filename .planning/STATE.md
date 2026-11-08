@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: planning
-stopped_at: Completed 54-03-PLAN.md
-last_updated: "2026-11-08T04:52:02.525Z"
+stopped_at: Completed 54-04-PLAN.md
+last_updated: "2026-11-08T05:03:48.354Z"
 last_activity: 2026-11-07
 last_activity_desc: Phase 53 complete, transitioned to Phase 6
-state_head: 5b49ccd7bf7d43e372771ac74facc094bd1c5c76
+state_head: 8c500ae4f2456bc107c852f556cfb6e47dd8f485
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 22
-  completed_plans: 9
+  completed_plans: 10
   percent: 20
 ---
 
@@ -152,6 +152,7 @@ Last activity: 2026-11-07 — Phase 53 complete, transitioned to Phase 6
 | Phase 54 P01 | 42min | 3 tasks | 12 files |
 | Phase 54 P02 | 17min | 3 tasks | 13 files |
 | Phase 54 P03 | 25min | 2 tasks | 4 files |
+| Phase 54 P04 | 25min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -317,6 +318,7 @@ Recent decisions affecting current work:
 - [Phase 6]: 54-01: un not-found de segmento no puede leer headers (getLocale ni getTranslations sin locale): las paginas con ISR responden 500
 - [Phase 6]: 54-02: globals home-page y about-page privados (sin access ni versions), fetchers con isFallback; tablas del bloque toolStack son groups_tools y _groups_v_tools
 - [Phase 6]: 54-03: namespaces de interfaz de la fase en es y en con guardia de paridad (54-messages-parity.mjs) y arnes de render (54-ssr-harness.ts); search.errorHeading exento de la regla de encabezados por ser una oracion existente
+- [Phase 54-04]: los scripts de siembra 20, 21 y 22 abortan antes de cargar Payload ante base equivocada, falta de credenciales de Cloudinary o falta de --alts-confirmed; en el script 22 el ES se omite si tras escribir EN ya muestra los logos (logo no es campo localizado)
 
 ### Pending Todos
 
@@ -374,8 +376,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-08T04:52:02.422Z
-Stopped at: Completed 54-03-PLAN.md
+Last session: 2026-11-08T05:03:38.349Z
+Stopped at: Completed 54-04-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
