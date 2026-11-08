@@ -81,7 +81,7 @@ Plans:
 - [x] 54-03-PLAN.md — Mensajes de interfaz ES y EN de la fase, guardia de paridad y arnés de render de servidor
 - [x] 54-04-PLAN.md — Scripts de datos sombra, fotos y logos del stack con guardias de base y dry-run
 - [x] 54-05-PLAN.md — Primitivas de layout MUI: Section, PageHero, Crumbs, IconTile, ScoreRing, FaqAccordion y aviso de traducción
-- [ ] 54-06-PLAN.md — Primitivas de conversión y MuiRichText con índice: marquesina, testimonios, caso, formulario único y cierre
+- [x] 54-06-PLAN.md — Primitivas de conversión y MuiRichText con índice: marquesina, testimonios, caso, formulario único y cierre
 - [ ] 54-07-PLAN.md — Aplicar la migración, sembrar con Juan y despliegue de humo con el esquema nuevo
 - [ ] 54-08-PLAN.md — Home primera mitad: Hero, marquesina, Tagline, Vitals y Servicios desde Payload
 - [ ] 54-09-PLAN.md — Detalle de las cuatro landings de servicio por ranuras sobre los bloques reales
