@@ -51,7 +51,7 @@ export function About({ about }: { about: HomeAbout }) {
   ].filter((c): c is { n: number; label: string } => c.n !== null && c.label !== null)
 
   return (
-    <Section id="sobre">
+    <Section id="sobre" labelledBy="sobre-t">
       <Box
         sx={{
           display: 'grid',

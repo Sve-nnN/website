@@ -59,7 +59,7 @@ export function Services({ services, locale }: Props) {
   }))
 
   return (
-    <Section id="servicios">
+    <Section id="servicios" labelledBy="servicios-t">
       <Box
         sx={{
           display: 'grid',

@@ -23,7 +23,7 @@ export function AuditorHighlightCard({ auditor }: { auditor: HomeAuditor }) {
   const t = useTranslations('auditorHighlight')
 
   return (
-    <Section id="auditor" py>
+    <Section id="auditor" labelledBy="auditor-t" py>
       <Card sx={{ bgcolor: 'raised', p: { xs: 3, md: 5 }, display: 'grid', gap: 3, justifyItems: 'start' }}>
         <Typography id="auditor-t" variant="h5" component="h2">
           {auditor.title ?? t('sectionHeading')}

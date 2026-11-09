@@ -12,6 +12,11 @@ type Props = {
   /** Franja con `band.bg`. Implica padding vertical doble. */
   band?: boolean
   children: ReactNode
+  /**
+   * Id del hijo que da nombre a la región cuando no hay `title`. Sin `title` ni
+   * `labelledBy` la sección no emite `aria-labelledby` (IN-09 de 54-REVIEW.md).
+   */
+  labelledBy?: string
   /** Padding superior en unidades de tema cuando no es band ni py. */
   pt?: number
   /** Padding vertical doble (80 y 96px en md segun la escala de seccion). */
@@ -19,18 +24,20 @@ type Props = {
 }
 
 /**
- * Seccion base con `aria-labelledby` al id `${id}-t`. Con `title` emite el h2
- * (variante h3 del tema) con ese id. Una seccion sin `title` exige que un hijo
- * declare el id `${id}-t`; si no, el aria-labelledby quedaria colgando.
+ * Seccion base. Con `title` emite el h2 (variante h3 del tema) con id
+ * `${id}-t` y la región se nombra con él. Sin `title`, la región se nombra con
+ * el hijo cuyo id llega en `labelledBy`; sin ninguno de los dos se omite
+ * `aria-labelledby`, de modo que nunca queda apuntando a un id inexistente.
  * No declara landmark principal.
  */
-export function Section({ id, title, lead, band, children, pt = 0, py }: Props) {
+export function Section({ id, title, lead, band, children, labelledBy, pt = 0, py }: Props) {
   const doubled = band || py
+  const nameId = title ? `${id}-t` : labelledBy
   return (
     <Box
       component="section"
       id={id}
-      aria-labelledby={`${id}-t`}
+      aria-labelledby={nameId}
       sx={{
         py: doubled ? { xs: 8, md: 12 } : undefined,
         pt: doubled ? undefined : pt,
