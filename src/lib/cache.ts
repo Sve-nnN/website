@@ -289,6 +289,56 @@ export function getCachedCategories(locale: Locale): Promise<CategoryData[]> {
 }
 
 /**
+ * Websites index (fase 55, plan 55-01). Todos los sitios publicados, mas
+ * recientes primero: la coleccion no tiene `publishedAt`, asi que se ordena por
+ * `-createdAt` (no sirve `getCachedArchive`, que ordena por un campo que no
+ * existe aqui).
+ *
+ * `overrideAccess: false` va DENTRO de la funcion cacheada: un sitio que nunca
+ * se publico no debe entrar a la cache (clase SEO-40). `select` y `populate`
+ * limitan lo que viaja a los campos publicos de Media y del cliente.
+ *
+ * Si la lectura falla, la funcion lanza: `unstable_cache` no guarda una
+ * excepcion, y la ruta la captura fuera para responder con la lista vacia sin
+ * fijar un fallo transitorio en la cache.
+ */
+export function getCachedWebsitesIndex(locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'websites',
+        locale,
+        sort: '-createdAt',
+        limit: 100,
+        pagination: false,
+        depth: 1,
+        overrideAccess: false,
+        select: {
+          title: true,
+          slug: true,
+          role: true,
+          industry: true,
+          year: true,
+          stack: true,
+          screenshots: true,
+          lighthouse: true,
+          lighthouseCapturedAt: true,
+          client: true,
+        },
+        populate: {
+          media: { url: true, width: true, height: true, alt: true },
+          clientes: { websiteUrl: true, name: true },
+        },
+      })
+      return docs
+    },
+    ['websites-index', locale],
+    { tags: [CACHE_TAGS.websites()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+/**
  * `postSlug -> categorySlug` for every published post. Backs two things that
  * would otherwise need a per-item query: building `/blog/<category>/<slug>`
  * links from contexts that only know a post slug (search results, footer),
@@ -463,7 +513,7 @@ export function getCachedArchive({
           ? CACHE_TAGS.posts()
           : relationTo === 'case-studies'
             ? CACHE_TAGS.caseStudies()
-            : 'websites:all',
+            : CACHE_TAGS.websites(),
       ],
       revalidate: CACHE_TTL_SECONDS,
     },

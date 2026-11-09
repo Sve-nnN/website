@@ -1,11 +1,10 @@
-import { getPayload } from 'payload'
-
-import config from '@payload-config'
-import { Container } from '@/components/Container'
-import { PageHero } from '@/components/PageHero'
-import { WebsiteCard } from '@/components/WebsiteCard'
 import { JsonLd } from '@/components/JsonLd'
+import { CtaSection } from '@/components/mui/CtaSection'
+import { WebsitesIndexView } from '@/components/pages/websites/WebsitesIndexView'
 import { buildWebsitesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
+import { getCachedWebsitesIndex } from '@/lib/cache'
+import { getCtaData } from '@/lib/cta-data'
+import { toWebsiteIndexProps, type WebsiteDocLike } from '@/lib/websites-data'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
@@ -28,16 +27,6 @@ export const revalidate = 60
 
 export function generateStaticParams(): Array<{ locale: string }> {
   return []
-}
-
-async function getWebsites(locale: string) {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'websites',
-    locale: locale as 'es' | 'en',
-    limit: 50,
-  })
-  return docs
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
@@ -70,45 +59,40 @@ export default async function WebsitesListPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  const websites = await getWebsites(locale)
-  const trail = buildWebsitesTrail(locale as 'es' | 'en')
+  const loc = locale as 'es' | 'en'
+
+  // La lectura lanza dentro de la cache (para no fijar un fallo transitorio) y
+  // aqui se captura: ante un error la ruta responde con la lista vacia.
+  let docs: ReadonlyArray<WebsiteDocLike> = []
+  try {
+    docs = await getCachedWebsitesIndex(loc)
+  } catch (err) {
+    console.error('[websites]', err)
+  }
+  const items = toWebsiteIndexProps(docs, loc)
+
+  const trail = buildWebsitesTrail(loc)
+  const ctaData = await getCtaData(loc)
 
   return (
-    <div>
-      <PageHero
-        variant="index"
-        trail={trail}
+    <>
+      <WebsitesIndexView
+        crumbs={trail.map((c) => ({ label: c.label, href: c.url }))}
         title={locale === 'es' ? 'Sitios web' : 'Websites'}
+        items={items}
       />
-
-      <Container className="py-12 md:py-16">
-        {websites.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="font-heading text-heading">
-              {locale === 'es' ? 'Próximamente' : 'Coming soon'}
-            </p>
-            <p className="mt-2 text-body text-muted-foreground">
-              {locale === 'es'
-                ? 'Estamos preparando nuevos casos de sitios web. Vuelve pronto.'
-                : "We're preparing new website case studies. Check back soon."}
-            </p>
-          </div>
-        ) : (
-          <>
-            {/* SEO-10.2: cada tarjeta lleva su titulo en h3 bajo la h1 de la
-                pagina, sin nivel intermedio. El encabezado de la grilla existe,
-                solo que el titulo de la pagina ya lo dice y repetirlo en
-                pantalla seria ruido. */}
-            <h2 className="sr-only">{locale === 'es' ? 'Sitios web' : 'Websites'}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {websites.map((w) => (
-                <WebsiteCard key={w.id} website={w} />
-              ))}
-            </div>
-          </>
-        )}
-      </Container>
+      {ctaData && (
+        <div lang={ctaData.isFallback && locale === 'en' ? 'es' : undefined}>
+          <CtaSection
+            title={ctaData.title}
+            lead={ctaData.lead}
+            email={ctaData.email}
+            name={ctaData.name}
+            avatarUrl={ctaData.avatarUrl}
+          />
+        </div>
+      )}
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </div>
+    </>
   )
 }

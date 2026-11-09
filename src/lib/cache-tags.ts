@@ -78,6 +78,7 @@ export const CACHE_TAGS = {
   caseStudies: () => 'case-studies:all',
   caseStudy: (slug: string) => `case-studies:${slug}`,
   categories: () => 'categories:all',
+  websites: () => 'websites:all',
   featuredContent: () => 'featured-content',
   blogPromo: () => 'blog-promo',
   header: () => 'header',
