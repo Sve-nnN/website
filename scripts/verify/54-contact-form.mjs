@@ -17,8 +17,12 @@
 //     vez contra produccion en la fase 57.
 //
 // SEGURIDAD (T-54-47): sin --submit el script NUNCA envia el formulario con datos
-// validos. Con --submit contra una base que no es el preview, exige ALLOW_REAL_SEND=1
-// porque enviaria un correo real.
+// validos. Con --submit la compuerta se deriva del HOST de BASE_URL, no de una
+// bandera que el operador escribe a mano: solo se permite si el hostname esta en
+// SUBMIT_ALLOWED_HOSTS (hoy solo dev.juan-tech.com, el preview de solo lectura).
+// Cualquier otro host, o una BASE_URL invalida, bloquea el envio, se cuenta como
+// FAIL y el proceso sale con 1. No hay variable de entorno que lo salte: el envio
+// real contra produccion (fase 57) exige editar la lista a proposito.
 //
 // Modos:
 //   --selftest  Evalua checkFormSnapshot, checkSentSnapshot y checkValidationSnapshot
@@ -28,7 +32,7 @@
 //   (sin modo)  Corre contra BASE_URL (obligatoria).
 //   --submit    Agrega el envio con datos validos (ver SEGURIDAD).
 //
-// Variables: BASE_URL, EXPECT_PREVIEW=1, ALLOW_REAL_SEND=1.
+// Variables: BASE_URL.
 //
 // Cada comprobacion imprime PASS o FAIL motivo y se sale con 1 si hay algun FAIL.
 //
@@ -40,6 +44,26 @@
 import { pathToFileURL } from 'node:url'
 
 const REQUIRED_FIELDS = ['name', 'email', 'message']
+
+/** Hosts donde --submit esta permitido. Lista explicita: nada se deriva de variables de entorno. */
+export const SUBMIT_ALLOWED_HOSTS = ['dev.juan-tech.com']
+
+/**
+ * Compuerta de --submit (T-54-47). Devuelve el motivo del bloqueo, o null si el
+ * host de `base` esta en la lista de permitidos.
+ * @param {string} base
+ * @returns {string|null}
+ */
+export function submitBlockReason(base) {
+  let hostname
+  try {
+    hostname = new URL(base).hostname.toLowerCase()
+  } catch {
+    return `BASE_URL no es una URL valida (${JSON.stringify(base)}), --submit bloqueado`
+  }
+  if (SUBMIT_ALLOWED_HOSTS.includes(hostname)) return null
+  return `--submit enviaria un correo real: el host ${hostname} no esta en la lista de permitidos (${SUBMIT_ALLOWED_HOSTS.join(', ')})`
+}
 const FORBIDDEN_FIELDS = ['service', 'website', 'url', 'site', 'company', 'sitio']
 
 // ------------------------------------------------------------ chequeos puros
@@ -222,6 +246,24 @@ function selftest() {
   expectBroken('validacion: foco en otro campo', checkValidationSnapshot({ ...afterEmpty(), activeName: 'message' }, { navigated: false, urlAfter: 'https://x.test/contact' }))
   expectBroken('validacion: un campo sin marcar', checkValidationSnapshot(patch(afterEmpty(), 'email', { invalid: false }), { navigated: false, urlAfter: 'https://x.test/contact' }))
 
+  // Compuerta de --submit: solo el host de la lista pasa.
+  const allowed = (name, base, ok) => {
+    const blocked = submitBlockReason(base) !== null
+    if (blocked !== ok) console.log(`PASS selftest submit-gate ${name}`)
+    else {
+      bad += 1
+      console.log(`FAIL selftest submit-gate ${name}: ${base} ${ok ? 'deberia permitirse' : 'deberia bloquearse'}`)
+    }
+  }
+  allowed('preview permitido', 'https://dev.juan-tech.com', true)
+  allowed('preview con mayusculas y puerto', 'https://DEV.juan-tech.com:443/contact', true)
+  allowed('produccion bloqueada', 'https://juan-tech.com', false)
+  allowed('www bloqueado', 'https://www.juan-tech.com', false)
+  allowed('subdominio con sufijo bloqueado', 'https://dev.juan-tech.com.evil.test', false)
+  allowed('credenciales que imitan el host bloqueadas', 'https://dev.juan-tech.com@juan-tech.com', false)
+  allowed('localhost bloqueado', 'http://localhost:3000', false)
+  allowed('URL invalida bloqueada', 'no-es-url', false)
+
   if (bad === 0) console.log('PASS selftest 54-contact-form: fixtures validos sin fallos y defectuosos detectados')
   return bad > 0 ? 1 : 0
 }
@@ -316,10 +358,14 @@ async function visit(page, base, path) {
   if (!response || !response.ok()) throw new Error(`${path} respondio ${response ? response.status() : 'sin respuesta'}`)
 }
 
-async function liveMode(base, { submit, expectPreview }) {
-  if (submit && !expectPreview && process.env.ALLOW_REAL_SEND !== '1') {
-    console.log('FAIL --submit enviaria un correo real: usa EXPECT_PREVIEW=1 contra el preview o ALLOW_REAL_SEND=1 si de verdad quieres enviarlo')
-    return
+async function liveMode(base, { submit }) {
+  if (submit) {
+    const reason = submitBlockReason(base)
+    if (reason) {
+      // Cuenta en `failures`: el proceso sale con 1 y 54-run-all marca el paso como FAIL.
+      report('--submit bloqueado', [reason])
+      return
+    }
   }
   const { chromium } = await import('playwright')
   const browser = await launch(chromium)
@@ -407,6 +453,6 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href) {
     console.error('FAIL BASE_URL es obligatoria sin --selftest')
     process.exit(1)
   }
-  await liveMode(base, { submit: args.includes('--submit'), expectPreview: process.env.EXPECT_PREVIEW === '1' })
+  await liveMode(base, { submit: args.includes('--submit') })
   process.exit(failures > 0 ? 1 : 0)
 }
