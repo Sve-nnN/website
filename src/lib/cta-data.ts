@@ -8,9 +8,9 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
-import type { Page } from '@/payload-types'
 import { getCachedHomePage, getCachedPageBySlug, type Locale } from '@/lib/cache'
 import { CACHE_TTL_SECONDS } from '@/lib/cache-tags'
+import { extractContactEmail } from '@/lib/contact-data'
 import { SITE_PERSON_SLUG } from '@/lib/person'
 
 export type CtaData = {
@@ -45,20 +45,6 @@ const getCachedCtaAuthor = unstable_cache(
   { revalidate: CACHE_TTL_SECONDS },
 )
 
-/** Correo de la primera entrada `mailto:` de contactInfo, sin el esquema ni la query. */
-export function emailFromContactPage(page: Page | null | undefined): string | null {
-  for (const block of page?.content?.layout ?? []) {
-    if (block.blockType !== 'contactFormBlock') continue
-    for (const info of block.contactInfo ?? []) {
-      const href = info.href?.trim() ?? ''
-      if (!/^mailto:/i.test(href)) continue
-      const address = href.replace(/^mailto:/i, '').split('?')[0]?.trim()
-      if (address) return address
-    }
-  }
-  return null
-}
-
 export async function getCtaData(locale: Locale): Promise<CtaData | null> {
   try {
     const [home, contact, author] = await Promise.all([
@@ -68,7 +54,8 @@ export async function getCtaData(locale: Locale): Promise<CtaData | null> {
     ])
     const title = home.data.cta?.title?.trim()
     if (!title) return null
-    const email = emailFromContactPage(contact)
+    // Un solo extractor, con validacion: el mismo que usa la pagina Contacto.
+    const email = extractContactEmail(contact)
     if (!email) {
       console.error('[cta]', new Error('el doc contact no trae una entrada mailto en contactInfo'))
       return null

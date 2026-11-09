@@ -25,7 +25,7 @@ import { LogoMarquee, LogoStaticGrid, fitLogo, type MarqueeLogo } from '../../sr
 import { TestimonialCards } from '../../src/components/mui/TestimonialCards'
 import { Toc } from '../../src/components/mui/rich-text/Toc'
 import { formatSector, splitHeroMetric } from '../../src/components/mui/split-hero-metric'
-import { emailFromContactPage } from '../../src/lib/cta-data'
+import { extractContactEmail } from '../../src/lib/contact-data'
 import { countOf, hasId, headingLevels, renderToHtml, textOf } from './54-ssr-harness'
 
 // tsx no transforma JSX con `jsx: preserve` y cae al runtime clasico, que busca
@@ -268,8 +268,9 @@ const ARROW = String.fromCharCode(0x2192)
 {
   const page = (info: Array<{ href?: string | null }>) =>
     ({ content: { layout: [{ blockType: 'contactFormBlock', contactInfo: info }] } }) as never
-  check('emailFromContactPage toma la entrada mailto y quita la query', emailFromContactPage(page([{ href: 'https://x.com' }, { href: 'mailto:a@b.co?subject=hola' }])) === 'a@b.co', 'no extrajo el correo')
-  check('emailFromContactPage sin mailto devuelve null', emailFromContactPage(page([{ href: 'tel:+51' }])) === null && emailFromContactPage(undefined) === null, 'devolvio algo sin mailto')
+  check('extractContactEmail toma la entrada mailto y quita la query', extractContactEmail(page([{ href: 'https://x.com' }, { href: 'mailto:a@b.co?subject=hola' }])) === 'a@b.co', 'no extrajo el correo')
+  check('extractContactEmail sin mailto devuelve null', extractContactEmail(page([{ href: 'tel:+51' }])) === null && extractContactEmail(undefined) === null, 'devolvio algo sin mailto')
+  check('extractContactEmail descarta un mailto con direccion invalida', extractContactEmail(page([{ href: 'mailto:juan @x' }])) === null, 'publico una direccion invalida')
 }
 
 if (failed > 0) {
