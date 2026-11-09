@@ -15,9 +15,9 @@ import { useLocale, useTranslations } from 'next-intl'
 import { resolveLinkHref, sanitizeHref, type NavLinkInput } from '@/lib/nav-links'
 import { richTextConverters } from '@/components/richTextBlockConverters'
 
-import { linkFor } from '../links'
 import { UL, OL } from '../lists'
 import { buildHeadingIdMap, type LexicalNodeLike, type LexicalRootLike } from './lexical-toc'
+import { RichTextLink } from './RichTextLink'
 
 type Props = {
   data: SerializedEditorState | null | undefined
@@ -89,9 +89,9 @@ export function MuiRichText({ data, maxWidth = 760 }: Props) {
       )
     }
     return (
-      <Link key={key} component={linkFor(href)} href={href} underline="always" sx={{ color: 'accentText' }}>
+      <RichTextLink key={key} href={href}>
         {children}
-      </Link>
+      </RichTextLink>
     )
   }
 

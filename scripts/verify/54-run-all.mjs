@@ -72,6 +72,8 @@ export function selftestSteps() {
     tsx('54-local-ssr', '54-local-ssr.ts'),
     node('54-no-sandbox-data --selftest', '54-no-sandbox-data.mjs', ['--selftest']),
     node('54-no-sandbox-data', '54-no-sandbox-data.mjs'),
+    node('54-rsc-boundary --selftest', '54-rsc-boundary.mjs', ['--selftest']),
+    node('54-rsc-boundary', '54-rsc-boundary.mjs'),
   ]
 }
 
