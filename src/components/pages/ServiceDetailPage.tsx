@@ -87,7 +87,7 @@ export async function ServiceDetailPage({ locale, slug }: { locale: Locale; slug
     getTranslations({ locale, namespace: 'testimonialsCarousel' }),
     logosSection?.kind === 'logos' ? getServiceLogos(logosSection.block.clients) : Promise.resolve([]),
     testimonialsSection?.kind === 'testimonials'
-      ? getServiceTestimonials(testimonialsSection.block.limit)
+      ? getServiceTestimonials(testimonialsSection.block.limit, locale)
       : Promise.resolve([]),
     caseSection?.kind === 'caseProof' ? getCaseProof(locale, caseSection.block.caseStudy) : Promise.resolve(null),
     getOtherServices(locale, resolvedSlug),

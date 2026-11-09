@@ -124,13 +124,23 @@ export async function getServiceLogos(
   }
 }
 
-/** Testimonios para el bloque testimonialsCarousel (`limit` del bloque, 8 por defecto). */
-export async function getServiceTestimonials(limit: number | null | undefined): Promise<TestimonialItem[]> {
+/**
+ * Testimonios para el bloque testimonialsCarousel (`limit` del bloque, 8 por defecto).
+ *
+ * IN-07 (54-REVIEW): en Payload `limit: 0` significa "sin límite", así que un 0
+ * o un negativo caen al 8 por defecto, y `locale` va a `find` para que EN lea
+ * los testimonios en inglés y no el idioma por defecto.
+ */
+export async function getServiceTestimonials(
+  limit: number | null | undefined,
+  locale: Locale,
+): Promise<TestimonialItem[]> {
   try {
     const payload = await getPayload({ config })
     const { docs } = await payload.find({
       collection: 'testimonials',
-      limit: limit ?? 8,
+      locale,
+      limit: limit && limit > 0 ? limit : 8,
       depth: 0,
       overrideAccess: false,
     })
