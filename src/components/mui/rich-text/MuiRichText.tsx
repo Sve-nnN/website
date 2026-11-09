@@ -46,6 +46,20 @@ type LinkFields = {
   doc?: NavLinkInput['reference']
 }
 
+// Hosts del propio sitio. Comparación por hostname exacto contra este conjunto,
+// nunca por "contiene": juan-tech.com.evil.com no es del sitio (T-55-17).
+const SITE_HOSTS = new Set(['juan-tech.com', 'www.juan-tech.com'])
+
+/** True si `href` es absoluto y su hostname es uno de los hosts del sitio. */
+function isSameSiteHref(href: string): boolean {
+  if (!/^https?:/i.test(href)) return false
+  try {
+    return SITE_HOSTS.has(new URL(href).hostname.toLowerCase())
+  } catch {
+    return false
+  }
+}
+
 type ListNode = { tag?: string; listType?: string; children?: unknown[] }
 type ListItemNode = { children?: Array<{ type?: string }>; value?: number }
 
@@ -70,7 +84,12 @@ export function MuiRichText({ data, maxWidth = 760 }: Props) {
     // Esquema no permitido o sin destino: queda el texto, sin enlace (T-54-22).
     if (!href) return <span key={key}>{children}</span>
 
-    const external = /^https?:/i.test(href) || Boolean(fields?.newTab)
+    // Producción sirve los enlaces absolutos al propio sitio en la misma pestaña
+    // y con el href intacto (Pitfall 1 de 55-RESEARCH.md): se mantienen así. En
+    // el preview llevan a producción. Solo otro host o `fields.newTab` abren
+    // una pestaña nueva.
+    const sameSite = isSameSiteHref(href)
+    const external = (/^https?:/i.test(href) && !sameSite) || Boolean(fields?.newTab)
     if (external) {
       return (
         <Link
@@ -85,6 +104,13 @@ export function MuiRichText({ data, maxWidth = 760 }: Props) {
           <Box component="span" sx={visuallyHidden}>
             {` (${t('opensInNewTab')})`}
           </Box>
+        </Link>
+      )
+    }
+    if (sameSite) {
+      return (
+        <Link key={key} href={href} underline="always" sx={{ color: 'accentText' }}>
+          {children}
         </Link>
       )
     }
