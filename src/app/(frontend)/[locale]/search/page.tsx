@@ -1,12 +1,8 @@
 import { getPayload } from 'payload'
+import { getTranslations } from 'next-intl/server'
 
 import config from '@payload-config'
-import { Link } from '@/i18n/navigation'
-import { Container } from '@/components/Container'
-import { PageHero } from '@/components/PageHero'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+import { SearchView, type SearchResult } from '@/components/pages/SearchView'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
@@ -20,27 +16,6 @@ import { blogIndexPath, blogPostPath } from '@/lib/blog-paths'
 export const dynamic = 'force-dynamic'
 
 const MAX_QUERY_LENGTH = 200
-
-const copy = {
-  es: {
-    title: 'Buscar',
-    placeholder: 'Buscar artículos, casos de éxito, autores...',
-    submit: 'Buscar',
-    noResultsHeading: (q: string) => `Sin resultados para "${q}"`,
-    noResultsBody: 'Prueba con otro término, o explora artículos y casos de estudio directamente.',
-    errorHeading: 'La búsqueda no está disponible por el momento. Intenta de nuevo en unos minutos.',
-    typeLabels: { posts: 'Artículo', 'case-studies': 'Caso de éxito', authors: 'Autor' },
-  },
-  en: {
-    title: 'Search',
-    placeholder: 'Search posts, case studies, authors...',
-    submit: 'Search',
-    noResultsHeading: (q: string) => `No results for "${q}"`,
-    noResultsBody: 'Try a different term, or browse posts and case studies directly.',
-    errorHeading: 'Search is temporarily unavailable. Please try again in a moment.',
-    typeLabels: { posts: 'Post', 'case-studies': 'Case Study', authors: 'Author' },
-  },
-}
 
 // Posts live at /blog/<category>/<slug>, but the search index only stores the
 // post slug — `postCategories` is the cached postSlug -> categorySlug map the
@@ -58,8 +33,8 @@ function hrefFor(relationTo: string, slug: string, postCategories: Record<string
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  const t = copy[locale as 'es' | 'en'] ?? copy.es
-  const title = t.title
+  const t = await getTranslations({ locale, namespace: 'search' })
+  const title = t('title')
   return {
     title: pageTitle(title),
     // SEO-46: las paginas de resultados de busqueda interna son el caso de
@@ -95,18 +70,17 @@ export default async function SearchPage({
 }) {
   const { locale } = await params
   const { q } = await searchParams
-  const t = copy[locale as 'es' | 'en'] ?? copy.es
 
   // T-05-11-02: bound query length before it reaches a DB query.
   const query = q?.slice(0, MAX_QUERY_LENGTH)
 
-  let results: Awaited<ReturnType<typeof runSearch>> = []
+  let docs: Awaited<ReturnType<typeof runSearch>> = []
   let searchFailed = false
   let postCategories: Record<string, string> = {}
 
   if (query) {
     try {
-      ;[results, postCategories] = await Promise.all([
+      ;[docs, postCategories] = await Promise.all([
         runSearch(query, locale),
         getCachedPostCategoryMap(locale as 'es' | 'en'),
       ])
@@ -116,51 +90,18 @@ export default async function SearchPage({
     }
   }
 
-  return (
-    <div>
-      <PageHero variant="index" title={t.title} />
+  const results: SearchResult[] | null =
+    query && !searchFailed
+      ? docs.map((result) => ({
+          id: result.id,
+          type: result.doc.relationTo,
+          title: result.meta?.title ?? result.title ?? '',
+          description: result.meta?.description,
+          href: hrefFor(result.doc.relationTo, result.slug ?? '', postCategories),
+        }))
+      : null
 
-      <Container className="py-12 md:py-16">
-        <form className="flex gap-2 max-w-xl" action="" method="get">
-          <Input type="search" name="q" defaultValue={query} placeholder={t.placeholder} />
-          <Button type="submit">{t.submit}</Button>
-        </form>
-
-        {searchFailed && (
-          <div className="mt-12 text-center py-16">
-            <p className="text-body text-destructive">{t.errorHeading}</p>
-          </div>
-        )}
-
-        {!searchFailed && query && results.length === 0 && (
-          <div className="mt-12 text-center py-16">
-            <p className="font-heading text-heading">{t.noResultsHeading(query)}</p>
-            <p className="mt-2 text-body text-muted-foreground">{t.noResultsBody}</p>
-          </div>
-        )}
-
-        {!searchFailed && results.length > 0 && (
-          <div className="mt-12 space-y-4">
-            {results.map((result) => (
-              <Link
-                key={result.id}
-                href={hrefFor(result.doc.relationTo, result.slug ?? '', postCategories)}
-                className="block rounded-lg border border-border p-4 hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center gap-2">
-                  <Badge variant="secondary">{t.typeLabels[result.doc.relationTo]}</Badge>
-                  <p className="font-heading text-heading">{result.meta?.title ?? result.title}</p>
-                </div>
-                {result.meta?.description && (
-                  <p className="mt-1 text-body text-muted-foreground">{result.meta.description}</p>
-                )}
-              </Link>
-            ))}
-          </div>
-        )}
-      </Container>
-    </div>
-  )
+  return <SearchView query={query ?? null} results={results} failed={searchFailed} />
 }
 
 async function runSearch(query: string, locale: string) {
@@ -168,6 +109,9 @@ async function runSearch(query: string, locale: string) {
 
   const { docs } = await payload.find({
     collection: 'search',
+    // La coleccion search tiene lectura abierta (plugin-search); con
+    // overrideAccess false ese acceso se aplica y un borrador nunca sale.
+    overrideAccess: false,
     locale: locale as 'es' | 'en',
     pagination: false,
     where: {
