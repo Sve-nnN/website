@@ -327,7 +327,11 @@ export function getCachedWebsitesIndex(locale: Locale) {
           client: true,
         },
         populate: {
-          media: { url: true, width: true, height: true, alt: true },
+          // `filename` es obligatorio: el `url` de Media lo genera el adaptador
+          // de Cloudinary a partir del filename en `afterRead`, y con un
+          // `populate` que solo pide `url` llega como null (medido en el
+          // preview, 2026-11-09: seis tarjetas sin captura).
+          media: { url: true, filename: true, width: true, height: true, alt: true },
           clientes: { websiteUrl: true, name: true },
         },
       })

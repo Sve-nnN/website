@@ -9,6 +9,10 @@
 //     (`PROD_BASE/api/websites?locale=<es|en>&limit=100&depth=0`). El contador de
 //     referencia viene de otro origen que el que renderiza: asi un indice que lee mal
 //     no se da por bueno contra si mismo (T-55-04);
+//   - que cada sitio con captura en produccion tenga su imagen en el indice (`<img>` con
+//     alt no vacio dentro de main). Un `populate` que pierde el `url` de Media (el adaptador
+//     de Cloudinary lo genera desde `filename`) deja tarjetas sin captura y todo lo demas
+//     en verde: lo detecto en el primer despliegue de 55-01;
 //   - paridad de title, description, canonical, hreflang y tipos de JSON-LD contra la
 //     misma ruta en produccion (`extractMeta` y `compareMeta` de 54-page-contract.mjs).
 //
@@ -53,11 +57,17 @@ export function distinctSiteLinks(html, linkPrefix) {
   return found
 }
 
+/** Imagenes con alt no vacio dentro del main (las capturas; el avatar del cierre es decorativo). */
+export function screenshotImages(html) {
+  const main = html.match(/<main\b[\s\S]*<\/main>/i)?.[0] ?? ''
+  return (main.match(/<img\b[^>]*\salt="[^"]+"/gi) ?? []).length
+}
+
 /**
  * Comprobacion pura de una pagina del indice.
  * @returns {string[]} motivos de fallo
  */
-export function checkIndexPage(html, { route, status = 200, headers = {}, expectPreview = false, prodCount }) {
+export function checkIndexPage(html, { route, status = 200, headers = {}, expectPreview = false, prodCount, prodWithImage }) {
   const { failures } = checkContract(html, {
     lang: route.lang,
     path: route.path,
@@ -71,12 +81,18 @@ export function checkIndexPage(html, { route, status = 200, headers = {}, expect
   } else if (links.size !== prodCount) {
     failures.push(`el indice lista ${links.size} sitios distintos y produccion tiene ${prodCount}`)
   }
+  if (typeof prodWithImage === 'number') {
+    const imgs = screenshotImages(html)
+    if (imgs !== prodWithImage) {
+      failures.push(`el indice trae ${imgs} capturas y produccion tiene ${prodWithImage} sitios con captura`)
+    }
+  }
   return failures
 }
 
 // ------------------------------------------------------------------- selftest
 
-function fixtureHtml({ h1 = 1, links = 3, robots = 'noindex, nofollow', title = 'Sitios web | Juan', prefix = '/websites/' } = {}) {
+function fixtureHtml({ h1 = 1, links = 3, imgs = links, robots = 'noindex, nofollow', title = 'Sitios web | Juan', prefix = '/websites/' } = {}) {
   const head =
     '<!DOCTYPE html><html lang="es"><head>' +
     `<title>${title}</title>` +
@@ -87,14 +103,14 @@ function fixtureHtml({ h1 = 1, links = 3, robots = 'noindex, nofollow', title = 
     '<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList"}</script>' +
     '<style>@layer mui{.a{color:red}}</style></head>'
   const heads = Array.from({ length: h1 }, () => '<h1>Sitios web</h1>').join('')
-  const anchors = Array.from({ length: links }, (_, i) => `<li><a href="${prefix}sitio-${i}">Sitio ${i}</a></li>`).join('')
+  const anchors = Array.from({ length: links }, (_, i) => `<li><a href="${prefix}sitio-${i}">Sitio ${i}</a>${i < imgs ? `<img src="https://res.example.test/${i}.png" alt="Captura ${i}"/>` : ''}</li>`).join('')
   return `${head}<body><main id="main-content">${heads}<h2>Proyectos</h2><ul>${anchors}</ul></main></body></html>`
 }
 
 function selftest() {
   let bad = 0
   const route = ROUTES[0]
-  const opts = { route, expectPreview: true, headers: { 'x-robots-tag': 'noindex, nofollow' }, prodCount: 3 }
+  const opts = { route, expectPreview: true, headers: { 'x-robots-tag': 'noindex, nofollow' }, prodCount: 3, prodWithImage: 3 }
 
   const valid = checkIndexPage(fixtureHtml(), opts)
   if (valid.length === 0) console.log('PASS selftest: fixture valido sin fallos')
@@ -109,6 +125,7 @@ function selftest() {
     ['sin noindex en el meta', checkIndexPage(fixtureHtml({ robots: '' }), opts), /noindex/],
     ['sin x-robots-tag', checkIndexPage(fixtureHtml(), { ...opts, headers: {} }), /x-robots-tag/],
     ['estado distinto de 200', checkIndexPage(fixtureHtml(), { ...opts, status: 500 }), /500/],
+    ['tarjetas sin captura', checkIndexPage(fixtureHtml({ imgs: 0 }), opts), /0 capturas/],
     ['sin recuento de produccion', checkIndexPage(fixtureHtml(), { ...opts, prodCount: undefined }), /recuento/],
   ]
   for (const [name, failures, expected] of cases) {
@@ -161,11 +178,15 @@ async function get(url, retry = true) {
   }
 }
 
-async function prodSiteCount(prodBase, apiLocale) {
+async function prodSites(prodBase, apiLocale) {
   const res = await get(`${prodBase}/api/websites?locale=${apiLocale}&limit=100&depth=0`)
   if (res.status !== 200) throw new Error(`la API de produccion respondio ${res.status}${res.error ? ` (${res.error})` : ''}`)
   const json = JSON.parse(res.body)
-  return Array.isArray(json.docs) ? json.docs.length : null
+  if (!Array.isArray(json.docs)) throw new Error('la API de produccion no devolvio docs')
+  return {
+    total: json.docs.length,
+    withImage: json.docs.filter((d) => Array.isArray(d.screenshots) && d.screenshots.length > 0).length,
+  }
 }
 
 async function live() {
@@ -181,8 +202,11 @@ async function live() {
   for (const route of ROUTES) {
     const failures = []
     let prodCount
+    let prodWithImage
     try {
-      prodCount = await prodSiteCount(prodBase, route.apiLocale)
+      const prodInfo = await prodSites(prodBase, route.apiLocale)
+      prodCount = prodInfo.total
+      prodWithImage = prodInfo.withImage
     } catch (err) {
       failures.push(`recuento de produccion: ${err.message}`)
     }
@@ -197,13 +221,16 @@ async function live() {
           headers: preview.headers,
           expectPreview,
           prodCount,
+          prodWithImage,
         }),
       )
       const prod = await get(prodBase + route.path)
       if (prod.status !== 200) failures.push(`produccion respondio ${prod.status} en ${route.path}`)
       else failures.push(...compareMeta(extractMeta(preview.body), extractMeta(prod.body)))
       const links = distinctSiteLinks(preview.body, route.linkPrefix)
-      console.log(`INFO ${route.path}: ${links.size} tarjetas con enlace en el preview, ${prodCount ?? '?'} sitios en produccion`)
+      console.log(
+        `INFO ${route.path}: ${links.size} tarjetas con enlace y ${screenshotImages(preview.body)} capturas en el preview, ${prodCount ?? '?'} sitios (${prodWithImage ?? '?'} con captura) en produccion`,
+      )
     }
 
     if (failures.length === 0) console.log(`PASS ${route.path}`)
