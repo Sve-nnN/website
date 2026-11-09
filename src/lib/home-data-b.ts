@@ -552,31 +552,37 @@ export function mapTestimonials(docs: ReadonlyArray<TestimonialLike> | null | un
   return items
 }
 
-/** Solo los documentos de la coleccion (hoy uno). Nunca lanza: null ante un error. */
-export function getHomeTestimonials(locale: Locale): Promise<HomeTestimonialItem[] | null> {
+// La lectura LANZA dentro de unstable_cache: un error transitorio no se guarda
+// como resultado valido. El catch vive fuera, en getHomeTestimonials.
+function readHomeTestimonials(locale: Locale): Promise<HomeTestimonialItem[]> {
   return unstable_cache(
-    async (): Promise<HomeTestimonialItem[] | null> => {
-      try {
-        const payload = await getPayload({ config })
-        const { docs } = await payload.find({
-          collection: 'testimonials',
-          locale,
-          limit: 9,
-          depth: 0,
-          pagination: false,
-          sort: 'createdAt',
-          overrideAccess: false,
-          select: { name: true, role: true, company: true, testimonial: true },
-        })
-        return mapTestimonials(docs)
-      } catch (err) {
-        console.error('[home]', err)
-        return null
-      }
+    async (): Promise<HomeTestimonialItem[]> => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'testimonials',
+        locale,
+        limit: 9,
+        depth: 0,
+        pagination: false,
+        sort: 'createdAt',
+        overrideAccess: false,
+        select: { name: true, role: true, company: true, testimonial: true },
+      })
+      return mapTestimonials(docs)
     },
     ['home-testimonials', locale],
     { revalidate: CACHE_TTL_SECONDS },
   )()
+}
+
+/** Solo los documentos de la coleccion (hoy uno). Nunca lanza: null ante un error, sin cachearlo. */
+export async function getHomeTestimonials(locale: Locale): Promise<HomeTestimonialItem[] | null> {
+  try {
+    return await readHomeTestimonials(locale)
+  } catch (err) {
+    console.error('[home]', err)
+    return null
+  }
 }
 
 export function assembleTestimonials(title: string | null, items: HomeTestimonialItem[] | null): HomeTestimonials | null {
