@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
-import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { sendContactMessage } from '@/app/actions/contact'
+import { ContactView } from '@/components/pages/ContactView'
+import { getContactData } from '@/lib/contact-data'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
@@ -65,15 +65,15 @@ export default async function ContactPage({
   searchParams: Promise<{ sent?: string }>
 }) {
   const [{ locale }, { sent }] = await Promise.all([params, searchParams])
-  const doc = await getContactPage(locale)
+  const data = await getContactData(locale as 'es' | 'en')
 
-  if (!doc) {
+  if (!data) {
     notFound()
   }
 
-  const hasHeroTitle = doc.content?.layout?.some(
-    (block) => block.blockType === 'hero' && 'title' in block && block.title,
-  )
+  // Estado del envio: la accion redirige a ?sent=true|false. Cualquier otro
+  // valor (o ninguno) deja el formulario sin estado.
+  const status = sent === 'true' ? 'success' : sent === 'false' ? 'error' : null
 
   // SEO-48: /contact era una de las diez paginas sin ningun dato estructurado.
   // `ContactPage` es lo que dice que esta URL ES el canal de contacto de la
@@ -88,7 +88,7 @@ export default async function ContactPage({
     '@type': 'ContactPage',
     '@id': `${SITE_URL}${contactPath}#contactpage`,
     url: `${SITE_URL}${contactPath}`,
-    name: doc.meta?.title ?? doc.title ?? contactFallbackTitle(locale),
+    name: data.schemaName,
     inLanguage: locale === 'en' ? 'en' : 'es',
     isPartOf: websiteRef,
     about: { '@id': BUSINESS_ID },
@@ -98,21 +98,11 @@ export default async function ContactPage({
   return (
     <div>
       <JsonLd data={contactPageData} />
-      {!hasHeroTitle && (
-        <h1 className="sr-only">
-          {doc.meta?.title ?? doc.title ?? contactFallbackTitle(locale)}
-        </h1>
-      )}
-      <RenderBlocks
-        blocks={doc.content?.layout ?? []}
-        blockProps={{
-          contactFormBlock: {
-            onSubmit: sendContactMessage,
-            locale,
-            sent,
-            contactEmail: process.env.CONTACT_TO_EMAIL,
-          },
-        }}
+      <ContactView
+        data={data}
+        locale={locale as 'es' | 'en'}
+        status={status}
+        formEmail={data.email ?? process.env.CONTACT_TO_EMAIL ?? ''}
       />
     </div>
   )
