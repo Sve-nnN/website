@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: planning
-stopped_at: Completed 54-14-PLAN.md
-last_updated: "2026-11-09T01:43:45.391Z"
+stopped_at: Completed 54-15-PLAN.md
+last_updated: "2026-11-09T01:54:11.951Z"
 last_activity: 2026-11-07
 last_activity_desc: Phase 53 complete, transitioned to Phase 6
-state_head: ac1a4421404bf2c8b3ab916f73f00bcff4d0a1a9
+state_head: 8c0702c7cae54e2ec90cd1e89aa0cb2a30d08101
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 22
-  completed_plans: 20
+  completed_plans: 21
   percent: 20
 ---
 
@@ -163,6 +163,7 @@ Last activity: 2026-11-07 — Phase 53 complete, transitioned to Phase 6
 | Phase 54 P12 | 55min | 3 tasks | 13 files |
 | Phase 54 P13 | 14min | 3 tasks | 8 files |
 | Phase 54 P14 | 95min | 3 tasks | 14 files |
+| Phase 54 P15 | 50min | 3 tasks | 15 files |
 
 ## Accumulated Context
 
@@ -331,6 +332,7 @@ Recent decisions affecting current work:
 - [Phase 54-04]: los scripts de siembra 20, 21 y 22 abortan antes de cargar Payload ante base equivocada, falta de credenciales de Cloudinary o falta de --alts-confirmed; en el script 22 el ES se omite si tras escribir EN ya muestra los logos (logo no es campo localizado)
 - [Phase 6]: 54-13: @mui/lab 9.0.0-beta.10 instalado con version exacta tras aprobacion delegada del checkpoint; Sobre mi vive en un global y su enlace de nav solo existe con isPreviewReadonly()
 - [Phase 6]: 54-14: HomeData gana sectionsB; el enlace de SiteCard va a /websites/<slug>; los verificadores de la fase 48 se retiran en el corte de la fase 57
+- [Phase 6]: 54-15: el inlineStat de Madrid tambien es un marcador y no pinta aside; los botones del hero de las landings locales se conservan como LocalHeroActions; el contrato 54-dual-urls.mjs ya pasa contra produccion como linea base
 
 ### Pending Todos
 
@@ -388,8 +390,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-09T01:43:45.362Z
-Stopped at: Completed 54-14-PLAN.md
+Last session: 2026-11-09T01:54:11.920Z
+Stopped at: Completed 54-15-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
