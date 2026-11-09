@@ -11,11 +11,23 @@
  *   node_modules/.bin/tsx scripts/verify/55-richtext-ssr.ts
  * Imprime PASS o FAIL con el motivo y sale con 1 ante cualquier FAIL.
  */
-import * as React from 'react'
-import { createElement } from 'react'
+import { createRequire } from 'node:module'
 
-import { MuiRichText } from '../../src/components/mui/rich-text/MuiRichText'
-import { countOf, renderToHtml } from './54-ssr-harness'
+import * as React from 'react'
+import { createElement, type ReactElement } from 'react'
+
+// Debe instalarse antes de cargar los módulos que importan next-intl/server.
+createRequire(import.meta.url)('./55-stub-next-intl-server.cjs')
+
+const { MuiRichText } = await import('../../src/components/mui/rich-text/MuiRichText')
+const { buildHeadingIdMap, extractHeadings, RESERVED_IDS } = await import(
+  '../../src/components/mui/rich-text/lexical-toc'
+)
+const { buildRichTextConverters, richTextConverters } = await import(
+  '../../src/components/richTextBlockConverters'
+)
+const { splitContentForOffer } = await import('../../src/lib/lexical-split')
+const { countOf, renderToHtml } = await import('./54-ssr-harness')
 
 // tsx no transforma JSX con `jsx: preserve` y cae al runtime clasico, que busca
 // `React` global al renderizar los componentes .tsx. Solo se usa en esta prueba.
@@ -130,6 +142,176 @@ function siteLinkProblem(html: string, href: string): string | null {
     'fixture defectuoso (enlace del sitio con target _blank) falla la comprobación',
     siteLinkProblem(defective, 'https://juan-tech.com/blog/x') !== null,
     'la comprobación dejó pasar un enlace del sitio con target _blank',
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Ids sobre el cuerpo completo, h1 como nivel 2 y ids reservados (Pitfall 2)
+// ---------------------------------------------------------------------------
+const heading = (tag: string, t: string): Node => ({ type: 'heading', tag, version: 1, children: [text(t)] })
+const p = (t: string): Node => para(text(t))
+
+/** Cuántos elementos llevan exactamente ese id. */
+function idCount(html: string, id: string): number {
+  const escaped = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  return countOf(html, new RegExp(`\\sid="${escaped}"`))
+}
+
+/** Todos los ids de encabezado (h2/h3) presentes en el HTML, con repeticiones. */
+function headingIdsIn(html: string): string[] {
+  return [...html.matchAll(/<h[23]\b[^>]*\sid="([^"]+)"/g)].map((m) => m[1] as string)
+}
+
+/** Motivo de fallo si hay ids repetidos o un id del índice no resuelve, o null. */
+function idProblem(html: string, tocIds: string[]): string | null {
+  const ids = headingIdsIn(html)
+  const dup = ids.filter((id, i) => ids.indexOf(id) !== i)
+  if (dup.length > 0) return `ids repetidos: ${[...new Set(dup)].join(', ')}`
+  for (const id of tocIds) if (!ids.includes(id)) return `el id del índice "${id}" no existe en el cuerpo`
+  return null
+}
+
+{
+  // h1, h2 y h3; un h2 repetido; "Contacto" (reservado) y suficientes bloques para partir el cuerpo.
+  const data = doc([
+    heading('h1', 'Titulo en el cuerpo'),
+    p('uno'),
+    heading('h2', 'Repetido'),
+    p('dos'),
+    heading('h3', 'Detalle'),
+    p('tres'),
+    heading('h2', 'Contacto'),
+    p('cuatro'),
+    heading('h2', 'Repetido'),
+    p('cinco'),
+    heading('h2', 'Repetido'),
+    p('seis'),
+  ])
+  const root = (data as { root: never }).root
+  const entries = extractHeadings(root)
+  const ids = entries.map((e) => e.id)
+
+  check(
+    'el h1 del cuerpo entra al índice como nivel 2 con id',
+    entries[0]?.id === 'titulo-en-el-cuerpo' && entries[0]?.level === 2,
+    `entradas = ${JSON.stringify(entries)}`,
+  )
+  check(
+    'dos h2 con el mismo texto reciben ids con sufijo -2 y -3',
+    ids.includes('repetido') && ids.includes('repetido-2') && ids.includes('repetido-3'),
+    `ids = ${JSON.stringify(ids)}`,
+  )
+  check(
+    'un h2 titulado Contacto no usa el id reservado contacto',
+    !ids.includes('contacto') && ids.includes('contacto-2') && [...RESERVED_IDS].every((r) => !ids.includes(r)),
+    `ids = ${JSON.stringify(ids)}`,
+  )
+
+  const html = renderToHtml(createElement(MuiRichText, { data }), 'es')
+  check(
+    'el h1 del cuerpo se renderiza como h2 con id y no queda ningún h1',
+    countOf(html, /<h1[\s>]/) === 0 && idCount(html, 'titulo-en-el-cuerpo') === 1 && /<h2[^>]*id="titulo-en-el-cuerpo"/.test(html),
+    `h1=${countOf(html, /<h1[\s>]/)} id=${idCount(html, 'titulo-en-el-cuerpo')}`,
+  )
+  check('cuerpo completo: ids únicos y todos los del índice resuelven', idProblem(html, ids) === null, String(idProblem(html, ids)))
+  check(
+    'la regla vieja (extractHeadings con [2, 3] explícito) sigue excluyendo el h1',
+    extractHeadings(root, [2, 3]).every((e) => e.text !== 'Titulo en el cuerpo'),
+    'el filtro explícito dejó pasar el h1',
+  )
+
+  // Cuerpo partido por la oferta inline: las dos mitades comparten UN mapa.
+  const { before, after } = splitContentForOffer(data as never)
+  check('el cuerpo del fixture se parte en dos mitades', Boolean(before && after), 'splitContentForOffer no partió el cuerpo')
+  const shared = buildHeadingIdMap(root) as Map<object, string>
+  const halves = (withMap: boolean) =>
+    [before, after]
+      .map((half) =>
+        renderToHtml(createElement(MuiRichText, { data: half as never, ...(withMap ? { headingIds: shared } : {}) }), 'es'),
+      )
+      .join('\n')
+  const joined = halves(true)
+  check('dos mitades con el mismo headingIds: ids únicos y sin huecos', idProblem(joined, ids) === null, String(idProblem(joined, ids)))
+  check(
+    'las mitades reproducen los ids del índice del cuerpo completo (mismo orden)',
+    JSON.stringify(headingIdsIn(joined)) === JSON.stringify(ids),
+    `HTML = ${JSON.stringify(headingIdsIn(joined))} índice = ${JSON.stringify(ids)}`,
+  )
+  // Fixture defectuoso: sin headingIds cada mitad numera por su cuenta y choca con el índice.
+  check(
+    'fixture defectuoso (mitades sin headingIds) falla la comprobación de ids',
+    idProblem(halves(false), ids) !== null,
+    'la comprobación dejó pasar mitades con ids repetidos o desalineados',
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Bloque email-capture (Pitfall 3)
+// ---------------------------------------------------------------------------
+{
+  const block: Node = { type: 'block', version: 2, format: '', fields: { id: 'fixture-captura', blockType: 'email-capture' } }
+  const data = doc([p('antes'), block, p('despues')])
+  const args = { defaultConverters: {} } as never
+  const withCtx = (buildRichTextConverters({ postPath: '/blog/fixture', subscribedState: undefined })(args) as {
+    blocks?: Record<string, (a: never) => ReactElement>
+  }).blocks?.['email-capture']
+  const withoutCtx = (richTextConverters(args) as { blocks?: Record<string, unknown> }).blocks?.['email-capture']
+
+  check('el conjunto estático no trae convertidor email-capture (como hoy)', withoutCtx === undefined, 'el estático ya trae email-capture')
+  check('buildRichTextConverters(ctx) trae el convertidor email-capture', typeof withCtx === 'function', 'falta el convertidor con ctx')
+
+  if (typeof withCtx === 'function') {
+    const el = withCtx({} as never) as ReactElement<{ postPath: string }>
+    const card = el.type as unknown as (props: unknown) => Promise<ReactElement>
+    const tree = await card(el.props)
+    const formHtml = renderToHtml(tree, 'es')
+    check('el bloque con ctx produce el input name="email"', /name="email"/.test(formHtml), 'falta name="email"')
+    check('el bloque con ctx produce el honeypot name="company_website"', /name="company_website"/.test(formHtml), 'falta company_website')
+    check(
+      'el bloque con ctx lleva los ocultos postPath y locale',
+      /name="postPath"[^>]*value="\/blog\/fixture"|value="\/blog\/fixture"[^>]*name="postPath"/.test(formHtml) &&
+        /name="locale"[^>]*value="es"|value="es"[^>]*name="locale"/.test(formHtml),
+      'faltan postPath o locale',
+    )
+  }
+
+  // Por MuiRichText: sin ctx el bloque no se pinta (y Payload avisa); con ctx el
+  // render llega al componente asíncrono de captura, que renderToString no puede
+  // resolver (solo un Server Component asíncrono suspende así).
+  const logged: string[] = []
+  const origLog = console.log
+  const origWarn = console.warn
+  const origError = console.error
+  const capture = (...a: unknown[]) => {
+    logged.push(a.map(String).join(' '))
+  }
+  console.log = capture
+  console.warn = capture
+  console.error = capture
+  let noCtxHtml = ''
+  let withCtxThrew = ''
+  try {
+    noCtxHtml = renderToHtml(createElement(MuiRichText, { data }), 'es')
+    try {
+      renderToHtml(createElement(MuiRichText, { data, ctx: { postPath: '/blog/fixture' } }), 'es')
+    } catch (err) {
+      withCtxThrew = String((err as Error).message)
+    }
+  } finally {
+    console.log = origLog
+    console.warn = origWarn
+    console.error = origError
+  }
+  check('MuiRichText sin ctx no pinta el formulario de captura', !/name="email"/.test(noCtxHtml), 'apareció el formulario sin ctx')
+  check(
+    'MuiRichText sin ctx deja el aviso de "no converter" (el bloque se pierde sin ctx)',
+    logged.some((l) => /no converter is provided/.test(l)),
+    'no apareció el aviso de Payload',
+  )
+  check(
+    'MuiRichText con ctx llega al componente de captura (async) y no registra "no converter"',
+    /suspended/.test(withCtxThrew) && logged.filter((l) => /no converter is provided/.test(l)).length === 1,
+    `error = ${withCtxThrew.slice(0, 80)} avisos = ${logged.filter((l) => /no converter is provided/.test(l)).length}`,
   )
 }
 

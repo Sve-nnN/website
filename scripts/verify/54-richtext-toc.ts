@@ -92,10 +92,12 @@ function idCount(html: string, id: string): number {
   const children = (root as { children: never[] }).children
   check('el mapa se indexa por la referencia del nodo', map.get(children[0]) === 'seccion' && map.get(children[3]) === 'x-2', 'el mapa no devolvio los ids por referencia')
 
-  // h1 y h4 no entran al indice ni reciben id
+  // h4 no entra al indice ni recibe id. Desde 55-05 el h1 del cuerpo SI entra
+  // (como nivel 2, porque el sitio lo renderiza como h2): 12 posts ES y 10 EN
+  // lo llevan y el indice basado en el DOM de produccion los listaba.
   const mixed = doc([heading('h1', 'Titulo'), heading('h4', 'Menor'), heading('h2', 'Seccion')])
   const mixedIds = extractHeadings((mixed as { root: never }).root).map((i) => i.id)
-  check('h1 y h4 no entran al indice', JSON.stringify(mixedIds) === '["seccion"]', `ids = ${JSON.stringify(mixedIds)}`)
+  check('h1 entra al indice (55-05) y h4 no', JSON.stringify(mixedIds) === '["titulo","seccion"]', `ids = ${JSON.stringify(mixedIds)}`)
 }
 
 // ---------------------------------------------------------------------------

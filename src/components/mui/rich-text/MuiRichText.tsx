@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography'
 import { useLocale, useTranslations } from 'next-intl'
 
 import { resolveLinkHref, sanitizeHref, type NavLinkInput } from '@/lib/nav-links'
-import { richTextConverters } from '@/components/richTextBlockConverters'
+import { buildRichTextConverters, richTextConverters } from '@/components/richTextBlockConverters'
 
 import { UL, OL } from '../lists'
 import { buildHeadingIdMap, type LexicalNodeLike, type LexicalRootLike } from './lexical-toc'
@@ -23,6 +23,21 @@ type Props = {
   data: SerializedEditorState | null | undefined
   /** Ancho máximo del texto en px. 760 por defecto (UI-SPEC, prosa larga). */
   maxWidth?: number
+  /**
+   * Mapa de la referencia del nodo a su id, calculado UNA vez sobre el cuerpo
+   * completo con `buildHeadingIdMap`. Las dos mitades de un cuerpo partido por
+   * `splitContentForOffer` comparten los nodos hijos por referencia, así que
+   * con el mismo mapa comparten numeración y no repiten ids. Sin esta prop se
+   * calcula sobre `data.root` (comportamiento de la fase 54).
+   */
+  headingIds?: Map<object, string>
+  /**
+   * Contexto por petición para los bloques que lo necesitan (captura de
+   * email). Con `ctx` los convertidores se componen sobre
+   * `buildRichTextConverters(ctx)`; sin él se usa el conjunto estático y el
+   * bloque `email-capture` no se pinta (Privacy y Terms no lo llevan).
+   */
+  ctx?: { subscribedState?: string; postPath?: string }
 }
 
 // Oculto a la vista y visible para el lector de pantalla. Va local porque este
@@ -63,14 +78,16 @@ function isSameSiteHref(href: string): boolean {
 type ListNode = { tag?: string; listType?: string; children?: unknown[] }
 type ListItemNode = { children?: Array<{ type?: string }>; value?: number }
 
-export function MuiRichText({ data, maxWidth = 760 }: Props) {
+export function MuiRichText({ data, maxWidth = 760, headingIds, ctx }: Props) {
   const t = useTranslations('common')
   const locale = useLocale() === 'en' ? 'en' : 'es'
 
   if (!data) return null
 
-  // El mismo recorrido que arma el índice de la página: los ids coinciden.
-  const idByNode = buildHeadingIdMap(data.root as unknown as LexicalRootLike)
+  // El mismo recorrido que arma el índice de la página: los ids coinciden. Si
+  // la página ya calculó el mapa sobre el cuerpo completo, se usa ese.
+  const idByNode: Map<object, string> =
+    headingIds ?? buildHeadingIdMap(data.root as unknown as LexicalRootLike)
 
   function renderLink(
     fields: LinkFields | undefined,
@@ -125,7 +142,7 @@ export function MuiRichText({ data, maxWidth = 760 }: Props) {
   // tabla con encabezado y baja de h1 a h2) para no perder contenido indexable
   // (SEO-03) y reemplaza solo lo que cambia con MUI.
   const converters: JSXConvertersFunction = (args) => {
-    const base = richTextConverters(args)
+    const base = ctx ? buildRichTextConverters(ctx)(args) : richTextConverters(args)
     return {
       ...base,
       heading: (a) => {
@@ -133,7 +150,9 @@ export function MuiRichText({ data, maxWidth = 760 }: Props) {
         const id = idByNode.get(node)
         const { nodesToJSX } = a
         const children = nodesToJSX({ nodes: a.node.children })
-        if (node.tag === 'h2' && id) {
+        // Un h1 del cuerpo se renderiza como h2 (SEO-44) y, al estar en el
+        // mapa de ids, lleva id y entra al índice.
+        if ((node.tag === 'h2' || node.tag === 'h1') && id) {
           return (
             <Typography
               variant="h4"
@@ -157,7 +176,7 @@ export function MuiRichText({ data, maxWidth = 760 }: Props) {
             </Typography>
           )
         }
-        // h1 y h4 a h6: convertidor del sitio (baja h1 a h2, SEO-44).
+        // h4 a h6 (y un h1 sin id): convertidor del sitio (baja h1 a h2, SEO-44).
         const fallback = base.heading as (x: typeof a) => ReactNode
         return fallback(a)
       },

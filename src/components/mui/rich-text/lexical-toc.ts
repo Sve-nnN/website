@@ -43,26 +43,44 @@ export function headingText(node: LexicalNodeLike): string {
   return (node.children ?? []).map(headingText).join('')
 }
 
+/**
+ * Ids que ya declara la página y que un encabezado del cuerpo nunca debe usar:
+ * el slug "contacto" colisionaría con la sección de contacto, "main-content"
+ * con el destino del enlace de salto y "page-title" con el h1 de la página
+ * (Pitfall 2 de 55-RESEARCH.md; hoy ninguno choca, es prevención). Un slug
+ * reservado se numera como un duplicado (`contacto-2`).
+ */
+export const RESERVED_IDS: ReadonlySet<string> = new Set(['contacto', 'main-content', 'page-title'])
+
+/** Niveles que entran al índice y reciben id por defecto: h1, h2 y h3. */
+export const DEFAULT_LEVELS: number[] = [1, 2, 3]
+
 type Found = { node: LexicalNodeLike; entry: HeadingEntry }
 
 /**
  * Recorre `root.children` (solo el primer nivel, igual que el render) y asigna
  * ids únicos. Un texto repetido recibe `-2`, `-3`; un texto vacío usa el id
  * base `seccion`. Si el id calculado ya existe (un encabezado literal "x-2"
- * junto a dos "x"), sigue contando hasta hallar uno libre.
+ * junto a dos "x") o es un id reservado de la página, sigue contando hasta
+ * hallar uno libre.
+ *
+ * `levels` filtra por la etiqueta real (h1 = 1). Un h1 del cuerpo se reporta
+ * como nivel 2 porque el sitio lo renderiza como h2 (SEO-44): así entra al
+ * índice junto a los h2 y recibe id.
  */
 function collect(root: LexicalRootLike | null | undefined, levels: number[]): Found[] {
   const used = new Set<string>()
   const out: Found[] = []
   for (const node of root?.children ?? []) {
     if (node.type !== 'heading' || typeof node.tag !== 'string') continue
-    const level = Number(node.tag.slice(1))
-    if (!levels.includes(level)) continue
+    const tagLevel = Number(node.tag.slice(1))
+    if (!levels.includes(tagLevel)) continue
+    const level = tagLevel === 1 ? 2 : tagLevel
     const text = headingText(node).trim()
     const base = slugify(text) || 'seccion'
     let id = base
     let n = 1
-    while (used.has(id)) {
+    while (used.has(id) || RESERVED_IDS.has(id)) {
       n += 1
       id = `${base}-${n}`
     }
@@ -72,10 +90,10 @@ function collect(root: LexicalRootLike | null | undefined, levels: number[]): Fo
   return out
 }
 
-/** Encabezados h2 y h3 (por defecto) en orden, con su id. Alimenta el índice. */
+/** Encabezados h1 (como nivel 2), h2 y h3 en orden, con su id. Alimenta el índice. */
 export function extractHeadings(
   root: LexicalRootLike | null | undefined,
-  levels: number[] = [2, 3],
+  levels: number[] = DEFAULT_LEVELS,
 ): HeadingEntry[] {
   return collect(root, levels).map((f) => f.entry)
 }
@@ -83,7 +101,7 @@ export function extractHeadings(
 /** Mapa de la referencia del nodo a su id. Alimenta el render de MuiRichText. */
 export function buildHeadingIdMap(
   root: LexicalRootLike | null | undefined,
-  levels: number[] = [2, 3],
+  levels: number[] = DEFAULT_LEVELS,
 ): Map<LexicalNodeLike, string> {
   return new Map(collect(root, levels).map((f) => [f.node, f.entry.id]))
 }
