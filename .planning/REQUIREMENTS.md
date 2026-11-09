@@ -15,7 +15,7 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 
 ### Páginas conectadas a Payload (PAG)
 
-- [ ] **PAG-01**: La home muestra todas sus secciones con datos de Pages y globals.
+- [x] **PAG-01**: La home muestra todas sus secciones con datos de Pages y globals.
 - [x] **PAG-02**: Servicios (índice y detalle) se renderizan desde Payload.
 - [ ] **PAG-03**: Casos de éxito (índice y detalle) muestran estadísticas, contexto, solución, lecciones aprendidas, casos comparativos y conclusiones (campos nuevos en CaseStudies vía migración aditiva).
 - [ ] **PAG-04**: Websites (portafolio y detalle) se renderizan desde la colección Websites.
@@ -74,7 +74,7 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 | BASE-01 | Phase 53 | Complete |
 | BASE-02 | Phase 53 | Complete |
 | BASE-03 | Phase 53 | Complete |
-| PAG-01 | Phase 54 | Pending |
+| PAG-01 | Phase 54 | Complete |
 | PAG-02 | Phase 54 | Complete |
 | PAG-03 | Phase 55 | Pending |
 | PAG-04 | Phase 55 | Pending |

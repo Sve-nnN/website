@@ -26,7 +26,7 @@
 - Idiomas EN y ES con paridad, modo oscuro único, WCAG 2.2 AA según A11Y.md.
 
 - [x] **Phase 53: Base del rediseño: rama, preview, tema y shell** - Rama `feat/mui-redesign`, preview seguro en `dev.juan-tech.com`, tema MUI v9 oscuro y shell (nav, footer, idioma, movimiento) conectado a Payload (completed 2026-11-07)
-- [ ] **Phase 54: Páginas de conversión y utilidad** - Home, servicios, landings Lima y Madrid, búsqueda, sobre mí, contacto, stack, legales y 404 en MUI desde Payload
+- [x] **Phase 54: Páginas de conversión y utilidad** - Home, servicios, landings Lima y Madrid, búsqueda, sobre mí, contacto, stack, legales y 404 en MUI desde Payload (completed 2026-11-08)
 - [ ] **Phase 55: Casos, websites, blog y autores** - Las superficies de prueba y contenido editorial en MUI desde Payload, incluidos los 58 posts
 - [ ] **Phase 56: Contenido pendiente de Juan** - Resolución de marcadores `{{pendiente}}`, textos CTA, lecciones de casos y texto legal; corre en paralelo y bloquea solo el corte
 - [ ] **Phase 57: Gate de calidad y corte a producción** - Gate de SEO, accesibilidad y rendimiento contra el preview, limpieza de Tailwind y shadcn, confirmación explícita de Juan, merge, validación live y rollback documentado
@@ -144,7 +144,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 53. Base del rediseño: rama, preview, tema y shell | 6/6 | Complete    | 2026-11-07 |
-| 54. Páginas de conversión y utilidad | 15/16 | In Progress|  |
+| 54. Páginas de conversión y utilidad | 16/16 | Complete    | 2026-11-08 |
 | 55. Casos, websites, blog y autores | 0/TBD | Not started | - |
 | 56. Contenido pendiente de Juan | 0/TBD | Not started | - |
 | 57. Gate de calidad y corte a producción | 0/TBD | Not started | - |
