@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
 
 import { JsonLd } from '@/components/JsonLd'
-import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { sendContactMessage } from '@/app/actions/contact'
+import { HomeView } from '@/components/home/HomeView'
+import { getHomeData } from '@/lib/home-data'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
@@ -84,22 +84,14 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const websiteData = buildWebSite(locale as 'es' | 'en')
   const businessData = buildProfessionalService(locale as 'es' | 'en')
 
+  const homeData = await getHomeData(locale as 'es' | 'en')
+
   return (
     <div>
-      <RenderBlocks
-        blocks={doc.content?.layout ?? []}
-        blockProps={{
-          // The logo wall labels its groups (SEO / Desarrollo / Optimización)
-          // and those labels are UI strings, not content, so they don't come
-          // from Payload's localized fields — the block needs to know which
-          // locale it is rendering in.
-          clientLogosBlock: { locale },
-          contactFormBlock: {
-            onSubmit: sendContactMessage,
-            locale,
-            contactEmail: process.env.CONTACT_TO_EMAIL,
-          },
-        }}
+      <HomeView
+        data={homeData}
+        locale={locale as 'es' | 'en'}
+        fallbackTitle={doc.title ?? 'Juan Carlos Angulo'}
       />
       <JsonLd data={personData} />
       <JsonLd data={websiteData} />
