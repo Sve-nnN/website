@@ -33,9 +33,9 @@ const EXTERNAL = /^https?:\/\//i
 // Solo para lectores de pantalla (el sufijo de "otra pestana").
 const srOnly = {
   position: 'absolute',
-  width: 1,
-  height: 1,
-  margin: -1,
+  width: '1px',
+  height: '1px',
+  margin: '-1px',
   padding: 0,
   overflow: 'hidden',
   clip: 'rect(0 0 0 0)',
@@ -120,7 +120,7 @@ export function FooterView({ columns, socialLinks, legalLinks, copyrightText, lo
                   {column.title && (
                     <Typography
                       variant="overline"
-                      component="h3"
+                      component="h2"
                       color="text.secondary"
                       sx={{ display: 'block', mb: 1.5, overflowWrap: 'anywhere' }}
                     >

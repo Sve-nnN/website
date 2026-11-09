@@ -26,9 +26,9 @@ import { Vitals } from './Vitals'
 // como el objeto de estilo.
 const HIDDEN: CSSProperties = {
   position: 'absolute',
-  width: 1,
-  height: 1,
-  margin: -1,
+  width: '1px',
+  height: '1px',
+  margin: '-1px',
   padding: 0,
   overflow: 'hidden',
   clip: 'rect(0 0 0 0)',

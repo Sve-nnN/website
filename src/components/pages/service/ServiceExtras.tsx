@@ -12,9 +12,9 @@ import { AUDITOR_URL } from '@/lib/auditor'
 // no puede leer valores de un modulo cliente).
 const visuallyHidden = {
   position: 'absolute',
-  width: 1,
-  height: 1,
-  margin: -1,
+  width: '1px',
+  height: '1px',
+  margin: '-1px',
   padding: 0,
   overflow: 'hidden',
   clip: 'rect(0 0 0 0)',
