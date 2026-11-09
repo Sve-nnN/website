@@ -1,10 +1,8 @@
 import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
+import { getTranslations } from 'next-intl/server'
 
-import config from '@payload-config'
-import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { Container } from '@/components/Container'
-import { PageHero } from '@/components/PageHero'
+import { extractLegalRichTexts, LegalView } from '@/components/pages/LegalView'
+import { getCachedPageBySlug } from '@/lib/cache'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
@@ -30,14 +28,7 @@ export function generateStaticParams(): Array<{ locale: string }> {
 }
 
 async function getPage(locale: string) {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'pages',
-    where: { slug: { equals: 'terms' } },
-    locale: locale as 'es' | 'en',
-    limit: 1,
-  })
-  return docs[0]
+  return getCachedPageBySlug('terms', locale as 'es' | 'en')
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
@@ -72,13 +63,19 @@ export default async function TermsPage({ params }: { params: Promise<{ locale: 
     notFound()
   }
 
-  return (
-    <div>
-      <PageHero variant="index" title={doc.title} />
+  const [t, tCommon] = await Promise.all([getTranslations('legal'), getTranslations('common')])
 
-      <Container className="py-12 md:py-16 max-w-3xl">
-        <RenderBlocks blocks={doc.content?.layout ?? []} />
-      </Container>
-    </div>
+  // Sin JSON-LD: la ruta no lo emitia antes y el contrato de SEO no cambia (SEO-01).
+  return (
+    <LegalView
+      title={doc.title}
+      crumbs={[
+        { label: tCommon('breadcrumbHome'), href: '/' },
+        { label: doc.title },
+      ]}
+      richTexts={extractLegalRichTexts(doc.content?.layout)}
+      eyebrow={t('eyebrow')}
+      tocLabel={t('tocLabel')}
+    />
   )
 }
