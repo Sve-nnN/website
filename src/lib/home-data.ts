@@ -13,6 +13,7 @@ import config from '@payload-config'
 import type { MarqueeLogo } from '@/components/mui/LogoMarquee'
 import { getCachedHomePage, type Locale } from '@/lib/cache'
 import { CACHE_TAGS, CACHE_TTL_SECONDS } from '@/lib/cache-tags'
+import { emptySectionsB, getHomeSectionsB, type HomeSectionsB } from '@/lib/home-data-b'
 import { sanitizeHref } from '@/lib/nav-links'
 import { SERVICE_ICON_NAMES } from '@/lib/shadow-icons'
 import { isServiceSlug, type ServiceSlug } from '@/lib/service-slugs'
@@ -78,6 +79,8 @@ export type HomeData = {
   services: HomeServices | null
   /** Marquesina de logos: clientes con logo y titulo de clientLogosBlock. null sin logos. */
   clients: HomeClients | null
+  /** Segunda mitad de la home (plan 54-14): proceso, casos, sitios, sobre mi, testimonios, FAQ, bloques existentes y cierre. */
+  sectionsB: HomeSectionsB
   /** True cuando la pagina es EN pero el copy del global salio en espanol. */
   isFallback: boolean
 }
@@ -90,7 +93,15 @@ export function str(value: unknown): string | null {
 }
 
 export function emptyHomeData(): HomeData {
-  return { hero: null, tagline: null, vitals: null, services: null, clients: null, isFallback: false }
+  return {
+    hero: null,
+    tagline: null,
+    vitals: null,
+    services: null,
+    clients: null,
+    sectionsB: emptySectionsB(),
+    isFallback: false,
+  }
 }
 
 function mapHero(hero: HomePage['hero'], locale: Locale): HomeHero | null {
@@ -178,6 +189,8 @@ export function mapHomeGlobal(
     // Los logos salen de la coleccion `clientes`, no del global: getHomeData
     // los agrega despues.
     clients: null,
+    // La segunda mitad la agrega getHomeData: mapHomeGlobal solo mapea el global.
+    sectionsB: emptySectionsB(),
     isFallback,
   }
 }
@@ -261,14 +274,14 @@ export function getHomeClients(locale: Locale): Promise<HomeClients | null> {
  * separado, asi que un error en clientes no se lleva el global ni al reves.
  */
 export async function getHomeData(locale: Locale): Promise<HomeData> {
-  const [base, clients] = await Promise.all([
-    (async (): Promise<HomeData> => {
+  const [{ base, rawGlobal }, clients] = await Promise.all([
+    (async (): Promise<{ base: HomeData; rawGlobal: HomePage | null }> => {
       try {
         const { data, isFallback } = await getCachedHomePage(locale)
-        return mapHomeGlobal(data, locale, isFallback)
+        return { base: mapHomeGlobal(data, locale, isFallback), rawGlobal: data }
       } catch (err) {
         console.error('[home]', err)
-        return emptyHomeData()
+        return { base: emptyHomeData(), rawGlobal: null }
       }
     })(),
     (async (): Promise<HomeClients | null> => {
@@ -280,5 +293,9 @@ export async function getHomeData(locale: Locale): Promise<HomeData> {
       }
     })(),
   ])
-  return { ...base, clients }
+  // La segunda mitad nunca lanza (cada lector falla por separado) y no depende
+  // de que el global haya leido bien: sus lectores propios siguen con el global
+  // en null, y una mitad caida no tumba a la otra.
+  const sectionsB = await getHomeSectionsB(locale, rawGlobal)
+  return { ...base, clients, sectionsB }
 }

@@ -16,10 +16,13 @@ import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import { formatSector, splitHeroMetric } from '@/components/mui/split-hero-metric'
-import { getCachedFeaturedContent, type Locale } from '@/lib/cache'
+import { AUDITOR_URL } from '@/lib/auditor'
+import { getCachedFeaturedContent, getCachedPageBySlug, type Locale } from '@/lib/cache'
 import { CACHE_TAGS, CACHE_TTL_SECONDS } from '@/lib/cache-tags'
+import { getCtaData, type CtaData } from '@/lib/cta-data'
+import { sanitizeHref } from '@/lib/nav-links'
 import { SERVICE_ICON_NAMES } from '@/lib/shadow-icons'
-import type { HomePage, Media } from '@/payload-types'
+import type { HomePage, Media, Page } from '@/payload-types'
 
 // ---------------------------------------------------------------------------
 // Tipos de seccion
@@ -579,4 +582,241 @@ export function getHomeTestimonials(locale: Locale): Promise<HomeTestimonialItem
 export function assembleTestimonials(title: string | null, items: HomeTestimonialItem[] | null): HomeTestimonials | null {
   if (!title || !items || items.length === 0) return null
   return { title, items }
+}
+
+// ---------------------------------------------------------------------------
+// Bloques que el doc `home` de Pages ya sirve (SEO-03: quitarlos reduciria
+// contenido indexable). Se mapean a props serializables sin HTML en crudo
+// (T-54-57) y con las URLs saneadas (T-54-58).
+// ---------------------------------------------------------------------------
+
+export type CodeFixItem = {
+  symptom: string
+  cause: string | null
+  filePath: string
+  language: string | null
+  code: string
+  /** URL absoluta http(s) ya saneada, o null. */
+  commitUrl: string | null
+  commitSha: string | null
+  outcome: string | null
+}
+
+export type HomeCodeFixes = {
+  title: string
+  intro: string | null
+  repoLabel: string | null
+  /** URL absoluta http(s) ya saneada, o null. */
+  repoUrl: string | null
+  fixes: CodeFixItem[]
+}
+
+export type HomeAuditor = {
+  /** null: la vista usa el encabezado de messages `auditorHighlight.sectionHeading`. */
+  title: string | null
+  description: string
+  ctaLabel: string | null
+  freeTierNote: string
+  /** Destino externo del auditor (AUDITOR_URL). */
+  href: string
+}
+
+export type HomeAuditOffer = {
+  title: string
+  description: string | null
+  price: string | null
+  priceCaption: string | null
+  creditNote: string | null
+  includes: string[]
+  deliveryNote: string | null
+  /** Rotulo del CTA: el del primer enlace del bloque o, sin el, el del hero. null omite el boton. */
+  ctaLabel: string | null
+}
+
+export type HomeLegacyBlocks = {
+  codeFixes: HomeCodeFixes | null
+  auditor: HomeAuditor | null
+  auditOffer: HomeAuditOffer | null
+}
+
+/** Maximo de arreglos que muestra la home (rejilla de tres columnas). */
+export const HOME_CODE_FIXES_MAX = 3
+
+type LayoutBlock = NonNullable<Page['content']>['layout'][number]
+
+/** Solo URLs absolutas http o https: un repo o un commit no son rutas internas ni mailto. */
+function externalHref(raw: string | null | undefined, locale: Locale): string | null {
+  const href = sanitizeHref(raw, locale)
+  return href && /^https?:\/\//i.test(href) ? href : null
+}
+
+/**
+ * Bloques `codeFixesBlock`, `auditorHighlight` y `auditOfferBlock` del layout
+ * del doc `home` a props. Un bloque ausente o sin contenido minimo da null.
+ * Mapeo puro: lo alimenta la autoprueba con datos de prueba.
+ */
+export function mapLegacyBlocks(
+  layout: ReadonlyArray<LayoutBlock> | null | undefined,
+  locale: Locale,
+  fallbackCtaLabel: string | null,
+): HomeLegacyBlocks {
+  const out: HomeLegacyBlocks = { codeFixes: null, auditor: null, auditOffer: null }
+  for (const block of layout ?? []) {
+    if (block.blockType === 'codeFixesBlock' && !out.codeFixes) {
+      const title = text(block.title)
+      const fixes: CodeFixItem[] = []
+      for (const raw of block.fixes ?? []) {
+        const symptom = text(raw?.symptom)
+        const filePath = text(raw?.filePath)
+        const code = typeof raw?.code === 'string' && raw.code.trim() !== '' ? raw.code : null
+        if (!symptom || !filePath || !code) continue
+        fixes.push({
+          symptom,
+          cause: text(raw.cause),
+          filePath,
+          language: text(raw.language),
+          code,
+          commitUrl: externalHref(raw.commitUrl, locale),
+          commitSha: text(raw.commitSha),
+          outcome: text(raw.outcome),
+        })
+      }
+      if (title && fixes.length > 0) {
+        out.codeFixes = {
+          title,
+          intro: text(block.intro),
+          repoLabel: text(block.repoLabel),
+          repoUrl: externalHref(block.repoUrl, locale),
+          fixes: fixes.slice(0, HOME_CODE_FIXES_MAX),
+        }
+      }
+    } else if (block.blockType === 'auditorHighlight' && !out.auditor) {
+      const description = text(block.description)
+      const freeTierNote = text(block.freeTierNote)
+      if (description && freeTierNote) {
+        out.auditor = {
+          title: text(block.title),
+          description,
+          ctaLabel: text(block.ctaLabel),
+          freeTierNote,
+          href: AUDITOR_URL,
+        }
+      }
+    } else if (block.blockType === 'auditOfferBlock' && !out.auditOffer) {
+      const title = text(block.title)
+      if (title) {
+        const includes = (block.includes ?? []).map((row) => text(row?.item)).filter((i): i is string => i !== null)
+        out.auditOffer = {
+          title,
+          description: text(block.description),
+          price: text(block.price),
+          priceCaption: text(block.priceCaption),
+          creditNote: text(block.creditNote),
+          includes,
+          deliveryNote: text(block.deliveryNote),
+          ctaLabel: text(block.links?.[0]?.link?.label) ?? fallbackCtaLabel,
+        }
+      }
+    }
+  }
+  return out
+}
+
+/**
+ * Lee el doc `home` por la capa cacheada de pages y mapea los tres bloques.
+ * Nunca lanza: un error se registra y los tres quedan en null.
+ */
+export async function getHomeLegacyBlocks(locale: Locale, fallbackCtaLabel: string | null): Promise<HomeLegacyBlocks> {
+  try {
+    const doc = await getCachedPageBySlug('home', locale)
+    return mapLegacyBlocks(doc?.content?.layout, locale, fallbackCtaLabel)
+  } catch (err) {
+    console.error('[home]', err)
+    return { codeFixes: null, auditor: null, auditOffer: null }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Ensamblado de la segunda mitad
+// ---------------------------------------------------------------------------
+
+export type HomeSectionsB = {
+  process: HomeProcess | null
+  cases: HomeCases | null
+  sites: HomeSites | null
+  about: HomeAbout | null
+  testimonials: HomeTestimonials | null
+  faq: HomeFaq | null
+  codeFixes: HomeCodeFixes | null
+  auditor: HomeAuditor | null
+  auditOffer: HomeAuditOffer | null
+  /** Cierre de conversion (getCtaData). null omite el cierre. */
+  cta: CtaData | null
+}
+
+export function emptySectionsB(): HomeSectionsB {
+  return {
+    process: null,
+    cases: null,
+    sites: null,
+    about: null,
+    testimonials: null,
+    faq: null,
+    codeFixes: null,
+    auditor: null,
+    auditOffer: null,
+    cta: null,
+  }
+}
+
+export type SectionsBInput = {
+  global: Partial<HomePage> | null | undefined
+  locale: Locale
+  cases: HomeCaseItem[] | null
+  sites: HomeSiteItem[] | null
+  counts: HomeClientCounts | null
+  testimonials: HomeTestimonialItem[] | null
+  legacy: HomeLegacyBlocks | null
+  cta: CtaData | null
+}
+
+/** Junta el global mapeado con lo leido de cada fuente. Puro: sin Payload. */
+export function assembleHomeSectionsB(input: SectionsBInput): HomeSectionsB {
+  const g = mapHomeGlobalB(input.global, input.locale)
+  return {
+    process: g.process,
+    cases: assembleCases(g.casesText, input.cases),
+    sites: assembleSites(g.sitesText, input.sites),
+    about: assembleAbout(g.aboutText, input.counts),
+    testimonials: assembleTestimonials(g.testimonialsTitle, input.testimonials),
+    faq: g.faq,
+    codeFixes: input.legacy?.codeFixes ?? null,
+    auditor: input.legacy?.auditor ?? null,
+    auditOffer: input.legacy?.auditOffer ?? null,
+    cta: input.cta,
+  }
+}
+
+/**
+ * Lee todas las fuentes de la segunda mitad en paralelo y las junta con el
+ * global ya leido. Nunca lanza: cada lector falla por separado (registra con
+ * `[home]` y deja su seccion en null), asi que un error en sitios no se lleva
+ * los casos ni al reves, y la mitad de arriba de la home no se entera.
+ */
+export async function getHomeSectionsB(locale: Locale, global: Partial<HomePage> | null | undefined): Promise<HomeSectionsB> {
+  try {
+    const heroCta = text(global?.hero?.ctaLabel)
+    const [cases, sites, counts, testimonials, legacy, cta] = await Promise.all([
+      getHomeCases(locale),
+      getHomeSites(locale),
+      getHomeClientCounts(),
+      getHomeTestimonials(locale),
+      getHomeLegacyBlocks(locale, heroCta),
+      getCtaData(locale),
+    ])
+    return assembleHomeSectionsB({ global, locale, cases, sites, counts, testimonials, legacy, cta })
+  } catch (err) {
+    console.error('[home]', err)
+    return emptySectionsB()
+  }
 }

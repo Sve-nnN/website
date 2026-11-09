@@ -14,20 +14,28 @@ import * as React from 'react'
 import { createElement } from 'react'
 
 import { About } from '../../src/components/home/About'
+import { AuditOffer } from '../../src/components/home/AuditOffer'
+import { AuditorHighlightCard } from '../../src/components/home/AuditorHighlightCard'
 import { Cases } from '../../src/components/home/Cases'
+import { CodeFixes } from '../../src/components/home/CodeFixes'
 import { Faq } from '../../src/components/home/Faq'
+import { HomeView } from '../../src/components/home/HomeView'
 import { Process } from '../../src/components/home/Process'
 import { SiteCard } from '../../src/components/home/SiteCard'
 import { Sites } from '../../src/components/home/Sites'
 import { Testimonials } from '../../src/components/home/Testimonials'
+import { mapHomeGlobal } from '../../src/lib/home-data'
 import {
   assembleAbout,
   assembleCases,
+  assembleHomeSectionsB,
   assembleSites,
   assembleTestimonials,
+  emptySectionsB,
   hostnameOf,
   mapFeaturedCases,
   mapHomeGlobalB,
+  mapLegacyBlocks,
   mapTestimonials,
   mapWebsite,
   type HomeSiteItem,
@@ -310,6 +318,158 @@ const SITE_ITEMS = WEBSITE_DOCS.map((d) => mapWebsite(d)).filter((x): x is HomeS
   check(sparse === null, 'faq: sin items validos no hay seccion', JSON.stringify(sparse))
   const emptyFaq = renderToHtml(createElement(Faq, { faq: { title: 'T', items: [] } }))
   check(!/<section/.test(emptyFaq) && !/<h2/.test(emptyFaq), 'faq: el componente con cero items no deja encabezado', 'pinto una seccion vacia')
+}
+
+// ---------------------------------------------------------------------------
+// Bloques existentes y ensamblado final (tarea 3)
+// ---------------------------------------------------------------------------
+const LAYOUT = [
+  {
+    blockType: 'codeFixesBlock',
+    title: 'Este sitio es el caso de estudio',
+    intro: 'Arreglos reales de este repositorio publico.',
+    repoUrl: 'https://github.com/juantech/juan-payload',
+    repoLabel: 'Ver el repositorio',
+    fixes: [
+      { symptom: 'Google recibia dos hreflang', cause: 'Dos fuentes emitian la misma etiqueta.', filePath: 'src/lib/canonical.ts', language: 'ts', code: 'const a = 1 < 2 && "<script>alert(1)</script>"\nconst linea = "una linea muy larga que desborda el contenedor de codigo".repeat(10)', commitUrl: 'https://github.com/juantech/juan-payload/commit/abc1234', commitSha: 'abc1234', outcome: 'Cero errores en Search Console' },
+      { symptom: 'El sitemap listaba redirecciones', filePath: 'src/lib/sitemap-data.ts', code: 'export const x = 1', commitUrl: 'javascript:alert(1)', commitSha: 'def5678' },
+      { symptom: 'Tercer arreglo', filePath: 'src/a.ts', code: 'a()', commitUrl: 'https://github.com/juantech/juan-payload/commit/fff0000', commitSha: 'fff0000' },
+      { symptom: 'Cuarto arreglo que no se muestra', filePath: 'src/b.ts', code: 'b()' },
+      { symptom: 'Sin codigo', filePath: 'src/c.ts', code: '  ' },
+    ],
+  },
+  { blockType: 'auditorHighlight', title: 'Mi auditor SEO', description: 'Un auditor propio con checks tecnicos.', ctaLabel: 'Probar el auditor', freeTierNote: 'El plan gratuito cubre una auditoria al mes.' },
+  {
+    blockType: 'auditOfferBlock',
+    title: 'Auditoria SEO tecnica completa',
+    description: 'Un informe con el plan de correccion.',
+    price: '600 USD',
+    priceCaption: 'Pago unico',
+    creditNote: 'El importe se acredita si contratas la implementacion.',
+    includes: [{ item: 'Rastreo e indexacion' }, { item: 'Core Web Vitals' }, { item: 'Datos estructurados' }, { item: 'Plan por impacto' }],
+    deliveryNote: 'Entrega en 10 dias habiles',
+    links: [{ link: { type: 'custom', url: '#contacto', label: 'Pedir la auditoria' } }],
+  },
+]
+const legacy = mapLegacyBlocks(LAYOUT as never, 'es', 'Pedir auditoría 360')
+{
+  check(legacy.codeFixes?.fixes.length === 3, 'bloques: codeFixes con tres arreglos (omite el cuarto y el que no trae codigo)', `arreglos: ${legacy.codeFixes?.fixes.length}`)
+  check(legacy.codeFixes?.fixes[1]?.commitUrl === null && legacy.codeFixes?.fixes[0]?.commitUrl?.startsWith('https://') === true, 'bloques: commitUrl con javascript: queda en null', JSON.stringify(legacy.codeFixes?.fixes[1]))
+  const hostile = mapLegacyBlocks([{ blockType: 'codeFixesBlock', title: 'T', repoUrl: 'javascript:alert(1)', fixes: [{ symptom: 's', filePath: 'f', code: 'c', commitUrl: '/ruta-interna' }] }] as never, 'es', null)
+  check(hostile.codeFixes?.repoUrl === null && hostile.codeFixes?.fixes[0]?.commitUrl === null, 'bloques: repoUrl y commitUrl solo aceptan http o https absolutos', JSON.stringify(hostile.codeFixes))
+  check(legacy.auditOffer?.ctaLabel === 'Pedir la auditoria', 'bloques: el rotulo del CTA sale del primer enlace del bloque', `rotulo: ${legacy.auditOffer?.ctaLabel}`)
+  const noLink = mapLegacyBlocks([{ blockType: 'auditOfferBlock', title: 'T', includes: [] }] as never, 'es', 'Pedir auditoría 360')
+  check(noLink.auditOffer?.ctaLabel === 'Pedir auditoría 360', 'bloques: sin enlace propio el CTA cae al rotulo del hero', `rotulo: ${noLink.auditOffer?.ctaLabel}`)
+  const none = mapLegacyBlocks([{ blockType: 'hero' }] as never, 'es', null)
+  check(none.codeFixes === null && none.auditor === null && none.auditOffer === null && mapLegacyBlocks(null, 'es', null).auditor === null, 'bloques: un bloque ausente da null', JSON.stringify(none))
+  check(mapLegacyBlocks([{ blockType: 'auditorHighlight', description: 'x' }] as never, 'es', null).auditor === null, 'bloques: auditor sin nota de plan gratuito se omite', 'devolvio el auditor')
+
+  // CodeFixes
+  if (legacy.codeFixes) {
+    const html = strip(renderToHtml(createElement(CodeFixes, { block: legacy.codeFixes })))
+    const regions = [...html.matchAll(/<div[^>]*role="region"[^>]*>/g)].map((m) => m[0])
+    check(regions.length === 3 && regions.every((r) => /tabindex="0"/.test(r) && /aria-label="Código del arreglo [^"]+"/.test(r)), 'codefixes: tres regiones con tabindex 0, role region y aria-label con el nombre del arreglo', JSON.stringify(regions))
+    check(/aria-label="Código del arreglo Google recibia dos hreflang"/.test(html), 'codefixes: el nombre de la region es el sintoma', 'falta el nombre')
+    check(/<a[^>]*href="https:\/\/github\.com\/juantech\/juan-payload\/commit\/abc1234"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/.test(html) && html.includes('abc1234'), 'codefixes: el commit como chip con enlace externo en pestaña nueva', 'falta el chip del commit')
+    check(countOf(html, /commit\/(abc1234|fff0000)/) === 2 && !/javascript:/.test(html), 'codefixes: el commit con esquema peligroso no llega al HTML', 'aparece javascript: o un enlace de mas')
+    check(countOf(html, /se abre en otra pestaña/) === 3, 'codefixes: sufijo de nueva pestaña en repo y en los dos commits', `sufijos: ${countOf(html, /se abre en otra pestaña/)}`)
+    check(html.includes('&lt;script&gt;alert(1)&lt;/script&gt;') && !/<script>alert/.test(html), 'codefixes: el codigo se escapa como texto (sin HTML en crudo)', 'el codigo llego sin escapar')
+    check(countOf(html, /<h3[\s>]/) === 3 && /<h2[^>]*id="codigo-t"/.test(html), 'codefixes: h2 y tres h3', JSON.stringify(headingLevels(html)))
+    check(html.includes('src/lib/canonical.ts') && html.includes('Cero errores en Search Console') && html.includes('Ver el repositorio'), 'codefixes: archivo, resultado y enlace al repo', 'falta archivo, resultado o repo')
+    check(!/<main[\s>]/.test(html) && !/\{\{/.test(html), 'codefixes: sin main ni llaves dobles', 'main o llaves')
+  }
+  const emptyFixes = renderToHtml(createElement(CodeFixes, { block: { title: 'T', intro: null, repoLabel: null, repoUrl: null, fixes: [] } }))
+  check(!/<section/.test(emptyFixes) && !/<h2/.test(emptyFixes), 'codefixes: con cero arreglos no deja encabezado', 'pinto una seccion vacia')
+
+  // Auditor
+  if (legacy.auditor) {
+    const html = strip(renderToHtml(createElement(AuditorHighlightCard, { auditor: legacy.auditor })))
+    check(/<h2[^>]*id="auditor-t"[^>]*>Mi auditor SEO<\/h2>/.test(html), 'auditor: h2 con el titulo y el id que nombra la seccion', 'falta el h2')
+    check(/<a[^>]*href="https:\/\/auditor\.juan-tech\.com"[^>]*target="_blank"[^>]*rel="noopener"/.test(html) && html.includes('Probar el auditor') && html.includes('se abre en una pestaña nueva'), 'auditor: boton al auditor en pestaña nueva con su sufijo', 'falta el boton o el sufijo')
+    check(html.includes(legacy.auditor.freeTierNote), 'auditor: nota del plan gratuito visible', 'falta la nota')
+    check(countOf(html, /<li[\s>]/) === 4 && html.includes('checks técnicos'), 'auditor: las cuatro cifras verificables con su rotulo', `li: ${countOf(html, /<li[\s>]/)}`)
+    check(/MuiButton-outlined/.test(html) && !/MuiButton-contained(?![A-Za-z])/.test(html), 'auditor: boton outlined, ningun contained', 'el boton no es outlined')
+  }
+  const noTitle = mapLegacyBlocks([{ blockType: 'auditorHighlight', description: 'd', freeTierNote: 'n' }] as never, 'es', null).auditor
+  check(noTitle !== null && /Mi auditor SEO/.test(strip(renderToHtml(createElement(AuditorHighlightCard, { auditor: noTitle })))), 'auditor: sin titulo usa el encabezado de messages', 'falta el encabezado de respaldo')
+
+  // AuditOffer
+  if (legacy.auditOffer) {
+    const html = strip(renderToHtml(createElement(AuditOffer, { offer: legacy.auditOffer })))
+    const raw = renderToHtml(createElement(AuditOffer, { offer: legacy.auditOffer }))
+    check(html.includes('600 USD') && html.includes('Pago unico'), 'oferta: precio y leyenda', 'falta el precio')
+    check(countOf(html, /<li[\s>]/) === legacy.auditOffer.includes.length, 'oferta: tantos li como includes', `li: ${countOf(html, /<li[\s>]/)}`)
+    check(countOf(html, /MuiButton-contained(?![A-Za-z])/) === 1, 'oferta: un solo boton contained', `contained: ${countOf(html, /MuiButton-contained(?![A-Za-z])/)}`)
+    check(/<a[^>]*href="#contacto"[^>]*>Pedir la auditoria<\/a>/.test(html), 'oferta: el boton va a #contacto', 'falta el boton')
+    const priceClass = html.match(/<p class="([^"]+)">600 USD<\/p>/)?.[1]?.split(' ').find((c) => c.startsWith('css-')) ?? ''
+    check(priceClass !== '' && new RegExp(`\\.${priceClass}\\{[^}]*font-size:3rem`).test(raw), 'oferta: precio de 48px', `clase ${priceClass || '(ninguna)'}`)
+    check(html.includes('El importe se acredita') && html.includes('Entrega en 10 dias habiles'), 'oferta: notas de credito y de entrega', 'faltan las notas')
+    check(/<h2[^>]*id="oferta-t"/.test(html) && !/<main[\s>]/.test(html), 'oferta: h2 y sin main', 'falta el h2')
+    check(/width:32px/.test(raw) && /height:32px/.test(raw), 'oferta: marca de verificacion en circulo de 32px', 'falta el circulo de 32px')
+    const noCta = strip(renderToHtml(createElement(AuditOffer, { offer: { ...legacy.auditOffer, ctaLabel: null } })))
+    check(!/<a[\s>]/.test(noCta), 'oferta: sin rotulo no hay boton', 'quedo un enlace')
+  }
+}
+
+// HomeView completa
+{
+  const fixtureHome = mapHomeGlobal(HOME_COPY_ES as never, 'es', false)
+  const CTA = { title: 'Hablemos de tu sitio', lead: 'Cuentame de que se trata.', email: 'hola@juan-tech.com', name: 'Juan', avatarUrl: null, isFallback: false }
+  const photosGlobal = {
+    ...HOME_COPY_ES,
+    about: { ...HOME_COPY_ES.about, photos: [{ caption: 'Taller', image: { id: 1, url: 'https://res.cloudinary.com/demo/image/upload/t.jpg', alt: 'Taller', width: 1600, height: 1200 } }] },
+  }
+  const sectionsB = assembleHomeSectionsB({
+    global: photosGlobal as never,
+    locale: 'es',
+    cases: mapFeaturedCases(CASE_DOCS),
+    sites: SITE_ITEMS,
+    counts: { seo: 15, dev: 13 },
+    testimonials: mapTestimonials([{ id: 1, name: 'Patricia Ibarra', role: 'CEO', company: 'Estylopia', testimonial: 'Trabajar con Juan fue lo mejor.' }]),
+    legacy,
+    cta: CTA,
+  })
+  const clients = { title: 'Clientes que confiaron en mí', logos: [{ id: 1, src: 'https://res.cloudinary.com/demo/image/upload/l.webp', alt: 'Cliente 1', width: 200, height: 60, onDark: false }] }
+  const data = { ...fixtureHome, clients, sectionsB }
+  const render = (d: typeof data, locale: 'es' | 'en' = 'es') =>
+    strip(renderToHtml(createElement(HomeView, { data: d, locale, fallbackTitle: 'Respaldo' }), locale))
+  const html = render(data)
+
+  check(countOf(html, /<h1[\s>]/) === 1 && headingLevels(html)[0] === 1, 'home: exactamente un h1 y es el del hero', JSON.stringify(headingLevels(html)))
+  const levels = headingLevels(html)
+  const jump = levels.findIndex((l, i) => i > 0 && l > (levels[i - 1] as number) + 1)
+  check(jump === -1, 'home: los niveles de encabezado nunca saltan', `salto en el indice ${jump}: ${JSON.stringify(levels)}`)
+
+  const ORDER = ['inicio', 'clientes', 'medicion', 'codigo', 'servicios', 'casos', 'auditor', 'proceso', 'sitios', 'sobre', 'testimonios', 'oferta', 'faq', 'contacto']
+  const positions = ORDER.map((id) => html.indexOf(` id="${id}"`))
+  check(positions.every((p) => p >= 0), 'home: aparecen las catorce secciones', `ausentes: ${ORDER.filter((_, i) => positions[i] === -1).join(', ')}`)
+  check(positions.every((p, i) => i === 0 || p > (positions[i - 1] as number)), 'home: las secciones salen en el orden aprobado', ORDER.map((id, i) => `${id}@${positions[i]}`).join(' '))
+
+  const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1])
+  const dupes = ids.filter((id, i) => ids.indexOf(id) !== i)
+  check(dupes.length === 0, 'home: ningun id repetido en la pagina completa', `repetidos: ${JSON.stringify(dupes)}`)
+  const controls = [...html.matchAll(/aria-controls="([^"]+)"/g)].map((m) => m[1])
+  check(controls.every((c) => ids.includes(c)), 'home: cada aria-controls resuelve a un id', `sin resolver: ${JSON.stringify(controls.filter((c) => !ids.includes(c)))}`)
+  const labelled = [...html.matchAll(/aria-labelledby="([^"]+)"/g)].map((m) => m[1])
+  check(labelled.every((l) => ids.includes(l)), 'home: cada aria-labelledby resuelve a un id', `colgando: ${JSON.stringify(labelled.filter((l) => !ids.includes(l)))}`)
+  // React 19 emite `javascript:throw new Error(...)` como marcador de todo <form> con action de servidor (atributo y script de reproduccion); no es un enlace del CMS.
+  const withoutFormAction = html.replace(/javascript:throw/g, '')
+  check(!/<main[\s>]/.test(html) && !/\{\{/.test(html) && !/javascript:/.test(withoutFormAction), 'home: sin main, sin llaves dobles y sin javascript:', `main:${/<main[\s>]/.test(html)} llaves:${html.match(/.{40}\{\{.{40}/)?.[0]} js:${withoutFormAction.match(/.{40}javascript:.{40}/)?.[0]}`)
+  check(!textOf(html).includes(EM) && !textOf(html).includes(EN), 'home: el texto visible no lleva raya larga ni corta', 'aparece una raya')
+
+  // Sin la segunda mitad la home sigue como en el plan 08
+  const half = render({ ...data, sectionsB: emptySectionsB() })
+  check(!/id="(codigo|casos|auditor|proceso|sitios|sobre|testimonios|oferta|faq|contacto)"/.test(half) && /id="servicios"/.test(half), 'home: con la segunda mitad vacia solo quedan las secciones de la primera', 'quedo una seccion de la segunda mitad')
+  // Una seccion caida no se lleva a las demas
+  const noSites = render({ ...data, sectionsB: { ...sectionsB, sites: null } })
+  check(!/id="sitios"/.test(noSites) && /id="casos"/.test(noSites) && /id="faq"/.test(noSites) && /id="contacto"/.test(noSites), 'home: sin sitios las demas secciones siguen', 'una seccion cayo con la de sitios')
+
+  // Respaldo EN: las secciones del global van en lang es y las del doc home no
+  const en = render({ ...fixtureHome, clients, isFallback: true, sectionsB }, 'en')
+  check(/role="note"/.test(en) && countOf(en, /lang="es"/) >= 9, 'home EN respaldo: aviso y las secciones del global en lang es', `lang es: ${countOf(en, /lang="es"/)}`)
+  const esLangBlocks = (id: string) => new RegExp(`<div lang="es"><(?:section|div)[^>]*id="${id}"`).test(en)
+  check(!esLangBlocks('codigo') && !esLangBlocks('auditor') && !esLangBlocks('oferta'), 'home EN respaldo: los bloques del doc home no van en lang es', 'un bloque del doc home quedo en lang es')
+  check(['proceso', 'casos', 'sitios', 'sobre', 'testimonios', 'faq'].every((id) => esLangBlocks(id)), 'home EN respaldo: proceso, casos, sitios, sobre mi, testimonios y FAQ envueltos en lang es', 'falta algun envoltorio')
 }
 
 if (failures > 0) {
