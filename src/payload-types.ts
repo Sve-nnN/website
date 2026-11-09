@@ -651,6 +651,16 @@ export interface CaseStudy {
         }[]
       | null;
   };
+  /**
+   * Opcional. La sección "Lecciones aprendidas" solo se muestra si hay lecciones cargadas.
+   */
+  lessons?:
+    | {
+        title: string;
+        body: string;
+        id?: string | null;
+      }[]
+    | null;
   conclusion?: {
     root: {
       type: string;
@@ -3007,6 +3017,13 @@ export interface CaseStudiesSelect<T extends boolean = true> {
               after?: T;
               id?: T;
             };
+      };
+  lessons?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        id?: T;
       };
   conclusion?: T;
   heroImage?: T;
