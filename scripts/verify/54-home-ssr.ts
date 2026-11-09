@@ -14,6 +14,8 @@ import * as React from 'react'
 import { createElement } from 'react'
 
 import { HomeView } from '../../src/components/home/HomeView'
+import { Services } from '../../src/components/home/Services'
+import { Vitals } from '../../src/components/home/Vitals'
 import { mapHomeGlobal, type HomeData } from '../../src/lib/home-data'
 import { HOME_COPY_ES } from '../db/data/54-home-copy'
 import { countOf, headingLevels, renderToHtml, textOf } from './54-ssr-harness'
@@ -144,6 +146,82 @@ const empty = mapHomeGlobal(null, 'es', false)
   check(!/id="clientes-t"/.test(noLogos) && !noLogos.includes(MARQUEE_TITLE), 'marquesina: sin logos no emite encabezado', 'quedó el encabezado de clientes')
   const noHero = render({ ...fixture, hero: null })
   check(countOf(noHero, /<h1[\s>]/) === 1 && textOf(noHero.match(/<h1[\s\S]*?<\/h1>/)?.[0] ?? '') === FALLBACK_TITLE, 'hero: sin hero hay un h1 oculto de respaldo', 'no hay un único h1 de respaldo')
+}
+
+
+// ---------------------------------------------------------------------------
+// Vitals y Servicios (tarea 3)
+// ---------------------------------------------------------------------------
+{
+  const html = render(fixture)
+  const vitalsHtml = html.slice(html.indexOf('id="medicion"'), html.indexOf('id="servicios"'))
+
+  // Vitals: cuatro tarjetas con h3, cuatro barras con nombre accesible y la cifra de cada una
+  check(fixture.vitals?.items.length === 4, 'vitals: el mapper trae cuatro lecturas', `items: ${fixture.vitals?.items.length}`)
+  check(countOf(vitalsHtml, /<h3[\s>]/) === 4, 'vitals: cuatro tarjetas con h3', `h3: ${countOf(vitalsHtml, /<h3[\s>]/)}`)
+  check(countOf(vitalsHtml, /<li[\s>]/) === 4, 'vitals: cuatro li dentro de una lista', `li: ${countOf(vitalsHtml, /<li[\s>]/)}`)
+  const bars = [...vitalsHtml.matchAll(/role="img"[^>]*aria-label="([^"]+)"/g)].map((m) => m[1])
+  const expected = HOME_COPY_ES.vitals.items.map((v) => `${v.name} de juan-tech.com: ${v.label}, dentro del rango bueno`)
+  check(
+    bars.length === 4 && expected.every((e, i) => bars[i] === e),
+    'vitals: cuatro role=img con el nombre accesible armado desde messages',
+    `barras: ${JSON.stringify(bars)}`,
+  )
+  check(
+    HOME_COPY_ES.vitals.items.every((v) => vitalsHtml.includes(`>${v.value}<`) && vitalsHtml.includes(v.note)),
+    'vitals: la cifra y la nota de cada lectura están en texto',
+    'falta una cifra o una nota',
+  )
+  check(vitalsHtml.includes(HOME_COPY_ES.vitals.measurementNote), 'vitals: nota de medición', 'falta la nota de medición')
+  check(!/\{\{|\{name\}|\{label\}/.test(html), 'vitals: la plantilla ariaLabel quedó sin variables sueltas', 'quedan llaves de plantilla')
+
+  // Servicios: cinco resúmenes, el texto de los cinco paneles en el HTML, Ver servicio solo donde hay página
+  check(countOf(html, /id="srv-\d-h"/) === 5, 'servicios: cinco resúmenes', `resúmenes: ${countOf(html, /id="srv-\d-h"/)}`)
+  check(
+    HOME_COPY_ES.services.items.every((it) => html.includes(it.body.replace(/&/g, '&amp;'))),
+    'servicios: el texto de los cinco paneles está en el HTML aunque cuatro estén cerrados',
+    'falta el cuerpo de algún panel',
+  )
+  check(countOf(html, /aria-expanded="true"/) === 1, 'servicios: solo el primer panel abierto', `abiertos: ${countOf(html, /aria-expanded="true"/)}`)
+  check(/id="srv-0-h"[^>]*aria-expanded="true"|aria-expanded="true"[^>]*id="srv-0-h"/.test(html), 'servicios: el abierto es el primero', 'el primero no está abierto')
+  check(countOf(html, /Ver servicio/g) === 3, 'servicios: Ver servicio solo en los tres con página', `apariciones: ${countOf(html, /Ver servicio/g)}`)
+  check(countOf(html, /href="\/servicios\/[a-z-]+"/) === 3, 'servicios ES: tres hrefs /servicios/<slug>', `hrefs: ${countOf(html, /href="\/servicios\/[a-z-]+"/)}`)
+  const htmlEn = render(fixture, 'en')
+  check(countOf(htmlEn, /href="\/en\/services\/[a-z-]+"/) === 3 && !/href="\/servicios\//.test(htmlEn), 'servicios EN: tres hrefs /en/services/<slug>', 'los hrefs EN no llevan /en/services/')
+  check(countOf(htmlEn, /View service/g) === 3, 'servicios EN: rótulo View service desde messages', `apariciones: ${countOf(htmlEn, /View service/g)}`)
+  check(countOf(html, /aria-label="Temas"/g) === 5, 'servicios: lista de temas con aria-label desde messages (los cinco traen tags)', `listas Temas: ${countOf(html, /aria-label="Temas"/g)}`)
+  check(/position:sticky/.test(renderRaw(fixture)) && /top:112px/.test(renderRaw(fixture)), 'servicios: columna izquierda sticky con top 112px', 'falta sticky o top 112px')
+  check(/<section[^>]*id="servicios"[^>]*aria-labelledby="servicios-t"/.test(html) && /<h2[^>]*id="servicios-t"/.test(html), 'servicios: sección con h2 servicios-t', 'falta el h2 o el aria-labelledby')
+
+  // Ids únicos y aria-controls resueltos en toda la home
+  const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1])
+  const dupes = ids.filter((id, i) => ids.indexOf(id) !== i)
+  check(dupes.length === 0, 'home: ningún id repetido', `repetidos: ${JSON.stringify(dupes)}`)
+  const controls = [...html.matchAll(/aria-controls="([^"]+)"/g)].map((m) => m[1])
+  check(controls.length >= 5 && controls.every((c) => ids.includes(c)), 'home: cada aria-controls resuelve a un id', `sin resolver: ${JSON.stringify(controls.filter((c) => !ids.includes(c)))}`)
+
+  // Encabezados en orden razonable: un h1, h2 de secciones, h3 de tarjetas y acordeón
+  const levels = headingLevels(html)
+  check(levels.filter((l) => l === 1).length === 1 && levels[0] === 1, 'home: un solo h1 y es el primer encabezado', JSON.stringify(levels))
+
+  // Estados vacíos
+  const emptyVitals = { ...fixture, vitals: mapHomeGlobal({ vitals: { title: 'T', items: [] } } as never, 'es', false).vitals }
+  const emptyServices = { ...fixture, services: mapHomeGlobal({ services: { title: 'T', items: [] } } as never, 'es', false).services }
+  check(emptyVitals.vitals === null && !/id="medicion"/.test(render(emptyVitals)) && !render(emptyVitals).includes('Medición antes'), 'vitals: sin items no deja encabezado', 'quedó la sección')
+  check(emptyServices.services === null && !/id="servicios"/.test(render(emptyServices)) && !/servicios-t/.test(render(emptyServices)), 'servicios: sin items no deja encabezado', 'quedó la sección')
+  const directVitals = renderToHtml(createElement(Vitals, { vitals: { title: 'T', lead: null, measurementNote: null, items: [] } }))
+  const directServices = renderToHtml(createElement(Services, { services: { title: 'T', lead: null, ctaLabel: null, items: [] }, locale: 'es' }))
+  check(!/<section/.test(directVitals) && !/<section/.test(directServices), 'vitals y servicios: el componente con items vacíos no pinta nada', 'pintó una sección vacía')
+  const sparse = mapHomeGlobal(
+    { vitals: { title: 'T', items: [{ name: 'LCP' }] }, services: { title: 'S', items: [{ title: 'X', icon: 'no-existe', servicePage: 'no-existe' }] } } as never,
+    'es',
+    false,
+  )
+  check(
+    sparse.vitals?.items[0].goodPct === 0 && sparse.vitals?.items[0].markerPct === 0 && sparse.services?.items[0].icon === null && sparse.services?.items[0].servicePage === null,
+    'mapper: números faltantes a 0, icono y página inválidos a null',
+    JSON.stringify(sparse),
+  )
 }
 
 // ---------------------------------------------------------------------------

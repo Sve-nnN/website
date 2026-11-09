@@ -168,6 +168,12 @@ function dangling(html: string, attr: 'aria-labelledby' | 'aria-controls'): stri
       dangling(faq, 'aria-controls').length === 0,
     `ids ausentes o aria-controls colgando: ${dangling(faq, 'aria-controls').join(', ')}`,
   )
+  const faqIds = [...faq.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1])
+  check(
+    'FaqAccordion: ningun id repetido (el panel recibe su id de MUI desde aria-controls)',
+    faqIds.every((id, i) => faqIds.indexOf(id) === i),
+    `ids repetidos: ${faqIds.filter((id, i) => faqIds.indexOf(id) !== i).join(', ')}`,
+  )
   check(
     'FaqAccordion: los encabezados de resumen son h3',
     JSON.stringify(headingLevels(faq)) === '[3,3,3]',

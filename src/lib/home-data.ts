@@ -14,6 +14,8 @@ import type { MarqueeLogo } from '@/components/mui/LogoMarquee'
 import { getCachedHomePage, type Locale } from '@/lib/cache'
 import { CACHE_TAGS, CACHE_TTL_SECONDS } from '@/lib/cache-tags'
 import { sanitizeHref } from '@/lib/nav-links'
+import { SERVICE_ICON_NAMES } from '@/lib/shadow-icons'
+import { isServiceSlug, type ServiceSlug } from '@/lib/service-slugs'
 import type { Cliente, HomePage, Media } from '@/payload-types'
 
 export type HomeHero = {
@@ -28,6 +30,42 @@ export type HomeHero = {
   statCaption: string | null
 }
 
+export type VitalItem = {
+  name: string
+  desc: string | null
+  value: string | null
+  label: string | null
+  goodPct: number
+  midPct: number
+  poorPct: number
+  markerPct: number
+  note: string | null
+}
+
+export type HomeVitals = {
+  title: string
+  lead: string | null
+  measurementNote: string | null
+  items: VitalItem[]
+}
+
+export type ServiceItem = {
+  /** Nombre de icono validado contra SERVICE_ICON_NAMES, o null. */
+  icon: string | null
+  title: string
+  body: string | null
+  tags: string[]
+  /** Slug validado de la pagina del servicio. La vista arma el href con buildServiceHref. */
+  servicePage: ServiceSlug | null
+}
+
+export type HomeServices = {
+  title: string
+  lead: string | null
+  ctaLabel: string | null
+  items: ServiceItem[]
+}
+
 export type HomeClients = {
   title: string
   logos: MarqueeLogo[]
@@ -36,6 +74,8 @@ export type HomeClients = {
 export type HomeData = {
   hero: HomeHero | null
   tagline: string | null
+  vitals: HomeVitals | null
+  services: HomeServices | null
   /** Marquesina de logos: clientes con logo y titulo de clientLogosBlock. null sin logos. */
   clients: HomeClients | null
   /** True cuando la pagina es EN pero el copy del global salio en espanol. */
@@ -50,7 +90,7 @@ export function str(value: unknown): string | null {
 }
 
 export function emptyHomeData(): HomeData {
-  return { hero: null, tagline: null, clients: null, isFallback: false }
+  return { hero: null, tagline: null, vitals: null, services: null, clients: null, isFallback: false }
 }
 
 function mapHero(hero: HomePage['hero'], locale: Locale): HomeHero | null {
@@ -72,6 +112,57 @@ function mapHero(hero: HomePage['hero'], locale: Locale): HomeHero | null {
   }
 }
 
+/** Numero finito o 0 (un valor que falta o no es numerico no rompe la barra). */
+function num(value: unknown): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : 0
+}
+
+function mapVitals(vitals: HomePage['vitals']): HomeVitals | null {
+  if (!vitals) return null
+  const title = str(vitals.title)
+  const items: VitalItem[] = []
+  for (const raw of vitals.items ?? []) {
+    const name = str(raw.name)
+    if (!name) continue
+    items.push({
+      name,
+      desc: str(raw.desc),
+      value: str(raw.value),
+      label: str(raw.label),
+      goodPct: num(raw.goodPct),
+      midPct: num(raw.midPct),
+      poorPct: num(raw.poorPct),
+      markerPct: num(raw.markerPct),
+      note: str(raw.note),
+    })
+  }
+  // Sin items no hay lecturas que mostrar, y sin titulo la seccion quedaria sin
+  // encabezado ni nombre accesible: en los dos casos se omite.
+  if (!title || items.length === 0) return null
+  return { title, lead: str(vitals.lead), measurementNote: str(vitals.measurementNote), items }
+}
+
+function mapServices(services: HomePage['services']): HomeServices | null {
+  if (!services) return null
+  const title = str(services.title)
+  const items: ServiceItem[] = []
+  for (const raw of services.items ?? []) {
+    const itemTitle = str(raw.title)
+    if (!itemTitle) continue
+    const icon = str(raw.icon)
+    const page = str(raw.servicePage)
+    items.push({
+      icon: icon && (SERVICE_ICON_NAMES as readonly string[]).includes(icon) ? icon : null,
+      title: itemTitle,
+      body: str(raw.body),
+      tags: (raw.tags ?? []).map((t) => str(t.tag)).filter((t): t is string => t !== null),
+      servicePage: page && isServiceSlug(page) ? page : null,
+    })
+  }
+  if (!title || items.length === 0) return null
+  return { title, lead: str(services.lead), ctaLabel: str(services.ctaLabel), items }
+}
+
 /** Documento del global `home-page` a props. Una seccion sin contenido da null. */
 export function mapHomeGlobal(
   global: Partial<HomePage> | null | undefined,
@@ -82,6 +173,8 @@ export function mapHomeGlobal(
   return {
     hero: mapHero(global.hero, locale),
     tagline: str(global.tagline),
+    vitals: mapVitals(global.vitals),
+    services: mapServices(global.services),
     // Los logos salen de la coleccion `clientes`, no del global: getHomeData
     // los agrega despues.
     clients: null,

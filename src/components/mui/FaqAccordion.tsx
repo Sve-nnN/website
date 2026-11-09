@@ -63,7 +63,7 @@ export function FaqAccordion({ idPrefix, items, defaultOpen = 0, headingLevel = 
               {item.question}
             </Typography>
           </AccordionSummary>
-          <AccordionDetails id={`${idPrefix}-${i}-c`}>
+          <AccordionDetails>
             {typeof item.answer === 'string' ? (
               <Typography variant="body1">{item.answer}</Typography>
             ) : (

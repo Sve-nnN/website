@@ -7,7 +7,9 @@ import type { Locale } from '@/lib/cache'
 import type { HomeData } from '@/lib/home-data'
 
 import { Hero } from './Hero'
+import { Services } from './Services'
 import { Tagline } from './Tagline'
+import { Vitals } from './Vitals'
 
 // Estilo local y no `visuallyHidden` de ScoreRing: ese modulo es 'use client' y
 // desde un Server Component su export llegaria como referencia de cliente, no
@@ -61,6 +63,8 @@ export function HomeView({ data, locale, fallbackTitle }: Props) {
         />
       )}
       {data.tagline && <div lang={copyLang}><Tagline text={data.tagline} /></div>}
+      {data.vitals && <div lang={copyLang}><Vitals vitals={data.vitals} /></div>}
+      {data.services && <div lang={copyLang}><Services services={data.services} locale={locale} /></div>}
     </>
   )
 }
