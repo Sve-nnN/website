@@ -128,7 +128,8 @@ export async function LocalLandingPage({ locale, slug }: { locale: Locale; slug:
       }
       case 'cta':
         // El cierre se pinta al final de la página, con el único formulario.
-        if (s.closing) return null
+        // Si no hay datos de cierre, el bloque se pinta como banda y su texto no se pierde.
+        if (s.closing && ctaData) return null
         return (
           <ServiceCtaBand key={key} link={ctaLink(s, locale)}>
             <MuiRichText data={s.block.richText as unknown as SerializedEditorState} maxWidth={760} />
