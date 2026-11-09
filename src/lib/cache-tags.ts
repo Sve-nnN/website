@@ -20,7 +20,16 @@ import type {
   GlobalAfterChangeHook,
 } from 'payload'
 
-import type { Page, Post, CaseStudy, Category, AffiliateLink } from '@/payload-types'
+import type {
+  Page,
+  Post,
+  CaseStudy,
+  Category,
+  AffiliateLink,
+  Website,
+  Author,
+  SpeakingEvent,
+} from '@/payload-types'
 
 export const CACHE_TTL_SECONDS = 60
 
@@ -79,6 +88,8 @@ export const CACHE_TAGS = {
   caseStudy: (slug: string) => `case-studies:${slug}`,
   categories: () => 'categories:all',
   websites: () => 'websites:all',
+  authors: () => 'authors:all',
+  speakingEvents: () => 'speaking-events:all',
   featuredContent: () => 'featured-content',
   blogPromo: () => 'blog-promo',
   header: () => 'header',
@@ -133,6 +144,63 @@ export const revalidateCaseStudiesCacheOnDelete: CollectionAfterDeleteHook<CaseS
 }) => {
   safeRevalidateTag(CACHE_TAGS.caseStudies())
   if (doc.slug) safeRevalidateTag(CACHE_TAGS.caseStudy(doc.slug))
+  safeRevalidateAllPaths()
+  return doc
+}
+
+// --- Websites (fase 55). La colección es pública; el índice y el detalle leen
+// por la capa cacheada con `CACHE_TAGS.websites()`. No hay tag por slug: la
+// lectura del detalle comparte el tag de colección, así que basta con este.
+//
+// LÍMITE (T-55-15): un hook corre en el proceso que ejecuta el admin, que es
+// producción (master). El preview (dev.juan-tech.com) es otro proceso y no
+// recibe este `revalidateTag`: ahí un cambio llega por el TTL de 60 s de
+// `unstable_cache` más la ventana ISR de 60 s de la ruta. La revalidación en
+// vivo se comprueba en la compuerta humana de la fase 57, no en un script. ---
+
+export const revalidateWebsitesCache: CollectionAfterChangeHook<Website> = ({ doc }) => {
+  safeRevalidateTag(CACHE_TAGS.websites())
+  safeRevalidateAllPaths()
+  return doc
+}
+
+export const revalidateWebsitesCacheOnDelete: CollectionAfterDeleteHook<Website> = ({ doc }) => {
+  safeRevalidateTag(CACHE_TAGS.websites())
+  safeRevalidateAllPaths()
+  return doc
+}
+
+// --- Authors (fase 55). La firma de autor aparece en los posts, así que un
+// cambio de autor invalida también el tag de posts. Mismo límite de proceso
+// que Websites (ver arriba). ---
+
+export const revalidateAuthorsCache: CollectionAfterChangeHook<Author> = ({ doc }) => {
+  safeRevalidateTag(CACHE_TAGS.authors())
+  safeRevalidateTag(CACHE_TAGS.posts())
+  safeRevalidateAllPaths()
+  return doc
+}
+
+export const revalidateAuthorsCacheOnDelete: CollectionAfterDeleteHook<Author> = ({ doc }) => {
+  safeRevalidateTag(CACHE_TAGS.authors())
+  safeRevalidateTag(CACHE_TAGS.posts())
+  safeRevalidateAllPaths()
+  return doc
+}
+
+// --- Speaking Events (fase 55). Las ponencias salen en Sobre mí y en el perfil
+// de autor. Mismo límite de proceso que Websites (ver arriba). ---
+
+export const revalidateSpeakingEventsCache: CollectionAfterChangeHook<SpeakingEvent> = ({ doc }) => {
+  safeRevalidateTag(CACHE_TAGS.speakingEvents())
+  safeRevalidateAllPaths()
+  return doc
+}
+
+export const revalidateSpeakingEventsCacheOnDelete: CollectionAfterDeleteHook<SpeakingEvent> = ({
+  doc,
+}) => {
+  safeRevalidateTag(CACHE_TAGS.speakingEvents())
   safeRevalidateAllPaths()
   return doc
 }
