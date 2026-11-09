@@ -189,5 +189,9 @@ function main() {
   console.log(`PASS: ${file} es aditiva y solo crea las cuatro tablas de lessons`)
 }
 
-if (process.argv.includes('--selftest')) selftest()
-else main()
+// Solo se ejecuta como script; al importarla (55-pre-migrate-check.mjs) expone
+// extractUpBody y checkUpBody sin correr main ni selftest.
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  if (process.argv.includes('--selftest')) selftest()
+  else main()
+}
