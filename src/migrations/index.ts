@@ -39,6 +39,7 @@ import * as migration_20260907_040039_phase48_5_auditor_callout from './20260907
 import * as migration_20260907_042330_phase48_5_tool_stack_auditor_highlight from './20260907_042330_phase48_5_tool_stack_auditor_highlight';
 import * as migration_20260908_014507_phase49_subscribers_lead_magnets from './20260908_014507_phase49_subscribers_lead_magnets';
 import * as migration_20261108_043335_phase54_shadow_content from './20261108_043335_phase54_shadow_content';
+import * as migration_20261109_044123_phase55_case_lessons from './20261109_044123_phase55_case_lessons';
 
 export const migrations = [
   {
@@ -244,6 +245,11 @@ export const migrations = [
   {
     up: migration_20261108_043335_phase54_shadow_content.up,
     down: migration_20261108_043335_phase54_shadow_content.down,
-    name: '20261108_043335_phase54_shadow_content'
+    name: '20261108_043335_phase54_shadow_content',
+  },
+  {
+    up: migration_20261109_044123_phase55_case_lessons.up,
+    down: migration_20261109_044123_phase55_case_lessons.down,
+    name: '20261109_044123_phase55_case_lessons'
   },
 ];

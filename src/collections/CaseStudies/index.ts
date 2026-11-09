@@ -101,6 +101,21 @@ export const CaseStudies: CollectionConfig = {
         },
       ],
     },
+    // Phase 55 (55-03, D-10): aditivo y opcional. La vista solo renderiza la
+    // seccion si hay lecciones cargadas; el contenido lo carga la fase 56.
+    {
+      name: 'lessons',
+      label: 'Lecciones aprendidas',
+      type: 'array',
+      admin: {
+        description:
+          'Opcional. La sección "Lecciones aprendidas" solo se muestra si hay lecciones cargadas.',
+      },
+      fields: [
+        { name: 'title', type: 'text', required: true, localized: true },
+        { name: 'body', type: 'textarea', required: true, localized: true },
+      ],
+    },
     { name: 'conclusion', type: 'richText', editor: lexicalEditor(), localized: true },
     { name: 'heroImage', type: 'upload', relationTo: 'media' },
     // Added in 05-09: CaseStudies had no author relationship, which would
