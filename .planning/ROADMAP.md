@@ -91,7 +91,7 @@ Plans:
 - [x] 54-13-PLAN.md — Sobre mí con timeline de @mui/lab (tras checkpoint de legitimidad), foto y enlace de nav solo en el preview
 - [x] 54-14-PLAN.md — Home segunda mitad: Casos, Proceso, Sitios, Sobre mí, Testimonios, FAQ, cierre y los tres bloques existentes
 - [x] 54-15-PLAN.md — Índice de servicios con tabla comparativa y landings SEO técnico Lima y Madrid
-- [ ] 54-16-PLAN.md — Contrato por ruta con paridad de SEO, auditoría sin datos del sandbox, batería en vivo y despliegue final
+- [x] 54-16-PLAN.md — Contrato por ruta con paridad de SEO, auditoría sin datos del sandbox, batería en vivo y despliegue final
 
 **UI hint**: yes
 
