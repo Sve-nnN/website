@@ -1,8 +1,13 @@
 ---
 phase: 54-paginas-de-conversion-y-utilidad
 verified: 2026-11-09T03:40:00Z
-status: gaps_found
+status: human_needed
 score: 4/5 must-haves verified
+overrides:
+  - gap: "Home sin secciones Casos y Sitios en el preview"
+    decision: "Aceptado como pendiente de contenido, no de código. Las dos secciones están implementadas y devuelven null mientras el global featured-content no tenga casos con heroMetric ni sitios publicados. Juan los puebla en el admin real. PAG-01 queda Pending hasta verlas en el preview."
+    accepted_by: "orquestador autónomo, sujeto a revisión de Juan"
+    date: 2026-11-09
 covered_files:
   - .planning/REQUIREMENTS.md
   - .planning/phases/54-paginas-de-conversion-y-utilidad/54-01-PLAN.md
