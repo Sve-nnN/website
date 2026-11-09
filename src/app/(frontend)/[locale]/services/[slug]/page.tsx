@@ -1,10 +1,5 @@
-import { notFound } from 'next/navigation'
-
-import { getServicePage, getServiceMetadata } from '@/lib/services-data'
-import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { buildTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
-import { buildServiceJsonLd } from '@/lib/service-schema'
-import { JsonLd } from '@/components/JsonLd'
+import { getServiceMetadata } from '@/lib/services-data'
+import { ServiceDetailPage } from '@/components/pages/ServiceDetailPage'
 
 // SEO-06: estas rutas servian `cache-control: no-store` y re-ejecutaban el SSR
 // completo en cada request. Venia de `force-dynamic`, que estaba por una razon
@@ -26,10 +21,6 @@ export function generateStaticParams(): Array<{ locale: string; slug: string }> 
   return []
 }
 
-async function getPage(locale: string, slug: string) {
-  return getServicePage(locale as 'es' | 'en', slug)
-}
-
 export async function generateMetadata({
   params,
 }: {
@@ -45,29 +36,5 @@ export default async function ServicePage({
   params: Promise<{ locale: string; slug: string }>
 }) {
   const { locale, slug } = await params
-  const doc = await getPage(locale, slug)
-
-  if (!doc) {
-    notFound()
-  }
-
-  const trail = buildTrail(locale as 'es' | 'en', { slug: doc.slug ?? slug, title: doc.title })
-
-  return (
-    <div>
-      <JsonLd
-        data={buildServiceJsonLd(
-          locale as 'es' | 'en',
-          doc.slug ?? slug,
-          doc.title,
-          doc.meta?.description,
-        )}
-      />
-      <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-      <RenderBlocks
-        blocks={doc.content?.layout ?? []}
-        blockProps={{ hero: { breadcrumbs: trail } }}
-      />
-    </div>
-  )
+  return <ServiceDetailPage locale={locale as 'es' | 'en'} slug={slug} />
 }
