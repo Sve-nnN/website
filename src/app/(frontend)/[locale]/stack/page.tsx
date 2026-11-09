@@ -1,13 +1,13 @@
 import { notFound } from 'next/navigation'
 
 import { JsonLd } from '@/components/JsonLd'
-import { PageHero } from '@/components/PageHero'
-import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { StackView } from '@/components/pages/StackView'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { buildBreadcrumbJsonLd, type BreadcrumbItem } from '@/lib/breadcrumbs'
 import { pageTitle } from '@/lib/page-title'
 import { getCachedPageBySlug } from '@/lib/cache'
+import { buildStackViewData } from '@/lib/stack-data'
 
 // Mismo patrón ISR de Home/Websites (SEO-06): generateStaticParams vacío,
 // dynamicParams (default true) sirve cada locale en la primera visita.
@@ -53,13 +53,11 @@ export default async function StackPage({ params }: { params: Promise<{ locale: 
   // STACK-01: "sin tocar sitemap-data.ts/canonical.ts/breadcrumbs.ts" prohíbe
   // EDITAR esos archivos, no llamarlos. El trail de /stack es un array
   // literal (2 niveles, sin sección reusable en breadcrumbs.ts), pasado a
-  // AMBOS lugares: la JSON-LD (buildBreadcrumbJsonLd, ya genérica) y el
-  // breadcrumb visible (PageHero.trail). El último ítem SÍ lleva `url`
-  // (apunta a esta misma página) — breadcrumbs.ts documenta que TODOS los
-  // entries llevan `item` absoluto en el JSON-LD, sin truncar el último; y
-  // HeroBreadcrumbs igual renderiza el último crumb como texto plano (nunca
-  // como link) por su propio chequeo `isLast`, así que el breadcrumb visible
-  // no cambia — solo se evita un `undefined` en el JSON-LD.
+  // la JSON-LD (buildBreadcrumbJsonLd, ya genérica). El breadcrumb visible lo
+  // arma ahora StackView con sus propias migas (PageHero MUI). El último ítem
+  // SÍ lleva `url` (apunta a esta misma página) — breadcrumbs.ts documenta que
+  // TODOS los entries llevan `item` absoluto en el JSON-LD, sin truncar el
+  // último — solo se evita un `undefined` en el JSON-LD.
   const trail: BreadcrumbItem[] = [
     { label: locale === 'es' ? 'Inicio' : 'Home', url: locale === 'es' ? '/' : '/en' },
     {
@@ -68,10 +66,14 @@ export default async function StackPage({ params }: { params: Promise<{ locale: 
     },
   ]
 
+  // El primer bloque toolStack del layout alimenta la vista. Sin bloque, la
+  // vista muestra solo el hero.
+  const block = doc.content?.layout?.find((b) => b.blockType === 'toolStack')
+  const data = block ? buildStackViewData(block, locale as 'es' | 'en') : null
+
   return (
     <div>
-      <PageHero variant="index" title={doc.title} trail={trail} />
-      <RenderBlocks blocks={doc.content?.layout ?? []} blockProps={{ toolStack: { locale } }} />
+      <StackView title={doc.title} data={data} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
     </div>
   )

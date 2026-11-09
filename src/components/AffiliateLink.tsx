@@ -7,6 +7,14 @@
 
 import React, { type ReactNode } from 'react'
 
+/**
+ * Unica fuente del `rel` de todo enlace de afiliado (los `/go/<slug>` y los de
+ * Amazon del equipo personal). Valor real de produccion, mas estricto que el
+ * `sponsored noopener` que escribio CONTEXT de la fase 54: la verificacion
+ * exige `sponsored` y `noopener`, y `nofollow` queda.
+ */
+export const AFFILIATE_REL = 'sponsored nofollow noopener'
+
 export function AffiliateLink({
   href,
   children,
@@ -17,7 +25,7 @@ export function AffiliateLink({
   className?: string
 }) {
   return (
-    <a href={href} target="_blank" rel="sponsored nofollow noopener" className={className}>
+    <a href={href} target="_blank" rel={AFFILIATE_REL} className={className}>
       {children}
     </a>
   )
