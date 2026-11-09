@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: planning
-stopped_at: Completed 54-12-PLAN.md
-last_updated: "2026-11-09T01:14:35.806Z"
+stopped_at: Completed 54-13-PLAN.md
+last_updated: "2026-11-09T01:28:41.570Z"
 last_activity: 2026-11-07
 last_activity_desc: Phase 53 complete, transitioned to Phase 6
-state_head: 22fdec75b6703e01a7194ed9d210f56fb3547435
+state_head: bd814ce1e1cd3d65f488390bf04f0d4caf797d74
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 22
-  completed_plans: 18
+  completed_plans: 19
   percent: 20
 ---
 
@@ -161,6 +161,7 @@ Last activity: 2026-11-07 — Phase 53 complete, transitioned to Phase 6
 | Phase 54 P10 | 25min | 2 tasks | 4 files |
 | Phase 54 P11 | 20min | 2 tasks | 4 files |
 | Phase 54 P12 | 55min | 3 tasks | 13 files |
+| Phase 54 P13 | 14min | 3 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -327,6 +328,7 @@ Recent decisions affecting current work:
 - [Phase 6]: 54-02: globals home-page y about-page privados (sin access ni versions), fetchers con isFallback; tablas del bloque toolStack son groups_tools y _groups_v_tools
 - [Phase 6]: 54-03: namespaces de interfaz de la fase en es y en con guardia de paridad (54-messages-parity.mjs) y arnes de render (54-ssr-harness.ts); search.errorHeading exento de la regla de encabezados por ser una oracion existente
 - [Phase 54-04]: los scripts de siembra 20, 21 y 22 abortan antes de cargar Payload ante base equivocada, falta de credenciales de Cloudinary o falta de --alts-confirmed; en el script 22 el ES se omite si tras escribir EN ya muestra los logos (logo no es campo localizado)
+- [Phase 6]: 54-13: @mui/lab 9.0.0-beta.10 instalado con version exacta tras aprobacion delegada del checkpoint; Sobre mi vive en un global y su enlace de nav solo existe con isPreviewReadonly()
 
 ### Pending Todos
 
@@ -384,8 +386,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-09T01:14:35.778Z
-Stopped at: Completed 54-12-PLAN.md
+Last session: 2026-11-09T01:28:41.542Z
+Stopped at: Completed 54-13-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
