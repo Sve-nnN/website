@@ -101,6 +101,13 @@ async function main(): Promise<void> {
 
   check(data.categories.length > 0 && toolCount > 0, 'mapeo: el doc real trae categorias con herramientas', `categorias = ${data.categories.length}`)
   check(data.categories.every((c) => c.anchor !== '') && new Set(data.categories.map((c) => c.anchor)).size === data.categories.length, 'mapeo: anclas unicas y no vacias', JSON.stringify(data.categories.map((c) => c.anchor)))
+  // STACK-02 (fase 48): cada narrativa de herramienta trae al menos 100 palabras. Cierra el hueco de deferred-items.md (54-14).
+  const shortNarratives = data.categories.flatMap((c) =>
+    c.tools
+      .map((t) => ({ name: t.name, words: t.narrative.trim().split(/\s+/).filter(Boolean).length }))
+      .filter((t) => t.words < 100),
+  )
+  check(shortNarratives.length === 0, 'mapeo: cada narrativa de herramienta trae al menos 100 palabras (STACK-02)', JSON.stringify(shortNarratives))
   check(data.gear.length > 0 && data.gear.every((g) => /^https:\/\//.test(g.href)), 'mapeo: el equipo trae enlaces absolutos https', 'falta equipo o un href no es https')
 
   // ---------------------------------------------------------------- doc real
