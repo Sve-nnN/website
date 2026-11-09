@@ -1,9 +1,12 @@
+import { useTranslations } from 'next-intl'
 import type { CSSProperties } from 'react'
 
+import { LogoMarquee } from '@/components/mui/LogoMarquee'
 import { TranslationNotice } from '@/components/mui/TranslationNotice'
 import type { Locale } from '@/lib/cache'
 import type { HomeData } from '@/lib/home-data'
 
+import { Hero } from './Hero'
 import { Tagline } from './Tagline'
 
 // Estilo local y no `visuallyHidden` de ScoreRing: ese modulo es 'use client' y
@@ -39,17 +42,25 @@ type Props = {
  * muestra TranslationNotice con el enlace a la version en espanol.
  */
 export function HomeView({ data, locale, fallbackTitle }: Props) {
+  const t = useTranslations('home')
   const showNotice = locale === 'en' && data.isFallback
+  // Las secciones que salen de `home-page` van en espanol cuando EN no tiene
+  // traduccion. La marquesina sale del doc `home` y de `clientes`, no del global.
+  const copyLang = showNotice ? 'es' : undefined
 
   return (
     <>
       {showNotice && <TranslationNotice esHref="/" />}
-      {!data.hero && (
-        <h1 style={HIDDEN}>{fallbackTitle}</h1>
+      {!data.hero && <h1 style={HIDDEN}>{fallbackTitle}</h1>}
+      {data.hero && <div lang={copyLang}><Hero hero={data.hero} /></div>}
+      {data.clients && (
+        <LogoMarquee
+          title={data.clients.title}
+          groupLabel={t('marquee.groupLabel')}
+          logos={data.clients.logos}
+        />
       )}
-      <div lang={showNotice ? 'es' : undefined}>
-        {data.tagline && <Tagline text={data.tagline} />}
-      </div>
+      {data.tagline && <div lang={copyLang}><Tagline text={data.tagline} /></div>}
     </>
   )
 }
