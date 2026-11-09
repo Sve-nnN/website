@@ -1,15 +1,5 @@
-import { notFound } from 'next/navigation'
-
-import {
-  getServicesIndexPage,
-  getServicesIndexMetadata,
-  getServicePage,
-  SERVICE_SLUGS,
-} from '@/lib/services-data'
-import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { buildTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
-import { buildServicesIndexJsonLd } from '@/lib/service-schema'
-import { JsonLd } from '@/components/JsonLd'
+import { getServicesIndexMetadata } from '@/lib/services-data'
+import { ServicesIndexPage } from '@/components/pages/ServicesIndexPage'
 
 // SEO-06: estas rutas servian `cache-control: no-store` y re-ejecutaban el SSR
 // completo en cada request. Venia de `force-dynamic`, que estaba por una razon
@@ -31,49 +21,16 @@ export function generateStaticParams(): Array<{ locale: string }> {
   return []
 }
 
-async function getPage(locale: string) {
-  return getServicesIndexPage(locale as 'es' | 'en')
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   return getServicesIndexMetadata(locale as 'es' | 'en')
 }
 
-export default async function ServicesIndexPage({
+export default async function ServicesIndexRoute({
   params,
 }: {
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  const doc = await getPage(locale)
-
-  if (!doc) {
-    notFound()
-  }
-
-  const trail = buildTrail(locale as 'es' | 'en')
-
-  // SEO-09: the index lists several offerings, so it is not itself a `Service`.
-  // Titles come from the real service pages — a landing that does not resolve
-  // is dropped rather than listed from a hardcoded label.
-  const servicePages = await Promise.all(
-    SERVICE_SLUGS.map((slug) => getServicePage(locale as 'es' | 'en', slug)),
-  )
-  const services = servicePages.flatMap((page, i) =>
-    page ? [{ slug: SERVICE_SLUGS[i], title: page.title }] : [],
-  )
-
-  return (
-    <div>
-      {services.length > 0 && (
-        <JsonLd data={buildServicesIndexJsonLd(locale as 'es' | 'en', services)} />
-      )}
-      <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-      <RenderBlocks
-        blocks={doc.content?.layout ?? []}
-        blockProps={{ hero: { breadcrumbs: trail } }}
-      />
-    </div>
-  )
+  return <ServicesIndexPage locale={locale as 'es' | 'en'} />
 }

@@ -209,7 +209,8 @@
         "time": "Tiempo estimado"
       },
       "unsure": "¿No estás seguro de cuál servicio necesitas? Cuéntame qué problema tienes y te digo por dónde empezar.",
-      "talkCta": "Hablar con Juan"
+      "talkCta": "Hablar con Juan",
+      "viewService": "Ver servicio"
     },
     "detail": {
       "eyebrow": "Servicio",

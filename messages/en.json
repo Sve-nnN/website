@@ -209,7 +209,8 @@
         "time": "Estimated time"
       },
       "unsure": "Not sure which service you need? Tell me what problem you have and I'll tell you where to start.",
-      "talkCta": "Talk to Juan"
+      "talkCta": "Talk to Juan",
+      "viewService": "View service"
     },
     "detail": {
       "eyebrow": "Service",
