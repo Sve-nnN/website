@@ -85,7 +85,7 @@ Plans:
 - [x] 54-07-PLAN.md — Aplicar la migración, sembrar con Juan y despliegue de humo con el esquema nuevo
 - [x] 54-08-PLAN.md — Home primera mitad: Hero, marquesina, Tagline, Vitals y Servicios desde Payload
 - [x] 54-09-PLAN.md — Detalle de las cuatro landings de servicio por ranuras sobre los bloques reales
-- [ ] 54-10-PLAN.md — Privacy y Terms con índice lateral sticky
+- [x] 54-10-PLAN.md — Privacy y Terms con índice lateral sticky
 - [ ] 54-11-PLAN.md — Búsqueda con la consulta conservada y vista MUI
 - [ ] 54-12-PLAN.md — Contacto con formulario real y FAQ, y Stack con logos y afiliados con divulgación
 - [ ] 54-13-PLAN.md — Sobre mí con timeline de @mui/lab (tras checkpoint de legitimidad), foto y enlace de nav solo en el preview
@@ -144,7 +144,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 53. Base del rediseño: rama, preview, tema y shell | 6/6 | Complete    | 2026-11-07 |
-| 54. Páginas de conversión y utilidad | 9/16 | In Progress|  |
+| 54. Páginas de conversión y utilidad | 10/16 | In Progress|  |
 | 55. Casos, websites, blog y autores | 0/TBD | Not started | - |
 | 56. Contenido pendiente de Juan | 0/TBD | Not started | - |
 | 57. Gate de calidad y corte a producción | 0/TBD | Not started | - |
