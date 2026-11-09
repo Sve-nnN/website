@@ -1,15 +1,10 @@
-import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
-import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { LocalLandingPage } from '@/components/pages/LocalLandingPage'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
-import { JsonLd } from '@/components/JsonLd'
-import { SITE_URL } from '@/lib/sitemap-data'
-import { buildLocalService } from '@/lib/site-schema'
-import { buildLocalLandingHref, findLocalLanding } from '@/lib/local-landing-slugs'
 
 // SEO-06: estas rutas servian `cache-control: no-store` y re-ejecutaban el SSR
 // completo en cada request. Venia de `force-dynamic`, que estaba por una razon
@@ -77,30 +72,5 @@ export default async function SeoTecnicoMadridPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  const doc = await getPage(locale)
-
-  if (!doc) {
-    notFound()
-  }
-
-  // SEO-42: esta landing no emitia ningun dato estructurado, ni siquiera
-  // BreadcrumbList, cuando el resto del sitio si lo tiene. Es justo el tipo de
-  // pagina que mas gana con `Service` + `areaServed`: lo que se pregunta en esa
-  // busqueda es quien presta este servicio en esta ciudad.
-  const landing = findLocalLanding('seo-tecnico-madrid')!
-  const serviceData = buildLocalService({
-    locale: locale as 'es' | 'en',
-    city: landing.city,
-    country: landing.country,
-    name: doc.meta?.title ?? doc.title,
-    description: doc.meta?.description ?? undefined,
-    url: `${SITE_URL}${buildLocalLandingHref(locale as 'es' | 'en', landing.slug)}`,
-  })
-
-  return (
-    <div>
-      <JsonLd data={serviceData} />
-      <RenderBlocks blocks={doc.content?.layout ?? []} />
-    </div>
-  )
+  return <LocalLandingPage locale={locale as 'es' | 'en'} slug="seo-tecnico-madrid" />
 }
