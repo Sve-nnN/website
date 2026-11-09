@@ -32,6 +32,8 @@ import * as React from 'react'
 import { createElement } from 'react'
 
 import { SearchView, type SearchResult } from '../../src/components/pages/SearchView'
+// @ts-expect-error el contrato HTTP es .mjs sin tipos
+import { checkSearchPage } from './54-search.mjs'
 import { countOf, headingLevels, renderToHtml, textOf, type HarnessLocale } from './54-ssr-harness'
 
 // tsx usa el runtime clasico con jsx: preserve; los componentes .tsx necesitan React global.
@@ -196,6 +198,25 @@ function checkCommon(html: string, name: string) {
   const route = fs.readFileSync(path.join(ROOT, 'src/app/(frontend)/[locale]/search/page.tsx'), 'utf8')
   check(/const MAX_QUERY_LENGTH = 200/.test(route), 'limite: MAX_QUERY_LENGTH = 200 en la ruta', 'falta la constante')
   check(/q\?\.slice\(0, MAX_QUERY_LENGTH\)/.test(route), 'limite: la ruta recorta la consulta', 'falta q?.slice(0, MAX_QUERY_LENGTH)')
+}
+
+// 9. El HTML real de la vista pasa el contrato HTTP de 54-search.mjs (mismos
+// fixtures de render, envueltos en un shell minimo con main, pie y meta robots).
+{
+  const shell = (inner: string) =>
+    `<html lang="es"><head><meta name="robots" content="noindex, follow"/></head><body><header></header><main id="main-content">${inner}</main><footer><h2><a href="/blog">pie</a></h2></footer></body></html>`
+  const cases: Array<[string, 'empty' | 'results' | 'none', { query: string | null; results: SearchResult[] | null; failed: boolean }]> = [
+    ['empty', 'empty', { query: null, results: null, failed: false }],
+    ['results', 'results', { query: 'seo', results: THREE, failed: false }],
+    ['none', 'none', { query: 'zzzzqx', results: [], failed: false }],
+  ]
+  for (const locale of ['es', 'en'] as const) {
+    for (const [name, kind, props] of cases) {
+      const html = shell(render(props, locale))
+      const list: string[] = checkSearchPage({ status: 200, html }, kind)
+      check(list.length === 0, `contrato HTTP sobre el render real (${name}, ${locale})`, JSON.stringify(list))
+    }
+  }
 }
 
 if (failures > 0) {
