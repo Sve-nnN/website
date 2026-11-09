@@ -1,7 +1,5 @@
-import { getPayload } from 'payload'
-
-import config from '@payload-config'
 import { LocalLandingPage } from '@/components/pages/LocalLandingPage'
+import { getLocalLandingPage } from '@/lib/local-landing-data'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
@@ -26,15 +24,10 @@ export function generateStaticParams(): Array<{ locale: string }> {
   return []
 }
 
+// Misma lectura que el cuerpo de la pagina (overrideAccess: false): la metadata
+// no puede salir de un documento que el cuerpo no serviria a un anonimo.
 async function getPage(locale: string) {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'pages',
-    where: { slug: { equals: 'seo-tecnico-lima' } },
-    locale: locale as 'es' | 'en',
-    limit: 1,
-  })
-  return docs[0]
+  return getLocalLandingPage(locale as 'es' | 'en', 'seo-tecnico-lima')
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {

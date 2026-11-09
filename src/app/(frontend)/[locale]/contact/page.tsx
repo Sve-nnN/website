@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
 
-import config from '@payload-config'
 import { ContactView } from '@/components/pages/ContactView'
+import { getCachedPageBySlug } from '@/lib/cache'
 import { getContactData } from '@/lib/contact-data'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
@@ -22,15 +21,10 @@ function contactFallbackTitle(locale: string) {
   return locale === 'es' ? 'Contacto' : 'Contact'
 }
 
+// Misma lectura que getContactData (cacheada, overrideAccess: false): una sola
+// politica de acceso para la metadata y el cuerpo.
 async function getContactPage(locale: string) {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'pages',
-    where: { slug: { equals: 'contact' } },
-    locale: locale as 'es' | 'en',
-    limit: 1,
-  })
-  return docs[0]
+  return getCachedPageBySlug('contact', locale as 'es' | 'en')
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
