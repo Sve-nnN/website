@@ -3,6 +3,9 @@
 // `composeServiceSlots` y renderiza cada una en MUI. El contrato de SEO
 // (metadata, ISR, JSON-LD de Service y de BreadcrumbList) es el de las rutas
 // anteriores: mismas funciones y mismos argumentos.
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import { Fragment } from 'react'
 import { notFound } from 'next/navigation'
 
 import { RenderBlocks } from '@/blocks/RenderBlocks'
@@ -13,7 +16,13 @@ import { buildServiceJsonLd } from '@/lib/service-schema'
 import { composeServiceSlots } from '@/lib/service-slots'
 import { getServicePage } from '@/lib/services-data'
 
+import { MuiRichText } from '@/components/mui/rich-text/MuiRichText'
+
+import { ServiceExtras } from './service/ServiceExtras'
 import { ServiceHero } from './service/ServiceHero'
+import { ServiceHow } from './service/ServiceHow'
+import { ServiceIncludes } from './service/ServiceIncludes'
+import { ServiceProblem } from './service/ServiceProblem'
 
 type Locale = 'es' | 'en'
 
@@ -47,8 +56,36 @@ export async function ServiceDetailPage({ locale, slug }: { locale: Locale; slug
         }
         cta={cta}
       />
-      {/* Hasta que cada seccion tenga su vista, el registro anterior atiende el resto. */}
-      <RenderBlocks blocks={sections.map((s) => s.block)} />
+      {sections.map((s, i) => {
+        const key = s.block.id ?? i
+        switch (s.kind) {
+          case 'problem':
+            return <ServiceProblem key={key} richTexts={(s.block.columns ?? []).map((c) => c.richText)} />
+          case 'twoColumns':
+            return (
+              <Fragment key={key}>
+                <ServiceIncludes richText={s.block.columns?.[0]?.richText} />
+                <ServiceHow richText={s.block.columns?.[1]?.richText} />
+              </Fragment>
+            )
+          case 'prose':
+            // Todas las columnas, en orden: ningun texto del editor se pierde.
+            return (
+              <Box key={key} sx={{ pb: { xs: 8, md: 10 } }}>
+                <Container maxWidth="lg">
+                  {s.block.columns?.map((col, j) => (
+                    <MuiRichText key={col.id ?? j} data={col.richText as never} maxWidth={760} />
+                  ))}
+                </Container>
+              </Box>
+            )
+          case 'auditor':
+            return <ServiceExtras key={key} heading={s.block.heading} narrative={s.block.narrative} />
+          default:
+            // Hasta que cada seccion tenga su vista, el registro anterior atiende el resto.
+            return <RenderBlocks key={key} blocks={[s.block]} />
+        }
+      })}
     </>
   )
 }
