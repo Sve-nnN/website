@@ -16,17 +16,17 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 ### Páginas conectadas a Payload (PAG)
 
 - [ ] **PAG-01**: La home muestra todas sus secciones con datos de Pages y globals.
-- [ ] **PAG-02**: Servicios (índice y detalle) se renderizan desde Payload.
+- [x] **PAG-02**: Servicios (índice y detalle) se renderizan desde Payload.
 - [ ] **PAG-03**: Casos de éxito (índice y detalle) muestran estadísticas, contexto, solución, lecciones aprendidas, casos comparativos y conclusiones (campos nuevos en CaseStudies vía migración aditiva).
 - [ ] **PAG-04**: Websites (portafolio y detalle) se renderizan desde la colección Websites.
 - [ ] **PAG-05**: El blog (índice con búsqueda, categorías con "ver más" y post con TOC y progreso de lectura) sirve los 58 posts con su rich text.
-- [ ] **PAG-06**: Sobre mí con timeline y foto nueva se renderiza desde Payload (página nueva, migración aditiva).
-- [ ] **PAG-07**: Contacto conserva el formulario actual (Resend, honeypot) y su FAQ con el diseño MUI.
-- [ ] **PAG-08**: Stack muestra logos de herramientas y conserva los enlaces de afiliado `/go` con su divulgación.
-- [ ] **PAG-09**: Privacy y Terms se renderizan con índice lateral.
+- [x] **PAG-06**: Sobre mí con timeline y foto nueva se renderiza desde Payload (página nueva, migración aditiva).
+- [x] **PAG-07**: Contacto conserva el formulario actual (Resend, honeypot) y su FAQ con el diseño MUI.
+- [x] **PAG-08**: Stack muestra logos de herramientas y conserva los enlaces de afiliado `/go` con su divulgación.
+- [x] **PAG-09**: Privacy y Terms se renderizan con índice lateral.
 - [ ] **PAG-10**: Autores (índice y perfil) se renderizan desde la colección Authors.
 - [x] **PAG-11**: La 404 vive dentro del shell del sitio y devuelve estado 404 real.
-- [ ] **PAG-12**: Las landings SEO técnico Lima y Madrid y la página de búsqueda usan el diseño MUI.
+- [x] **PAG-12**: Las landings SEO técnico Lima y Madrid y la página de búsqueda usan el diseño MUI.
 
 ### SEO (SEO)
 
@@ -75,17 +75,17 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 | BASE-02 | Phase 53 | Complete |
 | BASE-03 | Phase 53 | Complete |
 | PAG-01 | Phase 54 | Pending |
-| PAG-02 | Phase 54 | Pending |
+| PAG-02 | Phase 54 | Complete |
 | PAG-03 | Phase 55 | Pending |
 | PAG-04 | Phase 55 | Pending |
 | PAG-05 | Phase 55 | Pending |
-| PAG-06 | Phase 54 | Pending |
-| PAG-07 | Phase 54 | Pending |
-| PAG-08 | Phase 54 | Pending |
-| PAG-09 | Phase 54 | Pending |
+| PAG-06 | Phase 54 | Complete |
+| PAG-07 | Phase 54 | Complete |
+| PAG-08 | Phase 54 | Complete |
+| PAG-09 | Phase 54 | Complete |
 | PAG-10 | Phase 55 | Pending |
 | PAG-11 | Phase 54 | Complete |
-| PAG-12 | Phase 54 | Pending |
+| PAG-12 | Phase 54 | Complete |
 | SEO-01 | Phase 57 | Pending |
 | SEO-02 | Phase 57 | Pending |
 | SEO-03 | Phase 57 | Pending |
