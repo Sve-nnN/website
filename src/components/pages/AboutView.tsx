@@ -13,21 +13,26 @@ import Chip from '@mui/material/Chip'
 import Container from '@mui/material/Container'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import { Briefcase, ExternalLink, Globe, MapPin } from 'lucide-react'
+import { Briefcase, ExternalLink, Globe, GraduationCap, MapPin, Mic, Users } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 
+import { CtaSection } from '@/components/mui/CtaSection'
 import { GrainBlob } from '@/components/mui/GrainBlob'
 import { linkFor } from '@/components/mui/links'
+import { UL } from '@/components/mui/lists'
 import { PageHero } from '@/components/mui/PageHero'
 import { visuallyHidden } from '@/components/mui/ScoreRing'
 import { TranslationNotice } from '@/components/mui/TranslationNotice'
-import type { AboutCounter, AboutData, AboutStage } from '@/lib/about-data'
+import type { AboutCounter, AboutData, AboutDateRange, AboutStage } from '@/lib/about-data'
+import type { CtaData } from '@/lib/cta-data'
 import { buildServicesIndexHref } from '@/lib/service-slugs'
 
 type Props = {
   data: AboutData
   locale: 'es' | 'en'
+  /** Datos del cierre (getCtaData en la ruta). Sin ellos no se dibuja el cierre. */
+  cta?: CtaData | null
 }
 
 /**
@@ -39,12 +44,15 @@ function Block({
   title,
   icon,
   band,
+  lang,
   children,
 }: {
   id: string
   title: string
   icon?: ReactNode
   band?: boolean
+  /** Idioma del encabezado cuando su texto sale del global sin traducir. */
+  lang?: string
   children: ReactNode
 }) {
   return (
@@ -59,6 +67,7 @@ function Block({
           id={`${id}-t`}
           variant="h3"
           component="h2"
+          lang={lang}
           sx={{ mb: 5, display: 'flex', alignItems: 'center', gap: 1.5 }}
         >
           {icon}
@@ -69,6 +78,8 @@ function Block({
     </Box>
   )
 }
+
+const QUIET_BAND_CHIP = { bgcolor: 'transparent', color: 'band.text', borderColor: 'band.border' } as const
 
 function CounterCard({ counter, display }: { counter: AboutCounter; display: string }) {
   return (
@@ -152,13 +163,20 @@ function StageContent({ stage, last }: { stage: AboutStage; last: boolean }) {
  * textos que salen de ese global van en `lang="es"` y se muestra
  * TranslationNotice. El h1 sale del autor, no del global.
  */
-export function AboutView({ data, locale }: Props) {
+export function AboutView({ data, locale, cta }: Props) {
   const t = useTranslations('about')
   const tCommon = useTranslations('common')
 
   const showNotice = locale === 'en' && data.isFallback
   const copyLang = showNotice ? 'es' : undefined
-  const { hero, bio, counters, experience } = data
+  const { hero, bio, counters, specialties, experience, education, talks } = data
+  // Las ponencias no se localizan (speaking-events sale en espanol en ambos idiomas).
+  const talksLang = locale === 'en' ? 'es' : undefined
+
+  const dateLine = (range: AboutDateRange | null): string | null => {
+    if (!range || range.from === '') return null
+    return range.to ? t('dateRange', { from: range.from, to: range.to }) : t('dateRangeOpen', { from: range.from })
+  }
 
   const counterCards: { key: string; counter: AboutCounter; display: string }[] = []
   if (counters.years) {
@@ -290,11 +308,56 @@ export function AboutView({ data, locale }: Props) {
         </Box>
       )}
 
+      {specialties && (
+        <Block id="about-areas" title={specialties.title} band lang={copyLang}>
+          <UL
+            lang={copyLang}
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'minmax(0,1fr)',
+                sm: 'repeat(2, minmax(0,1fr))',
+                md: 'repeat(4, minmax(0,1fr))',
+              },
+              gap: 2,
+            }}
+          >
+            {specialties.items.map((item) => (
+              <Box
+                key={item.title}
+                component="li"
+                sx={{
+                  p: 3,
+                  borderRadius: 2,
+                  bgcolor: 'band.surface',
+                  border: 1,
+                  borderColor: 'band.border',
+                  display: 'grid',
+                  gap: 1,
+                  alignContent: 'start',
+                  minWidth: 0,
+                }}
+              >
+                <Typography variant="h6" component="h3">
+                  {item.title}
+                </Typography>
+                {item.detail && (
+                  <Typography variant="body2" sx={{ color: 'band.muted' }}>
+                    {item.detail}
+                  </Typography>
+                )}
+              </Box>
+            ))}
+          </UL>
+        </Block>
+      )}
+
       {experience && (
         <Block
           id="about-experience"
           title={experience.title}
           icon={<Briefcase size={28} aria-hidden="true" />}
+          lang={copyLang}
         >
           <Box lang={copyLang}>
             {experience.lead && (
@@ -336,6 +399,143 @@ export function AboutView({ data, locale }: Props) {
             </Timeline>
           </Box>
         </Block>
+      )}
+      {education && (
+        <Block
+          id="about-education"
+          title={education.title}
+          icon={<GraduationCap size={28} aria-hidden="true" />}
+          lang={copyLang}
+        >
+          <UL
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: 'minmax(0,1fr)', md: 'repeat(2, minmax(0,1fr))' },
+              gap: 2,
+            }}
+          >
+            {education.items.map((item) => {
+              const dates = dateLine(item.dates)
+              return (
+                <Card
+                  key={`${item.degree}-${item.institution ?? ''}`}
+                  component="li"
+                  sx={{ p: 3, display: 'grid', gap: 0.5, minWidth: 0 }}
+                >
+                  <Typography variant="h6" component="h3">
+                    {item.degree}
+                  </Typography>
+                  {item.institution && <Typography variant="body1">{item.institution}</Typography>}
+                  {dates && (
+                    <Typography variant="body2" color="text.secondary">
+                      {dates}
+                    </Typography>
+                  )}
+                </Card>
+              )
+            })}
+          </UL>
+        </Block>
+      )}
+
+      {talks && (
+        <Block
+          id="about-talks"
+          title={talks.title}
+          icon={<Mic size={28} aria-hidden="true" />}
+          band
+          lang={copyLang}
+        >
+          <UL
+            lang={talksLang}
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: 'minmax(0,1fr)', md: 'repeat(2, minmax(0,1fr))' },
+              gap: 2,
+            }}
+          >
+            {talks.items.map((talk) => (
+              <Box key={`${talk.title}-${talk.by ?? ''}`} component="li" sx={{ display: 'grid', minWidth: 0 }}>
+                <Box
+                  sx={{
+                    borderRadius: 2,
+                    bgcolor: 'band.surface',
+                    border: 1,
+                    borderColor: 'band.border',
+                    overflow: 'hidden',
+                    display: 'grid',
+                    alignContent: 'start',
+                  }}
+                >
+                  {talk.flyer && (
+                    <Box
+                      component="img"
+                      src={talk.flyer.url}
+                      alt={talk.flyer.alt}
+                      width={talk.flyer.width}
+                      height={talk.flyer.height}
+                      loading="lazy"
+                      sx={{ width: '100%', height: 'auto', aspectRatio: '16 / 9', objectFit: 'cover', display: 'block' }}
+                    />
+                  )}
+                  <Box sx={{ p: 3, display: 'grid', gap: 1.5, minWidth: 0 }}>
+                    <Typography variant="h5" component="h3">
+                      {talk.title}
+                      {talk.by && (
+                        <Typography component="span" variant="body2" sx={{ color: 'band.muted', display: 'block' }}>
+                          {t('by', { name: talk.by })}
+                        </Typography>
+                      )}
+                    </Typography>
+                    {talk.role && (
+                      <Typography variant="subtitle1" component="p" sx={{ fontSize: '1rem', color: 'primary.main' }}>
+                        {talk.role}
+                      </Typography>
+                    )}
+                    {(talk.location || talk.attendees !== null) && (
+                      <Stack direction="row" useFlexGap spacing={1} sx={{ flexWrap: 'wrap' }}>
+                        {talk.location && (
+                          <Chip
+                            size="small"
+                            icon={<MapPin size={14} aria-hidden="true" />}
+                            label={talk.location}
+                            sx={QUIET_BAND_CHIP}
+                          />
+                        )}
+                        {talk.attendees !== null && (
+                          <Chip
+                            size="small"
+                            icon={<Users size={14} aria-hidden="true" />}
+                            label={t('attendees', { count: talk.attendees })}
+                            lang={talksLang ? locale : undefined}
+                            sx={QUIET_BAND_CHIP}
+                          />
+                        )}
+                      </Stack>
+                    )}
+                    {talk.description && (
+                      <Typography variant="body2" sx={{ color: 'band.muted', lineHeight: '1.375rem' }}>
+                        {talk.description}
+                      </Typography>
+                    )}
+                  </Box>
+                </Box>
+              </Box>
+            ))}
+          </UL>
+        </Block>
+      )}
+
+      {cta && (
+        <div lang={cta.isFallback && locale === 'en' ? 'es' : undefined}>
+          <CtaSection
+            title={cta.title}
+            lead={cta.lead}
+            email={cta.email}
+            name={cta.name}
+            avatarUrl={cta.avatarUrl}
+          />
+        </div>
       )}
     </>
   )

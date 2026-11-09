@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { AboutView } from '@/components/pages/AboutView'
 import { getAboutData } from '@/lib/about-data'
 import { buildAlternates } from '@/lib/canonical'
+import { getCtaData } from '@/lib/cta-data'
 import { buildOpenGraph } from '@/lib/og-image'
 import { pageTitle } from '@/lib/page-title'
 
@@ -46,11 +47,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const typedLocale: 'es' | 'en' = locale === 'en' ? 'en' : 'es'
-  const data = await getAboutData(typedLocale)
+  const [data, cta] = await Promise.all([getAboutData(typedLocale), getCtaData(typedLocale)])
 
   // Sin global ni autor no hay nada que mostrar. Cualquier otro fallo de la
   // Local API ya lo absorbió getAboutData: la página sale sin esa sección.
   if (!data) notFound()
 
-  return <AboutView data={data} locale={typedLocale} />
+  return <AboutView data={data} locale={typedLocale} cta={cta} />
 }

@@ -22,6 +22,7 @@ import {
   type AboutData,
 } from '../../src/lib/about-data'
 import { ABOUT_COPY_ES } from '../db/data/54-about-copy'
+import { checkAboutPage } from './54-about.mjs'
 import { countOf, hasId, headingLevels, renderToHtml, textOf } from './54-ssr-harness'
 
 // tsx usa el runtime clasico con jsx: preserve; los componentes .tsx necesitan React global.
@@ -196,7 +197,96 @@ function render(data: AboutData, locale: 'es' | 'en' = 'es'): string {
   check(!/<ul[^>]*MuiTimeline-root/.test(empty), 'sin etapas no hay timeline', 'quedo el timeline')
 }
 
-// TAREA3_SSR
+// ---------------------------------------------------------------------------
+// Secciones de la tarea 3: areas, educacion, ponencias, cierre y aviso EN
+// ---------------------------------------------------------------------------
+{
+  const CTA = {
+    title: 'Titulo del cierre de prueba',
+    lead: 'Lead del cierre de prueba',
+    email: 'correo@ejemplo.com',
+    name: 'Autora de Prueba',
+    avatarUrl: null,
+    isFallback: false,
+  }
+  const renderCta = (data: AboutData, cta: typeof CTA | null, locale: 'es' | 'en' = 'es'): string =>
+    renderToHtml(createElement(AboutView, { data, locale, cta }), locale).replace(/<style[\s\S]*?<\/style>/g, '')
+
+  const html = renderCta(build(), CTA)
+
+  // Areas: franja con lista de cuatro tarjetas.
+  const areas = /<section[^>]*id="about-areas"[\s\S]*?<\/section>/.exec(html)
+  check(areas !== null && countOf(areas[0], /<li[\s>]/) === 4, 'la lista de areas tiene cuatro tarjetas', `li = ${areas ? countOf(areas[0], /<li[\s>]/) : 'sin seccion'}`)
+  check(areas !== null && countOf(areas[0], /<h3[\s>]/) === 4, 'cada area tiene su h3', 'faltan h3 en las areas')
+
+  // Educacion con fechas armadas por dateRange y dateRangeOpen.
+  const edu = /<section[^>]*id="about-education"[\s\S]*?<\/section>/.exec(html)
+  check(edu !== null && countOf(edu[0], /<li[\s>]/) === 2, 'educacion: dos tarjetas en lista', 'no hay dos items')
+  check(edu !== null && edu[0].includes('may 2022 a ago 2028'), 'educacion: fecha con dateRange', 'falta "may 2022 a ago 2028"')
+  check(edu !== null && edu[0].includes('feb 2018 a hoy'), 'educacion: fecha abierta con dateRangeOpen', 'falta "feb 2018 a hoy"')
+  check(!/\s{2,}(a|to)\s/.test(textOf(html)) && !/ {2}/.test(edu?.[0].replace(/<[^>]+>/g, '|') ?? ''), 'educacion: las fechas no traen dos espacios', 'hay dos espacios')
+
+  // Ponencias.
+  const talks = /<section[^>]*id="about-talks"[\s\S]*?<\/section>/.exec(html)
+  check(talks !== null && countOf(talks[0], /<li[\s>]/) === 2, 'ponencias: dos tarjetas en lista', 'no hay dos items')
+  check(talks !== null && talks[0].includes('por Organizador de Prueba'), 'ponencias: el organizador sale con about.by', 'falta "por ..."')
+  check(talks !== null && talks[0].includes('18 asistentes') && talks[0].includes('100 asistentes'), 'ponencias: asistentes con plural de about.attendees', 'faltan asistentes')
+  check(talks !== null && !/<img/.test(talks[0]), 'ponencias: sin flyer no hay imagen', 'se renderizo una imagen')
+  const withFlyer = renderCta(build({ events: [{ ...EVENTS[0], flyer: MEDIA as never }] }), CTA)
+  check(/<img[^>]*alt="Texto alternativo de prueba de la foto"[^>]*loading="lazy"/.test(/<section[^>]*id="about-talks"[\s\S]*?<\/section>/.exec(withFlyer)?.[0] ?? ''), 'ponencias: con flyer hay img con alt y lazy', 'falta la imagen')
+
+  // Cierre.
+  check(/id="contacto"/.test(html) && textOf(html).includes('Titulo del cierre de prueba'), 'cierre: CtaSection con id contacto y titulo', 'falta el cierre')
+  check(!/id="contacto"/.test(renderCta(build(), null)), 'sin datos de cierre no se renderiza', 'quedo el cierre')
+
+  // Orden y jerarquia.
+  const order = ['about-areas', 'about-experience', 'about-education', 'about-talks', 'contacto'].map((id) => html.indexOf(`id="${id}"`))
+  check(order.every((n, i) => n > -1 && (i === 0 || n > order[i - 1])), 'orden: areas, experiencia, educacion, ponencias y cierre', `posiciones ${order.join(',')}`)
+  const levels = headingLevels(html)
+  check(countOf(html, /<h1[\s>]/) === 1 && !levels.some((l, i) => i > 0 && l - levels[i - 1] > 1), 'con todas las secciones: un h1 y sin saltos', `niveles ${levels.join(',')}`)
+
+  // Sin datos: se omiten sin encabezado huerfano.
+  const bare = renderCta(build({ author: { ...AUTHOR, education: [] }, events: [] }), null)
+  check(!hasId(bare, 'about-education-t') && !hasId(bare, 'about-talks-t'), 'sin educacion ni ponencias se omiten sus secciones', 'quedo un encabezado huerfano')
+  check(!/id="about-education"/.test(bare) && !/id="about-talks"/.test(bare), 'sin educacion ni ponencias no quedan secciones vacias', 'quedo una seccion')
+  const noAreas = renderCta(build({ about: { data: { ...COPY, specialties: { title: 'Areas', items: [] } }, isFallback: false } }), null)
+  check(!hasId(noAreas, 'about-areas-t'), 'sin areas se omite la seccion', 'quedo el encabezado')
+
+  // EN: sin traduccion cae al espanol con aviso y lang es.
+  const strictEn = renderCta(build({}, 'en'), null, 'en')
+  check(!/role="note"/.test(strictEn), 'en: con texto traducido no hay aviso', 'aparecio el aviso')
+  check(strictEn.includes('href="/en/services"') && strictEn.includes('href="/en/stack"'), 'en: los botones llevan prefijo /en', 'faltan /en/services o /en/stack')
+  check(strictEn.includes('18 attendees') && strictEn.includes('by Organizador de Prueba'), 'en: textos de interfaz en ingles', 'faltan "18 attendees" o "by ..."')
+  check(/Feb 2018 to today/.test(strictEn) && /May 2022 to Aug 2028/.test(strictEn), 'en: fechas en ingles con dateRange', 'faltan fechas en ingles')
+
+  const fallbackData = assembleAboutData({
+    about: { data: COPY, isFallback: true },
+    author: AUTHOR,
+    events: EVENTS,
+    counts: { seo: 15, dev: 13 },
+    locale: 'en',
+  })
+  const fb = renderCta(fallbackData, { ...CTA, isFallback: true }, 'en')
+  check(/role="note"/.test(fb) && /href="\/sobre-mi"[^>]*hrefLang="es"|hreflang="es"[^>]*href="\/sobre-mi"|href="\/sobre-mi"[^>]*lang="es"/i.test(fb), 'en con isFallback: TranslationNotice con enlace a /sobre-mi', 'falta el aviso o su enlace')
+  check(countOf(fb, /lang="es"/) >= 8, 'en con isFallback: los contenedores del global van en lang es', `lang es = ${countOf(fb, /lang="es"/)}`)
+  check(countOf(fb, /<h1[\s>]/) === 1, 'en con isFallback: un solo h1', 'h1 repetido')
+  const esHtml = renderCta(build(), CTA)
+  check(!/role="note"/.test(esHtml) && !/lang="es"/.test(esHtml), 'es: sin aviso ni lang es', 'aparecio aviso o lang es')
+}
+
+// ---------------------------------------------------------------------------
+// El contrato HTTP de 54-about.mjs contra el render real de la vista
+// ---------------------------------------------------------------------------
+{
+  for (const locale of ['es', 'en'] as const) {
+    const viewHtml = renderToHtml(createElement(AboutView, { data: build({}, locale), locale, cta: null }), locale)
+    // El header lo pone el layout; aqui se simula el del preview con el enlace inyectado.
+    const link = locale === 'en' ? '/en/sobre-mi' : '/sobre-mi'
+    const html = `<html><body><header><a href="${link}">Sobre mi</a></header><main id="main-content">${viewHtml}</main></body></html>`
+    const list = checkAboutPage({ status: 200, html, xRobotsTag: 'noindex' }, { locale, expectPreview: true })
+    check(list.length === 0, `real ${locale}: el contrato de 54-about.mjs pasa sobre el render de la vista`, list.join('; '))
+  }
+}
 
 if (failures > 0) {
   console.log(`\n${failures} comprobacion(es) fallaron`)

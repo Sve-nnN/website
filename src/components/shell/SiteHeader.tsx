@@ -1,3 +1,5 @@
+import { getTranslations } from 'next-intl/server'
+
 import {
   HeaderView,
   type HeaderViewCta,
@@ -6,6 +8,7 @@ import {
 } from '@/components/shell/HeaderView'
 import { getCachedHeader } from '@/lib/cache'
 import { resolveLinkHref, sanitizeHref } from '@/lib/nav-links'
+import { isPreviewReadonly } from '@/lib/preview'
 
 /**
  * Header del shell nuevo (D-10, D-11). Server component: lee el global Header
@@ -50,6 +53,19 @@ export async function SiteHeader({ locale }: { locale: string }) {
     items = []
     cta = null
     logo = null
+  }
+
+  // Enlace Sobre mí (fase 54, PAG-06): SOLO en el preview. El global Header se
+  // comparte con producción y /sobre-mi aún no existe allí (devolvería 404), así
+  // que el enlace no puede vivir en el global. El enlace real llega con el corte
+  // de la fase 57 y esta inyección se retira entonces.
+  if (isPreviewReadonly()) {
+    try {
+      const t = await getTranslations({ locale: typedLocale, namespace: 'about' })
+      items = [...items, { id: 'about-preview', href: '/sobre-mi', label: t('crumb'), newTab: false }]
+    } catch (err) {
+      console.error('[shell] about link', err)
+    }
   }
 
   return <HeaderView locale={typedLocale} items={items} cta={cta} logo={logo} />
