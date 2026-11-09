@@ -83,7 +83,7 @@ Plans:
 - [x] 54-05-PLAN.md — Primitivas de layout MUI: Section, PageHero, Crumbs, IconTile, ScoreRing, FaqAccordion y aviso de traducción
 - [x] 54-06-PLAN.md — Primitivas de conversión y MuiRichText con índice: marquesina, testimonios, caso, formulario único y cierre
 - [x] 54-07-PLAN.md — Aplicar la migración, sembrar con Juan y despliegue de humo con el esquema nuevo
-- [ ] 54-08-PLAN.md — Home primera mitad: Hero, marquesina, Tagline, Vitals y Servicios desde Payload
+- [x] 54-08-PLAN.md — Home primera mitad: Hero, marquesina, Tagline, Vitals y Servicios desde Payload
 - [ ] 54-09-PLAN.md — Detalle de las cuatro landings de servicio por ranuras sobre los bloques reales
 - [ ] 54-10-PLAN.md — Privacy y Terms con índice lateral sticky
 - [ ] 54-11-PLAN.md — Búsqueda con la consulta conservada y vista MUI
@@ -144,7 +144,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 53. Base del rediseño: rama, preview, tema y shell | 6/6 | Complete    | 2026-11-07 |
-| 54. Páginas de conversión y utilidad | 7/16 | In Progress|  |
+| 54. Páginas de conversión y utilidad | 8/16 | In Progress|  |
 | 55. Casos, websites, blog y autores | 0/TBD | Not started | - |
 | 56. Contenido pendiente de Juan | 0/TBD | Not started | - |
 | 57. Gate de calidad y corte a producción | 0/TBD | Not started | - |
