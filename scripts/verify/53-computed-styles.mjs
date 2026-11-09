@@ -267,6 +267,10 @@ try {
         let visited = 0
         for (let stop = 1; stop <= MAX_TAB_STOPS; stop += 1) {
           await page.keyboard.press('Tab')
+          // Dos cuadros de animacion: con movimiento pausado las transiciones duran
+          // 0.01 ms pero no terminan en el mismo tick, y el enlace de salto
+          // (top -64 a 8 px al recibir el foco) se medía aun fuera de pantalla.
+          await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))))
           const info = await page.evaluate(() => {
             const el = document.activeElement
             if (!el || el === document.body || el === document.documentElement) return { wrapped: true }

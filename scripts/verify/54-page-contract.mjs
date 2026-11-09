@@ -52,6 +52,16 @@ const LOCAL_SLUGS = ['seo-tecnico-lima', 'seo-tecnico-madrid']
 /** Rutas que todavia no existen en produccion: sin paridad posible. */
 const NEW_ROUTES = new Set(['/sobre-mi', '/en/sobre-mi'])
 
+/**
+ * Marcadores pendientes que CONTEXT permite renderizar tal como llegan de Payload
+ * hasta que la fase 56 los cierre (no se inventa copy). Se anotan como WARN y solo en
+ * la ruta indicada; cualquier otro marcador, o este en otra ruta, es FAIL.
+ */
+const KNOWN_PENDING = {
+  '/sobre-mi': ['{{pendiente}} fecha del cambio de nombre'],
+  '/en/sobre-mi': ['{{pendiente}} fecha del cambio de nombre'],
+}
+
 /** Lista por defecto de rutas, en es y en. */
 export function buildRoutes() {
   const routes = []
@@ -192,10 +202,10 @@ export function extractMeta(html) {
 /**
  * Contrato de una pagina.
  * @param {string} html
- * @param {{ lang: string, status?: number, headers?: Record<string,string>, expectPreview?: boolean }} opts
+ * @param {{ lang: string, path?: string, status?: number, headers?: Record<string,string>, expectPreview?: boolean }} opts
  * @returns {{ failures: string[], warnings: string[] }}
  */
-export function checkContract(html, { lang, status = 200, headers = {}, expectPreview = false }) {
+export function checkContract(html, { lang, path = '', status = 200, headers = {}, expectPreview = false }) {
   const failures = []
   const warnings = []
 
@@ -229,7 +239,14 @@ export function checkContract(html, { lang, status = 200, headers = {}, expectPr
     if (!/noindex/i.test(xr)) failures.push('falta x-robots-tag con noindex (EXPECT_PREVIEW=1)')
   }
 
-  const visible = visibleHtml(html)
+  let visible = visibleHtml(html)
+  for (const known of KNOWN_PENDING[path] ?? []) {
+    const n = visible.split(known).length - 1
+    if (n > 0) {
+      warnings.push(`marcador pendiente conocido x${n} (${known}); lo cierra la fase 56`)
+      visible = visible.split(known).join(' ')
+    }
+  }
   const braces = (visible.match(/\{\{/g) ?? []).length
   if (braces > 0) failures.push(`${braces} aparicion(es) de la secuencia de llaves dobles de marcadores`)
   const ph = (visible.match(/\[PLACEHOLDER\]/g) ?? []).length
@@ -316,6 +333,20 @@ function selftest() {
   // Un marcador dentro de un script que no es ld+json no es HTML visible.
   const inScript = FIXTURE({ body: '<h1>a</h1><script>var x = {{1}}</script>' })
   expectNone('llaves dobles dentro de un script ajeno', checkContract(inScript, opts).failures)
+
+  // Marcador pendiente permitido solo en su ruta y como WARN.
+  const pend = FIXTURE({ body: '<h1>a</h1><p>{{pendiente}} fecha del cambio de nombre</p>' })
+  const pendOk = checkContract(pend, { ...opts, path: '/sobre-mi' })
+  if (pendOk.failures.length === 0 && pendOk.warnings.length === 1) console.log('PASS selftest marcador pendiente conocido en /sobre-mi: un WARN y ningun fallo')
+  else {
+    bad += 1
+    console.log(`FAIL selftest marcador pendiente conocido en /sobre-mi: ${JSON.stringify(pendOk)}`)
+  }
+  expectSome('marcador pendiente conocido en otra ruta', checkContract(pend, { ...opts, path: '/contact' }).failures)
+  expectSome(
+    'otro marcador pendiente en /sobre-mi',
+    checkContract(FIXTURE({ body: '<h1>a</h1><p>{{pendiente}} otra cosa</p>' }), { ...opts, path: '/sobre-mi' }).failures,
+  )
 
   // Encabezados con punto o coma: WARN, no fallo.
   const punct = checkContract(FIXTURE({ body: '<h1>a</h1><h2>Hola, mundo.</h2><h3>Limpio</h3>' }), opts)
@@ -441,7 +472,7 @@ async function live(args) {
     }
 
     if (!parityOnly) {
-      const { failures, warnings } = checkContract(page.html, { lang: route.lang, status: page.status, headers: page.headers, expectPreview })
+      const { failures, warnings } = checkContract(page.html, { lang: route.lang, path: route.path, status: page.status, headers: page.headers, expectPreview })
       for (const x of failures) {
         out.push(`FAIL ${route.path} contrato: ${x}`)
         f += 1
