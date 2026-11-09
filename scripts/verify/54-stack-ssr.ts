@@ -20,6 +20,7 @@ import { StackView } from '../../src/components/pages/StackView'
 import { buildStackViewData, type StackViewData } from '../../src/lib/stack-data'
 import type { ToolStackBlock } from '../../src/payload-types'
 import { countOf, headingLevels, renderToHtml, textOf } from './54-ssr-harness'
+import { checkStackPage } from './54-stack-affiliate.mjs'
 
 // tsx usa el runtime clasico con jsx: preserve; los componentes .tsx necesitan React global.
 ;(globalThis as { React?: typeof React }).React = React
@@ -135,6 +136,13 @@ async function main(): Promise<void> {
   const navLinks = (categoriesNav(html).match(/<a\b[^>]*href="#[^"]+"/g) ?? []).map((a) => a.match(/href="#([^"]+)"/)?.[1] ?? '')
   check(navLinks.length === data.categories.length + 1, 'real: el nav lista las categorias y Mi equipo personal', `enlaces = ${navLinks.length}`)
   check(navLinks.every((id) => new RegExp(`\\sid="${id}"`).test(html)), 'real: cada enlace del nav apunta a un id existente', `ids ausentes: ${navLinks.filter((id) => !new RegExp(`\\sid="${id}"`).test(html)).join(', ')}`)
+  // El contrato HTTP de 54-stack-affiliate.mjs contra el render real de la vista (envuelto en un main minimo).
+  for (const [label, locale] of [['es', 'es'], ['en', 'en']] as const) {
+    const viewHtml = render(title, buildStackViewData(block, locale), locale)
+    const failuresHttp = checkStackPage({ status: 200, html: `<html><body><main id="main-content">${viewHtml}</main></body></html>` })
+    check(failuresHttp.length === 0, `real: ${label}: el contrato de 54-stack-affiliate.mjs pasa sobre el render de la vista`, failuresHttp.join('; '))
+  }
+
   check(/scroll-margin-top:96px/.test(raw), 'real: las secciones ancladas llevan scroll-margin-top de 96px', 'falta scroll-margin-top')
 
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1])
