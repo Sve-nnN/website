@@ -9,3 +9,9 @@
 ## 54-12 (hallado, fuera del alcance de ese plan)
 
 - Dos verificadores heredados de la fase 48 dependen del marcado Tailwind de `/stack` y dejan de coincidir con la vista MUI: `scripts/verify-stack-word-count.ts` busca `data-tool-narrative` en un `div` (la tarjeta nueva es un `li` sin ese marcador) y `scripts/verify-stack-page.ts` exige `aria-label="Breadcrumb"` (las migas MUI usan `common.breadcrumbsLabel`, "Ruta de navegación"). Ninguno forma parte de los scripts `54-*`. Decidir en 54-14 o 54-16 si se reemplazan por `54-stack-affiliate.mjs` y `54-stack-ssr.ts` o si se retiran con el corte de la fase 57. Los componentes viejos (`ToolCard`, `GearCard`, `StackHighlightCallout`, `AffiliateDisclosureFrame`) siguen en pie porque `blog/[category]/[slug]` y `AuditorCallout` los usan.
+
+## 54-14 (decision sobre los verificadores de la fase 48)
+
+- `scripts/verify-stack-word-count.ts` y `scripts/verify-stack-page.ts` no se adaptan: se retiran con el corte de la fase 57, junto con `ToolCard`, `GearCard`, `StackHighlightCallout` y `AffiliateDisclosureFrame`. Dependen de marcado Tailwind, de un dev server en `localhost:3000` y de `--env-file=.env` contra la base de produccion, y nada los invoca. `54-stack-ssr.ts` y `54-stack-affiliate.mjs` cubren su contrato estructural y el de afiliados.
+- **Hueco abierto:** ningun script `54-*` comprueba el minimo de 100 palabras por narrativa de herramienta (STACK-02 de la fase 48). Si se quiere conservar, agregarlo a `54-stack-ssr.ts` leyendo `narrative` del doc ya descargado (54-16 o verificacion de fase).
+- Pendiente de 54-16: supuesto A7 (rol `juantech_preview_ro` lee `home_page*` y `about_page*`) y, con la home completa, lecturas nuevas de `websites`, `testimonials`, `clientes`, `featured-content` y el doc `home`.

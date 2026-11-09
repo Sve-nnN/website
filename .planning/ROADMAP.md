@@ -89,7 +89,7 @@ Plans:
 - [x] 54-11-PLAN.md — Búsqueda con la consulta conservada y vista MUI
 - [x] 54-12-PLAN.md — Contacto con formulario real y FAQ, y Stack con logos y afiliados con divulgación
 - [x] 54-13-PLAN.md — Sobre mí con timeline de @mui/lab (tras checkpoint de legitimidad), foto y enlace de nav solo en el preview
-- [ ] 54-14-PLAN.md — Home segunda mitad: Casos, Proceso, Sitios, Sobre mí, Testimonios, FAQ, cierre y los tres bloques existentes
+- [x] 54-14-PLAN.md — Home segunda mitad: Casos, Proceso, Sitios, Sobre mí, Testimonios, FAQ, cierre y los tres bloques existentes
 - [ ] 54-15-PLAN.md — Índice de servicios con tabla comparativa y landings SEO técnico Lima y Madrid
 - [ ] 54-16-PLAN.md — Contrato por ruta con paridad de SEO, auditoría sin datos del sandbox, batería en vivo y despliegue final
 
@@ -144,7 +144,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 53. Base del rediseño: rama, preview, tema y shell | 6/6 | Complete    | 2026-11-07 |
-| 54. Páginas de conversión y utilidad | 13/16 | In Progress|  |
+| 54. Páginas de conversión y utilidad | 14/16 | In Progress|  |
 | 55. Casos, websites, blog y autores | 0/TBD | Not started | - |
 | 56. Contenido pendiente de Juan | 0/TBD | Not started | - |
 | 57. Gate de calidad y corte a producción | 0/TBD | Not started | - |
