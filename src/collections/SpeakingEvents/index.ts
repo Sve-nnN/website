@@ -1,5 +1,10 @@
 import type { CollectionConfig } from 'payload'
 
+import {
+  revalidateSpeakingEventsCache,
+  revalidateSpeakingEventsCacheOnDelete,
+} from '@/lib/cache-tags'
+
 /**
  * Standalone collection for speaking engagements (conferences, workshops,
  * talks) Juan has participated in — the 4th E-E-A-T section on the author
@@ -18,6 +23,11 @@ export const SpeakingEvents: CollectionConfig = {
   slug: 'speaking-events',
   access: {
     read: () => true,
+  },
+  // Fase 55 (D-03, IN-05): invalida speaking-events:all (Sobre mi y perfil de autor).
+  hooks: {
+    afterChange: [revalidateSpeakingEventsCache],
+    afterDelete: [revalidateSpeakingEventsCacheOnDelete],
   },
   // `date` is optional (see field below) and Postgres's default NULLS
   // ordering for `ORDER BY date DESC` is NULLS FIRST — undated events sort

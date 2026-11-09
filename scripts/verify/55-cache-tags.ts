@@ -140,9 +140,9 @@ export function unstableCacheCalls(src: string): string[] {
   return calls
 }
 
-/** Clave de cache: la primera cadena del arreglo `['clave', ...]` que sigue a la funcion. */
+/** Clave de cache: el arreglo `['clave', ...]` que va justo antes del objeto de opciones. */
 export function cacheKeyOf(call: string): string | null {
-  const m = call.match(/\[\s*(['"`])([^'"`]+)\1/)
+  const m = call.match(/\[\s*(['"`])([^'"`]+)\1[^\]]*\]\s*,\s*\{/)
   return m ? m[2] : null
 }
 

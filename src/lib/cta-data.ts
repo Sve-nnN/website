@@ -9,7 +9,7 @@ import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import { getCachedHomePage, getCachedPageBySlug, type Locale } from '@/lib/cache'
-import { CACHE_TTL_SECONDS } from '@/lib/cache-tags'
+import { CACHE_TAGS, CACHE_TTL_SECONDS } from '@/lib/cache-tags'
 import { extractContactEmail } from '@/lib/contact-data'
 import { SITE_PERSON_SLUG } from '@/lib/person'
 
@@ -42,7 +42,7 @@ const getCachedCtaAuthor = unstable_cache(
     return { name: author?.name ?? null, avatarUrl: url ?? null }
   },
   ['cta-author'],
-  { revalidate: CACHE_TTL_SECONDS },
+  { tags: [CACHE_TAGS.authors()], revalidate: CACHE_TTL_SECONDS },
 )
 
 export async function getCtaData(locale: Locale): Promise<CtaData | null> {

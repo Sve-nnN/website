@@ -21,7 +21,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { AboutPage, Media } from '@/payload-types'
 import { getCachedAboutPage, type Locale, type ShadowPageResult } from '@/lib/cache'
-import { CACHE_TTL_SECONDS } from '@/lib/cache-tags'
+import { CACHE_TAGS, CACHE_TTL_SECONDS } from '@/lib/cache-tags'
 import { str } from '@/lib/home-data'
 import { sanitizeHref } from '@/lib/nav-links'
 import { BRAND } from '@/lib/page-title'
@@ -357,7 +357,7 @@ const getCachedAboutAuthor = (locale: Locale) =>
       return (docs[0] as AuthorLike | undefined) ?? null
     },
     ['about-author', locale],
-    { revalidate: CACHE_TTL_SECONDS },
+    { tags: [CACHE_TAGS.authors()], revalidate: CACHE_TTL_SECONDS },
   )()
 
 const getCachedAboutEvents = (locale: Locale) =>
@@ -386,7 +386,7 @@ const getCachedAboutEvents = (locale: Locale) =>
       return docs as EventLike[]
     },
     ['about-events', locale],
-    { revalidate: CACHE_TTL_SECONDS },
+    { tags: [CACHE_TAGS.speakingEvents()], revalidate: CACHE_TTL_SECONDS },
   )()
 
 const getCachedAboutCounts = unstable_cache(
