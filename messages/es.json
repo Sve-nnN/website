@@ -275,5 +275,65 @@
     "eyebrow": "Legal",
     "tocLabel": "En este documento",
     "tocAria": "Índice del documento"
+  },
+  "websites": {
+    "index": {
+      "listTitle": "Proyectos",
+      "listLabel": "Lista de proyectos",
+      "filterLabel": "Filtrar proyectos por tecnología",
+      "filterAll": "Todos",
+      "filterOption": "{label} ({count})",
+      "kinds": {
+        "nextjs": "Next.js",
+        "wordpress": "WordPress",
+        "other": "Otras tecnologías"
+      },
+      "count": "{count, plural, one {# proyecto} other {# proyectos}}",
+      "countWithKind": "{count, plural, one {# proyecto} other {# proyectos}} con {kind}",
+      "featured": "Proyecto destacado",
+      "viewProject": "Ver el proyecto",
+      "emptyTitle": "Próximamente",
+      "emptyText": "Estoy preparando nuevos casos de sitios web. Vuelve pronto.",
+      "screenshotAlt": "Captura de {domain}",
+      "stackLabel": "Tecnologías",
+      "scoresLabel": "Puntajes de PageSpeed Insights",
+      "scoreSuffix": "de 100",
+      "scoresNote": "Puntajes de PageSpeed Insights, medidos el {date}.",
+      "rings": {
+        "performance": "Rendimiento",
+        "accessibility": "Accesibilidad",
+        "bestPractices": "Buenas prácticas",
+        "seo": "SEO"
+      }
+    },
+    "detail": {
+      "visit": "Visitar el sitio",
+      "opensInNewTab": "se abre en otra pestaña",
+      "externalNotice": "Este enlace lleva a un sitio externo y se abre en otra pestaña",
+      "screenshotAlt": "Captura de escritorio de {domain}",
+      "buildTitle": "Qué construí y qué retos tuvo",
+      "highlightsTitle": "Aspectos destacados",
+      "challengesTitle": "Retos",
+      "stackTitle": "Stack tecnológico",
+      "stackLabel": "Tecnologías",
+      "screenshotsTitle": "Capturas de pantalla",
+      "scoresTitle": "Rendimiento medido",
+      "scoresLabel": "Puntajes de PageSpeed Insights",
+      "scoreSuffix": "de 100",
+      "scoresNote": "Puntajes de PageSpeed Insights, medidos el {date}.",
+      "rings": {
+        "performance": "Rendimiento",
+        "accessibility": "Accesibilidad",
+        "bestPractices": "Buenas prácticas",
+        "seo": "SEO"
+      },
+      "relatedCaseTitle": "Caso de éxito relacionado",
+      "relatedCaseLink": "Ver el caso de éxito",
+      "navLabel": "Navegar entre proyectos",
+      "previous": "Anterior: {title}",
+      "next": "Siguiente: {title}",
+      "moreTitle": "Más proyectos",
+      "viewAll": "Ver todos"
+    }
   }
 }

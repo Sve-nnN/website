@@ -275,5 +275,65 @@
     "eyebrow": "Legal",
     "tocLabel": "In this document",
     "tocAria": "Document index"
+  },
+  "websites": {
+    "index": {
+      "listTitle": "Projects",
+      "listLabel": "Project list",
+      "filterLabel": "Filter projects by technology",
+      "filterAll": "All",
+      "filterOption": "{label} ({count})",
+      "kinds": {
+        "nextjs": "Next.js",
+        "wordpress": "WordPress",
+        "other": "Other technologies"
+      },
+      "count": "{count, plural, one {# project} other {# projects}}",
+      "countWithKind": "{count, plural, one {# project} other {# projects}} with {kind}",
+      "featured": "Featured project",
+      "viewProject": "View the project",
+      "emptyTitle": "Coming soon",
+      "emptyText": "I'm preparing new website case studies. Check back soon.",
+      "screenshotAlt": "Screenshot of {domain}",
+      "stackLabel": "Technologies",
+      "scoresLabel": "PageSpeed Insights scores",
+      "scoreSuffix": "out of 100",
+      "scoresNote": "PageSpeed Insights scores, measured on {date}.",
+      "rings": {
+        "performance": "Performance",
+        "accessibility": "Accessibility",
+        "bestPractices": "Best practices",
+        "seo": "SEO"
+      }
+    },
+    "detail": {
+      "visit": "Visit the site",
+      "opensInNewTab": "opens in a new tab",
+      "externalNotice": "This link goes to an external site and opens in a new tab",
+      "screenshotAlt": "Desktop screenshot of {domain}",
+      "buildTitle": "What I built and what challenges it had",
+      "highlightsTitle": "Highlights",
+      "challengesTitle": "Challenges",
+      "stackTitle": "Technology stack",
+      "stackLabel": "Technologies",
+      "screenshotsTitle": "Screenshots",
+      "scoresTitle": "Measured performance",
+      "scoresLabel": "PageSpeed Insights scores",
+      "scoreSuffix": "out of 100",
+      "scoresNote": "PageSpeed Insights scores, measured on {date}.",
+      "rings": {
+        "performance": "Performance",
+        "accessibility": "Accessibility",
+        "bestPractices": "Best practices",
+        "seo": "SEO"
+      },
+      "relatedCaseTitle": "Related case study",
+      "relatedCaseLink": "View the case study",
+      "navLabel": "Navigate between projects",
+      "previous": "Previous: {title}",
+      "next": "Next: {title}",
+      "moreTitle": "More projects",
+      "viewAll": "View all"
+    }
   }
 }
