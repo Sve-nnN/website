@@ -707,7 +707,7 @@ export function getCachedAuthorBySlug(slug: string, locale: Locale) {
 /**
  * TODOS los posts publicados de un autor, mas recientes primero (fase 55, plan
  * 55-12). Sin limite: produccion enlazaba solo 50 de los 58 posts desde el
- * perfil (`limit: 50`) y los 8 restantes no tenian enlace desde ahi (SEO-03).
+ * perfil (con un tope de 50) y los 8 restantes no tenian enlace desde ahi (SEO-03).
  * `limit: 0` con `pagination: false` trae todos.
  *
  * `overrideAccess: false` dentro de la cache: un borrador no se cachea (SEO-40).

@@ -1,28 +1,25 @@
 import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
-import Image from 'next/image'
-// Deliberately the PLAIN link, not the locale-aware `Link` from
-// `@/i18n/navigation`: the only `<Link>` on this page is an admin-authored
-// EXTERNAL speaking-event URL (`target="_blank"`), which must never be given a
-// locale prefix.
-import Link from 'next/link'
-import { GraduationCap, Mic, ExternalLink } from 'lucide-react'
 
-import config from '@payload-config'
-import { Link as LocaleLink } from '@/i18n/navigation'
 import { JsonLd } from '@/components/JsonLd'
-import { buildOpenGraph } from '@/lib/og-image'
-import { buildAlternates } from '@/lib/canonical'
-import { pageTitle } from '@/lib/page-title'
-import { Container } from '@/components/Container'
-import { Breadcrumbs } from '@/components/Breadcrumbs'
+import { CtaSection } from '@/components/mui/CtaSection'
+import { AuthorProfileView } from '@/components/pages/authors/AuthorProfileView'
+import {
+  buildAuthorPersonJsonLd,
+  pickAuthorCases,
+  toAuthorProfileProps,
+  type AuthorEventDocLike,
+} from '@/lib/authors-data'
+import { getCachedSpeakingEvents } from '@/lib/about-data'
 import { buildAuthorsTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
-import { AuthorCard } from '@/components/AuthorCard'
-import { PostCard } from '@/components/PostCard'
-import { CaseStudyCard } from '@/components/CaseStudyCard'
-import { Badge } from '@/components/ui/badge'
-import { Card } from '@/components/ui/card'
-import { buildSitePerson, SITE_PERSON_SLUG } from '@/lib/person'
+import {
+  getCachedAuthorBySlug,
+  getCachedAuthorPosts,
+  getCachedCaseStudiesIndex,
+} from '@/lib/cache'
+import { buildAlternates } from '@/lib/canonical'
+import { getCtaData } from '@/lib/cta-data'
+import { buildOpenGraph } from '@/lib/og-image'
+import { pageTitle } from '@/lib/page-title'
 
 // SEO-06: estas rutas servian `cache-control: no-store` y re-ejecutaban el SSR
 // completo en cada request. Venia de `force-dynamic`, que estaba por una razon
@@ -44,82 +41,13 @@ export function generateStaticParams(): Array<{ locale: string; slug: string }> 
   return []
 }
 
-const SITE_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'https://juan-tech.com'
-
-// PERF (js-hoist-intl): `locale` is a runtime parameter, not a module
-// constant, so a single top-level formatter can't be hoisted. Memoize per
-// locale instead -- this codebase only ever uses 'es'/'en', so each cache
-// stays at most 2 entries.
-const dateRangeFormatters = new Map<string, Intl.DateTimeFormat>()
-const eventDateFormatters = new Map<string, Intl.DateTimeFormat>()
-
-function getDateRangeFormatter(locale: string): Intl.DateTimeFormat {
-  let formatter = dateRangeFormatters.get(locale)
-  if (!formatter) {
-    formatter = new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric', timeZone: 'UTC' })
-    dateRangeFormatters.set(locale, formatter)
-  }
-  return formatter
-}
-
-function getEventDateFormatter(locale: string): Intl.DateTimeFormat {
-  let formatter = eventDateFormatters.get(locale)
-  if (!formatter) {
-    formatter = new Intl.DateTimeFormat(locale, {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-      timeZone: 'UTC',
-    })
-    eventDateFormatters.set(locale, formatter)
-  }
-  return formatter
-}
-
-/**
- * Formats a date range for education/experience items, e.g. "May 2022 – Aug 2028".
- * Falls back to `presentLabel` when `endDate` is missing (ongoing item).
- * Degrades gracefully (empty string) if `startDate` is missing.
- */
-function formatDateRange(
-  startDate: string | null | undefined,
-  endDate: string | null | undefined,
-  locale: string,
-  presentLabel: string,
-) {
-  if (!startDate) return ''
-
-  const formatter = getDateRangeFormatter(locale)
-  const start = formatter.format(new Date(startDate))
-  const end = endDate ? formatter.format(new Date(endDate)) : presentLabel
-
-  return `${start} – ${end}`
-}
-
-/** Formats a single date (day/month/year), e.g. "12 nov 2025". Empty string if missing. */
-function formatEventDate(date: string | null | undefined, locale: string) {
-  if (!date) return ''
-  return getEventDateFormatter(locale).format(new Date(date))
-}
-
-async function getAuthor(locale: string, slug: string) {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'authors',
-    where: { slug: { equals: slug } },
-    locale: locale as 'es' | 'en',
-    limit: 1,
-  })
-  return docs[0]
-}
-
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>
 }) {
   const { locale, slug } = await params
-  const doc = await getAuthor(locale, slug)
+  const doc = await getCachedAuthorBySlug(slug, locale as 'es' | 'en')
 
   if (!doc) return {}
 
@@ -141,317 +69,73 @@ export async function generateMetadata({
   }
 }
 
-const copy = {
-  es: {
-    posts: 'Artículos',
-    caseStudies: 'Casos de éxito',
-    // `home`/`authors` used to live here purely to label the hand-rolled
-    // breadcrumb JSON-LD. Those labels now come from lib/breadcrumbs.ts, and
-    // keeping a second copy here would be an invitation to let the two drift.
-    expertise: 'Áreas de especialización',
-    education: 'Educación y Certificaciones',
-    experience: 'Experiencia',
-    present: 'Presente',
-    speakingEvents: 'Eventos donde he sido ponente',
-    coSpeakersLabel: 'Con',
-    attendeesLabel: 'asistentes',
-    watchLink: 'Ver más',
-  },
-  en: {
-    posts: 'Posts',
-    caseStudies: 'Case Studies',
-    expertise: 'Expertise',
-    education: 'Education & Certifications',
-    experience: 'Experience',
-    present: 'Present',
-    speakingEvents: 'Speaking Events',
-    coSpeakersLabel: 'With',
-    attendeesLabel: 'attendees',
-    watchLink: 'Learn more',
-  },
-}
-
 export default async function AuthorProfilePage({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>
 }) {
   const { locale, slug } = await params
-  const doc = await getAuthor(locale, slug)
+  const loc = locale as 'es' | 'en'
+  const doc = await getCachedAuthorBySlug(slug, loc)
 
   if (!doc) {
     notFound()
   }
 
-  const t = copy[locale as 'es' | 'en'] ?? copy.es
-  const payload = await getPayload({ config })
-
-  const [{ docs: posts }, { docs: caseStudies }, { docs: speakingEvents }] = await Promise.all([
-    // SEO-40: `overrideAccess: false` en los dos listados. Sin eso la Local API
-    // se saltea `read: authenticatedOrPublished` y la pagina del autor lista
-    // posts y casos DESPUBLICADOS, enlazando a URLs que redirigen o no existen.
-    // Mismo mecanismo que RelatedCaseStudyBlock y src/lib/cache.ts.
-    payload.find({
-      collection: 'posts',
-      where: { author: { equals: doc.id } },
-      locale: locale as 'es' | 'en',
-      limit: 50,
-      overrideAccess: false,
-    }),
-    payload.find({
-      collection: 'case-studies',
-      where: { author: { equals: doc.id } },
-      locale: locale as 'es' | 'en',
-      limit: 50,
-      overrideAccess: false,
-    }),
-    payload.find({
-      collection: 'speaking-events',
-      locale: locale as 'es' | 'en',
-      sort: '-date',
-      limit: 50,
+  // SEO-03: el perfil enlaza TODOS los posts y TODOS los casos del autor en el
+  // HTML del servidor. Antes eran `limit: 50` (8 de los 58 posts sin enlace desde
+  // aqui). Las lecturas pasan por la cache con `overrideAccess: false` (SEO-40:
+  // sin borradores) y lanzan si fallan, para que ISR no fije una pagina sin posts.
+  // Las ponencias si se protegen: faltarian solo ellas y no afectan el enlazado.
+  const [posts, cases, events] = await Promise.all([
+    getCachedAuthorPosts(doc.id, loc),
+    getCachedCaseStudiesIndex(loc),
+    getCachedSpeakingEvents(loc).catch((err: unknown) => {
+      console.error('[authors]', err)
+      return [] as AuthorEventDocLike[]
     }),
   ])
 
-  // SEO-03: el dueno del sitio se emite desde src/lib/person.ts, con el @id
-  // canonico que tambien usa la home, para que sean un solo nodo y no dos
-  // representaciones sueltas de la misma persona. Ese modulo tambien es el que
-  // deja de afirmar una credencial con fecha futura: una carrera en curso sale
-  // como `alumniOf`, no como titulo obtenido.
-  //
-  // Cualquier OTRO autor sigue armando su nodo aca: no tiene @id de sitio
-  // porque no es la entidad del dominio.
-  const isSitePerson = doc.slug === SITE_PERSON_SLUG
-  const personData = isSitePerson
-    ? await buildSitePerson(locale as 'es' | 'en')
-    : {
-        '@context': 'https://schema.org',
-        '@type': 'Person',
-        name: doc.name,
-        jobTitle: doc.jobTitle,
-        url: `${SITE_URL}/authors/${doc.slug}`,
-        ...(doc.socialLinks?.length ? { sameAs: doc.socialLinks.map((s) => s.url) } : {}),
-        ...(doc.expertise?.length ? { knowsAbout: doc.expertise.map((e) => e.topic) } : {}),
-        ...(doc.education?.length
-          ? {
-              hasCredential: doc.education
-                .filter((ed) => ed.endDate && new Date(ed.endDate).getTime() <= Date.now())
-                .map((ed) => ({
-                  '@type': 'EducationalOccupationalCredential',
-                  name: ed.degree,
-                  recognizedBy: { '@type': 'Organization', name: ed.institution },
-                  datePublished: ed.endDate,
-                })),
-            }
-          : {}),
-      }
+  const profile = toAuthorProfileProps(doc, events as AuthorEventDocLike[], loc, {
+    posts,
+    cases: pickAuthorCases(cases, doc.id),
+  })
+  if (!profile) {
+    notFound()
+  }
 
-  // POLISH: this used to be a hand-rolled BreadcrumbList with hardcoded
-  // labels and URLs — and, more importantly, no visible counterpart anywhere
-  // on the page. Now both the markup and the rendered trail come from the same
-  // array, through the same helper every other section already uses.
-  const trail = buildAuthorsTrail(locale as 'es' | 'en', {
+  // El nodo Person sale de authors-data.ts: el dueno del sitio, con el @id
+  // canonico de src/lib/person.ts, y cualquier otro autor con su propio nodo.
+  const personData = await buildAuthorPersonJsonLd(doc, loc)
+
+  // POLISH: el BreadcrumbList y la ruta visible salen del mismo arreglo, por el
+  // mismo helper que usa el resto de las secciones.
+  const trail = buildAuthorsTrail(loc, {
     slug: doc.slug ?? slug,
     title: doc.name,
   })
+  const ctaData = await getCtaData(loc)
 
   return (
-    <div>
-      <Container className="py-16">
-        <Breadcrumbs trail={trail} className="mb-8" />
-        <AuthorCard author={doc} asPageHeading />
-
-        {doc.expertise && doc.expertise.length > 0 && (
-          <section className="mt-12">
-            <h2 className="font-heading text-heading mb-6">{t.expertise}</h2>
-            <div className="flex flex-wrap gap-2">
-              {doc.expertise.map((item, i) => (
-                <Badge key={item.id ?? i} variant="secondary">
-                  {item.topic}
-                </Badge>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {doc.education && doc.education.length > 0 && (
-          <section className="mt-12">
-            <h2 className="font-heading text-heading mb-6">{t.education}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {doc.education.map((item, i) => {
-                const logo = typeof item.logo === 'object' ? item.logo : null
-                const dateRange = formatDateRange(item.startDate, item.endDate, locale, t.present)
-
-                return (
-                  <Card key={item.id ?? i} className="flex gap-4 p-6">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-muted">
-                      {logo?.url ? (
-                        <Image
-                          src={logo.url}
-                          alt={logo.alt ?? item.institution}
-                          width={48}
-                          height={48}
-                          className="rounded-md object-contain"
-                        />
-                      ) : (
-                        <GraduationCap className="size-6 text-muted-foreground" />
-                      )}
-                    </div>
-                    <div>
-                      <p className="font-heading text-body font-semibold">{item.degree}</p>
-                      <p className="text-body text-muted-foreground">{item.institution}</p>
-                      {dateRange && (
-                        <p className="mt-1 text-label text-muted-foreground">{dateRange}</p>
-                      )}
-                    </div>
-                  </Card>
-                )
-              })}
-            </div>
-          </section>
-        )}
-
-        {doc.experience && doc.experience.length > 0 && (
-          <section className="mt-12">
-            <h2 className="font-heading text-heading mb-6">{t.experience}</h2>
-            <div className="relative pl-8">
-              <div aria-hidden className="absolute left-[7px] top-1 bottom-1 w-px bg-border" />
-              <ol className="space-y-8">
-                {doc.experience.map((item, i) => {
-                  const dateRange = formatDateRange(item.startDate, item.endDate, locale, t.present)
-
-                  return (
-                    // POLISH: the date line only rendered when a date existed,
-                    // so on an entry without one the dot lined up with the role
-                    // instead of the date — measured on production, entry 1's
-                    // dot sat beside an <h3> while entries 2 and 3 sat beside a
-                    // <p>, and the reading order flipped between items. The
-                    // slot is now always present; when there is no date it is
-                    // simply empty, and every dot lines up with the same thing.
-                    <li key={item.id ?? i} className="relative">
-                      <span
-                        aria-hidden
-                        className="absolute -left-8 top-1 size-3.5 rounded-full border-2 border-background bg-primary"
-                      />
-                      <p className="min-h-5 text-label text-muted-foreground">
-                        {dateRange || ' '}
-                      </p>
-                      <h3 className="font-heading text-body font-semibold">{item.role}</h3>
-                      <p className="text-body text-muted-foreground">{item.company}</p>
-                      {item.description && (
-                        <p className="mt-2 text-body text-muted-foreground max-w-[70ch]">
-                          {item.description}
-                        </p>
-                      )}
-                    </li>
-                  )
-                })}
-              </ol>
-            </div>
-          </section>
-        )}
-
-        {speakingEvents.length > 0 && (
-          <section className="mt-12">
-            <h2 className="font-heading text-heading mb-6">{t.speakingEvents}</h2>
-            <div className="grid grid-cols-1 gap-6">
-              {speakingEvents.map((event) => {
-                const flyer = typeof event.flyer === 'object' ? event.flyer : null
-                const eventDate = formatEventDate(event.date, locale)
-                const metaParts = [
-                  eventDate,
-                  event.location ?? undefined,
-                  event.attendeeCount ? `${event.attendeeCount} ${t.attendeesLabel}` : undefined,
-                ].filter(Boolean)
-
-                return (
-                  <Card key={event.id} className="flex gap-4 p-6">
-                    <div className="flex size-12 shrink-0 items-center justify-center rounded-md bg-muted">
-                      {flyer?.url ? (
-                        <Image
-                          src={flyer.url}
-                          alt={flyer.alt ?? event.title}
-                          width={48}
-                          height={48}
-                          className="rounded-md object-contain"
-                        />
-                      ) : (
-                        <Mic className="size-6 text-muted-foreground" />
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <p className="font-heading text-body font-semibold">{event.title}</p>
-                        {event.role && <Badge variant="secondary">{event.role}</Badge>}
-                      </div>
-                      {metaParts.length > 0 && (
-                        <p className="mt-1 text-label text-muted-foreground">{metaParts.join(' · ')}</p>
-                      )}
-                      {event.description && (
-                        <p className="mt-2 text-body text-muted-foreground">{event.description}</p>
-                      )}
-                      {event.coSpeakers && event.coSpeakers.length > 0 && (
-                        <p className="mt-2 text-label text-muted-foreground">
-                          {t.coSpeakersLabel} {event.coSpeakers.map((cs) => cs.name).join(', ')}
-                        </p>
-                      )}
-                      {event.link && (
-                        <Link
-                          href={event.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          // POLISH: `text-primary` is 3.15:1 on the light card
-                          // at 14px — below AA. `text-primary-text` is 4.61:1.
-                          className="mt-3 inline-flex min-h-6 items-center gap-1 rounded-sm text-label text-primary-text hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:shadow-focus"
-                        >
-                          {t.watchLink}
-                          <ExternalLink className="size-3.5" />
-                        </Link>
-                      )}
-                    </div>
-                  </Card>
-                )
-              })}
-            </div>
-          </section>
-        )}
-
-        {posts.length > 0 && (
-          <section className="mt-12">
-            <h2 className="font-heading text-heading mb-6">{t.posts}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {caseStudies.length > 0 && (
-          <section className="mt-12">
-            <h2 className="font-heading text-heading mb-6">{t.caseStudies}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {caseStudies.map((cs) => (
-                <CaseStudyCard key={cs.id} caseStudy={cs} />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {/* STACK-05: link simple a /stack, deliberadamente NO agregado a
-            AuthorCard (ese componente es la byline en 100+ posts/case
-            studies — ponerlo ahí diluiría el link equity de servicios que
-            esta constraint protege). Mismo tratamiento visual que
-            /websites/[slug]/page.tsx usa para "View related case study". */}
-        <div className="mt-12">
-          <LocaleLink href="/stack" className="text-primary-text underline underline-offset-2">
-            {locale === 'es' ? 'Ver mi stack de herramientas' : 'See my tool stack'}
-          </LocaleLink>
+    <>
+      <AuthorProfileView
+        crumbs={trail.map((c) => ({ label: c.label, href: c.url }))}
+        profile={profile}
+      />
+      {ctaData && (
+        <div lang={ctaData.isFallback && locale === 'en' ? 'es' : undefined}>
+          <CtaSection
+            title={ctaData.title}
+            lead={ctaData.lead}
+            email={ctaData.email}
+            name={ctaData.name}
+            avatarUrl={ctaData.avatarUrl}
+          />
         </div>
-      </Container>
+      )}
 
       <JsonLd data={personData} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </div>
+    </>
   )
 }

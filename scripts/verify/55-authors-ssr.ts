@@ -386,6 +386,28 @@ function mainProfile(): void {
     'no detecto el href peligroso',
   )
 
+  // SEO-03: TODOS los posts y casos del autor llegan al HTML del servidor, sin tope de 50.
+  const postLinkCount = (html: string): number => countOf(html, /href="(?:\/en)?\/blog\/tema-uno\/post-inventado-\d+"/g)
+  const caseLinkCount = (html: string): number => countOf(html, /href="(?:\/en)?\/case-studies\/caso-inventado-\d+"/g)
+  const full = toAuthorProfileProps(PROFILE_DOC, EVENT_DOCS, 'es', { posts: fakePosts(58), cases: fakeCases(7) }, NOW)!
+  check(full.posts.length === 58 && full.cases.length === 7, 'perfil props: 58 posts y 7 casos sin recorte', `${full.posts.length} y ${full.cases.length}`)
+  for (const locale of ['es', 'en'] as const) {
+    const html = renderProfile(full, locale)
+    check(postLinkCount(html) === 58, `perfil ${locale}: 58 posts producen 58 enlaces a posts en el HTML`, `hay ${postLinkCount(html)}`)
+    check(caseLinkCount(html) === 7, `perfil ${locale}: los 7 casos estan enlazados`, `hay ${caseLinkCount(html)}`)
+    const reasons = profileFailures(html, full)
+    check(reasons.length === 0, `perfil ${locale}: contrato completo con posts y casos`, reasons.join('; '))
+    check(!/Ver m[aá]s art[ií]culos|Show more|Load more/i.test(textOf(html)), `perfil ${locale}: sin boton de ver mas ni revelado en el cliente`, 'hay un boton de revelado')
+    check(countOf(html, /<button[\s>]/g) === 0, `perfil ${locale}: ningun boton en el perfil`, `hay ${countOf(html, /<button[\s>]/g)}`)
+  }
+  // Un fixture defectuoso con 50 posts (el tope viejo) debe fallar.
+  const capped = toAuthorProfileProps(PROFILE_DOC, EVENT_DOCS, 'es', { posts: fakePosts(50), cases: fakeCases(7) }, NOW)!
+  check(postLinkCount(renderProfile(capped, 'es')) !== 58, 'defectuoso: 50 posts no cumplen los 58 enlaces', 'el recuento no distingue 50 de 58')
+  // Sin posts ni casos: ni encabezados ni listas de esas secciones.
+  const noRelated = toAuthorProfileProps(PROFILE_DOC, EVENT_DOCS, 'es', { posts: [], cases: [] }, NOW)!
+  const noRelatedHtml = renderProfile(noRelated, 'es')
+  check(!SECTION_TITLES.posts.test(noRelatedHtml) && !SECTION_TITLES.cases.test(textOf(noRelatedHtml)), 'sin posts ni casos: no quedan sus encabezados', 'queda un encabezado huerfano')
+
   // Casos del autor: el filtro por autor no pierde ninguno.
   const mixed: AuthorCaseDocLike[] = [...fakeCases(3), { slug: 'ajeno', title: 'Ajeno', author: 2 }, { slug: 'poblado', title: 'Poblado', author: { id: 1 } }, { slug: 'sin-autor', title: 'Sin autor', author: null }]
   check(pickAuthorCases(mixed, 1).length === 4, 'casos del autor: id numerico y autor poblado, sin los ajenos ni los sin autor', `${pickAuthorCases(mixed, 1).length}`)
