@@ -437,6 +437,12 @@
       "label": "Table of contents"
     },
     "readingTime": "{minutes} min read",
-    "categoriesLabel": "Post categories"
+    "categoriesLabel": "Post categories",
+    "progress": {
+      "label": "Reading progress"
+    },
+    "offer": {
+      "label": "Featured information"
+    }
   }
 }

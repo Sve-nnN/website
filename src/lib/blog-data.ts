@@ -611,6 +611,30 @@ export function categoryItems(posts: ReadonlyArray<BlogPostDocLike>, categorySlu
   return toPostItems(posts.filter((doc) => belongsTo(doc, categorySlug)))
 }
 
+// ---------------------------------------------------------------------------
+// Ofertas del post (global blog-promo)
+// ---------------------------------------------------------------------------
+
+type InlineLike = { title?: string | null; text?: string | null; linkLabel?: string | null; linkUrl?: string | null }
+type RailLike = { title?: string | null; body?: string | null; linkLabel?: string | null; linkUrl?: string | null }
+
+export type PostInlineOffer = { title: string | null; text: string; link: { label: string; url: string } | null }
+export type PostRailOffer = { title: string; body: string | null; link: { label: string; url: string } | null }
+
+/** Oferta inline resuelta (`resolveBlogPromo`). Sin texto no hay oferta (null), igual que la anterior. */
+export function toInlineOffer(inline: InlineLike | null | undefined): PostInlineOffer | null {
+  const body = text(inline?.text)
+  if (!body) return null
+  return { title: text(inline?.title), text: body, link: cta(inline?.linkLabel, inline?.linkUrl) }
+}
+
+/** Tarjeta de riel resuelta. Sin titulo no hay tarjeta (null), igual que la anterior. */
+export function toRailOffer(rail: RailLike | null | undefined): PostRailOffer | null {
+  const title = text(rail?.title)
+  if (!title) return null
+  return { title, body: text(rail?.body), link: cta(rail?.linkLabel, rail?.linkUrl) }
+}
+
 /** Datos que la ruta aporta del servidor y que este modulo puro no puede importar. */
 export type PostJsonLdRefs = {
   /** SITE_URL de sitemap-data. */

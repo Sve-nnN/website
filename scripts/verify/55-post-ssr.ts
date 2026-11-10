@@ -25,6 +25,9 @@ createRequire(import.meta.url)('./55-stub-next-intl-server.cjs')
 const { PostView } = await import('../../src/components/pages/blog/PostView')
 const { MuiRichText } = await import('../../src/components/mui/rich-text/MuiRichText')
 const { Toc } = await import('../../src/components/mui/rich-text/Toc')
+const { ReadingProgress } = await import('../../src/components/mui/ReadingProgress')
+const { toInlineOffer, toRailOffer } = await import('../../src/lib/blog-data')
+const { postHasAffiliateInline, postHasAmazonAffiliateInline } = await import('../../src/lib/post-affiliate-scan')
 const { buildHeadingIdMap } = await import('../../src/components/mui/rich-text/lexical-toc')
 const { splitContentForOffer } = await import('../../src/lib/lexical-split')
 const { buildArticleJsonLd, toPostViewProps } = await import('../../src/lib/blog-data')
@@ -130,6 +133,8 @@ type RenderOpts = {
   locale?: 'es' | 'en'
   slug?: string
   extra?: Record<string, unknown>
+  inline?: Parameters<typeof toInlineOffer>[0]
+  rail?: Parameters<typeof toRailOffer>[0]
 }
 
 /** Renderiza PostView como lo hace la ruta: un mapa de ids sobre el cuerpo completo y dos mitades. */
@@ -144,6 +149,13 @@ function renderPost(content: unknown, o: RenderOpts = {}): { html: string; view:
       post: view,
       crumbs: CRUMBS,
       tocLabel: locale === 'es' ? 'Tabla de contenidos' : 'Table of contents',
+      progressLabel: locale === 'es' ? 'Progreso de lectura' : 'Reading progress',
+      // Igual que la ruta: el escaneo cubre el contenido ENTERO, nunca las mitades.
+      disclosure: postHasAffiliateInline(d.content as never)
+        ? { amazon: postHasAmazonAffiliateInline(d.content as never) }
+        : null,
+      inlineOffer: toInlineOffer(o.inline),
+      railOffer: toRailOffer(o.rail),
       before: body.before as never,
       after: body.after as never,
       headingIds,
@@ -280,9 +292,9 @@ for (const locale of ['es', 'en'] as const) {
   check(/role="note"/.test(incomplete.html) && /not available in English yet/.test(incomplete.html), 'EN incompleto: muestra TranslationNotice', 'sin aviso')
   check(/href="\/blog\/categoria-inventada\/recursividad"/.test(incomplete.html), 'EN incompleto: el aviso enlaza a la ruta ES sin prefijo', 'enlace mal formado')
   const complete = renderPost(BODY, { locale: 'en', slug: 'post-inventado' })
-  check(!/role="note"/.test(complete.html), 'EN completo: sin aviso', 'mostro el aviso')
+  check(!/not available in English yet/.test(complete.html), 'EN completo: sin aviso', 'mostro el aviso')
   const es = renderPost(BODY, { locale: 'es', slug: 'recursividad' })
-  check(!/role="note"/.test(es.html), 'ES con el mismo slug: sin aviso', 'mostro el aviso en ES')
+  check(!/todavía no está disponible en inglés/.test(es.html), 'ES con el mismo slug: sin aviso', 'mostro el aviso en ES')
 }
 
 // ---- JSON-LD Article extraido sin cambios (D-04, T-55-39) --------------------
@@ -340,6 +352,151 @@ for (const locale of ['es', 'en'] as const) {
     'buildArticleJsonLd: otro autor no hereda el @id del sitio y ES marca inLanguage es',
     JSON.stringify(trimmed.author),
   )
+}
+
+// ===========================================================================
+// Tarea 2: progreso de lectura, divulgacion de afiliados y ofertas MUI
+// ===========================================================================
+
+const AFFILIATE_LINK = { id: 7, name: 'Herramienta inventada', tagline: 'Una linea inventada', program: 'otro', active: true, slug: 'herramienta-inventada', ctaLabel: 'Probar la herramienta' }
+const affiliateBlock = (): Node => ({ type: 'block', version: 2, format: '', fields: { id: 'afiliado-fixture', blockType: 'affiliate-inline', affiliateLink: AFFILIATE_LINK } })
+
+/** Cuerpo con el bloque de afiliado en la SEGUNDA mitad: ninguna mitad por separado lo vera completo. */
+const BODY_AFFILIATE = doc([
+  p('Apertura inventada'),
+  heading('h2', 'Primera seccion'),
+  p('Parrafo uno'),
+  p('Parrafo dos'),
+  p('Parrafo tres'),
+  heading('h2', 'Segunda seccion'),
+  p('Parrafo cuatro'),
+  p('Parrafo cinco'),
+  affiliateBlock(),
+  p('Parrafo seis'),
+  p('Parrafo siete'),
+  p('Parrafo ocho'),
+])
+
+const REL_OK = 'rel="sponsored nofollow noopener"'
+
+/** Posicion del primer enlace de afiliado y de la divulgacion en el HTML. */
+function affiliateOrder(html: string): { disclosure: number; firstLink: number } {
+  return { disclosure: html.indexOf('id="post-disclosure"'), firstLink: html.indexOf('href="/go/') }
+}
+
+/** Motivos de fallo de la divulgacion de afiliados de un post que SI trae afiliado inline. */
+function disclosureFailures(html: string): string[] {
+  const reasons: string[] = []
+  const { disclosure, firstLink } = affiliateOrder(html)
+  if (firstLink === -1) reasons.push('no hay enlace de afiliado en el HTML')
+  if (disclosure === -1) reasons.push('falta la divulgacion de afiliados')
+  if (disclosure !== -1 && firstLink !== -1 && disclosure > firstLink) reasons.push('la divulgacion aparece despues del primer enlace de afiliado')
+  const a = /<a\b[^>]*\shref="\/go\/[^"]*"[^>]*>/.exec(html)?.[0] ?? ''
+  if (a && !a.includes(REL_OK)) reasons.push(`el enlace de afiliado no lleva ${REL_OK}`)
+  if (countOf(html, /id="post-disclosure"/) > 1) reasons.push('la divulgacion se repite')
+  return reasons
+}
+
+/** Motivos de fallo de la barra de progreso. */
+function progressFailures(html: string): string[] {
+  const reasons: string[] = []
+  const tag = /<[a-z]+\b[^>]*\srole="progressbar"[^>]*>/i.exec(html)?.[0] ?? ''
+  if (!tag) return ['falta role="progressbar"']
+  if (!/\saria-label="[^"]+"/.test(tag)) reasons.push('falta aria-label')
+  if (!/\saria-valuemin="0"/.test(tag)) reasons.push('falta aria-valuemin 0')
+  if (!/\saria-valuemax="100"/.test(tag)) reasons.push('falta aria-valuemax 100')
+  if (!/\saria-valuenow="\d+"/.test(tag)) reasons.push('aria-valuenow no es un entero')
+  if (countOf(html, /role="progressbar"/) !== 1) reasons.push('hay mas de una barra de progreso')
+  if (/\stabindex=/.test(tag)) reasons.push('la barra recibe foco')
+  return reasons
+}
+
+// ---- Progreso de lectura ----------------------------------------------------
+for (const locale of ['es', 'en'] as const) {
+  const html = renderToHtml(createElement(ReadingProgress, { targetId: 'post-body', label: locale === 'es' ? 'Progreso de lectura' : 'Reading progress' }), locale)
+  check(progressFailures(html).length === 0, `ReadingProgress ${locale}: role, aria-label, min, max y valuenow entero`, progressFailures(html).join('; '))
+}
+{
+  const { html } = renderPost(BODY)
+  check(progressFailures(html).length === 0, 'post: la barra de progreso va en la vista y apunta al article', progressFailures(html).join('; '))
+  check(/aria-label="Progreso de lectura"/.test(html), 'post es: el nombre de la barra sale de messages', 'sin etiqueta')
+  const good = renderToHtml(createElement(ReadingProgress, { targetId: 'post-body', label: 'Reading progress' }), 'en')
+  check(progressFailures(good.replace(/\saria-valuenow="\d+"/, '')).some((r) => r.includes('valuenow')), 'defectuoso: sin aria-valuenow se detecta', 'no se detecto')
+  check(progressFailures(good.replace(/\saria-valuemax="100"/, '')).some((r) => r.includes('valuemax')), 'defectuoso: sin aria-valuemax se detecta', 'no se detecto')
+  check(progressFailures(good.replace(/\saria-label="[^"]*"/, '')).some((r) => r.includes('aria-label')), 'defectuoso: sin aria-label se detecta', 'no se detecto')
+  check(progressFailures(good.replace('role="progressbar"', 'aria-hidden="true"')).some((r) => r.includes('progressbar')), 'defectuoso: barra decorativa aria-hidden se detecta', 'no se detecto')
+}
+
+// ---- Divulgacion de afiliados (D-20, T-55-40) ---------------------------------
+{
+  const whole = (BODY_AFFILIATE as { root: { children: unknown[] } }).root
+  const split = splitContentForOffer(BODY_AFFILIATE as never)
+  check(
+    postHasAffiliateInline(BODY_AFFILIATE as never) && !postHasAffiliateInline(split.before as never),
+    'fixture de afiliado: solo el contenido completo lo ve (la primera mitad no)',
+    `entero=${postHasAffiliateInline(BODY_AFFILIATE as never)} mitad1=${postHasAffiliateInline(split.before as never)}`,
+  )
+  check(whole.children.length >= 6 && split.after !== null, 'fixture de afiliado: el cuerpo se parte en dos mitades', 'no se partio')
+
+  for (const locale of ['es', 'en'] as const) {
+    const { html } = renderPost(BODY_AFFILIATE, { locale })
+    const reasons = disclosureFailures(html)
+    check(reasons.length === 0, `afiliado ${locale}: divulgacion antes del primer enlace y rel exacto`, reasons.join('; '))
+    check(
+      locale === 'es' ? /Algunos enlaces de esta página son de afiliado/.test(html) : /Some of the links on this page are affiliate links/.test(html),
+      `afiliado ${locale}: el texto sale del namespace affiliateDisclosure`,
+      'sin texto de divulgacion',
+    )
+    check(!/Como Afiliado de Amazon|As an Amazon Associate/.test(html), `afiliado ${locale}: sin programa Amazon no hay leyenda de Amazon`, 'mostro la leyenda de Amazon')
+  }
+  const amazon = renderPost(BODY_AFFILIATE, { locale: 'es' }).html
+  check(amazon.indexOf('id="post-disclosure"') < amazon.indexOf('href="/go/'), 'afiliado: la divulgacion precede al cuerpo entero', 'orden incorrecto')
+
+  const none = renderPost(BODY)
+  check(!/id="post-disclosure"/.test(none.html) && !/href="\/go\//.test(none.html), 'sin afiliado: no hay divulgacion ni enlace /go', 'aparecio divulgacion sin afiliado')
+
+  // Defectuosos: la divulgacion despues del enlace, ausente o con rel flojo.
+  const good = renderPost(BODY_AFFILIATE).html
+  const disclosureHtml = /<div\b[^>]*\sid="post-disclosure"[\s\S]*?<\/div>/.exec(good)?.[0] ?? ''
+  const moved = good.replace(disclosureHtml, '').replace('</article>', `${disclosureHtml}</article>`)
+  check(disclosureFailures(moved).some((r) => r.includes('despues')), 'defectuoso: divulgacion despues del primer enlace se detecta', JSON.stringify(disclosureFailures(moved)))
+  check(disclosureFailures(good.replace(disclosureHtml, '')).some((r) => r.includes('falta la divulgacion')), 'defectuoso: sin divulgacion se detecta', 'no se detecto')
+  check(disclosureFailures(good.replace(REL_OK, 'rel="noopener"')).some((r) => r.includes('rel')), 'defectuoso: afiliado sin sponsored nofollow se detecta', 'no se detecto')
+}
+
+// ---- Ofertas MUI --------------------------------------------------------------
+{
+  const inline = { title: 'Oferta inline inventada', text: 'Texto inventado de la oferta inline', linkLabel: 'Accion inline inventada', linkUrl: '/contacto' }
+  const rail = { title: 'Tarjeta de riel inventada', body: 'Cuerpo inventado del riel', linkLabel: 'Accion de riel inventada', linkUrl: '/servicios' }
+
+  for (const locale of ['es', 'en'] as const) {
+    const { html } = renderPost(BODY, { locale, inline, rail })
+    const at = (needle: string) => html.indexOf(needle)
+    check(countOf(html, /Texto inventado de la oferta inline/) === 1, `oferta inline ${locale}: aparece una vez`, `hay ${countOf(html, /Texto inventado de la oferta inline/)}`)
+    // El corte cae entre dos secciones: la oferta queda dentro del article, entre dos encabezados del cuerpo.
+    const articleStart = at('id="post-body"')
+    const firstH2 = html.indexOf('Seccion repetida', articleStart)
+    const offer = at('Texto inventado de la oferta inline')
+    const lastH2 = html.lastIndexOf('Cierre del cuerpo')
+    check(articleStart < firstH2 && firstH2 < offer && offer < lastH2, `oferta inline ${locale}: va entre las dos mitades del cuerpo`, `posiciones ${articleStart}, ${firstH2}, ${offer}, ${lastH2}`)
+    check(countOf(html, /Tarjeta de riel inventada/) === 1, `riel ${locale}: la tarjeta aparece una vez`, `hay ${countOf(html, /Tarjeta de riel inventada/)}`)
+    check(at('Tarjeta de riel inventada') < articleStart, `riel ${locale}: va en la columna del indice, antes del article en el DOM`, 'orden incorrecto')
+    const asides = [...html.matchAll(/<aside\b[^>]*>/g)].map((m) => m[0])
+    check(asides.length === 2 && asides.every((a) => /aria-label(?:ledby)?=/.test(a)), `ofertas ${locale}: dos aside con nombre accesible`, JSON.stringify(asides))
+    const ids = allIds(html)
+    check(new Set(ids).size === ids.length, `ofertas ${locale}: ids unicos con el indice y las ofertas`, 'hay ids repetidos')
+    check(/href="(?:\/en)?\/contacto"/.test(html) && /href="(?:\/en)?\/servicios"/.test(html), `ofertas ${locale}: los enlaces de las ofertas existen`, 'faltan enlaces')
+    check(postFailures(html, { expectToc: true }).length === 0, `ofertas ${locale}: el contrato del post se mantiene`, postFailures(html, { expectToc: true }).join('; '))
+  }
+  const noOffers = renderPost(BODY, { inline: null, rail: null }).html
+  check(!/<aside\b/.test(noOffers), 'sin promo: no hay aside vacio', 'aparecio un aside')
+  const noText = renderPost(BODY, { inline: { title: 'Solo titulo', text: '' }, rail: { title: '' } }).html
+  check(!/Solo titulo/.test(noText) && !/<aside\b/.test(noText), 'oferta sin texto y riel sin titulo no se pintan (igual que la version anterior)', 'pinto una oferta vacia')
+  const short = renderPost(doc([p('a'), p('b'), p('c')]), { inline, rail })
+  check(!/Texto inventado de la oferta inline/.test(short.html), 'cuerpo corto (no se parte): la oferta inline se omite', 'pinto la oferta inline')
+  check(/Tarjeta de riel inventada/.test(short.html), 'cuerpo corto sin TOC: el riel conserva su columna', 'se perdio el riel')
+  check(toInlineOffer({ title: 'T', text: 'x', linkLabel: 'L', linkUrl: '' })?.link === null, 'toInlineOffer: una accion sin url se descarta', 'conservo la accion')
+  check(toRailOffer({ title: 'T', body: ' ' })?.body === null, 'toRailOffer: cuerpo vacio queda null', 'conservo el cuerpo')
 }
 
 // ---- Fixtures defectuosos: deben fallar --------------------------------------

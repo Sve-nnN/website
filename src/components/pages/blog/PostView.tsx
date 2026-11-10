@@ -15,14 +15,20 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 
+import Typography from '@mui/material/Typography'
+import { useTranslations } from 'next-intl'
+
 import type { Crumb } from '@/components/mui/Crumbs'
 import { PageHero } from '@/components/mui/PageHero'
+import { ReadingProgress } from '@/components/mui/ReadingProgress'
 import { MuiRichText } from '@/components/mui/rich-text/MuiRichText'
 import { Toc } from '@/components/mui/rich-text/Toc'
 import { TranslationNotice } from '@/components/mui/TranslationNotice'
-import type { PostViewProps } from '@/lib/blog-data'
+import type { PostInlineOffer, PostRailOffer, PostViewProps } from '@/lib/blog-data'
 
+import { InlineOfferMui } from './InlineOfferMui'
 import { PostByline } from './PostByline'
+import { RailOfferMui } from './RailOfferMui'
 
 /** Id del elemento article: lo mide la barra de progreso y esta reservado en lexical-toc. */
 export const POST_BODY_ID = 'post-body'
@@ -33,6 +39,18 @@ type Props = {
   crumbs: Crumb[]
   /** Nombre del indice (messages post.toc.label), para que la ruta lo resuelva con el idioma. */
   tocLabel: string
+  /** Nombre accesible de la barra de progreso (messages post.progress.label). */
+  progressLabel: string
+  /**
+   * Divulgacion de afiliados. La ruta la calcula con `postHasAffiliateInline` y
+   * `postHasAmazonAffiliateInline` sobre `doc.content` ENTERO, nunca sobre las
+   * mitades (D-20, Pitfall 19). null si el post no trae afiliado inline.
+   */
+  disclosure: { amazon: boolean } | null
+  /** Oferta inline, entre las dos mitades. Solo se pinta si el cuerpo se partio. */
+  inlineOffer: PostInlineOffer | null
+  /** Tarjeta de riel de escritorio, bajo el indice. */
+  railOffer: PostRailOffer | null
   /** Primera mitad del cuerpo (o el cuerpo entero si no se parte). */
   before: SerializedEditorState | null | undefined
   /** Segunda mitad, o null cuando el post es demasiado corto para partirlo. */
@@ -43,10 +61,24 @@ type Props = {
   ctx: { subscribedState?: string; postPath: string }
 }
 
-export function PostView({ post, crumbs, tocLabel, before, after, headingIds, ctx }: Props) {
+export function PostView({
+  post,
+  crumbs,
+  tocLabel,
+  progressLabel,
+  disclosure,
+  inlineOffer,
+  railOffer,
+  before,
+  after,
+  headingIds,
+  ctx,
+}: Props) {
+  const tDisclosure = useTranslations('affiliateDisclosure')
   // Sin h2 (un h1 del cuerpo cuenta como h2) no hay TOC aunque haya varios h3.
   const showToc = post.headings.length >= 2 && post.headings.some((h) => h.level === 2)
-  const twoColumns = showToc
+  const showRail = railOffer !== null
+  const twoColumns = showToc || showRail
 
   return (
     <>
@@ -60,7 +92,27 @@ export function PostView({ post, crumbs, tocLabel, before, after, headingIds, ct
         />
       </PageHero>
 
+      {/* Mide el articulo, no la pagina. Es fija: su lugar en el DOM no importa. */}
+      <ReadingProgress targetId={POST_BODY_ID} label={progressLabel} />
+
       <Box sx={{ pb: { xs: 8, md: 12 } }}>
+        {/* La divulgacion va ANTES del cuerpo y de cualquier enlace de afiliado
+            (D-20, T-55-40): el escaneo ya cubrio el contenido entero. */}
+        {disclosure && (
+          <Container maxWidth="lg" sx={{ pb: 4 }}>
+            <Box
+              id="post-disclosure"
+              role="note"
+              sx={{ maxWidth: 760, p: 2, borderRadius: 2, border: 1, borderColor: 'divider', bgcolor: 'raised' }}
+            >
+              <Typography variant="body2" color="text.secondary">
+                {tDisclosure('generalDisclosure')}
+                {disclosure.amazon ? ` ${tDisclosure('amazonDisclosure')}` : null}
+              </Typography>
+            </Box>
+          </Container>
+        )}
+
         <Container
           maxWidth="lg"
           sx={{
@@ -73,24 +125,35 @@ export function PostView({ post, crumbs, tocLabel, before, after, headingIds, ct
             rowGap: 2,
           }}
         >
-          {showToc && (
+          {twoColumns && (
             <Box
               sx={{
+                // Sin indice, la columna solo lleva la tarjeta de riel, que ya se
+                // oculta bajo lg: no deja un hueco en movil.
+                display: { xs: showToc ? 'block' : 'none', lg: 'block' },
                 gridColumn: { lg: 2 },
                 gridRow: { lg: 1 },
                 alignSelf: 'start',
+                // El sticky y el desplazamiento los pone la columna entera, asi el
+                // indice y la tarjeta suben y bajan como una sola pieza.
                 position: { lg: 'sticky' },
                 top: { lg: 112 },
                 maxHeight: { lg: 'calc(100vh - 144px)' },
                 overflowY: { lg: 'auto' },
               }}
             >
-              <Toc items={post.headings} label={tocLabel} embedded />
+              {showToc && <Toc items={post.headings} label={tocLabel} embedded />}
+              {railOffer && <RailOfferMui offer={railOffer} />}
             </Box>
           )}
           <Box component="article" id={POST_BODY_ID} sx={{ gridColumn: { lg: 1 }, gridRow: { lg: 1 }, minWidth: 0 }}>
             <MuiRichText data={before} headingIds={headingIds} ctx={ctx} />
-            {after && <MuiRichText data={after} headingIds={headingIds} ctx={ctx} />}
+            {after && (
+              <>
+                {inlineOffer && <InlineOfferMui offer={inlineOffer} />}
+                <MuiRichText data={after} headingIds={headingIds} ctx={ctx} />
+              </>
+            )}
           </Box>
         </Container>
       </Box>

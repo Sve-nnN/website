@@ -10,8 +10,10 @@ import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
 import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { SITE_URL } from '@/lib/sitemap-data'
-import { getCachedPost } from '@/lib/cache'
-import { buildArticleJsonLd, toPostViewProps } from '@/lib/blog-data'
+import { getCachedBlogPromo, getCachedPost } from '@/lib/cache'
+import { buildArticleJsonLd, toInlineOffer, toPostViewProps, toRailOffer } from '@/lib/blog-data'
+import { resolveBlogPromo } from '@/lib/blog-promo'
+import { postHasAffiliateInline, postHasAmazonAffiliateInline } from '@/lib/post-affiliate-scan'
 import { splitContentForOffer } from '@/lib/lexical-split'
 import { blogPostPath, localizeBlogPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 import { personRef, SITE_PERSON_SLUG } from '@/lib/person'
@@ -179,6 +181,18 @@ export default async function PostPage({
   const t = await getTranslations({ locale, namespace: 'post' })
   const view = toPostViewProps(doc, { locale, routeSlug: slug })
 
+  // Los textos de conversion se resuelven contra la categoria primaria: es la
+  // que define la URL del post y tambien el problema con el que llego el lector.
+  const promo = resolveBlogPromo(await getCachedBlogPromo(locale), primaryCategory?.id)
+
+  // INL-02: el escaneo cubre `doc.content` ENTERO (no `body.before` ni
+  // `body.after`, recortados por splitContentForOffer): la divulgacion debe
+  // aparecer antes del cuerpo sin importar en que punto inserto el editor el
+  // bloque inline.
+  const disclosure = postHasAffiliateInline(doc.content)
+    ? { amazon: postHasAmazonAffiliateInline(doc.content) }
+    : null
+
   // SEO-09. Cada clave nombra una fuente real de Payload; lo que no la tiene se
   // omite (ver buildArticleJsonLd, extraido sin cambios).
   const articleData = buildArticleJsonLd(doc, {
@@ -195,6 +209,10 @@ export default async function PostPage({
         post={view}
         crumbs={trail.map((c) => ({ label: c.label, href: c.url }))}
         tocLabel={t('toc.label')}
+        progressLabel={t('progress.label')}
+        disclosure={disclosure}
+        inlineOffer={toInlineOffer(promo.inline)}
+        railOffer={toRailOffer(promo.rail)}
         before={body.before}
         after={body.after}
         headingIds={headingIds}

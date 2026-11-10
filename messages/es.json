@@ -437,6 +437,12 @@
       "label": "Tabla de contenidos"
     },
     "readingTime": "{minutes} min de lectura",
-    "categoriesLabel": "Categorías del artículo"
+    "categoriesLabel": "Categorías del artículo",
+    "progress": {
+      "label": "Progreso de lectura"
+    },
+    "offer": {
+      "label": "Información destacada"
+    }
   }
 }
