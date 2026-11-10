@@ -33,3 +33,9 @@ Aprobados tal como se listaron, con un cambio:
 - Servicios, ítem SEO técnico: Juan quiere mantenerlo (pendiente de aclarar si con el texto original o con el nuevo).
 - Línea de tiempo de Sobre mí: aprobada (aprendoseo y aprendoclub como una sola entrada "nov 2022 a hoy", Loops Growth "2024 a hoy" en paralelo, coach "mar 2025 a hoy").
 - "Ingeniero de software" con fecha 2028 es un título universitario en curso (educación), no un cargo. Se conserva como educación en curso.
+
+## Cierre de la home, decisiones finales de Juan (2026-11-10)
+- Servicios, texto de la sección: opción 3. ES "Desde la auditoría hasta el código en producción, con resultados que puedes medir." EN "From the audit to the code in production, with results you can measure."
+- Servicios, ítem SEO técnico: texto nuevo. ES "Audito rastreo, indexación y datos estructurados, y corrijo lo que impide que Google entienda y posicione tus páginas." EN "I audit crawling, indexing and structured data, and fix what keeps Google from understanding and ranking your pages."
+- "Ingeniero de software" se mantiene tal cual en el hero y la etiqueta. Decisión de Juan.
+- Con esto quedan cerradas todas las decisiones de copy de la home. Pendiente de Juan: lecciones de los casos, texto legal, textos en inglés de las demás secciones, alts, encabezados.
