@@ -29,6 +29,7 @@ import {
 } from '../db/data/54-seed-lib'
 import { MEDIA_MANIFEST } from '../db/data/54-media-manifest'
 import { ABOUT_COPY_ES, ABOUT_PENDING_PATHS } from '../db/data/54-about-copy'
+import { ABOUT_COPY_EN, ALLOWED_WHEN, ALLOWED_WHEN_EN } from '../db/data/56-about-copy'
 import { HOME_COPY_ES, ON_DARK_FILES, SANDBOX_LOGOS } from '../db/data/54-home-copy'
 import { SERVICE_SLUGS } from '../../src/lib/service-slugs'
 import {
@@ -199,11 +200,44 @@ check('el copy de la home pasa assertNoForbiddenChars y assertPendingMarkersOnly
   assertPendingMarkersOnlyIn(HOME_COPY_ES, [])
 })
 
-check('el copy de Sobre mí pasa los chequeos y el único marcador es la fecha de aprendoclub', () => {
+check('el copy de Sobre mí pasa los chequeos y no queda ningún marcador (56, D-11)', () => {
   assertNoForbiddenChars(ABOUT_COPY_ES, ABOUT_PENDING_PATHS)
   assertPendingMarkersOnlyIn(ABOUT_COPY_ES, ABOUT_PENDING_PATHS)
-  const aprendo = ABOUT_COPY_ES.experience.stages.filter((s) => s.when.includes(OPEN))
-  assert(aprendo.length === 1 && aprendo[0].org === 'aprendoclub', 'el marcador debe estar solo en la etapa de aprendoclub')
+  assert(ABOUT_PENDING_PATHS.length === 0, 'ya no se permite ningún marcador')
+  assertNoForbiddenChars(ABOUT_COPY_ES)
+  const withMarker = ABOUT_COPY_ES.experience.stages.filter((s) => s.when.includes(OPEN))
+  assert(withMarker.length === 0, 'queda un marcador en una etapa')
+})
+
+check('cada when de Sobre mí pertenece a la lista cerrada y no se inventa ninguna fecha (T-56-12)', () => {
+  for (const s of ABOUT_COPY_ES.experience.stages) {
+    assert((ALLOWED_WHEN as readonly string[]).includes(s.when), `when fuera de ALLOWED_WHEN: "${s.when}"`)
+  }
+  for (const s of ABOUT_COPY_EN.experience.stages) {
+    assert((ALLOWED_WHEN_EN as readonly string[]).includes(s.when), `when EN fuera de ALLOWED_WHEN_EN: "${s.when}"`)
+  }
+})
+
+check('aprendoclub es una sola etapa continua y el lead ya no dice que son el mismo equipo (D-11)', () => {
+  const { stages, lead } = ABOUT_COPY_ES.experience
+  const aprendoclub = stages.filter((s) => s.when === 'nov 2022 a hoy')
+  assert(aprendoclub.length === 1 && aprendoclub[0].org === 'aprendoclub', 'falta la etapa continua de aprendoclub')
+  assert(!stages.some((s) => s.org === 'AprendoSEO'), 'aprendoseo no debe ser una etapa aparte')
+  const loops = stages.filter((s) => s.org === 'Loops Growth')
+  assert(loops.length === 1 && loops[0].when === '2024 a hoy', 'Loops Growth debe ser una etapa 2024 a hoy')
+  assert(!/mismo equipo/i.test(lead), 'el lead conserva la afirmación del mismo equipo')
+  assert(!/cambia de nombre otra vez/i.test(loops[0].body), 'el cuerpo de Loops conserva el cambio de nombre')
+})
+
+check('ABOUT_COPY_EN: mismas etapas que el ES, hero.lead no vacío y sin caracteres prohibidos (D-14)', () => {
+  assertNoForbiddenChars(ABOUT_COPY_EN)
+  assert(
+    ABOUT_COPY_EN.experience.stages.length === ABOUT_COPY_ES.experience.stages.length,
+    `EN ${ABOUT_COPY_EN.experience.stages.length} etapas, ES ${ABOUT_COPY_ES.experience.stages.length}`,
+  )
+  assert(ABOUT_COPY_EN.hero.lead.trim().length > 0, 'hero.lead EN vacío (centinela del respaldo de idioma)')
+  assert(ABOUT_COPY_EN.specialties.items.length === ABOUT_COPY_ES.specialties.items.length, 'specialties EN distinto del ES')
+  assert(ABOUT_COPY_EN.hero.chips.length === ABOUT_COPY_ES.hero.chips.length, 'chips EN distinto del ES')
 })
 
 /** Recorre el copy y devuelve [ruta, valor] de cada clave cuyo nombre esté en `names`. */
@@ -245,7 +279,10 @@ check('conteos de ítems del copy', () => {
   assert(H.contact.steps.length === 3, `contact.steps = ${H.contact.steps.length}`)
   assert(H.contact.infoRows.length === 3, `contact.infoRows = ${H.contact.infoRows.length}`)
   assert(H.about.chips.length === 5 && H.about.paragraphs.length === 2 && H.about.photos.length === 3, 'about de la home')
-  assert(ABOUT_COPY_ES.experience.stages.length === 5, `experience.stages = ${ABOUT_COPY_ES.experience.stages.length}`)
+  assert(
+    ABOUT_COPY_ES.experience.stages.length === ALLOWED_WHEN.length,
+    `experience.stages = ${ABOUT_COPY_ES.experience.stages.length}, ALLOWED_WHEN = ${ALLOWED_WHEN.length}`,
+  )
   assert(ABOUT_COPY_ES.specialties.items.length === 4, 'specialties.items')
 })
 
@@ -419,10 +456,11 @@ const seededFixture: ShadowState = {
     faq: { items: [1, 2, 3, 4, 5].map((n) => ({ n })) },
     contact: { steps: [1, 2, 3].map((n) => ({ n })), infoRows: [1, 2, 3].map((n) => ({ n })) },
   },
-  about: { hero: { lead: 'Lead' }, experience: { stages: [1, 2, 3, 4, 5].map((n) => ({ n })) } },
+  about: { hero: { lead: 'Lead' }, experience: { stages: ABOUT_COPY_ES.experience.stages.map((n) => ({ n })) } },
   clientes: [{ onDark: false }, { onDark: true }],
   stackTools: { total: 25, withLogo: 9 },
 }
+const aboutStageCount = ABOUT_COPY_ES.experience.stages.length
 const emptyFixture: ShadowState = { home: {}, about: {}, clientes: [{ onDark: false }], stackTools: { total: 25, withLogo: 0 } }
 
 check('evaluateShadowState: estado vacío válido sin expectSeeded no produce FAIL', () => {
@@ -431,7 +469,7 @@ check('evaluateShadowState: estado vacío válido sin expectSeeded no produce FA
 })
 
 check('evaluateShadowState: estado sembrado válido con expectSeeded no produce FAIL', () => {
-  const fails = evaluateShadowState(seededFixture, { expectSeeded: true }).filter((r) => !r.ok)
+  const fails = evaluateShadowState(seededFixture, { expectSeeded: true, expectedStages: aboutStageCount }).filter((r) => !r.ok)
   assert(fails.length === 0, `fallos inesperados: ${fails.map((f) => f.name).join(', ')}`)
 })
 

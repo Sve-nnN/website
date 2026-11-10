@@ -370,7 +370,7 @@ function nonEmptyString(v: unknown): boolean {
  */
 export function evaluateShadowState(
   state: ShadowState,
-  opts: { expectSeeded: boolean },
+  opts: { expectSeeded: boolean; expectedStages?: number },
 ): ShadowResult[] {
   const out: ShadowResult[] = []
   const add = (name: string, ok: boolean, why: string) => out.push({ name, ok, why })
@@ -415,7 +415,8 @@ export function evaluateShadowState(
   add('about-page.hero.lead no vacío', nonEmptyString(pick(A, 'hero.lead')), nonEmptyString(pick(A, 'hero.lead')) ? 'ok' : 'vacío')
   const stages = pick(A, 'experience.stages')
   const nStages = Array.isArray(stages) ? stages.length : 0
-  add('about-page.experience.stages tiene 5', nStages === 5, `hay ${nStages}`)
+  const expectedStages = opts.expectedStages ?? 4
+  add(`about-page.experience.stages tiene ${expectedStages}`, nStages === expectedStages, `hay ${nStages}`)
   const nOnDark = (sample ?? []).filter((c) => c.onDark === true).length
   add('al menos un cliente con onDark verdadero', nOnDark >= 1, `hay ${nOnDark}`)
   const nLogo = state.stackTools?.withLogo ?? 0
