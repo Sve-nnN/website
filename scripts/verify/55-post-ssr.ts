@@ -680,6 +680,15 @@ function listDocs(): Array<Parameters<typeof pickRelated>[0][number]> {
   check(/target=/.test(/<a\b[^>]*\shref="https:\/\/juan-tech\.com[^"]*"[^>]*>/.exec(good.replace('href="https://juan-tech.com/blog/seo/otro"', 'href="https://juan-tech.com/blog/seo/otro" target="_blank"'))?.[0] ?? ''), 'defectuoso: enlace del sitio con target se distingue del correcto', 'no se distingue')
 }
 
+// ---- Auditoria de fuente: texto largo sin espacios no ensancha la pagina (320 px) ----------
+{
+  const { readFileSync } = await import('node:fs')
+  const source = readFileSync(new URL('../../src/components/mui/rich-text/MuiRichText.tsx', import.meta.url), 'utf8')
+  const wraps = (src: string) => /overflowWrap:\s*'(?:break-word|anywhere)'/.test(src)
+  check(wraps(source), 'MuiRichText: la prosa parte palabras largas (overflowWrap), sin ensanchar la pagina a 320 px', 'falta overflowWrap en la raiz de MuiRichText')
+  check(!wraps(source.replace(/overflowWrap:\s*'break-word',?/, '')), 'defectuoso: MuiRichText sin overflowWrap se detecta', 'la auditoria no lo distingue')
+}
+
 // ---- Fixtures defectuosos: deben fallar --------------------------------------
 {
   const { html } = renderPost(BODY)

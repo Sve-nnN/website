@@ -284,6 +284,11 @@ export function MuiRichText({ data, maxWidth = 760, headingIds, ctx, overrides }
     <Box
       sx={{
         maxWidth,
+        // Un texto largo sin espacios (una URL pegada tal cual en un parrafo, medido
+        // en /blog/development/que-es-css) no debe ensanchar la pagina: parte la
+        // palabra solo cuando no cabe. `break-word` no cambia el ancho minimo de
+        // las tablas, que siguen desplazandose dentro de ScrollRegion.
+        overflowWrap: 'break-word',
         '& > :first-child': { mt: 0 },
         // Lo que no pasa por un convertidor de MUI (h4 a h6, código en línea,
         // contenedores de bloque) hereda la tipografía del tema.
