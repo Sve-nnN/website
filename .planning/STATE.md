@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: executing
-stopped_at: Completed 55-10-PLAN.md
-last_updated: "2026-11-10T06:12:48.773Z"
+stopped_at: Completed 55-11-PLAN.md
+last_updated: "2026-11-10T07:13:52.022Z"
 last_activity: 2026-11-10
 last_activity_desc: Phase 54 complete, transitioned to Phase 6
-state_head: 3c373c28bd684d6c4d52c51ea9ffa6d6a0dee5df
+state_head: 7a7a133352cb67567559e153fc88aaa4f848bc6f
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 35
-  completed_plans: 32
+  completed_plans: 33
   percent: 40
 ---
 
@@ -30,9 +30,9 @@ See: .planning/PROJECT.md (updated 2026-11-06)
 ## Current Position
 
 Phase: 55 — Casos, websites, blog y autores (en ejecución, ola 5)
-Plan: 10 of 13 completo (55-10: índice y categorías del blog en MUI con búsqueda, ver más real y newsletter inerte; verificado en vivo en el preview); sigue 55-11
+Plan: 11 of 13 completo (55-11: post en MUI con TOC, progreso de lectura, afiliados antes del cuerpo, ofertas, autoría, relacionados y navegación; verificado en vivo en el preview); sigue 55-12
 Status: Ready to execute
-Last activity: 2026-11-10 — 55-10 completo, push de feat/mui-redesign y verificación en vivo (batería 21 PASS, 1 FAIL esperado: contrato de post, alcance de 55-11)
+Last activity: 2026-11-10 — 55-11 completo, push de feat/mui-redesign y verificación en vivo (batería: todo PASS salvo 3 anclas de contenido sin destino en /en/blog/cs-fundamentals/recursividad, traducción incompleta)
 
 ## Performance Metrics
 
@@ -170,6 +170,7 @@ Last activity: 2026-11-10 — 55-10 completo, push de feat/mui-redesign y verifi
 | Phase 55 P06 | 55min | 3 tasks | 2 files |
 | Phase 55 P09 | 55min | 3 tasks | 12 files |
 | Phase 55 P10 | 80min | 3 tasks | 17 files |
+| Phase 55 P11 | 95min | 3 tasks | 17 files |
 
 ## Accumulated Context
 
@@ -397,8 +398,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-10T06:12:48.734Z
-Stopped at: Completed 55-10-PLAN.md
+Last session: 2026-11-10T07:13:51.983Z
+Stopped at: Completed 55-11-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
