@@ -90,6 +90,8 @@ type ListItemNode = { children?: Array<{ type?: string }>; value?: number }
 export function MuiRichText({ data, maxWidth = 760, headingIds, ctx, overrides }: Props) {
   const t = useTranslations('common')
   const tRichText = useTranslations('richText')
+  const tEmailCapture = useTranslations('emailCapture')
+  const tStackPage = useTranslations('stackPage')
   const locale = useLocale() === 'en' ? 'en' : 'es'
 
   if (!data) return null
@@ -156,7 +158,12 @@ export function MuiRichText({ data, maxWidth = 760, headingIds, ctx, overrides }
     (ctx
       ? muiBlockConverters({
           locale,
-          t: { richText: tRichText as unknown as Translate },
+          t: {
+            richText: tRichText as unknown as Translate,
+            common: t as unknown as Translate,
+            emailCapture: tEmailCapture as unknown as Translate,
+            stackPage: tStackPage as unknown as Translate,
+          },
           postPath: ctx.postPath,
           subscribedState: ctx.subscribedState,
         })

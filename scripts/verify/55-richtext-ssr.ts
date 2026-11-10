@@ -276,8 +276,8 @@ function idProblem(html: string, tocIds: string[]): string | null {
   }
 
   // Por MuiRichText: sin ctx el bloque no se pinta (y Payload avisa); con ctx el
-  // render llega al componente asíncrono de captura, que renderToString no puede
-  // resolver (solo un Server Component asíncrono suspende así).
+  // render usa el convertidor MUI de captura (55-07), que es síncrono y pinta el
+  // formulario completo (antes era un Server Component asíncrono que suspendía).
   const logged: string[] = []
   const origLog = console.log
   const origWarn = console.warn
@@ -290,10 +290,11 @@ function idProblem(html: string, tocIds: string[]): string | null {
   console.error = capture
   let noCtxHtml = ''
   let withCtxThrew = ''
+  let withCtxHtml = ''
   try {
     noCtxHtml = renderToHtml(createElement(MuiRichText, { data }), 'es')
     try {
-      renderToHtml(createElement(MuiRichText, { data, ctx: { postPath: '/blog/fixture' } }), 'es')
+      withCtxHtml = renderToHtml(createElement(MuiRichText, { data, ctx: { postPath: '/blog/fixture' } }), 'es')
     } catch (err) {
       withCtxThrew = String((err as Error).message)
     }
@@ -309,8 +310,11 @@ function idProblem(html: string, tocIds: string[]): string | null {
     'no apareció el aviso de Payload',
   )
   check(
-    'MuiRichText con ctx llega al componente de captura (async) y no registra "no converter"',
-    /suspended/.test(withCtxThrew) && logged.filter((l) => /no converter is provided/.test(l)).length === 1,
+    'MuiRichText con ctx pinta el formulario de captura y no registra otro "no converter"',
+    withCtxThrew === '' &&
+      /name="email"/.test(withCtxHtml) &&
+      /name="company_website"/.test(withCtxHtml) &&
+      logged.filter((l) => /no converter is provided/.test(l)).length === 1,
     `error = ${withCtxThrew.slice(0, 80)} avisos = ${logged.filter((l) => /no converter is provided/.test(l)).length}`,
   )
 }
