@@ -347,8 +347,8 @@ export function getCachedBlogPostList(locale: Locale) {
  * limitan lo que viaja a los campos publicos de Media y del cliente.
  *
  * Si la lectura falla, la funcion lanza: `unstable_cache` no guarda una
- * excepcion, y la ruta la captura fuera para responder con la lista vacia sin
- * fijar un fallo transitorio en la cache.
+ * excepcion, y la ruta tampoco la captura: Next conserva el ultimo HTML bueno
+ * en lugar de fijar una lista vacia con 200.
  */
 export function getCachedWebsitesIndex(locale: Locale) {
   return unstable_cache(
@@ -501,7 +501,12 @@ export function getCachedPost(slug: string, locale: Locale) {
       return docs[0]
     },
     ['post', slug, locale],
-    { tags: [CACHE_TAGS.post(slug)], revalidate: CACHE_TTL_SECONDS },
+    {
+      // depth 2 puebla autor (nombre, cargo, bio, avatar) y categorias: un cambio
+      // en cualquiera de esas colecciones tiene que invalidar tambien el detalle.
+      tags: [CACHE_TAGS.post(slug), CACHE_TAGS.authors(), CACHE_TAGS.categories()],
+      revalidate: CACHE_TTL_SECONDS,
+    },
   )()
 }
 
@@ -562,7 +567,12 @@ export function getCachedCaseStudyBySlug(slug: string, locale: Locale) {
       return docs[0]
     },
     ['case-study', slug, locale],
-    { tags: [CACHE_TAGS.caseStudies(), CACHE_TAGS.caseStudy(slug)], revalidate: CACHE_TTL_SECONDS },
+    {
+      // `populate.authors` trae nombre, cargo, bio y avatar del autor: el tag de
+      // autores invalida el detalle cuando cambia el perfil.
+      tags: [CACHE_TAGS.caseStudies(), CACHE_TAGS.caseStudy(slug), CACHE_TAGS.authors()],
+      revalidate: CACHE_TTL_SECONDS,
+    },
   )()
 }
 
@@ -576,7 +586,7 @@ export function getCachedCaseStudyBySlug(slug: string, locale: Locale) {
  * las tarjetas y la comparacion de clics (`results`).
  *
  * Si la lectura falla, lanza: `unstable_cache` no guarda una excepcion, y la
- * ruta la captura fuera para no fijar un fallo transitorio en la cache.
+ * ruta tampoco la captura: Next conserva el ultimo HTML bueno.
  */
 export function getCachedCaseStudiesIndex(locale: Locale) {
   return unstable_cache(
@@ -610,7 +620,11 @@ export function getCachedCaseStudiesIndex(locale: Locale) {
       return docs
     },
     ['case-studies-index', locale],
-    { tags: [CACHE_TAGS.caseStudies()], revalidate: CACHE_TTL_SECONDS },
+    {
+      // `populate.authors` trae el nombre del autor de cada tarjeta.
+      tags: [CACHE_TAGS.caseStudies(), CACHE_TAGS.authors()],
+      revalidate: CACHE_TTL_SECONDS,
+    },
   )()
 }
 
@@ -626,7 +640,7 @@ export function getCachedCaseStudiesIndex(locale: Locale) {
  * el llega null (55-01).
  *
  * Si la lectura falla, lanza: `unstable_cache` no guarda una excepcion, y la
- * ruta la captura fuera para no fijar un fallo transitorio en la cache.
+ * ruta tampoco la captura: Next conserva el ultimo HTML bueno.
  */
 export function getCachedAuthorsIndex(locale: Locale) {
   return unstable_cache(

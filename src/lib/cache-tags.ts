@@ -170,9 +170,12 @@ export const revalidateWebsitesCacheOnDelete: CollectionAfterDeleteHook<Website>
   return doc
 }
 
-// --- Authors (fase 55). La firma de autor aparece en los posts, así que un
-// cambio de autor invalida también el tag de posts. Mismo límite de proceso
-// que Websites (ver arriba). ---
+// --- Authors (fase 55). La firma de autor aparece en el detalle del post y en
+// los casos. Esas lecturas (`getCachedPost`, `getCachedCaseStudyBySlug` y
+// `getCachedCaseStudiesIndex`) llevan `CACHE_TAGS.authors()` en sus tags, así
+// que invalidar el tag de autores las alcanza. El tag de posts se conserva para
+// las lecturas de listado de posts. Mismo límite de proceso que Websites (ver
+// arriba). ---
 
 export const revalidateAuthorsCache: CollectionAfterChangeHook<Author> = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.authors())
@@ -207,7 +210,9 @@ export const revalidateSpeakingEventsCacheOnDelete: CollectionAfterDeleteHook<Sp
 
 // --- Categories (a category's slug is a URL segment now — /blog/<category>/
 // <post> — so renaming one must invalidate the post caches too, otherwise
-// links keep pointing at the old segment until the 60s TTL lapses) ---
+// links keep pointing at the old segment until the 60s TTL lapses). El detalle
+// del post lleva `CACHE_TAGS.categories()` en sus tags porque puebla la
+// categoría, así que este hook sí lo alcanza. ---
 
 export const revalidateCategoriesCache: CollectionAfterChangeHook<Category> = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.categories())

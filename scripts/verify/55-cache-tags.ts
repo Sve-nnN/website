@@ -153,11 +153,16 @@ export function cacheKeyOf(call: string): string | null {
 export const UNTAGGED_ALLOWED = new Set(['about-counts'])
 
 /** Tag exigido por clave de cache, para las lecturas de autores y eventos. */
-export const REQUIRED_TAG_BY_KEY: Record<string, string> = {
+export const REQUIRED_TAG_BY_KEY: Record<string, string | string[]> = {
   'site-person': 'CACHE_TAGS.authors()',
   'cta-author': 'CACHE_TAGS.authors()',
   'about-author': 'CACHE_TAGS.authors()',
   'about-events': 'CACHE_TAGS.speakingEvents()',
+  // WR-02: las lecturas que pueblan autor o categoria llevan su tag, para que los
+  // hooks de Authors y Categories las invaliden de verdad.
+  post: ['CACHE_TAGS.authors()', 'CACHE_TAGS.categories()'],
+  'case-study': 'CACHE_TAGS.authors()',
+  'case-studies-index': 'CACHE_TAGS.authors()',
 }
 
 export function cacheProblem(call: string): string | null {
@@ -165,7 +170,9 @@ export function cacheProblem(call: string): string | null {
   const hasTags = /\btags\s*:/.test(call)
   if (!hasTags && !UNTAGGED_ALLOWED.has(key)) return `unstable_cache '${key}' sin tags`
   const required = REQUIRED_TAG_BY_KEY[key]
-  if (required && !call.includes(required)) return `unstable_cache '${key}' sin ${required}`
+  for (const tag of required === undefined ? [] : Array.isArray(required) ? required : [required]) {
+    if (!call.includes(tag)) return `unstable_cache '${key}' sin ${tag}`
+  }
   return null
 }
 
@@ -202,6 +209,16 @@ check(
   cacheProblem("unstable_cache(async () => 1, ['site-person'], { tags: [CACHE_TAGS.authors()], revalidate: 60 })") === null,
   'fixture: cache de autor con tag correcto pasa',
   'rechazo una cache de autor bien etiquetada',
+)
+check(
+  cacheProblem("unstable_cache(async () => 1, ['post', slug, locale], { tags: [CACHE_TAGS.post(slug)], revalidate: 60 })") !== null,
+  'fixture defectuoso: detalle de post sin tags de autor y categoria falla',
+  'acepto un detalle de post sin CACHE_TAGS.authors()',
+)
+check(
+  cacheProblem("unstable_cache(async () => 1, ['post', slug, locale], { tags: [CACHE_TAGS.post(slug), CACHE_TAGS.authors(), CACHE_TAGS.categories()], revalidate: 60 })") === null,
+  'fixture: detalle de post con autor y categoria pasa',
+  'rechazo un detalle de post bien etiquetado',
 )
 check(runtimePayloadImports("import { getPayload } from 'payload'").length === 1, 'fixture defectuoso: import de payload en runtime se detecta', 'no detecto el import')
 check(runtimePayloadImports("import type { Page } from 'payload'").length === 0, 'fixture: import type de payload no cuenta', 'conto un import type')
@@ -250,7 +267,7 @@ async function main(): Promise<void> {
 
   // 3. unstable_cache con tags (solo sin --only: depende de la tarea 2).
   if (!only) {
-    for (const f of ['person.ts', 'cta-data.ts', 'about-data.ts']) {
+    for (const f of ['person.ts', 'cta-data.ts', 'about-data.ts', 'cache.ts']) {
       const calls = unstableCacheCalls(readFileSync(join(LIB, f), 'utf8'))
       check(calls.length > 0, `${f} tiene unstable_cache`, 'no se encontro ninguna llamada')
       for (const call of calls) {
