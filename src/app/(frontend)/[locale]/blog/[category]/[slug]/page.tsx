@@ -231,11 +231,11 @@ export default async function PostPage({
         tocLabel={t('toc.label')}
         progressLabel={t('progress.label')}
         disclosure={disclosure}
-        inlineOffer={toInlineOffer(promo.inline)}
-        railOffer={toRailOffer(promo.rail)}
+        inlineOffer={toInlineOffer(promo.inline, locale)}
+        railOffer={toRailOffer(promo.rail, locale)}
         related={related}
         prevNext={prevNext}
-        closing={toClosingProps(promo.closing)}
+        closing={toClosingProps(promo.closing, locale)}
         before={body.before}
         after={body.after}
         headingIds={headingIds}

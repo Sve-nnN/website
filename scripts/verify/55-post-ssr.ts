@@ -157,8 +157,8 @@ function renderPost(content: unknown, o: RenderOpts = {}): { html: string; view:
       disclosure: postHasAffiliateInline(d.content as never)
         ? { amazon: postHasAmazonAffiliateInline(d.content as never) }
         : null,
-      inlineOffer: toInlineOffer(o.inline),
-      railOffer: toRailOffer(o.rail),
+      inlineOffer: toInlineOffer(o.inline, locale),
+      railOffer: toRailOffer(o.rail, locale),
       related: o.related ?? [],
       prevNext: o.prevNext ?? { previous: null, next: null },
       closing: o.closing ?? null,
@@ -492,7 +492,9 @@ for (const locale of ['es', 'en'] as const) {
     check(asides.length === 2 && asides.every((a) => /aria-label(?:ledby)?=/.test(a)), `ofertas ${locale}: dos aside con nombre accesible`, JSON.stringify(asides))
     const ids = allIds(html)
     check(new Set(ids).size === ids.length, `ofertas ${locale}: ids unicos con el indice y las ofertas`, 'hay ids repetidos')
-    check(/href="(?:\/en)?\/contacto"/.test(html) && /href="(?:\/en)?\/servicios"/.test(html), `ofertas ${locale}: los enlaces de las ofertas existen`, 'faltan enlaces')
+    // WR-05: el href de servicios sale normalizado por idioma, nunca la ruta del otro.
+    const servicesHref = locale === 'es' ? /href="\/servicios"/ : /href="\/en\/services"/
+    check(/href="(?:\/en)?\/contacto"/.test(html) && servicesHref.test(html), `ofertas ${locale}: los enlaces de las ofertas existen`, 'faltan enlaces')
     check(postFailures(html, { expectToc: true }).length === 0, `ofertas ${locale}: el contrato del post se mantiene`, postFailures(html, { expectToc: true }).join('; '))
   }
   const noOffers = renderPost(BODY, { inline: null, rail: null, extra: { author: null } }).html
@@ -502,8 +504,21 @@ for (const locale of ['es', 'en'] as const) {
   const short = renderPost(doc([p('a'), p('b'), p('c')]), { inline, rail })
   check(!/Texto inventado de la oferta inline/.test(short.html), 'cuerpo corto (no se parte): la oferta inline se omite', 'pinto la oferta inline')
   check(/Tarjeta de riel inventada/.test(short.html), 'cuerpo corto sin TOC: el riel conserva su columna', 'se perdio el riel')
-  check(toInlineOffer({ title: 'T', text: 'x', linkLabel: 'L', linkUrl: '' })?.link === null, 'toInlineOffer: una accion sin url se descarta', 'conservo la accion')
-  check(toRailOffer({ title: 'T', body: ' ' })?.body === null, 'toRailOffer: cuerpo vacio queda null', 'conservo el cuerpo')
+  check(toInlineOffer({ title: 'T', text: 'x', linkLabel: 'L', linkUrl: '' }, 'es')?.link === null, 'toInlineOffer: una accion sin url se descarta', 'conservo la accion')
+  check(toRailOffer({ title: 'T', body: ' ' }, 'es')?.body === null, 'toRailOffer: cuerpo vacio queda null', 'conservo el cuerpo')
+  // WR-05: el enlace de la oferta inline y del riel pasa por sanitizeHref.
+  check(
+    toInlineOffer({ title: 'T', text: 'x', linkLabel: 'L', linkUrl: 'javascript:alert(1)' }, 'es')?.link === null &&
+      toRailOffer({ title: 'T', linkLabel: 'L', linkUrl: '//evil.example/x' }, 'es')?.link === null,
+    'ofertas: javascript: y //host se descartan (WR-05)',
+    'conservo un enlace inseguro',
+  )
+  check(
+    toInlineOffer({ title: 'T', text: 'x', linkLabel: 'L', linkUrl: '/servicios' }, 'en')?.link?.url === '/en/services' &&
+      toRailOffer({ title: 'T', linkLabel: 'L', linkUrl: '/servicios' }, 'es')?.link?.url === '/servicios',
+    'ofertas: /servicios se normaliza por idioma (WR-05)',
+    'no normalizo el slug de servicios',
+  )
 }
 
 // ===========================================================================
@@ -553,7 +568,7 @@ function listDocs(): Array<Parameters<typeof pickRelated>[0][number]> {
   check(related.every((r) => r.categorySlug === 'categoria-inventada'), 'pickRelated: solo la misma categoria', JSON.stringify(related.map((r) => r.categorySlug)))
   check(pickRelated(posts, { slug: 'x', categorySlugs: [] }).length === 0, 'pickRelated: sin categorias no hay relacionados', 'devolvio entradas')
   check(pickRelated(posts, { slug: 'lista-post-8', categorySlugs: ['otra-inventada'] }).map((r) => r.slug).join() === 'lista-post-7', 'pickRelated: una categoria con una sola entrada mas devuelve esa', 'resultado inesperado')
-  check(toClosingProps(CLOSING)?.heading === CLOSING.heading, 'toClosingProps: el cierre del post usa el mismo formato que el de categoria', 'no convirtio')
+  check(toClosingProps(CLOSING, 'es')?.heading === CLOSING.heading, 'toClosingProps: el cierre del post usa el mismo formato que el de categoria', 'no convirtio')
 }
 
 // ---- Render: relacionados, anterior y siguiente, autoria y cierre -----------

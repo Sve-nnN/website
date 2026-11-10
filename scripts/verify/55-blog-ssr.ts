@@ -195,9 +195,14 @@ function mainCategory(): void {
   check(countOf(htmlWithClosing, /Cierre inventado del blog/) === 1, 'categoria: un solo cierre', `hay ${countOf(htmlWithClosing, /Cierre inventado del blog/)}`)
   const htmlNoClosing = renderCategory(props, 'es', null)
   check(!/Cierre inventado del blog/.test(htmlNoClosing), 'categoria: sin cierre no pinta nada', 'pinto un cierre')
-  check(toClosingProps({ heading: '', body: 'x' }) === null && toClosingProps(null) === null, 'toClosingProps: sin titulo no hay cierre', 'devolvio un cierre')
-  const closingProps = toClosingProps({ heading: 'H', points: [{ item: ' ' }, { item: 'a' }], primaryLabel: 'P', primaryUrl: '', secondaryLabel: 'S', secondaryUrl: '/x' })
+  check(toClosingProps({ heading: '', body: 'x' }, 'es') === null && toClosingProps(null, 'es') === null, 'toClosingProps: sin titulo no hay cierre', 'devolvio un cierre')
+  const closingProps = toClosingProps({ heading: 'H', points: [{ item: ' ' }, { item: 'a' }], primaryLabel: 'P', primaryUrl: '', secondaryLabel: 'S', secondaryUrl: '/x' }, 'es')
   check(closingProps?.points.length === 1 && closingProps?.primary === null && closingProps?.secondary?.url === '/x', 'toClosingProps: puntos vacios y accion sin url se descartan', JSON.stringify(closingProps))
+  // WR-05: las URLs del global pasan por sanitizeHref; una insegura descarta la accion.
+  const unsafe = toClosingProps({ heading: 'H', primaryLabel: 'P', primaryUrl: 'javascript:alert(1)', secondaryLabel: 'S', secondaryUrl: '//evil.example/x' }, 'es')
+  check(unsafe?.primary === null && unsafe?.secondary === null, 'toClosingProps: javascript: y //host se descartan (WR-05)', JSON.stringify(unsafe))
+  const dual = toClosingProps({ heading: 'H', primaryLabel: 'P', primaryUrl: '/servicios', secondaryLabel: 'S', secondaryUrl: 'https://example.com/a' }, 'en')
+  check(dual?.primary?.url === '/en/services' && dual?.secondary?.url === 'https://example.com/a', 'toClosingProps: /servicios en EN se normaliza y una URL https pasa (WR-05)', JSON.stringify(dual))
 
   // Fixtures defectuosos: deben fallar.
   const good = renderCategory(props, 'es')

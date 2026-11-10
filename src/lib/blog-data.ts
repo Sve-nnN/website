@@ -9,6 +9,7 @@
 import { extractHeadings, type HeadingEntry, type LexicalRootLike } from '@/components/mui/rich-text/lexical-toc'
 import { blogCategoryPath, blogPostPath, FALLBACK_CATEGORY_SLUG, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
+import { sanitizeHref, type NavLocale } from '@/lib/nav-links'
 import { estimateReadingTime } from '@/lib/reading-time'
 import { isEnTranslationIncomplete } from '@/lib/translation-gaps'
 
@@ -232,9 +233,16 @@ export type BlogClosingData = {
   secondary: { label: string; url: string } | null
 }
 
-function cta(label: unknown, url: unknown): { label: string; url: string } | null {
+/**
+ * Accion del global blog-promo. La URL la escribe un editor en el admin, asi que
+ * pasa por `sanitizeHref` (T-53-20, ASVS V5), igual que el resto de la fase: rechaza
+ * `javascript:`, `//host`, caracteres de control y esquemas fuera de la lista, y
+ * normaliza los slugs duales de servicios (`/servicios` a `/services` en EN). Si
+ * la URL no es valida, la accion se descarta.
+ */
+function cta(label: unknown, url: unknown, locale: NavLocale): { label: string; url: string } | null {
   const l = text(label)
-  const u = text(url)
+  const u = sanitizeHref(text(url), locale)
   return l && u ? { label: l, url: u } : null
 }
 
@@ -242,7 +250,10 @@ function cta(label: unknown, url: unknown): { label: string; url: string } | nul
  * Cierre resuelto (`resolveBlogPromo`) a datos serializables. Sin titulo no hay
  * cierre (null), igual que la banda anterior.
  */
-export function toClosingProps(closing: ClosingLike | null | undefined): BlogClosingData | null {
+export function toClosingProps(
+  closing: ClosingLike | null | undefined,
+  locale: NavLocale,
+): BlogClosingData | null {
   const heading = text(closing?.heading)
   if (!closing || !heading) return null
   const points: string[] = []
@@ -254,8 +265,8 @@ export function toClosingProps(closing: ClosingLike | null | undefined): BlogClo
     heading,
     body: text(closing.body),
     points,
-    primary: cta(closing.primaryLabel, closing.primaryUrl),
-    secondary: cta(closing.secondaryLabel, closing.secondaryUrl),
+    primary: cta(closing.primaryLabel, closing.primaryUrl, locale),
+    secondary: cta(closing.secondaryLabel, closing.secondaryUrl, locale),
   }
 }
 
@@ -622,17 +633,17 @@ export type PostInlineOffer = { title: string | null; text: string; link: { labe
 export type PostRailOffer = { title: string; body: string | null; link: { label: string; url: string } | null }
 
 /** Oferta inline resuelta (`resolveBlogPromo`). Sin texto no hay oferta (null), igual que la anterior. */
-export function toInlineOffer(inline: InlineLike | null | undefined): PostInlineOffer | null {
+export function toInlineOffer(inline: InlineLike | null | undefined, locale: NavLocale): PostInlineOffer | null {
   const body = text(inline?.text)
   if (!body) return null
-  return { title: text(inline?.title), text: body, link: cta(inline?.linkLabel, inline?.linkUrl) }
+  return { title: text(inline?.title), text: body, link: cta(inline?.linkLabel, inline?.linkUrl, locale) }
 }
 
 /** Tarjeta de riel resuelta. Sin titulo no hay tarjeta (null), igual que la anterior. */
-export function toRailOffer(rail: RailLike | null | undefined): PostRailOffer | null {
+export function toRailOffer(rail: RailLike | null | undefined, locale: NavLocale): PostRailOffer | null {
   const title = text(rail?.title)
   if (!title) return null
-  return { title, body: text(rail?.body), link: cta(rail?.linkLabel, rail?.linkUrl) }
+  return { title, body: text(rail?.body), link: cta(rail?.linkLabel, rail?.linkUrl, locale) }
 }
 
 /** Datos que la ruta aporta del servidor y que este modulo puro no puede importar. */

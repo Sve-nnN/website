@@ -79,7 +79,7 @@ export default async function BlogPage({
   const trail = buildBlogTrail(loc)
 
   // Un solo cierre por pagina (pregunta abierta 1 de RESEARCH), sin categoria.
-  const closing = toClosingProps(resolveBlogPromo(promo).closing)
+  const closing = toClosingProps(resolveBlogPromo(promo).closing, loc)
 
   return (
     <>

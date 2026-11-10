@@ -118,7 +118,7 @@ export default async function BlogCategoryPage({
 
   // Un solo cierre por pagina, con el texto de la categoria (blog-promo).
   const promo = await getCachedBlogPromo(locale)
-  const closing = toClosingProps(resolveBlogPromo(promo, category.id).closing)
+  const closing = toClosingProps(resolveBlogPromo(promo, category.id).closing, locale)
 
   return (
     <>
