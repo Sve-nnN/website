@@ -133,3 +133,102 @@ export function toWebsiteIndexProps(
   }
   return items
 }
+
+// ---------------------------------------------------------------------------
+// Detalle (plan 55-08)
+// ---------------------------------------------------------------------------
+
+/** Forma minima que el detalle lee del documento (docs de Payload y fixtures). */
+export type WebsiteDetailDocLike = WebsiteDocLike & {
+  highlights?: ReadonlyArray<{ text?: string | null } | null> | null
+  challenges?: ReadonlyArray<{ text?: string | null } | null> | null
+  relatedCaseStudy?: unknown
+}
+
+export type WebsiteDetailProps = {
+  slug: string
+  title: string
+  tagline: string | null
+  industry: string | null
+  year: number | null
+  kind: WebsiteKind
+  /** Hostname validado, sin `www.`. null si no hay uno seguro: sin dominio no hay enlace. */
+  domain: string | null
+  /** Nombre del cliente cuando el documento lo trae poblado. */
+  clientName: string | null
+  /** Una sola captura de escritorio (D-14). */
+  image: SiteImage | null
+  highlights: string[]
+  challenges: string[]
+  stack: string[]
+  scores: SiteScores
+  /** Fecha ISO de `lighthouseCapturedAt`, o null. */
+  scoresDate: string | null
+  /** Caso relacionado con la ruta sin prefijo de idioma, o null. */
+  relatedCase: { title: string; href: string } | null
+}
+
+function listOf(items: ReadonlyArray<{ text?: string | null } | null> | null | undefined): string[] {
+  return (items ?? []).map((i) => text(i?.text)).filter((t): t is string => t !== null)
+}
+
+/**
+ * Caso relacionado a `{ title, href }`. Solo cuando llega poblado (objeto) con
+ * slug y titulo: un id suelto no produce enlace.
+ */
+function relatedCaseOf(value: unknown): { title: string; href: string } | null {
+  if (!value || typeof value !== 'object') return null
+  const rel = value as { slug?: unknown; title?: unknown }
+  const slug = text(rel.slug)
+  const title = text(rel.title)
+  if (!slug || !title) return null
+  return { title, href: `/case-studies/${slug}` }
+}
+
+/**
+ * Documento de `websites` a props serializables del detalle. Sin slug o sin
+ * titulo devuelve null (la ruta responde notFound). El dominio sale solo de
+ * `domainFor`, que valida el hostname.
+ */
+export function toWebsiteDetailProps(
+  doc: WebsiteDetailDocLike,
+  _locale: 'es' | 'en',
+): WebsiteDetailProps | null {
+  const [base] = toWebsiteIndexProps([doc], _locale)
+  if (!base) return null
+  const client = doc.client && typeof doc.client === 'object' ? (doc.client as { name?: unknown }) : null
+  return {
+    slug: base.slug,
+    title: base.title,
+    tagline: base.tagline,
+    industry: base.industry,
+    year: base.year,
+    kind: base.kind,
+    domain: base.domain,
+    clientName: text(client?.name),
+    image: base.image,
+    highlights: listOf(doc.highlights),
+    challenges: listOf(doc.challenges),
+    stack: base.stack,
+    scores: base.scores,
+    scoresDate: base.scoresDate,
+    relatedCase: relatedCaseOf(doc.relatedCaseStudy),
+  }
+}
+
+/**
+ * JSON-LD `CreativeWork` del detalle. Es el mismo objeto que la ruta construia
+ * en linea antes de la fase 55 (D-04): no cambia ningun campo.
+ */
+export function buildWebsiteJsonLd(doc: {
+  title?: string | null
+  role?: string | null
+  industry?: string | null
+}): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: doc.title,
+    about: doc.role ?? doc.industry,
+  }
+}

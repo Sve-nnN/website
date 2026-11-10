@@ -16,7 +16,15 @@ import { createElement } from 'react'
 
 import * as Frames from '../../src/components/mui/Frames'
 import { WebsitesIndexView } from '../../src/components/pages/websites/WebsitesIndexView'
-import { toWebsiteIndexProps, type WebsiteDocLike, type WebsiteIndexItem } from '../../src/lib/websites-data'
+import { WebsiteDetailView } from '../../src/components/pages/websites/WebsiteDetailView'
+import {
+  toWebsiteDetailProps,
+  toWebsiteIndexProps,
+  type WebsiteDetailDocLike,
+  type WebsiteDetailProps,
+  type WebsiteDocLike,
+  type WebsiteIndexItem,
+} from '../../src/lib/websites-data'
 import { countOf, headingLevels, renderToHtml, textOf } from './54-ssr-harness'
 
 // tsx usa el runtime clasico con jsx: preserve; los componentes .tsx necesitan React global.
@@ -116,7 +124,55 @@ function render(items: WebsiteIndexItem[], locale: 'es' | 'en'): string {
   return renderToHtml(createElement(WebsitesIndexView, { crumbs: CRUMBS, title: 'Sitios web', items }), locale)
 }
 
+// ---------------------------------------------------------------------------
+// Detalle (plan 55-08)
+// ---------------------------------------------------------------------------
+
+const DETAIL_DOC: WebsiteDetailDocLike = {
+  ...DOCS[1]!,
+  highlights: [{ text: 'Arquitectura de contenido por temas' }, { text: 'Mediciones reales de rendimiento' }],
+  challenges: [{ text: 'Migrar sin perder posiciones' }],
+  relatedCaseStudy: { title: 'Caso de prueba', slug: 'caso-de-prueba' },
+}
+
+function renderDetail(site: WebsiteDetailProps, locale: 'es' | 'en'): string {
+  return renderToHtml(createElement(WebsiteDetailView, { crumbs: CRUMBS, site }), locale)
+}
+
+/** Contrato estructural minimo del detalle. Devuelve los motivos de fallo. */
+function detailFailures(rawHtml: string, site: WebsiteDetailProps): string[] {
+  const reasons: string[] = []
+  const html = rawHtml.replace(/<style[\s\S]*?<\/style>/g, '')
+  const h1 = headingLevels(html).filter((l) => l === 1).length
+  if (h1 !== 1) reasons.push(`se esperaba un h1 y hay ${h1}`)
+  if (!html.includes(site.title)) reasons.push('falta el titulo en el h1')
+  if (site.highlights.length > 0) {
+    const items = countOf(html, /<li[^>]*>[^<]*(?:Arquitectura|Mediciones)/)
+    if (items !== site.highlights.length) reasons.push(`se esperaban ${site.highlights.length} aspectos destacados y hay ${items}`)
+  }
+  if (/designs\//.test(html)) reasons.push('el HTML nombra una ruta de designs/')
+  if (countOf(html, /<main[\s>]/) !== 0) reasons.push('la vista declara un main (lo pone el layout)')
+  return reasons
+}
+
+function mainDetail(): void {
+  const site = toWebsiteDetailProps(DETAIL_DOC, 'es')
+  check(site !== null, 'detalle props: el documento produce props', 'devolvio null')
+  if (!site) return
+  check(site.highlights.length === 2 && site.challenges.length === 1, 'detalle props: destacados y retos', `${site.highlights.length}, ${site.challenges.length}`)
+  for (const locale of ['es', 'en'] as const) {
+    const reasons = detailFailures(renderDetail(site, locale), site)
+    check(reasons.length === 0, `detalle ${locale}: contrato minimo`, reasons.join('; '))
+  }
+  const good = renderDetail(site, 'es')
+  const twoH1 = good.replace('</section>', '<h1>otro</h1></section>')
+  check(detailFailures(twoH1, site).some((r) => r.includes('h1')), 'defectuoso detalle: dos h1 se detecta', 'no se detecto')
+  const noList = renderDetail({ ...site, highlights: [] }, 'es')
+  check(detailFailures(noList, site).some((r) => r.includes('destacados')), 'defectuoso detalle: lista de destacados ausente se detecta', 'no se detecto')
+}
+
 function main(): void {
+  mainDetail()
   const items = toWebsiteIndexProps(DOCS, 'es')
   check(items.length === 3, 'props: tres tarjetas', `hay ${items.length}`)
   check(items[0]?.domain === 'juan-tech.com', 'props: dominio del sitio propio derivado del slug', `dio ${items[0]?.domain}`)

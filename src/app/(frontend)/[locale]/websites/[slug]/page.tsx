@@ -1,20 +1,10 @@
-import Image from 'next/image'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
 
-import config from '@payload-config'
-import type { Website } from '@/payload-types'
-// Mixed file on purpose: the breadcrumb trail below arrives ALREADY
-// locale-prefixed from `src/lib/breadcrumbs.ts`, so it keeps the plain
-// `next/link` above; the related-case-study link takes an unprefixed path and
-// needs the locale-aware component.
-import { Link as LocaleLink } from '@/i18n/navigation'
 import { JsonLd } from '@/components/JsonLd'
-import { Container } from '@/components/Container'
-import { PageHero } from '@/components/PageHero'
-import { Badge } from '@/components/ui/badge'
+import { WebsiteDetailView } from '@/components/pages/websites/WebsiteDetailView'
 import { buildWebsitesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
+import { getCachedWebsiteBySlug } from '@/lib/cache'
+import { buildWebsiteJsonLd, toWebsiteDetailProps } from '@/lib/websites-data'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
@@ -39,16 +29,11 @@ export function generateStaticParams(): Array<{ locale: string; slug: string }> 
   return []
 }
 
-async function getWebsite(locale: string, slug: string) {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'websites',
-    where: { slug: { equals: slug } },
-    locale: locale as 'es' | 'en',
-    depth: 1,
-    limit: 1,
-  })
-  return docs[0]
+// Lectura por la capa cacheada (overrideAccess false y select dentro). Si la
+// lectura falla lanza: unstable_cache no guarda la excepcion y la ruta no
+// responde un 404 falso por un fallo transitorio.
+function getWebsite(locale: string, slug: string) {
+  return getCachedWebsiteBySlug(slug, locale as 'es' | 'en')
 }
 
 export async function generateMetadata({
@@ -82,169 +67,34 @@ export async function generateMetadata({
   }
 }
 
-const copy = {
-  es: {
-    lighthouse: 'Puntuaciones de Lighthouse',
-    highlights: 'Destacados',
-    challenges: 'Retos',
-    stack: 'Stack Tecnológico',
-    screenshots: 'Capturas de pantalla',
-    relatedCaseStudy: 'Ver caso de estudio relacionado',
-    performance: 'Rendimiento',
-    accessibility: 'Accesibilidad',
-    bestPractices: 'Buenas Prácticas',
-    seo: 'SEO',
-  },
-  en: {
-    lighthouse: 'Lighthouse Scores',
-    highlights: 'Highlights',
-    challenges: 'Challenges',
-    stack: 'Tech Stack',
-    screenshots: 'Screenshots',
-    relatedCaseStudy: 'View related case study',
-    performance: 'Performance',
-    accessibility: 'Accessibility',
-    bestPractices: 'Best Practices',
-    seo: 'SEO',
-  },
-}
-
 export default async function WebsitePage({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>
 }) {
   const { locale, slug } = await params
+  const loc = locale as 'es' | 'en'
   const doc = await getWebsite(locale, slug)
 
   if (!doc) {
     notFound()
   }
 
-  const t = copy[locale as 'es' | 'en'] ?? copy.es
-  const client = typeof doc.client === 'object' ? doc.client : null
-  const relatedCaseStudy = typeof doc.relatedCaseStudy === 'object' ? doc.relatedCaseStudy : null
-  const trail = buildWebsitesTrail(locale as 'es' | 'en', {
+  const site = toWebsiteDetailProps(doc, loc)
+  if (!site) {
+    notFound()
+  }
+
+  const trail = buildWebsitesTrail(loc, {
     slug: doc.slug ?? slug,
     title: doc.title,
   })
 
-  const creativeWorkData = {
-    '@context': 'https://schema.org',
-    '@type': 'CreativeWork',
-    name: doc.title,
-    about: doc.role ?? doc.industry,
-  }
-
   return (
-    <div>
-      <PageHero
-        variant="detail"
-        trail={trail}
-        title={doc.title}
-        subtitle={doc.role}
-        meta={[client?.name, doc.industry, doc.year ? String(doc.year) : null]}
-      />
-
-      <Container className="py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div className="rounded-lg bg-secondary text-secondary-foreground p-6 text-center">
-            <p className="text-display font-display font-semibold text-primary tracking-tight tabular-nums">
-              {doc.lighthouse?.performance ?? '—'}
-            </p>
-            <p className="mt-1 text-label uppercase tracking-wide opacity-70">{t.performance}</p>
-          </div>
-          <div className="rounded-lg bg-secondary text-secondary-foreground p-6 text-center">
-            <p className="text-display font-display font-semibold text-primary tracking-tight tabular-nums">
-              {doc.lighthouse?.accessibility ?? '—'}
-            </p>
-            <p className="mt-1 text-label uppercase tracking-wide opacity-70">{t.accessibility}</p>
-          </div>
-          <div className="rounded-lg bg-secondary text-secondary-foreground p-6 text-center">
-            <p className="text-display font-display font-semibold text-primary tracking-tight tabular-nums">
-              {doc.lighthouse?.bestPractices ?? '—'}
-            </p>
-            <p className="mt-1 text-label uppercase tracking-wide opacity-70">{t.bestPractices}</p>
-          </div>
-          <div className="rounded-lg bg-secondary text-secondary-foreground p-6 text-center">
-            <p className="text-display font-display font-semibold text-primary tracking-tight tabular-nums">
-              {doc.lighthouse?.seo ?? '—'}
-            </p>
-            <p className="mt-1 text-label uppercase tracking-wide opacity-70">{t.seo}</p>
-          </div>
-        </div>
-      </Container>
-
-      <Container className="py-8 space-y-12">
-        {doc.highlights && doc.highlights.length > 0 && (
-          <section>
-            <h2 className="font-heading text-heading mt-10 mb-4">{t.highlights}</h2>
-            <ul className="list-disc pl-6 space-y-2 text-body">
-              {doc.highlights.map((item, i) => (
-                <li key={item.id ?? i}>{item.text}</li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {doc.challenges && doc.challenges.length > 0 && (
-          <section>
-            <h2 className="font-heading text-heading mt-10 mb-4">{t.challenges}</h2>
-            <ul className="list-disc pl-6 space-y-2 text-body">
-              {doc.challenges.map((item, i) => (
-                <li key={item.id ?? i}>{item.text}</li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        {doc.stack && doc.stack.length > 0 && (
-          <section>
-            <h2 className="font-heading text-heading mt-10 mb-4">{t.stack}</h2>
-            <div className="flex flex-wrap gap-2">
-              {doc.stack.map((s, i) => (
-                <Badge key={s.id ?? i}>{s.tag}</Badge>
-              ))}
-            </div>
-          </section>
-        )}
-
-        {doc.screenshots && doc.screenshots.length > 0 && (
-          <section>
-            <h2 className="font-heading text-heading mt-10 mb-4">{t.screenshots}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {doc.screenshots.map((s, i) => {
-                const img = typeof s.image === 'object' ? s.image : null
-                return img ? (
-                  <div key={s.id ?? i} className="relative aspect-video overflow-hidden rounded-lg">
-                    <Image
-                      src={img.url ?? ''}
-                      alt={img.alt ?? doc.title}
-                      fill
-                      className="object-cover"
-                      sizes="(min-width: 640px) 50vw, 100vw"
-                    />
-                  </div>
-                ) : null
-              })}
-            </div>
-          </section>
-        )}
-
-        {relatedCaseStudy && (
-          <section>
-            <LocaleLink
-              href={`/case-studies/${relatedCaseStudy.slug}`}
-              className="text-primary-text underline underline-offset-2"
-            >
-              {t.relatedCaseStudy}
-            </LocaleLink>
-          </section>
-        )}
-      </Container>
-
-      <JsonLd data={creativeWorkData} />
+    <>
+      <WebsiteDetailView crumbs={trail.map((c) => ({ label: c.label, href: c.url }))} site={site} />
+      <JsonLd data={buildWebsiteJsonLd(doc)} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </div>
+    </>
   )
 }

@@ -343,6 +343,59 @@ export function getCachedWebsitesIndex(locale: Locale) {
 }
 
 /**
+ * Detalle de un sitio por slug (fase 55, plan 55-08). Mismas reglas que el
+ * indice: `overrideAccess: false` dentro de la cache (un borrador no se cachea),
+ * `select` con los campos que usa el detalle y `populate` solo de los campos
+ * publicos de Media, del cliente y del caso relacionado.
+ *
+ * `filename` va junto a `url` en Media: el `url` lo genera el adaptador de
+ * Cloudinary desde el filename, y sin el llega null (55-01). Eso incluye
+ * `meta.image`, que alimenta la imagen Open Graph.
+ *
+ * Devuelve null si el slug no existe (la ruta responde notFound). Si la lectura
+ * falla, lanza: `unstable_cache` no guarda una excepcion.
+ */
+export function getCachedWebsiteBySlug(slug: string, locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'websites',
+        where: { slug: { equals: slug } },
+        locale,
+        limit: 1,
+        depth: 2,
+        overrideAccess: false,
+        select: {
+          title: true,
+          slug: true,
+          role: true,
+          industry: true,
+          year: true,
+          highlights: true,
+          challenges: true,
+          stack: true,
+          screenshots: true,
+          lighthouse: true,
+          lighthouseCapturedAt: true,
+          client: true,
+          relatedCaseStudy: true,
+          meta: true,
+        },
+        populate: {
+          media: { url: true, filename: true, width: true, height: true, alt: true },
+          clientes: { websiteUrl: true, name: true },
+          'case-studies': { title: true, slug: true },
+        },
+      })
+      return docs[0] ?? null
+    },
+    ['website', slug, locale],
+    { tags: [CACHE_TAGS.websites()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+/**
  * `postSlug -> categorySlug` for every published post. Backs two things that
  * would otherwise need a per-item query: building `/blog/<category>/<slug>`
  * links from contexts that only know a post slug (search results, footer),
