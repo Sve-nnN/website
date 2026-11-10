@@ -6,17 +6,17 @@
     {
       "number": "53",
       "name": "Base del rediseño: rama, preview, tema y shell",
-      "status": "pending"
+      "status": "complete"
     },
     {
       "number": "54",
       "name": "Páginas de conversión y utilidad",
-      "status": "pending"
+      "status": "complete"
     },
     {
       "number": "55",
       "name": "Casos, websites, blog y autores",
-      "status": "pending"
+      "status": "in_progress"
     },
     {
       "number": "56",
@@ -32,7 +32,7 @@
   "next": {
     "command": "/gsd:progress --next",
     "label": "Advance to the next step",
-    "reason": "Phase 53 of 5 · 0% · executing"
+    "reason": "Phase 6 of 5 · 40% · executing"
   },
-  "updated_at": "2026-11-07T16:32:17.156Z"
+  "updated_at": "2026-11-10T08:30:11.539Z"
 }
