@@ -253,6 +253,21 @@ function sourceFailures(rawSource: string): string[] {
     'defectuoso: cache de sitios sin el tag de la coleccion se detecta',
     'la auditoria no lo detecto',
   )
+
+  // Desborde a 320 px (hallado en el preview al activar el respaldo de la home en
+  // 55-10): una tarjeta de caso con un sector largo en el Chip (nowrap) sacaba el
+  // documento a 443 px. La tarjeta debe poder encogerse y el rotulo envolver.
+  const card = fs.readFileSync(path.join(root, 'src/components/mui/CaseMetricCard.tsx'), 'utf8')
+  const cardFailures = (src: string): string[] => {
+    const out: string[] = []
+    if (!/gridTemplateColumns: 'minmax\(0,1fr\)'/.test(src)) out.push('la tarjeta no fija su columna a minmax(0,1fr)')
+    if (!/minWidth: 0/.test(src)) out.push('la tarjeta no declara minWidth 0')
+    if (!/'& \.MuiChip-label': \{ whiteSpace: 'normal'/.test(src)) out.push('el rotulo del sector no envuelve')
+    return out
+  }
+  check(cardFailures(card).length === 0, 'fuente: CaseMetricCard se encoge y el sector envuelve (sin desborde a 320 px)', cardFailures(card).join('; '))
+  check(cardFailures(card.replace("minWidth: 0,", '')).some((r) => r.includes('minWidth')), 'defectuoso: tarjeta sin minWidth 0 se detecta', 'la auditoria no lo detecto')
+  check(cardFailures(card.replace("whiteSpace: 'normal'", "whiteSpace: 'nowrap'")).some((r) => r.includes('envuelve')), 'defectuoso: sector que no envuelve se detecta', 'la auditoria no lo detecto')
 }
 
 if (failures > 0) {

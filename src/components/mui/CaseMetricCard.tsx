@@ -41,6 +41,11 @@ export function CaseMetricCard({ href, tag, metric, title, suffix, tone = 'band'
         bgcolor: band ? 'band.surface' : 'background.paper',
         color: band ? 'band.text' : 'text.primary',
         display: 'grid',
+        // La columna y la tarjeta no crecen con su contenido: un sector largo
+        // ("Manufactura / Materiales de construccion artesanal") sacaba la tarjeta
+        // de la pantalla a 320 px (hallazgo de 55-10 con el respaldo de la home).
+        gridTemplateColumns: 'minmax(0,1fr)',
+        minWidth: 0,
         gap: 2,
         alignContent: 'start',
         transition: 'transform var(--jt-motion-slow, 500ms), border-color var(--jt-motion-slow, 500ms)',
@@ -58,6 +63,10 @@ export function CaseMetricCard({ href, tag, metric, title, suffix, tone = 'band'
           size="small"
           sx={{
             justifySelf: 'start',
+            maxWidth: '100%',
+            height: 'auto',
+            // El rotulo del sector puede ocupar varias lineas en pantallas angostas.
+            '& .MuiChip-label': { whiteSpace: 'normal', py: 0.5 },
             ...(band ? { bgcolor: 'transparent', color: 'band.text', borderColor: 'band.border' } : {}),
           }}
         />
