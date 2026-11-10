@@ -93,12 +93,15 @@ export function toCaseIndexProps(
  * Interpreta el valor de una metrica: "47,108" da 47108, "533K" da 533000,
  * "1.25M" da 1250000, "4.2s" da 4.2 y "36.3" da 36.3. Un guion, un texto o una
  * cadena vacia dan NaN (la fila de posicion de un caso que partio sin dato).
+ *
+ * El sufijo K o M solo cuenta si no lo sigue una letra: "850ms" da 850, "45 min"
+ * da 45 y "3 meses" da 3, no millones. "533K clics" sigue dando 533000.
  */
 export function parseMetricNumber(value: string | null | undefined): number {
   const m = (value ?? '')
     .trim()
     .replace(/,/g, '')
-    .match(/^(-?\d+(?:\.\d+)?)\s*([KM])?/i)
+    .match(/^(-?\d+(?:\.\d+)?)(?:\s*([KM])(?![A-Za-z]))?/i)
   if (!m) return Number.NaN
   const suffix = m[2]?.toUpperCase()
   const factor = suffix === 'K' ? 1e3 : suffix === 'M' ? 1e6 : 1

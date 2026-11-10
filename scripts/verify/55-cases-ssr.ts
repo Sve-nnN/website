@@ -18,6 +18,7 @@ import { CaseStudiesIndexView } from '../../src/components/pages/cases/CaseStudi
 import {
   buildCaseComparison,
   buildCaseStudyJsonLd,
+  changeRatio,
   lexicalOrNull,
   parseMetricNumber,
   pickRelatedCases,
@@ -353,6 +354,25 @@ function mainDetail(): void {
     Number.isNaN(parseMetricNumber('-')) && Number.isNaN(parseMetricNumber('')) && parseMetricNumber('1.25M') === 1250000 && parseMetricNumber('4.2s') === 4.2,
     'parseMetricNumber: guion y vacio dan NaN, 1.25M y 4.2s se interpretan',
     `${parseMetricNumber('-')}, ${parseMetricNumber('1.25M')}, ${parseMetricNumber('4.2s')}`,
+  )
+  // WR-03: un sufijo K o M solo cuenta si no lo sigue una letra (ms, min, meses no son millones).
+  check(
+    parseMetricNumber('850ms') === 850 &&
+      parseMetricNumber('45 min') === 45 &&
+      parseMetricNumber('3 meses') === 3 &&
+      parseMetricNumber('1.25M') === 1250000 &&
+      parseMetricNumber('533K') === 533000 &&
+      parseMetricNumber('533K clics') === 533000 &&
+      parseMetricNumber('47,108') === 47108,
+    'parseMetricNumber: 850ms y 45 min no son millones; 1.25M, 533K y 47,108 se mantienen',
+    ['850ms', '45 min', '3 meses', '1.25M', '533K', '533K clics', '47,108'].map((v) => `${v}=${parseMetricNumber(v)}`).join(', '),
+  )
+  check(
+    changeRatio(parseMetricNumber('850ms'), parseMetricNumber('2.1s')) !== null &&
+      (changeRatio(parseMetricNumber('45 min'), parseMetricNumber('12 min')) ?? 0) < 0 &&
+      (changeRatio(parseMetricNumber('45 min'), parseMetricNumber('12 min')) ?? 0) > -1,
+    'resultados: una metrica de tiempo antes y despues da un cambio coherente',
+    `${changeRatio(parseMetricNumber('45 min'), parseMetricNumber('12 min'))}`,
   )
 
   // Un Lexical sin texto no cuenta como contenido.
