@@ -126,6 +126,15 @@
     "alreadyBody": "Revisa tu bandeja — ya deberías tener el checklist.",
     "errorBody": "Algo salió mal. No pudimos registrar tu correo — intenta de nuevo en un momento."
   },
+  "richText": {
+    "copyCode": "Copiar",
+    "codeNoun": "código",
+    "codeCopied": "Copiado",
+    "codeCopiedStatus": "Código copiado",
+    "codeCopyFailedStatus": "No se pudo copiar el código",
+    "codeRegionLabel": "Código con desplazamiento horizontal",
+    "tableRegionLabel": "Tabla con desplazamiento horizontal"
+  },
   "shell": {
     "skipLink": "Saltar al contenido",
     "brandAria": "Juan Angulo, inicio",

@@ -126,6 +126,15 @@
     "alreadyBody": "Check your inbox — you should already have the checklist.",
     "errorBody": "Something went wrong. We couldn't register your email — please try again in a moment."
   },
+  "richText": {
+    "copyCode": "Copy",
+    "codeNoun": "code",
+    "codeCopied": "Copied",
+    "codeCopiedStatus": "Code copied",
+    "codeCopyFailedStatus": "The code could not be copied",
+    "codeRegionLabel": "Code with horizontal scrolling",
+    "tableRegionLabel": "Table with horizontal scrolling"
+  },
   "shell": {
     "skipLink": "Skip to content",
     "brandAria": "Juan Angulo, home",

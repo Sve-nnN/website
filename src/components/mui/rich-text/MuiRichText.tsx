@@ -16,6 +16,7 @@ import { resolveLinkHref, sanitizeHref, type NavLinkInput } from '@/lib/nav-link
 import { buildRichTextConverters, richTextConverters } from '@/components/richTextBlockConverters'
 
 import { UL, OL } from '../lists'
+import { muiBlockConverters, type RichTextOverrides, type Translate } from './blocks'
 import { buildHeadingIdMap, type LexicalNodeLike, type LexicalRootLike } from './lexical-toc'
 import { RichTextLink } from './RichTextLink'
 
@@ -38,6 +39,14 @@ type Props = {
    * bloque `email-capture` no se pinta (Privacy y Terms no lo llevan).
    */
   ctx?: { subscribedState?: string; postPath?: string }
+  /**
+   * Convertidores de bloque que se combinan sobre los de la base y sobre los de
+   * MUI de este archivo. Con `ctx` el valor por defecto es
+   * `muiBlockConverters(...)` (bloques del post re-vestidos con MUI); sin `ctx`
+   * no hay overrides y se mantiene el comportamiento de la fase 54 (Privacy y
+   * Terms).
+   */
+  overrides?: RichTextOverrides
 }
 
 // Oculto a la vista y visible para el lector de pantalla. Va local porque este
@@ -78,8 +87,9 @@ function isSameSiteHref(href: string): boolean {
 type ListNode = { tag?: string; listType?: string; children?: unknown[] }
 type ListItemNode = { children?: Array<{ type?: string }>; value?: number }
 
-export function MuiRichText({ data, maxWidth = 760, headingIds, ctx }: Props) {
+export function MuiRichText({ data, maxWidth = 760, headingIds, ctx, overrides }: Props) {
   const t = useTranslations('common')
+  const tRichText = useTranslations('richText')
   const locale = useLocale() === 'en' ? 'en' : 'es'
 
   if (!data) return null
@@ -141,10 +151,24 @@ export function MuiRichText({ data, maxWidth = 760, headingIds, ctx }: Props) {
   // Parte de los convertidores del sitio (code-block, faq, affiliate-inline,
   // tabla con encabezado y baja de h1 a h2) para no perder contenido indexable
   // (SEO-03) y reemplaza solo lo que cambia con MUI.
+  const blockOverrides: RichTextOverrides | undefined =
+    overrides ??
+    (ctx
+      ? muiBlockConverters({
+          locale,
+          t: { richText: tRichText as unknown as Translate },
+          postPath: ctx.postPath,
+          subscribedState: ctx.subscribedState,
+        })
+      : undefined)
+
   const converters: JSXConvertersFunction = (args) => {
     const base = ctx ? buildRichTextConverters(ctx)(args) : richTextConverters(args)
+    const extra = blockOverrides?.(args)
     return {
       ...base,
+      ...(extra?.table ? { table: extra.table } : {}),
+      blocks: { ...base.blocks, ...extra?.blocks },
       heading: (a) => {
         const node = a.node as unknown as LexicalNodeLike
         const id = idByNode.get(node)
