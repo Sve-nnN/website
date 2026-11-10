@@ -11,7 +11,9 @@
 //   - todos los id unicos en la pagina;
 //   - cada href="#x" con un elemento cuyo id sea x (FAIL con --preview-only; contra produccion
 //     es WARN porque sus encabezados no llevan id y un post EN tiene enlaces de ancla a mano
-//     que no resuelven alli: el diseno nuevo los resuelve);
+//     que no resuelven alli: el diseno nuevo los resuelve). Excepcion unica y documentada:
+//     DANGLING_ANCHOR_ALLOWLIST tolera las tres anclas de /en/blog/cs-fundamentals/recursividad
+//     (contenido EN al 22 por ciento) y falla si otro post o ese mismo post suma otra ancla rota;
 //   - para los slugs de EN_TRANSLATION_INCOMPLETE (la lista se lee de
 //     src/lib/translation-gaps.ts por expresion): en EN, meta robots con noindex y follow
 //     y, en la pagina ES del mismo post, ausencia de hreflang en; los demas posts no
@@ -66,6 +68,52 @@ import {
 } from './55-page-contract.mjs'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..', '..')
+
+// ------------------------------------------------- anclas sin destino toleradas
+
+/**
+ * Lista explicita de anclas sin destino que se toleran con --preview-only (plan 55-13,
+ * decision del orquestador). NO es un permiso general: solo cubre estas anclas en esta ruta.
+ *   - Cualquier OTRO post con una ancla sin destino sigue siendo FAIL.
+ *   - Este post con una ancla que no figure aqui (mas anclas rotas que las registradas)
+ *     tambien es FAIL.
+ *   - Si el post pierde una ancla de la lista (se traduce y se resuelve), solo se avisa con
+ *     WARN para retirar la entrada; nunca falla por resolver de mas.
+ * Motivo: la traduccion EN de /blog/cs-fundamentals/recursividad esta al 22 por ciento del
+ * espanol (EN_TRANSLATION_INCOMPLETE). Su cuerpo enlaza a tres secciones que en ingles no
+ * existen, asi que el enlace no puede resolver. Es un defecto de contenido que ya estaba
+ * roto en produccion, no del diseno nuevo.
+ * Duena del cierre: fase 56 (contenido), traduciendo el articulo o quitando esos enlaces.
+ */
+export const DANGLING_ANCHOR_ALLOWLIST = [
+  {
+    path: '/en/blog/cs-fundamentals/recursividad',
+    anchors: ['common-recursion-algorithms', 'best-practices-for-writing-recursive-functions', 'conclusion'],
+    reason: 'traduccion EN al 22 por ciento: las tres secciones enlazadas no existen en ingles (contenido, ya roto en produccion)',
+    owner: 'fase 56 (contenido)',
+  },
+]
+
+const normPath = (p) => (p ?? '').replace(/\/$/, '')
+
+/**
+ * Separa las anclas sin destino en toleradas y no toleradas para una ruta.
+ * @param {string|undefined} path ruta pedida
+ * @param {Iterable<string>} missing anclas sin destino
+ * @param {typeof DANGLING_ANCHOR_ALLOWLIST} list
+ */
+export function splitDanglingAnchors(path, missing, list = DANGLING_ANCHOR_ALLOWLIST) {
+  const entry = list.find((e) => normPath(e.path) === normPath(path))
+  const all = [...missing]
+  if (!entry) return { entry: null, tolerated: [], unexpected: all, stale: [] }
+  const allowed = new Set(entry.anchors)
+  return {
+    entry,
+    tolerated: all.filter((a) => allowed.has(a)),
+    unexpected: all.filter((a) => !allowed.has(a)),
+    stale: entry.anchors.filter((a) => !all.includes(a)),
+  }
+}
 
 // ---------------------------------------------------------- slugs incompletos
 
@@ -170,8 +218,22 @@ export function checkPost(html, o) {
     // en el cuerpo (medido: 7 en /en/blog/cs-fundamentals/recursividad) no resuelve alli. Es
     // un defecto del sitio actual, no del diseno nuevo: contra produccion se avisa (WARN) y
     // con --preview-only, donde los encabezados ya tienen id, es FAIL.
-    if (previewOnly) failures.push(msg)
-    else warnings.push(msg)
+    if (previewOnly) {
+      // Excepcion explicita y documentada (DANGLING_ANCHOR_ALLOWLIST): solo las anclas
+      // registradas para esa ruta; cualquier otra ancla rota sigue fallando.
+      const { entry, tolerated, unexpected, stale } = splitDanglingAnchors(requestedPath, missing)
+      if (unexpected.length > 0) {
+        failures.push(
+          `${unexpected.length} ancla(s) sin elemento de destino${entry ? ' fuera de la lista tolerada' : ''}: ${unexpected.slice(0, 3).map((x) => `#${x}`).join(', ')}`,
+        )
+      }
+      if (entry && tolerated.length > 0) {
+        warnings.push(
+          `${tolerated.length} ancla(s) sin destino TOLERADA(S) por lista explicita (${tolerated.map((x) => `#${x}`).join(', ')}): ${entry.reason}; cierra ${entry.owner}`,
+        )
+      }
+      if (entry && stale.length > 0) warnings.push(`la lista tolerada ya no necesita ${stale.map((x) => `#${x}`).join(', ')} (resuelven): retirar de DANGLING_ANCHOR_ALLOWLIST`)
+    } else warnings.push(msg)
   }
 
   const robots = robotsDirectives(html)
@@ -315,6 +377,29 @@ function selftest() {
   else {
     bad += 1
     console.log(`FAIL selftest ancla sin destino contra produccion: ${JSON.stringify(warns)}`)
+  }
+  // Lista tolerada de anclas sin destino (55-13): solo esa ruta y solo esas anclas.
+  const RP = '/en/blog/cs-fundamentals/recursividad'
+  const al = DANGLING_ANCHOR_ALLOWLIST.find((e) => e.path === RP)
+  const linksTo = (ids) => FIXTURE({ lang: 'en', extra: `<nav><ol>${ids.map((i) => `<li><a href="#${i}">x</a></li>`).join('')}</ol></nav><div role="progressbar"></div>` })
+  const enStrict = (path) => ({ locale: 'en', previewOnly: true, requestedPath: path, finalPath: path })
+  const w1 = []
+  none('lista tolerada: las tres anclas registradas en su ruta', checkPost(linksTo(al.anchors), { ...enStrict(RP), warnings: w1 }))
+  if (w1.length === 1 && w1[0].includes('TOLERADA')) console.log('PASS selftest lista tolerada: un WARN que nombra el motivo')
+  else {
+    bad += 1
+    console.log(`FAIL selftest lista tolerada: ${JSON.stringify(w1)}`)
+  }
+  some('lista tolerada: otro post con la misma ancla sigue fallando', checkPost(linksTo([al.anchors[0]]), enStrict('/en/blog/seo/otro-post')), 'ancla')
+  some('lista tolerada: otro post con ancla rota ES sigue fallando', checkPost(dangling, { locale: 'es', previewOnly: true, requestedPath: '/blog/seo/p', finalPath: '/blog/seo/p' }), 'ancla')
+  some('lista tolerada: el mismo post con UNA ancla rota de mas falla', checkPost(linksTo([...al.anchors, 'otra-seccion']), enStrict(RP)), 'fuera de la lista tolerada')
+  none('lista tolerada: menos anclas rotas que las registradas no falla', checkPost(linksTo([al.anchors[0]]), enStrict(RP)))
+  const w2 = []
+  checkPost(linksTo([al.anchors[0]]), { ...enStrict(RP), warnings: w2 })
+  if (w2.some((x) => x.includes('retirar'))) console.log('PASS selftest lista tolerada: avisa para retirar anclas que ya resuelven')
+  else {
+    bad += 1
+    console.log(`FAIL selftest lista tolerada: no avisa del retiro ${JSON.stringify(w2)}`)
   }
   some('id repetido', checkPost(FIXTURE({ extra: '<h2 id="a">dup</h2>' }), es), 'id repetido')
   some('estado 404', checkPost(FIXTURE(), { ...es, status: 404 }), '404')
