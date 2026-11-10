@@ -138,8 +138,15 @@ export function compareMeasures(base, prod, questions = []) {
     const pct = (((prod.words - base.words) / prod.words) * 100).toFixed(1)
     failures.push(`texto visible ${base.words} palabras contra ${prod.words} de produccion (${pct}% menos, tolerancia ${TEXT_TOLERANCE * 100}%)`)
   }
+  // Las preguntas de FAQ son h4 en produccion (salto de h2 a h4) y h3 en el diseno nuevo
+  // (decision de 55-07: h2 del bloque y h3 por pregunta, sin saltos). Cada pregunta suma
+  // un h3 al preview que produccion no cuenta como h3.
   for (const key of ['h2', 'h3', 'pre', 'table']) {
-    if (base[key] !== prod[key]) failures.push(`${key}: ${base[key]} contra ${prod[key]} de produccion`)
+    const expected = key === 'h3' ? prod.h3 + questions.length : prod[key]
+    if (base[key] !== expected) {
+      const note = key === 'h3' && questions.length > 0 ? ` (${prod.h3} h3 y ${questions.length} pregunta(s) de FAQ)` : ''
+      failures.push(`${key}: ${base[key]} contra ${expected} de produccion${note}`)
+    }
   }
   for (const q of questions) {
     if (!base.pageText.includes(visibleText(q).toLowerCase())) failures.push(`falta la pregunta de FAQ: ${q.slice(0, 80)}`)
@@ -158,7 +165,7 @@ const HOSTS = new Set(['juan-tech.com', 'www.juan-tech.com', 'dev.juan-tech.com'
 const para = (n) => `<p>${Array.from({ length: n }, (_, i) => `palabra${i}`).join(' ')}</p>`
 
 const FIXTURE = (o = {}) => {
-  const { words = 200, h2 = 2, h3 = 1, pre = 1, table = 1, faq = true, links = ['/blog/seo/otro', 'https://juan-tech.com/servicios'], extra = '' } = o
+  const { words = 200, h2 = 2, h3 = 1, pre = 1, table = 1, faq = true, faqTag = 'h3', links = ['/blog/seo/otro', 'https://juan-tech.com/servicios'], extra = '' } = o
   return (
     '<!DOCTYPE html><html lang="es"><body><header><a href="/">Inicio</a></header><main>' +
     '<article id="post-body"><h1>Titulo</h1>' +
@@ -167,7 +174,7 @@ const FIXTURE = (o = {}) => {
     '<h3>Sub</h3>'.repeat(h3) +
     '<pre><code>x = 1</code></pre>'.repeat(pre) +
     '<table><tr><td>a</td></tr></table>'.repeat(table) +
-    (faq ? '<div><h4>1. ¿Por qué importa?</h4><p>Porque si.</p></div>' : '') +
+    (faq ? `<div><${faqTag}>1. ¿Por qué importa?</${faqTag}><p>Porque si.</p></div>` : '') +
     links.map((l) => `<a href="${l}">enlace</a>`).join('') +
     extra +
     '</article><aside><h2>Relacionados</h2></aside></main></body></html>'
@@ -176,7 +183,8 @@ const FIXTURE = (o = {}) => {
 
 function selftest() {
   let bad = 0
-  const prodHtml = FIXTURE()
+  // Produccion pinta la pregunta de FAQ como h4; el diseno nuevo, como h3.
+  const prodHtml = FIXTURE({ faqTag: 'h4' })
   const prod = measure(prodHtml, HOSTS)
   const questions = ['1. ¿Por qué importa?']
   const run = (html, qs = questions, ref = prod) => compareMeasures(measure(html, HOSTS), ref, qs)
