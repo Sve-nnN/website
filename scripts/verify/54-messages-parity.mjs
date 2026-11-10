@@ -1,8 +1,9 @@
 // Paridad es/en de los namespaces de interfaz de la fase 54 (plan 03).
 //
 // Namespaces revisados: common, home, services, about, contact, stack, legal,
-// search y notFound. El resto de namespaces del repo conserva guiones heredados
-// y no se mira aqui (shell lo cubre 53-messages-parity.mjs).
+// search, notFound y emailCapture (agregado en la fase 56, D-19). El resto de
+// namespaces del repo conserva guiones heredados y no se mira aqui (shell lo
+// cubre 53-messages-parity.mjs).
 //
 // Reglas, por namespace:
 //   1. mismo conjunto de rutas de clave en es y en
@@ -29,9 +30,9 @@ import { fileURLToPath } from 'node:url'
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..')
 
 // Namespaces que esta guardia mira.
-export const REVIEWED = ['common', 'home', 'services', 'about', 'contact', 'stack', 'legal', 'search', 'notFound']
+export const REVIEWED = ['common', 'home', 'services', 'about', 'contact', 'stack', 'legal', 'search', 'notFound', 'emailCapture']
 
-// Namespaces que no pueden faltar: los nueve de la fase.
+// Namespaces que no pueden faltar: los diez revisados.
 export const REQUIRED = [...REVIEWED]
 
 // Claves cuyo nombre termina en Heading o Title pero cuyo valor es una oracion
@@ -193,6 +194,12 @@ function selftest() {
   expect('errorHeading sin exencion falla', check(exemptEs, exemptEn, ns, ns, []), true, 'search.errorHeading')
 
   expect('namespace requerido ausente', check({ common: base().common }, { common: baseEn().common }, ns, ns), true, 'falta el namespace search')
+
+  // Fase 56 (D-19): emailCapture entra a REVIEWED, asi que quitarle una clave en un solo idioma falla.
+  const capEs = { emailCapture: { heading: 'Checklist', errorBody: 'Algo salio mal.' } }
+  const capEn = { emailCapture: { heading: 'Checklist' } }
+  expect('emailCapture esta en REVIEWED y en REQUIRED', REVIEWED.includes('emailCapture') && REQUIRED.includes('emailCapture') ? [] : ['falta'], false)
+  expect('clave de emailCapture ausente en un idioma', check(capEs, capEn, ['emailCapture'], ['emailCapture']), true, 'clave solo en es: emailCapture.errorBody')
 
   let bad = 0
   for (const r of results) {

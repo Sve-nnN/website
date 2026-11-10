@@ -113,18 +113,18 @@
   "emailCapture": {
     "eyebrow": "Free download",
     "heading": "Technical SEO audit checklist",
-    "description": "5 categories, dozens of actionable checks — the same criteria I use in my own audits.",
+    "description": "5 categories and dozens of actionable checks, the same criteria I use in my own audits.",
     "emailLabel": "Email address",
     "emailPlaceholder": "you@example.com",
     "submitLabel": "Send me the checklist",
-    "privacyPrefix": "By subscribing you accept our ",
+    "privacyPrefix": "By subscribing you accept my ",
     "privacyLinkText": "privacy policy",
-    "privacySuffix": ". We'll only email you to confirm your download — no spam.",
+    "privacySuffix": ". I'll only email you to confirm your download, no spam.",
     "pendingHeading": "Check your email",
-    "pendingBody": "We sent you a link to confirm your subscription and unlock the download.",
+    "pendingBody": "I sent you a link to confirm your subscription and unlock the download.",
     "alreadyHeading": "You're already subscribed",
-    "alreadyBody": "Check your inbox — you should already have the checklist.",
-    "errorBody": "Something went wrong. We couldn't register your email — please try again in a moment."
+    "alreadyBody": "Check your inbox. You should already have the checklist.",
+    "errorBody": "Something went wrong and I couldn't register your email. Please try again in a moment."
   },
   "richText": {
     "copyCode": "Copy",
@@ -284,7 +284,8 @@
   "legal": {
     "eyebrow": "Legal",
     "tocLabel": "In this document",
-    "tocAria": "Document index"
+    "tocAria": "Document index",
+    "effectiveOn": "Effective as of {date}"
   },
   "websites": {
     "index": {

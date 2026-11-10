@@ -113,18 +113,18 @@
   "emailCapture": {
     "eyebrow": "Descarga gratis",
     "heading": "Checklist de auditoría SEO técnica",
-    "description": "5 categorías, decenas de checks accionables — el mismo criterio que uso en mis propias auditorías.",
+    "description": "5 categorías y decenas de checks accionables, el mismo criterio que uso en mis propias auditorías.",
     "emailLabel": "Correo electrónico",
     "emailPlaceholder": "tucorreo@ejemplo.com",
     "submitLabel": "Enviarme el checklist",
-    "privacyPrefix": "Al suscribirte aceptas nuestra ",
+    "privacyPrefix": "Al suscribirte aceptas mi ",
     "privacyLinkText": "política de privacidad",
-    "privacySuffix": ". Solo te escribiremos para confirmar la descarga, sin spam.",
+    "privacySuffix": ". Solo te escribo para confirmar la descarga, sin spam.",
     "pendingHeading": "Revisa tu correo",
     "pendingBody": "Te enviamos un enlace para confirmar tu suscripción y desbloquear la descarga.",
     "alreadyHeading": "Ya estás suscrito",
-    "alreadyBody": "Revisa tu bandeja — ya deberías tener el checklist.",
-    "errorBody": "Algo salió mal. No pudimos registrar tu correo — intenta de nuevo en un momento."
+    "alreadyBody": "Revisa tu bandeja. Ya deberías tener el checklist.",
+    "errorBody": "Algo salió mal y no pude registrar tu correo. Intenta de nuevo en un momento."
   },
   "richText": {
     "copyCode": "Copiar",
@@ -284,7 +284,8 @@
   "legal": {
     "eyebrow": "Legal",
     "tocLabel": "En este documento",
-    "tocAria": "Índice del documento"
+    "tocAria": "Índice del documento",
+    "effectiveOn": "Vigente desde el {date}"
   },
   "websites": {
     "index": {
