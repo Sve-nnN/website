@@ -138,7 +138,24 @@ Plans:
   2. Juan aprueba por escrito el texto de cada CTA y las lecciones aprendidas de cada caso, y el contenido aprobado vive en Payload en lugar del `case-lessons.ts` del sandbox.
   3. Privacy y Terms describen la infraestructura real (hoy Dokploy en lugar de Hostinger) o el texto que Juan confirme, en EN y ES.
 
-**Plans**: TBD
+**Plans**: 14 plans
+
+Plans:
+
+- [ ] 56-01-PLAN.md — Base de verificacion: registro de decisiones, guardia de datos y paridad de messages
+- [ ] 56-02-PLAN.md — Entrada de Juan: lote 1 de CTAs y opciones de textos de la home
+- [ ] 56-03-PLAN.md — Esquema aditivo del global privado legal-pages con lectura con respaldo
+- [ ] 56-04-PLAN.md — Sobre mi: fecha aprendoclub, Loops Growth, coach y contrato de marcadores endurecido
+- [ ] 56-05-PLAN.md — Texto legal en espanol con la infraestructura real
+- [ ] 56-06-PLAN.md — Lecciones de los 7 casos verificadas, a la espera de aprobacion
+- [ ] 56-07-PLAN.md — Alts y tabla de encabezados antes y despues
+- [ ] 56-08-PLAN.md — Rutas privacy y terms leen el texto sombra y muestran la fecha efectiva
+- [ ] 56-09-PLAN.md — Copy ES y EN de home y Contacto desde constantes de decision
+- [ ] 56-10-PLAN.md — Inventario de CTAs y aplicacion de los que viven en messages
+- [ ] 56-11-PLAN.md — Texto legal en ingles y aprobacion legal de Juan
+- [ ] 56-12-PLAN.md — Migracion y siembra sombra con Juan, verificacion contra el preview
+- [ ] 56-13-PLAN.md — Registro de lo que master sirve y se carga en el corte
+- [ ] 56-14-PLAN.md — Cargador del corte probado en seco y handoff a la fase 57
 
 ### Phase 57: Gate de calidad y corte a producción
 
