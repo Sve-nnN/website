@@ -4,17 +4,17 @@ milestone: v2.4
 milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
-status: planning
-stopped_at: Completed 55-06-PLAN.md (migracion lessons aplicada y preview verificado)
-last_updated: "2026-11-10T04:31:14.454Z"
-last_activity: 2026-11-08
+status: executing
+stopped_at: Completed 55-09-PLAN.md
+last_updated: "2026-11-10T04:58:12.870Z"
+last_activity: 2026-11-10
 last_activity_desc: Phase 54 complete, transitioned to Phase 6
-state_head: ba38df4277aba50cc7e8f7ecd325bedcea35e57e
+state_head: "0b7cb786b58f06314213292d211a737b96240503"
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 35
-  completed_plans: 28
+  completed_plans: 31
   percent: 40
 ---
 
@@ -29,10 +29,10 @@ See: .planning/PROJECT.md (updated 2026-11-06)
 
 ## Current Position
 
-Phase: 55 — Casos, websites, blog y autores (en ejecución, ola 3)
-Plan: 6 of 13 completo (55-06: migración de lessons aplicada y preview verificado); sigue 55-07
-Status: Executing
-Last activity: 2026-11-10 — 55-06 completo, migración phase55_case_lessons aplicada en producción por Juan
+Phase: 55 — Casos, websites, blog y autores (en ejecución, ola 5)
+Plan: 9 of 13 completo (55-09: casos de éxito en MUI con comparativos en el servidor y lecciones preparadas); sigue 55-10
+Status: Ready to execute
+Last activity: 2026-11-10 — 55-09 completo, índice y detalle de casos en MUI sin push (la ola 5 no empuja)
 
 ## Performance Metrics
 
@@ -168,6 +168,7 @@ Last activity: 2026-11-10 — 55-06 completo, migración phase55_case_lessons ap
 | Phase 54 P16 | 120min | 3 tasks | 14 files |
 | Phase 55 P01 | 25min | 3 tasks | 12 files |
 | Phase 55 P06 | 55min | 3 tasks | 2 files |
+| Phase 55 P09 | 55min | 3 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -337,6 +338,7 @@ Recent decisions affecting current work:
 - [Phase 6]: 54-13: @mui/lab 9.0.0-beta.10 instalado con version exacta tras aprobacion delegada del checkpoint; Sobre mi vive en un global y su enlace de nav solo existe con isPreviewReadonly()
 - [Phase 6]: 54-14: HomeData gana sectionsB; el enlace de SiteCard va a /websites/<slug>; los verificadores de la fase 48 se retiran en el corte de la fase 57
 - [Phase 6]: 54-15: el inlineStat de Madrid tambien es un marcador y no pinta aside; los botones del hero de las landings locales se conservan como LocalHeroActions; el contrato 54-dual-urls.mjs ya pasa contra produccion como linea base
+- [Phase 6]: 55-09: lecciones de casos ocultas sin datos; comparativos de clics calculados en el servidor desde results.metrics (sin dato nuevo)
 
 ### Pending Todos
 
@@ -394,8 +396,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-10T04:31:14.412Z
-Stopped at: Completed 55-06-PLAN.md (migracion lessons aplicada y preview verificado)
+Last session: 2026-11-10T04:58:12.682Z
+Stopped at: Completed 55-09-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
