@@ -142,7 +142,7 @@ Plans:
 
 Plans:
 
-- [ ] 56-01-PLAN.md — Base de verificacion: registro de decisiones, guardia de datos y paridad de messages
+- [x] 56-01-PLAN.md — Base de verificacion: registro de decisiones, guardia de datos y paridad de messages
 - [ ] 56-02-PLAN.md — Entrada de Juan: lote 1 de CTAs y opciones de textos de la home
 - [ ] 56-03-PLAN.md — Esquema aditivo del global privado legal-pages con lectura con respaldo
 - [ ] 56-04-PLAN.md — Sobre mi: fecha aprendoclub, Loops Growth, coach y contrato de marcadores endurecido
@@ -180,7 +180,7 @@ Plans:
 | 53. Base del rediseño: rama, preview, tema y shell | 6/6 | Complete    | 2026-11-07 |
 | 54. Páginas de conversión y utilidad | 16/16 | Complete    | 2026-11-08 |
 | 55. Casos, websites, blog y autores | 13/13 | Complete    | 2026-11-10 |
-| 56. Contenido pendiente de Juan | 0/TBD | Not started | - |
+| 56. Contenido pendiente de Juan | 1/14 | In Progress|  - |
 | 57. Gate de calidad y corte a producción | 0/TBD | Not started | - |
 
 <details>
