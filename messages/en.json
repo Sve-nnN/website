@@ -345,5 +345,14 @@
       "moreTitle": "More projects",
       "viewAll": "View all"
     }
+  },
+  "cases": {
+    "index": {
+      "listTitle": "All case studies",
+      "listLabel": "Case study list",
+      "viewCase": "View the full case study",
+      "emptyTitle": "Coming soon",
+      "emptyText": "I'm preparing new case studies. Check back soon."
+    }
   }
 }

@@ -345,5 +345,14 @@
       "moreTitle": "Más proyectos",
       "viewAll": "Ver todos"
     }
+  },
+  "cases": {
+    "index": {
+      "listTitle": "Todos los casos",
+      "listLabel": "Lista de casos de éxito",
+      "viewCase": "Ver el caso completo",
+      "emptyTitle": "Próximamente",
+      "emptyText": "Estoy preparando nuevos casos de éxito. Vuelve pronto."
+    }
   }
 }

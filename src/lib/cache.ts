@@ -478,6 +478,47 @@ export function getCachedCaseStudy(slug: string, locale: Locale) {
   )()
 }
 
+/**
+ * Indice de casos de exito (fase 55, plan 55-09). Todos los casos publicados,
+ * mas recientes primero: la coleccion no tiene `publishedAt`, asi que se ordena
+ * por `-createdAt` (Pitfall 11; no sirve `getCachedArchive`).
+ *
+ * `overrideAccess: false` va DENTRO de la funcion cacheada: un caso que nunca
+ * se publico no debe entrar a la cache (T-55-31). `select` trae solo lo que usan
+ * las tarjetas y la comparacion de clics (`results`).
+ *
+ * Si la lectura falla, lanza: `unstable_cache` no guarda una excepcion, y la
+ * ruta la captura fuera para no fijar un fallo transitorio en la cache.
+ */
+export function getCachedCaseStudiesIndex(locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'case-studies',
+        locale,
+        sort: '-createdAt',
+        limit: 100,
+        pagination: false,
+        depth: 1,
+        overrideAccess: false,
+        select: {
+          title: true,
+          slug: true,
+          sector: true,
+          heroMetric: true,
+          heroSubtitle: true,
+          period: true,
+          results: true,
+        },
+      })
+      return docs
+    },
+    ['case-studies-index', locale],
+    { tags: [CACHE_TAGS.caseStudies()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
 // --- Archive listing (ArchiveBlock, used by Servicios/Blog listing routes
 // in 43-02) -- not wired to any component in this plan yet. Branches by
 // `relationTo` with 3 literal `payload.find` calls (one per collection)

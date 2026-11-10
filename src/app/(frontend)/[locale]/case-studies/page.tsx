@@ -1,11 +1,9 @@
-import { getPayload } from 'payload'
-
-import config from '@payload-config'
-import { Container } from '@/components/Container'
-import { PageHero } from '@/components/PageHero'
-import { CaseStudyCard } from '@/components/CaseStudyCard'
-import { FeaturedEntry } from '@/components/FeaturedEntry'
 import { JsonLd } from '@/components/JsonLd'
+import { CtaSection } from '@/components/mui/CtaSection'
+import { CaseStudiesIndexView } from '@/components/pages/cases/CaseStudiesIndexView'
+import { toCaseIndexProps, type CaseDocLike } from '@/lib/case-study-data'
+import { getCachedCaseStudiesIndex } from '@/lib/cache'
+import { getCtaData } from '@/lib/cta-data'
 import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
@@ -31,20 +29,6 @@ export function generateStaticParams(): Array<{ locale: string }> {
   return []
 }
 
-async function getCaseStudies(locale: string) {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'case-studies',
-    locale: locale as 'es' | 'en',
-    // POLISH: no sort meant Payload's default order, which on production put
-    // the most recent case study ("Migración a Next.js…") last, behind six
-    // older ones. A portfolio listing leads with the newest work.
-    sort: '-createdAt',
-    limit: 50,
-  })
-  return docs
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const title = locale === 'es' ? 'Casos de éxito' : 'Case Studies'
@@ -66,61 +50,45 @@ export default async function CaseStudiesListPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  const caseStudies = await getCaseStudies(locale)
-  const trail = buildCaseStudiesTrail(locale as 'es' | 'en')
-  const [featured, ...rest] = caseStudies
+  const loc = locale as 'es' | 'en'
+
+  // La lectura lanza dentro de la cache (para no fijar un fallo transitorio) y
+  // aqui se captura: ante un error la ruta responde con la lista vacia.
+  let docs: ReadonlyArray<CaseDocLike> = []
+  try {
+    docs = await getCachedCaseStudiesIndex(loc)
+  } catch (err) {
+    console.error('[case-studies]', err)
+  }
+  const items = toCaseIndexProps(docs, loc)
+
+  const trail = buildCaseStudiesTrail(loc)
+  const ctaData = await getCtaData(loc)
 
   return (
-    <div>
-      <PageHero
-        variant="index"
-        trail={trail}
+    <>
+      <CaseStudiesIndexView
+        crumbs={trail.map((c) => ({ label: c.label, href: c.url }))}
         title={locale === 'es' ? 'Casos de éxito' : 'Case Studies'}
-        subtitle={
+        lead={
           locale === 'es'
             ? 'Cada caso muestra qué estaba fallando, qué corregí en el código y qué cambió después. Los números salen de Search Console, los clientes van anonimizados.'
             : 'Every case shows what was failing, what I fixed in the code and what changed afterwards. The numbers come from Search Console, the clients stay anonymous.'
         }
+        items={items}
       />
-
-      <Container className="py-12 md:py-16">
-        {caseStudies.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="font-heading text-heading">
-              {locale === 'es' ? 'Próximamente' : 'Coming soon'}
-            </p>
-            <p className="mt-2 text-body text-muted-foreground">
-              {locale === 'es'
-                ? 'Estamos preparando nuevos casos de éxito. Vuelve pronto.'
-                : "We're preparing new case studies. Check back soon."}
-            </p>
-          </div>
-        ) : (
-          <>
-            {/* The newest case leads; the rest fall into the grid below. The
-                list is already sorted by -createdAt, so [0] is the lead. */}
-            <FeaturedEntry
-              kind="case-study"
-              locale={locale as 'es' | 'en'}
-              title={featured.title}
-              slug={featured.slug ?? String(featured.id)}
-              heroImage={featured.heroImage}
-              heroSubtitle={featured.heroSubtitle}
-              heroMetric={featured.heroMetric}
-              sector={featured.sector}
-            />
-
-            {rest.length > 0 && (
-              <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {rest.map((cs) => (
-                  <CaseStudyCard key={cs.id} caseStudy={cs} />
-                ))}
-              </div>
-            )}
-          </>
-        )}
-      </Container>
+      {ctaData && (
+        <div lang={ctaData.isFallback && locale === 'en' ? 'es' : undefined}>
+          <CtaSection
+            title={ctaData.title}
+            lead={ctaData.lead}
+            email={ctaData.email}
+            name={ctaData.name}
+            avatarUrl={ctaData.avatarUrl}
+          />
+        </div>
+      )}
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </div>
+    </>
   )
 }
