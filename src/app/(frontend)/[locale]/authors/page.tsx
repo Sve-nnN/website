@@ -1,13 +1,10 @@
-import Image from 'next/image'
-import { getPayload } from 'payload'
-
-import config from '@payload-config'
-import { Link } from '@/i18n/navigation'
-import { Container } from '@/components/Container'
-import { PageHero } from '@/components/PageHero'
 import { JsonLd } from '@/components/JsonLd'
+import { CtaSection } from '@/components/mui/CtaSection'
+import { AuthorsIndexView } from '@/components/pages/authors/AuthorsIndexView'
 import { buildAuthorsTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
-import { Badge } from '@/components/ui/badge'
+import { getCachedAuthorsIndex } from '@/lib/cache'
+import { getCtaData } from '@/lib/cta-data'
+import { toAuthorsIndexProps, type AuthorIndexDocLike } from '@/lib/authors-data'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
@@ -32,16 +29,6 @@ export function generateStaticParams(): Array<{ locale: string }> {
   return []
 }
 
-async function getAuthors(locale: string) {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'authors',
-    locale: locale as 'es' | 'en',
-    limit: 50,
-  })
-  return docs
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const title = locale === 'es' ? 'Autores' : 'Authors'
@@ -59,51 +46,40 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function AuthorsListPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  const authors = await getAuthors(locale)
-  const trail = buildAuthorsTrail(locale as 'es' | 'en')
+  const loc = locale as 'es' | 'en'
+
+  // La lectura lanza dentro de la cache (para no fijar un fallo transitorio) y
+  // aqui se captura: ante un error la ruta responde con la lista vacia.
+  let docs: ReadonlyArray<AuthorIndexDocLike> = []
+  try {
+    docs = await getCachedAuthorsIndex(loc)
+  } catch (err) {
+    console.error('[authors]', err)
+  }
+  const items = toAuthorsIndexProps(docs, loc)
+
+  const trail = buildAuthorsTrail(loc)
+  const ctaData = await getCtaData(loc)
 
   return (
-    <div>
-      <PageHero
-        variant="index"
-        trail={trail}
+    <>
+      <AuthorsIndexView
+        crumbs={trail.map((c) => ({ label: c.label, href: c.url }))}
         title={locale === 'es' ? 'Autores' : 'Authors'}
+        items={items}
       />
-
-      <Container className="py-12 md:py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {authors.map((author) => {
-            const avatar = typeof author.avatar === 'object' ? author.avatar : null
-            const firstCredential = author.credentials?.[0]
-
-            return (
-              <Link
-                key={author.id}
-                href={`/authors/${author.slug}`}
-                className="rounded-lg border border-border bg-card p-6 text-center hover:shadow-md transition-shadow"
-              >
-                {avatar?.url && (
-                  <Image
-                    src={avatar.url}
-                    alt={avatar.alt ?? author.name}
-                    width={80}
-                    height={80}
-                    className="mx-auto rounded-full object-cover"
-                  />
-                )}
-                <p className="mt-4 font-heading text-heading">{author.name}</p>
-                {author.jobTitle && <p className="text-body text-muted-foreground">{author.jobTitle}</p>}
-                {firstCredential && (
-                  <Badge variant="secondary" className="mt-3">
-                    {firstCredential.label}
-                  </Badge>
-                )}
-              </Link>
-            )
-          })}
+      {ctaData && (
+        <div lang={ctaData.isFallback && locale === 'en' ? 'es' : undefined}>
+          <CtaSection
+            title={ctaData.title}
+            lead={ctaData.lead}
+            email={ctaData.email}
+            name={ctaData.name}
+            avatarUrl={ctaData.avatarUrl}
+          />
         </div>
-      </Container>
+      )}
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </div>
+    </>
   )
 }

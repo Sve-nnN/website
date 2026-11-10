@@ -360,7 +360,13 @@ const getCachedAboutAuthor = (locale: Locale) =>
     { tags: [CACHE_TAGS.authors()], revalidate: CACHE_TTL_SECONDS },
   )()
 
-const getCachedAboutEvents = (locale: Locale) =>
+/**
+ * Ponencias para Sobre mi y para el perfil de autor (plan 55-12). Una sola
+ * lectura cacheada con `overrideAccess: false` y `select` explicito: el perfil
+ * reutiliza esta funcion en lugar de abrir una segunda lectura de la coleccion.
+ * `link` viaja para el enlace "ver mas" del perfil; Sobre mi no lo usa.
+ */
+export const getCachedSpeakingEvents = (locale: Locale) =>
   unstable_cache(
     async (): Promise<EventLike[]> => {
       const payload = await getPayload({ config })
@@ -380,6 +386,7 @@ const getCachedAboutEvents = (locale: Locale) =>
           attendeeCount: true,
           date: true,
           coSpeakers: true,
+          link: true,
           flyer: true,
         },
       })
@@ -426,7 +433,7 @@ export async function getAboutData(locale: Locale): Promise<AboutData | null> {
   const [about, author, events, counts] = await Promise.all([
     guarded(() => getCachedAboutPage(locale)),
     guarded(() => getCachedAboutAuthor(locale)),
-    guarded(() => getCachedAboutEvents(locale)),
+    guarded(() => getCachedSpeakingEvents(locale)),
     guarded(() => getCachedAboutCounts()),
   ])
   if (!about && !author) return null

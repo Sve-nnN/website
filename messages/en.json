@@ -459,5 +459,46 @@
       "previous": "Previous",
       "next": "Next"
     }
+  },
+  "authors": {
+    "index": {
+      "listLabel": "List of authors",
+      "emptyTitle": "Coming soon",
+      "emptyText": "There are no published authors yet.",
+      "viewProfile": "View profile"
+    },
+    "profile": {
+      "credentialsTitle": "Credentials",
+      "credentialsLabel": "List of credentials",
+      "expertiseTitle": "Areas of expertise",
+      "expertiseLabel": "List of areas of expertise",
+      "experienceTitle": "Experience",
+      "experienceLabel": "Professional experience",
+      "educationTitle": "Education and certifications",
+      "educationLabel": "Education and certifications",
+      "eventsTitle": "Speaking events",
+      "eventsLabel": "List of events",
+      "postsTitle": "Posts",
+      "postsLabel": "List of the author's posts",
+      "casesTitle": "Case studies",
+      "casesLabel": "List of the author's case studies",
+      "dateRange": "{from} to {to}",
+      "dateRangeOpen": "{from} to today",
+      "current": "Ongoing",
+      "years": "{years}+ years of experience",
+      "by": "by {name}",
+      "attendees": "{count, plural, one {# attendee} other {# attendees}}",
+      "coSpeakers": "With {names}",
+      "eventLink": "Learn more",
+      "socialLabel": "{name} on other platforms",
+      "platforms": {
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "x": "X",
+        "website": "Website"
+      },
+      "aboutLink": "More about me",
+      "stackLink": "See my tool stack"
+    }
   }
 }

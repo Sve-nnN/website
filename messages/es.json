@@ -459,5 +459,46 @@
       "previous": "Anterior",
       "next": "Siguiente"
     }
+  },
+  "authors": {
+    "index": {
+      "listLabel": "Lista de autores",
+      "emptyTitle": "Próximamente",
+      "emptyText": "Todavía no hay autores publicados.",
+      "viewProfile": "Ver el perfil"
+    },
+    "profile": {
+      "credentialsTitle": "Credenciales",
+      "credentialsLabel": "Lista de credenciales",
+      "expertiseTitle": "Áreas de especialización",
+      "expertiseLabel": "Lista de áreas de especialización",
+      "experienceTitle": "Experiencia",
+      "experienceLabel": "Experiencia profesional",
+      "educationTitle": "Educación y certificaciones",
+      "educationLabel": "Educación y certificaciones",
+      "eventsTitle": "Eventos donde he sido ponente",
+      "eventsLabel": "Lista de eventos",
+      "postsTitle": "Artículos",
+      "postsLabel": "Lista de artículos del autor",
+      "casesTitle": "Casos de éxito",
+      "casesLabel": "Lista de casos de éxito del autor",
+      "dateRange": "{from} a {to}",
+      "dateRangeOpen": "{from} a hoy",
+      "current": "En curso",
+      "years": "{years}+ años de experiencia",
+      "by": "por {name}",
+      "attendees": "{count, plural, one {# asistente} other {# asistentes}}",
+      "coSpeakers": "Con {names}",
+      "eventLink": "Ver más",
+      "socialLabel": "Perfiles de {name} en otras plataformas",
+      "platforms": {
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "x": "X",
+        "website": "Sitio web"
+      },
+      "aboutLink": "Más sobre mí",
+      "stackLink": "Ver mi stack de herramientas"
+    }
   }
 }

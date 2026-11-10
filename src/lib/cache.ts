@@ -598,12 +598,153 @@ export function getCachedCaseStudiesIndex(locale: Locale) {
           heroSubtitle: true,
           period: true,
           results: true,
+          // Plan 55-12: el perfil de autor filtra los casos por autor sobre esta
+          // misma lista. `populate` deja solo el id (siempre viaja) y el nombre,
+          // asi que la lista no arrastra el perfil entero de cada autor.
+          author: true,
+        },
+        populate: {
+          authors: { name: true },
         },
       })
       return docs
     },
     ['case-studies-index', locale],
     { tags: [CACHE_TAGS.caseStudies()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+/**
+ * Indice de autores (fase 55, plan 55-12). Todos los autores, con lo que pinta
+ * la tarjeta: nombre, slug, cargo, bio, avatar y anos de experiencia.
+ *
+ * `overrideAccess: false` va DENTRO de la funcion cacheada (la coleccion tiene
+ * `read` abierto, pero la regla del repo es la misma en toda lectura) y `select`
+ * deja fuera credenciales, educacion, experiencia y enlaces: el indice no los
+ * pinta y no deben viajar al cliente (T-55-44). `filename` va junto a `url` en
+ * Media: el `url` lo genera el adaptador de Cloudinary desde el filename y sin
+ * el llega null (55-01).
+ *
+ * Si la lectura falla, lanza: `unstable_cache` no guarda una excepcion, y la
+ * ruta la captura fuera para no fijar un fallo transitorio en la cache.
+ */
+export function getCachedAuthorsIndex(locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'authors',
+        locale,
+        limit: 100,
+        pagination: false,
+        depth: 1,
+        overrideAccess: false,
+        select: {
+          name: true,
+          slug: true,
+          jobTitle: true,
+          bio: true,
+          avatar: true,
+          yearsExperience: true,
+        },
+        populate: {
+          media: { url: true, filename: true, width: true, height: true, alt: true },
+        },
+      })
+      return docs
+    },
+    ['authors-index', locale],
+    { tags: [CACHE_TAGS.authors()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+/**
+ * Perfil de un autor por slug (fase 55, plan 55-12). `select` explicito con
+ * solo los campos del perfil publico (T-55-44): nombre, cargo, bio, avatar,
+ * credenciales, expertise, educacion (con logo), experiencia, anos, enlaces
+ * sociales y `meta` (title, description e imagen Open Graph). Nada mas del
+ * documento viaja a la cache.
+ *
+ * Devuelve null si el slug no existe (la ruta responde notFound). Si la lectura
+ * falla, lanza: `unstable_cache` no guarda una excepcion.
+ */
+export function getCachedAuthorBySlug(slug: string, locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'authors',
+        where: { slug: { equals: slug } },
+        locale,
+        limit: 1,
+        depth: 1,
+        overrideAccess: false,
+        select: {
+          name: true,
+          slug: true,
+          jobTitle: true,
+          bio: true,
+          avatar: true,
+          credentials: true,
+          expertise: true,
+          education: true,
+          experience: true,
+          yearsExperience: true,
+          socialLinks: true,
+          meta: true,
+        },
+        populate: {
+          media: { url: true, filename: true, width: true, height: true, alt: true },
+        },
+      })
+      return docs[0] ?? null
+    },
+    ['author', slug, locale],
+    { tags: [CACHE_TAGS.authors()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+/**
+ * TODOS los posts publicados de un autor, mas recientes primero (fase 55, plan
+ * 55-12). Sin limite: produccion enlazaba solo 50 de los 58 posts desde el
+ * perfil (`limit: 50`) y los 8 restantes no tenian enlace desde ahi (SEO-03).
+ * `limit: 0` con `pagination: false` trae todos.
+ *
+ * `overrideAccess: false` dentro de la cache: un borrador no se cachea (SEO-40).
+ * `select` ligero (sin `content`) y `populate` igual al del indice del blog:
+ * categoria reducida a slug y titulo, portada con `filename` (el `url` sale del
+ * adaptador de Cloudinary).
+ */
+export function getCachedAuthorPosts(authorId: number | string, locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'posts',
+        where: { author: { equals: authorId } },
+        locale,
+        sort: '-publishedAt',
+        limit: 0,
+        pagination: false,
+        depth: 1,
+        overrideAccess: false,
+        select: {
+          title: true,
+          slug: true,
+          excerpt: true,
+          categories: true,
+          publishedAt: true,
+          heroImage: true,
+        },
+        populate: {
+          categories: { slug: true, title: true },
+          media: { url: true, filename: true, width: true, height: true, alt: true },
+        },
+      })
+      return docs
+    },
+    ['author-posts', String(authorId), locale],
+    { tags: [CACHE_TAGS.posts()], revalidate: CACHE_TTL_SECONDS },
   )()
 }
 
