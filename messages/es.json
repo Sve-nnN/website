@@ -133,7 +133,8 @@
     "codeCopiedStatus": "Código copiado",
     "codeCopyFailedStatus": "No se pudo copiar el código",
     "codeRegionLabel": "Código con desplazamiento horizontal",
-    "tableRegionLabel": "Tabla con desplazamiento horizontal"
+    "tableRegionLabel": "Tabla con desplazamiento horizontal",
+    "readPost": "Leer el artículo"
   },
   "shell": {
     "skipLink": "Saltar al contenido",

@@ -133,7 +133,8 @@
     "codeCopiedStatus": "Code copied",
     "codeCopyFailedStatus": "The code could not be copied",
     "codeRegionLabel": "Code with horizontal scrolling",
-    "tableRegionLabel": "Table with horizontal scrolling"
+    "tableRegionLabel": "Table with horizontal scrolling",
+    "readPost": "Read the article"
   },
   "shell": {
     "skipLink": "Skip to content",

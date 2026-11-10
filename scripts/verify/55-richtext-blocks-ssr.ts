@@ -27,6 +27,7 @@ createRequire(import.meta.url)('./55-stub-next-intl-server.cjs')
 const { MuiRichText } = await import('../../src/components/mui/rich-text/MuiRichText')
 const { countOf, renderToHtml } = await import('./54-ssr-harness')
 const { FaqAccordion } = await import('../../src/components/mui/FaqAccordion')
+const { PostCard } = await import('../../src/components/mui/PostCard')
 
 // tsx no transforma JSX con `jsx: preserve` y cae al runtime clasico, que busca
 // `React` global al renderizar los componentes .tsx. Solo se usa en esta prueba.
@@ -283,6 +284,47 @@ function emailFormProblem(html: string, postPath: string): string | null {
 
   const bad = renderToHtml(createElement('form', null, createElement('input', { name: 'email' })), 'es')
   check('fixture defectuoso (formulario sin honeypot ni ocultos) falla', emailFormProblem(bad, '/blog/fixture') !== null, 'dejó pasar un formulario incompleto')
+}
+
+// ---------------------------------------------------------------------------
+// PostCard (Pitfall 17: el enlace se resuelve dentro del cliente)
+// ---------------------------------------------------------------------------
+
+/** Motivo de fallo de una tarjeta de post, o null. */
+function postCardProblem(html: string, href: string, level: number): string | null {
+  const escaped = href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  if (!new RegExp(`<a\\b[^>]*\\shref="${escaped}"`).test(html)) return `falta el enlace con href ${href}`
+  if (!/<time\b[^>]*\sdatetime="[^"]+"/i.test(html)) return 'falta el time con datetime'
+  if (countOf(html, new RegExp(`<h${level}\\b`)) !== 1) return `el título no está en un h${level}`
+  return null
+}
+
+{
+  const props = {
+    href: '/blog/seo-tecnico/post-inventado',
+    title: 'Titulo inventado del post',
+    excerpt: 'Resumen inventado del post.',
+    categoryLabel: 'SEO tecnico',
+    dateISO: '2026-03-05T00:00:00.000Z',
+  }
+  const noImage = renderToHtml(createElement(PostCard, { ...props, image: null }), 'es')
+  check('PostCard: enlace con el href, time con datetime y título en h3 por defecto', postCardProblem(noImage, props.href, 3) === null, String(postCardProblem(noImage, props.href, 3)))
+  check('PostCard con image null no pinta img', countOf(noImage, /<img\b/) === 0, 'pintó una imagen sin dato')
+  check('PostCard muestra categoría, resumen y fecha larga en ES', ['SEO tecnico', 'Resumen inventado del post.', '5 de marzo de 2026'].every((t) => noImage.includes(t)), 'falta categoría, resumen o fecha')
+  check('PostCard no calcula tiempo de lectura', !/min\b|minutos|lectura/i.test(noImage.replace(/Leer el artículo/g, '')), 'apareció un tiempo de lectura')
+
+  const h2 = renderToHtml(createElement(PostCard, { ...props, headingLevel: 2 }), 'es')
+  check('PostCard respeta headingLevel 2', postCardProblem(h2, props.href, 2) === null && countOf(h2, /<h3\b/) === 0, String(postCardProblem(h2, props.href, 2)))
+
+  const en = renderToHtml(createElement(PostCard, props), 'en')
+  check('PostCard en EN prefija el enlace con /en y formatea la fecha en inglés', /href="\/en\/blog\/seo-tecnico\/post-inventado"/.test(en) && /March 5, 2026/.test(en), 'href o fecha incorrectos en EN')
+
+  const withImage = renderToHtml(createElement(PostCard, { ...props, image: { url: 'https://example.test/a.jpg', alt: 'Texto alternativo inventado', width: 800, height: 450 } }), 'es')
+  check('PostCard con imagen trae width, height y alt de Payload', /<img\b[^>]*\swidth="800"/.test(withImage) && /<img\b[^>]*\sheight="450"/.test(withImage) && /alt="Texto alternativo inventado"/.test(withImage), 'falta width, height o alt')
+
+  // Fixture defectuoso: tarjeta sin atributo datetime.
+  const noDatetime = renderToHtml(createElement('div', null, createElement('a', { href: props.href }, 'x'), createElement('h3', null, 'x'), createElement('time', null, '5 de marzo')), 'es')
+  check('fixture defectuoso (time sin datetime) falla', postCardProblem(noDatetime, props.href, 3) !== null, 'dejó pasar un time sin datetime')
 }
 
 // ---------------------------------------------------------------------------
