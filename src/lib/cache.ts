@@ -23,7 +23,17 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
-import type { Post, CaseStudy, Category, AffiliateLink, HomePage, AboutPage } from '@/payload-types'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+
+import type {
+  Post,
+  CaseStudy,
+  Category,
+  AffiliateLink,
+  HomePage,
+  AboutPage,
+  LegalPage as LegalPages,
+} from '@/payload-types'
 import { CACHE_TAGS, CACHE_TTL_SECONDS } from './cache-tags'
 import { resolvePrimaryCategorySlug } from './blog-paths'
 
@@ -206,6 +216,67 @@ export function getCachedAboutPage(locale: Locale): Promise<ShadowPageResult<Abo
     },
     ['about-page', locale],
     { tags: [CACHE_TAGS.aboutPage()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+// --- Legal (fase 56, contenido sombra). Global privado legal-pages con el texto
+// nuevo de Privacidad y Términos.
+//
+// NOT overrideAccess:false, misma excepción documentada que getCachedAboutPage:
+// el global no declara access, y el acceso por defecto (solo autenticados) es lo
+// que mantiene el texto sin aprobar fuera de la API pública (T-56-09).
+//
+// Se lee con fallbackLocale:false: el cuerpo de un idioma vacío devuelve null
+// para ese idioma y la ruta cae al doc pages de ESE idioma, nunca al otro idioma
+// del global. Si la lectura lanza (tabla ausente antes de aplicar la migración, o
+// permission denied del rol del preview), devuelve todo null y registra el error
+// con la etiqueta legal-pages en la salida de errores (T-56-11). ---
+
+export type LegalPagesResult = {
+  privacy: SerializedEditorState | null
+  terms: SerializedEditorState | null
+  effectiveDate: string | null
+}
+
+const EMPTY_LEGAL: LegalPagesResult = { privacy: null, terms: null, effectiveDate: null }
+
+function lexicalWithText(value: unknown): SerializedEditorState | null {
+  const hasText = (node: unknown): boolean => {
+    if (!node || typeof node !== 'object') return false
+    const n = node as { text?: unknown; children?: unknown }
+    if (typeof n.text === 'string' && n.text.trim() !== '') return true
+    return Array.isArray(n.children) && n.children.some(hasText)
+  }
+  if (!value || typeof value !== 'object') return null
+  const root = (value as { root?: unknown }).root
+  return hasText(root) ? (value as SerializedEditorState) : null
+}
+
+export function getCachedLegalPages(locale: Locale): Promise<LegalPagesResult> {
+  return unstable_cache(
+    async (): Promise<LegalPagesResult> => {
+      try {
+        const payload = await getPayload({ config })
+        const data: LegalPages = await payload.findGlobal({
+          slug: 'legal-pages',
+          depth: 0,
+          locale,
+          fallbackLocale: false,
+        })
+        const date = typeof data.effectiveDate === 'string' ? data.effectiveDate.trim() : ''
+        return {
+          privacy: lexicalWithText(data.privacy?.body),
+          terms: lexicalWithText(data.terms?.body),
+          effectiveDate: date === '' ? null : date,
+        }
+      } catch (error) {
+        const detail = error instanceof Error ? error.message : String(error)
+        console.error(`legal-pages: lectura fallida, se usa el doc pages (${detail})`)
+        return EMPTY_LEGAL
+      }
+    },
+    ['legal-pages', locale],
+    { tags: [CACHE_TAGS.legalPages()], revalidate: CACHE_TTL_SECONDS },
   )()
 }
 

@@ -130,6 +130,7 @@ export interface Config {
     'blog-promo': BlogPromo;
     'home-page': HomePage;
     'about-page': AboutPage;
+    'legal-pages': LegalPage;
   };
   globalsSelect: {
     llms: LlmsSelect<false> | LlmsSelect<true>;
@@ -139,6 +140,7 @@ export interface Config {
     'blog-promo': BlogPromoSelect<false> | BlogPromoSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
     'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
+    'legal-pages': LegalPagesSelect<false> | LegalPagesSelect<true>;
   };
   locale: 'es' | 'en';
   widgets: {
@@ -3891,6 +3893,55 @@ export interface AboutPage {
   createdAt?: string | null;
 }
 /**
+ * Texto nuevo de Privacidad y Términos. Privado hasta el corte: la fecha efectiva se fija el día del corte.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-pages".
+ */
+export interface LegalPage {
+  id: number;
+  /**
+   * Fecha del día del corte. Sin valor no se muestra ninguna fecha efectiva en las páginas legales.
+   */
+  effectiveDate?: string | null;
+  privacy?: {
+    body?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
+  terms?: {
+    body?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "llms_select".
  */
@@ -4308,6 +4359,26 @@ export interface AboutPageSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-pages_select".
+ */
+export interface LegalPagesSelect<T extends boolean = true> {
+  effectiveDate?: T;
+  privacy?:
+    | T
+    | {
+        body?: T;
+      };
+  terms?:
+    | T
+    | {
+        body?: T;
       };
   updatedAt?: T;
   createdAt?: T;

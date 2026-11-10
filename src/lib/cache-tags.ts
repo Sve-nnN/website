@@ -96,6 +96,7 @@ export const CACHE_TAGS = {
   footer: () => 'footer',
   homePage: () => 'home-page',
   aboutPage: () => 'about-page',
+  legalPages: () => 'legal-pages',
   redirects: () => 'redirects',
   affiliateLinks: () => 'affiliate-links:all',
 }
@@ -275,6 +276,15 @@ export const revalidateHomePageCache: GlobalAfterChangeHook = ({ doc }) => {
 
 export const revalidateAboutPageCache: GlobalAfterChangeHook = ({ doc }) => {
   safeRevalidateTag(CACHE_TAGS.aboutPage())
+  safeRevalidateAllPaths()
+  return doc
+}
+
+// --- Legal (contenido nuevo, fase 56). Global privado con el texto de Privacidad
+// y Términos; las rutas /privacy y /terms lo leen con respaldo al doc pages. ---
+
+export const revalidateLegalPagesCache: GlobalAfterChangeHook = ({ doc }) => {
+  safeRevalidateTag(CACHE_TAGS.legalPages())
   safeRevalidateAllPaths()
   return doc
 }
