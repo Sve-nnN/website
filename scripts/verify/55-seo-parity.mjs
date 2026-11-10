@@ -23,6 +23,9 @@
 //                   x-robots-tag); cada uno debe dar al menos un fallo.
 //   --routes a,b,c  Subconjunto de rutas (ruta exacta; con prefijo /en si es EN; admite
 //                   la ruta de un post).
+//   --paths a,b,c   Rutas exactas tal cual (home, legales u otras fuera de la lista de
+//                   superficies), sin construir la lista desde produccion. Lo usa la
+//                   bateria de la fase 56 para comparar home, privacy y terms (D-23).
 //   --no-posts      Omite los 58 posts en es y en (solo superficies).
 //   (sin modo)      Paridad completa BASE_URL contra PROD_BASE.
 //
@@ -326,15 +329,21 @@ async function live(args) {
   const ignoreRobots = process.env.EXPECT_PREVIEW === '1'
 
   const subset = parseRoutesFlag(args)
+  const pi = args.indexOf('--paths')
+  const explicitPaths = pi >= 0 && args[pi + 1] ? args[pi + 1].split(',').filter(Boolean) : null
   let routes
-  try {
-    // Un --routes explicito puede nombrar un post, asi que con subconjunto siempre se arma la lista completa.
-    routes = await allRoutes(prodBase, { posts: subset ? true : !args.includes('--no-posts') })
-  } catch (err) {
-    console.log(`FAIL no se pudo construir la lista de rutas desde produccion: ${err.message}`)
-    return 1
+  if (explicitPaths) {
+    routes = explicitPaths.map((path) => ({ path, lang: path === '/en' || path.startsWith('/en/') ? 'en' : 'es' }))
+  } else {
+    try {
+      // Un --routes explicito puede nombrar un post, asi que con subconjunto siempre se arma la lista completa.
+      routes = await allRoutes(prodBase, { posts: subset ? true : !args.includes('--no-posts') })
+    } catch (err) {
+      console.log(`FAIL no se pudo construir la lista de rutas desde produccion: ${err.message}`)
+      return 1
+    }
   }
-  if (subset) {
+  if (subset && !explicitPaths) {
     routes = filterRoutes(routes, subset)
     if (!routes) {
       console.log(`FAIL --routes no coincide con ninguna ruta de la lista: ${[...subset].join(',')}`)
