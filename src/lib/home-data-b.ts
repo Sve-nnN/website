@@ -301,14 +301,58 @@ export function mapFeaturedCases(featured: ReadonlyArray<unknown> | null | undef
 }
 
 /**
- * Casos destacados por la capa cacheada de featured-content (no abre otra
- * consulta). Nunca lanza: un error de lectura se registra y deja la seccion en
- * null.
+ * Decision pura del respaldo (D-26): con casos curados en featured-content se
+ * usan esos y el respaldo se ignora; con el curado vacio se usa el respaldo (que
+ * puede estar vacio y entonces la seccion no se renderiza).
+ */
+export function selectCasesOrFallback(
+  curated: ReadonlyArray<HomeCaseItem>,
+  fallback: ReadonlyArray<HomeCaseItem>,
+): HomeCaseItem[] {
+  return curated.length > 0 ? [...curated] : [...fallback]
+}
+
+/**
+ * Respaldo de solo lectura (D-26): los casos mas recientes de la coleccion.
+ * `overrideAccess: false` y `select` van DENTRO de la funcion cacheada para que
+ * un borrador nunca entre a la cache (T-55-28). No escribe nada (T-55-29). La
+ * cache lleva el tag de featured-content (si Juan cura casos, el respaldo se
+ * descarta) y el de la coleccion (publicar un caso lo refresca). La lectura
+ * lanza dentro de la cache y `getHomeCases` la captura fuera (T-55-30).
+ */
+function readLatestCases(locale: Locale): Promise<HomeCaseItem[]> {
+  return unstable_cache(
+    async (): Promise<HomeCaseItem[]> => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'case-studies',
+        locale,
+        sort: '-createdAt',
+        limit: HOME_CASES_MAX,
+        pagination: false,
+        depth: 0,
+        overrideAccess: false,
+        select: { title: true, slug: true, sector: true, heroMetric: true },
+      })
+      return mapFeaturedCases(docs)
+    },
+    ['home-cases-fallback', locale],
+    { tags: [CACHE_TAGS.featuredContent(), CACHE_TAGS.caseStudies()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+/**
+ * Casos de la home: primero los curados en featured-content (capa cacheada, no
+ * abre otra consulta) y, si no hay ninguno, el respaldo de solo lectura con los
+ * mas recientes de la coleccion (D-26). Nunca lanza: un error de lectura se
+ * registra y deja la seccion en null.
  */
 export async function getHomeCases(locale: Locale): Promise<HomeCaseItem[] | null> {
   try {
     const featured = await getCachedFeaturedContent(locale)
-    return mapFeaturedCases(featured.featuredCaseStudies)
+    const curated = mapFeaturedCases(featured.featuredCaseStudies)
+    if (curated.length > 0) return curated
+    return selectCasesOrFallback(curated, await readLatestCases(locale))
   } catch (err) {
     console.error('[home]', err)
     return null
@@ -422,11 +466,30 @@ const SITES_SELECT = {
   client: true,
 } as const
 
+const SITES_POPULATE = {
+  // `filename` es obligatorio junto a `url`: el `url` de Media lo genera el
+  // adaptador de Cloudinary desde el filename y sin el llega null (55-01).
+  media: { url: true, filename: true, width: true, height: true, alt: true },
+  clientes: { websiteUrl: true },
+} as const
+
+/**
+ * Decision pura del respaldo (D-26): con sitios curados se usan esos y el
+ * respaldo se ignora; con el curado vacio se usa el respaldo.
+ */
+export function selectSitesOrFallback(
+  curated: ReadonlyArray<HomeSiteItem>,
+  fallback: ReadonlyArray<HomeSiteItem>,
+): HomeSiteItem[] {
+  return curated.length > 0 ? [...curated] : [...fallback]
+}
+
 /**
  * Sitios destacados: toma los ids de `featuredWebsites` (capa cacheada de
  * featured-content) y vuelve a leer esos websites con `overrideAccess: false`,
  * que descarta borradores, en el mismo orden. `select` minimo y `populate`
- * solo de los campos publicos de Media y del cliente (T-54-59).
+ * solo de los campos publicos de Media y del cliente (T-54-59). Sin sitios
+ * curados cae al respaldo de solo lectura (D-26).
  */
 export async function getHomeSites(locale: Locale): Promise<HomeSiteItem[] | null> {
   try {
@@ -445,33 +508,51 @@ function readHomeSites(locale: Locale): Promise<HomeSiteItem[]> {
         .map((w) => (typeof w === 'object' && w ? w.id : w))
         .filter((id): id is number => typeof id === 'number')
         .slice(0, HOME_SITES_MAX)
-      if (ids.length === 0) return []
 
       const payload = await getPayload({ config })
-      const { docs } = await payload.find({
+      const curated: HomeSiteItem[] = []
+      if (ids.length > 0) {
+        const { docs } = await payload.find({
+          collection: 'websites',
+          where: { id: { in: ids } },
+          locale,
+          depth: 1,
+          limit: ids.length,
+          pagination: false,
+          overrideAccess: false,
+          select: SITES_SELECT,
+          populate: SITES_POPULATE,
+        })
+        for (const id of ids) {
+          const doc = docs.find((d) => d.id === id)
+          const item = doc ? mapWebsite(doc as WebsiteLike) : null
+          if (item) curated.push(item)
+        }
+      }
+      if (curated.length > 0) return curated
+
+      // Respaldo de solo lectura (D-26): los sitios mas recientes. Mismas reglas
+      // de acceso que la lectura curada; no escribe en ninguna coleccion.
+      const { docs: latest } = await payload.find({
         collection: 'websites',
-        where: { id: { in: ids } },
         locale,
+        sort: '-createdAt',
+        limit: HOME_SITES_MAX,
         depth: 1,
-        limit: ids.length,
         pagination: false,
         overrideAccess: false,
         select: SITES_SELECT,
-        populate: {
-          media: { url: true, width: true, height: true, alt: true },
-          clientes: { websiteUrl: true },
-        },
+        populate: SITES_POPULATE,
       })
-      const items: HomeSiteItem[] = []
-      for (const id of ids) {
-        const doc = docs.find((d) => d.id === id)
-        const item = doc ? mapWebsite(doc as WebsiteLike) : null
-        if (item) items.push(item)
+      const fallback: HomeSiteItem[] = []
+      for (const doc of latest) {
+        const item = mapWebsite(doc as WebsiteLike)
+        if (item) fallback.push(item)
       }
-      return items
+      return selectSitesOrFallback(curated, fallback)
     },
     ['home-sites', locale],
-    { tags: [CACHE_TAGS.featuredContent()], revalidate: CACHE_TTL_SECONDS },
+    { tags: [CACHE_TAGS.featuredContent(), CACHE_TAGS.websites()], revalidate: CACHE_TTL_SECONDS },
   )()
 }
 
