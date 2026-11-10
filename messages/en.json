@@ -431,5 +431,12 @@
       "noResults": "No posts match your search.",
       "siteSearch": "Search the whole site"
     }
+  },
+  "post": {
+    "toc": {
+      "label": "Table of contents"
+    },
+    "readingTime": "{minutes} min read",
+    "categoriesLabel": "Post categories"
   }
 }

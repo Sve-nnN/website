@@ -47,10 +47,21 @@ export function headingText(node: LexicalNodeLike): string {
  * Ids que ya declara la página y que un encabezado del cuerpo nunca debe usar:
  * el slug "contacto" colisionaría con la sección de contacto, "main-content"
  * con el destino del enlace de salto y "page-title" con el h1 de la página
- * (Pitfall 2 de 55-RESEARCH.md; hoy ninguno choca, es prevención). Un slug
+ * (Pitfall 2 de 55-RESEARCH.md; hoy ninguno choca, es prevención) y los ids fijos
+ * que declara la vista del post (`post-*`). Un slug
  * reservado se numera como un duplicado (`contacto-2`).
  */
-export const RESERVED_IDS: ReadonlySet<string> = new Set(['contacto', 'main-content', 'page-title'])
+export const RESERVED_IDS: ReadonlySet<string> = new Set([
+  'contacto',
+  'main-content',
+  'page-title',
+  // Ids fijos de la vista del post (fase 55-11): el articulo y sus secciones.
+  'post-body',
+  'post-disclosure',
+  'post-author-t',
+  'post-related-t',
+  'post-nav-t',
+])
 
 /** Niveles que entran al índice y reciben id por defecto: h1, h2 y h3. */
 export const DEFAULT_LEVELS: number[] = [1, 2, 3]

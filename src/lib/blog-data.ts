@@ -6,8 +6,11 @@
 // Las vistas cliente importan funciones de aqui (`filterPosts`,
 // `normalizeQuery`), asi que este modulo no puede importar payload, cache.ts ni
 // nada del servidor. Ningun import de designs/ ni de datos del sandbox (D-02).
+import { extractHeadings, type HeadingEntry, type LexicalRootLike } from '@/components/mui/rich-text/lexical-toc'
 import { blogCategoryPath, blogPostPath, FALLBACK_CATEGORY_SLUG, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
+import { estimateReadingTime } from '@/lib/reading-time'
+import { isEnTranslationIncomplete } from '@/lib/translation-gaps'
 
 /** Entradas por categoria en el indice (D-18). El valor del bloque del CMS (3) no manda. */
 export const POSTS_PER_CATEGORY = 6
@@ -450,4 +453,239 @@ export function filterPosts<T extends { title: string; excerpt: string | null }>
     const haystack = normalizeQuery(`${post.title} ${post.excerpt ?? ''}`)
     return terms.every((term) => haystack.includes(term))
   })
+}
+
+// ---------------------------------------------------------------------------
+// Post (fase 55, plan 55-11)
+// ---------------------------------------------------------------------------
+//
+// Todo lo de abajo es puro: sin acceso al CMS, sin `payload` ni `sitemap-data`
+// (este modulo lo importan vistas cliente). Lo que necesita del servidor (la URL
+// del sitio, el nodo Person y el nodo WebSite) llega por argumento.
+
+/** Autor del post tal como llega de `getCachedPost` (depth 2: el avatar viene poblado). */
+type AuthorDocLike = {
+  name?: string | null
+  slug?: string | null
+  jobTitle?: string | null
+  bio?: string | null
+  yearsExperience?: number | null
+  avatar?: number | PostImageLike | null
+  credentials?: ReadonlyArray<{ label?: string | null } | null> | null
+}
+
+/** Forma minima que la pagina del post lee de un documento de `getCachedPost`. */
+export type PostPageDocLike = BlogPostDocLike & {
+  content?: { root?: unknown } | null
+  updatedAt?: string | null
+  author?: number | AuthorDocLike | null
+}
+
+export type PostAuthorProps = {
+  name: string
+  jobTitle: string | null
+  bio: string | null
+  /** Ruta del perfil sin prefijo de idioma. */
+  href: string
+  avatar: { url: string; alt: string | null } | null
+  credentials: string[]
+  yearsExperience: number | null
+}
+
+export type PostCategoryChip = { slug: string; title: string; href: string }
+
+export type PostViewProps = {
+  title: string
+  slug: string
+  dateISO: string | null
+  readingMinutes: number
+  image: BlogPostImage
+  categorySlug: string
+  /** Categorias del post como enlaces (la primaria primero). */
+  categories: PostCategoryChip[]
+  author: PostAuthorProps | null
+  /** h1 (como nivel 2), h2 y h3 del cuerpo COMPLETO, con los mismos ids que renderiza el cuerpo. */
+  headings: HeadingEntry[]
+  /** Solo en EN y solo para los posts de EN_TRANSLATION_INCOMPLETE: ruta ES canonica sin prefijo. */
+  translationNotice: { esHref: string } | null
+}
+
+function authorOf(value: PostPageDocLike['author']): PostAuthorProps | null {
+  if (!value || typeof value !== 'object') return null
+  const name = text(value.name)
+  if (!name) return null
+  const slug = text(value.slug)
+  const avatarDoc = value.avatar && typeof value.avatar === 'object' ? value.avatar : null
+  const avatarUrl = text(avatarDoc?.url)
+  const credentials: string[] = []
+  for (const row of value.credentials ?? []) {
+    const label = text(row?.label)
+    if (label) credentials.push(label)
+  }
+  return {
+    name,
+    jobTitle: text(value.jobTitle),
+    bio: text(value.bio),
+    href: slug ? `/authors/${slug}` : '/authors',
+    avatar: avatarUrl ? { url: avatarUrl, alt: text(avatarDoc?.alt) } : null,
+    credentials,
+    yearsExperience: typeof value.yearsExperience === 'number' ? value.yearsExperience : null,
+  }
+}
+
+/**
+ * Props de la cabecera y los datos del post. `headings` sale de la MISMA funcion
+ * que el mapa de ids del cuerpo (`buildHeadingIdMap` en la ruta), sobre el
+ * contenido completo: cada href del indice resuelve a un id del cuerpo (D-19,
+ * Pitfall 2). El tiempo de lectura cuenta el cuerpo completo, no las mitades.
+ */
+export function toPostViewProps(
+  doc: PostPageDocLike,
+  ctx: { locale: 'es' | 'en'; routeSlug: string },
+): PostViewProps {
+  const slug = text(doc.slug) ?? ctx.routeSlug
+  const primary = primaryCategory(doc)
+  const chips: PostCategoryChip[] = []
+  for (const c of doc.categories ?? []) {
+    if (!c || typeof c !== 'object') continue
+    const cSlug = text(c.slug)
+    if (!cSlug) continue
+    chips.push({ slug: cSlug, title: text(c.title) ?? cSlug, href: blogCategoryPath(cSlug) })
+  }
+  return {
+    title: text(doc.title) ?? slug,
+    slug,
+    dateISO: text(doc.publishedAt),
+    readingMinutes: estimateReadingTime(doc.content),
+    image: toImage(doc, slug),
+    categorySlug: primary.slug,
+    categories: chips,
+    author: authorOf(doc.author),
+    headings: extractHeadings(doc.content?.root as LexicalRootLike | undefined),
+    translationNotice: isEnTranslationIncomplete(ctx.locale, slug)
+      ? { esHref: blogPostPath(primary.slug, slug) }
+      : null,
+  }
+}
+
+/**
+ * Entrada anterior y siguiente dentro de una lista ordenada del mas reciente al
+ * mas antiguo (la de la categoria). `previous` es la publicada antes (la
+ * siguiente de la lista) y `next` la publicada despues. Un slug que no esta en
+ * la lista, o un extremo, devuelve null en ese lado.
+ */
+export function pickPrevNext<T extends { slug: string }>(
+  list: ReadonlyArray<T>,
+  currentSlug: string,
+): { previous: T | null; next: T | null } {
+  const index = list.findIndex((item) => item.slug === currentSlug)
+  if (index === -1) return { previous: null, next: null }
+  return { previous: list[index + 1] ?? null, next: index > 0 ? (list[index - 1] ?? null) : null }
+}
+
+/**
+ * Posts relacionados: de las mismas categorias que el actual, sin el actual y
+ * hasta `limit`, en el orden de la lista. Sale de la lista ligera cacheada
+ * (`getCachedBlogPostList`, leida con `overrideAccess: false`), asi que un
+ * borrador nunca entra (T-55-42).
+ */
+export function pickRelated(
+  posts: ReadonlyArray<BlogPostDocLike>,
+  current: { slug: string; categorySlugs: ReadonlyArray<string> },
+  limit = 3,
+): BlogPostItem[] {
+  if (current.categorySlugs.length === 0) return []
+  const related: BlogPostItem[] = []
+  for (const doc of posts) {
+    if (related.length >= limit) break
+    if (text(doc.slug) === current.slug) continue
+    if (!current.categorySlugs.some((slug) => belongsTo(doc, slug))) continue
+    const item = toPostItem(doc)
+    if (item) related.push(item)
+  }
+  return related
+}
+
+/** Entradas de una categoria (cualquiera de las del post) para anterior y siguiente. */
+export function categoryItems(posts: ReadonlyArray<BlogPostDocLike>, categorySlug: string): BlogPostItem[] {
+  return toPostItems(posts.filter((doc) => belongsTo(doc, categorySlug)))
+}
+
+/** Datos que la ruta aporta del servidor y que este modulo puro no puede importar. */
+export type PostJsonLdRefs = {
+  /** SITE_URL de sitemap-data. */
+  siteUrl: string
+  /** SITE_PERSON_SLUG de person.ts. */
+  sitePersonSlug: string
+  /** personRef de person.ts: el nodo `@id` canonico de Juan. */
+  personRef: Record<string, unknown>
+  /** websiteRef de site-schema.ts. */
+  websiteRef: Record<string, unknown>
+}
+
+type ArticleDoc = {
+  id?: number | string
+  title: string
+  slug?: string | null
+  excerpt?: string | null
+  publishedAt?: string | null
+  updatedAt?: string | null
+  heroImage?: number | PostImageLike | null
+  author?: number | AuthorDocLike | null
+}
+
+/**
+ * JSON-LD `Article` del post. Es el mismo objeto que la ruta construia en linea
+ * antes de la fase 55 (D-04, T-55-39): ningun campo cambia, ningun valor se
+ * inventa (SEO-09) y lo que no tiene fuente en Payload se omite.
+ *
+ * `localizedPostPath` es la ruta del post con prefijo de idioma
+ * (`localizeBlogPath`), de donde salen `mainEntityOfPage` y la URL absoluta.
+ */
+export function buildArticleJsonLd(
+  doc: ArticleDoc,
+  args: {
+    locale: 'es' | 'en'
+    routeSlug: string
+    localizedPostPath: string
+    categoryTitle: string
+    refs: PostJsonLdRefs
+  },
+): Record<string, unknown> {
+  const { refs } = args
+  const author = doc.author && typeof doc.author === 'object' ? doc.author : undefined
+  const hero = doc.heroImage && typeof doc.heroImage === 'object' ? doc.heroImage : null
+  const heroImageUrl = hero?.url ?? getFallbackHeroImage(doc.slug ?? String(doc.id))
+  const articleUrl = `${refs.siteUrl}${args.localizedPostPath}`
+  const articleImage = heroImageUrl.startsWith('http') ? heroImageUrl : `${refs.siteUrl}${heroImageUrl}`
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: doc.title,
+    // Antes emitia "" en ES y null en EN. Se omite.
+    ...(doc.excerpt ? { description: doc.excerpt } : {}),
+    datePublished: doc.publishedAt,
+    // Marca de tiempo real de Payload: no se copia datePublished.
+    ...(doc.updatedAt ? { dateModified: doc.updatedAt } : {}),
+    // SEO-03.3: cuando el autor es el dueno del sitio, el Article referencia el
+    // `@id` canonico en vez de repetir un Person suelto.
+    ...(author?.name
+      ? {
+          author: {
+            '@type': 'Person',
+            name: author.name,
+            ...(author.slug === refs.sitePersonSlug ? refs.personRef : {}),
+          },
+        }
+      : {}),
+    // Portfolio personal: el publisher ES la persona.
+    publisher: { '@type': 'Person', name: 'Juan Carlos Angulo', url: refs.siteUrl },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
+    image: articleImage,
+    articleSection: args.categoryTitle,
+    // SEO-48: idioma del articulo.
+    inLanguage: args.locale === 'en' ? 'en' : 'es',
+    isPartOf: refs.websiteRef,
+  }
 }

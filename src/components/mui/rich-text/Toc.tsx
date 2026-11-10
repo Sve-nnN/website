@@ -19,6 +19,12 @@ type Props = {
   items: TocItem[]
   /** Nombre del indice. Lo da el llamador desde messages: sirve de aria-label, rotulo y resumen. */
   label: string
+  /**
+   * El llamador pone el sticky y el desplazamiento de la columna (el post lo
+   * comparte con la tarjeta de oferta): la lista de escritorio no se fija ni
+   * limita su alto por su cuenta. Sin esta prop (Privacy y Terms) se fija sola.
+   */
+  embedded?: boolean
 }
 
 function TocList({
@@ -70,7 +76,7 @@ function TocList({
  * fija y el ancla funciona sin JavaScript). Con menos de 2 encabezados no se
  * renderiza. El acordeon movil no declara landmark propio para no duplicar nav.
  */
-export function Toc({ items, label }: Props) {
+export function Toc({ items, label, embedded = false }: Props) {
   const [active, setActive] = useState(items[0]?.id ?? '')
   const [open, setOpen] = useState(false)
   const uid = useId()
@@ -136,11 +142,15 @@ export function Toc({ items, label }: Props) {
         aria-label={label}
         sx={{
           display: { xs: 'none', lg: 'block' },
-          position: 'sticky',
-          top: 112,
-          alignSelf: 'start',
-          maxHeight: 'calc(100vh - 144px)',
-          overflowY: 'auto',
+          ...(embedded
+            ? {}
+            : {
+                position: 'sticky',
+                top: 112,
+                alignSelf: 'start',
+                maxHeight: 'calc(100vh - 144px)',
+                overflowY: 'auto',
+              }),
         }}
       >
         <Typography variant="overline" component="p" sx={{ color: 'text.secondary', mb: 1.5 }}>

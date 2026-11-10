@@ -1,42 +1,19 @@
 import { notFound, permanentRedirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 
-import type { Author, Category, Post } from '@/payload-types'
-import { Link } from '@/i18n/navigation'
+import type { Category } from '@/payload-types'
 import { JsonLd } from '@/components/JsonLd'
-import { Container } from '@/components/Container'
-import { PageHero } from '@/components/PageHero'
-import { Badge } from '@/components/ui/badge'
-import { AuthorByline } from '@/components/AuthorByline'
-import { AuthorCard } from '@/components/AuthorCard'
-import { RichTextRenderer } from '@/components/RichTextRenderer'
-import { buildRichTextConverters } from '@/components/richTextBlockConverters'
-import { AffiliateDisclosureFrame } from '@/components/AffiliateDisclosureFrame'
-import {
-  postHasAffiliateInline,
-  postHasAmazonAffiliateInline,
-} from '@/lib/post-affiliate-scan'
-import { RelatedPostsComponent } from '@/blocks/RelatedPosts/Component'
-import { TableOfContentsBlockComponent } from '@/blocks/TableOfContentsBlock/Component'
-import { getFallbackHeroImage } from '@/lib/heroImageFallback'
+import { PostView } from '@/components/pages/blog/PostView'
+import { buildHeadingIdMap, type LexicalRootLike } from '@/components/mui/rich-text/lexical-toc'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
 import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { SITE_URL } from '@/lib/sitemap-data'
-import { getCachedPost, getCachedBlogPromo } from '@/lib/cache'
-import { estimateReadingTime, readingTimeLabel } from '@/lib/reading-time'
+import { getCachedPost } from '@/lib/cache'
+import { buildArticleJsonLd, toPostViewProps } from '@/lib/blog-data'
 import { splitContentForOffer } from '@/lib/lexical-split'
-import { resolveBlogPromo } from '@/lib/blog-promo'
-import { InlineOffer } from '@/components/InlineOffer'
-import { RailOffer } from '@/components/RailOffer'
-import { ReadingProgress } from '@/components/ReadingProgress'
-import { BlogClosing } from '@/components/BlogClosing'
-import {
-  blogCategoryPath,
-  blogPostPath,
-  localizeBlogPath,
-  resolvePrimaryCategorySlug,
-} from '@/lib/blog-paths'
+import { blogPostPath, localizeBlogPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 import { personRef, SITE_PERSON_SLUG } from '@/lib/person'
 import { websiteRef } from '@/lib/site-schema'
 import { EN_TRANSLATION_INCOMPLETE, isEnTranslationIncomplete } from '@/lib/translation-gaps'
@@ -156,7 +133,8 @@ export default async function PostPage({
   params: Promise<{ locale: string; category: string; slug: string }>
   searchParams: Promise<{ subscribed?: string }>
 }) {
-  const [{ locale, category, slug }, { subscribed }] = await Promise.all([params, searchParams])
+  const [{ locale: rawLocale, category, slug }, { subscribed }] = await Promise.all([params, searchParams])
+  const locale = rawLocale as 'es' | 'en'
   const doc = await getPost(locale, slug)
 
   if (!doc) {
@@ -176,210 +154,54 @@ export default async function PostPage({
     )
   }
 
-  const author = typeof doc.author === 'object' ? (doc.author as Author) : undefined
   const categories = (doc.categories ?? []).filter(
     (c): c is Category => typeof c === 'object' && c !== null,
   )
-
-  const heroImage = typeof doc.heroImage === 'object' ? doc.heroImage : null
-  const heroImageUrl = heroImage?.url ?? getFallbackHeroImage(doc.slug ?? String(doc.id))
-
-  const readingTimeMinutes = estimateReadingTime(doc.content)
-
   const primaryCategory = categories[0]
 
-  // Los textos de conversión se resuelven contra la categoría primaria: es la
-  // que define la URL del post y también el problema con el que llegó el lector.
-  const promo = resolveBlogPromo(
-    await getCachedBlogPromo(locale as 'es' | 'en'),
-    primaryCategory?.id,
-  )
-  const body = splitContentForOffer(doc.content)
   const trail = buildBlogTrail(
-    locale as 'es' | 'en',
+    locale,
     { slug: primaryCategorySlug, title: primaryCategory?.title ?? primaryCategorySlug },
     { slug: doc.slug ?? slug, title: doc.title },
   )
 
-  // SEO-09. Every key below names a real Payload source. Anything without one is
-  // omitted rather than filled in — fabricated structured data is a Google
-  // Structured Data Guidelines violation, not a cosmetic gap. That is why there
-  // is no `publisher.logo` here: the repo has no real logo asset to point at.
-  //
-  // `mainEntityOfPage` and `image` must be absolute, so they go through
-  // SITE_URL. `heroImageUrl` can already be absolute (Cloudinary) or a root
-  // path (local/fallback), hence the conditional.
-  // MAIL-01: mismo path que `articleUrl` construye para el JSON-LD, extraído
-  // acá porque `buildRichTextConverters` (abajo) también lo necesita como
-  // `postPath` — la Server Action del bloque redirige de vuelta a esta misma
-  // URL con `?subscribed=...` tras el submit.
-  const localizedPostPath = localizeBlogPath(
-    locale as 'es' | 'en',
-    blogPostPath(primaryCategorySlug, doc.slug ?? slug),
-  )
-  const articleUrl = `${SITE_URL}${localizedPostPath}`
-  const articleImage = heroImageUrl.startsWith('http')
-    ? heroImageUrl
-    : `${SITE_URL}${heroImageUrl}`
+  // MAIL-01: ruta del post con prefijo de idioma. La Server Action del bloque
+  // email-capture redirige de vuelta a esta misma URL con `?subscribed=...`
+  // tras el envio, y el JSON-LD la usa como `mainEntityOfPage`.
+  const localizedPostPath = localizeBlogPath(locale, blogPostPath(primaryCategorySlug, doc.slug ?? slug))
 
-  // MAIL-01: factory por-request — el `email-capture` embebido en `doc.content`
-  // necesita leer `searchParams.subscribed` para mostrar el estado correcto
-  // tras el redirect de la Server Action. Construida una sola vez, pasada a
-  // AMBAS mitades del cuerpo (el bloque puede caer en cualquiera de las dos,
-  // ver `splitContentForOffer`).
-  const converters = buildRichTextConverters({ subscribedState: subscribed, postPath: localizedPostPath })
+  // Ids de encabezado: UN mapa sobre el contenido COMPLETO (Pitfall 2). Las dos
+  // mitades del cuerpo (la oferta inline va entre ellas) y el indice salen de
+  // aqui, asi que comparten numeracion y ningun id se repite.
+  const body = splitContentForOffer(doc.content)
+  const headingIds = buildHeadingIdMap(doc.content?.root as unknown as LexicalRootLike | undefined)
 
-  const articleData = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: doc.title,
-    // Previously emitted `""` on ES and `null` on EN. Omit instead.
-    ...(doc.excerpt ? { description: doc.excerpt } : {}),
-    datePublished: doc.publishedAt,
-    // Real Payload timestamp — deliberately NOT a copy of datePublished, which
-    // would assert a modification date the CMS never recorded.
-    ...(doc.updatedAt ? { dateModified: doc.updatedAt } : {}),
-    // SEO-03.3: cuando el autor es el dueno del sitio, el Article referencia
-    // el @id canonico en vez de repetir un Person suelto. Asi cada articulo
-    // suma al mismo nodo de entidad en lugar de crear uno nuevo por pagina.
-    ...(author?.name
-      ? {
-          author: {
-            '@type': 'Person',
-            name: author.name,
-            ...(author.slug === SITE_PERSON_SLUG ? personRef : {}),
-          },
-        }
-      : {}),
-    // Personal portfolio, not an organisation: the publisher IS the person.
-    publisher: { '@type': 'Person', name: 'Juan Carlos Angulo', url: SITE_URL },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
-    image: articleImage,
-    articleSection: primaryCategory?.title ?? primaryCategorySlug,
-    // SEO-48: ninguno de los 105 Article declaraba `inLanguage`. En un sitio
-    // bilingue donde cada articulo existe en dos URLs emparejadas por hreflang,
-    // es la senal de desambiguacion mas barata que hay: sin ella, lo unico que
-    // dice en que idioma esta el contenido es el `<html lang>`.
-    inLanguage: locale === 'en' ? 'en' : 'es',
-    isPartOf: websiteRef,
-  }
+  const t = await getTranslations({ locale, namespace: 'post' })
+  const view = toPostViewProps(doc, { locale, routeSlug: slug })
+
+  // SEO-09. Cada clave nombra una fuente real de Payload; lo que no la tiene se
+  // omite (ver buildArticleJsonLd, extraido sin cambios).
+  const articleData = buildArticleJsonLd(doc, {
+    locale,
+    routeSlug: slug,
+    localizedPostPath,
+    categoryTitle: primaryCategory?.title ?? primaryCategorySlug,
+    refs: { siteUrl: SITE_URL, sitePersonSlug: SITE_PERSON_SLUG, personRef, websiteRef },
+  })
 
   return (
-    <div>
-      {/* POLISH: the hero used to stack a 21/9 image band ABOVE the copy, the
-          same shape a case study already moved away from — on a 1440x812
-          viewport it ate the whole fold and pushed the h1 below it. The image
-          is now the hero's scrimmed background and the page renders the shared
-          `detail` template, so post, case study and website heroes finally
-          agree. The category chips moved out of the slot above the title
-          (where they read as a kicker) into the metadata row. */}
-      <PageHero
-        variant="detail"
-        trail={trail}
-        title={doc.title}
-        image={{ url: heroImageUrl, alt: heroImage?.alt ?? doc.title }}
-        metaSlot={
-          <>
-            {author && <AuthorByline author={author} tone="dark" />}
-            <div className="text-label text-secondary-foreground/80">
-              {doc.publishedAt && (
-                <time dateTime={doc.publishedAt}>
-                  {new Date(doc.publishedAt).toLocaleDateString(locale)}
-                </time>
-              )}
-              {' · '}
-              {readingTimeLabel(readingTimeMinutes, locale as 'es' | 'en')}
-            </div>
-            {categories.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {categories.map((cat) => (
-                  <Link key={cat.id} href={blogCategoryPath(cat.slug ?? primaryCategorySlug)}>
-                    <Badge variant="onDark">{cat.title}</Badge>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </>
-        }
+    <>
+      <PostView
+        post={view}
+        crumbs={trail.map((c) => ({ label: c.label, href: c.url }))}
+        tocLabel={t('toc.label')}
+        before={body.before}
+        after={body.after}
+        headingIds={headingIds}
+        ctx={{ subscribedState: subscribed, postPath: localizedPostPath }}
       />
-
-      {/* Mide el artículo, no la página: ver ReadingProgress. Va acá y no
-          dentro del Container para poder ocupar el ancho completo. */}
-      <ReadingProgress targetId="post-body" />
-
-      {/* INL-02: el escaneo cubre `doc.content` ENTERO (no `body.before`/
-          `body.after`, recortados por splitContentForOffer) — el disclosure
-          debe aparecer antes del cuerpo sin importar en qué punto del
-          artículo el editor insertó el bloque inline. */}
-      {postHasAffiliateInline(doc.content) && (
-        <Container className="py-4">
-          <AffiliateDisclosureFrame
-            hasAmazonLinks={postHasAmazonAffiliateInline(doc.content)}
-            locale={locale as 'es' | 'en'}
-          />
-        </Container>
-      )}
-
-      <Container className="py-8 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_16rem] gap-12">
-        {/* Las dos mitades viven dentro del MISMO <article>: la tabla de
-            contenidos lee `article h2` del DOM, así que partirlo en dos
-            elementos le escondería la mitad de los encabezados. */}
-        <article id="post-body">
-          <RichTextRenderer data={body.before} converters={converters} />
-          {body.after && (
-            <>
-              <InlineOffer
-                title={promo.inline.title}
-                text={promo.inline.text}
-                linkLabel={promo.inline.linkLabel}
-                linkUrl={promo.inline.linkUrl}
-              />
-              <RichTextRenderer data={body.after} converters={converters} />
-            </>
-          )}
-        </article>
-        {/* La columna derecha es ahora un riel: índice arriba, oferta debajo.
-            El sticky vive acá y no en el índice, para que ambos suban y bajen
-            como una sola pieza; el bloque del índice se renderiza sin su
-            propio sticky para no anidar dos contextos que compiten. */}
-        <aside className="order-first flex flex-col md:order-last md:sticky md:top-24 md:self-start">
-          <TableOfContentsBlockComponent
-            blockType="tableOfContentsBlock"
-            title={locale === 'es' ? 'Tabla de contenidos' : 'Table of contents'}
-            position="left"
-            sticky={false}
-            minHeadingLevel="2"
-          />
-          <RailOffer
-            title={promo.rail.title}
-            body={promo.rail.body}
-            linkLabel={promo.rail.linkLabel}
-            linkUrl={promo.rail.linkUrl}
-          />
-        </aside>
-      </Container>
-
-      {author && (
-        <Container className="py-8">
-          <AuthorCard author={author} />
-        </Container>
-      )}
-
-      <RelatedPostsComponent
-        blockType="relatedPosts"
-        title={locale === 'es' ? 'Artículos relacionados' : 'Related Posts'}
-        autoSelect
-        limit={3}
-        currentPostId={doc.id}
-        currentCategoryIds={categories.map((c) => c.id)}
-      />
-
-      {/* Escalera de cierre: autor, relacionados, y recién ahí el pedido. El
-          lector ya recibió el artículo completo antes de que se le pida algo. */}
-      <BlogClosing locale={locale as 'es' | 'en'} categoryId={primaryCategory?.id} />
-
       <JsonLd data={articleData} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </div>
+    </>
   )
 }

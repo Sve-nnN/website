@@ -431,5 +431,12 @@
       "noResults": "No hay artículos que coincidan con tu búsqueda.",
       "siteSearch": "Buscar en todo el sitio"
     }
+  },
+  "post": {
+    "toc": {
+      "label": "Tabla de contenidos"
+    },
+    "readingTime": "{minutes} min de lectura",
+    "categoriesLabel": "Categorías del artículo"
   }
 }
