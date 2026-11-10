@@ -372,7 +372,19 @@
       "conclusionTitle": "Conclusions",
       "authorLabel": "About the author",
       "moreTitle": "More case studies",
-      "viewAll": "View all"
+      "viewAll": "View all",
+      "compareTitle": "How it compares with my other cases",
+      "compareCaption": "Annual organic clicks for each case, the previous year against the measured period",
+      "compareRankBoth": "This case ranks number {pct} of {pctTotal} in percentage growth and number {abs} of {absTotal} in absolute clicks.",
+      "compareRankAbs": "This case ranks number {abs} of {absTotal} in absolute clicks. It has no percentage growth because it started from zero.",
+      "compareNote": "Cases that measure a different metric, such as monthly traffic, are left out of this comparison of annual clicks.",
+      "compareScrollLabel": "Comparison table with horizontal scrolling",
+      "compareThis": "This case",
+      "compareNoBase": "No baseline",
+      "caseColumn": "Case",
+      "sectorColumn": "Sector",
+      "scaleColumn": "Scale",
+      "lessonsTitle": "Lessons learned"
     }
   }
 }

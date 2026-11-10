@@ -16,12 +16,14 @@ import { createElement } from 'react'
 import { CaseDetailView } from '../../src/components/pages/cases/CaseDetailView'
 import { CaseStudiesIndexView } from '../../src/components/pages/cases/CaseStudiesIndexView'
 import {
+  buildCaseComparison,
   buildCaseStudyJsonLd,
   lexicalOrNull,
   parseMetricNumber,
   pickRelatedCases,
   toCaseDetailProps,
   toCaseIndexProps,
+  type CaseComparison,
   type CaseDetailDocLike,
   type CaseDetailProps,
   type CaseDocLike,
@@ -213,7 +215,7 @@ const DETAIL_DOC: CaseDetailDocLike = {
 
 const INDEX_ITEMS = toCaseIndexProps(DOCS, 'es')
 
-type DetailExtra = { related?: CaseIndexItem[] }
+type DetailExtra = { related?: CaseIndexItem[]; comparison?: CaseComparison | null }
 
 function renderDetail(c: CaseDetailProps, locale: 'es' | 'en', extra: DetailExtra = {}): string {
   return renderToHtml(
@@ -223,6 +225,7 @@ function renderDetail(c: CaseDetailProps, locale: 'es' | 'en', extra: DetailExtr
       clientContent: c.clientContext ? createElement('p', null, 'Texto de contexto inventado') : null,
       conclusionContent: c.conclusion ? createElement('p', null, 'Conclusion inventada del caso') : null,
       related: extra.related ?? [],
+      comparison: extra.comparison ?? null,
     }),
     locale,
   )
@@ -236,6 +239,9 @@ const T = {
   conclusion: /Conclusiones|Conclusions/,
   more: /Más casos de éxito|More case studies/,
   author: /Sobre el autor|About the author/,
+  compare: /Cómo se compara con mis otros casos|How it compares with my other cases/,
+  compareNote: /no entran en esta comparación|are left out of this comparison/,
+  lessons: /Lecciones aprendidas|Lessons learned/,
 }
 
 /**
@@ -260,7 +266,7 @@ function orphanHeadings(html: string): string[] {
 }
 
 /** Contrato estructural del detalle. Devuelve los motivos de fallo. */
-function detailFailures(rawHtml: string, c: CaseDetailProps): string[] {
+function detailFailures(rawHtml: string, c: CaseDetailProps, comparison: CaseComparison | null = null): string[] {
   const reasons: string[] = []
   const html = rawHtml.replace(/<style[\s\S]*?<\/style>/g, '')
   const text = textOf(html)
@@ -284,6 +290,11 @@ function detailFailures(rawHtml: string, c: CaseDetailProps): string[] {
   expectSection(T.results, c.results.length > 0, 'de resultados')
   expectSection(T.conclusion, c.conclusion !== null, 'de conclusiones')
   expectSection(T.author, c.author !== null, 'del autor')
+  expectSection(T.compare, comparison !== null, 'de comparativos')
+  expectSection(T.compareNote, comparison !== null && comparison.excluded > 0, 'de la nota de casos excluidos')
+  expectSection(T.lessons, c.lessons !== null, 'de lecciones')
+  if ((c.lessons !== null) !== /\sid="lecciones"/.test(html)) reasons.push(c.lessons ? 'falta el id de lecciones' : 'queda el id de lecciones sin lecciones')
+  for (const l of c.lessons ?? []) if (!html.includes(l.title) || !html.includes(l.body)) reasons.push(`falta la leccion ${l.title}`)
   if ((c.testimonial !== null) !== /<blockquote/.test(html)) reasons.push(c.testimonial ? 'falta el testimonio' : 'aparece un testimonio sin dato')
   if (c.testimonial && !html.includes(c.testimonial.authorName)) reasons.push('falta el autor del testimonio')
 
@@ -296,13 +307,18 @@ function detailFailures(rawHtml: string, c: CaseDetailProps): string[] {
   // Resultados: etiqueta verbatim, tabla con caption y scope.
   if (c.results.length > 0) {
     for (const r of c.results) if (!html.includes(r.label)) reasons.push(`falta la etiqueta ${r.label}`)
-    const table = /<table[\s\S]*?<\/table>/.exec(html)?.[0] ?? ''
-    if (!table) reasons.push('falta la tabla de resultados')
-    if (table && !/<caption[\s>]/.test(table)) reasons.push('la tabla de resultados no tiene caption')
-    if (table && !/scope="col"/.test(table)) reasons.push('la tabla de resultados no tiene scope col')
-    if (table && !/scope="row"/.test(table)) reasons.push('la tabla de resultados no tiene scope row')
     if (!/aria-hidden="true"/.test(html)) reasons.push('las barras no estan aria-hidden')
   }
+
+  // Toda tabla lleva caption, scope col y scope row; hay al menos una si hay resultados o comparacion.
+  const tables = html.match(/<table[\s\S]*?<\/table>/g) ?? []
+  if ((c.results.length > 0 || comparison !== null) && tables.length === 0) reasons.push('falta la tabla')
+  tables.forEach((table, i) => {
+    if (!/<caption[\s>]/.test(table)) reasons.push(`la tabla ${i + 1} no tiene caption`)
+    if (!/scope="col"/.test(table)) reasons.push(`la tabla ${i + 1} no tiene scope col`)
+    if (!/scope="row"/.test(table)) reasons.push(`la tabla ${i + 1} no tiene scope row`)
+  })
+  if (comparison !== null && tables.length < 2 && c.results.length > 0) reasons.push('falta la tabla comparativa')
 
   if (/designs\//.test(html)) reasons.push('el HTML nombra una ruta de designs/')
   if (countOf(html, /<main[\s>]/) !== 0) reasons.push('la vista declara un main (lo pone el layout)')
@@ -425,8 +441,8 @@ function mainDetail(): void {
   // Fixtures defectuosos: deben fallar.
   const good = renderDetail(c, 'es', { related })
   check(detailFailures(good.replace('</section>', '<h1>otro</h1></section>'), c).some((r) => r.includes('h1')), 'defectuoso detalle: dos h1 se detecta', 'no se detecto')
-  check(detailFailures(good.replace(/<caption[\s\S]*?<\/caption>/, ''), c).some((r) => r.includes('caption')), 'defectuoso detalle: tabla sin caption se detecta', 'no se detecto')
-  check(detailFailures(good.replace(/scope="row"/g, ''), c).some((r) => r.includes('scope row')), 'defectuoso detalle: tabla sin scope row se detecta', 'no se detecto')
+  check(detailFailures(good.replace(/<caption[\s\S]*?<\/caption>/, ''), c).some((r) => r.includes('caption')), 'defectuoso detalle: tabla de resultados sin caption se detecta', 'no se detecto')
+  check(detailFailures(good.replace(/scope="row"/g, ''), c).some((r) => r.includes('scope row')), 'defectuoso detalle: tabla de resultados sin scope row se detecta', 'no se detecto')
   check(detailFailures(good.replace(/<blockquote[\s\S]*?<\/blockquote>/, ''), c).some((r) => r.includes('testimonio')), 'defectuoso detalle: testimonio ausente se detecta', 'no se detecto')
   const orphan = renderDetail({ ...c, kpis: [] }, 'es', { related }).replace('<section', '<section><h2>Los números del caso</h2></section><section')
   check(detailFailures(orphan, { ...c, kpis: [] }).some((r) => r.includes('huerfano') || r.includes('sin datos')), 'defectuoso detalle: encabezado sin contenido se detecta', 'no se detecto')
@@ -434,9 +450,130 @@ function mainDetail(): void {
   check(detailFailures(good.replace('Texto de contexto inventado', `Texto ${EM_DASH} con guion`), c).some((r) => r.includes('guion')), 'defectuoso detalle: guion largo en el texto se detecta', 'no se detecto')
 }
 
+
+// ---------------------------------------------------------------------------
+// Comparativos y lecciones (tarea 3)
+// ---------------------------------------------------------------------------
+
+const CMP_DOCS: CaseDocLike[] = [
+  ...DOCS.slice(0, 3),
+  {
+    // Etiqueta en ingles y fila de posicion con un guion (no numerica).
+    slug: 'caso-delta',
+    title: 'Caso Delta de prueba',
+    sector: 'Software / SaaS',
+    heroMetric: '+50%',
+    results: {
+      metrics: [
+        { label: 'Annual organic clicks', before: '10K', after: '15K' },
+        { label: 'Average position', before: '-', after: '4.2' },
+      ],
+    },
+  },
+  {
+    // El caso de migracion mide trafico mensual: sin fila de clics.
+    slug: 'caso-migracion',
+    title: 'Caso Migracion de prueba',
+    sector: 'Tecnologia',
+    heroMetric: '+10%',
+    results: { metrics: [{ label: 'Tráfico orgánico mensual', before: '1,000', after: '2,000' }] },
+  },
+  {
+    // Fila de clics con un valor que no es numero: queda fuera.
+    slug: 'caso-guion',
+    title: 'Caso Guion de prueba',
+    results: { metrics: [{ label: 'Clics orgánicos anuales', before: '-', after: '500' }] },
+  },
+]
+
+const LESSONS = [
+  { title: 'Leccion inventada uno', body: 'Cuerpo inventado de la leccion uno' },
+  { title: 'Leccion inventada dos', body: 'Cuerpo inventado de la leccion dos' },
+]
+
+function mainCompare(): void {
+  const alfa = CMP_DOCS[0]!
+  const cmpAlfa = buildCaseComparison(alfa, CMP_DOCS)
+  check(cmpAlfa !== null, 'comparacion: el caso con clics produce comparacion', 'devolvio null')
+  if (!cmpAlfa) return
+  check(cmpAlfa.rows.map((r) => r.slug).join() === 'caso-alfa,caso-beta,caso-gamma,caso-delta', 'comparacion: filas en el orden del indice, sin migracion ni guion', cmpAlfa.rows.map((r) => r.slug).join())
+  check(cmpAlfa.excluded === 2, 'comparacion: dos casos quedan fuera (sin fila y con valor no numerico)', `${cmpAlfa.excluded}`)
+  check(cmpAlfa.rankPct === 1 && cmpAlfa.totalPct === 3, 'comparacion: ranking por porcentaje excluye el caso sin base', `${cmpAlfa.rankPct} de ${cmpAlfa.totalPct}`)
+  check(cmpAlfa.rankAbs === 2 && cmpAlfa.totalAbs === 4, 'comparacion: ranking por valor absoluto', `${cmpAlfa.rankAbs} de ${cmpAlfa.totalAbs}`)
+  const rowBy = (slug: string) => cmpAlfa.rows.find((r) => r.slug === slug)
+  check(rowBy('caso-beta')?.pct === null && rowBy('caso-beta')?.share === 1, 'comparacion: before 0 no tiene porcentaje y la barra mayor es 1', JSON.stringify(rowBy('caso-beta')))
+  check(rowBy('caso-delta')?.pct === 0.5 && rowBy('caso-delta')?.sector === 'Software', 'comparacion: etiqueta en ingles reconocida y sector con su primer tramo', JSON.stringify(rowBy('caso-delta')))
+  check(rowBy('caso-alfa')?.current === true && cmpAlfa.rows.filter((r) => r.current).length === 1, 'comparacion: solo el caso actual va marcado', 'marcado mal')
+  check(rowBy('caso-alfa')?.before === '47,108' && rowBy('caso-alfa')?.after === '533K', 'comparacion: los valores salen verbatim', JSON.stringify(rowBy('caso-alfa')))
+
+  const cmpBeta = buildCaseComparison(CMP_DOCS[1]!, CMP_DOCS)
+  check(cmpBeta?.rankPct === null && cmpBeta.totalPct === 3 && cmpBeta.rankAbs === 1, 'comparacion: un caso sin base ordena solo por valor absoluto', JSON.stringify(cmpBeta && [cmpBeta.rankPct, cmpBeta.totalPct, cmpBeta.rankAbs]))
+  const cmpDelta = buildCaseComparison(CMP_DOCS[3]!, CMP_DOCS)
+  check(cmpDelta?.rankPct === 3 && cmpDelta.rankAbs === 3, 'comparacion: el caso con etiqueta en ingles entra al ranking', JSON.stringify(cmpDelta && [cmpDelta.rankPct, cmpDelta.rankAbs]))
+  check(buildCaseComparison(CMP_DOCS[4]!, CMP_DOCS) === null, 'comparacion: el caso de migracion (sin clics) devuelve null', 'no devolvio null')
+  check(buildCaseComparison(CMP_DOCS[5]!, CMP_DOCS) === null, 'comparacion: un valor no numerico devuelve null para ese caso', 'no devolvio null')
+  const solo = buildCaseComparison(alfa, CMP_DOCS.slice(1, 3))
+  check(solo?.rows.map((r) => r.slug).join() === 'caso-alfa,caso-beta,caso-gamma', 'comparacion: el caso actual ausente de la lista entra primero', solo?.rows.map((r) => r.slug).join() ?? 'null')
+  check(buildCaseComparison({ title: 'Sin slug' }, CMP_DOCS) === null, 'comparacion: sin slug no hay comparacion', 'no devolvio null')
+
+  const c = toCaseDetailProps({ ...DETAIL_DOC, lessons: LESSONS }, 'es')!
+  for (const locale of ['es', 'en'] as const) {
+    const html = renderDetail(c, locale, { comparison: cmpAlfa })
+    const reasons = detailFailures(html, c, cmpAlfa)
+    check(reasons.length === 0, `detalle ${locale} con comparativos y lecciones: contrato completo`, reasons.join('; '))
+    const compareTable = /<table[\s\S]*?<\/table>/g
+    const tables = html.match(compareTable) ?? []
+    const cmp = tables.find((t) => /caso-beta/.test(t)) ?? ''
+    check(cmp !== '' && countOf(cmp, /<tbody[\s\S]*?<\/tbody>/) === 1 && countOf(cmp, /<tr[\s>]/) === 5, `detalle ${locale}: la tabla comparativa tiene encabezado y cuatro filas`, `hay ${countOf(cmp, /<tr[\s>]/)} tr`)
+    check(/<caption[^>]*>[^<]*(?:Clics orgánicos anuales|Annual organic clicks)/.test(cmp), `detalle ${locale}: la tabla comparativa tiene caption con su descripcion`, 'falta el caption')
+    check(countOf(cmp, /<th[^>]*scope="row"/) === 4 && countOf(cmp, /<th[^>]*scope="col"/) === 6, `detalle ${locale}: scope row en cada fila y scope col en los seis encabezados`, `${countOf(cmp, /<th[^>]*scope="row"/)} row, ${countOf(cmp, /<th[^>]*scope="col"/)} col`)
+    check(countOf(cmp, /aria-current="page"/) === 1 && /(?:Este caso|This case)/.test(textOf(cmp)), `detalle ${locale}: el caso actual se marca con texto y aria-current, no solo con color`, 'falta la marca')
+    check(countOf(cmp, /href="(?:\/en)?\/case-studies\/caso-(?:beta|gamma|delta)"/) === 3 && !/href="(?:\/en)?\/case-studies\/caso-alfa"/.test(cmp), `detalle ${locale}: enlaces a los otros casos y ninguno al actual`, 'enlaces mal')
+    check(/(?:Sin base|No baseline)/.test(textOf(cmp)), `detalle ${locale}: el caso sin base muestra su etiqueta en vez de un porcentaje`, 'falta la etiqueta')
+    check(countOf(cmp, /aria-hidden="true"/) === 5, `detalle ${locale}: la columna de barras va aria-hidden (encabezado y cuatro celdas)`, `hay ${countOf(cmp, /aria-hidden="true"/)} aria-hidden`)
+    check(!/tabindex|role="region"/.test(cmp), `detalle ${locale}: ScrollRegion sin tabindex en el HTML del servidor (se mide en el cliente)`, 'trae tabindex o region')
+    check(locale === 'es' ? /lugar 1 de 3 en crecimiento porcentual y el lugar 2 de 4 en clics absolutos/.test(textOf(html)) : /number 1 of 3 in percentage growth and number 2 of 4 in absolute clicks/.test(textOf(html)), `detalle ${locale}: la frase de ranking usa los lugares calculados`, 'frase equivocada')
+    check(countOf(html, /<h3[^>]*>Leccion inventada (?:uno|dos)<\/h3>/) === 2, `detalle ${locale}: una h3 por leccion`, 'faltan h3 de lecciones')
+  }
+
+  // Caso sin base: frase de solo valor absoluto.
+  const beta = toCaseDetailProps(CMP_DOCS[1]!, 'es')!
+  const betaHtml = renderDetail(beta, 'es', { comparison: cmpBeta })
+  check(detailFailures(betaHtml, beta, cmpBeta).length === 0 && /lugar 1 de 4 en clics absolutos\. No tiene crecimiento porcentual porque partió de cero/.test(textOf(betaHtml)), 'detalle del caso sin base: frase de solo valor absoluto', detailFailures(betaHtml, beta, cmpBeta).join('; ') || 'frase equivocada')
+
+  // Caso de migracion: sin comparacion, sin nota.
+  const mig = toCaseDetailProps({ ...CMP_DOCS[4]!, kpis: [{ label: 'KPI inventado', value: '9' }] }, 'es')!
+  const migHtml = renderDetail(mig, 'es', { comparison: buildCaseComparison(CMP_DOCS[4]!, CMP_DOCS) })
+  check(detailFailures(migHtml, mig, null).length === 0 && !T.compare.test(textOf(migHtml)) && !T.compareNote.test(textOf(migHtml)), 'detalle de migracion: ni seccion de comparacion ni su nota', detailFailures(migHtml, mig, null).join('; ') || 'aparece la seccion o la nota')
+
+  // Lecciones: undefined, [] y null no emiten nada (Pitfall 8).
+  for (const [name, lessons] of [['undefined', undefined], ['arreglo vacio', []], ['null', null]] as const) {
+    const noLessons = toCaseDetailProps({ ...DETAIL_DOC, lessons }, 'es')!
+    const html = renderDetail(noLessons, 'es', { comparison: cmpAlfa })
+    check(noLessons.lessons === null && detailFailures(html, noLessons, cmpAlfa).length === 0 && !T.lessons.test(textOf(html)), `lecciones ${name}: sin seccion, sin encabezado y sin overline`, detailFailures(html, noLessons, cmpAlfa).join('; ') || 'aparece el texto de lecciones')
+  }
+  check(toCaseDetailProps({ ...DETAIL_DOC, lessons: [{ title: 'Sin cuerpo', body: '' }] }, 'es')!.lessons === null, 'lecciones: una leccion sin cuerpo no cuenta', 'conto una leccion incompleta')
+
+  // Fixtures defectuosos: deben fallar.
+  const good = renderDetail(c, 'es', { comparison: cmpAlfa })
+  const noCaption = good.replace(/<caption[^>]*>[\s\S]*?<\/caption>/g, '')
+  check(detailFailures(noCaption, c, cmpAlfa).some((r) => r.includes('caption')), 'defectuoso: tablas sin caption se detectan', 'no se detecto')
+  const lastCaption = good.lastIndexOf('<caption')
+  const onlyCompareNoCaption = good.slice(0, lastCaption) + good.slice(lastCaption).replace(/<caption[^>]*>[\s\S]*?<\/caption>/, '')
+  check(detailFailures(onlyCompareNoCaption, c, cmpAlfa).some((r) => r.includes('tabla 2') && r.includes('caption')), 'defectuoso: la tabla comparativa sin caption se detecta', 'no se detecto')
+  check(detailFailures(good.replace(/scope="col"/g, ''), c, cmpAlfa).some((r) => r.includes('scope col')), 'defectuoso: tablas sin scope col se detectan', 'no se detecto')
+  check(detailFailures(migHtml.replace('</section>', '<h2>Cómo se compara con mis otros casos</h2></section>'), mig, null).some((r) => r.includes('comparativos') || r.includes('huerfano')), 'defectuoso: comparacion en el caso de migracion se detecta', 'no se detecto')
+  check(detailFailures(migHtml.replace('</section>', '<p>Los casos que miden otra métrica, como el tráfico mensual, no entran en esta comparación de clics anuales.</p></section>'), mig, null).some((r) => r.includes('nota')), 'defectuoso: la nota de excluidos sin comparacion se detecta', 'no se detecto')
+  const noLessonsProps = toCaseDetailProps({ ...DETAIL_DOC, lessons: [] }, 'es')!
+  const withHeading = renderDetail(noLessonsProps, 'es').replace('</section>', '<h2>Lecciones aprendidas</h2></section>')
+  check(detailFailures(withHeading, noLessonsProps, null).some((r) => r.includes('lecciones') || r.includes('huerfano')), 'defectuoso: encabezado de lecciones sin lecciones se detecta', 'no se detecto')
+  check(detailFailures(renderDetail(noLessonsProps, 'es', {}), c, null).some((r) => r.includes('leccion')), 'defectuoso: lecciones esperadas y ausentes se detectan', 'no se detecto')
+}
+
 function main(): void {
   mainIndex()
   mainDetail()
+  mainCompare()
   if (failures > 0) process.exit(1)
   console.log('PASS 55-cases-ssr')
 }

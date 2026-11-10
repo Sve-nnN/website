@@ -7,7 +7,7 @@ import Card from '@mui/material/Card'
 import Container from '@mui/material/Container'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
-import { ArrowRight, Quote } from 'lucide-react'
+import { ArrowRight, Lightbulb, Quote } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 
@@ -18,9 +18,10 @@ import { linkFor } from '@/components/mui/links'
 import { OL, UL } from '@/components/mui/lists'
 import { PageHero } from '@/components/mui/PageHero'
 import { Section } from '@/components/mui/Section'
-import type { CaseDetailProps, CaseIndexItem } from '@/lib/case-study-data'
+import type { CaseComparison, CaseDetailProps, CaseIndexItem } from '@/lib/case-study-data'
 
 import { CaseCard } from './CaseCard'
+import { CaseCompareTable } from './CaseCompareTable'
 
 type Props = {
   /** Migas de `buildCaseStudiesTrail`, ya con `href`. */
@@ -35,6 +36,11 @@ type Props = {
   conclusionContent: ReactNode
   /** Hasta tres casos para "Mas casos de exito" (`pickRelatedCases`). */
   related: CaseIndexItem[]
+  /**
+   * Comparacion de clics con los demas casos (`buildCaseComparison`). null si
+   * este caso no mide clics anuales: la vista no renderiza la seccion ni su nota.
+   */
+  comparison?: CaseComparison | null
 }
 
 // Una cifra que no se separo de su etiqueta llega entera y no cabe a 72 px: baja
@@ -72,15 +78,16 @@ function DotList({ items, label }: { items: string[]; label: string }) {
 
 /**
  * Detalle de un caso de exito (D-08). Orden: hero con la cifra y el subtitulo,
- * KPIs, contexto y reto, solucion, testimonio, resultados antes y despues y
- * conclusion; al final el autor (E-E-A-T) y mas casos. El cierre (CtaSection)
+ * KPIs, contexto y reto, solucion, testimonio, resultados antes y despues,
+ * comparativos, lecciones (solo si hay) y conclusion; al final el autor
+ * (E-E-A-T) y mas casos. El cierre (CtaSection)
  * lo pone el Server Component de la ruta. No declara landmark principal.
  *
  * Toda seccion sin datos se omite junto con su encabezado y su overline: sin
  * KPIs no hay seccion de numeros, sin contexto ni reto no hay seccion de
  * contexto. Las etiquetas de metricas y KPIs salen verbatim de Payload.
  */
-export function CaseDetailView({ crumbs, caseStudy: c, clientContent, conclusionContent, related }: Props) {
+export function CaseDetailView({ crumbs, caseStudy: c, clientContent, conclusionContent, related, comparison = null }: Props) {
   const t = useTranslations('cases.detail')
 
   const eyebrow = [c.clientName, c.sector, c.period].filter(Boolean).join(' · ')
@@ -275,6 +282,80 @@ export function CaseDetailView({ crumbs, caseStudy: c, clientContent, conclusion
             </Typography>
           )}
           <BeforeAfter results={c.results} />
+        </Section>
+      )}
+
+      {comparison && (
+        <Section id="comparar" title={t('compareTitle')}>
+          <Typography variant="body1" color="text.secondary" sx={{ fontSize: '1.125rem', lineHeight: '1.75rem', maxWidth: 820, mb: 4 }}>
+            {comparison.rankPct !== null
+              ? t('compareRankBoth', {
+                  pct: comparison.rankPct,
+                  pctTotal: comparison.totalPct,
+                  abs: comparison.rankAbs,
+                  absTotal: comparison.totalAbs,
+                })
+              : t('compareRankAbs', { abs: comparison.rankAbs, absTotal: comparison.totalAbs })}
+          </Typography>
+          <CaseCompareTable comparison={comparison} />
+          {comparison.excluded > 0 && (
+            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 2 }}>
+              {t('compareNote')}
+            </Typography>
+          )}
+        </Section>
+      )}
+
+      {c.lessons && c.lessons.length > 0 && (
+        <Section id="lecciones" band title={t('lessonsTitle')}>
+          <UL
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: {
+                xs: 'minmax(0,1fr)',
+                md: `repeat(${Math.min(c.lessons.length, 3)}, minmax(0,1fr))`,
+              },
+              gap: 2,
+            }}
+          >
+            {c.lessons.map((l, i) => (
+              <Box
+                key={`${i}-${l.title}`}
+                component="li"
+                sx={{
+                  p: 3,
+                  borderRadius: 2,
+                  bgcolor: 'band.surface',
+                  border: 1,
+                  borderColor: 'band.border',
+                  display: 'grid',
+                  gap: 1.5,
+                  alignContent: 'start',
+                }}
+              >
+                <Box
+                  aria-hidden="true"
+                  sx={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: '50%',
+                    bgcolor: 'primary.main',
+                    color: 'primary.contrastText',
+                    display: 'grid',
+                    placeItems: 'center',
+                  }}
+                >
+                  <Lightbulb size={18} />
+                </Box>
+                <Typography variant="h6" component="h3">
+                  {l.title}
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'band.muted', lineHeight: '1.5rem' }}>
+                  {l.body}
+                </Typography>
+              </Box>
+            ))}
+          </UL>
         </Section>
       )}
 

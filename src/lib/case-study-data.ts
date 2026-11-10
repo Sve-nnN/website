@@ -325,6 +325,122 @@ export function pickRelatedCases(items: ReadonlyArray<CaseIndexItem>, currentSlu
 }
 
 // ---------------------------------------------------------------------------
+// Comparacion de clics organicos entre casos (tarea 3, D-09, Pitfall 9)
+// ---------------------------------------------------------------------------
+
+// La fila de clics se reconoce por su etiqueta, que cambia con el idioma de la
+// fila (ES `Clics organicos anuales`, EN `Annual organic clicks`). El caso de
+// migracion mide trafico mensual y no tiene esa fila: queda fuera.
+const CLICKS_LABEL = /^(clics org[aá]nicos anuales|annual organic clicks)/i
+
+export type CompareRow = {
+  slug: string
+  title: string
+  /** Primer tramo del sector (antes de la coma o de la barra), o null. */
+  sector: string | null
+  /** Valores tal como llegan de Payload ("47,108", "533K"). */
+  before: string
+  after: string
+  /** Cambio como razon, o null si `before` es 0 o menor. */
+  pct: number | null
+  /** Largo de la barra entre 0 y 1: clics finales sobre el mayor de todos. */
+  share: number
+  current: boolean
+}
+
+export type CaseComparison = {
+  rows: CompareRow[]
+  /** Lugar del caso actual por crecimiento porcentual, o null si partio de cero. */
+  rankPct: number | null
+  /** Casos con porcentaje (los que tienen base mayor que cero). */
+  totalPct: number
+  /** Lugar del caso actual por clics absolutos. */
+  rankAbs: number
+  totalAbs: number
+  /** Casos que no miden clics anuales y quedaron fuera de la comparacion. */
+  excluded: number
+}
+
+type ClicksRow = { before: string; after: string; beforeNum: number; afterNum: number; pct: number | null }
+
+function clicksOf(doc: CaseDocLike): ClicksRow | null {
+  const metric = (doc.results?.metrics ?? []).find((m) => CLICKS_LABEL.test((m?.label ?? '').trim()))
+  const before = text(metric?.before)
+  const after = text(metric?.after)
+  if (!before || !after) return null
+  const beforeNum = parseMetricNumber(before)
+  const afterNum = parseMetricNumber(after)
+  if (!Number.isFinite(beforeNum) || !Number.isFinite(afterNum)) return null
+  return { before, after, beforeNum, afterNum, pct: changeRatio(beforeNum, afterNum) }
+}
+
+function firstSector(value: string | null | undefined): string | null {
+  const sector = text(formatSector(value))
+  return sector ? text(sector.split(', ')[0]?.split(' / ')[0]) : null
+}
+
+/**
+ * Compara los clics organicos anuales del caso actual con los de los demas. Pura
+ * y sin escritura: sale de `results.metrics` que ya existen (D-09).
+ *
+ * `others` puede incluir al caso actual (es el indice completo): se reemplaza
+ * por `current` en su lugar; si no esta, entra primero. Un caso sin fila de
+ * clics, o con un valor que no es numero (un guion, un texto), no entra. El
+ * ranking por porcentaje excluye los casos sin base (before 0). Devuelve null si
+ * el caso actual no mide clics: la vista no renderiza la seccion ni su nota.
+ */
+export function buildCaseComparison(
+  current: CaseDocLike,
+  others: ReadonlyArray<CaseDocLike>,
+): CaseComparison | null {
+  const currentSlug = text(current.slug)
+  if (!currentSlug) return null
+  const all = others.some((o) => text(o.slug) === currentSlug)
+    ? others.map((o) => (text(o.slug) === currentSlug ? current : o))
+    : [current, ...others]
+
+  const rows: Array<CompareRow & { afterNum: number }> = []
+  let measurable = 0
+  for (const doc of all) {
+    const slug = text(doc.slug)
+    const title = text(doc.title)
+    if (!slug || !title) continue
+    measurable += 1
+    const clicks = clicksOf(doc)
+    if (!clicks) continue
+    rows.push({
+      slug,
+      title,
+      sector: firstSector(doc.sector),
+      before: clicks.before,
+      after: clicks.after,
+      pct: clicks.pct,
+      afterNum: clicks.afterNum,
+      share: 0,
+      current: slug === currentSlug,
+    })
+  }
+
+  const me = rows.find((r) => r.current)
+  if (!me) return null
+
+  const maxAfter = Math.max(...rows.map((r) => r.afterNum))
+  for (const r of rows) r.share = maxAfter > 0 ? Math.max(0, r.afterNum) / maxAfter : 0
+
+  const byPct = rows.filter((r) => r.pct !== null).sort((a, b) => (b.pct as number) - (a.pct as number))
+  const byAbs = [...rows].sort((a, b) => b.afterNum - a.afterNum)
+
+  return {
+    rows: rows.map(({ afterNum: _after, ...row }) => row),
+    rankPct: me.pct !== null ? byPct.findIndex((r) => r.slug === currentSlug) + 1 : null,
+    totalPct: byPct.length,
+    rankAbs: byAbs.findIndex((r) => r.slug === currentSlug) + 1,
+    totalAbs: rows.length,
+    excluded: measurable - rows.length,
+  }
+}
+
+// ---------------------------------------------------------------------------
 // JSON-LD (extraido de la ruta [slug] sin cambios, D-04 y T-55-33)
 // ---------------------------------------------------------------------------
 

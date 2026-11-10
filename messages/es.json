@@ -372,7 +372,19 @@
       "conclusionTitle": "Conclusiones",
       "authorLabel": "Sobre el autor",
       "moreTitle": "Más casos de éxito",
-      "viewAll": "Ver todos"
+      "viewAll": "Ver todos",
+      "compareTitle": "Cómo se compara con mis otros casos",
+      "compareCaption": "Clics orgánicos anuales de cada caso, el año anterior contra el periodo medido",
+      "compareRankBoth": "Este caso ocupa el lugar {pct} de {pctTotal} en crecimiento porcentual y el lugar {abs} de {absTotal} en clics absolutos.",
+      "compareRankAbs": "Este caso ocupa el lugar {abs} de {absTotal} en clics absolutos. No tiene crecimiento porcentual porque partió de cero.",
+      "compareNote": "Los casos que miden otra métrica, como el tráfico mensual, no entran en esta comparación de clics anuales.",
+      "compareScrollLabel": "Tabla de comparación con desplazamiento horizontal",
+      "compareThis": "Este caso",
+      "compareNoBase": "Sin base",
+      "caseColumn": "Caso",
+      "sectorColumn": "Sector",
+      "scaleColumn": "Escala",
+      "lessonsTitle": "Lecciones aprendidas"
     }
   }
 }

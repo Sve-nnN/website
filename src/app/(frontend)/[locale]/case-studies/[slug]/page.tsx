@@ -10,6 +10,7 @@ import { pageTitle } from '@/lib/page-title'
 import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { getCachedCaseStudiesIndex, getCachedCaseStudyBySlug } from '@/lib/cache'
 import {
+  buildCaseComparison,
   buildCaseStudyJsonLd,
   pickRelatedCases,
   toCaseDetailProps,
@@ -127,6 +128,12 @@ export default async function CaseStudyPage({
   }
   const related = pickRelatedCases(toCaseIndexProps(indexDocs, loc), detail.slug)
 
+  // Comparativos calculados en el servidor desde los `results.metrics` de los
+  // demas casos (D-09). Sin indice (la lectura fallo) o con un solo caso medido
+  // no hay con que comparar: la seccion no se renderiza.
+  const built = indexDocs.length > 0 ? buildCaseComparison(doc, indexDocs) : null
+  const comparison = built && built.rows.length > 1 ? built : null
+
   const ctaData = await getCtaData(loc)
 
   return (
@@ -137,6 +144,7 @@ export default async function CaseStudyPage({
         clientContent={detail.clientContext ? <MuiRichText data={detail.clientContext} /> : null}
         conclusionContent={detail.conclusion ? <MuiRichText data={detail.conclusion} /> : null}
         related={related}
+        comparison={comparison}
       />
       {ctaData && (
         <div lang={ctaData.isFallback && locale === 'en' ? 'es' : undefined}>
