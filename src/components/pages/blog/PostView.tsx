@@ -24,10 +24,14 @@ import { ReadingProgress } from '@/components/mui/ReadingProgress'
 import { MuiRichText } from '@/components/mui/rich-text/MuiRichText'
 import { Toc } from '@/components/mui/rich-text/Toc'
 import { TranslationNotice } from '@/components/mui/TranslationNotice'
-import type { PostInlineOffer, PostRailOffer, PostViewProps } from '@/lib/blog-data'
+import type { BlogClosingData, BlogPostItem, PostInlineOffer, PostRailOffer, PostViewProps } from '@/lib/blog-data'
 
+import { BlogClosingMui } from './BlogClosingMui'
 import { InlineOfferMui } from './InlineOfferMui'
+import { PostAuthorAside } from './PostAuthorAside'
 import { PostByline } from './PostByline'
+import { PostPrevNext } from './PostPrevNext'
+import { PostRelated } from './PostRelated'
 import { RailOfferMui } from './RailOfferMui'
 
 /** Id del elemento article: lo mide la barra de progreso y esta reservado en lexical-toc. */
@@ -51,6 +55,12 @@ type Props = {
   inlineOffer: PostInlineOffer | null
   /** Tarjeta de riel de escritorio, bajo el indice. */
   railOffer: PostRailOffer | null
+  /** Posts relacionados de la misma categoria, sin el actual (hasta 3). */
+  related: BlogPostItem[]
+  /** Entrada anterior y siguiente dentro de la categoria. */
+  prevNext: { previous: BlogPostItem | null; next: BlogPostItem | null }
+  /** Cierre unico del blog (blog-promo), o null si el global no trae titulo. */
+  closing: BlogClosingData | null
   /** Primera mitad del cuerpo (o el cuerpo entero si no se parte). */
   before: SerializedEditorState | null | undefined
   /** Segunda mitad, o null cuando el post es demasiado corto para partirlo. */
@@ -69,6 +79,9 @@ export function PostView({
   disclosure,
   inlineOffer,
   railOffer,
+  related,
+  prevNext,
+  closing,
   before,
   after,
   headingIds,
@@ -146,17 +159,26 @@ export function PostView({
               {railOffer && <RailOfferMui offer={railOffer} />}
             </Box>
           )}
-          <Box component="article" id={POST_BODY_ID} sx={{ gridColumn: { lg: 1 }, gridRow: { lg: 1 }, minWidth: 0 }}>
-            <MuiRichText data={before} headingIds={headingIds} ctx={ctx} />
-            {after && (
-              <>
-                {inlineOffer && <InlineOfferMui offer={inlineOffer} />}
-                <MuiRichText data={after} headingIds={headingIds} ctx={ctx} />
-              </>
-            )}
+          <Box sx={{ gridColumn: { lg: 1 }, gridRow: { lg: 1 }, minWidth: 0 }}>
+            <Box component="article" id={POST_BODY_ID}>
+              <MuiRichText data={before} headingIds={headingIds} ctx={ctx} />
+              {after && (
+                <>
+                  {inlineOffer && <InlineOfferMui offer={inlineOffer} />}
+                  <MuiRichText data={after} headingIds={headingIds} ctx={ctx} />
+                </>
+              )}
+            </Box>
+            {post.author && <PostAuthorAside author={post.author} />}
+            <PostPrevNext previous={prevNext.previous} next={prevNext.next} />
           </Box>
         </Container>
       </Box>
+
+      <PostRelated items={related} />
+
+      {/* Un solo cierre: la banda MUI alimentada con blog-promo (RESEARCH, pregunta abierta 1). */}
+      {closing && <BlogClosingMui closing={closing} />}
     </>
   )
 }

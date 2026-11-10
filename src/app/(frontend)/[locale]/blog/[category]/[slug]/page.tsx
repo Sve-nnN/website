@@ -10,8 +10,17 @@ import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
 import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { SITE_URL } from '@/lib/sitemap-data'
-import { getCachedBlogPromo, getCachedPost } from '@/lib/cache'
-import { buildArticleJsonLd, toInlineOffer, toPostViewProps, toRailOffer } from '@/lib/blog-data'
+import { getCachedBlogPostList, getCachedBlogPromo, getCachedPost } from '@/lib/cache'
+import {
+  buildArticleJsonLd,
+  categoryItems,
+  pickPrevNext,
+  pickRelated,
+  toClosingProps,
+  toInlineOffer,
+  toPostViewProps,
+  toRailOffer,
+} from '@/lib/blog-data'
 import { resolveBlogPromo } from '@/lib/blog-promo'
 import { postHasAffiliateInline, postHasAmazonAffiliateInline } from '@/lib/post-affiliate-scan'
 import { splitContentForOffer } from '@/lib/lexical-split'
@@ -185,6 +194,17 @@ export default async function PostPage({
   // que define la URL del post y tambien el problema con el que llego el lector.
   const promo = resolveBlogPromo(await getCachedBlogPromo(locale), primaryCategory?.id)
 
+  // Relacionados y anterior/siguiente salen de la lista ligera cacheada, que se
+  // lee con `overrideAccess: false` (un borrador no entra, T-55-42). La lectura
+  // lanza si falla y aqui se deja propagar (500): una lista vacia por un fallo
+  // transitorio se serviria sin relacionados con 200 durante el TTL.
+  const posts = await getCachedBlogPostList(locale)
+  const related = pickRelated(posts, {
+    slug: doc.slug ?? slug,
+    categorySlugs: categories.flatMap((c) => (c.slug ? [c.slug] : [])),
+  })
+  const prevNext = pickPrevNext(categoryItems(posts, primaryCategorySlug), doc.slug ?? slug)
+
   // INL-02: el escaneo cubre `doc.content` ENTERO (no `body.before` ni
   // `body.after`, recortados por splitContentForOffer): la divulgacion debe
   // aparecer antes del cuerpo sin importar en que punto inserto el editor el
@@ -213,6 +233,9 @@ export default async function PostPage({
         disclosure={disclosure}
         inlineOffer={toInlineOffer(promo.inline)}
         railOffer={toRailOffer(promo.rail)}
+        related={related}
+        prevNext={prevNext}
+        closing={toClosingProps(promo.closing)}
         before={body.before}
         after={body.after}
         headingIds={headingIds}

@@ -443,6 +443,21 @@
     },
     "offer": {
       "label": "Featured information"
+    },
+    "author": {
+      "title": "About the author",
+      "credentialsLabel": "Credentials",
+      "years": "{years}+ years of experience",
+      "profile": "View {name}'s profile"
+    },
+    "related": {
+      "title": "Related posts",
+      "listLabel": "List of related posts"
+    },
+    "nav": {
+      "label": "Previous and next post",
+      "previous": "Previous",
+      "next": "Next"
     }
   }
 }

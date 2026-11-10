@@ -26,14 +26,14 @@ const { PostView } = await import('../../src/components/pages/blog/PostView')
 const { MuiRichText } = await import('../../src/components/mui/rich-text/MuiRichText')
 const { Toc } = await import('../../src/components/mui/rich-text/Toc')
 const { ReadingProgress } = await import('../../src/components/mui/ReadingProgress')
-const { toInlineOffer, toRailOffer } = await import('../../src/lib/blog-data')
+const { categoryItems, pickPrevNext, pickRelated, toClosingProps, toInlineOffer, toRailOffer } = await import('../../src/lib/blog-data')
 const { postHasAffiliateInline, postHasAmazonAffiliateInline } = await import('../../src/lib/post-affiliate-scan')
 const { buildHeadingIdMap } = await import('../../src/components/mui/rich-text/lexical-toc')
 const { splitContentForOffer } = await import('../../src/lib/lexical-split')
 const { buildArticleJsonLd, toPostViewProps } = await import('../../src/lib/blog-data')
 const { countOf, headingLevels, renderToHtml, textOf } = await import('./54-ssr-harness')
 
-import type { PostViewProps } from '../../src/lib/blog-data'
+import type { BlogClosingData, BlogPostItem, PostViewProps } from '../../src/lib/blog-data'
 
 // tsx usa el runtime clasico con jsx: preserve; los componentes .tsx necesitan React global.
 ;(globalThis as { React?: typeof React }).React = React
@@ -135,6 +135,9 @@ type RenderOpts = {
   extra?: Record<string, unknown>
   inline?: Parameters<typeof toInlineOffer>[0]
   rail?: Parameters<typeof toRailOffer>[0]
+  related?: BlogPostItem[]
+  prevNext?: { previous: BlogPostItem | null; next: BlogPostItem | null }
+  closing?: BlogClosingData | null
 }
 
 /** Renderiza PostView como lo hace la ruta: un mapa de ids sobre el cuerpo completo y dos mitades. */
@@ -156,6 +159,9 @@ function renderPost(content: unknown, o: RenderOpts = {}): { html: string; view:
         : null,
       inlineOffer: toInlineOffer(o.inline),
       railOffer: toRailOffer(o.rail),
+      related: o.related ?? [],
+      prevNext: o.prevNext ?? { previous: null, next: null },
+      closing: o.closing ?? null,
       before: body.before as never,
       after: body.after as never,
       headingIds,
@@ -481,22 +487,197 @@ for (const locale of ['es', 'en'] as const) {
     check(articleStart < firstH2 && firstH2 < offer && offer < lastH2, `oferta inline ${locale}: va entre las dos mitades del cuerpo`, `posiciones ${articleStart}, ${firstH2}, ${offer}, ${lastH2}`)
     check(countOf(html, /Tarjeta de riel inventada/) === 1, `riel ${locale}: la tarjeta aparece una vez`, `hay ${countOf(html, /Tarjeta de riel inventada/)}`)
     check(at('Tarjeta de riel inventada') < articleStart, `riel ${locale}: va en la columna del indice, antes del article en el DOM`, 'orden incorrecto')
-    const asides = [...html.matchAll(/<aside\b[^>]*>/g)].map((m) => m[0])
+    // La autoria (post-author-t) es otro aside, con su propia prueba en la tarea 3.
+    const asides = [...html.matchAll(/<aside\b[^>]*>/g)].map((m) => m[0]).filter((a) => !a.includes('post-author-t'))
     check(asides.length === 2 && asides.every((a) => /aria-label(?:ledby)?=/.test(a)), `ofertas ${locale}: dos aside con nombre accesible`, JSON.stringify(asides))
     const ids = allIds(html)
     check(new Set(ids).size === ids.length, `ofertas ${locale}: ids unicos con el indice y las ofertas`, 'hay ids repetidos')
     check(/href="(?:\/en)?\/contacto"/.test(html) && /href="(?:\/en)?\/servicios"/.test(html), `ofertas ${locale}: los enlaces de las ofertas existen`, 'faltan enlaces')
     check(postFailures(html, { expectToc: true }).length === 0, `ofertas ${locale}: el contrato del post se mantiene`, postFailures(html, { expectToc: true }).join('; '))
   }
-  const noOffers = renderPost(BODY, { inline: null, rail: null }).html
+  const noOffers = renderPost(BODY, { inline: null, rail: null, extra: { author: null } }).html
   check(!/<aside\b/.test(noOffers), 'sin promo: no hay aside vacio', 'aparecio un aside')
-  const noText = renderPost(BODY, { inline: { title: 'Solo titulo', text: '' }, rail: { title: '' } }).html
+  const noText = renderPost(BODY, { inline: { title: 'Solo titulo', text: '' }, rail: { title: '' }, extra: { author: null } }).html
   check(!/Solo titulo/.test(noText) && !/<aside\b/.test(noText), 'oferta sin texto y riel sin titulo no se pintan (igual que la version anterior)', 'pinto una oferta vacia')
   const short = renderPost(doc([p('a'), p('b'), p('c')]), { inline, rail })
   check(!/Texto inventado de la oferta inline/.test(short.html), 'cuerpo corto (no se parte): la oferta inline se omite', 'pinto la oferta inline')
   check(/Tarjeta de riel inventada/.test(short.html), 'cuerpo corto sin TOC: el riel conserva su columna', 'se perdio el riel')
   check(toInlineOffer({ title: 'T', text: 'x', linkLabel: 'L', linkUrl: '' })?.link === null, 'toInlineOffer: una accion sin url se descarta', 'conservo la accion')
   check(toRailOffer({ title: 'T', body: ' ' })?.body === null, 'toRailOffer: cuerpo vacio queda null', 'conservo el cuerpo')
+}
+
+// ===========================================================================
+// Tarea 3: relacionados, anterior y siguiente, autoria, cierre, captura y enlaces
+// ===========================================================================
+
+const CLOSING: BlogClosingData = {
+  heading: 'Cierre inventado del blog',
+  body: 'Cuerpo inventado del cierre',
+  points: ['Punto uno inventado'],
+  primary: { label: 'Accion principal inventada', url: '/contacto' },
+  secondary: null,
+}
+
+/** Posts inventados de una categoria, del mas reciente al mas antiguo. */
+function listDocs(): Array<Parameters<typeof pickRelated>[0][number]> {
+  return Array.from({ length: 8 }, (_, i) => ({
+    id: i + 1,
+    slug: `lista-post-${i + 1}`,
+    title: `Entrada inventada ${i + 1}`,
+    excerpt: `Resumen inventado ${i + 1}`,
+    publishedAt: `2026-0${9 - i}-10T10:00:00.000Z`,
+    categories: [{ id: i < 6 ? 1 : 2, slug: i < 6 ? 'categoria-inventada' : 'otra-inventada', title: i < 6 ? 'Categoria inventada' : 'Otra inventada' }],
+    heroImage: null,
+  }))
+}
+
+// ---- Funciones puras: anterior, siguiente, relacionados --------------------
+{
+  const posts = listDocs()
+  const inCategory = categoryItems(posts, 'categoria-inventada')
+  check(inCategory.length === 6 && inCategory.every((i) => i.categorySlug === 'categoria-inventada'), 'categoryItems: solo las entradas de la categoria', `hay ${inCategory.length}`)
+
+  const middle = pickPrevNext(inCategory, 'lista-post-3')
+  check(middle.previous?.slug === 'lista-post-4' && middle.next?.slug === 'lista-post-2', 'pickPrevNext: anterior es la publicada antes y siguiente la publicada despues', JSON.stringify([middle.previous?.slug, middle.next?.slug]))
+  const first = pickPrevNext(inCategory, 'lista-post-1')
+  check(first.next === null && first.previous?.slug === 'lista-post-2', 'pickPrevNext: la mas reciente no tiene siguiente', JSON.stringify([first.previous?.slug, first.next?.slug]))
+  const last = pickPrevNext(inCategory, 'lista-post-6')
+  check(last.previous === null && last.next?.slug === 'lista-post-5', 'pickPrevNext: la mas antigua no tiene anterior', JSON.stringify([last.previous?.slug, last.next?.slug]))
+  const missing = pickPrevNext(inCategory, 'no-esta')
+  check(missing.previous === null && missing.next === null, 'pickPrevNext: un slug que no esta en la lista no devuelve vecinos', JSON.stringify(missing))
+  check(pickPrevNext([], 'x').previous === null, 'pickPrevNext: lista vacia', 'devolvio un vecino')
+
+  const related = pickRelated(posts, { slug: 'lista-post-2', categorySlugs: ['categoria-inventada'] })
+  check(related.length === 3, 'pickRelated: hasta 3', `hay ${related.length}`)
+  check(related.every((r) => r.slug !== 'lista-post-2'), 'pickRelated: excluye el actual', JSON.stringify(related.map((r) => r.slug)))
+  check(related.every((r) => r.categorySlug === 'categoria-inventada'), 'pickRelated: solo la misma categoria', JSON.stringify(related.map((r) => r.categorySlug)))
+  check(pickRelated(posts, { slug: 'x', categorySlugs: [] }).length === 0, 'pickRelated: sin categorias no hay relacionados', 'devolvio entradas')
+  check(pickRelated(posts, { slug: 'lista-post-8', categorySlugs: ['otra-inventada'] }).map((r) => r.slug).join() === 'lista-post-7', 'pickRelated: una categoria con una sola entrada mas devuelve esa', 'resultado inesperado')
+  check(toClosingProps(CLOSING)?.heading === CLOSING.heading, 'toClosingProps: el cierre del post usa el mismo formato que el de categoria', 'no convirtio')
+}
+
+// ---- Render: relacionados, anterior y siguiente, autoria y cierre -----------
+{
+  const posts = listDocs()
+  const items = categoryItems(posts, 'categoria-inventada')
+  const current = 'lista-post-3'
+  const relatedItems = pickRelated(posts, { slug: current, categorySlugs: ['categoria-inventada'] })
+  const prevNext = pickPrevNext(items, current)
+
+  for (const locale of ['es', 'en'] as const) {
+    const { html } = renderPost(BODY, { locale, related: relatedItems, prevNext, closing: CLOSING, slug: current })
+    const reasons = postFailures(html, { expectToc: true })
+    check(reasons.length === 0, `post completo ${locale}: el contrato se mantiene con autoria, relacionados y cierre`, reasons.join('; '))
+
+    const section = /<section\b[^>]*aria-labelledby="post-related-t"[^>]*>([\s\S]*?)<\/section>/.exec(html)?.[1] ?? ''
+    check(section !== '', `relacionados ${locale}: seccion nombrada por su h2`, 'sin seccion post-related-t')
+    check(/<h2\b[^>]*id="post-related-t"/.test(section), `relacionados ${locale}: el titulo es un h2`, 'sin h2')
+    const cards = countOf(section, /<li[\s>]/)
+    check(cards === 3, `relacionados ${locale}: tres tarjetas`, `hay ${cards}`)
+    check(!new RegExp(`href="(?:/en)?/blog/categoria-inventada/${current}"`).test(section), `relacionados ${locale}: el actual no aparece`, 'aparece el post actual')
+    check(countOf(section, /<h3\b/) === 3, `relacionados ${locale}: cada tarjeta lleva un h3 (sin saltos)`, `h3=${countOf(section, /<h3\b/)}`)
+
+    const nav = new RegExp(`<nav\\b[^>]*aria-label="${locale === 'es' ? 'Entrada anterior y siguiente' : 'Previous and next post'}"[^>]*>([\\s\\S]*?)</nav>`).exec(html)?.[1] ?? ''
+    check(nav !== '', `anterior y siguiente ${locale}: nav etiquetada`, 'sin nav')
+    check(countOf(nav, /<a\b/) === 2, `anterior y siguiente ${locale}: dos enlaces reales`, `hay ${countOf(nav, /<a\b/)}`)
+    check(nav.includes('/blog/categoria-inventada/lista-post-4') && nav.includes('/blog/categoria-inventada/lista-post-2'), `anterior y siguiente ${locale}: apuntan a los vecinos de la categoria`, 'enlaces equivocados')
+
+    const author = /<aside\b[^>]*aria-labelledby="post-author-t"[^>]*>([\s\S]*?)<\/aside>/.exec(html)?.[1] ?? ''
+    check(author !== '', `autoria ${locale}: aside nombrado por su h2`, 'sin aside de autor')
+    check(/<h2\b[^>]*id="post-author-t"/.test(author), `autoria ${locale}: el nombre accesible sale de un h2`, 'sin h2')
+    check(/Autor Inventado/.test(author) && /Biografia inventada/.test(author) && /Credencial inventada/.test(author) && /Cargo inventado/.test(author), `autoria ${locale}: nombre, cargo, bio y credenciales`, 'faltan datos')
+    check(/href="(?:\/en)?\/authors\/autor-inventado"/.test(author), `autoria ${locale}: enlace al perfil`, 'sin enlace al perfil')
+    check(/9\+ (años de experiencia|years of experience)/.test(author), `autoria ${locale}: anos de experiencia localizados`, 'sin anos')
+    check(countOf(html, /Cierre inventado del blog/) === 1, `cierre ${locale}: un solo cierre`, `hay ${countOf(html, /Cierre inventado del blog/)}`)
+    check(html.indexOf('Cierre inventado del blog') > html.indexOf('post-related-t'), `cierre ${locale}: despues de los relacionados`, 'orden incorrecto')
+  }
+
+  // Extremos: primera entrada sin siguiente; sin autor, sin relacionados y sin cierre.
+  const newest = pickPrevNext(items, 'lista-post-1')
+  const edge = renderPost(BODY, { prevNext: newest, slug: 'lista-post-1' }).html
+  const edgeNav = /<nav\b[^>]*aria-label="Entrada anterior y siguiente"[^>]*>([\s\S]*?)<\/nav>/.exec(edge)?.[1] ?? ''
+  check(countOf(edgeNav, /<a\b/) === 1, 'la entrada mas reciente solo ofrece anterior', `enlaces=${countOf(edgeNav, /<a\b/)}`)
+  const bare = renderPost(BODY, { extra: { author: null } }).html
+  check(!/post-author-t|post-related-t|Entrada anterior y siguiente|Cierre inventado/.test(bare), 'sin autor, relacionados, vecinos ni cierre: no se pinta ninguno de esos bloques', 'aparecio un bloque vacio')
+  check(postFailures(bare, { expectToc: true }).length === 0, 'post sin autor: el contrato se mantiene', postFailures(bare, { expectToc: true }).join('; '))
+
+  // Fixtures defectuosos.
+  const withRelated = renderPost(BODY, { related: relatedItems, closing: CLOSING, slug: current }).html
+  const selfIncluded = pickRelated(posts, { slug: 'otro-slug', categorySlugs: ['categoria-inventada'] })
+  const badRelated = renderPost(BODY, { related: selfIncluded, slug: current }).html
+  const badSection = /<section\b[^>]*aria-labelledby="post-related-t"[^>]*>([\s\S]*?)<\/section>/.exec(badRelated)?.[1] ?? ''
+  check(new RegExp(`href="(?:/en)?/blog/categoria-inventada/${current}"`).test(badSection), 'defectuoso: relacionados que incluyen al actual se detectan', 'la comprobacion no lo distingue')
+  check(countOf(withRelated.replace('</section>', '</section>' + (/Cierre inventado[\s\S]*?<\/section>/.exec(withRelated)?.[0] ?? '')), /Cierre inventado del blog/) !== 1, 'defectuoso: dos cierres se detectan', 'no se detecto')
+}
+
+// ---- Captura de email y enlaces del propio sitio (D-21, Pitfall 1) ----------
+{
+  const capture: Node = { type: 'block', version: 2, format: '', fields: { id: 'captura-fixture', blockType: 'email-capture' } }
+  const link = (url: string, label: string): Node => ({ type: 'link', version: 1, fields: { linkType: 'custom', url, newTab: false }, children: [text(label)] })
+  const BODY_MIXED = doc([
+    p('Apertura'),
+    heading('h2', 'Primera'),
+    p('Uno'),
+    p('Dos'),
+    { type: 'paragraph', version: 1, children: [text('Mira '), link('https://juan-tech.com/blog/seo/otro', 'el articulo del sitio'), text(' y '), link('https://otro-sitio.invalid/x', 'un sitio externo')] },
+    heading('h2', 'Segunda'),
+    capture,
+    p('Cinco'),
+    p('Seis'),
+    p('Siete'),
+  ])
+
+  /** Motivo de fallo del formulario de captura en la ruta del post. */
+  function captureFailures(html: string, postPath: string, locale: string): string[] {
+    const reasons: string[] = []
+    if (!/<form\b/.test(html)) reasons.push('falta el form de captura')
+    if (!/name="email"/.test(html)) reasons.push('falta el campo name email')
+    if (!/name="company_website"/.test(html)) reasons.push('falta el campo name company_website')
+    const hidden = (name: string, value: string) => new RegExp(`name="${name}"[^>]*value="${value}"|value="${value}"[^>]*name="${name}"`).test(html)
+    if (!hidden('postPath', postPath)) reasons.push('falta el oculto postPath')
+    if (!hidden('locale', locale)) reasons.push('falta el oculto locale')
+    return reasons
+  }
+
+  for (const locale of ['es', 'en'] as const) {
+    const { html } = renderPost(BODY_MIXED, { locale })
+    const reasons = captureFailures(html, '/blog/categoria-inventada/post-inventado', locale)
+    check(reasons.length === 0, `captura ${locale}: campos name email y company_website y ocultos postPath y locale`, reasons.join('; '))
+    // El texto del namespace emailCapture (oferta del checklist) ya traia guiones largos antes de esta
+    // fase y es copy de Juan (fase 56): aqui no se mide su guion, solo la estructura.
+    const structural = postFailures(html, { expectToc: true }).filter((r) => !r.includes('guion largo'))
+    check(structural.length === 0, `captura ${locale}: el contrato del post se mantiene con el bloque`, structural.join('; '))
+
+    const site = /<a\b[^>]*\shref="https:\/\/juan-tech\.com\/blog\/seo\/otro"[^>]*>/.exec(html)?.[0] ?? ''
+    check(site !== '' && !/target=/.test(site) && !/rel=/.test(site), `enlace del sitio ${locale}: href identico a produccion, misma pestana y sin rel`, site || 'no aparece el enlace')
+    const ext = /<a\b[^>]*\shref="https:\/\/otro-sitio\.invalid\/x"[^>]*>/.exec(html)?.[0] ?? ''
+    check(/target="_blank"/.test(ext) && /rel="noopener noreferrer"/.test(ext), `enlace externo ${locale}: abre pestana nueva con rel`, ext || 'no aparece el enlace')
+  }
+  const pending = renderToHtml(
+    createElement(PostView, {
+      post: toPostViewProps(fixtureDoc(BODY_MIXED), { locale: 'es', routeSlug: 'post-inventado' }),
+      crumbs: CRUMBS,
+      tocLabel: 'Tabla de contenidos',
+      progressLabel: 'Progreso de lectura',
+      disclosure: null,
+      inlineOffer: null,
+      railOffer: null,
+      related: [],
+      prevNext: { previous: null, next: null },
+      closing: null,
+      before: splitContentForOffer(BODY_MIXED as never).before as never,
+      after: splitContentForOffer(BODY_MIXED as never).after as never,
+      headingIds: buildHeadingIdMap((BODY_MIXED as { root: never }).root) as Map<object, string>,
+      ctx: { subscribedState: 'pending', postPath: '/blog/categoria-inventada/post-inventado' },
+    }),
+    'es',
+  )
+  check(!/<form\b/.test(pending) && /Revisa tu correo/.test(pending), 'captura con ?subscribed=pending: el formulario cede al mensaje (inerte en el preview)', 'sigue el formulario o falta el mensaje')
+
+  const good = renderPost(BODY_MIXED).html
+  check(captureFailures(good.replace('name="company_website"', 'name="otro"'), '/blog/categoria-inventada/post-inventado', 'es').some((r) => r.includes('company_website')), 'defectuoso: captura sin honeypot se detecta', 'no se detecto')
+  check(captureFailures(good.replace(/name="postPath"/g, 'name="x"'), '/blog/categoria-inventada/post-inventado', 'es').some((r) => r.includes('postPath')), 'defectuoso: captura sin postPath se detecta', 'no se detecto')
+  check(/target=/.test(/<a\b[^>]*\shref="https:\/\/juan-tech\.com[^"]*"[^>]*>/.exec(good.replace('href="https://juan-tech.com/blog/seo/otro"', 'href="https://juan-tech.com/blog/seo/otro" target="_blank"'))?.[0] ?? ''), 'defectuoso: enlace del sitio con target se distingue del correcto', 'no se distingue')
 }
 
 // ---- Fixtures defectuosos: deben fallar --------------------------------------

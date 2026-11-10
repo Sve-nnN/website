@@ -443,6 +443,21 @@
     },
     "offer": {
       "label": "Información destacada"
+    },
+    "author": {
+      "title": "Sobre el autor",
+      "credentialsLabel": "Credenciales",
+      "years": "{years}+ años de experiencia",
+      "profile": "Ver el perfil de {name}"
+    },
+    "related": {
+      "title": "Artículos relacionados",
+      "listLabel": "Lista de artículos relacionados"
+    },
+    "nav": {
+      "label": "Entrada anterior y siguiente",
+      "previous": "Anterior",
+      "next": "Siguiente"
     }
   }
 }
