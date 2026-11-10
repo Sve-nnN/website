@@ -402,6 +402,25 @@
     },
     "closing": {
       "pointsLabel": "Key points"
+    },
+    "index": {
+      "latestTitle": "Latest",
+      "sectionListLabel": "Posts about {category}",
+      "count": "{count, plural, one {# post} other {# posts}}",
+      "viewMore": "View more"
+    },
+    "newsletter": {
+      "emailLabel": "Your email",
+      "submitLabel": "Subscribe",
+      "sending": "Sending…",
+      "success": "Check your inbox: I sent you a link to confirm. Without that click the signup is not active.",
+      "invalid": "That email doesn't look valid. Check it and try again.",
+      "error": "Couldn't complete the signup. Try again in a bit.",
+      "unconfigured": "Signup is unavailable right now. Reach me through the contact form instead.",
+      "confirmed": "Confirmed. You will get new articles from now on.",
+      "unsubscribed": "You are unsubscribed. No more emails from me.",
+      "invalidLink": "That link is no longer valid. If you wanted to subscribe, leave your email again below.",
+      "honeypotLabel": "Company website"
     }
   }
 }

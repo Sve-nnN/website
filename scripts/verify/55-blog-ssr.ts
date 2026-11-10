@@ -20,9 +20,14 @@ import { createElement } from 'react'
 // (la accion de suscripcion llega por el formulario de newsletter).
 createRequire(import.meta.url)('./55-stub-next-intl-server.cjs')
 
+const { BlogClosingMui } = await import('../../src/components/pages/blog/BlogClosingMui')
+const { BlogIndexView } = await import('../../src/components/pages/blog/BlogIndexView')
 const { CategoryPageView } = await import('../../src/components/pages/blog/CategoryPageView')
 const {
+  POSTS_PER_CATEGORY,
   listableCategories,
+  parseNewsletterNotice,
+  toBlogIndexProps,
   toCategoryProps,
   toClosingProps,
   toNavItems,
@@ -30,7 +35,14 @@ const {
 } = await import('../../src/lib/blog-data')
 const { countOf, headingLevels, renderToHtml, textOf } = await import('./54-ssr-harness')
 
-import type { BlogClosingData, BlogPostDocLike, CategoryPageProps } from '../../src/lib/blog-data'
+import type {
+  BlogClosingData,
+  BlogIndexProps,
+  BlogPageDocLike,
+  BlogPostDocLike,
+  CategoryPageProps,
+  NewsletterNotice,
+} from '../../src/lib/blog-data'
 
 // tsx usa el runtime clasico con jsx: preserve; los componentes .tsx necesitan React global.
 ;(globalThis as { React?: typeof React }).React = React
@@ -98,7 +110,7 @@ const CLOSING: BlogClosingData = {
 /** Contrato estructural de la categoria. Devuelve los motivos de fallo. */
 function categoryFailures(rawHtml: string, props: CategoryPageProps, expected: number): string[] {
   const reasons: string[] = []
-  const html = rawHtml.replace(/<style[\s\S]*?<\/style>/g, '')
+  const html = rawHtml.replace(/<(style|script)[\s\S]*?<\/\1>/g, '')
   const levels = headingLevels(html)
   const h1 = levels.filter((l) => l === 1).length
   if (h1 !== 1) reasons.push(`se esperaba un h1 y hay ${h1}`)
@@ -198,6 +210,158 @@ function mainCategory(): void {
 }
 
 mainCategory()
+
+// ---------------------------------------------------------------------------
+// Indice del blog (tarea 2)
+// ---------------------------------------------------------------------------
+
+const DOC_TITLE = 'Titulo del documento inventado'
+const DOC_LEAD = 'Subtitulo del documento inventado'
+
+const PAGE_DOC: BlogPageDocLike = {
+  title: 'Blog (titulo del doc)',
+  content: {
+    layout: [
+      { blockType: 'hero', title: DOC_TITLE, subtitle: DOC_LEAD } as { blockType: string },
+      // El orden del CMS manda: estrategia antes que tecnica. `general` se pide y no debe aparecer.
+      { blockType: 'blogCategoryRows', postsPerCategory: 3, categoryOrder: [{ category: 2 }, { category: { id: 1 } }, { category: 9 }], viewAllLabel: null } as { blockType: string },
+      {
+        blockType: 'newsletterBlock',
+        title: 'Franja inventada de suscripcion',
+        description: 'Descripcion inventada de la franja',
+        emailLabel: null,
+        submitLabel: null,
+        consentText: 'Consentimiento inventado de la franja',
+      } as { blockType: string },
+    ],
+  },
+}
+
+const STRAT_8 = fixturePosts('estrategia-inventada', 'Estrategia inventada', 8, 'est')
+const INDEX_POSTS: BlogPostDocLike[] = [...TECH_POSTS, ...STRAT_8]
+
+function renderIndex(props: BlogIndexProps, locale: 'es' | 'en', notice: NewsletterNotice | null = null, closing: BlogClosingData | null = CLOSING): string {
+  return renderToHtml(
+    createElement(BlogIndexView, { ...props, crumbs: [{ label: 'Inicio', href: '/' }, { label: 'Blog' }], newsletterNotice: notice, closing }),
+    locale,
+  )
+}
+
+const escapeRe = (v: string) => v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+/** Contrato estructural del indice. Devuelve los motivos de fallo. */
+function indexFailures(rawHtml: string, props: BlogIndexProps, perSection: number, closingHeading: string | null = CLOSING.heading): string[] {
+  const reasons: string[] = []
+  const html = rawHtml.replace(/<(style|script)[\s\S]*?<\/\1>/g, '')
+  const levels = headingLevels(html)
+  const h1s = [...html.matchAll(/<h1[^>]*>([\s\S]*?)<\/h1>/g)]
+  if (h1s.length !== 1) reasons.push(`se esperaba un h1 y hay ${h1s.length}`)
+  else if (textOf(h1s[0]![1]!) !== props.title) reasons.push(`el h1 "${textOf(h1s[0]![1]!)}" no es el del documento "${props.title}"`)
+  for (let i = 1; i < levels.length; i += 1) {
+    if (levels[i]! - levels[i - 1]! > 1) reasons.push(`salto de nivel de encabezado h${levels[i - 1]} a h${levels[i]}`)
+  }
+  for (const section of props.sections) {
+    const re = new RegExp(`<ul[^>]*aria-label="(?:Artículos de|Posts about) ${escapeRe(section.title)}"[^>]*>([\\s\\S]*?)</ul>`)
+    const list = re.exec(html)?.[1]
+    if (list === undefined) {
+      reasons.push(`falta la lista de ${section.slug}`)
+      continue
+    }
+    const cards = countOf(list, /<li[\s>]/)
+    if (cards !== perSection) reasons.push(`la categoria ${section.slug} debe tener ${perSection} tarjetas y tiene ${cards}`)
+    const more = new RegExp(`<a\\s[^>]*href="(?:/en)?/blog/${escapeRe(section.slug)}"[^>]*>\\s*(?:Ver más|View more)`).test(html)
+    if (section.hasMore && !more) reasons.push(`falta el enlace real Ver mas a /blog/${section.slug}`)
+    if (!section.hasMore && more) reasons.push(`sobra el enlace Ver mas de ${section.slug}`)
+  }
+  if (/href="(?:\/en)?\/blog\/general"/.test(html)) reasons.push('general aparece como enlace')
+  if (/<h2[^>]*>\s*General\s*<\/h2>/.test(html)) reasons.push('general tiene seccion')
+  if (closingHeading !== null && countOf(html, new RegExp(escapeRe(closingHeading))) !== 1) {
+    reasons.push(`el cierre debe aparecer una vez y aparece ${countOf(html, new RegExp(escapeRe(closingHeading)))}`)
+  }
+  if (countOf(html, /<main[\s>]/) !== 0) reasons.push('la vista declara un main (lo pone el layout)')
+  if (/designs\//.test(html)) reasons.push('el HTML nombra una ruta de designs/')
+  const text = textOf(html)
+  if (/\bnull\b|\bundefined\b/.test(text)) reasons.push('aparece null o undefined en el texto')
+  if (/{{|}}/.test(html)) reasons.push('quedan llaves dobles sin renderizar')
+  if (text.includes(EM_DASH) || text.includes(EN_DASH)) reasons.push('el texto visible trae un guion largo o corto')
+  return reasons
+}
+
+function mainIndex(): void {
+  const props = toBlogIndexProps(PAGE_DOC, CATEGORIES, INDEX_POSTS, 'es')
+
+  // Funciones puras.
+  check(props.title === DOC_TITLE && props.lead === DOC_LEAD, 'indice props: h1 y subtitulo salen del documento Pages blog', `${props.title} | ${props.lead}`)
+  check(toBlogIndexProps({ title: 'Solo titulo' }, CATEGORIES, [], 'es').title === 'Solo titulo', 'indice props: sin bloque hero usa el titulo del documento', 'no lo uso')
+  check(toBlogIndexProps(null, CATEGORIES, [], 'es').title === 'Blog', 'indice props: sin documento el titulo es Blog', 'no es Blog')
+  check(props.latest?.slug === 'tec-post-01', 'indice props: la entrada mas reciente es la destacada', String(props.latest?.slug))
+  check(props.sections.map((x) => x.slug).join() === 'estrategia-inventada,tech-inventada', 'indice props: orden de categoryOrder y sin general', props.sections.map((x) => x.slug).join())
+  check(props.sections.every((x) => x.items.length === POSTS_PER_CATEGORY && POSTS_PER_CATEGORY === 6), 'indice props: seis entradas por categoria', props.sections.map((x) => x.items.length).join())
+  const tech = props.sections.find((x) => x.slug === 'tech-inventada')!
+  check(tech.total === 20 && tech.hasMore && tech.href === '/blog/tech-inventada', 'indice props: total, hasMore y ruta de Ver mas', JSON.stringify({ t: tech.total, m: tech.hasMore, h: tech.href }))
+  check(!tech.items.some((i) => i.slug === 'tec-post-01'), 'indice props: la destacada no se repite en su categoria', 'se repite')
+  check(props.sections[0]!.title === 'Estrategia inventada' && props.sections[0]!.description === 'Descripcion inventada de estrategia', 'indice props: nombre y descripcion salen de Payload', JSON.stringify(props.sections[0]))
+  check(props.newsletter?.title === 'Franja inventada de suscripcion' && props.newsletter?.emailLabel === null && props.newsletter?.consentText === 'Consentimiento inventado de la franja', 'indice props: textos del bloque newsletter del doc', JSON.stringify(props.newsletter))
+  const few = toBlogIndexProps(PAGE_DOC, CATEGORIES, [...TECH_POSTS.slice(0, 5), ...fixturePosts('estrategia-inventada', 'Estrategia inventada', 2, 'est')], 'es')
+  check(few.sections.every((x) => !x.hasMore), 'indice props: con pocas entradas no hay Ver mas', JSON.stringify(few.sections.map((x) => x.hasMore)))
+  const noOrder = toBlogIndexProps({ content: { layout: [{ blockType: 'blogCategoryRows' }] } }, CATEGORIES, INDEX_POSTS, 'es')
+  check(noOrder.sections.map((x) => x.slug).join() === 'tech-inventada,estrategia-inventada', 'indice props: sin categoryOrder usa el orden de las categorias', noOrder.sections.map((x) => x.slug).join())
+  check(toBlogIndexProps(PAGE_DOC, CATEGORIES, [], 'es').sections.length === 0, 'indice props: sin posts no hay secciones', 'hay secciones')
+  check(toBlogIndexProps({ content: { layout: [{ blockType: 'newsletterBlock', title: ' ' } as { blockType: string }] } }, CATEGORIES, [], 'es').newsletter === null, 'indice props: newsletter sin titulo se omite', 'no se omitio')
+
+  check(parseNewsletterNotice('confirmed') === 'confirmed' && parseNewsletterNotice('unsubscribed') === 'unsubscribed' && parseNewsletterNotice('invalid') === 'invalid', 'parseNewsletterNotice: estados conocidos', 'no los reconoce')
+  check(parseNewsletterNotice('<script>') === null && parseNewsletterNotice(['confirmed']) === null && parseNewsletterNotice(undefined) === null, 'parseNewsletterNotice: valores desconocidos se descartan', 'no descarto')
+
+  // Render ES y EN.
+  for (const locale of ['es', 'en'] as const) {
+    const html = renderIndex(props, locale)
+    const reasons = indexFailures(html, props, 6)
+    check(reasons.length === 0, `indice ${locale}: contrato con seis tarjetas por categoria`, reasons.join('; '))
+    const latestLinks = countOf(html, /href="(?:\/en)?\/blog\/tech-inventada\/tec-post-01"/)
+    check(latestLinks === 1, `indice ${locale}: la destacada tiene un solo enlace`, `hay ${latestLinks}`)
+    check(/<h2[^>]*>(?:Lo más reciente|Latest)<\/h2>/.test(html), `indice ${locale}: seccion de la entrada destacada`, 'falta')
+    if (locale === 'en') {
+      check(/href="\/en\/blog\/tech-inventada"/.test(html), 'indice en: Ver mas lleva el prefijo /en', 'sin prefijo')
+    }
+    const newsletter = (notice: NewsletterNotice | null) => renderIndex(props, locale, notice)
+    const form = newsletter(null)
+    check(['email', 'locale', 'source', 'company_website'].every((n) => new RegExp(`name="${n}"`).test(form)), `newsletter ${locale}: campos email, locale, source y company_website`, 'falta un campo')
+    check(new RegExp(`name="locale" value="${locale}"`).test(form) || new RegExp(`value="${locale}"[^>]*name="locale"`).test(form), `newsletter ${locale}: el campo locale lleva el idioma`, 'valor incorrecto')
+    check(!/role="alert"/.test(form) && countOf(form, /id="newsletter-status"/) === 1, `newsletter ${locale}: sin estado hay formulario y region de estado`, 'estado inesperado')
+    const confirmed = newsletter('confirmed')
+    check(/role="status"[^>]*>(?:Listo, tu correo|Confirmed)/.test(confirmed) && !/name="email"/.test(confirmed), `newsletter ${locale}: confirmed muestra aviso y oculta el formulario`, 'no coincide')
+    const unsub = newsletter('unsubscribed')
+    check(/role="status"[^>]*>(?:Te diste de baja|You are unsubscribed)/.test(unsub) && !/name="email"/.test(unsub), `newsletter ${locale}: unsubscribed muestra aviso y oculta el formulario`, 'no coincide')
+    const invalid = newsletter('invalid')
+    check(/role="alert"[^>]*>(?:Ese enlace ya no sirve|That link is no longer valid)/.test(invalid) && /name="email"/.test(invalid), `newsletter ${locale}: invalid avisa y deja el formulario`, 'no coincide')
+    check(!/Franja inventada/.test(renderIndex({ ...props, newsletter: null }, locale)), `newsletter ${locale}: sin bloque no se pinta la franja`, 'pinto la franja')
+  }
+  const formEs = renderIndex(props, 'es')
+  check(/Tu correo/.test(formEs) && /Suscribirme/.test(formEs), 'newsletter es: etiquetas por omision de messages', 'faltan')
+  check(/Consentimiento inventado de la franja/.test(formEs), 'newsletter es: el consentimiento del doc va antes de enviar', 'falta')
+  const formEn = renderIndex(props, 'en')
+  check(/Your email/.test(formEn) && /Subscribe/.test(formEn), 'newsletter en: etiquetas por omision de messages', 'faltan')
+
+  // Cierre unico.
+  check(!/Cierre inventado del blog/.test(renderIndex(props, 'es', null, null)), 'indice: sin cierre no pinta nada', 'pinto un cierre')
+
+  // Fixtures defectuosos: deben fallar.
+  const good = renderIndex(props, 'es')
+  const seven = { ...props, sections: props.sections.map((x) => ({ ...x, items: [...x.items, x.items[0]!].map((it, i) => ({ ...it, href: `${it.href}${i === x.items.length ? '-extra' : ''}` })) })) }
+  check(indexFailures(renderIndex(seven, 'es'), props, 6).some((r) => r.includes('tarjetas')), 'defectuoso indice: siete tarjetas por categoria se detecta', 'no se detecto')
+  check(indexFailures(good.replace(/href="\/blog\/tech-inventada"/g, 'href="#"'), props, 6).some((r) => r.includes('Ver mas')), 'defectuoso indice: Ver mas sin enlace real se detecta', 'no se detecto')
+  check(indexFailures(good.replace(DOC_TITLE, 'Otro titulo'), props, 6).some((r) => r.includes('h1')), 'defectuoso indice: h1 distinto del documento se detecta', 'no se detecto')
+  const twice = renderToHtml(
+    createElement(React.Fragment, null, createElement(BlogIndexView, { ...props, crumbs: [{ label: 'Inicio', href: '/' }], newsletterNotice: null, closing: CLOSING }), createElement(BlogClosingMui, { closing: CLOSING })),
+    'es',
+  )
+  check(indexFailures(twice, props, 6).some((r) => r.includes('cierre')), 'defectuoso indice: cierre duplicado se detecta', 'no se detecto')
+  const withGeneral = { ...props, sections: [...props.sections, { slug: 'general', title: 'General', description: null, href: '/blog/general', total: 1, hasMore: false, items: props.sections[0]!.items.slice(0, 6) }] }
+  check(indexFailures(renderIndex(withGeneral, 'es'), props, 6).some((r) => r.includes('general')), 'defectuoso indice: seccion general se detecta', 'no se detecto')
+  check(indexFailures(good.replace('Descripcion inventada de estrategia', `Texto ${EN_DASH} con raya`), props, 6).some((r) => r.includes('guion')), 'defectuoso indice: guion corto se detecta', 'no se detecto')
+}
+
+mainIndex()
 
 if (failures > 0) {
   console.log(`\nFAIL 55-blog-ssr: ${failures} comprobacion(es) fallaron`)

@@ -402,6 +402,25 @@
     },
     "closing": {
       "pointsLabel": "Puntos clave"
+    },
+    "index": {
+      "latestTitle": "Lo más reciente",
+      "sectionListLabel": "Artículos de {category}",
+      "count": "{count, plural, one {# artículo} other {# artículos}}",
+      "viewMore": "Ver más"
+    },
+    "newsletter": {
+      "emailLabel": "Tu correo",
+      "submitLabel": "Suscribirme",
+      "sending": "Enviando…",
+      "success": "Revisa tu correo: te mandé un enlace para confirmar el alta. Sin ese clic no queda activa.",
+      "invalid": "Ese correo no parece válido. Revísalo e inténtalo otra vez.",
+      "error": "No se pudo completar el alta. Inténtalo de nuevo en un rato.",
+      "unconfigured": "El alta no está disponible en este momento. Escríbeme por el formulario de contacto.",
+      "confirmed": "Listo, tu correo quedó confirmado. Vas a recibir los artículos nuevos.",
+      "unsubscribed": "Te diste de baja. No vas a recibir más correos míos.",
+      "invalidLink": "Ese enlace ya no sirve. Si querías suscribirte, deja tu correo otra vez aquí abajo.",
+      "honeypotLabel": "Company website"
     }
   }
 }

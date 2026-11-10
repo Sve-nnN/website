@@ -30,6 +30,11 @@ type Props = {
   image?: PostCardImage | null
   /** Nivel del encabezado del título, para respetar la jerarquía de la página. */
   headingLevel?: 2 | 3 | 4
+  /**
+   * Entrada destacada: con imagen y desde `md` pone la portada a la izquierda y el
+   * texto a la derecha. No cambia el marcado ni el orden de lectura.
+   */
+  featured?: boolean
 }
 
 /**
@@ -47,10 +52,20 @@ type Props = {
  * Escalas aceptadas: título 20/28 con peso 600 (rol h6), resumen 16/24,
  * metadatos 14 y 12 px.
  */
-export function PostCard({ href, title, excerpt, categoryLabel, dateISO, image = null, headingLevel = 3 }: Props) {
+export function PostCard({
+  href,
+  title,
+  excerpt,
+  categoryLabel,
+  dateISO,
+  image = null,
+  headingLevel = 3,
+  featured = false,
+}: Props) {
   const t = useTranslations('richText')
   const locale = useLocale()
   const date = formatLongDateUtc(dateISO, locale)
+  const sideBySide = featured && Boolean(image)
 
   return (
     <Card
@@ -60,6 +75,9 @@ export function PostCard({ href, title, excerpt, categoryLabel, dateISO, image =
         height: '100%',
         display: 'grid',
         gridTemplateRows: image ? 'auto 1fr' : '1fr',
+        ...(sideBySide
+          ? { gridTemplateColumns: { md: 'minmax(0,1.15fr) minmax(0,1fr)' }, gridTemplateRows: { xs: 'auto 1fr', md: '1fr' } }
+          : {}),
         transition: 'transform 500ms cubic-bezier(0.22,1,0.36,1), border-color 300ms',
         '&:hover': { borderColor: 'text.primary', transform: 'translateY(-4px)' },
         'html[data-motion="paused"] &:hover': { transform: 'none' },
@@ -70,10 +88,12 @@ export function PostCard({ href, title, excerpt, categoryLabel, dateISO, image =
       {image && (
         <Box
           sx={{
-            aspectRatio: '16 / 7',
+            aspectRatio: sideBySide ? { xs: '16 / 7', md: 'auto' } : '16 / 7',
+            minHeight: sideBySide ? { md: 280 } : undefined,
             bgcolor: 'raised',
             borderBottom: 1,
             borderColor: 'divider',
+            ...(sideBySide ? { borderRight: { md: 1 }, borderBottom: { xs: 1, md: 0 } } : {}),
             overflow: 'hidden',
           }}
         >
@@ -88,7 +108,7 @@ export function PostCard({ href, title, excerpt, categoryLabel, dateISO, image =
           />
         </Box>
       )}
-      <Box sx={{ p: 3, display: 'grid', gap: 2, alignContent: 'start' }}>
+      <Box sx={{ p: sideBySide ? { xs: 3, md: 5 } : 3, display: 'grid', gap: 2, alignContent: sideBySide ? { md: 'center' } : 'start' }}>
         {categoryLabel && (
           <Typography variant="overline" component="p" sx={{ color: 'accentText' }}>
             {categoryLabel}

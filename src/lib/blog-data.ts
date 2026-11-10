@@ -255,3 +255,163 @@ export function toClosingProps(closing: ClosingLike | null | undefined): BlogClo
     secondary: cta(closing.secondaryLabel, closing.secondaryUrl),
   }
 }
+
+// ---------------------------------------------------------------------------
+// Indice del blog (tarea 2)
+// ---------------------------------------------------------------------------
+
+/** Documento Pages `blog`: solo lo que el indice lee (h1, subtitulo, filas y newsletter). */
+export type BlogPageDocLike = {
+  title?: string | null
+  content?: { layout?: ReadonlyArray<{ blockType: string }> | null } | null
+}
+
+type HeroBlockLike = { title?: string | null; subtitle?: string | null }
+type CategoryRowsBlockLike = {
+  categoryOrder?: ReadonlyArray<{ category?: number | { id?: number | string } | null } | null> | null
+  viewAllLabel?: string | null
+}
+type NewsletterBlockLike = {
+  title?: string | null
+  description?: string | null
+  emailLabel?: string | null
+  submitLabel?: string | null
+  consentText?: string | null
+}
+
+export type BlogSectionProps = {
+  slug: string
+  title: string
+  description: string | null
+  /** Ruta de la categoria sin prefijo de idioma: destino real de "Ver mas" (D-18). */
+  href: string
+  /** Cuantas entradas tiene la categoria en total. */
+  total: number
+  /** Las primeras POSTS_PER_CATEGORY, sin la entrada destacada. */
+  items: BlogPostItem[]
+  /** Hay entradas fuera de las mostradas (sin contar la destacada): se ofrece "Ver mas". */
+  hasMore: boolean
+}
+
+/** Elemento ligero de la busqueda: sin imagen, para no cargar el cliente con 58 portadas. */
+export type BlogSearchItem = Omit<BlogPostItem, 'image'>
+
+export type BlogNewsletterData = {
+  title: string
+  description: string | null
+  emailLabel: string | null
+  submitLabel: string | null
+  consentText: string | null
+}
+
+export type BlogIndexProps = {
+  /** h1 del documento Pages blog, no el del sandbox (pregunta abierta 6). */
+  title: string
+  lead: string | null
+  /** La entrada mas reciente, destacada arriba. */
+  latest: BlogPostItem | null
+  sections: BlogSectionProps[]
+  nav: BlogNavItem[]
+  searchList: BlogSearchItem[]
+  /** Texto del enlace "Ver mas" del bloque del CMS, o null para usar el de messages. */
+  viewAllLabel: string | null
+  newsletter: BlogNewsletterData | null
+}
+
+function findBlock<T>(page: BlogPageDocLike | null | undefined, blockType: string): T | undefined {
+  return page?.content?.layout?.find((b) => b.blockType === blockType) as T | undefined
+}
+
+function refId(ref: number | { id?: number | string } | null | undefined): number | string | null {
+  if (typeof ref === 'number') return ref
+  if (ref && typeof ref === 'object' && ref.id !== undefined) return ref.id
+  return null
+}
+
+/**
+ * Props del indice. El h1 y el subtitulo salen del bloque `hero` del documento
+ * Pages `blog`. Las filas siguen el orden `categoryOrder` del bloque
+ * `blogCategoryRows` (sin orden: alfabetico, como llega `getCachedCategories`),
+ * sin `general`, con las primeras 6 entradas y el enlace real a /blog/<slug>. El
+ * bloque `newsletterBlock` aporta los textos del alta.
+ *
+ * La entrada destacada no se repite dentro de la fila de su categoria: ya ocupa
+ * su propia pantalla arriba. Una categoria sin entradas no tiene fila.
+ */
+export function toBlogIndexProps(
+  pageDoc: BlogPageDocLike | null | undefined,
+  categories: ReadonlyArray<BlogCategoryLike>,
+  posts: ReadonlyArray<BlogPostDocLike>,
+  _locale: 'es' | 'en',
+): BlogIndexProps {
+  const hero = findBlock<HeroBlockLike>(pageDoc, 'hero')
+  const rows = findBlock<CategoryRowsBlockLike>(pageDoc, 'blogCategoryRows')
+  const newsletterBlock = findBlock<NewsletterBlockLike>(pageDoc, 'newsletterBlock')
+
+  const pairs = posts.flatMap((doc) => {
+    const item = toPostItem(doc)
+    return item ? [{ doc, item }] : []
+  })
+  const items = pairs.map((p) => p.item)
+  const latest = items[0] ?? null
+
+  const listable = listableCategories(categories)
+  const ordered = rows?.categoryOrder?.length
+    ? rows.categoryOrder
+        .map((row) => {
+          const id = refId(row?.category)
+          return id === null ? undefined : listable.find((c) => c.id === id)
+        })
+        .filter((c): c is (typeof listable)[number] => Boolean(c))
+    : listable
+
+  const sections: BlogSectionProps[] = []
+  for (const category of ordered) {
+    const slug = category.slug as string
+    const own = pairs.filter((p) => belongsTo(p.doc, slug)).map((p) => p.item)
+    if (own.length === 0) continue
+    const rest = own.filter((p) => p.slug !== latest?.slug)
+    const shown = rest.slice(0, POSTS_PER_CATEGORY)
+    sections.push({
+      slug,
+      title: category.title as string,
+      description: text(category.description),
+      href: blogCategoryPath(slug),
+      total: own.length,
+      items: shown,
+      hasMore: rest.length > shown.length,
+    })
+  }
+
+  const newsletterTitle = text(newsletterBlock?.title)
+
+  return {
+    title: text(hero?.title) ?? text(pageDoc?.title) ?? 'Blog',
+    lead: text(hero?.subtitle),
+    latest,
+    sections,
+    nav: toNavItems(categories),
+    searchList: items.map(({ image: _image, ...rest }) => rest),
+    viewAllLabel: text(rows?.viewAllLabel),
+    newsletter: newsletterBlock && newsletterTitle
+      ? {
+          title: newsletterTitle,
+          description: text(newsletterBlock.description),
+          emailLabel: text(newsletterBlock.emailLabel),
+          submitLabel: text(newsletterBlock.submitLabel),
+          consentText: text(newsletterBlock.consentText),
+        }
+      : null,
+  }
+}
+
+/** Estados de `?newsletter=` a los que vuelven los enlaces del correo de doble opt-in. */
+export type NewsletterNotice = 'confirmed' | 'unsubscribed' | 'invalid'
+
+/**
+ * `?newsletter=` a un estado conocido. Cualquier otro valor (incluidos arreglos
+ * de una query repetida) se descarta: el valor nunca se interpola en el HTML.
+ */
+export function parseNewsletterNotice(value: string | string[] | undefined): NewsletterNotice | null {
+  return value === 'confirmed' || value === 'unsubscribed' || value === 'invalid' ? value : null
+}
