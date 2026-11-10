@@ -4,7 +4,12 @@
 // documentos en props serializables para las vistas.
 //
 // Ningun import de designs/ ni de datos del sandbox (D-02).
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+
 import { formatSector, splitHeroMetric } from '@/components/mui/split-hero-metric'
+import { getFallbackHeroImage } from '@/lib/heroImageFallback'
+import { personRef, SITE_PERSON_SLUG } from '@/lib/person'
+import { SITE_URL } from '@/lib/sitemap-data'
 
 /** Fila de resultados tal como llega de Payload (docs y fixtures). */
 export type CaseMetricDocLike = {
@@ -78,4 +83,319 @@ export function toCaseIndexProps(
     })
   }
   return items
+}
+
+// ---------------------------------------------------------------------------
+// Numeros de las metricas (tarea 2; la comparacion de la tarea 3 los reutiliza)
+// ---------------------------------------------------------------------------
+
+/**
+ * Interpreta el valor de una metrica: "47,108" da 47108, "533K" da 533000,
+ * "1.25M" da 1250000, "4.2s" da 4.2 y "36.3" da 36.3. Un guion, un texto o una
+ * cadena vacia dan NaN (la fila de posicion de un caso que partio sin dato).
+ */
+export function parseMetricNumber(value: string | null | undefined): number {
+  const m = (value ?? '')
+    .trim()
+    .replace(/,/g, '')
+    .match(/^(-?\d+(?:\.\d+)?)\s*([KM])?/i)
+  if (!m) return Number.NaN
+  const suffix = m[2]?.toUpperCase()
+  const factor = suffix === 'K' ? 1e3 : suffix === 'M' ? 1e6 : 1
+  return parseFloat(m[1]!) * factor
+}
+
+/**
+ * Cambio relativo entre dos valores ya interpretados, como razon (0.68 es
+ * +68 %). null si algun valor no es un numero finito o si `before` es 0 o
+ * menor: no hay base sobre la que calcularlo (Pitfall 9, T-55-34).
+ */
+export function changeRatio(before: number, after: number): number | null {
+  if (!Number.isFinite(before) || !Number.isFinite(after) || before <= 0) return null
+  return (after - before) / before
+}
+
+// ---------------------------------------------------------------------------
+// Detalle (tarea 2)
+// ---------------------------------------------------------------------------
+
+type ListItemLike<K extends string> = { [P in K]?: string | null } | null
+
+/** Forma minima que el detalle lee del documento (docs de Payload y fixtures). */
+export type CaseDetailDocLike = CaseDocLike & {
+  client?: unknown
+  kpis?: ReadonlyArray<ListItemLike<'label' | 'value'>> | null
+  clientContext?: unknown
+  challenge?: ReadonlyArray<ListItemLike<'text'>> | null
+  solution?: ReadonlyArray<ListItemLike<'title' | 'description'>> | null
+  testimonialSection?: ReadonlyArray<ListItemLike<'quote' | 'authorName' | 'authorRole'>> | null
+  lessons?: ReadonlyArray<ListItemLike<'title' | 'body'>> | null
+  conclusion?: unknown
+  heroImage?: unknown
+  author?: unknown
+  createdAt?: string | null
+  updatedAt?: string | null
+}
+
+export type CaseResultRow = {
+  /** Etiqueta tal como llega de Payload (verbatim, pregunta abierta 7 de 55-RESEARCH). */
+  label: string
+  before: string
+  after: string
+  /** Cambio como razon, o null si no hay base numerica. */
+  pct: number | null
+  /** Largo de cada barra entre 0 y 1, o null si algun valor no es numerico. */
+  beforeShare: number | null
+  afterShare: number | null
+}
+
+export type CaseAuthorProps = {
+  name: string
+  jobTitle: string | null
+  bio: string | null
+  /** Ruta sin prefijo de idioma. */
+  href: string
+  avatar: { url: string; width: number | null; height: number | null; alt: string | null } | null
+}
+
+export type CaseDetailProps = {
+  slug: string
+  title: string
+  clientName: string | null
+  sector: string | null
+  period: string | null
+  metric: string
+  metricLabel: string | null
+  deck: string | null
+  kpis: Array<{ label: string; value: string }>
+  periodBefore: string | null
+  periodAfter: string | null
+  /** Lexical con texto, o null: la vista no emite encabezado para una seccion vacia. */
+  clientContext: SerializedEditorState | null
+  challenge: string[]
+  solution: Array<{ title: string; body: string }>
+  testimonial: { quote: string; authorName: string; authorRole: string | null } | null
+  results: CaseResultRow[]
+  /** Lecciones, o null si no hay ninguna (undefined y arreglo vacio dan null, D-10). */
+  lessons: Array<{ title: string; body: string }> | null
+  conclusion: SerializedEditorState | null
+  author: CaseAuthorProps | null
+}
+
+type LexicalNodeShape = { text?: unknown; children?: unknown }
+
+function nodeHasText(node: unknown): boolean {
+  if (!node || typeof node !== 'object') return false
+  const n = node as LexicalNodeShape
+  if (typeof n.text === 'string' && n.text.trim() !== '') return true
+  return Array.isArray(n.children) && n.children.some(nodeHasText)
+}
+
+/**
+ * El estado Lexical solo cuenta si tiene texto: un parrafo vacio (lo que el
+ * editor guarda al borrar el contenido) no debe abrir una seccion con encabezado
+ * y sin cuerpo.
+ */
+export function lexicalOrNull(value: unknown): SerializedEditorState | null {
+  if (!value || typeof value !== 'object') return null
+  const root = (value as { root?: unknown }).root
+  return nodeHasText(root) ? (value as SerializedEditorState) : null
+}
+
+function mediaOf(value: unknown): CaseAuthorProps['avatar'] {
+  if (!value || typeof value !== 'object') return null
+  const m = value as { url?: unknown; width?: unknown; height?: unknown; alt?: unknown }
+  const url = text(m.url)
+  if (!url) return null
+  return {
+    url,
+    width: typeof m.width === 'number' && m.width > 0 ? m.width : null,
+    height: typeof m.height === 'number' && m.height > 0 ? m.height : null,
+    alt: text(m.alt),
+  }
+}
+
+function authorOf(value: unknown): CaseAuthorProps | null {
+  if (!value || typeof value !== 'object') return null
+  const a = value as { name?: unknown; slug?: unknown; jobTitle?: unknown; bio?: unknown; avatar?: unknown }
+  const name = text(a.name)
+  const slug = text(a.slug)
+  if (!name || !slug) return null
+  return {
+    name,
+    jobTitle: text(a.jobTitle),
+    bio: text(a.bio),
+    href: `/authors/${slug}`,
+    avatar: mediaOf(a.avatar),
+  }
+}
+
+function resultRows(doc: CaseDocLike): CaseResultRow[] {
+  const rows: CaseResultRow[] = []
+  for (const m of doc.results?.metrics ?? []) {
+    const label = text(m?.label)
+    const before = text(m?.before)
+    const after = text(m?.after)
+    if (!label || !before || !after) continue
+    const b = parseMetricNumber(before)
+    const a = parseMetricNumber(after)
+    const max = Math.max(b, a)
+    const bars = Number.isFinite(b) && Number.isFinite(a) && max > 0
+    rows.push({
+      label,
+      before,
+      after,
+      pct: changeRatio(b, a),
+      beforeShare: bars ? Math.max(0, b) / max : null,
+      afterShare: bars ? Math.max(0, a) / max : null,
+    })
+  }
+  return rows
+}
+
+function pairs<K extends string>(
+  items: ReadonlyArray<ListItemLike<K>> | null | undefined,
+  keys: readonly K[],
+): Array<Record<K, string>> {
+  const out: Array<Record<K, string>> = []
+  for (const item of items ?? []) {
+    const row = {} as Record<K, string>
+    let complete = true
+    for (const k of keys) {
+      const v = text(item?.[k])
+      if (v === null) {
+        complete = false
+        break
+      }
+      row[k] = v
+    }
+    if (complete) out.push(row)
+  }
+  return out
+}
+
+/**
+ * Documento de `case-studies` a props serializables del detalle. Sin slug o sin
+ * titulo devuelve null (la ruta responde notFound). Toda seccion sin datos sale
+ * vacia (arreglo vacio o null) para que la vista no emita su encabezado (D-08).
+ * No escribe nada y no copia texto de ninguna fuente externa (D-10, T-55-32).
+ */
+export function toCaseDetailProps(doc: CaseDetailDocLike, _locale: 'es' | 'en'): CaseDetailProps | null {
+  const slug = text(doc.slug)
+  const title = text(doc.title)
+  if (!slug || !title) return null
+  const { metric, label } = splitHeroMetric(doc.heroMetric)
+  const client = doc.client && typeof doc.client === 'object' ? (doc.client as { name?: unknown }) : null
+  const testimonial = pairs(doc.testimonialSection, ['quote', 'authorName'] as const)[0]
+  const testimonialRole = text(doc.testimonialSection?.[0]?.authorRole)
+  const lessons = pairs(doc.lessons, ['title', 'body'] as const)
+  return {
+    slug,
+    title,
+    clientName: text(client?.name),
+    sector: text(formatSector(doc.sector)),
+    period: text(doc.period),
+    metric,
+    metricLabel: label,
+    deck: text(doc.heroSubtitle),
+    kpis: pairs(doc.kpis, ['label', 'value'] as const),
+    periodBefore: text(doc.results?.periodBefore),
+    periodAfter: text(doc.results?.periodAfter),
+    clientContext: lexicalOrNull(doc.clientContext),
+    challenge: pairs(doc.challenge, ['text'] as const).map((c) => c.text),
+    solution: pairs(doc.solution, ['title', 'description'] as const).map((s) => ({
+      title: s.title,
+      body: s.description,
+    })),
+    testimonial: testimonial
+      ? { quote: testimonial.quote, authorName: testimonial.authorName, authorRole: testimonialRole }
+      : null,
+    results: resultRows(doc),
+    lessons: lessons.length > 0 ? lessons : null,
+    conclusion: lexicalOrNull(doc.conclusion),
+    author: authorOf(doc.author),
+  }
+}
+
+const RELATED_MAX = 3
+
+/** Hasta tres casos para "Mas casos de exito", en el orden del indice y sin el actual. */
+export function pickRelatedCases(items: ReadonlyArray<CaseIndexItem>, currentSlug: string): CaseIndexItem[] {
+  return items.filter((i) => i.slug !== currentSlug).slice(0, RELATED_MAX)
+}
+
+// ---------------------------------------------------------------------------
+// JSON-LD (extraido de la ruta [slug] sin cambios, D-04 y T-55-33)
+// ---------------------------------------------------------------------------
+
+type JsonLdDoc = {
+  title: string
+  slug?: string | null
+  heroSubtitle?: string | null
+  kpis?: ReadonlyArray<{ label?: string | null; value?: string | null } | null> | null
+  createdAt?: string | null
+  updatedAt?: string | null
+  heroImage?: unknown
+  author?: unknown
+  client?: unknown
+}
+
+/**
+ * JSON-LD `CreativeWork` del caso. Es el mismo objeto que la ruta construia en
+ * linea antes de la fase 55 (D-04): ningun campo cambia. SEO-09: `about` es un
+ * Thing, `image`, `url` y `dateCreated` van siempre que existan y los valores
+ * vacios se omiten. No lleva `datePublished`: la coleccion no tiene
+ * `publishedAt` y `createdAt` no se hace pasar por fecha editorial.
+ */
+export function buildCaseStudyJsonLd(
+  doc: JsonLdDoc,
+  locale: 'es' | 'en',
+  routeSlug: string,
+): Record<string, unknown> {
+  const author =
+    doc.author && typeof doc.author === 'object'
+      ? (doc.author as { name?: string; slug?: string | null })
+      : undefined
+  const client = doc.client && typeof doc.client === 'object' ? (doc.client as { name?: string | null }) : null
+  const heroImage =
+    doc.heroImage && typeof doc.heroImage === 'object' ? (doc.heroImage as { url?: string | null }) : null
+  const heroImageUrl = heroImage?.url ?? getFallbackHeroImage(doc.slug ?? routeSlug)
+  const localePrefix = locale === 'es' ? '' : '/en'
+  const caseStudyUrl = `${SITE_URL}${localePrefix}/case-studies/${doc.slug ?? routeSlug}`
+  const caseStudyImage = heroImageUrl.startsWith('http') ? heroImageUrl : `${SITE_URL}${heroImageUrl}`
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    name: doc.title,
+    url: caseStudyUrl,
+    image: caseStudyImage,
+    ...(doc.heroSubtitle
+      ? {
+          about: { '@type': 'Thing', name: doc.heroSubtitle },
+          description: doc.heroSubtitle,
+        }
+      : {}),
+    ...(author
+      ? {
+          author: {
+            '@type': 'Person',
+            name: author.name,
+            ...(author.slug === SITE_PERSON_SLUG ? personRef : {}),
+          },
+        }
+      : {}),
+    dateCreated: doc.createdAt,
+    dateModified: doc.updatedAt,
+    ...(client?.name ? { creator: { '@type': 'Organization', name: client.name } } : {}),
+    ...(doc.kpis && doc.kpis.length > 0
+      ? {
+          additionalProperty: doc.kpis.map((kpi) => ({
+            '@type': 'PropertyValue',
+            name: kpi?.label,
+            value: kpi?.value,
+          })),
+        }
+      : {}),
+  }
 }

@@ -457,7 +457,22 @@ export function getCachedPost(slug: string, locale: Locale) {
   )()
 }
 
-export function getCachedCaseStudy(slug: string, locale: Locale) {
+/**
+ * Detalle de un caso de exito por slug (fase 55, plan 55-09). Reemplaza a la
+ * lectura sin `select` de antes. Mismas reglas que el indice:
+ * `overrideAccess: false` dentro de la cache (un borrador no se cachea,
+ * T-55-31) y `select` con los campos que usan el detalle, `generateMetadata` y
+ * el JSON-LD (incluidos `lessons`, `meta`, `createdAt` y `updatedAt`).
+ *
+ * `depth: 2` y `populate` limitado a los campos publicos: Media (con
+ * `filename`, de donde el adaptador de Cloudinary genera el `url`; incluye
+ * `heroImage` y `meta.image`), el cliente (solo el nombre) y el autor con su
+ * avatar, que vive una relacion mas abajo (aside de E-E-A-T y JSON-LD).
+ *
+ * Devuelve undefined si el slug no existe (la ruta responde notFound). Si la
+ * lectura falla, lanza: `unstable_cache` no guarda una excepcion.
+ */
+export function getCachedCaseStudyBySlug(slug: string, locale: Locale) {
   return unstable_cache(
     async () => {
       const payload = await getPayload({ config })
@@ -465,16 +480,41 @@ export function getCachedCaseStudy(slug: string, locale: Locale) {
         collection: 'case-studies',
         where: { slug: { equals: slug } },
         locale,
-        // Same reason as posts above: this page renders an AuthorCard, whose
-        // avatar sits a relationship deeper than the author itself.
         depth: 2,
         limit: 1,
         overrideAccess: false,
+        select: {
+          title: true,
+          slug: true,
+          heroMetric: true,
+          heroSubtitle: true,
+          client: true,
+          sector: true,
+          period: true,
+          kpis: true,
+          clientContext: true,
+          challenge: true,
+          solution: true,
+          testimonialSection: true,
+          results: true,
+          lessons: true,
+          conclusion: true,
+          heroImage: true,
+          author: true,
+          meta: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+        populate: {
+          media: { url: true, filename: true, width: true, height: true, alt: true },
+          clientes: { name: true },
+          authors: { name: true, jobTitle: true, bio: true, slug: true, avatar: true },
+        },
       })
       return docs[0]
     },
     ['case-study', slug, locale],
-    { tags: [CACHE_TAGS.caseStudy(slug)], revalidate: CACHE_TTL_SECONDS },
+    { tags: [CACHE_TAGS.caseStudies(), CACHE_TAGS.caseStudy(slug)], revalidate: CACHE_TTL_SECONDS },
   )()
 }
 

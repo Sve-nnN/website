@@ -353,6 +353,26 @@
       "viewCase": "View the full case study",
       "emptyTitle": "Coming soon",
       "emptyText": "I'm preparing new case studies. Check back soon."
+    },
+    "detail": {
+      "statsTitle": "The numbers behind the case",
+      "contextTitle": "The client and the challenge",
+      "clientTitle": "The client",
+      "challengeTitle": "The challenge",
+      "solutionTitle": "The solution",
+      "resultsTitle": "Results",
+      "periodBefore": "Before: {period}.",
+      "periodAfter": "After: {period}.",
+      "before": "Before",
+      "after": "After",
+      "resultsCaption": "Case results, before and after",
+      "metricColumn": "Metric",
+      "changeColumn": "Change",
+      "noBase": "No baseline to compare",
+      "conclusionTitle": "Conclusions",
+      "authorLabel": "About the author",
+      "moreTitle": "More case studies",
+      "viewAll": "View all"
     }
   }
 }

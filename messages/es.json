@@ -353,6 +353,26 @@
       "viewCase": "Ver el caso completo",
       "emptyTitle": "Próximamente",
       "emptyText": "Estoy preparando nuevos casos de éxito. Vuelve pronto."
+    },
+    "detail": {
+      "statsTitle": "Los números del caso",
+      "contextTitle": "El cliente y el reto",
+      "clientTitle": "El cliente",
+      "challengeTitle": "El reto",
+      "solutionTitle": "La solución",
+      "resultsTitle": "Resultados",
+      "periodBefore": "Antes: {period}.",
+      "periodAfter": "Después: {period}.",
+      "before": "Antes",
+      "after": "Después",
+      "resultsCaption": "Resultados del caso, antes y después",
+      "metricColumn": "Métrica",
+      "changeColumn": "Cambio",
+      "noBase": "Sin base de comparación",
+      "conclusionTitle": "Conclusiones",
+      "authorLabel": "Sobre el autor",
+      "moreTitle": "Más casos de éxito",
+      "viewAll": "Ver todos"
     }
   }
 }
