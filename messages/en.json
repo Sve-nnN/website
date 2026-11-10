@@ -386,5 +386,22 @@
       "scaleColumn": "Scale",
       "lessonsTitle": "Lessons learned"
     }
+  },
+  "blog": {
+    "nav": {
+      "label": "Blog categories",
+      "all": "All"
+    },
+    "category": {
+      "listTitle": "Posts in this category",
+      "listLabel": "List of posts in the category",
+      "count": "{count, plural, one {# post} other {# posts}}",
+      "emptyTitle": "No posts in this category yet",
+      "emptyText": "Browse the rest of the blog in the meantime.",
+      "backToBlog": "Browse the whole blog"
+    },
+    "closing": {
+      "pointsLabel": "Key points"
+    }
   }
 }

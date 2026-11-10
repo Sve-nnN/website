@@ -1,25 +1,21 @@
 import { notFound, permanentRedirect } from 'next/navigation'
 
-import { Container } from '@/components/Container'
-import { PageHero } from '@/components/PageHero'
-import { PostCard } from '@/components/PostCard'
-import { ScrollReveal } from '@/components/ScrollReveal'
-import { BlogCategoryTabs } from '@/components/BlogCategoryTabs'
-import { CategoryBridge } from '@/components/CategoryBridge'
-import { BlogClosing } from '@/components/BlogClosing'
 import { JsonLd } from '@/components/JsonLd'
+import { CategoryPageView } from '@/components/pages/blog/CategoryPageView'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
 import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import {
-  getCachedArchive,
+  getCachedBlogPostList,
+  getCachedBlogPromo,
   getCachedCategories,
   getCachedPostCategoryMap,
   type CategoryData,
-  type PostCardData,
 } from '@/lib/cache'
-import { blogCategoryPath, blogPostPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
+import { toCategoryProps, toClosingProps } from '@/lib/blog-data'
+import { resolveBlogPromo } from '@/lib/blog-promo'
+import { blogCategoryPath, blogPostPath } from '@/lib/blog-paths'
 
 // SEO-06: estas rutas servian `cache-control: no-store` y re-ejecutaban el SSR
 // completo en cada request. Venia de `force-dynamic`, que estaba por una razon
@@ -39,25 +35,6 @@ export const revalidate = 60
 
 export function generateStaticParams(): Array<{ locale: string; category: string }> {
   return []
-}
-
-// Category listings are finite (66 published posts across 5 categories today),
-// so they are not paginated — one page per category is the whole category.
-const CATEGORY_POST_LIMIT = 100
-
-const COPY = {
-  es: {
-    emptyHeading: 'Todavía no hay artículos en esta categoría',
-    emptyBody: 'Explora el resto del blog mientras tanto.',
-    listingHeading: 'Artículos de esta categoría',
-    count: (n: number) => (n === 1 ? '1 artículo' : `${n} artículos`),
-  },
-  en: {
-    emptyHeading: 'No posts in this category yet',
-    emptyBody: 'Browse the rest of the blog in the meantime.',
-    listingHeading: 'Posts in this category',
-    count: (n: number) => (n === 1 ? '1 post' : `${n} posts`),
-  },
 }
 
 async function findCategory(locale: 'es' | 'en', slug: string): Promise<CategoryData | undefined> {
@@ -132,72 +109,25 @@ export default async function BlogCategoryPage({
     notFound()
   }
 
-  const result = await getCachedArchive({
-    relationTo: 'posts',
-    limit: CATEGORY_POST_LIMIT,
-    locale,
-    categoryId: category.id,
-  })
-
-  const docs = result.docs as PostCardData[]
-  const t = COPY[locale] ?? COPY.es
+  // La lectura lanza dentro de la cache y aqui se deja propagar (500): una lista
+  // vacia por un fallo transitorio se serviria como categoria vacia con 200 y
+  // la fijaria la cache de ruta durante el TTL.
+  const posts = await getCachedBlogPostList(locale)
+  const props = toCategoryProps(category, posts, categories, locale)
   const trail = buildBlogTrail(locale, { slug: categorySlug, title: category.title })
 
+  // Un solo cierre por pagina, con el texto de la categoria (blog-promo).
+  const promo = await getCachedBlogPromo(locale)
+  const closing = toClosingProps(resolveBlogPromo(promo, category.id).closing)
+
   return (
-    <div>
-      <PageHero
-        variant="index"
-        trail={trail}
-        title={category.title}
-        subtitle={category.description}
-        // El conteo es la orientación más barata que puede dar una categoría:
-        // dice si acá hay dos artículos o veinte antes de que el visitante
-        // scrollee para averiguarlo.
-        meta={[t.count(result.totalDocs)]}
+    <>
+      <CategoryPageView
+        {...props}
+        crumbs={trail.map((c) => ({ label: c.label, href: c.url }))}
+        closing={closing}
       />
-
-      <Container className="py-12 md:py-16">
-        <BlogCategoryTabs locale={locale} categories={categories} activeSlug={categorySlug} />
-
-        {docs.length === 0 ? (
-          <div className="text-center py-16">
-            <p className="font-heading text-heading">{t.emptyHeading}</p>
-            <p className="mt-2 text-body text-muted-foreground">{t.emptyBody}</p>
-          </div>
-        ) : (
-          <>
-            {/* SEO-10.2: cada tarjeta lleva su titulo en h3 y arriba solo
-                estaba la h1 de la categoria, o sea que la pagina saltaba un
-                nivel. La grilla ES una seccion, lo que le faltaba era el
-                encabezado: va oculto porque el titulo de la pagina ya dice de
-                que categoria se trata y repetirlo en pantalla seria ruido. */}
-            <h2 className="sr-only">{t.listingHeading}</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {docs.map((doc, i) => {
-              // Same above-the-fold rule as ArchiveBlock: the first row must
-              // not be SSR-hidden behind ScrollReveal's opacity:0 nor
-              // lazy-load its thumbnail (LCP).
-              const isAboveFold = i < 3
-              return (
-                <ScrollReveal key={doc.id} priority={isAboveFold}>
-                  <PostCard
-                    post={doc}
-                    priority={isAboveFold}
-                    href={blogPostPath(resolvePrimaryCategorySlug(doc.categories), doc.slug ?? '')}
-                  />
-                </ScrollReveal>
-                )
-              })}
-            </div>
-          </>
-        )}
-      </Container>
-
-      <CategoryBridge locale={locale} categories={categories} currentSlug={categorySlug} />
-
-      <BlogClosing locale={locale} categoryId={category.id} />
-
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </div>
+    </>
   )
 }

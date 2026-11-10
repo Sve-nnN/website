@@ -386,5 +386,22 @@
       "scaleColumn": "Escala",
       "lessonsTitle": "Lecciones aprendidas"
     }
+  },
+  "blog": {
+    "nav": {
+      "label": "Categorías del blog",
+      "all": "Todas"
+    },
+    "category": {
+      "listTitle": "Artículos de esta categoría",
+      "listLabel": "Lista de artículos de la categoría",
+      "count": "{count, plural, one {# artículo} other {# artículos}}",
+      "emptyTitle": "Todavía no hay artículos en esta categoría",
+      "emptyText": "Explora el resto del blog mientras tanto.",
+      "backToBlog": "Ver todo el blog"
+    },
+    "closing": {
+      "pointsLabel": "Puntos clave"
+    }
   }
 }

@@ -289,6 +289,54 @@ export function getCachedCategories(locale: Locale): Promise<CategoryData[]> {
 }
 
 /**
+ * Lista ligera de TODOS los posts publicados (fase 55, plan 55-10), mas
+ * recientes primero. La usan el indice del blog (filas por categoria, entrada
+ * destacada y busqueda en el cliente) y cada pagina de categoria, asi que una
+ * sola lectura cacheada por idioma sirve a las cinco rutas.
+ *
+ * Ligera a proposito: `select` deja fuera `content` (58 cuerpos de Lexical no
+ * viajan al listado) y `populate` reduce la categoria a slug y titulo y la
+ * portada a lo que pinta la tarjeta. `filename` es obligatorio en el populate
+ * de media (el `url` lo genera el adaptador de Cloudinary desde el filename).
+ *
+ * `overrideAccess: false` va DENTRO de la funcion cacheada: un borrador no debe
+ * entrar a la cache ni a la lista que se serializa al cliente (T-55-36).
+ * Si la lectura falla, la funcion lanza: `unstable_cache` no guarda una
+ * excepcion, y la ruta la deja propagar (500) en vez de servir una lista vacia.
+ */
+export function getCachedBlogPostList(locale: Locale) {
+  return unstable_cache(
+    async () => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'posts',
+        locale,
+        sort: '-publishedAt',
+        limit: 0,
+        pagination: false,
+        depth: 1,
+        overrideAccess: false,
+        select: {
+          title: true,
+          slug: true,
+          excerpt: true,
+          categories: true,
+          publishedAt: true,
+          heroImage: true,
+        },
+        populate: {
+          categories: { slug: true, title: true },
+          media: { url: true, filename: true, width: true, height: true, alt: true },
+        },
+      })
+      return docs
+    },
+    ['blog-post-list', locale],
+    { tags: [CACHE_TAGS.posts(), CACHE_TAGS.categories()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+/**
  * Websites index (fase 55, plan 55-01). Todos los sitios publicados, mas
  * recientes primero: la coleccion no tiene `publishedAt`, asi que se ordena por
  * `-createdAt` (no sirve `getCachedArchive`, que ordena por un campo que no
