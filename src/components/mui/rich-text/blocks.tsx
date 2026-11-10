@@ -464,12 +464,21 @@ function renderEmailCapture(ctx: BlockCtx): ReactNode {
         </Box>
       )}
       {state === 'error' && (
-        <Typography variant="body1" component="p" sx={{ mt: 2, color: 'error.main' }}>
+        <Typography
+          id="email-capture-error"
+          role="alert"
+          variant="body1"
+          component="p"
+          sx={{ mt: 2, color: 'error.main' }}
+        >
           {t('errorBody')}
         </Typography>
       )}
 
-      {!state && (
+      {/* El formulario sigue visible tras ?subscribed=error para que la persona
+          corrija el correo y reintente sin editar la URL. Solo pending y already
+          lo reemplazan por su mensaje. */}
+      {(!state || state === 'error') && (
         <Box component="form" action={subscribeToLeadMagnetAction} sx={{ mt: 2, display: 'grid', gap: 2 }}>
           <input type="hidden" name="postPath" value={ctx.postPath ?? ''} />
           <input type="hidden" name="locale" value={ctx.locale} />
@@ -482,6 +491,14 @@ function renderEmailCapture(ctx: BlockCtx): ReactNode {
               placeholder={t('emailPlaceholder')}
               required
               autoComplete="email"
+              // Tras un error la pagina recarga completa: se marca el campo como
+              // invalido, se enlaza con el mensaje y se lleva el foco aqui para
+              // que un lector de pantalla y el teclado retomen donde fallo.
+              error={state === 'error'}
+              autoFocus={state === 'error'}
+              slotProps={{
+                htmlInput: state === 'error' ? { 'aria-describedby': 'email-capture-error' } : undefined,
+              }}
               sx={{ flex: 1 }}
             />
             <Button type="submit" variant="contained" size="large" sx={{ flexShrink: 0 }}>

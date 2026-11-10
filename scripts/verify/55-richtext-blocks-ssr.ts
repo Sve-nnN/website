@@ -280,6 +280,27 @@ function emailFormProblem(html: string, postPath: string): string | null {
   check('email-capture con ?subscribed=pending cambia el formulario por el mensaje', !/<form\b/.test(pending) && /Revisa tu correo/.test(pending), 'sigue el formulario o falta el mensaje')
   check('email-capture con ?subscribed=already muestra el mensaje', /Ya estás suscrito/.test(stateHtml('already')), 'falta el mensaje already')
   check('email-capture con ?subscribed=error muestra el mensaje', /Algo salió mal/.test(stateHtml('error')), 'falta el mensaje error')
+  // WR-04: tras el error el formulario sigue visible, el mensaje se anuncia y el campo lo referencia.
+  const errorHtml = stateHtml('error')
+  check(
+    'email-capture con ?subscribed=error conserva el formulario completo para reintentar',
+    emailFormProblem(errorHtml, '/blog/fixture') === null,
+    String(emailFormProblem(errorHtml, '/blog/fixture')),
+  )
+  check(
+    'email-capture con ?subscribed=error anuncia el mensaje con role="alert" y lo enlaza al campo',
+    /<p\b[^>]*role="alert"[^>]*>[^<]*Algo salió mal/.test(errorHtml) &&
+      /id="email-capture-error"/.test(errorHtml) &&
+      /aria-describedby="email-capture-error"/.test(errorHtml) &&
+      /aria-invalid="true"/.test(errorHtml),
+    'falta role="alert", el id del mensaje, aria-describedby o aria-invalid',
+  )
+  check(
+    'email-capture sin error no lleva role="alert" ni aria-invalid',
+    !/role="alert"/.test(html) && !/aria-invalid="true"/.test(html) && !/aria-describedby="email-capture-error"/.test(html),
+    'el estado inicial trae marcas de error',
+  )
+  check('email-capture con ?subscribed=already conserva el reemplazo del formulario', !/<form\b/.test(stateHtml('already')), 'already dejo el formulario')
   check('email-capture ignora un valor de subscribed desconocido y no lo interpola (T-49-08)', /<form\b/.test(stateHtml('<script>')) && !/&lt;script/.test(stateHtml('<script>')), 'interpoló o ocultó el formulario')
 
   const bad = renderToHtml(createElement('form', null, createElement('input', { name: 'email' })), 'es')
