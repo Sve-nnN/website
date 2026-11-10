@@ -1,10 +1,19 @@
 import { notFound } from 'next/navigation'
 
 import { JsonLd } from '@/components/JsonLd'
+import { CtaSection } from '@/components/mui/CtaSection'
 import { WebsiteDetailView } from '@/components/pages/websites/WebsiteDetailView'
 import { buildWebsitesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
-import { getCachedWebsiteBySlug } from '@/lib/cache'
-import { buildWebsiteJsonLd, toWebsiteDetailProps } from '@/lib/websites-data'
+import { getCachedWebsiteBySlug, getCachedWebsitesIndex } from '@/lib/cache'
+import { getCtaData } from '@/lib/cta-data'
+import {
+  buildWebsiteJsonLd,
+  pickNeighbors,
+  pickSuggested,
+  toWebsiteDetailProps,
+  toWebsiteIndexProps,
+  type WebsiteDocLike,
+} from '@/lib/websites-data'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
@@ -90,9 +99,40 @@ export default async function WebsitePage({
     title: doc.title,
   })
 
+  // Anterior, siguiente y sugeridos salen del indice cacheado. Si esa lectura
+  // falla, el detalle se sirve igual sin esas dos secciones (la lectura lanza
+  // dentro de la cache, asi que el fallo no se fija).
+  let indexDocs: ReadonlyArray<WebsiteDocLike> = []
+  try {
+    indexDocs = await getCachedWebsitesIndex(loc)
+  } catch (err) {
+    console.error('[websites]', err)
+  }
+  const indexItems = toWebsiteIndexProps(indexDocs, loc)
+  const neighbors = pickNeighbors(indexItems, site.slug)
+  const suggested = pickSuggested(indexItems, site)
+
+  const ctaData = await getCtaData(loc)
+
   return (
     <>
-      <WebsiteDetailView crumbs={trail.map((c) => ({ label: c.label, href: c.url }))} site={site} />
+      <WebsiteDetailView
+        crumbs={trail.map((c) => ({ label: c.label, href: c.url }))}
+        site={site}
+        neighbors={neighbors}
+        suggested={suggested}
+      />
+      {ctaData && (
+        <div lang={ctaData.isFallback && locale === 'en' ? 'es' : undefined}>
+          <CtaSection
+            title={ctaData.title}
+            lead={ctaData.lead}
+            email={ctaData.email}
+            name={ctaData.name}
+            avatarUrl={ctaData.avatarUrl}
+          />
+        </div>
+      )}
       <JsonLd data={buildWebsiteJsonLd(doc)} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
     </>

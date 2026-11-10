@@ -232,3 +232,38 @@ export function buildWebsiteJsonLd(doc: {
     about: doc.role ?? doc.industry,
   }
 }
+
+const SUGGESTED_MAX = 3
+
+/**
+ * Hasta tres sitios para "Mas proyectos": primero los del mismo tipo que el
+ * actual (D-15) y, si faltan, se completa con los demas en el orden del indice.
+ * Nunca incluye el sitio actual ni repite uno.
+ */
+export function pickSuggested(
+  items: ReadonlyArray<WebsiteIndexItem>,
+  current: { slug: string; kind: WebsiteKind },
+): WebsiteIndexItem[] {
+  const others = items.filter((i) => i.slug !== current.slug)
+  const same = others.filter((i) => i.kind === current.kind)
+  const rest = others.filter((i) => i.kind !== current.kind)
+  return [...same, ...rest].slice(0, SUGGESTED_MAX)
+}
+
+export type WebsiteNeighbor = { slug: string; title: string }
+
+/**
+ * Sitio anterior y siguiente segun el orden del indice, en circulo (el ultimo
+ * enlaza al primero, como el sandbox). Con menos de dos sitios, o si el actual
+ * no esta en la lista, no hay navegacion: devuelve null.
+ */
+export function pickNeighbors(
+  items: ReadonlyArray<WebsiteIndexItem>,
+  slug: string,
+): { prev: WebsiteNeighbor; next: WebsiteNeighbor } | null {
+  const i = items.findIndex((x) => x.slug === slug)
+  if (i === -1 || items.length < 2) return null
+  const prev = items[(i - 1 + items.length) % items.length]!
+  const next = items[(i + 1) % items.length]!
+  return { prev: { slug: prev.slug, title: prev.title }, next: { slug: next.slug, title: next.title } }
+}
