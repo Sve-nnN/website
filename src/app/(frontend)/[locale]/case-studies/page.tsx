@@ -1,7 +1,7 @@
 import { JsonLd } from '@/components/JsonLd'
 import { CtaSection } from '@/components/mui/CtaSection'
 import { CaseStudiesIndexView } from '@/components/pages/cases/CaseStudiesIndexView'
-import { toCaseIndexProps, type CaseDocLike } from '@/lib/case-study-data'
+import { toCaseIndexProps } from '@/lib/case-study-data'
 import { getCachedCaseStudiesIndex } from '@/lib/cache'
 import { getCtaData } from '@/lib/cta-data'
 import { buildCaseStudiesTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
@@ -52,14 +52,10 @@ export default async function CaseStudiesListPage({
   const { locale } = await params
   const loc = locale as 'es' | 'en'
 
-  // La lectura lanza dentro de la cache (para no fijar un fallo transitorio) y
-  // aqui se captura: ante un error la ruta responde con la lista vacia.
-  let docs: ReadonlyArray<CaseDocLike> = []
-  try {
-    docs = await getCachedCaseStudiesIndex(loc)
-  } catch (err) {
-    console.error('[case-studies]', err)
-  }
+  // La lectura lanza dentro de la cache y aqui NO se captura: si falla una
+  // regeneracion ISR, Next conserva el ultimo HTML bueno en lugar de fijar una
+  // lista vacia con 200. El estado vacio solo aparece con la coleccion vacia.
+  const docs = await getCachedCaseStudiesIndex(loc)
   const items = toCaseIndexProps(docs, loc)
 
   const trail = buildCaseStudiesTrail(loc)

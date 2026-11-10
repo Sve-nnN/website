@@ -4,7 +4,7 @@ import { AuthorsIndexView } from '@/components/pages/authors/AuthorsIndexView'
 import { buildAuthorsTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { getCachedAuthorsIndex } from '@/lib/cache'
 import { getCtaData } from '@/lib/cta-data'
-import { toAuthorsIndexProps, type AuthorIndexDocLike } from '@/lib/authors-data'
+import { toAuthorsIndexProps } from '@/lib/authors-data'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
@@ -48,14 +48,10 @@ export default async function AuthorsListPage({ params }: { params: Promise<{ lo
   const { locale } = await params
   const loc = locale as 'es' | 'en'
 
-  // La lectura lanza dentro de la cache (para no fijar un fallo transitorio) y
-  // aqui se captura: ante un error la ruta responde con la lista vacia.
-  let docs: ReadonlyArray<AuthorIndexDocLike> = []
-  try {
-    docs = await getCachedAuthorsIndex(loc)
-  } catch (err) {
-    console.error('[authors]', err)
-  }
+  // La lectura lanza dentro de la cache y aqui NO se captura: si falla una
+  // regeneracion ISR, Next conserva el ultimo HTML bueno en lugar de fijar una
+  // lista vacia con 200. El estado vacio solo aparece con la coleccion vacia.
+  const docs = await getCachedAuthorsIndex(loc)
   const items = toAuthorsIndexProps(docs, loc)
 
   const trail = buildAuthorsTrail(loc)
