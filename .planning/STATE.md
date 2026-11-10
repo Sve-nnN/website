@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: planning
-stopped_at: Completed 55-01-PLAN.md (tracer Websites verificado en el preview)
-last_updated: "2026-11-09T04:40:19.345Z"
+stopped_at: Completed 55-06-PLAN.md (migracion lessons aplicada y preview verificado)
+last_updated: "2026-11-10T04:31:14.454Z"
 last_activity: 2026-11-08
 last_activity_desc: Phase 54 complete, transitioned to Phase 6
-state_head: 49a143ae0f236c67751fda1a56e3d089e1e659a2
+state_head: ba38df4277aba50cc7e8f7ecd325bedcea35e57e
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 35
-  completed_plans: 23
+  completed_plans: 28
   percent: 40
 ---
 
@@ -25,14 +25,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-06)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 53 — Base del rediseño: rama, preview, tema y shell
+**Current focus:** Phase 55 — Casos, websites, blog y autores
 
 ## Current Position
 
-Phase: 6 — deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
-Plan: Not started
-Status: Ready to plan
-Last activity: 2026-11-08 — Phase 54 complete, transitioned to Phase 6
+Phase: 55 — Casos, websites, blog y autores (en ejecución, ola 3)
+Plan: 6 of 13 completo (55-06: migración de lessons aplicada y preview verificado); sigue 55-07
+Status: Executing
+Last activity: 2026-11-10 — 55-06 completo, migración phase55_case_lessons aplicada en producción por Juan
 
 ## Performance Metrics
 
@@ -167,6 +167,7 @@ Last activity: 2026-11-08 — Phase 54 complete, transitioned to Phase 6
 | Phase 54 P15 | 50min | 3 tasks | 15 files |
 | Phase 54 P16 | 120min | 3 tasks | 14 files |
 | Phase 55 P01 | 25min | 3 tasks | 12 files |
+| Phase 55 P06 | 55min | 3 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -393,8 +394,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-09T04:40:19.303Z
-Stopped at: Completed 55-01-PLAN.md (tracer Websites verificado en el preview)
+Last session: 2026-11-10T04:31:14.412Z
+Stopped at: Completed 55-06-PLAN.md (migracion lessons aplicada y preview verificado)
 Resume file: None
 
 ## Operator Next Steps

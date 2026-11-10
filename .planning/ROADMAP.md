@@ -107,7 +107,24 @@ Plans:
   3. El índice del blog tiene búsqueda, las categorías tienen "ver más" y cada post muestra TOC y progreso de lectura; los 58 posts responden 200 con su rich text completo (bloques de código, FAQ, enlaces de afiliado inline con su divulgación y captura de email).
   4. El índice de autores y el perfil de Juan se renderizan desde Authors, con sus secciones de experiencia, educación, expertise y eventos.
 
-**Plans**: TBD
+**Plans**: 13 plans
+
+Plans:
+
+- [x] 55-01-PLAN.md — Índice de Websites en MUI de punta a punta (tracer) con verificación en vivo contra el preview
+- [x] 55-02-PLAN.md — Batería de verificación: paridad profunda de SEO, contrato de los 58 posts, paridad de contenido y auditorías estáticas
+- [x] 55-03-PLAN.md — Campo aditivo lessons de CaseStudies, migración generada sin aplicar, guardia aditiva y script de lectura
+- [x] 55-04-PLAN.md — Tags y hooks de revalidación de Websites, Authors y SpeakingEvents (IN-05 e IN-07)
+- [x] 55-05-PLAN.md — Motor de prosa compartido: enlaces propios, ids únicos de encabezados, captura de email y h1 del cuerpo
+- [x] 55-06-PLAN.md — Aplicar la migración con Juan, verificar con los dos roles y despliegue de humo con el esquema nuevo
+- [ ] 55-07-PLAN.md — Bloques del cuerpo de los posts en MUI y piezas compartidas ScrollRegion y PostCard
+- [ ] 55-08-PLAN.md — Detalle de Websites en MUI y respaldo de solo lectura de la home para Casos y Sitios
+- [ ] 55-09-PLAN.md — Índice y detalle de casos de éxito en MUI con comparativos calculados en el servidor y lecciones preparadas
+- [ ] 55-10-PLAN.md — Índice del blog con búsqueda, "ver más" por categoría y páginas de categoría
+- [ ] 55-11-PLAN.md — Post en MUI con TOC, progreso de lectura, byline, ofertas, relacionados y navegación
+- [ ] 55-12-PLAN.md — Índice de autores y perfil de Juan desde Authors con experiencia, educación, expertise y eventos
+- [ ] 55-13-PLAN.md — Prueba de la fase completa contra el preview: batería estricta, 58 posts en dos idiomas y chequeo A7
+
 **UI hint**: yes
 
 ### Phase 56: Contenido pendiente de Juan
@@ -145,7 +162,7 @@ Plans:
 |-------|----------------|--------|-----------|
 | 53. Base del rediseño: rama, preview, tema y shell | 6/6 | Complete    | 2026-11-07 |
 | 54. Páginas de conversión y utilidad | 16/16 | Complete    | 2026-11-08 |
-| 55. Casos, websites, blog y autores | 0/TBD | Not started | - |
+| 55. Casos, websites, blog y autores | 6/13 | In Progress|  |
 | 56. Contenido pendiente de Juan | 0/TBD | Not started | - |
 | 57. Gate de calidad y corte a producción | 0/TBD | Not started | - |
 
