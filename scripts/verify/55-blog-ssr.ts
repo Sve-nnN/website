@@ -25,7 +25,9 @@ const { BlogIndexView } = await import('../../src/components/pages/blog/BlogInde
 const { CategoryPageView } = await import('../../src/components/pages/blog/CategoryPageView')
 const {
   POSTS_PER_CATEGORY,
+  filterPosts,
   listableCategories,
+  normalizeQuery,
   parseNewsletterNotice,
   toBlogIndexProps,
   toCategoryProps,
@@ -362,6 +364,85 @@ function mainIndex(): void {
 }
 
 mainIndex()
+
+// ---------------------------------------------------------------------------
+// Busqueda del indice (tarea 3)
+// ---------------------------------------------------------------------------
+
+/** Contrato del campo de busqueda en el HTML del servidor, sin consulta. */
+function searchFailures(rawHtml: string, locale: 'es' | 'en', expectedLinks: string[]): string[] {
+  const reasons: string[] = []
+  const html = rawHtml.replace(/<(style|script)[\s\S]*?<\/\1>/g, '')
+  const form = /<form\s[^>]*role="search"[^>]*>([\s\S]*?)<\/form>/.exec(html)
+  if (!form) return ['falta el form role="search"']
+  const tag = /<form\s[^>]*role="search"[^>]*>/.exec(html)![0]
+  const action = locale === 'en' ? '/en/search' : '/search'
+  if (!new RegExp(`action="${action}"`).test(tag)) reasons.push(`el form no apunta a action="${action}"`)
+  if (!/method="get"/i.test(tag)) reasons.push('el form no usa method="get"')
+  if (!/aria-label="[^"]+"/.test(tag)) reasons.push('el form role="search" no tiene nombre accesible')
+  const input = /<input\s[^>]*name="q"[^>]*>/.exec(form[1]!)?.[0]
+  if (!input) reasons.push('falta el campo name="q"')
+  else {
+    const id = /\sid="([^"]+)"/.exec(input)?.[1]
+    if (!id) reasons.push('el campo no tiene id')
+    else if (!new RegExp(`<label[^>]*for="${escapeRe(id)}"[^>]*>[^<]*(?:Buscar artículos|Search posts)`).test(form[1]!)) {
+      reasons.push('el campo no tiene etiqueta visible asociada')
+    }
+  }
+  if (!/<button[^>]*type="submit"/.test(form[1]!)) reasons.push('falta el boton de enviar')
+  // El anuncio de estado esta en el DOM y vacio sin consulta.
+  const after = html.slice(html.indexOf(form[0]) + form[0].length)
+  const status = /<[a-z0-9]+[^>]*role="status"[^>]*aria-live="polite"[^>]*>([\s\S]*?)<\/[a-z0-9]+>/.exec(after)
+  if (!status) reasons.push('falta la region role="status" con aria-live="polite" tras el campo')
+  else if (textOf(status[1]!) !== '') reasons.push(`el anuncio de estado no esta vacio sin consulta (${JSON.stringify(textOf(status[1]!))})`)
+  if (/data-search-results/.test(html)) reasons.push('hay una lista de resultados sin consulta')
+  if (!/data-blog-sections/.test(html)) reasons.push('las secciones del servidor no estan sin consulta')
+  for (const href of expectedLinks) {
+    if (countOf(html, new RegExp(`href="(?:/en)?${escapeRe(href)}"`)) < 1) reasons.push(`falta el enlace ${href} sin consulta`)
+  }
+  return reasons
+}
+
+function mainSearch(): void {
+  // Funciones puras.
+  check(normalizeQuery('  Optimización   SEO ') === 'optimizacion seo', 'normalizeQuery: minusculas, sin tildes y espacios colapsados', normalizeQuery('  Optimización   SEO '))
+  check(normalizeQuery('') === '' && normalizeQuery('   ') === '', 'normalizeQuery: vacio y solo espacios dan vacio', 'no es vacio')
+  const list = [
+    { title: 'Optimización de imágenes', excerpt: 'Cómo reducir el peso', slug: 'a' },
+    { title: 'Core Web Vitals', excerpt: 'LCP, INP y CLS explicados', slug: 'b' },
+    { title: 'Rutas de React', excerpt: null, slug: 'c' },
+  ]
+  check(filterPosts(list, 'optimizacion').map((x) => x.slug).join() === 'a', 'filterPosts: ignora tildes en el titulo', filterPosts(list, 'optimizacion').map((x) => x.slug).join())
+  check(filterPosts(list, 'IMAGENES peso').map((x) => x.slug).join() === 'a', 'filterPosts: cada palabra puede estar en titulo o resumen', filterPosts(list, 'IMAGENES peso').map((x) => x.slug).join())
+  check(filterPosts(list, 'inp').map((x) => x.slug).join() === 'b', 'filterPosts: busca en el resumen', filterPosts(list, 'inp').map((x) => x.slug).join())
+  check(filterPosts(list, 'rutas').map((x) => x.slug).join() === 'c', 'filterPosts: resumen null no rompe', filterPosts(list, 'rutas').map((x) => x.slug).join())
+  check(filterPosts(list, '').length === 0 && filterPosts(list, '   ').length === 0, 'filterPosts: consulta vacia no filtra', 'devolvio resultados')
+  check(filterPosts(list, 'zzzzqx').length === 0, 'filterPosts: sin coincidencias da lista vacia', 'devolvio resultados')
+  check(filterPosts(list, '<script>alert(1)</script>').length === 0, 'filterPosts: una consulta con HTML es solo texto', 'devolvio resultados')
+
+  const props = toBlogIndexProps(PAGE_DOC, CATEGORIES, INDEX_POSTS, 'es')
+  check(props.searchList.length === 28 && props.searchList.every((x) => !('image' in x)), 'busqueda props: lista ligera de todos los posts y sin imagen', `${props.searchList.length}`)
+  const links = props.sections.flatMap((x) => x.items.map((i) => i.href))
+
+  for (const locale of ['es', 'en'] as const) {
+    const html = renderIndex(props, locale)
+    const reasons = searchFailures(html, locale, links)
+    check(reasons.length === 0, `busqueda ${locale}: sin consulta el HTML trae el campo, el anuncio vacio y todos los enlaces`, reasons.join('; '))
+  }
+
+  // Fixtures defectuosos: deben fallar.
+  const good = renderIndex(props, 'es')
+  check(searchFailures(good.replace('role="search"', ''), 'es', links).length > 0, 'defectuoso busqueda: sin role search se detecta', 'no se detecto')
+  check(searchFailures(good.replace(/for="blog-search-q"/g, 'for="otro"'), 'es', links).some((r) => r.includes('etiqueta')), 'defectuoso busqueda: sin etiqueta asociada se detecta', 'no se detecto')
+  check(searchFailures(good.replace('action="/search"', 'action="/otra"'), 'es', links).some((r) => r.includes('action')), 'defectuoso busqueda: action distinto de /search se detecta', 'no se detecto')
+  check(searchFailures(good.replace('method="get"', 'method="post"'), 'es', links).some((r) => r.includes('method')), 'defectuoso busqueda: method post se detecta', 'no se detecto')
+  const announced = good.replace(/(role="search"[\s\S]*?role="status"[^>]*aria-live="polite"[^>]*>)(<\/)/, '$13 resultados$2')
+  check(searchFailures(announced, 'es', links).some((r) => r.includes('anuncio')), 'defectuoso busqueda: anuncio con texto sin consulta se detecta', 'no se detecto')
+  check(searchFailures(good.replace(`href="${links[0]}"`, 'href="#"'), 'es', links).some((r) => r.includes(links[0]!)), 'defectuoso busqueda: un enlace menos sin consulta se detecta', 'no se detecto')
+  check(searchFailures(good.replace('data-blog-sections', 'data-otro'), 'es', links).some((r) => r.includes('secciones')), 'defectuoso busqueda: secciones del servidor ausentes se detecta', 'no se detecto')
+}
+
+mainSearch()
 
 if (failures > 0) {
   console.log(`\nFAIL 55-blog-ssr: ${failures} comprobacion(es) fallaron`)

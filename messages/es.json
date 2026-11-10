@@ -421,6 +421,15 @@
       "unsubscribed": "Te diste de baja. No vas a recibir más correos míos.",
       "invalidLink": "Ese enlace ya no sirve. Si querías suscribirte, deja tu correo otra vez aquí abajo.",
       "honeypotLabel": "Company website"
+    },
+    "search": {
+      "formAria": "Buscar en el blog",
+      "fieldLabel": "Buscar artículos",
+      "submit": "Buscar",
+      "resultCount": "{count, plural, =0 {Sin resultados} one {# resultado} other {# resultados}}",
+      "resultsTitle": "Resultados de la búsqueda",
+      "noResults": "No hay artículos que coincidan con tu búsqueda.",
+      "siteSearch": "Buscar en todo el sitio"
     }
   }
 }

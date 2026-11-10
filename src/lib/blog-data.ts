@@ -415,3 +415,39 @@ export type NewsletterNotice = 'confirmed' | 'unsubscribed' | 'invalid'
 export function parseNewsletterNotice(value: string | string[] | undefined): NewsletterNotice | null {
   return value === 'confirmed' || value === 'unsubscribed' || value === 'invalid' ? value : null
 }
+
+// ---------------------------------------------------------------------------
+// Busqueda del indice (tarea 3)
+// ---------------------------------------------------------------------------
+
+/**
+ * Texto de busqueda normalizado: minusculas, sin diacriticos (NFD) y sin espacios
+ * sobrantes. "Optimización" y "optimizacion" quedan iguales. Nunca produce HTML:
+ * es solo una cadena para comparar.
+ */
+export function normalizeQuery(value: string): string {
+  return value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+/**
+ * Filtra la lista ligera por `title` y `excerpt`. Cada palabra de la consulta debe
+ * aparecer en alguno de los dos (el orden no importa). Una consulta vacia no
+ * filtra: devuelve una lista vacia, porque sin consulta el indice muestra sus
+ * secciones y no una lista de resultados.
+ */
+export function filterPosts<T extends { title: string; excerpt: string | null }>(
+  list: ReadonlyArray<T>,
+  query: string,
+): T[] {
+  const terms = normalizeQuery(query).split(' ').filter(Boolean)
+  if (terms.length === 0) return []
+  return list.filter((post) => {
+    const haystack = normalizeQuery(`${post.title} ${post.excerpt ?? ''}`)
+    return terms.every((term) => haystack.includes(term))
+  })
+}

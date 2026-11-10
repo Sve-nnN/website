@@ -17,6 +17,7 @@ import type { BlogClosingData, BlogIndexProps, BlogPostItem, NewsletterNotice } 
 
 import { BlogClosingMui } from './BlogClosingMui'
 import { BlogNewsletter } from './BlogNewsletter'
+import { BlogSearch } from './BlogSearch'
 import { CategoryNav } from './CategoryNav'
 
 type Props = BlogIndexProps & {
@@ -65,6 +66,7 @@ export function BlogIndexView({
   latest,
   sections,
   nav,
+  searchList,
   viewAllLabel,
   newsletter,
   newsletterNotice,
@@ -78,62 +80,64 @@ export function BlogIndexView({
         <CategoryNav items={nav} />
       </PageHero>
 
-      {latest && (
-        <Box component="section" aria-labelledby="blog-latest-t" sx={{ pb: { xs: 6, md: 8 } }}>
-          <Container maxWidth="lg">
-            <Typography id="blog-latest-t" variant="overline" component="h2" sx={{ color: 'accentText', display: 'block', mb: 2 }}>
-              {t('latestTitle')}
-            </Typography>
-            {card(latest, true, true)}
-          </Container>
-        </Box>
-      )}
+      <BlogSearch posts={searchList}>
+        {latest && (
+          <Box component="section" aria-labelledby="blog-latest-t" sx={{ pb: { xs: 6, md: 8 } }}>
+            <Container maxWidth="lg">
+              <Typography id="blog-latest-t" variant="overline" component="h2" sx={{ color: 'accentText', display: 'block', mb: 2 }}>
+                {t('latestTitle')}
+              </Typography>
+              {card(latest, true, true)}
+            </Container>
+          </Box>
+        )}
 
-      {sections.map((section, i) => (
-        <Box
-          key={section.slug}
-          component="section"
-          aria-labelledby={`blog-cat-${section.slug}`}
-          sx={{ py: { xs: 6, md: 8 }, ...(i % 2 === 1 ? { bgcolor: 'raised' } : {}) }}
-        >
-          <Container maxWidth="lg">
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 3, mb: 4 }}>
-              <Box sx={{ maxWidth: 720, display: 'grid', gap: 1.5 }}>
-                <Typography variant="overline" component="p" sx={{ color: 'accentText' }}>
-                  {t('count', { count: section.total })}
-                </Typography>
-                <Typography id={`blog-cat-${section.slug}`} variant="h3" component="h2">
-                  {section.title}
-                </Typography>
-                {section.description && (
-                  <Typography variant="body1" color="text.secondary">
-                    {section.description}
+        {sections.map((section, i) => (
+          <Box
+            key={section.slug}
+            component="section"
+            aria-labelledby={`blog-cat-${section.slug}`}
+            sx={{ py: { xs: 6, md: 8 }, ...(i % 2 === 1 ? { bgcolor: 'raised' } : {}) }}
+          >
+            <Container maxWidth="lg">
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 3, mb: 4 }}>
+                <Box sx={{ maxWidth: 720, display: 'grid', gap: 1.5 }}>
+                  <Typography variant="overline" component="p" sx={{ color: 'accentText' }}>
+                    {t('count', { count: section.total })}
                   </Typography>
+                  <Typography id={`blog-cat-${section.slug}`} variant="h3" component="h2">
+                    {section.title}
+                  </Typography>
+                  {section.description && (
+                    <Typography variant="body1" color="text.secondary">
+                      {section.description}
+                    </Typography>
+                  )}
+                </Box>
+                {section.hasMore && (
+                  <Button
+                    component={linkFor(section.href)}
+                    href={section.href}
+                    variant="outlined"
+                    sx={{ minHeight: 40 }}
+                    endIcon={<ArrowRight size={18} aria-hidden="true" />}
+                  >
+                    {viewAllLabel ?? t('viewMore')}
+                    <Box component="span" sx={visuallyHidden}>
+                      {`: ${section.title}`}
+                    </Box>
+                  </Button>
                 )}
               </Box>
-              {section.hasMore && (
-                <Button
-                  component={linkFor(section.href)}
-                  href={section.href}
-                  variant="outlined"
-                  sx={{ minHeight: 40 }}
-                  endIcon={<ArrowRight size={18} aria-hidden="true" />}
-                >
-                  {viewAllLabel ?? t('viewMore')}
-                  <Box component="span" sx={visuallyHidden}>
-                    {`: ${section.title}`}
-                  </Box>
-                </Button>
-              )}
-            </Box>
-            <UL aria-label={t('sectionListLabel', { category: section.title })} sx={CARD_GRID}>
-              {section.items.map((item) => (
-                <li key={item.href}>{card(item)}</li>
-              ))}
-            </UL>
-          </Container>
-        </Box>
-      ))}
+              <UL aria-label={t('sectionListLabel', { category: section.title })} sx={CARD_GRID}>
+                {section.items.map((item) => (
+                  <li key={item.href}>{card(item)}</li>
+                ))}
+              </UL>
+            </Container>
+          </Box>
+        ))}
+      </BlogSearch>
 
       {newsletter && <BlogNewsletter data={newsletter} notice={newsletterNotice} />}
       {closing && <BlogClosingMui closing={closing} />}

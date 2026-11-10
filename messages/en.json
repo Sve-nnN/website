@@ -421,6 +421,15 @@
       "unsubscribed": "You are unsubscribed. No more emails from me.",
       "invalidLink": "That link is no longer valid. If you wanted to subscribe, leave your email again below.",
       "honeypotLabel": "Company website"
+    },
+    "search": {
+      "formAria": "Search the blog",
+      "fieldLabel": "Search posts",
+      "submit": "Search",
+      "resultCount": "{count, plural, =0 {No results} one {# result} other {# results}}",
+      "resultsTitle": "Search results",
+      "noResults": "No posts match your search.",
+      "siteSearch": "Search the whole site"
     }
   }
 }
