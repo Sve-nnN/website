@@ -68,9 +68,13 @@ export function AuthorTimeline({ items, label }: Props) {
                 sx={{
                   m: '6px 0',
                   boxShadow: 'none',
+                  // Mismo borde en los dos estados: el punto mide lo mismo y el texto de
+                  // todas las etapas arranca en la misma columna (con el relleno solo, el
+                  // punto en curso era 2 px mas angosto y el contenido quedaba corrido).
+                  border: '3px solid',
                   ...(item.current
                     ? { bgcolor: 'primary.main', borderColor: 'primary.main' }
-                    : { bgcolor: 'background.default', border: '3px solid', borderColor: 'divider' }),
+                    : { bgcolor: 'background.default', borderColor: 'divider' }),
                 }}
               />
               {!last && <TimelineConnector sx={{ bgcolor: 'divider' }} />}

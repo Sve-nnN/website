@@ -407,6 +407,20 @@ function mainProfile(): void {
   const noRelated = toAuthorProfileProps(PROFILE_DOC, EVENT_DOCS, 'es', { posts: [], cases: [] }, NOW)!
   const noRelatedHtml = renderProfile(noRelated, 'es')
   check(!SECTION_TITLES.posts.test(noRelatedHtml) && !SECTION_TITLES.cases.test(textOf(noRelatedHtml)), 'sin posts ni casos: no quedan sus encabezados', 'queda un encabezado huerfano')
+  // Una etapa sin ninguna fecha no se marca como en curso: la ausencia de datos no afirma un estado.
+  const undated = toAuthorProfileProps(
+    { ...PROFILE_DOC, experience: [{ role: 'Sin fechas', company: 'Empresa', startDate: null, endDate: null }] },
+    [],
+    'es',
+    {},
+    NOW,
+  )!
+  check(undated.experience[0]?.current === false && undated.experience[0]?.dates === null, 'perfil props: una etapa sin ninguna fecha no esta en curso', JSON.stringify(undated.experience[0]))
+  check(
+    countOf(renderProfile(undated, 'es'), /data-current="true"/g) === 1,
+    'perfil: la etapa sin fechas no pinta el punto de en curso (solo queda el de la educacion)',
+    'el punto de en curso aparece en la etapa sin fechas',
+  )
 
   // Una URL pegada en la descripcion (medido en vivo) no debe ensanchar la pagina: la linea tiene que poder partirse.
   const urlDoc = toAuthorProfileProps(

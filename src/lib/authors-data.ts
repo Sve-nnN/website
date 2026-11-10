@@ -115,7 +115,7 @@ export type AuthorTimelineItem = {
   title: string
   org: string | null
   dates: AboutDateRange | null
-  /** Sin fecha de fin o con fin en el futuro: etapa en curso. */
+  /** Con inicio y sin fin, o con fin en el futuro: etapa en curso. Sin ninguna fecha, no. */
   current: boolean
   description: string | null
 }
@@ -219,10 +219,20 @@ export function toAuthorsIndexProps(
 // Perfil
 // ---------------------------------------------------------------------------
 
-function isCurrent(endDate: string | null | undefined, now: number): boolean {
-  if (!endDate) return true
+/**
+ * Etapa en curso: con fecha de fin, cuando esa fecha aun no llego; sin fecha de
+ * fin, solo si hay fecha de inicio. Una etapa SIN NINGUNA fecha no se marca como
+ * en curso: la ausencia de datos no afirma un estado (medido en vivo: la primera
+ * experiencia de Juan llega sin fechas y aparecia como actual).
+ */
+function isCurrent(
+  startDate: string | null | undefined,
+  endDate: string | null | undefined,
+  now: number,
+): boolean {
+  if (!endDate) return Boolean(startDate)
   const end = new Date(endDate).getTime()
-  return Number.isNaN(end) ? true : end > now
+  return Number.isNaN(end) ? Boolean(startDate) : end > now
 }
 
 function mapTimeline(
@@ -250,7 +260,7 @@ function mapTimeline(
       title,
       org: text(kind === 'experience' ? row.company : row.institution),
       dates: range.from === '' ? null : range,
-      current: isCurrent(row.endDate, now),
+      current: isCurrent(row.startDate, row.endDate, now),
       description: text(row.description),
     })
   }
