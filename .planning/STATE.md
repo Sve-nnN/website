@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: executing
-stopped_at: Completed 55-11-PLAN.md
-last_updated: "2026-11-10T07:13:52.022Z"
+stopped_at: Completed 55-12-PLAN.md
+last_updated: "2026-11-10T08:00:51.336Z"
 last_activity: 2026-11-10
 last_activity_desc: Phase 54 complete, transitioned to Phase 6
-state_head: 7a7a133352cb67567559e153fc88aaa4f848bc6f
+state_head: 5b79918acb4e50a9a50c51f2b5b59b7530b00c78
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 35
-  completed_plans: 33
+  completed_plans: 34
   percent: 40
 ---
 
@@ -30,9 +30,9 @@ See: .planning/PROJECT.md (updated 2026-11-06)
 ## Current Position
 
 Phase: 55 — Casos, websites, blog y autores (en ejecución, ola 5)
-Plan: 11 of 13 completo (55-11: post en MUI con TOC, progreso de lectura, afiliados antes del cuerpo, ofertas, autoría, relacionados y navegación; verificado en vivo en el preview); sigue 55-12
+Plan: 12 of 13 completo (55-12: índice de autores y perfil de Juan en MUI desde Authors, con experiencia y educación en timeline de @mui/lab, eventos, 58 posts y 7 casos enlazados; verificado en vivo en el preview); sigue 55-13
 Status: Ready to execute
-Last activity: 2026-11-10 — 55-11 completo, push de feat/mui-redesign y verificación en vivo (batería: todo PASS salvo 3 anclas de contenido sin destino en /en/blog/cs-fundamentals/recursividad, traducción incompleta)
+Last activity: 2026-11-10 — 55-12 completo, push de feat/mui-redesign y verificación en vivo (batería: todo PASS salvo 3 anclas de contenido sin destino en /en/blog/cs-fundamentals/recursividad, traducción incompleta; commit 5b79918 sin empujar)
 
 ## Performance Metrics
 
@@ -399,7 +399,7 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 ## Session Continuity
 
 Last session: 2026-11-10T07:13:51.983Z
-Stopped at: Completed 55-11-PLAN.md
+Stopped at: Completed 55-12-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
