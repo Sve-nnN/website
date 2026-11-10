@@ -30,6 +30,10 @@ type Props = {
  * anuncia "En curso". `role="list"` se declara a mano porque la lista no
  * muestra viñetas y VoiceOver en Safari deja de anunciarla.
  *
+ * `overflowWrap: 'anywhere'` en el contenido: la descripcion que viene del CMS
+ * puede traer una URL pegada (medido en vivo: "Mas info: https://www.aprendoclub.com/diplomado"
+ * ensanchaba la pagina a 358 px en 320 px) y sin espacios no hay donde partir la linea.
+ *
  * Sin items no pinta nada: la seccion que la contiene tampoco pinta encabezado.
  */
 export function AuthorTimeline({ items, label }: Props) {
@@ -71,7 +75,7 @@ export function AuthorTimeline({ items, label }: Props) {
               />
               {!last && <TimelineConnector sx={{ bgcolor: 'divider' }} />}
             </TimelineSeparator>
-            <TimelineContent sx={{ pt: 0, pb: last ? 0 : 5, pl: 3, minWidth: 0 }}>
+            <TimelineContent sx={{ pt: 0, pb: last ? 0 : 5, pl: 3, minWidth: 0, overflowWrap: 'anywhere' }}>
               {dateLine && (
                 <Typography
                   variant="overline"

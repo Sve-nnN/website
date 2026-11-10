@@ -113,7 +113,7 @@ function EventCard({ event }: { event: AuthorEventItem }) {
             sx={{ width: '100%', height: 'auto', aspectRatio: '16 / 9', objectFit: 'cover', display: 'block' }}
           />
         )}
-        <Box sx={{ p: 3, display: 'grid', gap: 1.5, minWidth: 0 }}>
+        <Box sx={{ p: 3, display: 'grid', gap: 1.5, minWidth: 0, overflowWrap: 'anywhere' }}>
           <Typography variant="h5" component="h3">
             {event.title}
             {event.by && (
@@ -249,7 +249,7 @@ export function AuthorProfileView({ crumbs, profile }: Props) {
             key={`${i}-${paragraph.slice(0, 24)}`}
             variant="body1"
             color="text.secondary"
-            sx={{ maxWidth: 680 }}
+            sx={{ maxWidth: 680, overflowWrap: 'anywhere' }}
           >
             {paragraph}
           </Typography>

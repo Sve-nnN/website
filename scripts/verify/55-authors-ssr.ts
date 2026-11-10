@@ -408,6 +408,22 @@ function mainProfile(): void {
   const noRelatedHtml = renderProfile(noRelated, 'es')
   check(!SECTION_TITLES.posts.test(noRelatedHtml) && !SECTION_TITLES.cases.test(textOf(noRelatedHtml)), 'sin posts ni casos: no quedan sus encabezados', 'queda un encabezado huerfano')
 
+  // Una URL pegada en la descripcion (medido en vivo) no debe ensanchar la pagina: la linea tiene que poder partirse.
+  const urlDoc = toAuthorProfileProps(
+    {
+      ...PROFILE_DOC,
+      experience: [{ role: 'Cargo', company: 'Empresa', startDate: '2024-01-01T00:00:00.000Z', description: 'Mas info: https://www.ejemplo.example.test/una/ruta/larga/sin/espacios' }],
+    },
+    [],
+    'es',
+    {},
+    NOW,
+  )!
+  const urlHtml = renderProfile(urlDoc, 'es')
+  check(/overflow-wrap:anywhere/.test(urlHtml) && urlHtml.includes('https://www.ejemplo.example.test/una/ruta/larga/sin/espacios'), 'perfil: el contenido de la etapa puede partir una URL larga (overflow-wrap anywhere)', 'falta overflow-wrap:anywhere en el estilo')
+  const noWrap = urlHtml.replace(/overflow-wrap:anywhere/g, 'overflow-wrap:normal')
+  check(!/overflow-wrap:anywhere/.test(noWrap), 'defectuoso: sin overflow-wrap anywhere no se cumple la prueba de URL larga', 'el reemplazo no cambia el estilo')
+
   // Casos del autor: el filtro por autor no pierde ninguno.
   const mixed: AuthorCaseDocLike[] = [...fakeCases(3), { slug: 'ajeno', title: 'Ajeno', author: 2 }, { slug: 'poblado', title: 'Poblado', author: { id: 1 } }, { slug: 'sin-autor', title: 'Sin autor', author: null }]
   check(pickAuthorCases(mixed, 1).length === 4, 'casos del autor: id numerico y autor poblado, sin los ajenos ni los sin autor', `${pickAuthorCases(mixed, 1).length}`)
