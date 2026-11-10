@@ -120,7 +120,7 @@ Plans:
 - [x] 55-07-PLAN.md — Bloques del cuerpo de los posts en MUI y piezas compartidas ScrollRegion y PostCard
 - [x] 55-08-PLAN.md — Detalle de Websites en MUI y respaldo de solo lectura de la home para Casos y Sitios
 - [x] 55-09-PLAN.md — Índice y detalle de casos de éxito en MUI con comparativos calculados en el servidor y lecciones preparadas
-- [ ] 55-10-PLAN.md — Índice del blog con búsqueda, "ver más" por categoría y páginas de categoría
+- [x] 55-10-PLAN.md — Índice del blog con búsqueda, "ver más" por categoría y páginas de categoría
 - [ ] 55-11-PLAN.md — Post en MUI con TOC, progreso de lectura, byline, ofertas, relacionados y navegación
 - [ ] 55-12-PLAN.md — Índice de autores y perfil de Juan desde Authors con experiencia, educación, expertise y eventos
 - [ ] 55-13-PLAN.md — Prueba de la fase completa contra el preview: batería estricta, 58 posts en dos idiomas y chequeo A7
