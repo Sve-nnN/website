@@ -728,24 +728,175 @@ export function buildTermsEs(F: LegalFacts): LegalSection[] {
 
 export const TERMS_ES: LegalSection[] = buildTermsEs(LEGAL_FACTS)
 
+export function buildTermsEn(F: LegalFacts): LegalSection[] {
+  const country = valueEn(F.GOVERNING_LAW) || 'Peru'
+  const en: EnSection[] = [
+    {
+      title: 'Acceptance of the terms',
+      blocks: [
+        pe('By using this site you accept these terms. If you disagree with any of them, do not use the site.'),
+        pe(['To find out how I handle your data, read the ', { text: 'privacy policy', href: PRIVACY_URL_EN }, '.']),
+      ],
+    },
+    {
+      title: 'What this site is',
+      blocks: [
+        pe(
+          'This site is the portfolio and blog of Juan Carlos Angulo, software engineer and technical SEO consultant. Here I publish articles, client case studies, the tools I use and the way to hire me. Everything is informational.',
+        ),
+        pe('If you hire me for a service, we agree on it separately and in writing. That agreement overrides these terms.'),
+      ],
+    },
+    {
+      title: 'Intellectual property and how to cite me',
+      blocks: [
+        pe('The texts, the analyses and the design of this site are mine unless it says otherwise. The logos and brands that appear belong to their owners.'),
+        pe(
+          'You can quote short excerpts if you credit me as Juan Carlos Angulo and link to the original page. To reproduce a full text or use it commercially, ask me for written permission.',
+        ),
+      ],
+    },
+    {
+      title: 'Affiliate links',
+      blocks: [
+        pe(
+          'Some links are affiliate links. If you buy through one, I may earn a commission at no extra cost to you. I only recommend tools I actually use.',
+        ),
+        pe('Those links do not follow you. The site only records that someone clicked the link, as the privacy policy explains.'),
+      ],
+    },
+    {
+      title: 'Third-party content and external links',
+      blocks: [
+        pe(
+          'The site links to pages and services that belong to other people. I do not control them and I am not responsible for their content, their availability or how they handle your data. If you use an external service, its own terms and its own privacy policy apply.',
+        ),
+      ],
+    },
+    {
+      title: 'No warranties and limit of liability',
+      blocks: [
+        pe(
+          'I publish this site as it is. I work to keep the information correct and up to date, but I do not guarantee that it is, or that the site will run without interruptions.',
+        ),
+        pe(
+          'The case studies show concrete results from concrete projects. They are not a promise that you will get the same, because SEO depends on many factors that change from one site to another. The articles are educational, and applying what they say is your decision.',
+        ),
+        pe('To the extent the law allows, I am not liable for losses or indirect damages that come from using the site or following its content.'),
+      ],
+    },
+    {
+      title: 'Changes to the terms',
+      blocks: [
+        pe(
+          'I can update these terms. When I do, I change the text and the date shown at the top of the page. If you keep using the site after the change, you accept the new version.',
+        ),
+      ],
+    },
+    {
+      title: 'Governing law',
+      blocks: [
+        pe(
+          `These terms are governed by the laws of ${country}. If a disagreement comes up, you write to me first and we try to sort it out by talking. If it is not resolved, a competent court of ${country} will hear it. None of this takes away the rights your local law gives you as a consumer.`,
+        ),
+      ],
+    },
+    {
+      title: 'How to contact me',
+      blocks: [
+        pe(['For any question about these terms or about the site, write to me at ', { text: MAIL, href: MAILTO }, '.']),
+      ],
+    },
+  ]
+  return withEvidenceFrom(buildTermsEs(F), en, 'TERMS_EN')
+}
+
+export const TERMS_EN: LegalSection[] = buildTermsEn(LEGAL_FACTS)
+
 // ---------------------------------------------------------------------------
-// Decisiones: una por hecho por confirmar (el plan 56-11 agrega las de cada documento)
+// Decisiones: una por documento e idioma y una por hecho por confirmar (plan 56-11)
 // ---------------------------------------------------------------------------
 
-const FACT_NOTES: Record<keyof LegalFacts, string[]> = {
-  HOSTING: ['', 'Alemania', 'Finlandia', 'Estados Unidos'],
-  MAILBOX_PROVIDER: [''],
-  RETENTION_CONTACT_EMAIL: ['6 meses', '12 meses', '24 meses'],
-  RETENTION_SUBSCRIBERS: ['6 meses', '12 meses', '24 meses'],
-  COOKIE_BANNER: ['no hace falta'],
-  GOVERNING_LAW: ['Perú'],
+/** Texto plano legible de un documento, para la vista previa de 56-review-export. */
+export function sectionsToPlain(sections: readonly LegalSection[]): string {
+  const part = (c: InlineContent) =>
+    (Array.isArray(c) ? c : [c]).map((x) => (typeof x === 'string' ? x : `${x.text} (${x.href})`)).join('')
+  const lines: string[] = []
+  for (const s of sections) {
+    lines.push(`## ${s.title}`)
+    for (const b of s.blocks) {
+      if (b.type === 'p') lines.push(part(b.content))
+      else for (const it of b.items) lines.push(`- ${part(it.content)}`)
+    }
+    lines.push('')
+  }
+  return lines.join('\n').trimEnd()
+}
+
+const NOTE_NOT_LEGAL_ADVICE = 'Juan no es abogado: el texto no es asesoría legal (D-10). La revisión legal profesional es opcional y va en el handoff, no en el sitio.'
+
+/**
+ * Una decision por documento e idioma. El estado queda `propuesto` con gate `aprobado`:
+ * el texto se siembra a la sombra para que Juan lo lea, y el corte no pasa hasta que
+ * responda. Cuando Juan apruebe, el estado y `chosen` se cambian en estas cuatro lineas
+ * (status: 'aprobado') y la fecha de la aprobacion se anota en `source`.
+ */
+const docDecision = (id: string, label: string, sections: readonly LegalSection[], lang: 'es' | 'en'): Decision => ({
+  id,
+  label,
+  status: 'propuesto',
+  gate: 'aprobado',
+  chosen: 'propuesto',
+  recommended: 'propuesto',
+  options: {
+    propuesto: {
+      es: lang === 'es' ? 'Aprobar el texto tal como está' : 'Aprobar el texto en inglés tal como está',
+      en: lang === 'es' ? 'Approve the Spanish text as written' : 'Approve the English text as written',
+      note: NOTE_NOT_LEGAL_ADVICE,
+    },
+    cambios: { es: 'Aprobar con cambios (Juan indica documento y texto)', en: 'Approve with changes (Juan names the document and the text)' },
+  },
+  preview: { [lang]: sectionsToPlain(sections) },
+  source: 'scripts/db/data/56-legal-copy.ts (texto adaptado de la plantilla CC0 General-Legal/legal-templates)',
+})
+
+export const DOCUMENT_DECISIONS: Decision[] = [
+  docDecision('LEGAL-PRIVACY-ES', 'Política de privacidad en español', PRIVACY_ES, 'es'),
+  docDecision('LEGAL-PRIVACY-EN', 'Política de privacidad en inglés', PRIVACY_EN, 'en'),
+  docDecision('LEGAL-TERMS-ES', 'Términos de uso en español', TERMS_ES, 'es'),
+  docDecision('LEGAL-TERMS-EN', 'Términos de uso en inglés', TERMS_EN, 'en'),
+]
+
+/** Alternativas razonables por hecho, con el texto en los dos idiomas. */
+const FACT_NOTES: Record<keyof LegalFacts, { es: string; en: string }[]> = {
+  HOSTING: [
+    { es: '', en: '' },
+    { es: 'Alemania', en: 'Germany' },
+    { es: 'Finlandia', en: 'Finland' },
+    { es: 'Estados Unidos', en: 'United States' },
+  ],
+  MAILBOX_PROVIDER: [{ es: '', en: '' }],
+  RETENTION_CONTACT_EMAIL: [
+    { es: '6 meses', en: '6 months' },
+    { es: '12 meses', en: '12 months' },
+    { es: '24 meses', en: '24 months' },
+  ],
+  RETENTION_SUBSCRIBERS: [
+    { es: '6 meses', en: '6 months' },
+    { es: '12 meses', en: '12 months' },
+    { es: '24 meses', en: '24 months' },
+  ],
+  COOKIE_BANNER: [{ es: 'no hace falta', en: 'not needed' }],
+  GOVERNING_LAW: [{ es: 'Perú', en: 'Peru' }],
 }
 
 /** Una decision por hecho. status y valor salen de LEGAL_FACTS: se cambian ahi. Gate aprobado. */
-export const DECISIONS: Decision[] = (Object.keys(LEGAL_FACTS) as (keyof LegalFacts)[]).map((key) => {
+const FACT_DECISIONS: Decision[] = (Object.keys(LEGAL_FACTS) as (keyof LegalFacts)[]).map((key) => {
   const fact = LEGAL_FACTS[key]
-  const extras = details(fact, 'region') !== '' ? `, región ${details(fact, 'region')}` : ''
-  const current = `${fact.value || '(sin dato: el texto usa una fórmula general)'}${extras}`
+  const extrasEs = details(fact, 'region') !== '' ? `, región ${details(fact, 'region')}` : ''
+  const extrasEn = detailsEn(fact, 'region') !== '' ? `, region ${detailsEn(fact, 'region')}` : ''
+  const currentEs = `${fact.value || '(sin dato: el texto usa una fórmula general)'}${extrasEs}`
+  const currentEn = `${valueEn(fact) || '(no data: the text uses a general formula)'}${extrasEn}`
   return {
     id: `LEGAL-FACT-${key.replace(/_/g, '-')}`,
     label: fact.label,
@@ -754,13 +905,15 @@ export const DECISIONS: Decision[] = (Object.keys(LEGAL_FACTS) as (keyof LegalFa
     chosen: 'propuesto',
     recommended: 'propuesto',
     options: {
-      propuesto: { es: current, note: fact.evidence },
+      propuesto: { es: currentEs, en: currentEn, note: fact.evidence },
       ...Object.fromEntries(
         FACT_NOTES[key]
-          .filter((v) => v !== fact.value)
-          .map((v, i) => [`alt${i + 1}`, { es: v === '' ? '(sin dato)' : v }]),
+          .filter((v) => v.es !== fact.value)
+          .map((v, i) => [`alt${i + 1}`, { es: v.es === '' ? '(sin dato)' : v.es, en: v.en === '' ? '(no data)' : v.en }]),
       ),
     },
     source: 'scripts/db/data/56-legal-copy.ts LEGAL_FACTS',
   }
 })
+
+export const DECISIONS: Decision[] = [...DOCUMENT_DECISIONS, ...FACT_DECISIONS]

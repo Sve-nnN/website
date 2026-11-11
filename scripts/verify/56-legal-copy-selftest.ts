@@ -36,6 +36,8 @@ const {
   PRIVACY_ES,
   TERMS_ES,
   PRIVACY_EN,
+  TERMS_EN,
+  buildTermsEn,
   buildPrivacyEs,
   buildTermsEs,
   buildPrivacyEn,
@@ -186,10 +188,35 @@ for (const k of FACT_KEYS) {
   check(okStatus && f.evidence.trim().length > 20 && f.label.trim() !== '', `LEGAL_FACTS.${k} tiene status, etiqueta y evidencia`, `status=${f.status}`)
 }
 check(LEGAL_FACTS.HOSTING.value === 'Hetzner', 'HOSTING nombra a Hetzner (D-08)', `vale "${LEGAL_FACTS.HOSTING.value}"`)
+const DOC_IDS = ['LEGAL-PRIVACY-ES', 'LEGAL-PRIVACY-EN', 'LEGAL-TERMS-ES', 'LEGAL-TERMS-EN']
+const FACT_IDS = FACT_KEYS.map((k) => `LEGAL-FACT-${k.replace(/_/g, '-')}`)
 check(
-  validateDecisions(DECISIONS).length === 0 && DECISIONS.length === 6 && DECISIONS.every((d) => d.gate === 'aprobado' && d.id.startsWith('LEGAL-')),
-  'DECISIONS: seis decisiones LEGAL-, validas y con gate aprobado',
-  validateDecisions(DECISIONS).join('; ') || `cantidad ${DECISIONS.length}`,
+  validateDecisions(DECISIONS).length === 0 &&
+    DECISIONS.length === DOC_IDS.length + FACT_IDS.length &&
+    DECISIONS.every((d) => d.gate === 'aprobado' && d.id.startsWith('LEGAL-')) &&
+    [...DOC_IDS, ...FACT_IDS].every((id) => DECISIONS.some((d) => d.id === id)),
+  'DECISIONS: una por documento e idioma (4) y una por hecho (6), validas y con gate aprobado',
+  validateDecisions(DECISIONS).join('; ') || `cantidad ${DECISIONS.length}: ${DECISIONS.map((d) => d.id).join(', ')}`,
+)
+check(
+  DECISIONS.filter((d) => DOC_IDS.includes(d.id)).every((d) => d.status === 'propuesto' && d.options !== undefined && d.recommended === 'propuesto' && d.chosen === 'propuesto'),
+  'las cuatro decisiones de documento quedan propuesto hasta que Juan responda',
+  'una decision de documento no esta propuesta',
+)
+check(
+  DOC_IDS.every((id) => {
+    const d = DECISIONS.find((x) => x.id === id)
+    const lang = id.endsWith('-EN') ? 'en' : 'es'
+    const other = lang === 'en' ? 'es' : 'en'
+    return !!d?.preview?.[lang] && d.preview[lang]!.includes('## ') && d.preview[other] === undefined
+  }),
+  'cada decision de documento trae su texto completo como vista previa para 56-review-export',
+  'falta la vista previa o esta en el idioma equivocado',
+)
+check(
+  DECISIONS.filter((d) => FACT_IDS.includes(d.id)).every((d) => Object.values(d.options ?? {}).every((o) => (o.es ?? '') !== '' && (o.en ?? '') !== '')),
+  'cada opcion de cada hecho trae el valor en espanol y en ingles',
+  'una opcion sin es o sin en',
 )
 
 // ---------------------------------------------------------------- constructor Lexical
@@ -339,6 +366,28 @@ check(!privacyAll.includes('Alemania') && privacyAll.includes('un proveedor de c
   const changedTerms = buildTermsEs({ ...LEGAL_FACTS, GOVERNING_LAW: { ...LEGAL_FACTS.GOVERNING_LAW, value: 'PaísDePrueba' } }).flatMap(sectionTexts).join('\n')
   check(changedTerms.includes('PaísDePrueba'), 'cambiar GOVERNING_LAW cambia terms', 'terms no cambio')
   check(/comisi/.test(termsAll) && /sin costo/.test(termsAll), 'terms divulga los enlaces de afiliado', 'falta la divulgacion')
+}
+
+// ---------------------------------------------------------------- terminos en ingles (plan 56-11)
+
+{
+  const termsEnProblems = docProblems(TERMS_EN, ['hello@juan-tech.com'])
+  check(termsEnProblems.length === 0, 'TERMS_EN cumple encabezados, evidencia y cadenas prohibidas', termsEnProblems.join(' | '))
+  const heads = extractHeadings(sectionsToLexical(TERMS_EN).root as unknown as LexicalRootLike)
+  check(heads.length === TERMS_EN.length && heads.every((h, i) => h.text === TERMS_EN[i].title && h.level === 2), 'extractHeadings acepta el estado de TERMS_EN', `${heads.length} de ${TERMS_EN.length}`)
+  const par = parityProblems(TERMS_ES, TERMS_EN, PROVIDERS)
+  check(par.length === 0 && TERMS_EN.length === TERMS_ES.length, 'TERMS_EN y TERMS_ES: mismas secciones, bloques, enlaces y evidencia', par.join(' | '))
+  check(spanishLeaks(TERMS_EN).length === 0, 'TERMS_EN no trae tildes ni signos del espanol', spanishLeaks(TERMS_EN).join(''))
+  const allowed = new Set([...PROVIDERS, ...Object.values(LEGAL_FACTS).map((f) => f.value).filter(Boolean)])
+  const termsEnAll = TERMS_EN.flatMap(sectionTexts).join('\n')
+  const stray = strayProviders(termsEnAll, allowed)
+  check(stray.length === 0, 'ninguna seccion de terms EN nombra un proveedor que no sea de LEGAL_FACTS', stray.join(', '))
+  check(termsEnAll.includes('Peru') && termsEnAll.includes(LEGAL_FACTS.GOVERNING_LAW.valueEn ?? ''), 'terms EN usa la ley aplicable de LEGAL_FACTS.GOVERNING_LAW', 'falta')
+  const changedTermsEn = buildTermsEn({ ...LEGAL_FACTS, GOVERNING_LAW: { ...LEGAL_FACTS.GOVERNING_LAW, valueEn: 'TestCountry' } }).flatMap(sectionTexts).join('\n')
+  check(changedTermsEn.includes('TestCountry'), 'cambiar GOVERNING_LAW cambia terms EN', 'terms EN no cambio')
+  check(/commission/.test(termsEnAll) && /no extra cost/.test(termsEnAll), 'terms EN divulga los enlaces de afiliado', 'falta la divulgacion')
+  const linksEn = linkHrefs(TERMS_EN)
+  check(linksEn.includes(PRIVACY_URL_EN) && !linksEn.includes(PRIVACY_URL_ES), 'terms EN enlaza a la privacidad en ingles', linksEn.join(', '))
 }
 
 // ---------------------------------------------------------------- la autoprueba rechaza lo malo
