@@ -256,8 +256,8 @@
       "origen": "messages",
       "loadAt": "ahora",
       "estado": "aprobado",
-      "es": "Explorar servicio",
-      "en": "Explore service",
+      "es": "Ver servicio",
+      "en": "View service",
       "vigenteEs": "Explorar servicio",
       "routes": {
         "es": [],
