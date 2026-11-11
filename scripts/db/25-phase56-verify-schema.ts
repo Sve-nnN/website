@@ -22,6 +22,8 @@
  *   --expect-seeded         legal-pages con privacy y terms con texto en es y en
  *   --expect-date           legal-pages.effectiveDate no vacia
  *   --expect-shadow-seeded  siembra EN de home-page y about-page (centinelas, listas, etapas)
+ *   --es-only               con las dos anteriores, exige solo ES (el EN espera la aprobacion
+ *                           de Juan y todavia no se sembro)
  *   --selftest              fixtures, sin tocar ninguna base
  */
 import { ABOUT_COPY_ES } from './data/56-about-copy'
@@ -42,6 +44,7 @@ import {
 const EXPECT_SEEDED = process.argv.includes('--expect-seeded')
 const EXPECT_DATE = process.argv.includes('--expect-date')
 const EXPECT_SHADOW_SEEDED = process.argv.includes('--expect-shadow-seeded')
+const ES_ONLY = process.argv.includes('--es-only')
 const SELFTEST = process.argv.includes('--selftest')
 
 /** Cuantas etapas debe tener about-page: se deriva del copy de la fase, no se cablea. */
@@ -158,6 +161,13 @@ function selftest(): never {
     'none',
   )
 
+  // Test 3b: modo esOnly (el EN todavia no se sembro)
+  const noEn = shadowFixture({ enTagline: '', enHeroLead: '' })
+  expect('esOnly no exige el centinela EN', evaluateShadow56State(noEn, { ...opts, esOnly: true }), 'none')
+  const legalEsOnly: LegalState = { es: legalLocale(), en: { privacyBody: null, termsBody: null, effectiveDate: null } }
+  expect('legal esOnly pasa con solo ES sembrado', evaluateLegalState(legalEsOnly, { expectSeeded: true, esOnly: true }), 'none')
+  expect('legal sin esOnly falla con EN vacio', evaluateLegalState(legalEsOnly, { expectSeeded: true }), 'some')
+
   // Test 4: marcador de ranura y cantidad de etapas
   const slot = '{' + '{pendiente}' + '}'
   const withSlot = stageList(ABOUT_STAGES)
@@ -217,6 +227,7 @@ async function main() {
     EXPECT_SEEDED && '--expect-seeded',
     EXPECT_DATE && '--expect-date',
     EXPECT_SHADOW_SEEDED && '--expect-shadow-seeded',
+    ES_ONLY && '--es-only',
   ].filter(Boolean)
   console.log(`  modo: ${modes.length > 0 ? modes.join(' ') : 'solo esquema (los tres globals se leen)'}`)
 
@@ -262,9 +273,9 @@ async function main() {
   }
 
   let fails = 0
-  fails += report(evaluateLegalState(legalState, { expectSeeded: EXPECT_SEEDED, expectDate: EXPECT_DATE }))
+  fails += report(evaluateLegalState(legalState, { expectSeeded: EXPECT_SEEDED, expectDate: EXPECT_DATE, esOnly: ES_ONLY }))
   fails += report(
-    evaluateShadow56State(shadowState, { expectShadowSeeded: EXPECT_SHADOW_SEEDED, expectedStages: ABOUT_STAGES }),
+    evaluateShadow56State(shadowState, { expectShadowSeeded: EXPECT_SHADOW_SEEDED, expectedStages: ABOUT_STAGES, esOnly: ES_ONLY }),
   )
   console.log(fails === 0 ? '\nTodo en PASS' : `\n${fails} resultado(s) en FAIL`)
   process.exit(fails === 0 ? 0 : 1)

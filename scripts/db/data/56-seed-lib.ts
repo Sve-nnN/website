@@ -72,7 +72,7 @@ export type LegalState = {
 
 export function evaluateLegalState(
   state: LegalState,
-  opts: { expectSeeded: boolean; expectDate?: boolean },
+  opts: { expectSeeded: boolean; expectDate?: boolean; esOnly?: boolean },
 ): CheckResult[] {
   const out: CheckResult[] = []
   const add = (name: string, ok: boolean, why: string) => out.push({ name, ok, why })
@@ -87,6 +87,8 @@ export function evaluateLegalState(
 
   if (opts.expectSeeded) {
     for (const [lang, st] of [['es', state.es], ['en', state.en]] as const) {
+      // Con esOnly el EN no se siembra todavia (espera la aprobacion de Juan): no se exige.
+      if (opts.esOnly && lang === 'en') continue
       add(`legal-pages.privacy.body con texto en ${lang}`, lexicalHasText(st?.privacyBody), lexicalHasText(st?.privacyBody) ? 'ok' : 'vacio')
       add(`legal-pages.terms.body con texto en ${lang}`, lexicalHasText(st?.termsBody), lexicalHasText(st?.termsBody) ? 'ok' : 'vacio')
     }
@@ -122,7 +124,7 @@ export const HOME_LIST_COUNTS: readonly [string, number][] = [
 
 export function evaluateShadow56State(
   state: Shadow56State,
-  opts: { expectShadowSeeded: boolean; expectedStages: number },
+  opts: { expectShadowSeeded: boolean; expectedStages: number; esOnly?: boolean },
 ): CheckResult[] {
   const out: CheckResult[] = []
   const add = (name: string, ok: boolean, why: string) => out.push({ name, ok, why })
@@ -135,15 +137,19 @@ export function evaluateShadow56State(
 
   if (!opts.expectShadowSeeded) return out
 
-  // Centinelas EN: si faltan, /en cae al espanol.
-  const enTag = pick(state.en.home, 'tagline')
-  add('home-page.tagline EN no vacio (centinela)', nonEmptyString(enTag), nonEmptyString(enTag) ? 'ok' : 'vacio, /en cae al espanol')
-  const enLead = pick(state.en.home, 'hero.lead')
-  add('home-page.hero.lead EN no vacio (centinela)', nonEmptyString(enLead), nonEmptyString(enLead) ? 'ok' : 'vacio')
-  const enAboutLead = pick(state.en.about, 'hero.lead')
-  add('about-page.hero.lead EN no vacio (centinela)', nonEmptyString(enAboutLead), nonEmptyString(enAboutLead) ? 'ok' : 'vacio, /en/sobre-mi cae al espanol')
+  const langs = opts.esOnly ? (['es'] as const) : (['es', 'en'] as const)
 
-  for (const lang of ['es', 'en'] as const) {
+  // Centinelas EN: si faltan, /en cae al espanol. Con esOnly no se exigen.
+  if (!opts.esOnly) {
+    const enTag = pick(state.en.home, 'tagline')
+    add('home-page.tagline EN no vacio (centinela)', nonEmptyString(enTag), nonEmptyString(enTag) ? 'ok' : 'vacio, /en cae al espanol')
+    const enLead = pick(state.en.home, 'hero.lead')
+    add('home-page.hero.lead EN no vacio (centinela)', nonEmptyString(enLead), nonEmptyString(enLead) ? 'ok' : 'vacio')
+    const enAboutLead = pick(state.en.about, 'hero.lead')
+    add('about-page.hero.lead EN no vacio (centinela)', nonEmptyString(enAboutLead), nonEmptyString(enAboutLead) ? 'ok' : 'vacio, /en/sobre-mi cae al espanol')
+  }
+
+  for (const lang of langs) {
     for (const [path, expected] of HOME_LIST_COUNTS) {
       const v = pick(state[lang].home, path)
       const n = Array.isArray(v) ? v.length : 0
