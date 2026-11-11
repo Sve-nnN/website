@@ -80,3 +80,6 @@ Sigue pendiente de Juan (sin recomendación aceptada):
 - Renombrar "AprendoSEO" a aprendoclub en la fila del autor.
 - Título original del post "Topic clusters SEO...".
 - La frase del recorte de etapas de Sobre mí (paso 11 de la siembra) y el "aplicado" de la migración.
+
+## Corrección pendiente de aplicar en el registro (2026-11-10)
+La fila 8 del lote 1 del registro tipado dice "Explorar servicio" / "Explore service", pero Juan aceptó la recomendación de **dejar "Ver servicio" / "View service"** en las tarjetas. Gana la recomendación aceptada: cambiar la fila 8 (`service-card-cta`) a "Ver servicio" / "View service" en `56-juan-inputs.json` y regenerar `56-cta-map.json` con `--export`. Revisar también el inglés de `audit-offer-cta` ("Request the audit"), que escribió Claude.
