@@ -60,3 +60,23 @@ Juan respondió "del resto lo veo bien" con un solo cambio (fila 3). Texto en es
 | 13 | Contacto, nota de respuesta | Suelo responder en menos de 48 horas. | I usually reply within 48 hours. |
 
 Los pasos de Contacto ("Me cuentas el proyecto", "Miro qué ve Google hoy", "Te digo por dónde empezar") y sus textos en inglés fueron parte del lote 2 y siguen pendientes de aprobación explícita.
+
+## Recomendaciones aceptadas en bloque por Juan (2026-11-10)
+Juan respondió "sí, haz todo eso que recomiendas". Se aceptan las recomendaciones de Claude marcadas así en los mensajes anteriores. Lo que no tenía recomendación sigue pendiente.
+
+Aceptado:
+- Texto legal: valores por defecto (región de Hetzner vacía hasta confirmar, buzón sin nombrar, retención de 12 meses, registros del servidor 30 días sujeto a verificar, sin banner de cookies, ley aplicable Perú con la Ley 29733 como supuesto), y revisión legal profesional opcional después del corte.
+- Alts: aprobados (10 filas). Recapturar las capturas de Juan Tech, Arianna Lupi, Dr. Vargas y Estylopia queda como tarea de Juan.
+- Encabezados con punto o coma que sirve master (landings de servicio, Stack, títulos de posts): no tocar. Los legales se reemplazan al cortar.
+- CTAs: dejar "Ver servicio" en las tarjetas (no cambiar a "Explorar servicio"); confirmar el botón del encabezado como "Pedir auditoría 360" en el corte; aprobar con su texto actual los pasos de Contacto, "Pedir la auditoría", "Escribir un correo", "Enviar mensaje", "Enviarme el checklist" y "Suscribirme".
+- Arianna Lupi: stack Astro y Cloudflare. Loops Growth: no crear fila en Websites. Recursividad en inglés: mantener el aviso de traducción.
+
+Sigue pendiente de Juan (sin recomendación aceptada):
+- Aprobar las 21 lecciones de los 7 casos.
+- Aprobar el inglés de la home, de Sobre mí y del texto legal.
+- Arianna: highlights y retos reales en ES y EN.
+- Cita real de Patricia Ibarra (ES y EN no coinciden).
+- Etiquetas del stack de Juan Tech y confirmar si Neon sigue en aprendoclub y Apturio.
+- Renombrar "AprendoSEO" a aprendoclub en la fila del autor.
+- Título original del post "Topic clusters SEO...".
+- La frase del recorte de etapas de Sobre mí (paso 11 de la siembra) y el "aplicado" de la migración.
