@@ -9,8 +9,8 @@
 //     nivel hacia abajo (h2 a h4 es un salto);
 //   - exactamente una apertura de main;
 //   - con EXPECT_PREVIEW=1: meta robots con noindex y cabecera x-robots-tag con noindex;
-//   - ausencia de la secuencia de llaves dobles de los marcadores, de [PLACEHOLDER]
-//     y de lorem en el HTML visible (se ignoran script y style salvo ld+json);
+//   - ausencia de la secuencia de llaves dobles de los marcadores (en TODA ruta, tambien
+//     /sobre-mi y /en/sobre-mi desde la fase 56), de [PLACEHOLDER] y de lorem en el HTML visible (se ignoran script y style salvo ld+json);
 //   - ningun src que apunte a /img/ o /logos/ y responda 404 (rutas del sandbox sin
 //     activo en el repo).
 // Los h2 y h3 con punto o coma se imprimen como WARN para la revision de la fase 56 y
@@ -51,16 +51,6 @@ const LOCAL_SLUGS = ['seo-tecnico-lima', 'seo-tecnico-madrid']
 
 /** Rutas que todavia no existen en produccion: sin paridad posible. */
 const NEW_ROUTES = new Set(['/sobre-mi', '/en/sobre-mi'])
-
-/**
- * Marcadores pendientes que CONTEXT permite renderizar tal como llegan de Payload
- * hasta que la fase 56 los cierre (no se inventa copy). Se anotan como WARN y solo en
- * la ruta indicada; cualquier otro marcador, o este en otra ruta, es FAIL.
- */
-const KNOWN_PENDING = {
-  '/sobre-mi': ['{{pendiente}} fecha del cambio de nombre'],
-  '/en/sobre-mi': ['{{pendiente}} fecha del cambio de nombre'],
-}
 
 /** Lista por defecto de rutas, en es y en. */
 export function buildRoutes() {
@@ -239,14 +229,8 @@ export function checkContract(html, { lang, path = '', status = 200, headers = {
     if (!/noindex/i.test(xr)) failures.push('falta x-robots-tag con noindex (EXPECT_PREVIEW=1)')
   }
 
-  let visible = visibleHtml(html)
-  for (const known of KNOWN_PENDING[path] ?? []) {
-    const n = visible.split(known).length - 1
-    if (n > 0) {
-      warnings.push(`marcador pendiente conocido x${n} (${known}); lo cierra la fase 56`)
-      visible = visible.split(known).join(' ')
-    }
-  }
+  // Fase 56: el marcador de fecha ya no se permite en ninguna ruta (tampoco en /sobre-mi).
+  const visible = visibleHtml(html)
   const braces = (visible.match(/\{\{/g) ?? []).length
   if (braces > 0) failures.push(`${braces} aparicion(es) de la secuencia de llaves dobles de marcadores`)
   const ph = (visible.match(/\[PLACEHOLDER\]/g) ?? []).length
@@ -334,15 +318,11 @@ function selftest() {
   const inScript = FIXTURE({ body: '<h1>a</h1><script>var x = {{1}}</script>' })
   expectNone('llaves dobles dentro de un script ajeno', checkContract(inScript, opts).failures)
 
-  // Marcador pendiente permitido solo en su ruta y como WARN.
+  // Fase 56: el marcador es FAIL en cualquier ruta, incluidas /sobre-mi y /en/sobre-mi.
   const pend = FIXTURE({ body: '<h1>a</h1><p>{{pendiente}} fecha del cambio de nombre</p>' })
-  const pendOk = checkContract(pend, { ...opts, path: '/sobre-mi' })
-  if (pendOk.failures.length === 0 && pendOk.warnings.length === 1) console.log('PASS selftest marcador pendiente conocido en /sobre-mi: un WARN y ningun fallo')
-  else {
-    bad += 1
-    console.log(`FAIL selftest marcador pendiente conocido en /sobre-mi: ${JSON.stringify(pendOk)}`)
-  }
-  expectSome('marcador pendiente conocido en otra ruta', checkContract(pend, { ...opts, path: '/contact' }).failures)
+  expectSome('marcador de fecha en /sobre-mi', checkContract(pend, { ...opts, path: '/sobre-mi' }).failures)
+  expectSome('marcador de fecha en /en/sobre-mi', checkContract(pend, { ...opts, path: '/en/sobre-mi' }).failures)
+  expectSome('marcador de fecha en otra ruta', checkContract(pend, { ...opts, path: '/contact' }).failures)
   expectSome(
     'otro marcador pendiente en /sobre-mi',
     checkContract(FIXTURE({ body: '<h1>a</h1><p>{{pendiente}} otra cosa</p>' }), { ...opts, path: '/sobre-mi' }).failures,

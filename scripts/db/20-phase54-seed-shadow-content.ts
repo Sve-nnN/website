@@ -28,6 +28,10 @@
  *     efecto sale tras el TTL de 60 s. Verificar contra el HTML servido, no
  *     contra el OK de este script.
  *
+ * NOTA fase 56: desde la fase 56 la siembra de about-page y home-page la hace
+ * 26-phase56-seed-shadow.ts. Este script no se vuelve a correr sobre esos globals:
+ * mergeGroup se niega a reducir las etapas de Sobre mí de 5 a 4.
+ *
  * Requiere el túnel a producción (./scripts/db/tunnel.sh) y la migración
  * phase54_shadow_content ya aplicada (plan 54-07).
  *

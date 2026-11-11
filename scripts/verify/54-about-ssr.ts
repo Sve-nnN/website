@@ -63,6 +63,13 @@ const MEDIA = {
   alt: 'Texto alternativo de prueba de la foto',
 }
 
+// El conteo de etapas, de etapas actuales y la etapa con enlace salen del copy: nada cableado.
+const STAGES = ABOUT_COPY_ES.experience.stages
+const N_STAGES = STAGES.length
+const N_CURRENT = STAGES.filter((s) => s.current).length
+const N_PAST = N_STAGES - N_CURRENT
+const LINK_STAGE = STAGES.map((s) => Boolean((s as { linkHref?: string }).linkHref)).lastIndexOf(true)
+
 const COPY = { ...ABOUT_COPY_ES, hero: { ...ABOUT_COPY_ES.hero, photo: MEDIA } }
 
 type Overrides = Partial<{
@@ -113,9 +120,9 @@ function render(data: AboutData, locale: 'es' | 'en' = 'es'): string {
 
   const data = build()
   check(data.name === AUTHOR.name, 'el h1 sale del nombre del autor', `dio ${data.name}`)
-  check(data.experience?.stages.length === 5, 'cinco etapas mapeadas', `dio ${data.experience?.stages.length}`)
-  check(data.experience?.stages[2]?.when?.startsWith('{{pendiente}}') === true, 'la fecha pendiente llega tal cual', 'se perdio el marcador')
-  check(data.experience?.stages[4]?.link?.external === true, 'el enlace https de la etapa es externo', 'no se marco externo')
+  check(data.experience?.stages.length === N_STAGES, `${N_STAGES} etapas mapeadas (derivado del copy)`, `dio ${data.experience?.stages.length}`)
+  check(!data.experience?.stages.some((s) => s.when?.includes('{{')), 'ninguna fecha lleva marcador', 'quedo un marcador en when')
+  check(data.experience?.stages[LINK_STAGE]?.link?.external === true, 'el enlace https de la etapa es externo', 'no se marco externo')
   check(data.specialties?.items.length === 4, 'cuatro areas mapeadas', `dio ${data.specialties?.items.length}`)
   check(data.education?.items[1]?.dates?.to === null, 'una educacion sin fin queda abierta', 'to no es null')
   check(data.talks?.items[0]?.by === 'Organizador de Prueba' && data.talks.items[0].title === 'Taller de prueba', 'la ponencia separa titulo y organizador', 'no separo')
@@ -137,12 +144,12 @@ function render(data: AboutData, locale: 'es' | 'en' = 'es'): string {
   const jumps = levels.some((l, i) => i > 0 && l - levels[i - 1] > 1)
   check(!jumps, 'jerarquia de encabezados sin saltos', `niveles ${levels.join(',')}`)
 
-  // Timeline: lista con cinco items y aria-label.
+  // Timeline: lista con un item por etapa y aria-label.
   const tl = /<ul[^>]*MuiTimeline-root[^>]*>/.exec(html)
   check(tl !== null, 'el timeline se renderiza como ul', 'no hay ul MuiTimeline-root')
   check(tl !== null && /aria-label="Recorrido profesional"/.test(tl[0]), 'el timeline tiene aria-label del recorrido', 'falta aria-label')
-  check(countOf(html, /<li[^>]*MuiTimelineItem-root/) === 5, 'el timeline tiene cinco items', `items = ${countOf(html, /<li[^>]*MuiTimelineItem-root/)}`)
-  check(countOf(html, /<h3[\s>]/) >= 5, 'cada etapa tiene su h3', `h3 = ${countOf(html, /<h3[\s>]/)}`)
+  check(countOf(html, /<li[^>]*MuiTimelineItem-root/) === N_STAGES, `el timeline tiene ${N_STAGES} items`, `items = ${countOf(html, /<li[^>]*MuiTimelineItem-root/)}`)
+  check(countOf(html, /<h3[\s>]/) >= N_STAGES, 'cada etapa tiene su h3', `h3 = ${countOf(html, /<h3[\s>]/)}`)
 
   // Punto: relleno si es la etapa actual, aro si no. Se lee de las reglas de Emotion.
   const raw = renderRaw(build())
@@ -156,11 +163,12 @@ function render(data: AboutData, locale: 'es' | 'en' = 'es'): string {
   const pastDot = dotCss(false)
   check(currentDot !== '' && pastDot !== '', 'los puntos llevan data-current', 'no se encontro el punto actual o el pasado')
   check(!/3px solid/.test(currentDot) && /3px solid/.test(pastDot), 'la etapa actual tiene el punto relleno y las otras el aro de 3px', `actual="${currentDot.slice(0, 120)}" pasado="${pastDot.slice(0, 120)}"`)
-  check(countOf(raw, /data-current="true"/) === 2 && countOf(raw, /data-current="false"/) === 3, 'dos etapas actuales y tres pasadas', 'conteo de data-current distinto')
+  check(countOf(raw, /data-current="true"/) === N_CURRENT && countOf(raw, /data-current="false"/) === N_PAST, `${N_CURRENT} etapas actuales y ${N_PAST} pasadas (derivado del copy)`, 'conteo de data-current distinto')
 
-  // Fecha pendiente: aparece en el texto, jamas en aria-label ni title.
-  check(textOf(html).includes('{{pendiente}}'), 'la fecha pendiente aparece en el texto', 'no se renderizo el marcador')
-  check(!/(aria-label|title|aria-labelledby)="[^"]*pendiente/.test(raw), 'la fecha pendiente no entra a ningun aria-label ni title', 'el marcador esta en un atributo')
+  // Fase 56: el marcador de fecha NO debe estar en el texto renderizado ni en ningun atributo.
+  check(!textOf(html).includes('{{'), 'el marcador de fecha no aparece en el texto', 'se renderizo un marcador')
+  check(!textOf(html).includes('pendiente}}'), 'ninguna llave de cierre de marcador en el texto', 'queda un marcador')
+  check(!/(aria-label|title|aria-labelledby)="[^"]*pendiente/.test(raw), 'ningun aria-label ni title lleva pendiente', 'hay un marcador en un atributo')
   check(!/aria-label="[^"]*\{\{/.test(raw), 'ningun aria-label lleva llaves', 'hay llaves en un aria-label')
 
   // Foto.

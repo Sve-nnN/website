@@ -21,6 +21,10 @@ import {
   type ShadowResult,
   type ShadowState,
 } from './data/54-seed-lib'
+import { ABOUT_COPY_ES } from './data/54-about-copy'
+
+/** Cuantas etapas debe tener about-page: se deriva del copy, no se cablea (fase 56, D-11). */
+const ABOUT_STAGES = ABOUT_COPY_ES.experience.stages.length
 
 const EXPECT_SEEDED = process.argv.includes('--expect-seeded')
 const SELFTEST = process.argv.includes('--selftest')
@@ -45,7 +49,7 @@ function selftest(): never {
       faq: { items: [1, 2, 3, 4, 5].map((n) => ({ n })) },
       contact: { steps: [1, 2, 3].map((n) => ({ n })), infoRows: [1, 2, 3].map((n) => ({ n })) },
     },
-    about: { hero: { lead: 'Lead' }, experience: { stages: [1, 2, 3, 4, 5].map((n) => ({ n })) } },
+    about: { hero: { lead: 'Lead' }, experience: { stages: ABOUT_COPY_ES.experience.stages.map((n) => ({ n })) } },
     clientes: [{ onDark: false }, { onDark: true }],
     stackTools: { total: 25, withLogo: 9 },
   }
@@ -63,7 +67,7 @@ function selftest(): never {
     if (!good) bad++
   }
   expect('estado vacío válido sin expectSeeded', evaluateShadowState(empty, { expectSeeded: false }), 'none')
-  expect('estado sembrado válido con expectSeeded', evaluateShadowState(seeded, { expectSeeded: true }), 'none')
+  expect('estado sembrado válido con expectSeeded', evaluateShadowState(seeded, { expectSeeded: true, expectedStages: ABOUT_STAGES }), 'none')
   expect('estado vacío con expectSeeded produce FAIL', evaluateShadowState(empty, { expectSeeded: true }), 'some')
   process.exit(bad > 0 ? 1 : 0)
 }
@@ -154,7 +158,7 @@ async function main() {
       `FAIL permission denied al leer: ${denied.join(', ')}. El rol conectado no puede leer las tablas nuevas; la causa probable es que la migración no la aplicó juantech_user (Pitfall 3), así que el rol de solo lectura no heredó SELECT.`,
     )
   }
-  const fails = report(evaluateShadowState(state, { expectSeeded: EXPECT_SEEDED })) + denied.length
+  const fails = report(evaluateShadowState(state, { expectSeeded: EXPECT_SEEDED, expectedStages: ABOUT_STAGES })) + denied.length
   console.log(fails === 0 ? '\nTodo en PASS' : `\n${fails} resultado(s) en FAIL`)
   process.exit(fails === 0 ? 0 : 1)
 }
