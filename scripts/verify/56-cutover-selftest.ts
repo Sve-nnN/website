@@ -17,7 +17,8 @@
  *     valor vivo copiado tal cual y las capturas de Websites sirven hoy un alt con raya larga.
  */
 import { CAPTURE_ALTS } from '../db/data/56-alt-texts'
-import { flatLessons, lessonId } from '../db/data/56-case-lessons'
+import * as loader from '../db/28-phase56-cutover-load'
+import { CASE_SLUGS, flatLessons, lessonId } from '../db/data/56-case-lessons'
 import { CTA_MAP } from '../db/data/56-cta-map'
 import {
   CUTOVER_ITEMS,
@@ -260,6 +261,360 @@ async function realData(): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
+// Cargador del corte (28-phase56-cutover-load.ts) con una Local API falsa en memoria
+// ---------------------------------------------------------------------------
+//
+// La Local API falsa modela las dos trampas que importan: un arreglo con subcampos localizados
+// comparte los id de fila entre idiomas (escribir EN sin id crea filas nuevas), y un update de una
+// coleccion con borradores sin draft false deja el doc en borrador. No tiene ninguna operacion de
+// borrado: si el cargador intentara borrar, lanzaria y el caso fallaria. No abre ninguna base, no
+// usa la red y no lee el .env.
+
+type Locale = 'es' | 'en'
+type Sub = 'plain' | 'loc'
+type FieldDef = 'plain' | 'loc' | { array: Record<string, Sub> } | { group: Record<string, Sub> }
+type Schema = Record<string, FieldDef>
+type Row = Record<string, unknown>
+type FakeDoc = { id: number; status?: string; data: Row }
+type FakeWrite = { op: 'update' | 'updateGlobal'; target: string; id?: unknown; locale: Locale; data: Row; draft?: unknown }
+
+const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T
+const isRow = (v: unknown): v is Row => typeof v === 'object' && v !== null && !Array.isArray(v)
+
+function viewField(def: FieldDef, raw: unknown, locale: Locale): unknown {
+  if (def === 'plain') return raw
+  if (def === 'loc') return isRow(raw) ? raw[locale] : undefined
+  const sub = 'array' in def ? def.array : def.group
+  const viewRow = (r: Row): Row => {
+    const out: Row = {}
+    if ('id' in r) out.id = r.id
+    for (const [k, d] of Object.entries(sub)) out[k] = d === 'loc' ? (isRow(r[k]) ? (r[k] as Row)[locale] : undefined) : r[k]
+    return out
+  }
+  if ('array' in def) return Array.isArray(raw) ? (raw as Row[]).map(viewRow) : []
+  return isRow(raw) ? viewRow(raw) : {}
+}
+
+function applyData(schema: Schema, store: Row, data: Row, locale: Locale, nextId: () => number): void {
+  for (const [k, v] of Object.entries(data)) {
+    const def = schema[k]
+    if (def === undefined) throw new Error(`campo desconocido ${k}`)
+    if (def === 'plain') store[k] = clone(v)
+    else if (def === 'loc') store[k] = { ...(isRow(store[k]) ? (store[k] as Row) : {}), [locale]: v }
+    else {
+      const sub = 'array' in def ? def.array : def.group
+      const mergeRow = (base: Row, incoming: Row): Row => {
+        const row: Row = { ...base }
+        for (const [sk, sv] of Object.entries(incoming)) {
+          if (sk === 'id') continue
+          const sd = sub[sk]
+          if (sd === undefined) throw new Error(`subcampo desconocido ${k}.${sk}`)
+          row[sk] = sd === 'loc' ? { ...(isRow(row[sk]) ? (row[sk] as Row) : {}), [locale]: sv } : clone(sv)
+        }
+        return row
+      }
+      if ('array' in def) {
+        const cur = Array.isArray(store[k]) ? (store[k] as Row[]) : []
+        store[k] = (v as Row[]).map((inc) => {
+          const existing = inc.id !== undefined ? cur.find((r) => r.id === inc.id) : undefined
+          return mergeRow(existing ?? { id: nextId() }, inc)
+        })
+      } else {
+        store[k] = mergeRow(isRow(store[k]) ? (store[k] as Row) : {}, v as Row)
+      }
+    }
+  }
+}
+
+type CollectionSpec = { schema: Schema; drafts: boolean; docs: FakeDoc[] }
+type GlobalSpec = { schema: Schema; data: Row }
+
+function makeFake(spec: { collections: Record<string, CollectionSpec>; globals?: Record<string, GlobalSpec> }) {
+  const collections = clone(spec.collections)
+  const globals = clone(spec.globals ?? {})
+  const writes: FakeWrite[] = []
+  let seq = 1000
+  const nextId = () => ++seq
+  const needFalse = (args: { fallbackLocale?: unknown }, what: string) => {
+    if (args.fallbackLocale !== false) throw new Error(`la lectura ${what} debe usar fallbackLocale: false`)
+  }
+  const coll = (name: unknown): CollectionSpec => {
+    const c = collections[String(name)]
+    if (!c) throw new Error(`coleccion desconocida ${String(name)}`)
+    return c
+  }
+  const view = (c: CollectionSpec, d: FakeDoc, locale: Locale): Row => {
+    const out: Row = { id: d.id, _status: d.status }
+    for (const [k, def] of Object.entries(c.schema)) out[k] = viewField(def, d.data[k], locale)
+    return out
+  }
+  return {
+    collections,
+    globals,
+    writes,
+    nextId,
+    async find(args: { collection: string; where?: Row; limit?: number; locale: Locale; fallbackLocale?: unknown }) {
+      needFalse(args, `de ${args.collection}`)
+      const c = coll(args.collection)
+      const [field, cond] = Object.entries(args.where ?? {})[0] as [string, Row]
+      const docs = c.docs.filter((d) => {
+        const v = viewField(c.schema[field], d.data[field], args.locale)
+        if ('equals' in cond) return v === cond.equals
+        if ('like' in cond) return typeof v === 'string' && v.includes(String(cond.like))
+        return false
+      })
+      return { docs: docs.slice(0, args.limit ?? 10).map((d) => view(c, d, args.locale)) }
+    },
+    async findByID(args: { collection: string; id: number; locale: Locale; fallbackLocale?: unknown }) {
+      needFalse(args, `de ${args.collection}`)
+      const c = coll(args.collection)
+      const d = c.docs.find((x) => x.id === args.id)
+      if (!d) throw new Error(`no existe ${args.collection} ${args.id}`)
+      return view(c, d, args.locale)
+    },
+    async update(args: { collection: string; id: number; locale: Locale; data: Row; draft?: unknown; fallbackLocale?: unknown }) {
+      const c = coll(args.collection)
+      const d = c.docs.find((x) => x.id === args.id)
+      if (!d) throw new Error(`no existe ${args.collection} ${args.id}`)
+      writes.push({ op: 'update', target: args.collection, id: args.id, locale: args.locale, data: clone(args.data), draft: args.draft })
+      applyData(c.schema, d.data, clone(args.data), args.locale, nextId)
+      // Sin draft false, un update de una coleccion con borradores despublica el doc.
+      if (c.drafts) d.status = args.draft === false ? (d.status ?? 'published') : 'draft'
+      return view(c, d, args.locale)
+    },
+    async findGlobal(args: { slug: string; locale: Locale; fallbackLocale?: unknown }) {
+      needFalse(args, `del global ${args.slug}`)
+      const g = globals[args.slug]
+      if (!g) throw new Error(`global desconocido ${args.slug}`)
+      const out: Row = {}
+      for (const [k, def] of Object.entries(g.schema)) out[k] = viewField(def, g.data[k], args.locale)
+      return out
+    },
+    async updateGlobal(args: { slug: string; locale: Locale; data: Row }) {
+      const g = globals[args.slug]
+      if (!g) throw new Error(`global desconocido ${args.slug}`)
+      writes.push({ op: 'updateGlobal', target: args.slug, locale: args.locale, data: clone(args.data) })
+      applyData(g.schema, g.data, clone(args.data), args.locale, nextId)
+      return {}
+    },
+  }
+}
+
+type Fake = ReturnType<typeof makeFake>
+
+const PROD_URI = 'postgresql://x:y@127.0.0.1:15432/juantech?sslmode=disable'
+const NEON_URI = 'postgresql://x:y@ep-hidden-heart-atc1vys8.c-2.us-west-2.aws.neon.tech/neondb'
+const NOW = new Date('2026-11-20T12:00:00Z')
+
+const LESSON_SCHEMA: Schema = { title: 'loc', slug: 'plain', lessons: { array: { title: 'loc', body: 'loc' } } }
+
+/** Siete casos publicados, sin lecciones: el estado de produccion hoy. */
+function caseDocs(): FakeDoc[] {
+  return CASE_SLUGS.map((slug, i) => ({ id: i + 1, status: 'published', data: { title: { es: slug, en: slug }, slug } }))
+}
+
+function fakeCases(): Fake {
+  return makeFake({ collections: { 'case-studies': { schema: LESSON_SCHEMA, drafts: true, docs: caseDocs() } } })
+}
+
+const sink = () => {
+  const lines: string[] = []
+  return { lines, io: { out: (l: string) => lines.push(l), err: (l: string) => lines.push(l) } }
+}
+
+const baseOpts = (over: Partial<loader.Opts> = {}): loader.Opts => ({
+  apply: false,
+  dbChecked: false,
+  only: [],
+  printCurrent: false,
+  overwriteLessons: false,
+  allowShrinkRows: false,
+  ...over,
+})
+
+async function runLoader(opts: loader.Opts, fake: Fake, over: { uri?: string; items?: CutItem[]; legalDate?: string } = {}) {
+  let loads = 0
+  const { lines, io } = sink()
+  const code = await loader.run(
+    opts,
+    { DATABASE_URI: over.uri ?? PROD_URI },
+    async () => {
+      loads += 1
+      return fake
+    },
+    io,
+    { items: over.items, legalDate: over.legalDate ?? '', now: () => NOW },
+  )
+  return { code, loads, text: lines.join('\n') }
+}
+
+/** Los items reales con el estado de las lecciones cambiado, para probar la carga con items aprobados. */
+function withLessonStatus(status: 'aprobado' | 'propuesto' | 'pendiente', only?: (i: CutItem) => boolean): CutItem[] {
+  return CUTOVER_ITEMS.map((i) => (i.kind === 'lessons' && (!only || only(i)) ? { ...i, status } : i))
+}
+
+const lessonOf = (slug: string, n: number) => flatLessons().find((x) => x.slug === slug && x.lesson.n === n)!.lesson
+
+async function loaderTracer(): Promise<void> {
+  // Argumentos
+  const a = loader.parseArgs(['--apply', '--db-checked', '--only', 'lessons,CUT-media', 'testimonial', '--overwrite-lessons'])
+  expect('cargador: parseArgs lee --only con comas y espacios hasta la siguiente bandera', a.only.join('|') === 'lessons|CUT-media|testimonial' && a.apply && a.dbChecked && a.overwriteLessons && !a.allowShrinkRows)
+  let threw = false
+  try {
+    loader.parseArgs(['--only'])
+  } catch {
+    threw = true
+  }
+  expect('cargador: --only sin valor falla', threw)
+
+  // Dry-run sobre los items reales
+  {
+    const fake = fakeCases()
+    const r = await runLoader(baseOpts({ only: ['lessons'] }), fake)
+    expect('cargador: el dry-run sale 0 y no escribe nada', r.code === 0 && fake.writes.length === 0, `codigo ${r.code}, escrituras ${fake.writes.length}`)
+    expect('cargador: el dry-run imprime DRY-RUN y la base como host:puerto/base sin usuario', r.text.includes('DRY-RUN') && r.text.includes('127.0.0.1:15432/juantech') && !r.text.includes('x:y'))
+    const sin = (r.text.match(/sin lecciones en la base/g) ?? []).length
+    expect('cargador: el dry-run lista los 7 casos con "sin lecciones en la base"', sin === 7, `aparece ${sin} veces`)
+    expect('cargador: con las lecciones propuestas y gate aprobado el dry-run dice SE NIEGA y no las carga', (r.text.match(/\[SE NIEGA\] lessons:/g) ?? []).length === 7)
+    expect('cargador: el dry-run recuerda que es solo para el corte', /SOLO PARA EL CORTE/.test(r.text))
+  }
+
+  // Guardia de base
+  {
+    const fake = fakeCases()
+    const r = await runLoader(baseOpts({ apply: true }), fake)
+    expect('cargador: --apply sin --db-checked falla antes de importar Payload', r.code === 1 && r.loads === 0 && fake.writes.length === 0 && /--db-checked/.test(r.text), `codigo ${r.code}, cargas ${r.loads}`)
+  }
+  {
+    const fake = fakeCases()
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true }), fake, { uri: NEON_URI })
+    expect('cargador: una base de Neon falla antes de importar nada', r.code === 1 && r.loads === 0 && fake.writes.length === 0 && /neon/i.test(r.text), `codigo ${r.code}, cargas ${r.loads}`)
+  }
+  {
+    const fake = fakeCases()
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true }), fake, { uri: 'postgresql://x:y@127.0.0.1:15432/otra' })
+    expect('cargador: una base con otro nombre falla antes de importar nada', r.code === 1 && r.loads === 0)
+  }
+  {
+    const fake = fakeCases()
+    const r = await runLoader(baseOpts({ printCurrent: true, apply: true, dbChecked: true }), fake)
+    expect('cargador: --print-current junto a --apply aborta', r.code === 1 && fake.writes.length === 0)
+  }
+
+  // Negativas por estado
+  {
+    const fake = fakeCases()
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['lessons'] }), fake)
+    expect('cargador: --apply se niega ante lecciones propuestas con gate aprobado y no escribe', r.code === 1 && fake.writes.length === 0 && /sin aprobar/.test(r.text), `codigo ${r.code}`)
+  }
+  {
+    const fake = fakeCases()
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['lessons'] }), fake, { items: withLessonStatus('pendiente') })
+    expect('cargador: --apply se niega ante lecciones pendientes y no escribe', r.code === 1 && fake.writes.length === 0)
+  }
+  {
+    const fake = fakeCases()
+    const first = CASE_SLUGS[0]
+    const items = withLessonStatus('aprobado', (i) => i.id !== `CUT-lessons-${first}-2`).map((i) => (i.id === `CUT-lessons-${first}-2` ? { ...i, status: 'pendiente' as const } : i))
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['lessons'] }), fake, { items })
+    expect('cargador: una sola leccion pendiente niega el caso entero y no escribe ninguno', r.code === 1 && fake.writes.length === 0)
+  }
+  {
+    const fake = fakeCases()
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['lessons'] }), fake, { items: withLessonStatus('propuesto').map((i) => (i.kind === 'lessons' ? { ...i, gate: 'propuesto' as const } : i)) })
+    expect('cargador: propuesto con gate propuesto SI se carga y se anota para el handoff', r.code === 0 && fake.writes.length === 14 && /AVISO para el handoff/.test(r.text), `codigo ${r.code}, escrituras ${fake.writes.length}`)
+  }
+
+  // Carga de punta a punta con lecciones aprobadas
+  {
+    const fake = fakeCases()
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['lessons'] }), fake, { items: withLessonStatus('aprobado') })
+    expect('cargador: --apply --db-checked con lecciones aprobadas sale 0', r.code === 0, `codigo ${r.code}\n${r.text.split('\n').slice(-12).join('\n')}`)
+    const updates = fake.writes.filter((w) => w.op === 'update')
+    expect('cargador: escribe ES y EN por cada uno de los 7 casos (14 escrituras)', updates.length === 14)
+    expect('cargador: todo update lleva draft false', updates.every((w) => w.draft === false))
+    const order = CASE_SLUGS.every((_, i) => updates[i * 2].locale === 'es' && updates[i * 2 + 1].locale === 'en' && updates[i * 2].id === updates[i * 2 + 1].id)
+    expect('cargador: cada caso escribe ES y despues EN', order)
+    const enRows = updates.filter((w) => w.locale === 'en').flatMap((w) => w.data.lessons as Row[])
+    expect('cargador: el EN se escribe siempre con el id de fila releido', enRows.length === 21 && enRows.every((r) => typeof r.id === 'number'))
+    const storeIds = new Set(fake.collections['case-studies'].docs.flatMap((d) => (d.data.lessons as Row[]).map((r) => r.id)))
+    expect('cargador: los id del EN son los de las filas creadas por el ES (sin filas duplicadas)', enRows.every((r) => storeIds.has(r.id)) && storeIds.size === 21)
+    const okStore = flatLessons().every(({ slug, lesson }) => {
+      const d = fake.collections['case-studies'].docs.find((x) => x.data.slug === slug)!
+      const row = (d.data.lessons as Row[])[lesson.n - 1] as { title: { es: string; en: string }; body: { es: string; en: string } }
+      return row.title.es === lesson.es.title && row.body.es === lesson.es.body && row.title.en === lesson.en.title && row.body.en === lesson.en.body
+    })
+    expect('cargador: las 21 lecciones quedan en ES y EN y se releen iguales', okStore)
+    expect('cargador: el status de publicacion sigue en published en los 7 casos', fake.collections['case-studies'].docs.every((d) => d.status === 'published'))
+    expect('cargador: no toca ningun otro campo del caso', fake.collections['case-studies'].docs.every((d) => Object.keys(d.data).sort().join() === 'lessons,slug,title'))
+    expect('cargador: avisa del TTL y de la verificacion viva', /60 s/.test(r.text) && /56-cases-lessons-live\.mjs --expect-loaded/.test(r.text))
+    const again = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['lessons'] }), fake, { items: withLessonStatus('aprobado') })
+    expect('cargador: repetir la carga es idempotente (no escribe de nuevo)', again.code === 0 && fake.writes.length === 14 && /nada que escribir/.test(again.text))
+  }
+
+  // La Local API falsa reproduce la trampa: un EN sin id crea filas nuevas y se pierde el ES
+  {
+    const fake = fakeCases()
+    const doc = fake.collections['case-studies'].docs[0]
+    await fake.update({ collection: 'case-studies', id: doc.id, locale: 'es', data: { lessons: [{ title: 'uno', body: 'a' }, { title: 'dos', body: 'b' }] }, draft: false })
+    await fake.update({ collection: 'case-studies', id: doc.id, locale: 'en', data: { lessons: [{ title: 'one', body: 'a' }, { title: 'two', body: 'b' }] }, draft: false })
+    const rows = (await fake.findByID({ collection: 'case-studies', id: doc.id, locale: 'es', fallbackLocale: false })).lessons as Row[]
+    expect('cargador: la Local API falsa pierde el ES si el EN se escribe sin id (la trampa existe)', rows.length === 2 && rows.every((r) => r.title === undefined))
+    expect('cargador: la Local API falsa despublica si un update no lleva draft false', await (async () => {
+      const f = fakeCases()
+      await f.update({ collection: 'case-studies', id: 1, locale: 'es', data: { slug: 'x' } })
+      return f.collections['case-studies'].docs[0].status === 'draft'
+    })())
+  }
+
+  // Lecciones existentes que difieren
+  {
+    const slug = CASE_SLUGS[0]
+    const seeded = (): Fake => {
+      const docs = caseDocs()
+      docs[0].data.lessons = [
+        { id: 101, title: { es: 'Otra uno', en: 'Other one' }, body: { es: 'x', en: 'x' } },
+        { id: 102, title: { es: 'Otra dos', en: 'Other two' }, body: { es: 'y', en: 'y' } },
+        { id: 103, title: { es: 'Otra tres', en: 'Other three' }, body: { es: 'z', en: 'z' } },
+      ]
+      return makeFake({ collections: { 'case-studies': { schema: LESSON_SCHEMA, drafts: true, docs } } })
+    }
+    const items = withLessonStatus('aprobado')
+    const only = [`CUT-lessons-${slug}`]
+    const f1 = seeded()
+    const dry = await runLoader(baseOpts({ only }), f1, { items })
+    expect('cargador: el dry-run de un caso con lecciones distintas imprime el respaldo y avisa que se negaria', dry.code === 0 && /Otra uno/.test(dry.text) && /SE NEGARIA: .*--overwrite-lessons/.test(dry.text) && f1.writes.length === 0)
+    const r1 = await runLoader(baseOpts({ apply: true, dbChecked: true, only }), f1, { items })
+    expect('cargador: se niega a pisar lecciones distintas sin --overwrite-lessons y no escribe', r1.code === 1 && f1.writes.length === 0 && /--overwrite-lessons/.test(r1.text))
+    const f2 = seeded()
+    const r2 = await runLoader(baseOpts({ apply: true, dbChecked: true, only, overwriteLessons: true }), f2, { items })
+    const rows = f2.collections['case-studies'].docs[0].data.lessons as Row[]
+    expect('cargador: con --overwrite-lessons pisa, conserva los id de fila y suma 2 escrituras', r2.code === 0 && f2.writes.length === 2 && rows.map((r) => r.id).join() === '101,102,103' && (rows[0].title as Row).en === lessonOf(slug, 1).en.title && (rows[2].body as Row).es === lessonOf(slug, 3).es.body)
+  }
+
+  // Un caso no publicado y una seleccion parcial
+  {
+    const docs = caseDocs()
+    docs[0].status = 'draft'
+    const f = makeFake({ collections: { 'case-studies': { schema: LESSON_SCHEMA, drafts: true, docs } } })
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: [`CUT-lessons-${CASE_SLUGS[0]}`] }), f, { items: withLessonStatus('aprobado') })
+    expect('cargador: se niega a tocar un caso que no esta publicado', r.code === 1 && f.writes.length === 0 && /no esta publicado/.test(r.text))
+    const g = fakeCases()
+    const p = await runLoader(baseOpts({ only: [`CUT-lessons-${CASE_SLUGS[0]}-1`] }), g, { items: withLessonStatus('aprobado') })
+    expect('cargador: una leccion suelta aborta porque el caso se carga completo', p.code === 1 && /se carga completo/.test(p.text) && g.writes.length === 0)
+    const n = await runLoader(baseOpts({ only: ['nada-que-ver'] }), fakeCases())
+    expect('cargador: --only sin coincidencias aborta', n.code === 1 && /no coincide con ningun item/.test(n.text))
+  }
+
+  // --print-current
+  {
+    const fake = fakeCases()
+    const r = await runLoader(baseOpts({ printCurrent: true, only: [`CUT-lessons-${CASE_SLUGS[0]}`] }), fake)
+    expect('cargador: --print-current sale 0, no escribe y manda el JSON a la salida', r.code === 0 && fake.writes.length === 0 && /"lessons:/.test(r.text))
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Lectura viva (solo GET)
 // ---------------------------------------------------------------------------
 
@@ -303,6 +658,7 @@ async function live(): Promise<void> {
 async function main(): Promise<void> {
   rules()
   await realData()
+  await loaderTracer()
   if (process.argv.includes('--live')) await live()
   if (bad > 0) {
     console.log(`\nFAIL 56-cutover-selftest: ${bad} caso(s)`)
