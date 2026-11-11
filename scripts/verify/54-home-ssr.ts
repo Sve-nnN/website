@@ -131,7 +131,14 @@ const empty = mapHomeGlobal(null, 'es', false)
   )
   check(!/javascript:/.test(noCta) && !/<a[\s>]/.test(noCta), 'hero: href peligroso no llega al HTML', 'aparece javascript: o un enlace')
   check(/role="img"[^>]*aria-label="Retrato de Juan Carlos Angulo dibujado con caracteres ASCII"/.test(html) || /aria-label="Retrato de Juan Carlos Angulo dibujado con caracteres ASCII"[^>]*role="img"/.test(html), 'hero: retrato con aria-label de messages', 'falta el nombre accesible del retrato')
-  check(html.includes(HOME_COPY_ES.hero.statValue) && html.includes(HOME_COPY_ES.hero.statCaption), 'hero: tarjeta de cifra', 'falta statValue o statCaption')
+  // 56-09: Juan eligio no mostrar estadistica (D-22c). Sin statValue la tarjeta no se pinta; con una, debe estar completa.
+  check(
+    HOME_COPY_ES.hero.statValue === ''
+      ? !html.includes('clics interanuales en un caso')
+      : html.includes(HOME_COPY_ES.hero.statValue) && html.includes(HOME_COPY_ES.hero.statCaption),
+    'hero: tarjeta de cifra (ausente si no hay estadistica)',
+    'la tarjeta de cifra no coincide con el copy',
+  )
 
   // Marquesina con seis logos
   check(countOf(html, /id="clientes-t"/) === 1, 'marquesina: un encabezado de clientes', 'falta o se repite el encabezado')
@@ -167,11 +174,13 @@ const empty = mapHomeGlobal(null, 'es', false)
     'vitals: cuatro role=img con el nombre accesible armado desde messages',
     `barras: ${JSON.stringify(bars)}`,
   )
+  // 56-09: se quitaron las notas "Bueno: hasta" (D-22e). Si una vuelve con texto, debe pintarse.
   check(
-    HOME_COPY_ES.vitals.items.every((v) => vitalsHtml.includes(`>${v.value}<`) && vitalsHtml.includes(v.note)),
-    'vitals: la cifra y la nota de cada lectura están en texto',
+    HOME_COPY_ES.vitals.items.every((v) => vitalsHtml.includes(`>${v.value}<`) && (v.note === '' || vitalsHtml.includes(v.note))),
+    'vitals: la cifra de cada lectura está en texto',
     'falta una cifra o una nota',
   )
+  check(!/Bueno: hasta/.test(vitalsHtml), 'vitals: ya no hay notas "Bueno: hasta"', 'sobrevive una nota')
   check(vitalsHtml.includes(HOME_COPY_ES.vitals.measurementNote), 'vitals: nota de medición', 'falta la nota de medición')
   check(!/\{\{|\{name\}|\{label\}/.test(html), 'vitals: la plantilla ariaLabel quedó sin variables sueltas', 'quedan llaves de plantilla')
 
@@ -207,7 +216,7 @@ const empty = mapHomeGlobal(null, 'es', false)
   // Estados vacíos
   const emptyVitals = { ...fixture, vitals: mapHomeGlobal({ vitals: { title: 'T', items: [] } } as never, 'es', false).vitals }
   const emptyServices = { ...fixture, services: mapHomeGlobal({ services: { title: 'T', items: [] } } as never, 'es', false).services }
-  check(emptyVitals.vitals === null && !/id="medicion"/.test(render(emptyVitals)) && !render(emptyVitals).includes('Medición antes'), 'vitals: sin items no deja encabezado', 'quedó la sección')
+  check(emptyVitals.vitals === null && !/id="medicion"/.test(render(emptyVitals)) && !render(emptyVitals).includes(HOME_COPY_ES.vitals.title), 'vitals: sin items no deja encabezado', 'quedó la sección')
   check(emptyServices.services === null && !/id="servicios"/.test(render(emptyServices)) && !/servicios-t/.test(render(emptyServices)), 'servicios: sin items no deja encabezado', 'quedó la sección')
   const directVitals = renderToHtml(createElement(Vitals, { vitals: { title: 'T', lead: null, measurementNote: null, items: [] } }))
   const directServices = renderToHtml(createElement(Services, { services: { title: 'T', lead: null, ctaLabel: null, items: [] }, locale: 'es' }))
