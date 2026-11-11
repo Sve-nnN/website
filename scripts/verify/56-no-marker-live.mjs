@@ -26,6 +26,10 @@
 //   --selftest   HTML sintetico bueno y malo; no usa la red. Sale 0 solo si el comportamiento
 //                es el esperado.
 //   (sin modo)   Contra BASE_URL.
+// Opcion:
+//   --allow-en-notice   No exige la ausencia del aviso de traduccion en /en y /en/sobre-mi.
+//                       Solo para cuando el EN todavia no se sembro a proposito (espera la
+//                       aprobacion de Juan). Los marcadores y los testimonios se siguen exigiendo.
 //
 // Cada comprobacion imprime PASS o FAIL motivo y se sale con 1 si hay algun FAIL. Nunca
 // escribe en ninguna base ni envia correos: solo GET.
@@ -93,13 +97,13 @@ export function scriptsText(html) {
 // ----------------------------------------------------------------- comprobaciones puras
 
 /** Motivos de fallo de una pagina. Lista vacia significa que cumple. */
-export function checkPage(route, { status, html }) {
+export function checkPage(route, { status, html }, { allowEnNotice = false } = {}) {
   const problems = []
   if (status !== 200) return [`estado ${status}, se esperaba 200`]
   const text = visibleText(html)
   if (text.includes(SLOT)) problems.push('marcador de ranura en el texto visible')
   if (SLOT_FULL.test(scriptsText(html))) problems.push('marcador de ranura en el payload RSC')
-  if (route.notice && text.toLowerCase().includes(NOTICE_NEEDLE)) {
+  if (route.notice && !allowEnNotice && text.toLowerCase().includes(NOTICE_NEEDLE)) {
     problems.push('muestra el aviso de traduccion: el global sombra no tiene el EN sembrado y cae al espanol')
   }
   return problems
@@ -153,6 +157,8 @@ function selftest() {
   expectFail('aviso de traduccion en /en', checkPage(en, { status: 200, html: fixture({ visible: 'This page is not available in English yet. You are viewing the Spanish content.' }) }), /aviso de traduccion/)
   expectEmpty('el aviso no se exige fuera de las rutas marcadas', checkPage({ path: '/en/stack', locale: 'en' }, { status: 200, html: fixture({ visible: 'This page is not available in English yet.' }) }))
   expectEmpty('/en sin aviso', checkPage(en, { status: 200, html: fixture({ visible: 'Technical SEO consultant' }) }))
+  expectEmpty('--allow-en-notice deja pasar el aviso (EN sin sembrar a proposito)', checkPage(en, { status: 200, html: fixture({ visible: 'This page is not available in English yet.' }) }, { allowEnNotice: true }))
+  expectFail('--allow-en-notice sigue exigiendo cero marcadores', checkPage(en, { status: 200, html: fixture({ visible: `x ${SLOT}f}}` }) }, { allowEnNotice: true }), /texto visible/)
   expectFail('estado distinto de 200', checkPage(es, { status: 500, html: '' }), /estado 500/)
 
   expectEmpty('home con el testimonio', checkHomeTestimonial(fixture({ visible: 'Patricia Ibarra, CEO' })))
@@ -186,6 +192,7 @@ async function live() {
     return 1
   }
   const prod = (process.env.PROD_BASE ?? 'https://juan-tech.com').replace(/\/$/, '')
+  const allowEnNotice = process.argv.includes('--allow-en-notice')
   let fails = 0
   const report = (label, problems) => {
     if (problems.length === 0) console.log(`PASS ${label}`)
@@ -202,9 +209,9 @@ async function live() {
       report(`${route.path}`, [`no se pudo descargar: ${error}`])
       continue
     }
-    const problems = checkPage(route, { status, html: body })
+    const problems = checkPage(route, { status, html: body }, { allowEnNotice })
     if (route.home && status === 200) problems.push(...checkHomeTestimonial(body))
-    report(`${route.path} (${route.locale}) sin marcadores${route.notice ? ' y sin aviso de traduccion' : ''}`, problems)
+    report(`${route.path} (${route.locale}) sin marcadores${route.notice && !allowEnNotice ? ' y sin aviso de traduccion' : ''}`, problems)
   }
 
   const api = await getText(`${prod}/api/testimonials?limit=100&depth=0`)
