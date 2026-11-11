@@ -282,7 +282,7 @@ const siteValue = (
   stack: string[],
   text?: { highlights: { es: string[]; en: string[] }; challenges?: { es: string[]; en: string[] } },
 ): CutValue => ({
-  es: { ...(stack.length > 0 ? { stack } : {}), ...(text ? { highlights: text.highlights.es, ...(text.challenges ? { retos: text.challenges.es } : {}) } : {}) },
+  es: { ...(stack.length > 0 ? { stack } : {}), ...(text ? { highlights: text.highlights.es, ...(text.challenges ? { challenges: text.challenges.es } : {}) } : {}) },
   en: { ...(stack.length > 0 ? { stack } : {}), ...(text ? { highlights: text.highlights.en, ...(text.challenges ? { challenges: text.challenges.en } : {}) } : {}) },
 })
 

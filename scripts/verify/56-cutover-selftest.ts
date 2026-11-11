@@ -634,6 +634,8 @@ const AUTHOR_SCHEMA: Schema = {
 const TESTIMONIAL_SCHEMA: Schema = { name: 'plain', testimonial: 'loc' }
 
 const iso = (d: string | null): string | null => (d === null ? null : `${d}T00:00:00.000Z`)
+/** Payload devuelve las fechas como ISO completo: se compara por dia. */
+const day = (v: unknown): string | null => (typeof v === 'string' ? v.slice(0, 10) : null)
 
 /** Un mundo completo como el de produccion: casos, capturas, sitios, autor, testimonio, header y legal. */
 function fullFake(): Fake {
@@ -791,7 +793,7 @@ async function loaderRest(): Promise<void> {
     const ups = fake.writes.filter((w) => w.target === 'authors')
     const rows = fake.collections.authors.docs[0].data.experience as Row[]
     expect('cargador author: escribe ES y despues EN con las tres filas completas', r.code === 0 && ups.length === 2 && (ups[0].data.experience as Row[]).length === 3 && (ups[1].data.experience as Row[]).every((x) => typeof x.id === 'number'), `codigo ${r.code}, escrituras ${ups.length}\n${r.text.split('\n').slice(-6).join('\n')}`)
-    expect('cargador author: solo cambia endDate de AprendoSEO y las otras dos filas quedan igual', rows[1].endDate === null && rows[0].endDate === null && rows[2].endDate === iso('2022-09-01') && rows[2].startDate === iso('2022-01-01') && rows.map((x) => x.id).join() === '500,501,502')
+    expect('cargador author: solo cambia endDate de AprendoSEO y las otras dos filas quedan igual', rows[1].endDate === null && rows[0].endDate === null && day(rows[2].endDate) === '2022-09-01' && day(rows[2].startDate) === '2022-01-01' && day(rows[1].startDate) === '2022-11-01' && rows.map((x) => x.id).join() === '500,501,502')
     expect('cargador author: la descripcion localizada de aprendoclub sigue en ES y EN', (rows[0].description as Row).es === LIVE_AUTHOR_EXPERIENCE.es[0].description && (rows[0].description as Row).en === LIVE_AUTHOR_EXPERIENCE.en[0].description)
   }
   {
@@ -837,6 +839,18 @@ async function loaderRest(): Promise<void> {
     const items = CUTOVER_ITEMS.map((i) => (i.kind === 'heading-master' ? { ...i, status: 'aprobado' as const, desired: ['h2 [es] Titulo'] } : i))
     const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['heading-master'] }), fake, { items })
     expect('cargador: los encabezados y CTA de codigo salen como MANUAL y no se escriben', r.code === 0 && fake.writes.length === 0 && /\[MANUAL\] CUT-heading-master-legal/.test(r.text))
+  }
+
+  // Deriva: si la base ya no coincide con el respaldo registrado, el dry-run lo avisa
+  {
+    const fake = fullFake()
+    const doc = fake.collections.websites.docs.find((d) => d.data.slug === 'juan-tech-com')!
+    ;((doc.data.highlights as Row[])[0].text as Row).es = 'Un highlight que Juan edito despues del respaldo'
+    const id = 'CUT-websites-juan-tech-com'
+    const r = await runLoader(baseOpts({ only: [id] }), fake, { items: approve([id]) })
+    expect('cargador: el dry-run avisa DRIFT si la base cambio desde el respaldo registrado', r.code === 0 && /DRIFT/.test(r.text) && fake.writes.length === 0)
+    const clean = await runLoader(baseOpts({ only: [id] }), fullFake(), { items: approve([id]) })
+    expect('cargador: sin cambios en la base no hay aviso de DRIFT', !/DRIFT/.test(clean.text))
   }
 
   // Respaldo

@@ -166,40 +166,28 @@ export function parseArgs(argv: string[]): Opts {
 export type StateKind = 'cargar' | 'pendiente' | 'rechazado' | 'sin-carga' | 'manual'
 export type Eligibility = { state: StateKind; annotate: boolean; reason: string }
 
+/** Id del unico CTA de master que este cargador escribe: el boton del header. */
+const HEADER_CTA_ID = 'CUT-cta-master-header-cta'
+
 /** Kinds con aplicador. Los demas se listan como MANUAL. */
 export function hasApplier(item: CutItem): boolean {
   switch (item.kind) {
     case 'lessons':
-      return APPLIERS.lessons
     case 'media-alt':
-      return APPLIERS['media-alt']
     case 'legal-date':
-      return APPLIERS['legal-date']
+      return true
     case 'websites-row':
-      return APPLIERS['websites-row'] && /^websites:[a-z0-9-]+#/.test(item.target)
+      return /^websites:[a-z0-9-]+#/.test(item.target)
     case 'author':
-      return APPLIERS.author && /^authors:[a-z0-9-]+#experience/.test(item.target)
+      return /^authors:[a-z0-9-]+#experience/.test(item.target)
     case 'testimonial':
-      return APPLIERS.testimonial && /^testimonials:\d+/.test(item.target)
+      return /^testimonials:\d+/.test(item.target)
     case 'cta-master':
-      return APPLIERS['cta-master'] && item.id === HEADER_CTA_ID
+      return item.id === HEADER_CTA_ID
     default:
       return false
   }
 }
-
-/** Interruptor por aplicador. La tarea 2 los enciende al implementarlos. */
-const APPLIERS = {
-  lessons: true,
-  'media-alt': false,
-  'legal-date': false,
-  'websites-row': false,
-  author: false,
-  testimonial: false,
-  'cta-master': false,
-}
-
-const HEADER_CTA_ID = 'CUT-cta-master-header-cta'
 
 const DAY_MS = 86_400_000
 
@@ -459,6 +447,309 @@ async function planLessons(payload: PayloadLike, task: Task, ctx: Ctx): Promise<
 }
 
 // ---------------------------------------------------------------------------
+// Alt de capturas (solo el campo alt)
+// ---------------------------------------------------------------------------
+
+const DRIFT_HINT = 'DRIFT: la base ya no coincide con el respaldo registrado en 56-cutover-data.ts'
+
+/** Aviso (no bloquea) si lo que hay hoy en la base ya no es lo que se registro como respaldo. */
+function driftNote(live: unknown, registered: CutValue | undefined, item: CutItem): string[] {
+  if (registered === undefined) return []
+  const d = diffLenient(live, registered)
+  return d.length === 0 ? [] : [`${DRIFT_HINT} (${item.capturedAt}) en ${d.slice(0, 6).join(', ')}: revisa el respaldo antes de aplicar`]
+}
+
+function bilingualStrings(item: CutItem): { es: string; en: string } | null {
+  const d = item.desired
+  if (isObj(d) && typeof d.es === 'string' && typeof d.en === 'string' && d.es !== '' && d.en !== '') return { es: d.es, en: d.en }
+  return null
+}
+
+async function planMediaAlt(payload: PayloadLike, task: Task, ctx: Ctx): Promise<Plan> {
+  const item = task.items[0]
+  const m = /^media:([^#\s]+)#alt$/.exec(item.target)
+  if (!m) throw new Error(`el target "${item.target}" no tiene la forma media:<archivo>#alt`)
+  const res = await payload.find({ collection: 'media', where: { filename: { like: m[1] } }, limit: 2, depth: 0, locale: 'es', fallbackLocale: false })
+  const docs = (res?.docs ?? []) as Rec[]
+  if (docs.length === 0) throw new Error(`no existe un doc de Media con nombre parecido a "${m[1]}"`)
+  if (docs.length > 1) throw new Error(`hay ${docs.length} docs de Media con nombre parecido a "${m[1]}": resuelvelo a mano`)
+  const id = docs[0].id
+  const docEn = await readById(payload, 'media', id, 'en')
+  const current = { es: str(docs[0].alt), en: str(docEn.alt) }
+  const notes = driftNote(current, item.current, item)
+  const desired = bilingualStrings(item)
+  const others = (d: Rec): string => {
+    const { alt: _alt, updatedAt: _updatedAt, ...rest } = d
+    return JSON.stringify(rest)
+  }
+  const before = others(docs[0])
+  const diff = desired ? diffLenient(current, desired) : []
+  const write =
+    desired && diff.length > 0
+      ? async (): Promise<boolean> => {
+          await updateDoc(payload, 'media', id, 'es', { alt: desired.es })
+          await updateDoc(payload, 'media', id, 'en', { alt: desired.en })
+          const afterEs = await readById(payload, 'media', id, 'es')
+          const afterEn = await readById(payload, 'media', id, 'en')
+          const okAlt = afterEs.alt === desired.es && afterEn.alt === desired.en
+          const okOthers = others(afterEs) === before
+          ctx.log(
+            okAlt && okOthers
+              ? `  OK   alt de ${m[1]}: releido en ES y EN, ningun otro campo cambio`
+              : `  FALLA alt de ${m[1]}: alt ${okAlt ? 'bien' : 'distinto'}, otros campos ${okOthers ? 'iguales' : 'CAMBIARON'}`,
+          )
+          return okAlt && okOthers
+        }
+      : undefined
+  return { current, diff, notes, blockers: [], write }
+}
+
+// ---------------------------------------------------------------------------
+// Fecha efectiva legal
+// ---------------------------------------------------------------------------
+
+async function planLegalDate(payload: PayloadLike, _task: Task, ctx: Ctx): Promise<Plan> {
+  const read = async (): Promise<Rec> => (await payload.findGlobal({ slug: 'legal-pages', locale: 'es', fallbackLocale: false, depth: 0 })) as Rec
+  const live = await read()
+  const current = { effectiveDate: live.effectiveDate ?? null }
+  const date = ctx.legalDate
+  const diff = date === '' ? [] : diffLenient(current, { effectiveDate: date })
+  const write =
+    date !== '' && diff.length > 0
+      ? async (): Promise<boolean> => {
+          // Solo effectiveDate: el cuerpo de privacidad y terminos no viaja.
+          await payload.updateGlobal({ slug: 'legal-pages', locale: 'es', data: { effectiveDate: date }, depth: 0 })
+          const after = await read()
+          const ok = diffLenient({ effectiveDate: after.effectiveDate }, { effectiveDate: date }).length === 0
+          ctx.log(ok ? `  OK   legal-pages.effectiveDate = ${date}: releido y comparado` : `  FALLA legal-pages.effectiveDate: la relectura trae ${String(after.effectiveDate)}`)
+          return ok
+        }
+      : undefined
+  return { current, diff, notes: [], blockers: [], write }
+}
+
+// ---------------------------------------------------------------------------
+// Filas de arreglos (Websites y autor): grupo completo, ES, relectura de id, EN
+// ---------------------------------------------------------------------------
+
+type RowSpec = {
+  field: string
+  /** Filas deseadas en ES. */
+  es: Rec[]
+  /** Filas deseadas en EN. Ausente si el arreglo no tiene subcampos localizados. */
+  en?: Rec[]
+}
+
+type RowGroupOpts = {
+  collection: string
+  slug: string
+  label: string
+  /** Campos a leer como respaldo aunque no cambien. */
+  fields: string[]
+  specs: RowSpec[]
+  requirePublished: boolean
+  /** Forma del valor vivo para comparar con el respaldo registrado. */
+  liveShape: (es: Rec, en: Rec) => CutValue
+  item: CutItem
+}
+
+const rowsOf = (doc: Rec, field: string): Rec[] => (Array.isArray(doc[field]) ? (doc[field] as Rec[]) : [])
+
+async function planRowGroups(payload: PayloadLike, ctx: Ctx, o: RowGroupOpts): Promise<Plan> {
+  const docEs = await findBySlug(payload, o.collection, o.slug)
+  const id = docEs.id
+  const docEn = await readById(payload, o.collection, id, 'en')
+  const status = docEs._status
+  const current: Rec = { ...(status !== undefined ? { status } : {}) }
+  for (const f of o.fields) current[f] = { es: rowsOf(docEs, f), en: rowsOf(docEn, f) }
+  const notes = driftNote(o.liveShape(docEs, docEn), o.item.current, o.item)
+
+  const diff: string[] = []
+  const blockers: string[] = []
+  const active: { spec: RowSpec; merged: Rec[] }[] = []
+  for (const spec of o.specs) {
+    const curEs = rowsOf(docEs, spec.field)
+    const dEs = diffLenient(curEs, spec.es, `${spec.field}.es`)
+    const dEn = spec.en ? diffLenient(rowsOf(docEn, spec.field), spec.en, `${spec.field}.en`) : []
+    if (dEs.length + dEn.length === 0) continue
+    diff.push(...dEs, ...dEn)
+    // Grupo COMPLETO: lo leido fusionado con lo deseado, nunca un grupo parcial.
+    const { merged, discarded } = mergeGroupAllowShrink(curEs as never, spec.es as never, spec.field)
+    for (const d of discarded) {
+      const idx = Number(/\[(\d+)\]$/.exec(d.path)?.[1])
+      notes.push(`DESCARTA ${d.path} (id ${String(d.id)}): ${brief(curEs[idx], 160)}`)
+    }
+    if (discarded.length > 0 && !ctx.opts.allowShrinkRows) {
+      blockers.push(`el desired reduciria ${spec.field} de ${curEs.length} a ${spec.es.length} filas: es destructivo. Revisa el respaldo y vuelve con --allow-shrink-rows`)
+    }
+    active.push({ spec, merged: merged as Rec[] })
+  }
+  if (o.requirePublished && active.length > 0 && status !== 'published') {
+    blockers.push(`el documento no esta publicado (status ${String(status)}): no se toca lo que master no sirve`)
+  }
+
+  const write =
+    active.length === 0
+      ? undefined
+      : async (): Promise<boolean> => {
+          // 1. ES con el grupo completo fusionado (conserva los id de las filas que existen).
+          const esData: Rec = {}
+          for (const a of active) esData[a.spec.field] = a.merged
+          await updateDoc(payload, o.collection, id, 'es', esData)
+          // 2. Releer ES para obtener los id de fila y 3. EN con esos id.
+          const afterEs = await readById(payload, o.collection, id, 'es')
+          const enData: Rec = {}
+          for (const a of active) {
+            if (!a.spec.en) continue
+            const ids = rowsOf(afterEs, a.spec.field).map((r) => r.id)
+            if (ids.length !== a.spec.en.length || ids.some((x) => x === undefined || x === null)) {
+              throw new Error(`tras escribir ES, ${a.spec.field} trae ${ids.length} filas con id y se esperaban ${a.spec.en.length}: no se escribe EN`)
+            }
+            enData[a.spec.field] = a.spec.en.map((r, i) => ({ ...r, id: ids[i] }))
+          }
+          if (Object.keys(enData).length > 0) await updateDoc(payload, o.collection, id, 'en', enData)
+          // 4. Releer ES y EN y comparar; el status de publicacion no cambia.
+          const finalEs = await readById(payload, o.collection, id, 'es')
+          const finalEn = await readById(payload, o.collection, id, 'en')
+          const bad: string[] = []
+          for (const a of active) {
+            bad.push(...diffLenient(rowsOf(finalEs, a.spec.field), a.spec.es, `${a.spec.field}.es`))
+            if (a.spec.en) bad.push(...diffLenient(rowsOf(finalEn, a.spec.field), a.spec.en, `${a.spec.field}.en`))
+          }
+          const okStatus = finalEs._status === status
+          ctx.log(
+            bad.length === 0 && okStatus
+              ? `  OK   ${o.label}: releido en ES y EN${status !== undefined ? `, status ${String(status)}` : ''}`
+              : `  FALLA ${o.label}: siguen difiriendo ${bad.join(', ') || '(nada)'}, status ${String(finalEs._status)} (antes ${String(status)})`,
+          )
+          return bad.length === 0 && okStatus
+        }
+  return { current, diff, notes, blockers, write }
+}
+
+async function planWebsite(payload: PayloadLike, task: Task, ctx: Ctx): Promise<Plan> {
+  const item = task.items[0]
+  const m = /^websites:([a-z0-9-]+)#/.exec(item.target)
+  if (!m) throw new Error(`el target "${item.target}" no tiene la forma websites:<slug>#campos`)
+  const d = isObj(item.desired) ? item.desired : {}
+  const dEs = isObj(d.es) ? d.es : {}
+  const dEn = isObj(d.en) ? d.en : {}
+  const strings = (v: unknown, where: string): string[] => {
+    if (!Array.isArray(v) || v.some((x) => typeof x !== 'string' || x === '')) throw new Error(`${item.id}: ${where} debe ser una lista de textos no vacios`)
+    return v as string[]
+  }
+  const specs: RowSpec[] = []
+  if (dEs.stack !== undefined || dEn.stack !== undefined) {
+    specs.push({ field: 'stack', es: strings(dEs.stack ?? dEn.stack, 'stack').map((tag) => ({ tag })) })
+  }
+  for (const field of ['highlights', 'challenges']) {
+    if (dEs[field] === undefined && dEn[field] === undefined) continue
+    specs.push({
+      field,
+      es: strings(dEs[field], `${field} en ES`).map((text) => ({ text })),
+      en: strings(dEn[field], `${field} en EN`).map((text) => ({ text })),
+    })
+  }
+  const texts = (doc: Rec, f: string, key: string): string[] => rowsOf(doc, f).map((r) => str(r[key]))
+  return planRowGroups(payload, ctx, {
+    collection: 'websites',
+    slug: m[1],
+    label: `websites ${m[1]}`,
+    fields: ['stack', 'highlights', 'challenges'],
+    specs,
+    requirePublished: true,
+    item,
+    liveShape: (es, en) => ({
+      es: { stack: texts(es, 'stack', 'tag'), highlights: texts(es, 'highlights', 'text'), challenges: texts(es, 'challenges', 'text') },
+      en: { stack: texts(en, 'stack', 'tag'), highlights: texts(en, 'highlights', 'text'), challenges: texts(en, 'challenges', 'text') },
+    }),
+  })
+}
+
+async function planAuthor(payload: PayloadLike, task: Task, ctx: Ctx): Promise<Plan> {
+  const item = task.items[0]
+  const m = /^authors:([a-z0-9-]+)#experience/.exec(item.target)
+  if (!m) throw new Error(`el target "${item.target}" no tiene la forma authors:<slug>#experience`)
+  const d = isObj(item.desired) ? item.desired : {}
+  const rows = (side: unknown): Rec[] | undefined => {
+    if (!isObj(side) || side.experience === undefined) return undefined
+    if (!Array.isArray(side.experience) || side.experience.some((r) => !isObj(r))) throw new Error(`${item.id}: experience debe ser una lista de filas`)
+    return side.experience as Rec[]
+  }
+  const es = rows(d.es)
+  const en = rows(d.en)
+  const specs: RowSpec[] = es && en ? [{ field: 'experience', es, en }] : []
+  const shape = (doc: Rec): CutValue => ({ experience: rowsOf(doc, 'experience').map(({ id: _id, ...rest }) => rest) as CutValue })
+  return planRowGroups(payload, ctx, {
+    collection: 'authors',
+    slug: m[1],
+    label: `authors ${m[1]} experience`,
+    fields: ['experience'],
+    specs,
+    requirePublished: false,
+    item,
+    liveShape: (a, b) => ({ es: shape(a), en: shape(b) }),
+  })
+}
+
+// ---------------------------------------------------------------------------
+// Testimonio y boton del header
+// ---------------------------------------------------------------------------
+
+async function planTestimonial(payload: PayloadLike, task: Task, ctx: Ctx): Promise<Plan> {
+  const item = task.items[0]
+  const m = /^testimonials:(\d+)/.exec(item.target)
+  if (!m) throw new Error(`el target "${item.target}" no tiene la forma testimonials:<id>`)
+  const id = Number(m[1])
+  const docEs = await readById(payload, 'testimonials', id, 'es')
+  const docEn = await readById(payload, 'testimonials', id, 'en')
+  const current = { es: str(docEs.testimonial), en: str(docEn.testimonial) }
+  const notes = driftNote(current, item.current, item)
+  const desired = bilingualStrings(item)
+  const diff = desired ? diffLenient(current, desired) : []
+  const write =
+    desired && diff.length > 0
+      ? async (): Promise<boolean> => {
+          await updateDoc(payload, 'testimonials', id, 'es', { testimonial: desired.es })
+          await updateDoc(payload, 'testimonials', id, 'en', { testimonial: desired.en })
+          const afterEs = await readById(payload, 'testimonials', id, 'es')
+          const afterEn = await readById(payload, 'testimonials', id, 'en')
+          const ok = afterEs.testimonial === desired.es && afterEn.testimonial === desired.en
+          ctx.log(ok ? `  OK   testimonials ${id}: releido en ES y EN` : `  FALLA testimonials ${id}: la relectura no coincide`)
+          return ok
+        }
+      : undefined
+  return { current, diff, notes, blockers: [], write }
+}
+
+async function planHeaderCta(payload: PayloadLike, task: Task, ctx: Ctx): Promise<Plan> {
+  const item = task.items[0]
+  const readGroup = async (locale: Locale): Promise<Rec> => {
+    const g = (await payload.findGlobal({ slug: 'header', locale: locale, fallbackLocale: false, depth: 0 })) as Rec
+    return isObj(g.ctaButton) ? g.ctaButton : {}
+  }
+  const [gEs, gEn] = [await readGroup('es'), await readGroup('en')]
+  const current = { es: str(gEs.label), en: str(gEn.label) }
+  const registered = isObj(item.current) && typeof item.current.es === 'string' ? ({ es: item.current.es } as CutValue) : undefined
+  const notes = driftNote({ es: current.es }, registered, item)
+  const desired = bilingualStrings(item)
+  const diff = desired ? diffLenient(current, desired) : []
+  const write =
+    desired && diff.length > 0
+      ? async (): Promise<boolean> => {
+          // El grupo completo (label y href): un grupo parcial borraria el href.
+          await payload.updateGlobal({ slug: 'header', locale: 'es', data: { ctaButton: { ...gEs, label: desired.es } }, depth: 0 })
+          await payload.updateGlobal({ slug: 'header', locale: 'en', data: { ctaButton: { ...gEn, label: desired.en } }, depth: 0 })
+          const [aEs, aEn] = [await readGroup('es'), await readGroup('en')]
+          const ok = aEs.label === desired.es && aEn.label === desired.en && aEs.href === gEs.href
+          ctx.log(ok ? '  OK   header.ctaButton.label: releido en ES y EN, href intacto' : '  FALLA header.ctaButton: la relectura no coincide')
+          return ok
+        }
+      : undefined
+  return { current, diff, notes, blockers: [], write }
+}
+
+// ---------------------------------------------------------------------------
 // Despacho
 // ---------------------------------------------------------------------------
 
@@ -466,6 +757,18 @@ async function planTask(payload: PayloadLike, task: Task, ctx: Ctx): Promise<Pla
   switch (task.kind) {
     case 'lessons':
       return planLessons(payload, task, ctx)
+    case 'media-alt':
+      return planMediaAlt(payload, task, ctx)
+    case 'legal-date':
+      return planLegalDate(payload, task, ctx)
+    case 'websites-row':
+      return planWebsite(payload, task, ctx)
+    case 'author':
+      return planAuthor(payload, task, ctx)
+    case 'testimonial':
+      return planTestimonial(payload, task, ctx)
+    case 'cta-master':
+      return planHeaderCta(payload, task, ctx)
     default:
       throw new Error(`${task.key}: sin aplicador para el kind ${task.kind}`)
   }
