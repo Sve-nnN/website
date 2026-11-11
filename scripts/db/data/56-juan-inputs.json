@@ -5,24 +5,24 @@
       "origen": "global sombra home-page, hero.ctaLabel",
       "carga": "ahora",
       "vigenteEs": "Pedir auditoría 360",
-      "es": null,
-      "en": null
+      "es": "Pedir auditoría 360",
+      "en": "Request a 360 audit"
     },
     {
       "id": "services-cta",
       "origen": "global sombra home-page, services.ctaLabel",
       "carga": "ahora",
       "vigenteEs": "Hablemos de tu sitio",
-      "es": null,
-      "en": null
+      "es": "Hablemos de tu sitio",
+      "en": "Let's talk about your site"
     },
     {
       "id": "cierre-titulo",
       "origen": "global sombra home-page, cta.title",
       "carga": "ahora",
       "vigenteEs": "Hablemos de tu sitio",
-      "es": null,
-      "en": null
+      "es": "Hablemos de tu sitio",
+      "en": "Let's talk about your site"
     },
     {
       "id": "cierre-lead",
@@ -37,16 +37,16 @@
       "origen": "global sombra home-page, cases.ctaLabel",
       "carga": "ahora",
       "vigenteEs": "Ver todos los casos",
-      "es": null,
-      "en": null
+      "es": "Ver todos los casos",
+      "en": "See all case studies"
     },
     {
       "id": "sites-cta",
       "origen": "global sombra home-page, sites.ctaLabel",
       "carga": "ahora",
       "vigenteEs": "Ver todos los sitios",
-      "es": null,
-      "en": null
+      "es": "Ver todos los sitios",
+      "en": "See all websites"
     },
     {
       "id": "contact-step-1",
@@ -77,8 +77,8 @@
       "origen": "global header, ctaButton (lo lee master)",
       "carga": "corte",
       "vigenteEs": "Hablemos",
-      "es": null,
-      "en": null
+      "es": "Pedir auditoría 360",
+      "en": "Request a 360 audit"
     },
     {
       "id": "audit-offer-cta",
@@ -93,16 +93,56 @@
       "origen": "bloque auditorHighlight o messages auditorHighlight.cta (lo lee master)",
       "carga": "corte",
       "vigenteEs": "Probar el auditor",
-      "es": null,
-      "en": null
+      "es": "Probar el auditor",
+      "en": "Try the auditor"
     },
     {
       "id": "services-index-talk",
       "origen": "messages, services.index.talkCta",
       "carga": "ahora",
       "vigenteEs": "Hablar con Juan",
-      "es": null,
-      "en": null
+      "es": "Hablar con Juan",
+      "en": "Talk to Juan"
+    },
+    {
+      "id": "service-card-cta",
+      "origen": "messages, servicesShowcase.cta",
+      "carga": "ahora",
+      "vigenteEs": "Explorar servicio",
+      "es": "Explorar servicio",
+      "en": "Explore service"
+    },
+    {
+      "id": "auditor-notice-cta",
+      "origen": "messages, serviceScopeCard.auditorCta",
+      "carga": "ahora",
+      "vigenteEs": "Ir al auditor",
+      "es": "Ir al auditor",
+      "en": "Go to the auditor"
+    },
+    {
+      "id": "stack-tool-link",
+      "origen": "messages, serviceScopeCard.ctaDefault",
+      "carga": "ahora",
+      "vigenteEs": "Probar {tool}",
+      "es": "Probar {tool}",
+      "en": "Try {tool}"
+    },
+    {
+      "id": "stack-amazon",
+      "origen": "messages, serviceScopeCard.ctaAmazon",
+      "carga": "ahora",
+      "vigenteEs": "Ver en Amazon",
+      "es": "Ver en Amazon",
+      "en": "View on Amazon"
+    },
+    {
+      "id": "contact-response-note",
+      "origen": "global sombra home-page contact.infoRows[0].text y messages contact.cta.responseNote",
+      "carga": "ahora",
+      "vigenteEs": "Suelo responder en menos de 48 horas.",
+      "es": "Suelo responder en menos de 48 horas.",
+      "en": "I usually reply within 48 hours."
     },
     {
       "id": "contact-write-email",

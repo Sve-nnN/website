@@ -12,21 +12,26 @@ Cómo se usa:
 
 ## LOTE1 CTAs del lote 1
 
-Aprobados por Juan tal como se listaron, con el cierre de la home cambiado (D-15). Los textos ES y EN del resto del lote existen solo en la conversación: pégalos aquí.
+Tabla de 13 filas aprobada por Juan el 2026-11-10 (ver `aprobaciones-juan.md`), con el cierre de la home cambiado (D-15). Las filas con "(pega aquí)" no estaban en esa tabla: son del lote 2 (pasos de Contacto) o textos que Juan no vio, y quedan pendientes.
 
-- hero-cta | origen: global sombra home-page, hero.ctaLabel | carga: ahora | vigente ES: Pedir auditoría 360 | ES: (pega aquí) | EN: (pega aquí)
-- services-cta | origen: global sombra home-page, services.ctaLabel | carga: ahora | vigente ES: Hablemos de tu sitio | ES: (pega aquí) | EN: (pega aquí)
-- cierre-titulo | origen: global sombra home-page, cta.title | carga: ahora | vigente ES: Hablemos de tu sitio | ES: (pega aquí) | EN: (pega aquí)
+- hero-cta | origen: global sombra home-page, hero.ctaLabel | carga: ahora | vigente ES: Pedir auditoría 360 | ES: Pedir auditoría 360 | EN: Request a 360 audit
+- services-cta | origen: global sombra home-page, services.ctaLabel | carga: ahora | vigente ES: Hablemos de tu sitio | ES: Hablemos de tu sitio | EN: Let's talk about your site
+- cierre-titulo | origen: global sombra home-page, cta.title | carga: ahora | vigente ES: Hablemos de tu sitio | ES: Hablemos de tu sitio | EN: Let's talk about your site
 - cierre-lead | origen: global sombra home-page, cta.lead | carga: ahora | vigente ES: ¿Tienes un proyecto en mente? Cuéntame de qué se trata y empiezo por mirar qué ve Google hoy. | ES: ¿Tienes un proyecto en mente? Cuéntame de qué se trata. | EN: Have a project in mind? Tell me what it is about.
-- cases-cta | origen: global sombra home-page, cases.ctaLabel | carga: ahora | vigente ES: Ver todos los casos | ES: (pega aquí) | EN: (pega aquí)
-- sites-cta | origen: global sombra home-page, sites.ctaLabel | carga: ahora | vigente ES: Ver todos los sitios | ES: (pega aquí) | EN: (pega aquí)
+- cases-cta | origen: global sombra home-page, cases.ctaLabel | carga: ahora | vigente ES: Ver todos los casos | ES: Ver todos los casos | EN: See all case studies
+- sites-cta | origen: global sombra home-page, sites.ctaLabel | carga: ahora | vigente ES: Ver todos los sitios | ES: Ver todos los sitios | EN: See all websites
 - contact-step-1 | origen: global sombra home-page, contact.steps[0].title | carga: ahora | vigente ES: Me cuentas el proyecto | ES: (pega aquí) | EN: (pega aquí)
 - contact-step-2 | origen: global sombra home-page, contact.steps[1].title | carga: ahora | vigente ES: Miro qué ve Google hoy | ES: (pega aquí) | EN: (pega aquí)
 - contact-step-3 | origen: global sombra home-page, contact.steps[2].title | carga: ahora | vigente ES: Te digo por dónde empezar | ES: (pega aquí) | EN: (pega aquí)
-- header-cta | origen: global header, ctaButton (lo lee master) | carga: corte | vigente ES: Hablemos | ES: (pega aquí) | EN: (pega aquí)
+- header-cta | origen: global header, ctaButton (lo lee master) | carga: corte | vigente ES: Hablemos | ES: Pedir auditoría 360 | EN: Request a 360 audit
 - audit-offer-cta | origen: bloque auditOfferBlock del doc pages home (lo lee master) | carga: corte | vigente ES: Pedir la auditoría | ES: (pega aquí) | EN: (pega aquí)
-- auditor-cta | origen: bloque auditorHighlight o messages auditorHighlight.cta (lo lee master) | carga: corte | vigente ES: Probar el auditor | ES: (pega aquí) | EN: (pega aquí)
-- services-index-talk | origen: messages, services.index.talkCta | carga: ahora | vigente ES: Hablar con Juan | ES: (pega aquí) | EN: (pega aquí)
+- auditor-cta | origen: bloque auditorHighlight o messages auditorHighlight.cta (lo lee master) | carga: corte | vigente ES: Probar el auditor | ES: Probar el auditor | EN: Try the auditor
+- services-index-talk | origen: messages, services.index.talkCta | carga: ahora | vigente ES: Hablar con Juan | ES: Hablar con Juan | EN: Talk to Juan
+- service-card-cta | origen: messages, servicesShowcase.cta | carga: ahora | vigente ES: Explorar servicio | ES: Explorar servicio | EN: Explore service
+- auditor-notice-cta | origen: messages, serviceScopeCard.auditorCta | carga: ahora | vigente ES: Ir al auditor | ES: Ir al auditor | EN: Go to the auditor
+- stack-tool-link | origen: messages, serviceScopeCard.ctaDefault | carga: ahora | vigente ES: Probar {tool} | ES: Probar {tool} | EN: Try {tool}
+- stack-amazon | origen: messages, serviceScopeCard.ctaAmazon | carga: ahora | vigente ES: Ver en Amazon | ES: Ver en Amazon | EN: View on Amazon
+- contact-response-note | origen: global sombra home-page contact.infoRows[0].text y messages contact.cta.responseNote | carga: ahora | vigente ES: Suelo responder en menos de 48 horas. | ES: Suelo responder en menos de 48 horas. | EN: I usually reply within 48 hours.
 - contact-write-email | origen: messages, contact.writeEmail | carga: ahora | vigente ES: Escribir un correo | ES: (pega aquí) | EN: (pega aquí)
 - contact-submit | origen: messages, contact.form.submit | carga: ahora | vigente ES: Enviar mensaje | ES: (pega aquí) | EN: (pega aquí)
 - emailcapture-submit | origen: messages, emailCapture.submitLabel | carga: ahora | vigente ES: Enviarme el checklist | ES: (pega aquí) | EN: (pega aquí)

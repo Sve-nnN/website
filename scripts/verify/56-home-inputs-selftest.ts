@@ -86,7 +86,12 @@ for (const id of ['header-cta', 'audit-offer-cta', 'auditor-cta']) {
   expect(`${id} se carga en el corte`, CTA_LOTE1.find((r) => r.id === id)?.loadAt === 'corte')
 }
 expect('el resto del lote 1 se carga ahora', CTA_LOTE1.filter((r) => !['header-cta', 'audit-offer-cta', 'auditor-cta'].includes(r.id)).every((r) => r.loadAt === 'ahora'))
-expect('hay 17 filas y una decision CTA por fila', CTA_LOTE1.length === 17 && CTA_DECISIONS.length === 17 && CTA_DECISIONS.every((d) => d.id.startsWith('CTA-')))
+expect('hay 22 filas y una decision CTA por fila', CTA_LOTE1.length === 22 && CTA_DECISIONS.length === 22 && CTA_DECISIONS.every((d) => d.id.startsWith('CTA-')))
+// Tabla del lote 1 aprobada por Juan el 2026-11-10 (13 filas de la tabla, la primera cubre hero y encabezado).
+const APROBADAS = ['hero-cta', 'header-cta', 'cierre-titulo', 'cierre-lead', 'services-cta', 'cases-cta', 'sites-cta', 'services-index-talk', 'service-card-cta', 'auditor-cta', 'auditor-notice-cta', 'stack-tool-link', 'stack-amazon', 'contact-response-note']
+expect('las 14 filas de la tabla aprobada estan aprobadas con ES y EN', APROBADAS.every((id) => { const r = CTA_LOTE1.find((x) => x.id === id); return r?.estado === 'aprobado' && Boolean(r.es) && Boolean(r.en) }))
+expect('el resto del lote sigue pendiente', CTA_LOTE1.filter((r) => !APROBADAS.includes(r.id)).every((r) => r.estado === 'pendiente'))
+expect('hero-cta EN es Request a 360 audit', CTA_LOTE1.find((r) => r.id === 'hero-cta')?.en === 'Request a 360 audit')
 
 // Test 5: ninguna cadena contiene raya larga, media ni marcador.
 const everything = JSON.stringify([HOME_DECISION_LIST, CTA_DECISIONS, CTA_LOTE1, HERO_STATS])
