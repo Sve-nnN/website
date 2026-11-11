@@ -80,7 +80,7 @@ Siguen pendientes y sin cambio: `contact.writeEmail`, `contact.form.submit`, `em
 - `node scripts/verify/56-cta-live.mjs --selftest`: PASS (25 casos, incluye rechazar el HTML con la frase retirada, el texto que solo vive en un `<script>` y el lead viejo).
 - `node scripts/verify/56-cta-live.mjs --messages`: PASS (13 claves).
 - `56-content-guard.mjs --data` y `--messages`: PASS. `56-gate.ts`: sale 0, con las 8 decisiones `CTA-MAP-*` como pendientes. `56-review-export.ts --only CTA-MAP` las lista con archivo, clave y carga. `npx tsc --noEmit`: 0. Paridad 54 y 55, sin rayas, `56-home-inputs-selftest` y `56-run-all --selftests` (lógica de SKIP): PASS.
-- Lectura de solo HTTP contra dev, antes de la siembra (informativo, no es el modo vivo oficial): FAIL esperado. Sobre las rutas ES de hoy ya pasan `/contact`, `/stack` y `/en/stack`; fallan la frase retirada (sigue en 10 rutas, incluidas las EN) y los textos EN del global sombra (`/en` sigue en español). Eso lo cierra la siembra de 56-12; el modo vivo se corre allí con `BASE_URL`.
+- Lectura de solo HTTP contra dev, antes de la siembra (informativo, no es el modo vivo oficial): FAIL esperado. Sobre las rutas ES de hoy ya pasan `/contact`, `/stack` y `/en/stack`; fallan la frase retirada (sigue en varias rutas, incluidas las EN) y los textos EN del global sombra (`/en` sigue en español). Eso lo cierra la siembra de 56-12; el modo vivo se corre allí con `BASE_URL`.
 
 ## Deviations from Plan
 
