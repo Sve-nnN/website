@@ -29,7 +29,20 @@ import {
 } from '../db/data/56-legal-lexical'
 import { extractHeadings, type LexicalRootLike } from '../../src/components/mui/rich-text/lexical-toc'
 
-const { LEGAL_FACTS, LEGAL_EFFECTIVE_DATE, DECISIONS, PRIVACY_ES, TERMS_ES, buildPrivacyEs, buildTermsEs } = copy
+const {
+  LEGAL_FACTS,
+  LEGAL_EFFECTIVE_DATE,
+  DECISIONS,
+  PRIVACY_ES,
+  TERMS_ES,
+  PRIVACY_EN,
+  buildPrivacyEs,
+  buildTermsEs,
+  buildPrivacyEn,
+  withEvidenceFrom,
+  PRIVACY_URL_ES,
+  PRIVACY_URL_EN,
+} = copy
 
 // Las cadenas prohibidas se arman por codigo para que este archivo no las contenga.
 const EM_DASH = String.fromCharCode(0x2014)
@@ -48,7 +61,7 @@ const FORBIDDEN: { label: string; test: (t: string) => boolean }[] = [
   { label: 'marcador de ranura', test: (t) => t.includes(SLOT) },
   // D-09: el texto no inventa ni fija la fecha efectiva (un ano de cuatro cifras delataria una).
   { label: 'un ano o una fecha efectiva', test: (t) => /\b(19|20)\d{2}\b/.test(t) },
-  { label: 'una linea de fecha efectiva', test: (t) => /vigente desde|ultima actualizacion|última actualización|effective as of/i.test(t) },
+  { label: 'una linea de fecha efectiva', test: (t) => /vigente desde|ultima actualizacion|última actualización|effective as of|effective date|last updated/i.test(t) },
 ]
 
 const PROVIDERS = ['Resend', 'Cloudinary', 'Hetzner', 'Cloudflare']
@@ -89,6 +102,68 @@ export function docProblems(sections: readonly LegalSection[], required: readonl
   for (const f of FORBIDDEN) if (f.test(all)) problems.push(`contiene ${f.label}`)
   for (const r of required) if (!all.includes(r)) problems.push(`falta "${r}"`)
   return problems
+}
+
+/** Enlaces de un documento en orden. La URL de privacidad del ES se compara con la del EN. */
+export function linkHrefs(sections: readonly LegalSection[]): string[] {
+  const out: string[] = []
+  const take = (c: LegalSection['blocks'][number]) => {
+    const parts = c.type === 'p' ? [c.content] : c.items.map((i) => i.content)
+    for (const content of parts) for (const part of Array.isArray(content) ? content : [content]) if (typeof part !== 'string') out.push(part.href)
+  }
+  for (const s of sections) s.blocks.forEach(take)
+  return out
+}
+
+/** Problemas de paridad ES y EN (T-56-36): mismas secciones, mismos bloques, mismos enlaces y mismos proveedores. */
+export function parityProblems(es: readonly LegalSection[], en: readonly LegalSection[], providers: readonly string[]): string[] {
+  const problems: string[] = []
+  if (es.length !== en.length) problems.push(`secciones: ${es.length} en espanol y ${en.length} en ingles`)
+  for (let i = 0; i < Math.min(es.length, en.length); i++) {
+    const a = es[i].blocks
+    const b = en[i].blocks
+    if (a.length !== b.length) {
+      problems.push(`seccion ${i + 1}: ${a.length} bloques en espanol y ${b.length} en ingles`)
+      continue
+    }
+    a.forEach((block, j) => {
+      const other = b[j]
+      if (block.type !== other.type) problems.push(`seccion ${i + 1}, bloque ${j + 1}: tipo distinto`)
+      else if (block.type === 'ul' && other.type === 'ul' && block.items.length !== other.items.length) {
+        problems.push(`seccion ${i + 1}, lista ${j + 1}: ${block.items.length} elementos en espanol y ${other.items.length} en ingles`)
+      } else if (block.type === 'p' && other.type === 'p' && block.evidence !== other.evidence) problems.push(`seccion ${i + 1}, bloque ${j + 1}: evidencia distinta`)
+    })
+  }
+  const toNeutral = (u: string) => (u === PRIVACY_URL_EN ? PRIVACY_URL_ES : u)
+  const esLinks = linkHrefs(es).join(' ')
+  const enLinks = linkHrefs(en).map(toNeutral).join(' ')
+  if (esLinks !== enLinks) problems.push(`enlaces distintos: ES [${esLinks}] y EN [${enLinks}]`)
+  const esText = es.flatMap(sectionTexts).join('\n')
+  const enText = en.flatMap(sectionTexts).join('\n')
+  for (const w of providers) {
+    if (esText.includes(w) !== enText.includes(w)) problems.push(`el proveedor ${w} no aparece en los dos idiomas`)
+  }
+  return problems
+}
+
+/** Un hecho no se afirma en un idioma y se calla en el otro (valor y detalles de texto). */
+export function factParityProblems(facts: typeof LEGAL_FACTS): string[] {
+  const problems: string[] = []
+  for (const [key, f] of Object.entries(facts)) {
+    if ((f.value.trim() === '') !== ((f.valueEn ?? '').trim() === '')) problems.push(`${key}: value y valueEn no estan los dos llenos o los dos vacios`)
+    for (const [dk, dv] of Object.entries(f.details ?? {})) {
+      if (dk === 'mentionDataLaw') continue
+      if ((dv.trim() === '') !== ((f.detailsEn?.[dk] ?? '').trim() === '')) problems.push(`${key}.${dk}: ES y EN no estan los dos llenos o los dos vacios`)
+    }
+    for (const dk of Object.keys(f.detailsEn ?? {})) if (!(dk in (f.details ?? {}))) problems.push(`${key}.${dk}: existe en detailsEn y no en details`)
+  }
+  return problems
+}
+
+/** El ingles no arrastra espanol: sin tildes, enye ni signos de apertura. */
+export function spanishLeaks(sections: readonly LegalSection[]): string[] {
+  const all = sections.flatMap(sectionTexts).join('\n')
+  return all.match(/[áéíóúñ¿¡Á-Ú]/g) ?? []
 }
 
 function section(title: string, text = 'texto', evidence = 'evidencia'): LegalSection {
@@ -183,6 +258,70 @@ check(
   'el texto no cambio',
 )
 check(!privacyAll.includes('Alemania') && privacyAll.includes('un proveedor de correo'), 'sin region ni buzon confirmados el texto no inventa ninguno', 'el texto nombra un dato sin confirmar')
+
+// ---------------------------------------------------------------- privacy en ingles (plan 56-11)
+
+{
+  const enProblems = docProblems(PRIVACY_EN, [...PROVIDERS, 'NEXT_LOCALE', 'hello@juan-tech.com'])
+  check(enProblems.length === 0, 'PRIVACY_EN cumple encabezados, evidencia, proveedores y cadenas prohibidas', enProblems.join(' | '))
+  const enHeads = extractHeadings(sectionsToLexical(PRIVACY_EN).root as unknown as LexicalRootLike)
+  check(
+    enHeads.length === PRIVACY_EN.length && enHeads.every((h, i) => h.text === PRIVACY_EN[i].title && h.level === 2) && new Set(enHeads.map((h) => h.id)).size === enHeads.length,
+    'extractHeadings acepta PRIVACY_EN: un h2 por seccion e ids unicos',
+    `${enHeads.length} de ${PRIVACY_EN.length}`,
+  )
+  const par = parityProblems(PRIVACY_ES, PRIVACY_EN, [...PROVIDERS, 'Dokploy', 'NEXT_LOCALE', 'hello@juan-tech.com'])
+  check(par.length === 0 && PRIVACY_EN.length === PRIVACY_ES.length, 'PRIVACY_EN y PRIVACY_ES: mismas secciones, bloques, enlaces, evidencia y proveedores', par.join(' | '))
+  const factPar = factParityProblems(LEGAL_FACTS)
+  check(factPar.length === 0, 'cada hecho de LEGAL_FACTS esta en los dos idiomas o en ninguno', factPar.join(' | '))
+  check(spanishLeaks(PRIVACY_EN).length === 0, 'PRIVACY_EN no trae tildes ni signos del espanol', spanishLeaks(PRIVACY_EN).join(''))
+  const enAll = PRIVACY_EN.flatMap(sectionTexts).join('\n')
+  check(/does not store them in any database/.test(enAll), 'privacy EN dice que el formulario de contacto no guarda nada en la base', 'falta la frase')
+  check(/I do not store your IP address/.test(enAll) && /server's memory/.test(enAll), 'privacy EN dice que la IP solo vive en memoria y no se guarda', 'falta la frase')
+  check(/two steps/.test(enAll), 'privacy EN describe la confirmacion en dos pasos de los suscriptores', 'falta la frase')
+  check(!enAll.includes('Germany') && enAll.includes('an email provider'), 'sin region ni buzon confirmados el EN no inventa ninguno', 'el texto nombra un dato sin confirmar')
+  check(
+    /legal rights|rights/.test(enAll) && ['Access', 'Correction', 'Deletion', 'Portability', 'Restriction', 'Objection', 'Withdrawing your consent'].every((r) => enAll.includes(r)),
+    'privacy EN nombra los siete derechos (acceso, correccion, supresion, portabilidad, limitacion, oposicion y retiro del consentimiento)',
+    'falta un derecho',
+  )
+  const changedEn = buildPrivacyEn({
+    ...LEGAL_FACTS,
+    HOSTING: { ...LEGAL_FACTS.HOSTING, detailsEn: { region: 'Germany', logRetention: '14 days' } },
+    MAILBOX_PROVIDER: { ...LEGAL_FACTS.MAILBOX_PROVIDER, valueEn: 'TestProvider' },
+    RETENTION_CONTACT_EMAIL: { ...LEGAL_FACTS.RETENTION_CONTACT_EMAIL, valueEn: '6 months' },
+  })
+    .flatMap(sectionTexts)
+    .join('\n')
+  check(
+    changedEn.includes('The server is in Germany') && changedEn.includes('TestProvider') && changedEn.includes('up to 6 months') && changedEn.includes('14 days'),
+    'cambiar un hecho de LEGAL_FACTS cambia el texto en ingles',
+    'el texto en ingles no cambio',
+  )
+  const noLaw = buildPrivacyEn({ ...LEGAL_FACTS, GOVERNING_LAW: { ...LEGAL_FACTS.GOVERNING_LAW, details: { ...LEGAL_FACTS.GOVERNING_LAW.details, mentionDataLaw: 'no' } } })
+    .flatMap(sectionTexts)
+    .join('\n')
+  check(enAll.includes('Law 29733') && !noLaw.includes('Law 29733'), 'mentionDataLaw=no quita la ley de datos en ingles', 'la bandera no cambia el ingles')
+  let threw = false
+  try {
+    withEvidenceFrom(PRIVACY_ES, [{ title: 'Solo una', blocks: [{ type: 'p', content: 'x' }] }], 'fixture')
+  } catch {
+    threw = true
+  }
+  check(threw, 'withEvidenceFrom lanza si el ingles tiene otra estructura que el espanol', 'no lanzo')
+  const shortEn = PRIVACY_EN.slice(0, -1)
+  check(parityProblems(PRIVACY_ES, shortEn, PROVIDERS).some((p) => /secciones/.test(p)), 'la paridad detecta una seccion que falta en ingles', 'no detecto nada')
+  const rename = (content: string | (string | { text: string; href: string })[]): typeof content =>
+    typeof content === 'string'
+      ? content.replace(/Resend/g, 'Mailer')
+      : content.map((part) => (typeof part === 'string' ? part.replace(/Resend/g, 'Mailer') : part))
+  const noResend: LegalSection[] = PRIVACY_EN.map((sec) => ({
+    ...sec,
+    blocks: sec.blocks.map((b) => (b.type === 'p' ? { ...b, content: rename(b.content) } : { ...b, items: b.items.map((it) => ({ ...it, content: rename(it.content) })) })),
+  }))
+  check(parityProblems(PRIVACY_ES, noResend, PROVIDERS).some((p) => /Resend/.test(p)), 'la paridad detecta un proveedor que falta en ingles', 'no detecto nada')
+  check(factParityProblems({ ...LEGAL_FACTS, MAILBOX_PROVIDER: { ...LEGAL_FACTS.MAILBOX_PROVIDER, value: 'ProveedorX' } }).length === 1, 'la paridad de hechos detecta un valor solo en espanol', 'no detecto nada')
+}
 
 // ---------------------------------------------------------------- terminos
 

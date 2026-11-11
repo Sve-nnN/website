@@ -38,6 +38,14 @@ export type LegalFact = {
   value: string
   /** Datos secundarios del mismo hecho (region, plazo de los registros, ley de datos). */
   details?: Record<string, string>
+  /**
+   * Mismo valor para el texto en ingles (plan 56-11). Vacio o ausente significa "sin dato" en
+   * ingles: el texto usa la formula general. La autoprueba exige que ES y EN esten los dos
+   * llenos o los dos vacios, para que un hecho nunca se afirme en un idioma y se calle en el otro.
+   */
+  valueEn?: string
+  /** Mismos datos secundarios en ingles. Las banderas (mentionDataLaw) se leen de `details`. */
+  detailsEn?: Record<string, string>
   /** De donde sale el hecho o por que se propone este valor. */
   evidence: string
 }
@@ -61,7 +69,9 @@ export const LEGAL_FACTS: LegalFacts = {
     label: 'Servidor: proveedor, region y registros de acceso',
     status: 'propuesto',
     value: 'Hetzner',
+    valueEn: 'Hetzner',
     details: { region: '', logRetention: '30 días' },
+    detailsEn: { region: '', logRetention: '30 days' },
     evidence:
       'D-08 (Hetzner con Dokploy, dicho por Juan). dig juan-tech.com: A 116.203.79.125, NS de Cloudflare. Region y plazo de los registros de acceso: sin verificar en el VPS.',
   },
@@ -79,6 +89,7 @@ export const LEGAL_FACTS: LegalFacts = {
     label: 'Plazo para conservar los correos del formulario de contacto',
     status: 'propuesto',
     value: '12 meses',
+    valueEn: '12 months',
     evidence:
       'El texto vivo de /privacy decia hasta 12 meses (curl 2026-11-10). El plazo real lo decide Juan: no hay tarea automatica de borrado en el codigo, el buzon es manual.',
   },
@@ -87,6 +98,7 @@ export const LEGAL_FACTS: LegalFacts = {
     label: 'Plazo para conservar el correo de quien se da de baja',
     status: 'propuesto',
     value: '12 meses',
+    valueEn: '12 months',
     evidence:
       'El texto vivo de /privacy decia 12 meses (seccion 8). src/app/api/newsletter/unsubscribe/route.ts marca unsubscribedAt y conserva la fila: no existe borrado automatico, el plazo se cumple a mano.',
   },
@@ -96,6 +108,7 @@ export const LEGAL_FACTS: LegalFacts = {
     label: 'Conclusión: no hace falta banner de cookies',
     status: 'propuesto',
     value: 'no hace falta',
+    valueEn: 'not needed',
     evidence:
       'curl -I a / y /en en prod y dev: set-cookie NEXT_LOCALE=es; Path=/; SameSite=lax, sin Max-Age. Sin analitica ni pixeles (grep en src, package.json y next.config). Conclusion legal sin validar por un abogado.',
   },
@@ -104,7 +117,9 @@ export const LEGAL_FACTS: LegalFacts = {
     label: 'Ley aplicable y mención de la ley de datos personales',
     status: 'propuesto',
     value: 'Perú',
+    valueEn: 'Peru',
     details: { dataProtectionLaw: 'Ley 29733 de Protección de Datos Personales', mentionDataLaw: 'si' },
+    detailsEn: { dataProtectionLaw: 'Law 29733 on Personal Data Protection' },
     evidence:
       'D-06 (persona natural en Peru). La referencia a la Ley 29733 es un supuesto por validar (56-RESEARCH 4.3, ASSUMED): la plantilla CC0 no la cubre.',
   },
@@ -377,6 +392,224 @@ export function buildPrivacyEs(F: LegalFacts): LegalSection[] {
 }
 
 export const PRIVACY_ES: LegalSection[] = buildPrivacyEs(LEGAL_FACTS)
+
+// ---------------------------------------------------------------------------
+// Ingles (plan 56-11): adaptacion fiel del espanol, mismas secciones y mismos hechos
+// ---------------------------------------------------------------------------
+//
+// El texto en ingles se escribe sin evidencia propia y la toma por posicion del espanol
+// (withEvidenceFrom). Asi las dos versiones comparten la misma evidencia y, si una tiene
+// una seccion, un parrafo o un elemento de lista que la otra no tiene, el modulo lanza al
+// cargarse (T-56-36). La autoprueba repite la comprobacion por separado.
+
+export const PRIVACY_URL_EN = 'https://juan-tech.com/en/privacy'
+
+type EnBlock = { type: 'p'; content: InlineContent } | { type: 'ul'; items: { content: InlineContent }[] }
+type EnSection = { title: string; blocks: EnBlock[] }
+
+function pe(content: InlineContent): EnBlock {
+  return { type: 'p', content }
+}
+
+function ule(...items: InlineContent[]): EnBlock {
+  return { type: 'ul', items: items.map((content) => ({ content })) }
+}
+
+/** Valor en ingles de un hecho. Una cadena vacia significa "sin dato". */
+function valueEn(fact: LegalFact): string {
+  return (fact.valueEn ?? '').trim()
+}
+
+function detailsEn(fact: LegalFact, key: string): string {
+  return (fact.detailsEn?.[key] ?? '').trim()
+}
+
+/** Copia la evidencia del espanol por posicion. Lanza si las dos estructuras no coinciden. */
+export function withEvidenceFrom(es: readonly LegalSection[], en: readonly EnSection[], doc: string): LegalSection[] {
+  if (es.length !== en.length) {
+    throw new Error(`${doc}: el ingles tiene ${en.length} secciones y el espanol ${es.length}`)
+  }
+  return en.map((section, i) => {
+    const base = es[i]
+    if (section.blocks.length !== base.blocks.length) {
+      throw new Error(`${doc}: la seccion ${i + 1} tiene ${section.blocks.length} bloques en ingles y ${base.blocks.length} en espanol`)
+    }
+    return {
+      title: section.title,
+      blocks: section.blocks.map((block, j): LegalBlock => {
+        const ref = base.blocks[j]
+        if (block.type === 'p') {
+          if (ref.type !== 'p') throw new Error(`${doc}: la seccion ${i + 1}, bloque ${j + 1}, es parrafo en ingles y lista en espanol`)
+          return { type: 'p', content: block.content, evidence: ref.evidence }
+        }
+        if (ref.type !== 'ul') throw new Error(`${doc}: la seccion ${i + 1}, bloque ${j + 1}, es lista en ingles y parrafo en espanol`)
+        if (block.items.length !== ref.items.length) {
+          throw new Error(`${doc}: la lista ${j + 1} de la seccion ${i + 1} tiene ${block.items.length} elementos en ingles y ${ref.items.length} en espanol`)
+        }
+        return { type: 'ul', items: block.items.map((it, k) => ({ content: it.content, evidence: ref.items[k].evidence })) }
+      }),
+    }
+  })
+}
+
+export function buildPrivacyEn(F: LegalFacts): LegalSection[] {
+  const region = detailsEn(F.HOSTING, 'region')
+  const logRetention = detailsEn(F.HOSTING, 'logRetention') || 'a limited time'
+  const country = valueEn(F.GOVERNING_LAW) || 'Peru'
+  const dataLaw = detailsEn(F.GOVERNING_LAW, 'dataProtectionLaw')
+  const mentionDataLaw = details(F.GOVERNING_LAW, 'mentionDataLaw') !== 'no' && dataLaw !== ''
+  const mailbox = F.MAILBOX_PROVIDER.valueEn?.trim() ?? ''
+
+  const en: EnSection[] = [
+    {
+      title: 'Who I am and how to contact me',
+      blocks: [
+        pe("I'm Juan Carlos Angulo, an individual who lives in Peru. This site is mine, and I decide what data it collects and what I use it for."),
+        pe(['If you have a question about your data, write to me at ', { text: MAIL, href: MAILTO }, '.']),
+      ],
+    },
+    {
+      title: 'What data I collect',
+      blocks: [
+        pe('I collect the minimum. Here is each case.'),
+        ule(
+          'Contact form. Your name, your email and your message reach my mailbox as a normal email. The site does not store them in any database. I use them only to reply to you.',
+          'Newsletter or free download signup. I store your email, the language you signed up in, the page you signed up from and, if it was for a download, which one you asked for. I also store whether you confirmed. Confirmation takes two steps: I email you, and you are subscribed only once you click the link. If you ask for the checklist, I only email you to confirm and deliver the download. If you subscribe to the blog, I let you know when I publish a new article.',
+          "Affiliate link clicks. I store the link identifier and your browser's user agent, which is the text that says which browser and system you use. I do not store your IP address.",
+          "Your IP address. The site reads it to stop abuse: it counts how many times you submit a form, subscribe or click an affiliate link within 10 minutes. That count lives only in the server's memory and disappears when the server restarts. I do not write it to the database.",
+          'Server technical logs. Like any web server, mine may record the IP address, the date and the page requested on each visit. I use them only to detect errors and attacks.',
+        ),
+      ],
+    },
+    {
+      title: "What I don't use",
+      blocks: [
+        pe("I don't use analytics tools, tracking pixels or third-party advertising, and nothing that builds a profile of what you do on the site. I don't sell your data."),
+      ],
+    },
+    {
+      title: 'Cookies',
+      blocks: [
+        pe(
+          'The site uses a single cookie, and it is functional. It is called NEXT_LOCALE and remembers the language you read the page in. It is a session cookie: it expires when you close the browser. It is not used to follow you or to measure anything.',
+        ),
+        pe(
+          'Because I only use that functional cookie, the site does not show a cookie banner. If I ever add a cookie that is not necessary for the page to work, I will ask your permission first.',
+        ),
+        pe(
+          'The admin panel, which only I use, stores its own session cookie when I log in. It does not affect people who visit the site.',
+        ),
+      ],
+    },
+    {
+      title: 'Providers that process data',
+      blocks: [
+        pe('To keep the site running I depend on these providers. Each one does a specific job.'),
+        ule(
+          [
+            "Resend sends the site's emails: the contact form email, which reaches my mailbox, and the subscription confirmation emails. Your name, your email and your message pass through Resend. Its ",
+            { text: 'privacy policy', href: 'https://resend.com/legal/privacy-policy' },
+            '.',
+          ],
+          [
+            "Cloudinary stores and serves the site's images. Your browser requests them straight from Cloudinary, so your IP address and your user agent reach its server when you load a page with images. Its ",
+            { text: 'privacy policy', href: 'https://cloudinary.com/privacy' },
+            '.',
+          ],
+          [
+            region === ''
+              ? 'Hetzner is the provider of the server where the site runs and where its database lives. It is a virtual server that I manage myself with Dokploy, the tool I use to publish the site. Its '
+              : `${valueEn(F.HOSTING) || F.HOSTING.value} is the provider of the server where the site runs and where its database lives. The server is in ${region}. It is a virtual server that I manage myself with Dokploy, the tool I use to publish the site. Its `,
+            { text: 'privacy policy', href: 'https://www.hetzner.com/legal/privacy-policy' },
+            '.',
+          ],
+          [
+            'Cloudflare only handles DNS: it translates the name juan-tech.com into the address of the server. The page and your data do not pass through Cloudflare. Its ',
+            { text: 'privacy policy', href: 'https://www.cloudflare.com/privacypolicy/' },
+            '.',
+          ],
+          mailbox === ''
+            ? `My mailbox ${MAIL} is hosted by an email provider, which therefore also sees the messages you write to me.`
+            : `${mailbox} hosts my mailbox ${MAIL}, so it also sees the messages you write to me.`,
+        ),
+      ],
+    },
+    {
+      title: 'Affiliate links',
+      blocks: [
+        pe(
+          'Some links on the site are affiliate links. If you buy through one, I may earn a small commission at no extra cost to you. I only recommend tools I actually use. As an Amazon Associate I earn from qualifying purchases.',
+        ),
+        pe(
+          'Those links go first through an address on this site, which records the click as I explained above and sends you to the store. The store has its own privacy policy and its own cookies, which I do not control.',
+        ),
+      ],
+    },
+    {
+      title: 'How long I keep your data',
+      blocks: [
+        ule(
+          `Contact form emails: up to ${valueEn(F.RETENTION_CONTACT_EMAIL)} from the last time we talked. I keep them so I can pick the conversation back up if needed.`,
+          `Subscribers: as long as you stay subscribed. If you unsubscribe, I leave your email marked as unsubscribed so I never write to you again, and I delete it no later than ${valueEn(F.RETENTION_SUBSCRIBERS)} after you unsubscribe.`,
+          'Affiliate clicks: since they carry neither your IP address nor your email, I keep them for as long as they help me see which links get used.',
+          `Server technical logs: ${logRetention}.`,
+          'IP address in memory: until the server restarts.',
+        ),
+        pe('If you would rather I delete something sooner, ask me and I will delete it.'),
+      ],
+    },
+    {
+      title: 'Your rights and how to use them',
+      blocks: [
+        pe('Your data is yours. At any time you can ask me for any of these things.'),
+        ule(
+          'Access: ask me what data of yours I hold and get a copy.',
+          'Correction: ask me to fix a piece of data that is wrong.',
+          'Deletion: ask me to delete your data.',
+          'Portability: ask me to hand over your data in a format a program can read.',
+          'Restriction: ask me to stop using your data while we sort out a question.',
+          'Objection: ask me not to use your data for a specific purpose.',
+          'Withdrawing your consent: ask me to stop writing to you. With the unsubscribe link that comes in every email you can do it yourself, without writing to me.',
+        ),
+        pe([
+          'To use any of these rights, write to me at ',
+          { text: MAIL, href: MAILTO },
+          '. If needed, I ask you to confirm that you are who you say you are before handing over or deleting anything.',
+        ]),
+        pe(
+          mentionDataLaw
+            ? `I handle your data in line with the Peruvian personal data protection law (${dataLaw}) and I use the European data protection regulation, the GDPR, as a reference. If you think I did not handle your data properly, you can file a complaint with the data protection authority of ${country} or, if you live in Europe, with the one in your own country.`
+            : `If you think I did not handle your data properly, you can file a complaint with the data protection authority of ${country} or, if you live in Europe, with the one in your own country.`,
+        ),
+      ],
+    },
+    {
+      title: 'International transfers',
+      blocks: [
+        pe(
+          "I live in Peru and my providers operate in other countries. That's why your data may travel outside your country and outside mine when you use the form, subscribe or load the site's images. Each provider applies the laws of its own country and publishes its own privacy policy, which I link to above.",
+        ),
+      ],
+    },
+    {
+      title: 'Children',
+      blocks: [
+        pe(
+          'This site is not meant for people under 18 and I do not collect their data on purpose. If you think a minor left me theirs, write to me and I will delete it.',
+        ),
+      ],
+    },
+    {
+      title: 'Changes to this policy',
+      blocks: [
+        pe('If I change something, I update this text and the date shown at the top of the page. Each change applies from that date.'),
+      ],
+    },
+  ]
+  return withEvidenceFrom(buildPrivacyEs(F), en, 'PRIVACY_EN')
+}
+
+export const PRIVACY_EN: LegalSection[] = buildPrivacyEn(LEGAL_FACTS)
 
 // ---------------------------------------------------------------------------
 // Terminos de uso
