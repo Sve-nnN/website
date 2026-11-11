@@ -39,3 +39,24 @@ Aprobados tal como se listaron, con un cambio:
 - Servicios, ítem SEO técnico: texto nuevo. ES "Audito rastreo, indexación y datos estructurados, y corrijo lo que impide que Google entienda y posicione tus páginas." EN "I audit crawling, indexing and structured data, and fix what keeps Google from understanding and ranking your pages."
 - "Ingeniero de software" se mantiene tal cual en el hero y la etiqueta. Decisión de Juan.
 - Con esto quedan cerradas todas las decisiones de copy de la home. Pendiente de Juan: lecciones de los casos, texto legal, textos en inglés de las demás secciones, alts, encabezados.
+
+## Lote 1 de CTAs, tabla completa aprobada por Juan (2026-11-10)
+Juan respondió "del resto lo veo bien" con un solo cambio (fila 3). Texto en español vigente del sandbox y propuesta en inglés aprobada.
+
+| # | Dónde | Español | Inglés |
+|---|---|---|---|
+| 1 | Botón del hero y del encabezado | Pedir auditoría 360 | Request a 360 audit |
+| 2 | Cierre de la home, título | Hablemos de tu sitio | Let's talk about your site |
+| 3 | Cierre de la home, texto | ¿Tienes un proyecto en mente? Cuéntame de qué se trata. | Have a project in mind? Tell me what it is about. |
+| 4 | Bloque de servicios en la home | Hablemos de tu sitio | Let's talk about your site |
+| 5 | Casos en la home | Ver todos los casos | See all case studies |
+| 6 | Sitios en la home | Ver todos los sitios | See all websites |
+| 7 | Índice de servicios | Hablar con Juan | Talk to Juan |
+| 8 | Tarjeta de cada servicio | Explorar servicio | Explore service |
+| 9 | Auditor en la home | Probar el auditor | Try the auditor |
+| 10 | Aviso del auditor | Ir al auditor | Go to the auditor |
+| 11 | Stack, enlace de herramienta | Probar {herramienta} | Try {tool} |
+| 12 | Stack, Amazon | Ver en Amazon | View on Amazon |
+| 13 | Contacto, nota de respuesta | Suelo responder en menos de 48 horas. | I usually reply within 48 hours. |
+
+Los pasos de Contacto ("Me cuentas el proyecto", "Miro qué ve Google hoy", "Te digo por dónde empezar") y sus textos en inglés fueron parte del lote 2 y siguen pendientes de aprobación explícita.
