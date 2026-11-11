@@ -7,12 +7,14 @@
 // y el indice sale de la misma raiz que se renderiza: cada href del indice
 // coincide con un id del texto (Pitfall 11 de 54-RESEARCH.md).
 //
-// Sin landmark principal (lo pone el layout), sin listas sueltas y sin linea de
-// ultima actualizacion: no hay dato y no se usa la fecha de modificacion del doc
-// (UI-SPEC, Privacy y Terms). Esa linea queda para la fase 56.
+// Sin landmark principal (lo pone el layout) y sin listas sueltas. La linea de
+// fecha efectiva (54-UI-SPEC linea 223) se renderiza SOLO cuando las rutas pasan
+// `effectiveLabel` y `effectiveDateIso`; sin dato no se renderiza nada. Nunca
+// se usa updatedAt ni otra fecha de modificacion del doc (fase 56, plan 56-08).
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
 
 import { PageHero } from '@/components/mui/PageHero'
 import type { Crumb } from '@/components/mui/Crumbs'
@@ -28,6 +30,10 @@ type Props = {
   eyebrow: string
   /** Nombre del indice (messages legal.tocLabel). */
   tocLabel: string
+  /** Texto ya formateado y traducido (messages legal.effectiveOn). Va con effectiveDateIso. */
+  effectiveLabel?: string | null
+  /** YYYY-MM-DD para el atributo dateTime. Sin este valor no hay linea de fecha. */
+  effectiveDateIso?: string | null
 }
 
 type ColumnLike = { richText?: unknown } | null | undefined
@@ -71,14 +77,28 @@ export function combineRichTexts(
   } as unknown as SerializedEditorState
 }
 
-export function LegalView({ title, crumbs, richTexts, eyebrow, tocLabel }: Props) {
+export function LegalView({
+  title,
+  crumbs,
+  richTexts,
+  eyebrow,
+  tocLabel,
+  effectiveLabel,
+  effectiveDateIso,
+}: Props) {
   const combined = combineRichTexts(richTexts)
   const items = combined ? extractHeadings(combined.root as unknown as LexicalRootLike) : []
   const hasToc = items.length >= 2
 
   return (
     <>
-      <PageHero compact crumbs={crumbs} eyebrow={eyebrow} title={title} />
+      <PageHero compact crumbs={crumbs} eyebrow={eyebrow} title={title}>
+        {effectiveLabel && effectiveDateIso ? (
+          <Typography variant="body2" color="text.secondary">
+            <time dateTime={effectiveDateIso}>{effectiveLabel}</time>
+          </Typography>
+        ) : null}
+      </PageHero>
       <Box sx={{ pb: { xs: 8, md: 12 } }}>
         <Container
           maxWidth="lg"
