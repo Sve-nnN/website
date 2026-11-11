@@ -9,6 +9,7 @@
  */
 import {
   ALL_ALTS,
+  DECORATIVE_IMAGES,
   ALT_HARD_MAX,
   CAPTURE_ALTS,
   DECISIONS,
@@ -16,6 +17,13 @@ import {
   type AltRow,
 } from '../db/data/56-alt-texts'
 import { validateDecisions } from '../db/data/56-content-decisions'
+import {
+  DECISIONS as HEAD_DECISIONS,
+  HEADINGS,
+  bannedInProposal,
+  isRealPunctuation,
+  parseContractWarnings,
+} from '../db/data/56-headings-table'
 
 const EM = String.fromCharCode(0x2014)
 const EN_DASH = String.fromCharCode(0x2013)
@@ -139,6 +147,95 @@ check('datos: el registro de decisiones es valido y trae una por fila', () => {
 check('datos: el hero de Sobre mi y al menos una captura existen', () => {
   assert(PHOTO_ALTS.some((r) => r.key === 'about-hero'), 'falta about-hero')
   assert(CAPTURE_ALTS.length > 0, 'faltan capturas')
+})
+
+check('datos: el avatar decorativo queda fuera de las filas de alt', () => {
+  assert(DECORATIVE_IMAGES.length > 0, 'falta el registro de imagenes decorativas')
+  assert(
+    DECORATIVE_IMAGES.every((d) => !ALL_ALTS.some((r) => r.mediaSlug === d.mediaSlug)),
+    'una imagen decorativa aparece tambien como fila de alt',
+  )
+})
+check('datos: 4 fotos y 6 capturas, todas con valor actual', () => {
+  assert(PHOTO_ALTS.length === 4, `${PHOTO_ALTS.length} fotos`)
+  assert(CAPTURE_ALTS.length === 6, `${CAPTURE_ALTS.length} capturas`)
+  assert(ALL_ALTS.every((r) => r.actualEs.trim() && r.actualEn.trim()), 'falta un valor actual')
+})
+check('datos: nada de lo cargable esta aprobado sin que Juan lo apruebe', () => {
+  assert(ALL_ALTS.every((r) => r.status !== 'aprobado'), 'hay un alt aprobado y Juan no ha respondido')
+})
+
+// ---- tabla de encabezados (D-17, T-56-23)
+const FIXTURE_CONTRACT = [
+  'PASS / contrato',
+  'WARN /: encabezado con punto o coma (h2: Errores reales, con el commit que los corrige)',
+  'WARN /: encabezado con punto o coma (h3: Desarrollo con Next.js y Payload)',
+  'WARN /privacy: encabezado con punto o coma (h2: 6. Cookies)',
+  'FAIL /sobre-mi contrato: marcador',
+].join('\n')
+
+check('encabezados: el parser lee solo los avisos de encabezado', () => {
+  const rows = parseContractWarnings(FIXTURE_CONTRACT)
+  assert(rows.length === 3, `${rows.length} filas`)
+  assert(rows[0].level === 2 && rows[0].text === 'Errores reales, con el commit que los corrige', 'fila 1 mal leida')
+})
+check('encabezados: el regex afinado separa reales de falsos positivos', () => {
+  const real = ['Errores reales, con el commit que los corrige', '6. Cookies', 'Desarrollo, CMS y medios']
+  const falsos = ['Desarrollo con Next.js y Payload', 'Dr. Manuel A. Vargas Hidalgo', 'más de 86,000 clics', 'el archivo llms.txt']
+  for (const t of real) assert(isRealPunctuation(t), `deberia ser real: ${t}`)
+  for (const t of falsos) assert(!isRealPunctuation(t), `deberia ser falso positivo: ${t}`)
+})
+check('encabezados: la regla de la voz rechaza puntuacion en una propuesta', () => {
+  assert(bannedInProposal('Cómo uso tus datos').length === 0, 'rechazo un texto limpio')
+  assert(bannedInProposal('Antes, después').length > 0, 'no rechazo la coma')
+  assert(bannedInProposal('Tema: subtema').length > 0, 'no rechazo los dos puntos')
+  assert(bannedInProposal('Texto cortado...').length > 0, 'no rechazo los puntos suspensivos')
+  assert(bannedInProposal('¿Cuánto dura una auditoría?').length === 0, 'rechazo una pregunta de FAQ')
+})
+check('encabezados: el recuento reproduce el contrato contra dev (52 unicos, 13 falsos, 39 reales)', () => {
+  const dev = HEADINGS.filter((r) => r.enDev)
+  assert(dev.length === 52, `${dev.length} unicos en dev, se esperaban 52`)
+  assert(dev.filter((r) => !r.real).length === 13, 'falsos positivos distintos de 13')
+  assert(dev.filter((r) => r.real).length === 39, 'reales en dev distintos de 39')
+  assert(HEADINGS.filter((r) => r.real).length === 41, 'reales totales distintos de 41 (39 + 2 lecciones)')
+})
+check('encabezados: la marca real coincide con el regex afinado y no hay filas repetidas', () => {
+  const bad = HEADINGS.filter((r) => r.enDev && r.real !== isRealPunctuation(r.antes)).map((r) => r.id)
+  assert(bad.length === 0, `marca real incoherente en ${bad.join(', ')}`)
+  const seen = new Set<string>()
+  for (const r of HEADINGS) {
+    const k = `${r.level}|${r.antes}`
+    assert(!seen.has(k), `fila repetida ${r.id}`)
+    seen.add(k)
+  }
+})
+check('encabezados: toda propuesta cumple la voz y los falsos positivos no se tocan', () => {
+  for (const r of HEADINGS) {
+    if (r.real) {
+      assert(r.despues.trim().length > 0, `${r.id}: fila real sin propuesta`)
+      const p = bannedInProposal(r.despues)
+      assert(p.length === 0, `${r.id}: ${p.join('; ')}`)
+    } else {
+      assert(r.despues === '' && r.accion === 'ninguna-falso-positivo', `${r.id}: un falso positivo no lleva propuesta`)
+    }
+  }
+})
+check('encabezados: solo se documenta, lo de master queda en decidir Juan o en reemplazo al cortar', () => {
+  for (const r of HEADINGS.filter((x) => x.viveEn === 'master' && x.real)) {
+    assert(r.accion === 'decidir-juan' || r.accion === 'reemplazar-al-cortar', `${r.id}: accion ${r.accion} sobre un encabezado de master`)
+    assert(r.group === 'legal' ? r.accion === 'reemplazar-al-cortar' : r.accion === 'decidir-juan', `${r.id}: accion no coincide con su grupo`)
+  }
+  assert(HEADINGS.filter((r) => r.group === 'lecciones').every((r) => r.viveEn === 'nuevo'), 'las lecciones deben ser contenido nuevo')
+})
+check('encabezados: los grupos de master quedan pendientes con default no tocar', () => {
+  const p = validateDecisions(HEAD_DECISIONS)
+  assert(p.length === 0, p.join('; '))
+  assert(HEAD_DECISIONS.every((d) => d.id.startsWith('HEAD-')), 'id sin prefijo HEAD-')
+  for (const g of ['codefixes', 'servicios', 'stack', 'busqueda']) {
+    const d = HEAD_DECISIONS.find((x) => x.id === `HEAD-${g}`)
+    assert(d, `falta HEAD-${g}`)
+    assert(d.status === 'pendiente' && d.chosen === 'no-tocar', `HEAD-${g} debe estar pendiente con no-tocar`)
+  }
 })
 
 if (failures > 0) {
