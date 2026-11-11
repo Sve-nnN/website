@@ -277,7 +277,7 @@ function masterDecision(g: Exclude<HeadingGroup, 'falso-positivo' | 'legal' | 'l
   return {
     id: `HEAD-${g}`,
     label: `${GROUP_LABEL[g]} (${rows.length})`,
-    status: 'pendiente',
+    status: 'aprobado',
     gate: 'aprobado',
     chosen: 'no-tocar',
     recommended: 'no-tocar',
@@ -292,7 +292,8 @@ function masterDecision(g: Exclude<HeadingGroup, 'falso-positivo' | 'legal' | 'l
       },
     },
     preview: { es: lines(rows, 'es'), en: lines(rows, 'en') },
-    source: 'scripts/verify/54-page-contract.mjs contra dev, 2026-11-10',
+    source:
+      'scripts/verify/54-page-contract.mjs contra dev, 2026-11-10; no-tocar aprobado por Juan 2026-11-10 (aprobaciones-juan.md)',
   }
 }
 

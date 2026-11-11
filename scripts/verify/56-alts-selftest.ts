@@ -161,8 +161,8 @@ check('datos: 4 fotos y 6 capturas, todas con valor actual', () => {
   assert(CAPTURE_ALTS.length === 6, `${CAPTURE_ALTS.length} capturas`)
   assert(ALL_ALTS.every((r) => r.actualEs.trim() && r.actualEn.trim()), 'falta un valor actual')
 })
-check('datos: nada de lo cargable esta aprobado sin que Juan lo apruebe', () => {
-  assert(ALL_ALTS.every((r) => r.status !== 'aprobado'), 'hay un alt aprobado y Juan no ha respondido')
+check('datos: solo esta aprobado lo cargable (Juan aprobo los alt el 2026-11-10; el de Juan Tech espera recaptura)', () => {
+  assert(ALL_ALTS.every((r) => (r.status === 'aprobado') === r.loadable), 'un alt aprobado no es cargable, o uno cargable no esta aprobado')
 })
 
 // ---- tabla de encabezados (D-17, T-56-23)
@@ -227,14 +227,14 @@ check('encabezados: solo se documenta, lo de master queda en decidir Juan o en r
   }
   assert(HEADINGS.filter((r) => r.group === 'lecciones').every((r) => r.viveEn === 'nuevo'), 'las lecciones deben ser contenido nuevo')
 })
-check('encabezados: los grupos de master quedan pendientes con default no tocar', () => {
+check('encabezados: los grupos de master quedan aprobados con no tocar (Juan, 2026-11-10)', () => {
   const p = validateDecisions(HEAD_DECISIONS)
   assert(p.length === 0, p.join('; '))
   assert(HEAD_DECISIONS.every((d) => d.id.startsWith('HEAD-')), 'id sin prefijo HEAD-')
   for (const g of ['codefixes', 'servicios', 'stack', 'busqueda']) {
     const d = HEAD_DECISIONS.find((x) => x.id === `HEAD-${g}`)
     assert(d, `falta HEAD-${g}`)
-    assert(d.status === 'pendiente' && d.chosen === 'no-tocar', `HEAD-${g} debe estar pendiente con no-tocar`)
+    assert(d.status === 'aprobado' && d.chosen === 'no-tocar', `HEAD-${g} debe estar aprobado con no-tocar`)
   }
 })
 

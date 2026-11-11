@@ -127,9 +127,9 @@
       "id": "contact-step-1",
       "origen": "sombra",
       "loadAt": "ahora",
-      "estado": "pendiente",
+      "estado": "aprobado",
       "es": "Me cuentas el proyecto",
-      "en": null,
+      "en": "You tell me about the project",
       "vigenteEs": "Me cuentas el proyecto",
       "routes": {
         "es": [
@@ -145,9 +145,9 @@
       "id": "contact-step-2",
       "origen": "sombra",
       "loadAt": "ahora",
-      "estado": "pendiente",
+      "estado": "aprobado",
       "es": "Miro qué ve Google hoy",
-      "en": null,
+      "en": "I look at what Google sees today",
       "vigenteEs": "Miro qué ve Google hoy",
       "routes": {
         "es": [
@@ -163,9 +163,9 @@
       "id": "contact-step-3",
       "origen": "sombra",
       "loadAt": "ahora",
-      "estado": "pendiente",
+      "estado": "aprobado",
       "es": "Te digo por dónde empezar",
-      "en": null,
+      "en": "I tell you where to start",
       "vigenteEs": "Te digo por dónde empezar",
       "routes": {
         "es": [
@@ -201,9 +201,9 @@
       "id": "audit-offer-cta",
       "origen": "bloque",
       "loadAt": "corte",
-      "estado": "pendiente",
+      "estado": "aprobado",
       "es": "Pedir la auditoría",
-      "en": null,
+      "en": "Request the audit",
       "vigenteEs": "Pedir la auditoría",
       "routes": {
         "es": [],
@@ -352,9 +352,9 @@
       "id": "contact-write-email",
       "origen": "messages",
       "loadAt": "ahora",
-      "estado": "pendiente",
+      "estado": "aprobado",
       "es": "Escribir un correo",
-      "en": null,
+      "en": "Write an email",
       "vigenteEs": "Escribir un correo",
       "routes": {
         "es": [],
@@ -368,9 +368,9 @@
       "id": "contact-submit",
       "origen": "messages",
       "loadAt": "ahora",
-      "estado": "pendiente",
+      "estado": "aprobado",
       "es": "Enviar mensaje",
-      "en": null,
+      "en": "Send message",
       "vigenteEs": "Enviar mensaje",
       "routes": {
         "es": [],
@@ -384,9 +384,9 @@
       "id": "emailcapture-submit",
       "origen": "messages",
       "loadAt": "ahora",
-      "estado": "pendiente",
+      "estado": "aprobado",
       "es": "Enviarme el checklist",
-      "en": null,
+      "en": "Send me the checklist",
       "vigenteEs": "Enviarme el checklist",
       "routes": {
         "es": [],
@@ -400,9 +400,9 @@
       "id": "newsletter-submit",
       "origen": "messages",
       "loadAt": "ahora",
-      "estado": "pendiente",
+      "estado": "aprobado",
       "es": "Suscribirme",
-      "en": null,
+      "en": "Subscribe",
       "vigenteEs": "Suscribirme",
       "routes": {
         "es": [],

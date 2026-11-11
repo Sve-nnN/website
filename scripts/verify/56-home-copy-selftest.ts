@@ -110,7 +110,7 @@ for (const [id, value] of LOTE_EN_GLOBAL) {
   const r = row(id)
   expect(`lote 1 ${id}: el copy usa el texto aprobado`, r?.estado === 'aprobado' && r.es === value, `${r?.es} vs ${value}`)
 }
-expect('lote 1: los pasos de Contacto siguen con el valor vigente (pendientes de Juan)', HOME_COPY_ES.contact.steps.map((s) => s.title).join('|') === 'Me cuentas el proyecto|Miro qué ve Google hoy|Te digo por dónde empezar' && ['contact-step-1', 'contact-step-2', 'contact-step-3'].every((id) => row(id)?.estado === 'pendiente'))
+expect('lote 1: los pasos de Contacto siguen con el valor vigente y Juan los aprobo tal cual (2026-11-10)', HOME_COPY_ES.contact.steps.map((s) => s.title).join('|') === 'Me cuentas el proyecto|Miro qué ve Google hoy|Te digo por dónde empezar' && ['contact-step-1', 'contact-step-2', 'contact-step-3'].every((id) => row(id)?.estado === 'aprobado'))
 expect('lote 1: los CTA del header, de la oferta de auditoria y del auditor no estan en el copy (los lee master)', !JSON.stringify(HOME_COPY_ES).includes('Pedir la auditoría'))
 
 // --- Rayas, marcadores y href ---

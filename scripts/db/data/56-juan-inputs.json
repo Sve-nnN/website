@@ -53,24 +53,24 @@
       "origen": "global sombra home-page, contact.steps[0].title",
       "carga": "ahora",
       "vigenteEs": "Me cuentas el proyecto",
-      "es": null,
-      "en": null
+      "es": "Me cuentas el proyecto",
+      "en": "You tell me about the project"
     },
     {
       "id": "contact-step-2",
       "origen": "global sombra home-page, contact.steps[1].title",
       "carga": "ahora",
       "vigenteEs": "Miro qué ve Google hoy",
-      "es": null,
-      "en": null
+      "es": "Miro qué ve Google hoy",
+      "en": "I look at what Google sees today"
     },
     {
       "id": "contact-step-3",
       "origen": "global sombra home-page, contact.steps[2].title",
       "carga": "ahora",
       "vigenteEs": "Te digo por dónde empezar",
-      "es": null,
-      "en": null
+      "es": "Te digo por dónde empezar",
+      "en": "I tell you where to start"
     },
     {
       "id": "header-cta",
@@ -85,8 +85,8 @@
       "origen": "bloque auditOfferBlock del doc pages home (lo lee master)",
       "carga": "corte",
       "vigenteEs": "Pedir la auditoría",
-      "es": null,
-      "en": null
+      "es": "Pedir la auditoría",
+      "en": "Request the audit"
     },
     {
       "id": "auditor-cta",
@@ -149,32 +149,32 @@
       "origen": "messages, contact.writeEmail",
       "carga": "ahora",
       "vigenteEs": "Escribir un correo",
-      "es": null,
-      "en": null
+      "es": "Escribir un correo",
+      "en": "Write an email"
     },
     {
       "id": "contact-submit",
       "origen": "messages, contact.form.submit",
       "carga": "ahora",
       "vigenteEs": "Enviar mensaje",
-      "es": null,
-      "en": null
+      "es": "Enviar mensaje",
+      "en": "Send message"
     },
     {
       "id": "emailcapture-submit",
       "origen": "messages, emailCapture.submitLabel",
       "carga": "ahora",
       "vigenteEs": "Enviarme el checklist",
-      "es": null,
-      "en": null
+      "es": "Enviarme el checklist",
+      "en": "Send me the checklist"
     },
     {
       "id": "newsletter-submit",
       "origen": "messages, blog.newsletter.submitLabel",
       "carga": "ahora",
       "vigenteEs": "Suscribirme",
-      "es": null,
-      "en": null
+      "es": "Suscribirme",
+      "en": "Subscribe"
     }
   ],
   "decisions": {

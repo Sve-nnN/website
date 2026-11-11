@@ -67,7 +67,7 @@ export const LEGAL_FACTS: LegalFacts = {
   // recomendacion, no un hecho medido.
   HOSTING: {
     label: 'Servidor: proveedor, region y registros de acceso',
-    status: 'propuesto',
+    status: 'aprobado',
     value: 'Hetzner',
     valueEn: 'Hetzner',
     details: { region: '', logRetention: '30 días' },
@@ -79,7 +79,7 @@ export const LEGAL_FACTS: LegalFacts = {
   // Valor vacio: el texto dice "un proveedor de correo" sin nombrarlo.
   MAILBOX_PROVIDER: {
     label: 'Proveedor del buzón hello@juan-tech.com',
-    status: 'propuesto',
+    status: 'aprobado',
     value: '',
     evidence:
       'No se puede verificar desde el repo. CONTACT_TO_EMAIL=hello@juan-tech.com (D-06). Valor vacio: el texto usa la formula general.',
@@ -87,7 +87,7 @@ export const LEGAL_FACTS: LegalFacts = {
   // El texto vivo decia "hasta 12 meses" para los envios del formulario (56-RESEARCH 4.1).
   RETENTION_CONTACT_EMAIL: {
     label: 'Plazo para conservar los correos del formulario de contacto',
-    status: 'propuesto',
+    status: 'aprobado',
     value: '12 meses',
     valueEn: '12 months',
     evidence:
@@ -96,7 +96,7 @@ export const LEGAL_FACTS: LegalFacts = {
   // El texto vivo decia "dentro de los mismos 12 meses". Aqui se usa como plazo despues de la baja.
   RETENTION_SUBSCRIBERS: {
     label: 'Plazo para conservar el correo de quien se da de baja',
-    status: 'propuesto',
+    status: 'aprobado',
     value: '12 meses',
     valueEn: '12 months',
     evidence:
@@ -106,7 +106,7 @@ export const LEGAL_FACTS: LegalFacts = {
   // La conclusion "no hace falta banner" es de Claude, no de un abogado.
   COOKIE_BANNER: {
     label: 'Conclusión: no hace falta banner de cookies',
-    status: 'propuesto',
+    status: 'aprobado',
     value: 'no hace falta',
     valueEn: 'not needed',
     evidence:
@@ -115,7 +115,7 @@ export const LEGAL_FACTS: LegalFacts = {
   // Ley aplicable Peru (propuesta). La mencion de la ley peruana de datos personales es un supuesto por validar.
   GOVERNING_LAW: {
     label: 'Ley aplicable y mención de la ley de datos personales',
-    status: 'propuesto',
+    status: 'aprobado',
     value: 'Perú',
     valueEn: 'Peru',
     details: { dataProtectionLaw: 'Ley 29733 de Protección de Datos Personales', mentionDataLaw: 'si' },
@@ -912,7 +912,7 @@ const FACT_DECISIONS: Decision[] = (Object.keys(LEGAL_FACTS) as (keyof LegalFact
           .map((v, i) => [`alt${i + 1}`, { es: v.es === '' ? '(sin dato)' : v.es, en: v.en === '' ? '(no data)' : v.en }]),
       ),
     },
-    source: 'scripts/db/data/56-legal-copy.ts LEGAL_FACTS',
+    source: 'scripts/db/data/56-legal-copy.ts LEGAL_FACTS; valor por defecto aprobado por Juan 2026-11-10 (aprobaciones-juan.md)',
   }
 })
 

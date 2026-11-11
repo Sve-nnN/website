@@ -88,7 +88,10 @@ export function itemProblems(item: CutItem): string[] {
   if (item.loadAt !== 'corte') p(`loadAt es "${String(item.loadAt)}" y debe ser corte (D-02)`)
   if (isEmptyValue(item.current)) p('current esta vacio: no hay respaldo del valor actual (T-56-46)')
   if (!item.capturedAt) p('falta capturedAt')
-  if (item.status === 'aprobado' && isEmptyValue(item.desired)) p('esta aprobado y no tiene desired')
+  // Un item aprobado sin desired es valido solo si lo aprobado es no cambiar nada (dejar, no crear, no tocar, aviso) o es un grupo de encabezados que master sirve.
+  const NO_CHANGE = ['dejar', 'no-crear', 'no-tocar', 'aviso', 'sin-cambio']
+  const noChange = (item.chosen !== undefined && NO_CHANGE.includes(item.chosen)) || (item.kind === 'heading-master' && item.governedBy !== undefined)
+  if (item.status === 'aprobado' && isEmptyValue(item.desired) && !noChange) p('esta aprobado y no tiene desired')
   if (strings(item.current).some((s) => s.includes(OPEN))) p('current trae un marcador de ranura')
   for (const s of reviewStrings(item)) {
     if (hasDash(s)) p(`trae raya larga o media: "${s.slice(0, 60)}"`)
@@ -203,7 +206,7 @@ async function realData(): Promise<void> {
       stackTexts.includes('Astro') &&
       stackTexts.includes('Cloudflare') &&
       !stackTexts.some((t) => /Next\.js|Payload|Neon|Hostinger/.test(t)) &&
-      stack.status === 'propuesto',
+      stack.status === 'aprobado',
   )
   const cur = stack ? strings(stack.current) : []
   expect('Arianna: el respaldo trae el stack que sirve hoy (Next.js, Payload CMS, Neon Postgres, Hostinger)', ['Next.js', 'Payload CMS', 'Neon Postgres', 'Hostinger'].every((t) => cur.includes(t)))
@@ -229,7 +232,7 @@ async function realData(): Promise<void> {
   expect('Testimonio: solo el de Patricia Ibarra, sin cita inventada (desired vacio con la opcion dejar)', !!t && t.chosen === 'dejar' && t.desired === undefined && tc.es === LIVE_TESTIMONIAL.es && tc.en === LIVE_TESTIMONIAL.en && /Patricia Ibarra/.test(t.target))
   expect('Testimonio: hay exactamente un testimonio registrado', CUTOVER_ITEMS.filter((i) => i.kind === 'testimonial').length === 1)
   const post = CUTOVER_ITEMS.find((i) => i.kind === 'post-translation')
-  expect('Recursividad: registrada con su respaldo EN y la opcion recomendada aviso', !!post && post.id === 'CUT-post-translation-recursividad' && post.chosen === 'aviso' && /22 %/.test(show(post.current)) && post.status === 'propuesto')
+  expect('Recursividad: registrada con su respaldo EN y la opcion recomendada aviso', !!post && post.id === 'CUT-post-translation-recursividad' && post.chosen === 'aviso' && /22 %/.test(show(post.current)) && post.status === 'aprobado')
   const author = CUTOVER_ITEMS.find((i) => i.kind === 'author')
   const aDes = author?.desired as { es: { experience: { endDate: string | null }[] }; en: { experience: { endDate: string | null }[] } } | undefined
   expect(
@@ -245,7 +248,7 @@ async function realData(): Promise<void> {
   const own = validateDecisions(DECISIONS)
   expect('las decisiones propias son validas', own.length === 0, own.join(' | '))
   expect('las decisiones propias llevan prefijo CUT- y salen de items sin governedBy', DECISIONS.length === OWNED_ITEMS.length && DECISIONS.every((d) => d.id.startsWith('CUT-')))
-  expect('ningun item aprobado propio carece de desired y ninguna decision aprobada queda sin opcion elegida', OWNED_ITEMS.every((i) => i.status !== 'aprobado' || !isEmptyValue(i.desired)))
+  expect('ningun item aprobado propio carece de desired y ninguna decision aprobada queda sin opcion elegida', OWNED_ITEMS.every((i) => i.status !== 'aprobado' || !isEmptyValue(i.desired) || (i.chosen !== undefined && ['dejar', 'no-crear', 'no-tocar', 'aviso', 'sin-cambio'].includes(i.chosen))))
 
   // Cruce con las decisiones que mandan el estado de los items gobernados
   const discovered = await discoverDecisions()
