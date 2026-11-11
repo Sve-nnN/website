@@ -615,6 +615,239 @@ async function loaderTracer(): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
+// Cargador del corte: alt de capturas, fecha legal y actualizaciones genericas (tarea 2)
+// ---------------------------------------------------------------------------
+
+const MEDIA_SCHEMA: Schema = { filename: 'plain', url: 'plain', alt: 'loc' }
+const SITE_SCHEMA: Schema = {
+  slug: 'plain',
+  title: 'loc',
+  stack: { array: { tag: 'plain' } },
+  highlights: { array: { text: 'loc' } },
+  challenges: { array: { text: 'loc' } },
+}
+const AUTHOR_SCHEMA: Schema = {
+  slug: 'plain',
+  name: 'plain',
+  experience: { array: { company: 'loc', role: 'loc', startDate: 'plain', endDate: 'plain', description: 'loc' } },
+}
+const TESTIMONIAL_SCHEMA: Schema = { name: 'plain', testimonial: 'loc' }
+
+const iso = (d: string | null): string | null => (d === null ? null : `${d}T00:00:00.000Z`)
+
+/** Un mundo completo como el de produccion: casos, capturas, sitios, autor, testimonio, header y legal. */
+function fullFake(): Fake {
+  const siteDocs: FakeDoc[] = Object.entries(LIVE_WEBSITES).map(([slug, s], i) => ({
+    id: 200 + i,
+    status: 'published',
+    data: {
+      slug,
+      title: { es: slug, en: slug },
+      stack: s.stack.map((tag, k) => ({ id: 10 * (i + 1) + k, tag })),
+      highlights: s.highlights.es.map((es, k) => ({ id: 100 * (i + 1) + k, text: { es, en: s.highlights.en[k] } })),
+      challenges: s.challenges.es.map((es, k) => ({ id: 1000 * (i + 1) + k, text: { es, en: s.challenges.en[k] } })),
+    },
+  }))
+  const mediaDocs: FakeDoc[] = CAPTURE_ALTS.map((row, i) => ({
+    id: 300 + i,
+    data: { filename: `${row.mediaSlug}.png`, url: `https://res.example/${row.mediaSlug}.png`, alt: { es: row.actualEs, en: row.actualEn } },
+  }))
+  const authorDoc: FakeDoc = {
+    id: 400,
+    data: {
+      slug: 'juan-carlos-angulo',
+      name: 'Juan Carlos Angulo',
+      experience: LIVE_AUTHOR_EXPERIENCE.es.map((r, k) => ({
+        id: 500 + k,
+        company: { es: r.company, en: LIVE_AUTHOR_EXPERIENCE.en[k].company },
+        role: { es: r.role, en: LIVE_AUTHOR_EXPERIENCE.en[k].role },
+        startDate: iso(r.startDate),
+        endDate: iso(r.endDate),
+        description: { es: r.description ?? undefined, en: LIVE_AUTHOR_EXPERIENCE.en[k].description ?? undefined },
+      })),
+    },
+  }
+  return makeFake({
+    collections: {
+      'case-studies': { schema: LESSON_SCHEMA, drafts: true, docs: caseDocs() },
+      media: { schema: MEDIA_SCHEMA, drafts: false, docs: mediaDocs },
+      websites: { schema: SITE_SCHEMA, drafts: true, docs: siteDocs },
+      authors: { schema: AUTHOR_SCHEMA, drafts: false, docs: [authorDoc] },
+      testimonials: {
+        schema: TESTIMONIAL_SCHEMA,
+        drafts: false,
+        docs: [{ id: 1, data: { name: 'Patricia Ibarra', testimonial: { es: LIVE_TESTIMONIAL.es, en: LIVE_TESTIMONIAL.en } } }],
+      },
+    },
+    globals: {
+      'legal-pages': { schema: { effectiveDate: 'plain', privacy: 'plain' }, data: { effectiveDate: null, privacy: 'cuerpo' } },
+      header: { schema: { ctaButton: { group: { label: 'loc', href: 'plain' } } }, data: { ctaButton: { label: { es: 'Hablemos', en: 'Get in Touch' }, href: '/contact' } } },
+    },
+  })
+}
+
+const approve = (ids: string[], items: CutItem[] = CUTOVER_ITEMS): CutItem[] => items.map((i) => (ids.includes(i.id) ? { ...i, status: 'aprobado' as const } : i))
+
+const MEDIA_IDS = ['apturio', 'aprendoclub', 'ariannalupi', 'drmanuelvargashidalgo', 'estylopia'].map((k) => `CUT-media-alt-${k}`)
+
+async function loaderRest(): Promise<void> {
+  // Dry-run completo sobre un mundo como el de produccion
+  {
+    const fake = fullFake()
+    const r = await runLoader(baseOpts(), fake)
+    expect('cargador: el dry-run completo sale 0, no escribe y no trae errores de lectura', r.code === 0 && fake.writes.length === 0 && !/ERROR/.test(r.text), `codigo ${r.code}\n${r.text.split('\n').filter((l) => /ERROR/.test(l)).join('\n')}`)
+    expect('cargador: el dry-run imprime el alt actual de las capturas como respaldo', /Apturio .* captura de pantalla completa/.test(r.text) || /captura de pantalla completa/.test(r.text))
+    expect('cargador: el dry-run no deja pasar ninguna escritura de items sin aprobar y lo resume', /RESUMEN: \d+ tarea\(s\)/.test(r.text))
+  }
+
+  // Test 1: media-alt escribe solo alt en es y en y no toca ningun otro campo
+  {
+    const fake = fullFake()
+    const before = clone(fake.collections.media.docs.map((d) => ({ filename: d.data.filename, url: d.data.url })))
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: MEDIA_IDS }), fake, { items: approve(MEDIA_IDS) })
+    const ups = fake.writes.filter((w) => w.target === 'media')
+    expect('cargador media-alt: carga las 5 capturas aprobadas y sale 0', r.code === 0 && ups.length === 10, `codigo ${r.code}, escrituras ${ups.length}\n${r.text.split('\n').slice(-8).join('\n')}`)
+    expect('cargador media-alt: cada update envia solo el campo alt, primero es y luego en', ups.every((w) => Object.keys(w.data).join() === 'alt') && ups.every((w, i) => w.locale === (i % 2 === 0 ? 'es' : 'en')))
+    const row = CAPTURE_ALTS.find((x) => x.key === 'apturio')!
+    const doc = fake.collections.media.docs.find((d) => String(d.data.filename).startsWith(row.mediaSlug))!
+    expect('cargador media-alt: el alt queda en es y en con lo aprobado', (doc.data.alt as Row).es === row.es && (doc.data.alt as Row).en === row.en)
+    const after = fake.collections.media.docs.map((d) => ({ filename: d.data.filename, url: d.data.url }))
+    expect('cargador media-alt: no toca ningun otro campo del doc de Media', JSON.stringify(before) === JSON.stringify(after))
+    expect('cargador media-alt: imprime el alt actual como respaldo antes de escribir', /respaldo antes de escribir/.test(r.text) && /captura de pantalla completa/.test(r.text))
+    const jt = fake.collections.media.docs.find((d) => String(d.data.filename).startsWith('juan-tech-com-screenshot'))!
+    expect('cargador media-alt: la captura de Juan Tech (pendiente) no se toca', (jt.data.alt as Row).es === CAPTURE_ALTS.find((x) => x.key === 'juan-tech')!.actualEs)
+  }
+  {
+    const fake = fullFake()
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['media-alt'] }), fake, { items: approve(MEDIA_IDS) })
+    expect('cargador media-alt: con la captura de Juan Tech pendiente entre los elegidos aborta sin escribir', r.code === 1 && fake.writes.length === 0)
+  }
+
+  // Test 2: fecha legal
+  {
+    const only = ['legal-date']
+    const empty = fullFake()
+    const dry = await runLoader(baseOpts({ only }), empty, { legalDate: '' })
+    expect('cargador legal-date: con LEGAL_EFFECTIVE_DATE vacia el dry-run dice PENDIENTE', dry.code === 0 && /\[PENDIENTE\] CUT-legal-date-efectiva/.test(dry.text) && /vacia/.test(dry.text))
+    const a = await runLoader(baseOpts({ apply: true, dbChecked: true, only }), empty, { legalDate: '' })
+    expect('cargador legal-date: --apply con la fecha vacia se niega y no escribe', a.code === 1 && empty.writes.length === 0)
+    for (const bad of ['2026-11-10', '2026-11-30', '20-11-2026', '2026-13-45x']) {
+      const f = fullFake()
+      const b = await runLoader(baseOpts({ apply: true, dbChecked: true, only }), f, { legalDate: bad })
+      expect(`cargador legal-date: la fecha ${bad} no esta a un dia de hoy y se niega`, b.code === 1 && f.writes.length === 0)
+    }
+    for (const good of ['2026-11-20', '2026-11-19', '2026-11-21']) {
+      const f = fullFake()
+      const g = await runLoader(baseOpts({ apply: true, dbChecked: true, only }), f, { legalDate: good })
+      const w = f.writes.filter((x) => x.op === 'updateGlobal')
+      expect(`cargador legal-date: la fecha ${good} escribe solo effectiveDate del global legal-pages`, g.code === 0 && w.length === 1 && w[0].target === 'legal-pages' && Object.keys(w[0].data).join() === 'effectiveDate' && f.globals['legal-pages'].data.effectiveDate === good && f.globals['legal-pages'].data.privacy === 'cuerpo', `codigo ${g.code}, escrituras ${w.length}`)
+    }
+    const f = fullFake()
+    const ok = await runLoader(baseOpts({ apply: true, dbChecked: true, only }), f, { legalDate: '2026-11-20' })
+    expect('cargador legal-date: recuerda verificar con 56-legal-live.mjs --expect-date', /56-legal-live\.mjs --expect-date/.test(ok.text))
+  }
+
+  // Test 3: actualizacion generica de filas de Websites
+  {
+    const id = 'CUT-websites-juan-tech-com'
+    const fake = fullFake()
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: [id] }), fake, { items: approve([id]) })
+    const ups = fake.writes.filter((w) => w.target === 'websites')
+    expect('cargador websites: Juan Tech se carga con una escritura ES y otra EN', r.code === 0 && ups.length === 2 && ups[0].locale === 'es' && ups[1].locale === 'en', `codigo ${r.code}, escrituras ${ups.length}\n${r.text.split('\n').slice(-8).join('\n')}`)
+    expect('cargador websites: todo update de una coleccion con borradores lleva draft false', ups.every((w) => w.draft === false))
+    const doc = fake.collections.websites.docs.find((d) => d.data.slug === 'juan-tech-com')!
+    expect('cargador websites: el status de publicacion sigue en published', doc.status === 'published')
+    const esStack = ups[0].data.stack as Row[]
+    expect('cargador websites: envia el grupo COMPLETO del stack (7 filas) conservando los id de las 4 que ya existian', esStack.length === 7 && esStack.slice(0, 4).every((x, i) => x.id === 20 + i && typeof x.tag === 'string'))
+    expect('cargador websites: el EN trae los id de fila de highlights y no reenvia el stack', (ups[1].data.highlights as Row[]).every((x) => typeof x.id === 'number') && !('stack' in ups[1].data))
+    const tags = (doc.data.stack as Row[]).map((x) => x.tag)
+    expect('cargador websites: queda el stack nuevo y los highlights en es y en', tags.join() === 'Next.js,Payload CMS,Postgres,Hetzner,Dokploy,Cloudinary,Resend' && /Hetzner/.test(String(((doc.data.highlights as Row[])[2].text as Row).es)) && /Hetzner/.test(String(((doc.data.highlights as Row[])[2].text as Row).en)))
+    expect('cargador websites: los retos que no cambian no se reenvian', !('challenges' in ups[0].data))
+  }
+  {
+    const id = 'CUT-websites-ariannalupi-stack'
+    const f1 = fullFake()
+    const dry = await runLoader(baseOpts({ only: [id] }), f1, { items: approve([id]) })
+    expect('cargador websites: el dry-run lista las filas del stack que se descartarian y avisa de la bandera', dry.code === 0 && /DESCARTA/.test(dry.text) && /SE NEGARIA: .*--allow-shrink-rows/.test(dry.text) && f1.writes.length === 0)
+    const r1 = await runLoader(baseOpts({ apply: true, dbChecked: true, only: [id] }), f1, { items: approve([id]) })
+    expect('cargador websites: si el desired reduciria filas aborta sin --allow-shrink-rows y no escribe', r1.code === 1 && f1.writes.length === 0)
+    const f2 = fullFake()
+    const r2 = await runLoader(baseOpts({ apply: true, dbChecked: true, only: [id], allowShrinkRows: true }), f2, { items: approve([id]) })
+    const doc = f2.collections.websites.docs.find((d) => d.data.slug === 'ariannalupi-com')!
+    expect('cargador websites: con --allow-shrink-rows el stack de Arianna queda en Astro y Cloudflare con los id de las 2 primeras filas', r2.code === 0 && (doc.data.stack as Row[]).map((x) => `${x.id}:${x.tag}`).join() === '10:Astro,11:Cloudflare' && doc.status === 'published', `codigo ${r2.code}`)
+    expect('cargador websites: un stack que no es localizado se escribe una sola vez', f2.writes.length === 1)
+  }
+  {
+    const f = fullFake()
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['CUT-websites-apturio-com'] }), f)
+    expect('cargador websites: Apturio (sin cambio) no escribe y lo dice', r.code === 0 && f.writes.length === 0 && /Ningun item aprobado para cargar/.test(r.text))
+  }
+
+  // Autor, testimonio y boton del header
+  {
+    const id = 'CUT-author-aprendoclub-experience'
+    const fake = fullFake()
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: [id] }), fake, { items: approve([id]) })
+    const ups = fake.writes.filter((w) => w.target === 'authors')
+    const rows = fake.collections.authors.docs[0].data.experience as Row[]
+    expect('cargador author: escribe ES y despues EN con las tres filas completas', r.code === 0 && ups.length === 2 && (ups[0].data.experience as Row[]).length === 3 && (ups[1].data.experience as Row[]).every((x) => typeof x.id === 'number'), `codigo ${r.code}, escrituras ${ups.length}\n${r.text.split('\n').slice(-6).join('\n')}`)
+    expect('cargador author: solo cambia endDate de AprendoSEO y las otras dos filas quedan igual', rows[1].endDate === null && rows[0].endDate === null && rows[2].endDate === iso('2022-09-01') && rows[2].startDate === iso('2022-01-01') && rows.map((x) => x.id).join() === '500,501,502')
+    expect('cargador author: la descripcion localizada de aprendoclub sigue en ES y EN', (rows[0].description as Row).es === LIVE_AUTHOR_EXPERIENCE.es[0].description && (rows[0].description as Row).en === LIVE_AUTHOR_EXPERIENCE.en[0].description)
+  }
+  {
+    const fake = fullFake()
+    const items = CUTOVER_ITEMS.map((i) => (i.kind === 'testimonial' ? { ...i, desired: { es: 'Cita real en espanol', en: 'Real quote in English' }, status: 'propuesto' as const, gate: 'propuesto' as const, chosen: 'confirmo' } : i))
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['testimonial'] }), fake, { items })
+    const d = fake.collections.testimonials.docs[0].data.testimonial as Row
+    expect('cargador testimonial: con una cita nueva escribe ES y EN y se anota para el handoff', r.code === 0 && d.es === 'Cita real en espanol' && d.en === 'Real quote in English' && /AVISO para el handoff/.test(r.text))
+  }
+  {
+    const id = 'CUT-cta-master-header-cta'
+    const fake = fullFake()
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: [id] }), fake)
+    const g = fake.globals.header.data.ctaButton as Row
+    const w = fake.writes.filter((x) => x.target === 'header')
+    expect('cargador cta-master: el boton del header escribe el grupo completo (label y href) en ES y EN', r.code === 0 && w.length === 2 && w.every((x) => (x.data.ctaButton as Row).href === '/contact') && g.href === '/contact' && typeof (g.label as Row).es === 'string' && (g.label as Row).es !== 'Hablemos', `codigo ${r.code}\n${r.text.split('\n').slice(-6).join('\n')}`)
+  }
+
+  // Test 4: kind desconocido y post-translation
+  {
+    const fake = fullFake()
+    const weird = { ...CUTOVER_ITEMS[0], id: 'CUT-otro-x', kind: 'otro' as unknown as CutItem['kind'] }
+    const r = await runLoader(baseOpts({ only: ['CUT-otro-x'] }), fake, { items: [...CUTOVER_ITEMS, weird] })
+    expect('cargador: un kind desconocido aborta y no abre Payload', r.code === 1 && r.loads === 0 && /kind desconocido/.test(r.text))
+    const post = CUTOVER_ITEMS.find((i) => i.kind === 'post-translation')!
+    const traducir = { ...post, chosen: 'traducir' }
+    const t = await runLoader(baseOpts({ only: ['post-translation'] }), fullFake(), { items: [traducir] })
+    expect('cargador: post-translation con la decision traducir aborta y remite a un plan aparte', t.code === 1 && t.loads === 0 && /se planea aparte/.test(t.text))
+    const aviso = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['post-translation'] }), fullFake())
+    expect('cargador: post-translation con la decision aviso no carga nada y sale 0', aviso.code === 0 && /SIN CARGA/.test(aviso.text))
+  }
+
+  // Test 5: sin ningun item aprobado
+  {
+    const fake = fullFake()
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['testimonial'] }), fake)
+    expect('cargador: sin ningun item aprobado termina sin escribir y lo dice', r.code === 0 && fake.writes.length === 0 && /Ningun item aprobado para cargar: no se escribe nada/.test(r.text))
+  }
+
+  // Kinds sin aplicador
+  {
+    const fake = fullFake()
+    const items = CUTOVER_ITEMS.map((i) => (i.kind === 'heading-master' ? { ...i, status: 'aprobado' as const, desired: ['h2 [es] Titulo'] } : i))
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['heading-master'] }), fake, { items })
+    expect('cargador: los encabezados y CTA de codigo salen como MANUAL y no se escriben', r.code === 0 && fake.writes.length === 0 && /\[MANUAL\] CUT-heading-master-legal/.test(r.text))
+  }
+
+  // Respaldo
+  {
+    const fake = fullFake()
+    const r = await runLoader(baseOpts({ printCurrent: true }), fake)
+    expect('cargador: --print-current lee todos los items, no escribe y trae el alt actual', r.code === 0 && fake.writes.length === 0 && /"CUT-media-alt-apturio"/.test(r.text) && /"CUT-author-aprendoclub-experience"/.test(r.text) && /"CUT-websites-juan-tech-com"/.test(r.text))
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Lectura viva (solo GET)
 // ---------------------------------------------------------------------------
 
@@ -659,6 +892,7 @@ async function main(): Promise<void> {
   rules()
   await realData()
   await loaderTracer()
+  await loaderRest()
   if (process.argv.includes('--live')) await live()
   if (bad > 0) {
     console.log(`\nFAIL 56-cutover-selftest: ${bad} caso(s)`)
