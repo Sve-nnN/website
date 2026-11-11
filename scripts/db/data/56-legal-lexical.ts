@@ -14,6 +14,10 @@
  * Las funciones heading, paragraph y richTextDoc parten de scripts/seed-legal-pages.ts,
  * que no se importa porque ejecuta efectos al cargarse.
  */
+import type { Decision } from './56-content-decisions'
+
+/** Convencion de la fase 56 (56-gate descubre este modulo): no registra decisiones. */
+export const DECISIONS: Decision[] = []
 
 /** Trozo de texto de un bloque: texto plano o texto con enlace. */
 export type InlinePart = string | { text: string; href: string }

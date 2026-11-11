@@ -379,6 +379,123 @@ export function buildPrivacyEs(F: LegalFacts): LegalSection[] {
 export const PRIVACY_ES: LegalSection[] = buildPrivacyEs(LEGAL_FACTS)
 
 // ---------------------------------------------------------------------------
+// Terminos de uso
+// ---------------------------------------------------------------------------
+
+export function buildTermsEs(F: LegalFacts): LegalSection[] {
+  const country = F.GOVERNING_LAW.value.trim() || 'Perú'
+  return [
+    {
+      title: 'Aceptación de los términos',
+      blocks: [
+        p(
+          'Al usar este sitio aceptas estos términos. Si no estás de acuerdo con alguno, no uses el sitio.',
+          'Plantilla CC0 terms-of-use (Access to the Site), adaptada a un sitio sin cuentas de usuario.',
+        ),
+        p(
+          ['Para saber cómo trato tus datos, lee la ', { text: 'política de privacidad', href: PRIVACY_URL_ES }, '.'],
+          'Plantilla CC0 terms-of-use, clausula 3 (Privacy). La ruta /privacy existe en produccion.',
+        ),
+      ],
+    },
+    {
+      title: 'Qué es este sitio',
+      blocks: [
+        p(
+          'Este sitio es el portafolio y el blog de Juan Carlos Angulo, ingeniero de software y consultor SEO técnico. Aquí publico artículos, casos de clientes, las herramientas que uso y la forma de contratarme. Todo es informativo.',
+          'Pie del sitio: Ingeniero de software y consultor SEO tecnico (curl /privacy 2026-11-10). Rutas /blog, /case-studies, /websites, /contact existentes en el sitio.',
+        ),
+        p(
+          'Si contratamos un servicio, lo acordamos aparte y por escrito. Ese acuerdo vale más que estos términos.',
+          'Estructura general del contrato de servicios, sin hechos nuevos. Supuesto por validar (D-10).',
+        ),
+      ],
+    },
+    {
+      title: 'Propiedad intelectual y cómo citarme',
+      blocks: [
+        p(
+          'Los textos, los análisis y el diseño de este sitio son míos, salvo que diga lo contrario. Los logos y las marcas que aparecen son de sus dueños.',
+          'Plantilla CC0 terms-of-use, clausula 2.5 (Ownership), adaptada a una persona natural.',
+        ),
+        p(
+          'Puedes citar fragmentos cortos si me das atribución como Juan Carlos Angulo y pones un enlace a la página original. Para reproducir un texto completo o usarlo con fines comerciales, pídeme permiso por escrito.',
+          'Plantilla CC0 terms-of-use, clausulas 2.2 y 2.5. La atribucion con enlace es la politica propuesta por Claude y Juan la confirma.',
+        ),
+      ],
+    },
+    {
+      title: 'Enlaces de afiliado',
+      blocks: [
+        p(
+          'Algunos enlaces son de afiliado. Si compras a través de alguno, puedo ganar una comisión sin costo adicional para ti. Solo recomiendo herramientas que uso de verdad.',
+          'messages/es.json affiliateDisclosure.generalDisclosure (texto ya servido por AffiliateDisclosure.tsx). D-08: enlaces de afiliado con divulgacion.',
+        ),
+        p(
+          'Esos enlaces no te siguen. El sitio solo anota que alguien pulsó el enlace, como explica la política de privacidad.',
+          'src/components/AffiliateDisclosure.tsx: cero tracking por usuario. src/collections/AffiliateClicks/index.ts: solo slug y userAgent.',
+        ),
+      ],
+    },
+    {
+      title: 'Contenido de terceros y enlaces externos',
+      blocks: [
+        p(
+          'El sitio enlaza a páginas y servicios de otras personas. No los controlo y no respondo por su contenido, por su disponibilidad ni por cómo tratan tus datos. Si usas un servicio externo, valen sus propios términos y su propia política de privacidad.',
+          'Plantilla CC0 terms-of-use, clausula 5.1 (Third-Party Services).',
+        ),
+      ],
+    },
+    {
+      title: 'Sin garantías y límite de responsabilidad',
+      blocks: [
+        p(
+          'Publico este sitio tal como está. Me esfuerzo en que la información sea correcta y esté al día, pero no garantizo que lo esté ni que el sitio funcione sin interrupciones.',
+          'Plantilla CC0 terms-of-use, clausula 6 (Disclaimers), sin las mayusculas ni el lenguaje de EE. UU.',
+        ),
+        p(
+          'Los casos de clientes muestran resultados concretos de proyectos concretos. No son una promesa de que vayas a obtener lo mismo, porque el SEO depende de muchos factores que cambian de un sitio a otro. Los artículos son educativos y aplicar lo que cuentan es decisión tuya.',
+          'D-08 y plan 56-05: los resultados de los casos son datos de clientes concretos, no promesas.',
+        ),
+        p(
+          'Hasta donde la ley lo permita, no respondo por pérdidas ni por daños indirectos que salgan de usar el sitio o de seguir su contenido.',
+          'Plantilla CC0 terms-of-use, clausula 7 (Limitation of Liability), reducida.',
+        ),
+      ],
+    },
+    {
+      title: 'Cambios en los términos',
+      blocks: [
+        p(
+          'Puedo actualizar estos términos. Cuando lo haga, cambio el texto y la fecha que aparece al inicio de la página. Si sigues usando el sitio después del cambio, aceptas la versión nueva.',
+          'Plantilla CC0 terms-of-use, clausula 10.1 (Changes to Terms). D-09: la fecha la muestra el global legal-pages.',
+        ),
+      ],
+    },
+    {
+      title: 'Ley aplicable',
+      blocks: [
+        p(
+          `Estos términos se rigen por las leyes de ${country}. Si surge un desacuerdo, primero me escribes y tratamos de resolverlo hablando. Si no se resuelve, lo verá un tribunal competente de ${country}. Nada de esto te quita los derechos que tu ley local te da como consumidor.`,
+          'LEGAL_FACTS.GOVERNING_LAW (propuesto, Juan decide). Plantilla CC0 terms-of-use, clausula 10.2, sin la clausula de arbitraje de EE. UU.',
+        ),
+      ],
+    },
+    {
+      title: 'Cómo contactarme',
+      blocks: [
+        p(
+          ['Para cualquier duda sobre estos términos o sobre el sitio, escríbeme a ', { text: MAIL, href: MAILTO }, '.'],
+          'D-06: contacto legal hello@juan-tech.com.',
+        ),
+      ],
+    },
+  ]
+}
+
+export const TERMS_ES: LegalSection[] = buildTermsEs(LEGAL_FACTS)
+
+// ---------------------------------------------------------------------------
 // Decisiones: una por hecho por confirmar (el plan 56-11 agrega las de cada documento)
 // ---------------------------------------------------------------------------
 

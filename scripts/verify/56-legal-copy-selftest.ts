@@ -29,10 +29,7 @@ import {
 } from '../db/data/56-legal-lexical'
 import { extractHeadings, type LexicalRootLike } from '../../src/components/mui/rich-text/lexical-toc'
 
-const { LEGAL_FACTS, LEGAL_EFFECTIVE_DATE, DECISIONS, PRIVACY_ES, buildPrivacyEs } = copy
-// TERMS_ES lo agrega la tarea 2; la autoprueba lo exige en cuanto existe.
-const TERMS_ES = (copy as { TERMS_ES?: LegalSection[] }).TERMS_ES
-const buildTermsEs = (copy as { buildTermsEs?: (f: typeof LEGAL_FACTS) => LegalSection[] }).buildTermsEs
+const { LEGAL_FACTS, LEGAL_EFFECTIVE_DATE, DECISIONS, PRIVACY_ES, TERMS_ES, buildPrivacyEs, buildTermsEs } = copy
 
 // Las cadenas prohibidas se arman por codigo para que este archivo no las contenga.
 const EM_DASH = String.fromCharCode(0x2014)
@@ -58,6 +55,11 @@ const PROVIDERS = ['Resend', 'Cloudinary', 'Hetzner', 'Cloudflare']
 
 /** Nombres de proveedores que el texto legal podria nombrar. Los de LEGAL_FACTS son los unicos permitidos. */
 const KNOWN_PROVIDER_WORDS = ['Resend', 'Cloudinary', 'Hetzner', 'Cloudflare', 'Dokploy', 'Google', 'Amazon', 'Vercel', 'Neon', 'Hostinger', 'Mailchimp', 'Stripe']
+
+/** Nombres de proveedores del texto que no estan en el conjunto permitido (los de LEGAL_FACTS). */
+export function strayProviders(text: string, allowed: ReadonlySet<string>): string[] {
+  return KNOWN_PROVIDER_WORDS.filter((w) => text.includes(w) && !allowed.has(w))
+}
 
 let failures = 0
 function check(ok: boolean, name: string, reason: string): void {
@@ -182,9 +184,9 @@ check(
 )
 check(!privacyAll.includes('Alemania') && privacyAll.includes('un proveedor de correo'), 'sin region ni buzon confirmados el texto no inventa ninguno', 'el texto nombra un dato sin confirmar')
 
-// ---------------------------------------------------------------- terminos (tarea 2)
+// ---------------------------------------------------------------- terminos
 
-if (TERMS_ES && buildTermsEs) {
+{
   const termsProblems = docProblems(TERMS_ES, ['hello@juan-tech.com'])
   check(termsProblems.length === 0, 'TERMS_ES cumple encabezados, evidencia y cadenas prohibidas', termsProblems.join(' | '))
   const termsLex = sectionsToLexical(TERMS_ES)
@@ -192,7 +194,7 @@ if (TERMS_ES && buildTermsEs) {
   check(termsHeads.length === TERMS_ES.length && termsHeads.every((h, i) => h.text === TERMS_ES[i].title), 'extractHeadings acepta el estado de TERMS_ES', `${termsHeads.length} de ${TERMS_ES.length}`)
   const allowed = new Set([...PROVIDERS, ...Object.values(LEGAL_FACTS).map((f) => f.value).filter(Boolean)])
   const termsAll = TERMS_ES.flatMap(sectionTexts).join('\n')
-  const stray = KNOWN_PROVIDER_WORDS.filter((w) => termsAll.includes(w) && !allowed.has(w))
+  const stray = strayProviders(termsAll, allowed)
   check(stray.length === 0, 'ninguna seccion de terms nombra un proveedor que no sea de LEGAL_FACTS', stray.join(', '))
   check(/Perú/.test(termsAll) && termsAll.includes(LEGAL_FACTS.GOVERNING_LAW.value), 'terms usa la ley aplicable de LEGAL_FACTS.GOVERNING_LAW', 'falta')
   const changedTerms = buildTermsEs({ ...LEGAL_FACTS, GOVERNING_LAW: { ...LEGAL_FACTS.GOVERNING_LAW, value: 'PaísDePrueba' } }).flatMap(sectionTexts).join('\n')
@@ -221,6 +223,11 @@ for (const c of bad) {
   const found = docProblems(c.sections, goodReq)
   check(found.some((p) => c.expect.test(p)), `la autoprueba rechaza: ${c.name}`, found.join(' | ') || 'no detecto nada')
 }
+check(
+  strayProviders('Uso Amazon y Resend', new Set(['Resend'])).join() === 'Amazon' && strayProviders('Solo Resend', new Set(['Resend'])).length === 0,
+  'la autoprueba detecta un proveedor fuera de LEGAL_FACTS en terms',
+  'strayProviders no detecto Amazon',
+)
 check(docProblems([section('Datos', 'Resend')], goodReq).length === 0, 'la autoprueba acepta un documento bueno', docProblems([section('Datos', 'Resend')], goodReq).join(' | '))
 
 if (failures > 0) {
