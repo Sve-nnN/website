@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plan SEO juan-tech.com</title>
+<style>
+:root{
+  --bg:#f7f6f2; --surface:#ffffff; --ink:#16181d; --muted:#4b5160; --line:#dedbd2;
+  --accent:#1d4ed8; --accent-ink:#ffffff; --good:#0f6b3d; --warn:#8a5a00; --bad:#a32020;
+  --good-bg:#e4f4ea; --warn-bg:#fdf0d5; --bad-bg:#fbe5e5; --bar:#1d4ed8; --bar2:#7c8aa5;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101216; --surface:#181b21; --ink:#eceef2; --muted:#a8afbd; --line:#2b303a;
+    --accent:#7aa2ff; --accent-ink:#0b1020; --good:#6fd39b; --warn:#f0c46a; --bad:#ff8f8f;
+    --good-bg:#12301f; --warn-bg:#33270c; --bad-bg:#3a1717; --bar:#7aa2ff; --bar2:#5b6578;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.skip{position:absolute;left:-999px;top:0;background:var(--accent);color:var(--accent-ink);padding:10px 14px;z-index:20}
+.skip:focus{left:8px;top:8px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+header.top{padding:48px 16px 24px;border-bottom:1px solid var(--line);background:var(--surface)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+header.top .wrap{padding:0}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;margin:0 0 12px}
+h2{font-size:1.5rem;line-height:1.25;margin:0 0 6px}
+h3{font-size:1.1rem;margin:22px 0 6px}
+p{margin:0 0 12px}
+.lead{font-size:1.1rem;color:var(--muted);max-width:68ch}
+nav.toc{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.toc ul{list-style:none;margin:0;padding:0 16px;display:flex;gap:4px;overflow-x:auto;max-width:1080px;margin-inline:auto}
+nav.toc a{display:block;padding:12px 10px;color:var(--ink);text-decoration:none;white-space:nowrap;font-size:.92rem;border-bottom:3px solid transparent}
+nav.toc a:hover{border-bottom-color:var(--accent)}
+section{padding:44px 0;border-bottom:1px solid var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:20px 0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+.kpi b{display:block;font-size:1.9rem;line-height:1.1}
+.kpi span{color:var(--muted);font-size:.9rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin:14px 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.callout{border-left:5px solid var(--accent);background:var(--surface);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}
+.callout.warn{border-left-color:var(--warn);background:var(--warn-bg)}
+.callout.bad{border-left-color:var(--bad);background:var(--bad-bg)}
+.callout.good{border-left-color:var(--good);background:var(--good-bg)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface);margin:14px 0}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.93rem}
+caption{text-align:left;padding:12px 14px;font-weight:600}
+th,td{padding:9px 14px;text-align:left;border-top:1px solid var(--line);vertical-align:top}
+th{background:var(--bg);font-weight:600}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{display:inline-block;padding:1px 9px;border-radius:99px;font-size:.78rem;font-weight:600;border:1px solid currentColor}
+.tag.hi{color:var(--good);background:var(--good-bg)}
+.tag.mid{color:var(--warn);background:var(--warn-bg)}
+.tag.lo{color:var(--bad);background:var(--bad-bg)}
+.bars{display:grid;gap:8px;margin:14px 0}
+.bar{display:grid;grid-template-columns:minmax(120px,200px) 1fr 70px;gap:10px;align-items:center;font-size:.92rem}
+.bar .track{background:var(--line);height:16px;border-radius:8px;overflow:hidden;display:flex}
+.bar .es{background:var(--bar);height:100%}
+.bar .mx{background:var(--bar2);height:100%}
+.legend{display:flex;gap:16px;font-size:.85rem;color:var(--muted);flex-wrap:wrap}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+ol.phase{padding-left:20px;margin:8px 0}
+ol.phase li{margin-bottom:6px}
+.decision{display:grid;gap:10px}
+.decision .card{margin:0}
+.small{font-size:.85rem;color:var(--muted)}
+footer{padding:30px 0 60px;color:var(--muted);font-size:.9rem}
+code{background:var(--bg);padding:1px 6px;border-radius:5px;font-size:.88em}
+@media (max-width:560px){.bar{grid-template-columns:1fr;gap:4px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">Plan y estrategia SEO · 13 de noviembre de 2026</p>
+    <h1>Cómo posicionar juan-tech.com para vender servicios de SEO técnico</h1>
+    <p class="lead">El sitio ya atrae tráfico, pero el tráfico equivocado. Casi cuatro de cada cinco clics llegan a tutoriales de estructuras de datos y casi ninguno llega a los servicios. Este plan mueve la autoridad que ya existe hacia las páginas que generan clientes.</p>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Secciones del plan">
+  <ul>
+    <li><a href="#diagnostico">1. Diagnóstico</a></li>
+    <li><a href="#keywords">2. Keywords</a></li>
+    <li><a href="#estrategia">3. Estrategia</a></li>
+    <li><a href="#mapa">4. Mapa de URLs</a></li>
+    <li><a href="#quickwins">5. Victorias rápidas</a></li>
+    <li><a href="#roadmap">6. Roadmap</a></li>
+    <li><a href="#kpis">7. KPIs</a></li>
+    <li><a href="#decisiones">8. Decisiones</a></li>
+    <li><a href="#fuentes">9. Fuentes</a></li>
+  </ul>
+</nav>
+
+<main id="main" class="wrap">
+
+<section id="diagnostico">
+  <h2>1. Diagnóstico: dónde estamos hoy</h2>
+  <p class="small">Search Console, dominio juan-tech.com, 15 de agosto al 13 de noviembre de 2026 (90 días).</p>
+  <div class="kpis">
+    <div class="kpi"><b>231</b><span>clics en 90 días</span></div>
+    <div class="kpi"><b>33.769</b><span>impresiones</span></div>
+    <div class="kpi"><b>0,68%</b><span>CTR medio</span></div>
+    <div class="kpi"><b>17,3</b><span>posición media</span></div>
+  </div>
+
+  <div class="callout good">
+    <strong>La tendencia sube.</strong> En agosto el sitio sumaba unas 125 impresiones diarias y 0 o 1 clic. En noviembre suma entre 500 y 700 impresiones y entre 5 y 9 clics al día. La posición media pasó de 25-40 a 12-16.
+  </div>
+
+  <h3>Qué funciona</h3>
+  <div class="tbl">
+    <table>
+      <caption>Páginas con más clics (90 días)</caption>
+      <thead><tr><th>Página</th><th class="n">Clics</th><th class="n">Impr.</th><th class="n">Pos.</th></tr></thead>
+      <tbody>
+        <tr><td><code>/blog/cs-fundamentals/pilas-y-colas</code></td><td class="n">63</td><td class="n">3.962</td><td class="n">9,1</td></tr>
+        <tr><td><code>/blog/cs-fundamentals/recursividad</code></td><td class="n">23</td><td class="n">2.186</td><td class="n">9,1</td></tr>
+        <tr><td><code>/blog/cs-fundamentals/tablas-hash</code></td><td class="n">18</td><td class="n">2.242</td><td class="n">9,1</td></tr>
+        <tr><td><code>/blog/cs-fundamentals/data-structures</code></td><td class="n">15</td><td class="n">1.369</td><td class="n">14,6</td></tr>
+        <tr><td><code>/</code> (home)</td><td class="n">12</td><td class="n">193</td><td class="n">5,2</td></tr>
+        <tr><td><code>/blog/cs-fundamentals/dynamic-programming</code></td><td class="n">12</td><td class="n">747</td><td class="n">8,8</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Qué no funciona</h3>
+  <div class="grid2">
+    <div class="card">
+      <strong>El tráfico no coincide con el negocio.</strong>
+      <p>Sumé los clics de <code>/blog/cs-fundamentals</code>: pasan de 185 de los 231 totales. Ninguna página de <code>/servicios</code> aparece entre las 30 con más clics. <code>/servicios/seo-technical-audit</code> recibe impresiones para "auditoria seo tecnico" (34 + 14 + 6) y cero clics.</p>
+    </div>
+    <div class="card">
+      <strong>El inglés rinde la mitad.</strong>
+      <p>La versión en español de heap, space complexity y tree traversal rankea en posición 9 a 15. La versión <code>/en/</code> del mismo tema rankea en 15 a 32 y tiene 1.000 a 1.900 impresiones sin clics. Astro vs Next.js suma 1.889 impresiones en posición 19,9 y 2 clics.</p>
+    </div>
+    <div class="card">
+      <strong>Mucha impresión, poco clic.</strong>
+      <p>"heap": 610 impresiones, posición 9,1, 1 clic (0,16% de CTR). Los titles y las descriptions de esos tutoriales no compiten por el clic.</p>
+    </div>
+    <div class="card">
+      <strong>Un 404 con demanda.</strong>
+      <p>"contenido pilar seo" suma 411 impresiones apuntando a <code>/blog/content-pillar</code>, que hoy es un 404 con redirect y Search Console lo mantiene como "Enviada e indexada". La canónica real es <code>/blog/seo/pillar-page-seo</code>.</p>
+    </div>
+  </div>
+
+  <h3>Dónde llegan los clics por país</h3>
+  <div class="tbl">
+    <table>
+      <caption>Clics por país (90 días)</caption>
+      <thead><tr><th>País</th><th class="n">Clics</th><th class="n">Impr.</th><th class="n">Pos.</th></tr></thead>
+      <tbody>
+        <tr><td>México</td><td class="n">66</td><td class="n">5.158</td><td class="n">13,1</td></tr>
+        <tr><td>España</td><td class="n">28</td><td class="n">5.834</td><td class="n">18,9</td></tr>
+        <tr><td>Colombia</td><td class="n">15</td><td class="n">1.744</td><td class="n">11,2</td></tr>
+        <tr><td>Perú</td><td class="n">15</td><td class="n">1.820</td><td class="n">9,1</td></tr>
+        <tr><td>Venezuela</td><td class="n">13</td><td class="n">790</td><td class="n">8,8</td></tr>
+        <tr><td>Ecuador</td><td class="n">11</td><td class="n">914</td><td class="n">8,2</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>México aporta más clics. España aporta más impresiones, pero con peor posición. Los dos mercados piden estrategias distintas, y el punto 8 te plantea la decisión.</p>
+</section>
+
+<section id="keywords">
+  <h2>2. Keywords: qué buscan y cuánto</h2>
+  <p class="small">Fuente principal: Google Keyword Planner (cuenta aprendoclub), idioma español, promedio mensual de noviembre 2025 a octubre 2026. Sirve de suelo, porque Google agrupa variantes y redondea.</p>
+
+  <div class="callout warn">
+    <strong>Keyword Planner agrupa "consultor seo" y "consultoría seo" en una sola cifra (1.900 en España).</strong> Dos URLs que apunten a cada término compiten entre sí por el mismo grupo. Ahrefs las separa (3.700 y 800), pero Google trata la intención como una sola. Eso cambia el mapa de URLs del punto 4.
+  </div>
+
+  <h3>Servicios y SEO comercial</h3>
+  <div class="legend" aria-hidden="true"><span><i style="background:var(--bar)"></i>España</span><span><i style="background:var(--bar2)"></i>México</span></div>
+  <div class="bars" role="list" aria-label="Volumen mensual en España y México">
+    <div class="bar" role="listitem"><span>consultor seo</span><div class="track"><div class="es" style="width:100%"></div></div><span>1.900 / 320</span></div>
+    <div class="bar" role="listitem"><span>posicionamiento seo</span><div class="track"><div class="es" style="width:68%"></div></div><span>1.300 / n.d.</span></div>
+    <div class="bar" role="listitem"><span>core web vitals</span><div class="track"><div class="es" style="width:38%"></div></div><span>720 / n.d.</span></div>
+    <div class="bar" role="listitem"><span>geo seo</span><div class="track"><div class="es" style="width:31%"></div></div><span>590 / 140</span></div>
+    <div class="bar" role="listitem"><span>auditoría seo</span><div class="track"><div class="es" style="width:25%"></div></div><span>480 / 70</span></div>
+    <div class="bar" role="listitem"><span>experto seo</span><div class="track"><div class="es" style="width:25%"></div></div><span>480 / 90</span></div>
+    <div class="bar" role="listitem"><span>servicios seo</span><div class="track"><div class="es" style="width:21%"></div></div><span>390 / n.d.</span></div>
+    <div class="bar" role="listitem"><span>estrategia seo</span><div class="track"><div class="es" style="width:14%"></div></div><span>260 / n.d.</span></div>
+    <div class="bar" role="listitem"><span>especialista seo</span><div class="track"><div class="es" style="width:14%"></div></div><span>260 / 70</span></div>
+    <div class="bar" role="listitem"><span>seo freelance</span><div class="track"><div class="es" style="width:9%"></div></div><span>170 / n.d.</span></div>
+    <div class="bar" role="listitem"><span>seo técnico</span><div class="track"><div class="es" style="width:5%"></div></div><span>90 / 30</span></div>
+  </div>
+
+  <div class="tbl">
+    <table>
+      <caption>Detalle de keywords de servicio (Keyword Planner, España)</caption>
+      <thead><tr><th>Keyword</th><th class="n">Vol. ES</th><th class="n">Vol. MX</th><th class="n">3 meses</th><th class="n">Interanual</th><th class="n">Puja alta</th><th>Ahrefs ago-2026</th></tr></thead>
+      <tbody>
+        <tr><td>consultor seo / consultoría seo</td><td class="n">1.900</td><td class="n">320</td><td class="n">+26%</td><td class="n">-33%</td><td class="n">$6,45</td><td>3.700 y 800, KD 0</td></tr>
+        <tr><td>auditoría seo</td><td class="n">480</td><td class="n">70</td><td class="n">+24%</td><td class="n">-64%</td><td class="n">$3,91</td><td>1.400, KD 0</td></tr>
+        <tr><td>geo seo</td><td class="n">590</td><td class="n">140</td><td class="n">+51%</td><td class="n">+23%</td><td class="n">$6,68</td><td>450, KD 5</td></tr>
+        <tr><td>experto seo / experto en seo</td><td class="n">480</td><td class="n">90</td><td class="n">+88%</td><td class="n">-64%</td><td class="n">$13,49</td><td>sin medir</td></tr>
+        <tr><td>especialista seo</td><td class="n">260</td><td class="n">70</td><td class="n">n.d.</td><td class="n">n.d.</td><td class="n">n.d.</td><td>sin medir</td></tr>
+        <tr><td>seo técnico</td><td class="n">90</td><td class="n">30</td><td class="n">+100%</td><td class="n">-76%</td><td class="n">$6,87</td><td>350 (DinoRank jul: 260)</td></tr>
+        <tr><td>estrategia seo</td><td class="n">260</td><td class="n">n.d.</td><td class="n">+100%</td><td class="n">-76%</td><td class="n">$3,39</td><td>700, KD 31</td></tr>
+        <tr><td>core web vitals</td><td class="n">720</td><td class="n">n.d.</td><td class="n">+23%</td><td class="n">-33%</td><td class="n">$3,81</td><td>900, KD 24</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <strong>Tres lecturas.</strong>
+    <ol class="phase">
+      <li><strong>"geo seo" es el único término comercial que crece contra el año anterior (+23%).</strong> Los demás caen entre 33% y 76%. La categoría es joven y Juan ya tiene la implementación técnica (llms.txt, schema, citabilidad).</li>
+      <li><strong>"consultor seo" vale seis veces más en España que en México</strong> (1.900 contra 320). Si el objetivo es vender consultoría, España es el mercado de volumen.</li>
+      <li><strong>"seo técnico" tiene apenas 90 búsquedas en España.</strong> Es el término que hoy ocupa el H1 de la home. Funciona como tema de autoridad, pero pesa poco como objetivo de conversión.</li>
+    </ol>
+  </div>
+
+  <h3>Contenido técnico que ya genera tráfico (México)</h3>
+  <div class="tbl">
+    <table>
+      <caption>Keyword Planner, México, español</caption>
+      <thead><tr><th>Keyword</th><th class="n">Vol. mensual</th><th>Página de juan-tech que ya rankea</th></tr></thead>
+      <tbody>
+        <tr><td>recursividad</td><td class="n">2.400</td><td><code>/blog/cs-fundamentals/recursividad</code> (pos. 9,1)</td></tr>
+        <tr><td>estructuras de datos</td><td class="n">1.600</td><td><code>/blog/cs-fundamentals/data-structures</code> (pos. 14,6)</td></tr>
+        <tr><td>tablas hash</td><td class="n">390</td><td><code>/blog/cs-fundamentals/tablas-hash</code> (pos. 9,1)</td></tr>
+        <tr><td>programación dinámica</td><td class="n">210</td><td><code>/blog/cs-fundamentals/dynamic-programming</code> (pos. 8,8)</td></tr>
+        <tr><td>complejidad algorítmica</td><td class="n">170</td><td><code>/blog/cs-fundamentals/time-complexity</code> y <code>space-complexity</code></td></tr>
+        <tr><td>pilas y colas</td><td class="n">90</td><td><code>/blog/cs-fundamentals/pilas-y-colas</code> (63 clics, la mejor página)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small">"pilas y colas" marca solo 90 en Keyword Planner y aun así trae 63 clics y casi 4.000 impresiones. La herramienta subestima los términos de cola larga en tecnología. Los datos de Search Console pesan más que la herramienta en esta tabla.</p>
+</section>
+
+<section id="estrategia">
+  <h2>3. Estrategia: cinco frentes</h2>
+  <p>La idea central: el blog técnico ya funciona como motor de autoridad y de tráfico. Falta el puente hacia los servicios y falta una oferta visible para los términos que sí compran.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">A. Convertir: páginas de servicio</h3>
+      <p>Reconstruir las cuatro landings alrededor de un solo término cada una, con prueba (casos de éxito con métricas), FAQ y schema <code>Service</code> y <code>ProfessionalService</code>. Es la ventaja que ningún competidor directo ejecuta bien, según el análisis de julio.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">B. Tender el puente blog → servicios</h3>
+      <p>Cerca de 185 clics llegan a tutoriales de programación. Cada tutorial con tráfico recibe un bloque contextual hacia el servicio que corresponde, un autor visible con credenciales y enlaces internos hacia los casos. Cero popups, solo texto útil dentro del artículo.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">C. Autoridad en SEO técnico</h3>
+      <p>Publicar contenido del nivel de Carlos Sánchez Donate: crawl budget, rendering, Core Web Vitals, hreflang con Next.js y Payload. Núcleo: "core web vitals" (720), "estrategia seo" (260), "posicionamiento seo" (1.300) y los clusters que ya hay en el blog (canibalización, contenido pilar, structured data).</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">D. Ocupar GEO antes que los demás</h3>
+      <p>"geo seo" crece 51% en tres meses y 23% contra el año anterior. Nombrar el servicio como línea propia (Capitán SEO ya lo hace), publicar una guía profunda con datos propios y medir las citas del propio sitio en ChatGPT, Perplexity y AI Overviews.</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">E. Defender y exprimir el motor técnico</h3>
+      <p>Mejorar el CTR de los tutoriales que rankean en posición 9 a 15 (titles, descriptions, datos estructurados), cerrar la brecha entre ES y EN, y ampliar los clusters con más volumen: recursividad (2.400), estructuras de datos (1.600), tablas hash (390).</p>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">F. Higiene técnica</h3>
+      <p>Cerrar lo que dejó la auditoría de agosto: reenviar sitemap (196 URLs en GSC contra 167 reales), pedir indexación de las canónicas con cero impresiones, 62 meta descriptions, 7 titles de casos de éxito, imágenes OG genéricas y 2 assets en 404.</p>
+    </div>
+  </div>
+
+  <h3>Competidores de referencia</h3>
+  <div class="tbl">
+    <table>
+      <caption>Peer-set real, SERP de julio de 2026</caption>
+      <thead><tr><th>Dominio</th><th>Qué hace mejor</th><th>Qué hace Juan que ellos no</th></tr></thead>
+      <tbody>
+        <tr><td>carlossanchezdonate.com</td><td>Profundidad técnica en el blog, 6 conferencias, un Máster</td><td>Casos con métricas reales, educación y experiencia estructuradas</td></tr>
+        <tr><td>chesusrodrigo.es</td><td>Reseñas de Google visibles, 5,0 de 11 reseñas</td><td>Enfoque técnico en lugar de pyme local</td></tr>
+        <tr><td>manufuentes.com</td><td>Caso propio con 500% de crecimiento</td><td>Más amplitud técnica, blog bilingüe</td></tr>
+        <tr><td>capitanseo.es</td><td>"SEO for AI" nombrado como servicio</td><td>Implementación real de llms.txt y schema</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="mapa">
+  <h2>4. Mapa de keywords por URL</h2>
+  <p>Cada URL recibe una sola keyword principal. Marqué la intención como hipótesis porque SerpAPI alcanzó su límite de peticiones hoy y no pude confirmar qué muestra Google en cada SERP.</p>
+  <div class="tbl">
+    <table>
+      <caption>Propuesta de asignación (España, salvo indicación)</caption>
+      <thead><tr><th>URL</th><th>Keyword principal</th><th class="n">Vol.</th><th>Intención (hipótesis)</th><th>Acción</th></tr></thead>
+      <tbody>
+        <tr><td><code>/servicios/seo-consulting</code></td><td>consultor seo (+ consultoría seo)</td><td class="n">1.900</td><td>Comercial</td><td>Una sola URL para el par. Reescribir H1, casos, FAQ y schema.</td></tr>
+        <tr><td><code>/servicios</code></td><td>servicios seo</td><td class="n">390</td><td>Comercial</td><td>Hub que reparte hacia las cuatro landings.</td></tr>
+        <tr><td><code>/servicios/seo-technical-audit</code></td><td>auditoría seo</td><td class="n">480</td><td>Comercial</td><td>Resolver el choque con "auditoría seo técnico" de la página de autor.</td></tr>
+        <tr><td><code>/servicios/ai-seo-geo</code></td><td>geo seo</td><td class="n">590</td><td>Informacional/comercial</td><td>Añadir guía larga y datos propios. Mayor prioridad por crecimiento.</td></tr>
+        <tr><td><code>/servicios/fullstack-development</code></td><td>desarrollo full stack</td><td class="n">150 (Ahrefs)</td><td>Comercial</td><td>Mantener, sin inversión extra.</td></tr>
+        <tr><td><code>/</code> (home ES)</td><td>experto seo (marca + seo técnico)</td><td class="n">480</td><td>Mixta</td><td>Decisión pendiente, ver punto 8.</td></tr>
+        <tr><td><code>/en/</code> (home EN)</td><td>technical seo consultant</td><td class="n">320</td><td>Comercial</td><td>Mantener. CPC de $15,16 señala valor alto.</td></tr>
+        <tr><td><code>/seo-tecnico-madrid</code></td><td>seo técnico madrid</td><td class="n">sin medir</td><td>Local comercial</td><td>Pedir indexación. Medir volumen.</td></tr>
+        <tr><td><code>/blog/tech-seo</code></td><td>core web vitals</td><td class="n">720</td><td>Informacional</td><td>Artículo pilar con datos medidos del propio sitio.</td></tr>
+        <tr><td><code>/blog/seo</code></td><td>estrategia seo</td><td class="n">260 (Ahrefs 700)</td><td>Informacional</td><td>Pilar con enlaces a canibalización, clusters y arquitectura.</td></tr>
+        <tr><td><code>/blog/cs-fundamentals/recursividad</code></td><td>recursividad</td><td class="n">2.400 MX</td><td>Informacional</td><td>Ya en pos. 9. Subir CTR y profundidad.</td></tr>
+        <tr><td><code>/blog/cs-fundamentals/data-structures</code></td><td>estructuras de datos</td><td class="n">1.600 MX</td><td>Informacional</td><td>Pasa de pos. 14,6 al top 5 como hub del cluster.</td></tr>
+        <tr><td><code>/blog/cs-fundamentals/tablas-hash</code></td><td>tablas hash</td><td class="n">390 MX</td><td>Informacional</td><td>Title y description nuevos.</td></tr>
+        <tr><td><code>/blog/seo/pillar-page-seo</code></td><td>contenido pilar seo</td><td class="n">411 impr. GSC</td><td>Informacional</td><td>Corregir el 404 de <code>/blog/content-pillar</code> con un 301.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout bad">
+    <strong>Antes de fijar ninguna keyword comercial</strong> hay que mirar la SERP real de "consultor seo", "auditoría seo" y "geo seo". El research de julio ya cambió una decisión por eso ("seo técnico" resultó 100% informacional). Es la tarea 1 de la fase 1.
+  </div>
+</section>
+
+<section id="quickwins">
+  <h2>5. Victorias rápidas con datos de Search Console</h2>
+  <div class="tbl">
+    <table>
+      <caption>Páginas que ya rankean y pierden clics</caption>
+      <thead><tr><th>Página / consulta</th><th class="n">Impr.</th><th class="n">Pos.</th><th class="n">Clics</th><th>Acción</th></tr></thead>
+      <tbody>
+        <tr><td>heap data structure (ES), "heap"</td><td class="n">2.033</td><td class="n">10,1</td><td class="n">10</td><td>Title y description con el término exacto, ejemplo en Python en el snippet.</td></tr>
+        <tr><td>astro vs next js (EN)</td><td class="n">1.889</td><td class="n">19,9</td><td class="n">2</td><td>Reescribir title, añadir tabla comparativa y FAQ.</td></tr>
+        <tr><td>space complexity (EN)</td><td class="n">1.297</td><td class="n">15,2</td><td class="n">3</td><td>Igualar la profundidad de la versión ES (pos. 8,8).</td></tr>
+        <tr><td>heap data structure (EN)</td><td class="n">1.719</td><td class="n">32,1</td><td class="n">4</td><td>Revisar hreflang y contenido duplicado entre ES y EN.</td></tr>
+        <tr><td>tree traversal (EN)</td><td class="n">1.103</td><td class="n">28,4</td><td class="n">2</td><td>Ampliar y enlazar desde estructuras de datos.</td></tr>
+        <tr><td>"contenido pilar seo" (404)</td><td class="n">411 + 201</td><td class="n">18,2</td><td class="n">0</td><td>301 de <code>/blog/content-pillar</code> a <code>/blog/seo/pillar-page-seo</code>.</td></tr>
+        <tr><td>canibalización seo</td><td class="n">61 + 57</td><td class="n">n.d.</td><td class="n">0</td><td>Mejorar title y revisar si compite con la guía de clusters.</td></tr>
+        <tr><td>auditoria seo tecnico</td><td class="n">34 + 14 + 6</td><td class="n">n.d.</td><td class="n">0</td><td>Reforzar el H1 y el title de <code>/servicios/seo-technical-audit</code>.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small">Un CTR del 2% sobre las 10 páginas con más impresiones sumaría unos 400 clics adicionales por trimestre. Es una estimación de tamaño, no una promesa.</p>
+</section>
+
+<section id="roadmap">
+  <h2>6. Roadmap en cuatro fases</h2>
+
+  <div class="card">
+    <h3 style="margin-top:0">Fase 1. Fundamentos y decisiones (semanas 1 a 4)</h3>
+    <ol class="phase">
+      <li>Verificar la SERP real de las 6 keywords comerciales (SerpAPI vuelve a estar disponible mañana, o con Google en vivo).</li>
+      <li>Reenviar <code>sitemap.xml</code> y pedir indexación de las canónicas pendientes y de <code>/seo-tecnico-madrid</code>.</li>
+      <li>301 de <code>/blog/content-pillar</code> hacia <code>/blog/seo/pillar-page-seo</code>.</li>
+      <li>Reescribir title y description de los 10 tutoriales con más impresiones.</li>
+      <li>Escribir los 7 titles cortos de casos de éxito (7 × 2 idiomas) y las primeras 20 meta descriptions por impresiones.</li>
+      <li>Configurar eventos de GA4 en el formulario de contacto y en los clics a servicios. Hoy no hay línea base de leads.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Fase 2. Convertir y tender el puente (semanas 5 a 12)</h3>
+    <ol class="phase">
+      <li>Reescribir <code>/servicios/seo-consulting</code>, <code>/servicios/seo-technical-audit</code> y <code>/servicios/ai-seo-geo</code> con H1 del término objetivo, prueba, FAQ y schema.</li>
+      <li>Bloque contextual hacia el servicio en los 12 tutoriales con más tráfico.</li>
+      <li>Publicar la guía de GEO con datos propios y la guía de Core Web Vitals con mediciones reales.</li>
+      <li>Imágenes OG por plantilla para los 105 artículos, y propias para los casos y las 4 landings.</li>
+      <li>Cerrar la brecha ES y EN en los 5 tutoriales con peor rendimiento en inglés.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Fase 3. Escalar (semanas 13 a 24)</h3>
+    <ol class="phase">
+      <li>Cluster de SEO técnico con Next.js y Payload: hreflang, rendering, crawl budget, sitemaps dinámicos.</li>
+      <li>Ampliar el cluster de estructuras de datos hacia recursividad y complejidad con ejercicios resueltos.</li>
+      <li>Outreach para menciones de calidad: comunidades de SEO hispanas, charlas, colaboraciones con los referentes del peer-set.</li>
+      <li>Medir citas de IA con Brand Radar de Ahrefs cuando vuelvan las unidades.</li>
+      <li>Reseñas de Google visibles en el sitio, si existen.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-top:0">Fase 4. Autoridad (meses 7 a 12)</h3>
+    <ol class="phase">
+      <li>Estudios con datos propios de los casos de éxito, publicados como investigación citable.</li>
+      <li>Presencia en conferencias de SEO, con página de eventos enlazada a los casos.</li>
+      <li>Revisión trimestral de canibalización y poda de contenido sin demanda.</li>
+      <li>Decidir si el mercado local (Madrid, Lima) merece páginas adicionales, con volumen medido.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="kpis">
+  <h2>7. KPIs y metas</h2>
+  <p>Las metas son hipótesis de trabajo. Las proyecté a partir del ritmo actual de noviembre (unos 135 clics al mes) y del tamaño de las oportunidades del punto 5.</p>
+  <div class="tbl">
+    <table>
+      <caption>Línea base y metas</caption>
+      <thead><tr><th>Métrica</th><th class="n">Hoy</th><th class="n">3 meses</th><th class="n">6 meses</th><th class="n">12 meses</th></tr></thead>
+      <tbody>
+        <tr><td>Clics orgánicos por mes</td><td class="n">≈135</td><td class="n">300</td><td class="n">700</td><td class="n">1.500</td></tr>
+        <tr><td>Clics a páginas de servicio por mes</td><td class="n">≈0</td><td class="n">25</td><td class="n">100</td><td class="n">300</td></tr>
+        <tr><td>CTR medio</td><td class="n">0,68%</td><td class="n">1,2%</td><td class="n">1,8%</td><td class="n">2,5%</td></tr>
+        <tr><td>Posición media</td><td class="n">17,3</td><td class="n">14</td><td class="n">11</td><td class="n">9</td></tr>
+        <tr><td>Keywords comerciales en top 10</td><td class="n">por medir</td><td class="n">2</td><td class="n">4</td><td class="n">6</td></tr>
+        <tr><td>Contactos desde formulario por mes</td><td class="n">sin medir</td><td class="n">línea base</td><td class="n">2</td><td class="n">5</td></tr>
+        <tr><td>Páginas con 0 impresiones</td><td class="n">por medir</td><td class="n">-50%</td><td class="n">-80%</td><td class="n">-90%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="decisiones">
+  <h2>8. Decisiones que necesito de Juan</h2>
+  <div class="decision">
+    <div class="card">
+      <strong>1. Mercado principal de servicios.</strong>
+      <p>España concentra el volumen comercial (1.900 contra 320 en México para "consultor seo"). México concentra los clics actuales. Recomiendo España para las landings de servicio y todo el mundo hispano para el blog técnico.</p>
+    </div>
+    <div class="card">
+      <strong>2. Una URL para consultor y consultoría seo.</strong>
+      <p>Google las agrupa. Recomiendo asignar ambas a <code>/servicios/seo-consulting</code> y convertir <code>/servicios</code> en el hub de "servicios seo".</p>
+    </div>
+    <div class="card">
+      <strong>3. Keyword de la home en español.</strong>
+      <p>"seo técnico" (90) pesa poco. "experto seo" (480) compite contra marcas personales fuertes. Propongo mantener "seo técnico" como tema de autoridad y orientar la home a "experto seo", con la marca como ancla.</p>
+    </div>
+    <div class="card">
+      <strong>4. GEO como línea de servicio con nombre propio.</strong>
+      <p>La demanda crece y el sitio ya tiene la infraestructura. Falta decidir si lo nombras como servicio principal en la home.</p>
+    </div>
+    <div class="card">
+      <strong>5. Las 62 meta descriptions.</strong>
+      <p>Recortar el excerpt como piso y escribir las propias por tandas, ordenadas por impresiones. Sigue pendiente tu OK desde el handoff de agosto.</p>
+    </div>
+  </div>
+</section>
+
+<section id="fuentes">
+  <h2>9. Fuentes y límites de los datos</h2>
+  <ul>
+    <li><strong>Google Keyword Planner</strong>, cuenta aprendoclub, español, España y México, noviembre 2025 a octubre 2026. Las cifras mezclan variantes y se redondean. Competencia y puja describen anuncios de pago, no dificultad SEO.</li>
+    <li><strong>Search Console</strong> de juan-tech.com, 90 días hasta el 13 de noviembre de 2026.</li>
+    <li><strong>Ahrefs</strong>, research del 17 de agosto de 2026 (España). Las unidades de API están agotadas hasta el 20 de noviembre, así que no actualicé esas cifras.</li>
+    <li><strong>DinoRank y análisis de competidores</strong> de julio de 2026 (<code>research/COMPETITOR-ANALYSIS.md</code>).</li>
+    <li><strong>Handoff SEO</strong> del 26 de agosto de 2026 (<code>research/HANDOFF-seo-2026-08-26.md</code>).</li>
+  </ul>
+  <div class="callout warn">
+    <strong>Límites.</strong> SerpAPI devolvió "rate limit", así que no verifiqué la intención de las SERP. Keyword Planner y Ahrefs difieren entre 2 y 4 veces en varios términos (por ejemplo, "auditoría seo": 480 contra 1.400). Tomé Keyword Planner como suelo y Ahrefs como techo. Las metas de KPI son hipótesis, no pronósticos.
+  </div>
+</section>
+
+</main>
+<footer class="wrap">Plan generado el 13 de noviembre de 2026 con el flujo seo-plan de claude-seo.</footer>
+</body>
+</html>

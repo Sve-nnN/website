@@ -1,0 +1,333 @@
+{
+ "pillar": {
+  "title": "Pilar Estrategia SEO",
+  "keyword": "estrategia seo",
+  "volume": 260,
+  "template": "ultimate-guide",
+  "wordCount": 4119,
+  "url": "/blog/seo/estrategia-seo"
+ },
+ "clusters": [
+  {
+   "name": "Contenido",
+   "color": "#4E79A7",
+   "posts": [
+    {
+     "title": "Guía Maestra de Keyword Research 2026: Entidades y Clústeres",
+     "keyword": "investigación de palabras clave",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2101,
+     "url": "/blog/seo/guia-keyword-research",
+     "status": "written"
+    },
+    {
+     "title": "Estrategia de Contenidos SEO 2026: Dominando la Intención de",
+     "keyword": "estrategia de contenidos SEO",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 3698,
+     "url": "/blog/seo/estrategia-de-contenidos",
+     "status": "written"
+    },
+    {
+     "title": "Redacción SEO 2026: Cómo escribir contenidos que rankean",
+     "keyword": "redacción SEO",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 3944,
+     "url": "/blog/seo/redaccion-seo",
+     "status": "written"
+    },
+    {
+     "title": "Mejores Cursos de SEO en Español 2026: Guía Comparativa",
+     "keyword": "cursos de SEO en español",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 1230,
+     "url": "/blog/seo/mejores-cursos-seo-espanol",
+     "status": "written"
+    }
+   ]
+  },
+  {
+   "name": "Arquitectura",
+   "color": "#F28E2B",
+   "posts": [
+    {
+     "title": "Topic clusters SEO: Mejora tu posicionamiento y organización",
+     "keyword": "topic clusters",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2305,
+     "url": "/blog/seo/topic-clusters-seo",
+     "status": "written"
+    },
+    {
+     "title": "Pillar Page SEO: La Clave para Organizar tu Contenido Web",
+     "keyword": "página pilar",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2114,
+     "url": "/blog/seo/pillar-page-seo",
+     "status": "written"
+    },
+    {
+     "title": "Estrategia de Enlaces Internos 2026: Guía Maestra",
+     "keyword": "enlaces internos",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 3447,
+     "url": "/blog/seo/enlaces-internos-guia",
+     "status": "written"
+    },
+    {
+     "title": "Canibalización SEO",
+     "keyword": "canibalización SEO",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2145,
+     "url": "/blog/seo/canibalizacion-seo",
+     "status": "written"
+    }
+   ]
+  },
+  {
+   "name": "Autoridad",
+   "color": "#E15759",
+   "posts": [
+    {
+     "title": "E-E-A-T en SEO 2026: Guía para Dominar la Autoridad en la Er",
+     "keyword": "E-E-A-T",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 1703,
+     "url": "/blog/seo/guia-eeat",
+     "status": "written"
+    },
+    {
+     "title": "Guía de SEO Off-Page 2026: Más allá del Link Building",
+     "keyword": "SEO off page",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 3666,
+     "url": "/blog/seo/seo-off-page-guia",
+     "status": "written"
+    }
+   ]
+  }
+ ],
+ "links": [
+  {
+   "from": "cluster-0-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-0",
+   "to": "cluster-0-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-0",
+   "to": "cluster-0-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-1",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-1",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-1",
+   "to": "cluster-0-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-1",
+   "to": "cluster-0-post-3",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-2",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-2",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-2",
+   "to": "cluster-0-post-3",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-2",
+   "to": "cluster-0-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-3",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-3",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-3",
+   "to": "cluster-0-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-3",
+   "to": "cluster-0-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-0",
+   "to": "cluster-1-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-1-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "cluster-1-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "cluster-1-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-1",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-1-post-1",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-1-post-1",
+   "to": "cluster-1-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-1",
+   "to": "cluster-1-post-3",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-2",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-1-post-2",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-1-post-2",
+   "to": "cluster-1-post-3",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-2",
+   "to": "cluster-1-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-3",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-1-post-3",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-1-post-3",
+   "to": "cluster-1-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-3",
+   "to": "cluster-1-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "cluster-2-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-2-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-2-post-0",
+   "to": "cluster-2-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-1",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-2-post-1",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-2-post-1",
+   "to": "cluster-2-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-0",
+   "to": "cluster-0-post-0",
+   "type": "optional"
+  }
+ ],
+ "meta": {
+  "totalPosts": 11,
+  "totalClusters": 3,
+  "totalLinks": 41,
+  "estimatedWords": 30472
+ }
+}

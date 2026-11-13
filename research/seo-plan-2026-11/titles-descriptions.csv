@@ -1,0 +1,35 @@
+url,campo,actual,propuesto,motivo
+/blog/cs-fundamentals/complejidad-algoritmica,title y H1,Complejidad algorítmica: Guía técnica de rendim...,Complejidad algorítmica guía de Big O con ejemplos,Title y H1 llegan truncados con puntos suspensivos
+/blog/cs-fundamentals/normalizacion-bases-datos,title y H1,Normalización de Bases de Datos: Guía técnica de formas normales e integ...,Normalización de bases de datos formas normales,Truncado en title y H1
+/blog/seo/guia-eeat,title y H1,E-E-A-T en SEO 2026: Guía para Dominar la Autoridad en la Era...,E-E-A-T en SEO guía para demostrar autoridad,Truncado en title y H1
+/blog/tech-seo/ssr-vs-csr-seo,title y H1,SSR vs CSR para SEO: Guía técnica de estrategias de rend...,SSR vs CSR para SEO cuál elegir y por qué,Truncado en title y H1
+/blog/seo/topic-clusters-seo,title y H1,Topic clusters SEO: Mejora tu posicionamiento y organización de con...,Topic clusters SEO cómo organizar tu contenido,"Truncado. 382 impresiones, posición 41"
+/blog/development/astro-vs-nextjs,title y H1,Astro vs Next.js: ¿Cuál es el mejor framework para tu p...,Astro vs Next.js cuál elegir para tu proyecto,Truncado. Versión EN con 1.889 impresiones
+/blog/cs-fundamentals/algoritmos-estructuras-datos,title y H1,Algoritmos y estructuras de datos: Fundame...,Fusionar con data-structures (301),"Truncado y compite con data-structures, que gana en GSC"
+/blog/cs-fundamentals/programacion-dinamica,title y H1,Programación Dinámica: Guía técnica de optimizaci...,Fusionar con dynamic-programming (301),"Duplicado de dynamic-programming, que tiene 747 impresiones"
+/blog/seo/estrategia-seo,title,"Estrategia SEO Global 2026: Arquitectura, Contenido y Autoridad",Estrategia SEO 2026 guía completa paso a paso,"63 caracteres, la keyword no abre el title"
+/blog/seo/pillar-page-seo,title,Pillar Page SEO: La Clave para Organizar tu Contenido Web,Contenido pilar SEO cómo crear una página pilar,"La demanda real es contenido pilar seo, 411 impresiones"
+/blog/tech-seo/technical-seo-guide,title,Guía de SEO técnico: fundamentos para desarrolladores,SEO técnico guía para desarrolladores,La keyword pasa al inicio y baja a 37 caracteres
+/blog/tech-seo/auditoria-seo,title,Auditoria Seo: guia completa y estrategia practica,Cómo hacer una auditoría SEO paso a paso,Sin tildes en el title. Separa la intención de la landing de servicio
+/blog/tech-seo/core-web-vitals-guide,title,Guía de Core Web Vitals 2026: La Métrica de Oro del SEO,Core Web Vitals guía para medir y corregir LCP INP y CLS,Quita el relleno y empieza por la keyword de 720 búsquedas
+/blog/seo/enlaces-internos-guia,title,Estrategia de Enlaces Internos 2026: Guía Maestra,Enlaces internos SEO cómo repartir autoridad,Quita Guía Maestra y abre con la keyword
+/blog/seo/canibalizacion-seo,title,Canibalización SEO | Juan Carlos Angulo,Canibalización SEO qué es y cómo detectarla,Title genérico para una consulta con 118 impresiones
+/blog/tech-seo/structured-data-seo,title,Datos estructurados SEO: guía completa para mejorar tu visibilidad,Datos estructurados SEO qué tipos de schema usar,66 caracteres. Decidir fusión con schema-markup-guide
+/blog/cs-fundamentals/pilas-y-colas,title,Pilas y Colas | Juan Carlos Angulo,Pilas y colas en Python LIFO y FIFO con ejemplos,Es la página con más clics (63) y el title no dice nada
+/blog/cs-fundamentals/pilas-y-colas,description,"Explora las pilas y colas en Python, comprendiendo sus principios LIFO y FIFO. Aprende su importancia en el manejo y optimización de datos en programación.","Qué son las pilas y las colas, cuándo usar LIFO o FIFO y cómo implementarlas en Python con ejemplos.",Más directa y cabe sin cortarse
+/blog/cs-fundamentals/recursividad,title,Recursividad | Juan Carlos Angulo,Recursividad en programación con ejemplos,2.186 impresiones y un title sin keyword
+/blog/cs-fundamentals/recursividad,description,"La recursividad es un principio esencial en programación que permite resolver problemas complejos dividiéndolos en subproblemas más simples. Aquí exploramos su definición, tipos y ejemplos en lenguaje...","Qué es la recursividad, cómo funcionan el caso base y la llamada recursiva y cuándo conviene frente a un bucle.",220 caracteres y habla en plural. Validar contra el contenido
+/blog/cs-fundamentals/tablas-hash,title,Tablas hash: Estructuras clave para un manejo eficiente de datos,Tablas hash qué son y cómo funcionan,64 caracteres con relleno. 2.242 impresiones
+/blog/cs-fundamentals/tablas-hash,description,(297 caracteres),"Las tablas hash guardan pares clave valor y permiten buscar, insertar y borrar en tiempo casi constante. Funcionamiento, colisiones y ejemplos.",297 caracteres se cortan en la SERP. Validar contra el contenido
+/blog/cs-fundamentals/heap-data-structure,title,Heap Data Structure: guía práctica completa,Heap en programación qué es y cómo funciona,"La consulta es heap en español, 610 impresiones y 1 clic"
+/blog/cs-fundamentals/queue-data-structure,title,Queue Data Structure: Todo lo que Necesitas Saber,Cola o queue en programación FIFO y tipos,Inglés en un sitio en español y fórmula de relleno
+/blog/cs-fundamentals/data-structures,title,Estructuras de Datos 2026: Fundamentos y Aplicaciones Reales,Estructuras de datos guía completa con ejemplos,Pasa a ser el pilar del cluster. La keyword abre el title
+/blog/cs-fundamentals/data-structures,description,(214 caracteres),"Qué son las estructuras de datos, cuáles existen y cuándo usar listas, colas, árboles y grafos para que tu código rinda mejor.",Baja a 127 caracteres
+/blog/cs-fundamentals/dynamic-programming,title,Programación dinámica: guía práctica completa,Programación dinámica explicada con ejemplos,Absorbe el contenido de programacion-dinamica
+/blog/cs-fundamentals/time-complexity,title,Complejidad temporal: guía práctica completa para 2026,Complejidad temporal qué es y cómo se calcula,Quita el año y el relleno
+/blog/cs-fundamentals/space-complexity,title,Complejidad espacial: guía práctica completa para 2026,Complejidad espacial qué es y cómo se calcula,Quita el año y el relleno
+/blog/development/hidratacion-web,title,Hidratación Web | Juan Carlos Angulo,Hidratación web qué es y cómo afecta al SEO,Conecta el tema con el negocio de SEO técnico
+/servicios,title,Servicios | Juan Carlos Angulo,Servicios de SEO técnico y desarrollo web,30 caracteres sin keyword
+/servicios/seo-consulting,title,Consultoría SEO | Juan Carlos Angulo,Consultor SEO técnico para equipos con desarrollo propio,Alinea con la keyword de 1.900 búsquedas (consultor seo)
+/servicios/seo-technical-audit,title,Auditoría SEO Técnica | Juan Carlos Angulo,Auditoría SEO técnica con plan priorizado,Suma el diferenciador y baja a 41 caracteres
+/servicios/ai-seo-geo,title,SEO para IA / GEO | Juan Carlos Angulo,GEO SEO para que ChatGPT y Perplexity citen tu sitio,Abre con la keyword que crece (590 ES)

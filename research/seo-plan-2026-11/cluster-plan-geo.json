@@ -1,0 +1,109 @@
+{
+ "pillar": {
+  "title": "Pilar GEO SEO",
+  "keyword": "geo seo",
+  "volume": 590,
+  "template": "ultimate-guide",
+  "wordCount": 3000,
+  "url": "/blog/tech-seo/geo-seo-guia"
+ },
+ "clusters": [
+  {
+   "name": "Fundamentos GEO",
+   "color": "#4E79A7",
+   "posts": [
+    {
+     "title": "['tech-seo', 'llms-txt-guia']",
+     "keyword": "['tech-seo', 'llms-txt-guia']",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 1500,
+     "url": "/blog/tech-seo/['tech-seo', 'llms-txt-guia']",
+     "status": "planned"
+    },
+    {
+     "title": "['tech-seo', 'citabilidad-contenido-ia']",
+     "keyword": "['tech-seo', 'citabilidad-contenido-ia']",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 1500,
+     "url": "/blog/tech-seo/['tech-seo', 'citabilidad-contenido-ia']",
+     "status": "planned"
+    }
+   ]
+  },
+  {
+   "name": "Medición",
+   "color": "#F28E2B",
+   "posts": [
+    {
+     "title": "['tech-seo', 'medir-citas-ia']",
+     "keyword": "['tech-seo', 'medir-citas-ia']",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 1500,
+     "url": "/blog/tech-seo/['tech-seo', 'medir-citas-ia']",
+     "status": "planned"
+    }
+   ]
+  }
+ ],
+ "links": [
+  {
+   "from": "cluster-0-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-0",
+   "to": "cluster-0-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-1",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-1",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-1",
+   "to": "cluster-0-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-0",
+   "to": "cluster-1-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-1-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "cluster-0-post-0",
+   "type": "optional"
+  }
+ ],
+ "meta": {
+  "totalPosts": 4,
+  "totalClusters": 2,
+  "totalLinks": 10,
+  "estimatedWords": 7500
+ }
+}

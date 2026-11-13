@@ -1,0 +1,236 @@
+{
+ "pillar": {
+  "title": "Pilar Next.js y CMS headless",
+  "keyword": "headless cms",
+  "volume": 0,
+  "template": "ultimate-guide",
+  "wordCount": 2318,
+  "url": "/blog/development/headless-cms-comparison"
+ },
+ "clusters": [
+  {
+   "name": "Frameworks",
+   "color": "#4E79A7",
+   "posts": [
+    {
+     "title": "Astro vs Next.js: ¿Cuál es el mejor framework para tu p...",
+     "keyword": "Astro frente a Next.js",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2267,
+     "url": "/blog/development/astro-vs-nextjs",
+     "status": "written"
+    },
+    {
+     "title": "React 19",
+     "keyword": "React 19",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2152,
+     "url": "/blog/development/react-19",
+     "status": "written"
+    },
+    {
+     "title": "Hidratación Web",
+     "keyword": "hidratación web",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2973,
+     "url": "/blog/development/hidratacion-web",
+     "status": "written"
+    }
+   ]
+  },
+  {
+   "name": "CMS headless",
+   "color": "#F28E2B",
+   "posts": [
+    {
+     "title": "Next.js CMS: La Combinación Ideal para Tu Sitio Web",
+     "keyword": "Next.js con CMS",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2244,
+     "url": "/blog/development/nextjs-cms",
+     "status": "written"
+    },
+    {
+     "title": "Payload CMS: guía práctica completa para 2026",
+     "keyword": "Payload CMS",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 1948,
+     "url": "/blog/development/payload-cms-guide",
+     "status": "written"
+    }
+   ]
+  },
+  {
+   "name": "SEO del stack",
+   "color": "#E15759",
+   "posts": [
+    {
+     "title": "['tech-seo', 'nextjs-seo']",
+     "keyword": "['tech-seo', 'nextjs-seo']",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 1500,
+     "url": "/blog/development/['tech-seo', 'nextjs-seo']",
+     "status": "planned"
+    },
+    {
+     "title": "['tech-seo', 'headless-cms-seo']",
+     "keyword": "['tech-seo', 'headless-cms-seo']",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 1500,
+     "url": "/blog/development/['tech-seo', 'headless-cms-seo']",
+     "status": "planned"
+    }
+   ]
+  }
+ ],
+ "links": [
+  {
+   "from": "cluster-0-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-0",
+   "to": "cluster-0-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-0",
+   "to": "cluster-0-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-1",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-1",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-1",
+   "to": "cluster-0-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-1",
+   "to": "cluster-0-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-2",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-2",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-2",
+   "to": "cluster-0-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-2",
+   "to": "cluster-0-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-0",
+   "to": "cluster-1-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-1-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "cluster-1-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-1",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-1-post-1",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-1-post-1",
+   "to": "cluster-1-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "cluster-2-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-2-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-2-post-0",
+   "to": "cluster-2-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-1",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-2-post-1",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-2-post-1",
+   "to": "cluster-2-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-0",
+   "to": "cluster-0-post-0",
+   "type": "optional"
+  }
+ ],
+ "meta": {
+  "totalPosts": 8,
+  "totalClusters": 3,
+  "totalLinks": 27,
+  "estimatedWords": 16902
+ }
+}

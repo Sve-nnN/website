@@ -1,0 +1,250 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Reescrituras de páginas SEO</title><style>
+:root{--bg:#f7f6f2;--surface:#fff;--ink:#16181d;--muted:#4b5160;--line:#dedbd2;--accent:#1d4ed8;--accent-ink:#fff;--good:#0f6b3d;--warn:#8a5a00;--bad:#a32020;--good-bg:#e4f4ea;--warn-bg:#fdf0d5;--bad-bg:#fbe5e5}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101216;--surface:#181b21;--ink:#eceef2;--muted:#a8afbd;--line:#2b303a;--accent:#7aa2ff;--accent-ink:#0b1020;--good:#6fd39b;--warn:#f0c46a;--bad:#ff8f8f;--good-bg:#12301f;--warn-bg:#33270c;--bad-bg:#3a1717}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.skip{position:absolute;left:-999px;top:0;background:var(--accent);color:var(--accent-ink);padding:10px 14px;z-index:20}.skip:focus{left:8px;top:8px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+a{color:var(--accent)}
+header.top{padding:44px 16px 24px;border-bottom:1px solid var(--line);background:var(--surface)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px}header.top .wrap{padding:0}
+.eyebrow{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+h1{font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.15;margin:0 0 12px}h2{font-size:1.45rem;line-height:1.25;margin:0 0 6px}h3{font-size:1.08rem;margin:22px 0 6px}
+p{margin:0 0 12px}.lead{font-size:1.08rem;color:var(--muted);max-width:70ch}.small{font-size:.86rem;color:var(--muted)}
+nav.toc{position:sticky;top:0;z-index:10;background:var(--surface);border-bottom:1px solid var(--line)}
+nav.toc ul{list-style:none;margin:0 auto;padding:0 16px;display:flex;gap:2px;overflow-x:auto;max-width:1080px}
+nav.toc a{display:block;padding:12px 10px;color:var(--ink);text-decoration:none;white-space:nowrap;font-size:.9rem;border-bottom:3px solid transparent}nav.toc a:hover{border-bottom-color:var(--accent)}
+section{padding:42px 0;border-bottom:1px solid var(--line)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:18px 0}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}.kpi b{display:block;font-size:1.8rem;line-height:1.1}.kpi span{color:var(--muted);font-size:.88rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;margin:12px 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}.grid2 .card{margin:0}
+.callout{border-left:5px solid var(--accent);background:var(--surface);padding:14px 18px;border-radius:0 10px 10px 0;margin:16px 0}
+.callout.warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout.bad{border-left-color:var(--bad);background:var(--bad-bg)}.callout.good{border-left-color:var(--good);background:var(--good-bg)}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface);margin:14px 0}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:.92rem}caption{text-align:left;padding:12px 14px;font-weight:600}
+th,td{padding:9px 14px;text-align:left;border-top:1px solid var(--line);vertical-align:top}th{background:var(--bg);font-weight:600}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{display:inline-block;padding:1px 9px;border-radius:99px;font-size:.78rem;font-weight:600;border:1px solid currentColor;white-space:nowrap}
+.tag.keep{color:var(--good);background:var(--good-bg)}.tag.fix{color:var(--warn);background:var(--warn-bg)}.tag.new{color:var(--accent)}.tag.cut{color:var(--bad);background:var(--bad-bg)}
+code{background:var(--bg);padding:1px 6px;border-radius:5px;font-size:.88em;word-break:break-all}
+ol.s,ul.s{padding-left:22px;margin:8px 0}ol.s li,ul.s li{margin-bottom:6px}
+del{color:var(--bad)}ins{color:var(--good);text-decoration:none;font-weight:600}
+.copy{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;margin:14px 0}
+.copy h4{margin:18px 0 4px;font-size:1rem}.copy .meta{background:var(--bg);border-radius:8px;padding:10px 14px;font-size:.9rem;margin-bottom:14px}
+.copy blockquote{margin:8px 0;padding:2px 14px;border-left:3px solid var(--line);color:var(--ink)}
+footer{padding:30px 0 60px;color:var(--muted);font-size:.9rem}
+.flow{display:grid;gap:8px}.flow .step{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}.flow .num{width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-weight:700}
+@media(max-width:560px){h1{font-size:1.6rem}}
+</style></head><body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="top"><div class="wrap">
+<p class="eyebrow">Reescrituras listas para copiar · 13 de noviembre de 2026</p>
+<h1>Textos nuevos para servicios, hubs y el pilar de GEO</h1>
+<p class="lead">Cada bloque sigue tu guía de voz: primera persona, ningún encabezado con puntos ni comas, la keyword al inicio del meta título y sin guiones largos. Las cifras salen de los casos publicados en tu sitio. Nada de esto está aplicado en producción.</p>
+</div></header>
+<nav class="toc" aria-label="Secciones"><ul>
+<li><a href="#consulting">Consultoría SEO</a></li><li><a href="#audit">Auditoría técnica</a></li><li><a href="#geo">SEO para IA</a></li><li><a href="#hubs">Hubs del blog</a></li><li><a href="#pilar-geo">Pilar GEO</a></li><li><a href="#checklist">Antes de publicar</a></li></ul></nav>
+<main id="main" class="wrap">
+
+<section id="consulting">
+<h2>1. /servicios/seo-consulting</h2>
+<p class="small">Hoy tiene 669 palabras, repite el mismo caso en cada servicio y dice "no tengo todavía un caso publicado". Tienes siete casos reales con métricas. La página los usa.</p>
+<div class="copy">
+<div class="meta"><strong>Meta título (56):</strong> Consultor SEO técnico para equipos con desarrollo propio<br><strong>Meta descripción (147):</strong> Soy consultor SEO y también programo. Reviso cada release antes de que salga y corrijo el código cuando hace falta. Casos con hasta +309% de clics.<br><strong>URL:</strong> /servicios/seo-consulting (sin cambios) · <strong>Keyword:</strong> consultor seo (1.900 en España) y consultoría seo, que Google agrupa en la misma cifra</div>
+<h4>H1</h4><p>Consultor SEO técnico</p>
+<h4>Entradilla</h4>
+<p>Cuando el problema de SEO vive en el código, un consultor que solo habla de contenido te deja una lista de tareas que alguien más tiene que traducir. Yo reviso el sitio, hablo directo con tu equipo de desarrollo y, si hace falta, abro el pull request.</p>
+<h4>H2 · Por qué un informe único no alcanza</h4>
+<p>Un informe de auditoría envejece en cuanto el sitio cambia. Cada lanzamiento, cada migración y cada ajuste de plantilla mueve algo en el rastreo, el renderizado o la indexación. Si nadie mira ese impacto semana a semana, el tráfico cae primero y la explicación llega después.</p>
+<h4>H2 · Qué incluye la consultoría</h4>
+<ul class="s">
+<li>Un roadmap técnico priorizado por impacto, que cambia en cada ciclo según lo que muestran Search Console y tus propios datos.</li>
+<li>Monitoreo de Search Console, rankings y Core Web Vitals para detectar regresiones antes de que se vean en el tráfico.</li>
+<li>Revisión de cada release o deploy con efecto posible en SEO, antes de que salga a producción.</li>
+<li>Trabajo directo con tu equipo de desarrollo y con el de marketing, sin intermediarios.</li>
+<li>Implementación de los cambios en Next.js o en tu CMS headless cuando prefieres que los haga yo.</li>
+</ul>
+<h4>H2 · Cómo trabajo cada ciclo</h4>
+<ol class="s">
+<li>Fijamos la cadencia según el tamaño del sitio y la velocidad de cambio: desde revisiones mensuales hasta acompañamiento semanal.</li>
+<li>Cada ciclo termina con hallazgos priorizados y un reporte corto: qué cambió, qué se implementó y qué efecto tuvo. Sin dashboards que nadie interpreta.</li>
+<li>Reviso pull requests o los escribo yo, así la recomendación no se pierde entre equipos.</li>
+</ol>
+<h4>H2 · Resultados reales con clientes</h4>
+<p>Cifras de Search Console, de julio de 2025 a junio de 2026, salvo la migración, que corresponde a 2025.</p>
+<ul class="s">
+<li><strong>Despacho de defensa criminal en Pittsburgh:</strong> +83% de clics interanuales y 86.000 clics orgánicos en 12 meses. <em>Enlace a /case-studies/pittsburgh-criminal-defense-legal-content-seo, anchor: "ver el caso de Pittsburgh"</em></li>
+<li><strong>Despacho de inmigración en Atlanta:</strong> +309% de clics interanuales y 39.323 clics en el año. <em>/case-studies/immigration-law-atlanta-seo</em></li>
+<li><strong>Fabricante de baldosas hidráulicas en España:</strong> +143% de clics interanuales. <em>/case-studies/fabricante-baldosa-hidraulica-seo-espana</em></li>
+<li><strong>Tienda online con más de 4.000 productos:</strong> +68% de tráfico tras migrar a Next.js, sin una semana de caída. <em>/case-studies/migracion-ecommerce-nextjs-seo-tecnico</em></li>
+</ul>
+<h4>H2 · Guías para ir preparando el terreno</h4>
+<p>Enlaces: <em>estrategia SEO</em> (/blog/seo/estrategia-seo), <em>canibalización SEO</em>, <em>enlaces internos</em>, <em>topic clusters</em>.</p>
+<h4>H2 · Preguntas frecuentes</h4>
+<h4>¿Cómo se estructura un contrato de consultoría?</h4>
+<p>Defino una cadencia mensual, quincenal o semanal y un alcance claro de lo que reviso en cada ciclo. Cada ciclo tiene entregables concretos y el alcance se ajusta con el tiempo. No es un contrato abierto sin objetivos.</p>
+<h4>¿En qué se diferencia de la auditoría técnica?</h4>
+<p>La auditoría es un diagnóstico de un momento concreto. La consultoría es continua: monitoreo, ajuste de prioridades y revisión de cambios para sitios que evolucionan sin parar. Si dudas entre las dos, empieza por la <em>auditoría SEO técnica</em>.</p>
+<h4>¿Trabajas directamente con mi equipo de desarrollo?</h4>
+<p>Sí, y ahí es donde más valor aporto. Como también soy desarrollador full-stack, reviso código, participo en decisiones de arquitectura o implemento el cambio yo mismo, en vez de entregar recomendaciones que otro tiene que traducir.</p>
+<h4>¿Cuánto tarda en notarse el resultado?</h4>
+<p>Depende del punto de partida del sitio. Los casos publicados miden 12 meses, y por eso no prometo plazos más cortos. Lo que sí hago es medir cada ciclo para que veas el efecto de cada cambio.</p>
+<h4>Cierre y llamada a la acción</h4>
+<p>Cuéntame cómo cambia tu sitio y te digo qué cadencia tiene sentido. <strong>Botón:</strong> Conversar sobre consultoría → /contact</p>
+</div>
+</section>
+
+<section id="audit">
+<h2>2. /servicios/seo-technical-audit</h2>
+<p class="small">Hoy usa voseo ("acá tenés", "podés") en una web que pediste en español neutro, y también dice que no hay caso de auditorías. La migración a Next.js es ese caso.</p>
+<div class="copy">
+<div class="meta"><strong>Meta título (41):</strong> Auditoría SEO técnica con plan priorizado<br><strong>Meta descripción (144):</strong> Auditoría SEO técnica de rastreo, renderizado, Core Web Vitals e indexación, con hallazgos ordenados por impacto. Puedo corregirlo en tu código.<br><strong>Keyword:</strong> auditoría seo técnica. El artículo /blog/tech-seo/auditoria-seo pasa a "cómo hacer una auditoría seo" para no competir con esta página.</div>
+<h4>H1</h4><p>Auditoría SEO técnica</p>
+<h4>Entradilla</h4>
+<p>Si Google rastrea URLs que no importan, tarda en renderizar tu contenido o deja huecos de indexación que nadie detectó, ninguna estrategia de contenido lo compensa. La auditoría te dice cuál de esos problemas tienes y en qué orden conviene resolverlo.</p>
+<h4>H2 · Por qué tu tráfico baja y nadie sabe explicarlo</h4>
+<p>Los errores técnicos silenciosos no se ven al navegar el sitio: presupuesto de rastreo gastado en URLs sin valor, JavaScript que tarda en renderizar, contenido que nunca entra al índice. Cuando la caída aparece en Search Console, el problema ya lleva semanas instalado. Sin un diagnóstico técnico real es casi imposible saber si falla el rastreo, el renderizado o la indexación.</p>
+<h4>H2 · Qué revisa la auditoría</h4>
+<ul class="s">
+<li><strong>Rastreo y arquitectura:</strong> qué rastrea Google hoy, qué debería rastrear y en qué páginas de poco valor se gasta ese presupuesto.</li>
+<li><strong>Renderizado:</strong> la diferencia entre lo que sirve el servidor y lo que Google indexa, con foco en JavaScript crítico y contenido que carga tarde.</li>
+<li><strong>Core Web Vitals en campo:</strong> mediciones en condiciones reales y la causa raíz en el código, no solo el síntoma que reporta PageSpeed.</li>
+<li><strong>Indexación:</strong> canonicalización, robots.txt, sitemaps y páginas huérfanas que nunca reciben enlaces internos.</li>
+<li><strong>Datos estructurados:</strong> el schema que emites contra el que Google usa de verdad para mostrar resultados enriquecidos.</li>
+</ul>
+<h4>H2 · Qué recibes y cuánto tarda</h4>
+<p>Un informe con los hallazgos ordenados por impacto y esfuerzo, no una lista de doscientos ítems sin orden. Un sitio de hasta 500 URLs indexables toma entre una y dos semanas, desde que tengo acceso a las herramientas hasta la entrega. Si prefieres que corrija yo el código, lo acordamos como extensión del alcance.</p>
+<h4>H2 · Un caso real de auditoría y migración</h4>
+<p>Una tienda online con más de 4.000 productos migró de una plantilla genérica a una arquitectura headless en Next.js. Antes de tocar nada audité el sitio: el LCP móvil pasaba de 4 segundos y la migración cambiaba la URL de miles de páginas. Resultado: +68% de tráfico orgánico, 62% de mejora en el LCP móvil y cero semanas de caída. <em>Anchor: "ver el caso completo" → /case-studies/migracion-ecommerce-nextjs-seo-tecnico</em></p>
+<h4>H2 · Prueba el auditor automático gratis</h4>
+<p>Antes de encargar la auditoría completa, mi auditor corre 29 checks técnicos en 5 categorías, hasta 500 URLs por corrida, con Core Web Vitals vía PageSpeed Insights. Es un primer diagnóstico sin costo. El límite es honesto: una auditoría por semana por email verificado. <strong>Botón:</strong> Ir al auditor</p>
+<h4>H2 · Guías para entender el informe</h4>
+<p>Enlaces: <em>SEO técnico guía para desarrolladores</em> (/blog/tech-seo/technical-seo-guide), <em>checklist de SEO técnico</em>, <em>Core Web Vitals</em>, <em>cómo hacer una auditoría SEO</em>.</p>
+<h4>H2 · Preguntas frecuentes</h4>
+<h4>¿Cuánto dura una auditoría técnica?</h4><p>Depende del tamaño del sitio. Uno mediano, con hasta 500 URLs indexables, suele tomar entre una y dos semanas.</p>
+<h4>¿Entregas solo el informe o también corriges?</h4><p>Por defecto entrego un informe priorizado para que tu equipo lo implemente. Si prefieres que yo corrija el código, lo acordamos como extensión. No necesitas contratar a otra persona para la parte técnica.</p>
+<h4>¿Qué herramientas usas?</h4><p>Combino crawlers técnicos, Google Search Console y Analytics, Lighthouse y CrUX para medir en campo, y reviso el código fuente cuando el síntoma apunta ahí.</p>
+<h4>Cierre y llamada a la acción</h4>
+<p>Si sospechas que tienes un problema técnico y no sabes cuál, empecemos por ahí. <strong>Botón:</strong> Pedir una auditoría → /contact</p>
+</div>
+</section>
+
+<section id="geo">
+<h2>3. /servicios/ai-seo-geo</h2>
+<p class="small">Esta página tiene la keyword que más crece (geo seo, +51% en tres meses). No tiene caso de cliente, y el texto no debe inventarlo. La prueba que sí existe es este mismo sitio.</p>
+<div class="copy">
+<div class="meta"><strong>Meta título (52):</strong> GEO SEO para que ChatGPT y Perplexity citen tu sitio<br><strong>Meta descripción (129):</strong> GEO SEO: estructuro tu contenido para que ChatGPT, Perplexity y Google AI Overviews lo citen, con llms.txt y datos estructurados.<br><strong>Keyword:</strong> geo seo (590 en España, 140 en México)</div>
+<h4>H1</h4><p>SEO para IA y GEO</p>
+<h4>Entradilla</h4>
+<p>Cada vez más búsquedas terminan en una respuesta generada por IA sin que nadie haga clic. Si tu contenido no tiene pasajes claros y autocontenidos, esos sistemas no pueden extraerlo ni citarlo, y la respuesta cita a tu competencia.</p>
+<h4>H2 · Por qué la IA cita a otros y no a ti</h4>
+<p>Escribir más contenido no lo arregla. Lo que suele faltar es estructura: respuestas directas al inicio de cada sección, definiciones que se entienden sin el contexto de la página y datos estructurados que confirmen quién escribió qué. Reorganizo lo que ya tienes para que lo lean bien los buscadores tradicionales y los motores de respuesta.</p>
+<h4>H2 · Qué incluye</h4>
+<ul class="s">
+<li>Estructura de contenido en pasajes que un sistema de IA pueda extraer y citar.</li>
+<li>Implementación y mantenimiento de <code>llms.txt</code> y <code>llms-full.txt</code>, ajustados cada vez que el sitio suma contenido. Un matiz que prefiero dejar claro: Google no usa este archivo para posicionar. Sirve a agentes de IA que lo consultan, y por eso lo trato como un complemento y no como la palanca principal.</li>
+<li>Revisión del marcado semántico y de los datos estructurados existentes.</li>
+<li>Una medición base de citas en ChatGPT, Perplexity y Google AI Overviews para un conjunto fijo de preguntas, repetida cada mes.</li>
+</ul>
+<h4>H2 · Puedes verificarlo en este sitio</h4>
+<ul class="s">
+<li><a href="https://juan-tech.com/llms.txt">/llms.txt</a> y <a href="https://juan-tech.com/llms-full.txt">/llms-full.txt</a> funcionando en producción.</li>
+<li>Datos estructurados <code>Person</code> y <code>ProfessionalService</code> en la home, y <code>Article</code> con fecha de modificación en cada guía.</li>
+<li>Un <code>robots.txt</code> abierto a todos los rastreadores.</li>
+</ul>
+<p>Todavía no tengo un caso de GEO con cifras de un cliente. Prefiero decírtelo antes de enseñarte un resultado que no existe. Cuando lo tenga, aparecerá aquí.</p>
+<h4>H2 · Cómo se mide el resultado</h4>
+<p>Defino un conjunto de 20 a 30 preguntas que tus clientes hacen de verdad y reviso cada mes si ChatGPT, Perplexity y AI Overviews citan tu sitio. Mido apariciones, no promesas. Ningún proveedor puede garantizar una cita, y desconfía de quien lo haga.</p>
+<h4>H2 · Guías relacionadas</h4>
+<p>Enlaces: <em>GEO SEO guía</em> (página nueva, /blog/tech-seo/geo-seo-guia), <em>datos estructurados</em>, <em>E-E-A-T</em>.</p>
+<h4>H2 · Preguntas frecuentes</h4>
+<h4>¿Qué es GEO y en qué se diferencia del SEO tradicional?</h4>
+<p>GEO, o Generative Engine Optimization, busca que los motores de respuesta con IA citen tu contenido en sus respuestas, en lugar de solo listarlo entre resultados. Comparte bases con el SEO clásico (estructura, semántica, autoridad) y suma una capa nueva: contenido legible y citable por sistemas que generan texto.</p>
+<h4>¿Sirve de algo el llms.txt?</h4>
+<p>Es un complemento barato y útil para agentes de IA que lo consultan. No mejora tu posición en Google. Lo implemento porque cuesta poco, no porque cambie el ranking.</p>
+<h4>Cierre y llamada a la acción</h4>
+<p>Dime qué preguntas deberían terminar en tu sitio y te muestro cuántas lo hacen hoy. <strong>Botón:</strong> Hablar sobre GEO → /contact</p>
+</div>
+</section>
+
+<section id="hubs">
+<h2>4. Hubs del blog: /blog/seo y /blog/tech-seo</h2>
+<p class="small">Hoy son listados con 681 y 648 palabras y sin una ruta de lectura. Se convierten en la portada del pilar.</p>
+<div class="copy">
+<div class="meta"><strong>/blog/seo · Meta título (50):</strong> Estrategia SEO guías para arquitectura y contenido<br><strong>Meta descripción (133):</strong> Guías de estrategia SEO ordenadas como ruta de lectura: palabras clave, contenido, topic clusters, enlaces internos y canibalización.</div>
+<h4>Texto de introducción</h4>
+<p>Estas guías salen del trabajo con sitios reales. Las ordené como una ruta, porque la estrategia SEO funciona cuando las decisiones llegan en el orden correcto: primero entiendes qué busca la gente, después organizas el contenido y al final proteges la autoridad que construiste.</p>
+<h4>H2 · Ruta de lectura recomendada</h4>
+<ol class="s">
+<li><strong>Estrategia SEO</strong> (el pilar): el mapa completo.</li>
+<li>Investigación de palabras clave.</li>
+<li>Estrategia de contenidos.</li>
+<li>Topic clusters y contenido pilar.</li>
+<li>Enlaces internos.</li>
+<li>Canibalización SEO.</li>
+<li>E-E-A-T y SEO off page.</li>
+</ol>
+<h4>Bloque final</h4>
+<p>¿Quieres que alguien aplique esto a tu sitio? Mira la <em>consultoría SEO técnica</em> (/servicios/seo-consulting).</p>
+</div>
+<div class="copy">
+<div class="meta"><strong>/blog/tech-seo · Meta título (48):</strong> SEO técnico guías de rastreo rendimiento y datos<br><strong>Meta descripción (126):</strong> Guías de SEO técnico para desarrolladores: rastreo, indexación, Core Web Vitals, renderizado, datos estructurados y auditoría.</div>
+<h4>Texto de introducción</h4>
+<p>Aquí reúno lo que reviso cuando un sitio pierde posiciones sin motivo aparente. Casi siempre la causa vive en el código: una plantilla, un header, un deploy. Las guías siguen el orden en que diagnostico, de lo que Google puede ver a lo que debe mostrar.</p>
+<h4>H2 · Ruta de lectura recomendada</h4>
+<ol class="s">
+<li><strong>SEO técnico guía para desarrolladores</strong> (el pilar).</li>
+<li>Rastreo e indexación: robots.txt, sitemap XML y Google Search Console.</li>
+<li>Rendimiento y renderizado: Core Web Vitals, rendimiento web, JavaScript y SSR frente a CSR.</li>
+<li>Datos y on page: datos estructurados, schema y SEO on page.</li>
+<li>GEO SEO: cómo hacer que la IA cite tu sitio.</li>
+</ol>
+<h4>Bloque final</h4>
+<p>Si prefieres un diagnóstico en lugar de leer, pide la <em>auditoría SEO técnica</em> (/servicios/seo-technical-audit) o prueba el auditor gratis.</p>
+</div>
+</section>
+
+<section id="pilar-geo">
+<h2>5. Pilar nuevo: GEO SEO guía para que la IA cite tu sitio</h2>
+<p class="small">Brief de la página que falta. Keyword principal: geo seo (590 ES, 140 MX). URL propuesta: /blog/tech-seo/geo-seo-guia. Entre 2.500 y 3.000 palabras.</p>
+<div class="copy">
+<div class="meta"><strong>Meta título (41):</strong> GEO SEO guía para que la IA cite tu sitio<br><strong>Meta descripción (137):</strong> Qué es GEO, cómo deciden las respuestas de IA qué citar y cómo estructurar tu contenido para aparecer, con una forma de medirlo cada mes.</div>
+<h4>Esquema de encabezados</h4>
+<ol class="s">
+<li>H2 Qué es GEO y en qué se diferencia del SEO</li>
+<li>H2 Cómo deciden las respuestas de IA qué citar</li>
+<li>H2 Estructura de contenido que la IA puede citar</li>
+<li>H2 llms.txt qué hace y qué no hace</li>
+<li>H2 Datos estructurados que ayudan a la comprensión</li>
+<li>H2 Cómo medir tus citas cada mes</li>
+<li>H2 Errores comunes</li>
+<li>H2 Lista de comprobación</li>
+<li>H2 Preguntas frecuentes</li>
+</ol>
+<h4>Evidencia propia que debe llevar</h4>
+<ul class="s">
+<li>La estructura real de <code>/llms.txt</code> de este sitio, con sus decisiones explicadas.</li>
+<li>Una prueba medida: 20 preguntas del nicho, repetidas en ChatGPT, Perplexity y AI Overviews, con la tabla de resultados y la fecha.</li>
+<li>Una captura del marcado <code>Person</code> y <code>Article</code> del sitio.</li>
+</ul>
+<h4>Enlaces internos de salida</h4>
+<p>/servicios/ai-seo-geo (ancla "SEO para IA"), datos estructurados, E-E-A-T, SEO técnico guía. <strong>Entradas:</strong> el pilar de SEO técnico, structured-data-seo, guia-eeat y la home de servicios.</p>
+<h4>Páginas satélite que cuelgan del pilar</h4>
+<ul class="s"><li>/blog/tech-seo/llms-txt-guia: qué es llms.txt y cómo implementarlo.</li><li>/blog/tech-seo/citabilidad-contenido-ia: cómo escribir pasajes que se pueden citar.</li><li>/blog/tech-seo/medir-citas-ia: método para medir citas en ChatGPT y Perplexity.</li></ul>
+<p class="small">Los volúmenes de los satélites no están medidos. Antes de escribirlos conviene sacarlos de Keyword Planner.</p>
+</div>
+</section>
+
+<section id="checklist">
+<h2>6. Antes de publicar cualquier texto</h2>
+<ul class="s">
+<li>Valida cada cifra contra el caso publicado. Las usé tal como aparecen en el sitio hoy.</li>
+<li>Lee los títulos propuestos de los tutoriales contra el contenido real. Algunos asumen temas (colisiones en tablas hash, ventajas de la recursividad) que debes confirmar.</li>
+<li>Aplica los textos por script con <code>draft: false</code> explícito y verifica contra el HTML en producción, no contra la base. Es la trampa que ya te costó dos veces.</li>
+<li>Confirma contra qué base escribes con <code>scripts/db/04-which-database.ts</code> antes de empezar.</li>
+</ul>
+</section>
+</main>
+<footer class="wrap">Reescrituras generadas el 13 de noviembre de 2026 con claude-seo, sobre datos de rastreo en vivo.</footer>
+</body></html>

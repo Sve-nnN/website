@@ -56,5 +56,10 @@ export function isPrefixableHref(href: string): boolean {
   const firstSegment = href.slice(1).split(/[/?#]/)[0]
   if ((routing.locales as readonly string[]).includes(firstSegment)) return false
 
+  // Archivos y redirecciones que viven en la raíz y no tienen gemelo por
+  // idioma. `/en/sitemap.html` daba 404 y el pie lo enlazaba desde 76 páginas
+  // inglesas (auditoría SEO 2026-11-13).
+  if (/^\/(sitemap\.(html|xml)|llms(-full)?\.txt|robots\.txt|go)(\/|$|[?#])/.test(href)) return false
+
   return true
 }

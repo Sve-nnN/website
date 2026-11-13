@@ -1,0 +1,234 @@
+[
+ {
+  "path": "/blog/cs-fundamentals/complejidad-algoritmica",
+  "slug": "complejidad-algoritmica",
+  "kind": "post",
+  "field": "title+h1",
+  "value": "Complejidad algorítmica guía de Big O con ejemplos"
+ },
+ {
+  "path": "/blog/cs-fundamentals/normalizacion-bases-datos",
+  "slug": "normalizacion-bases-datos",
+  "kind": "post",
+  "field": "title+h1",
+  "value": "Normalización de bases de datos formas normales"
+ },
+ {
+  "path": "/blog/seo/guia-eeat",
+  "slug": "guia-eeat",
+  "kind": "post",
+  "field": "title+h1",
+  "value": "E-E-A-T en SEO guía para demostrar autoridad"
+ },
+ {
+  "path": "/blog/tech-seo/ssr-vs-csr-seo",
+  "slug": "ssr-vs-csr-seo",
+  "kind": "post",
+  "field": "title+h1",
+  "value": "SSR vs CSR para SEO cuál elegir y por qué"
+ },
+ {
+  "path": "/blog/seo/topic-clusters-seo",
+  "slug": "topic-clusters-seo",
+  "kind": "post",
+  "field": "title+h1",
+  "value": "Topic clusters SEO cómo organizar tu contenido"
+ },
+ {
+  "path": "/blog/development/astro-vs-nextjs",
+  "slug": "astro-vs-nextjs",
+  "kind": "post",
+  "field": "title+h1",
+  "value": "Astro vs Next.js cuál elegir para tu proyecto"
+ },
+ {
+  "path": "/blog/seo/estrategia-seo",
+  "slug": "estrategia-seo",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Estrategia SEO 2026 guía completa paso a paso"
+ },
+ {
+  "path": "/blog/seo/pillar-page-seo",
+  "slug": "pillar-page-seo",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Contenido pilar SEO cómo crear una página pilar"
+ },
+ {
+  "path": "/blog/tech-seo/technical-seo-guide",
+  "slug": "technical-seo-guide",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "SEO técnico guía para desarrolladores"
+ },
+ {
+  "path": "/blog/tech-seo/auditoria-seo",
+  "slug": "auditoria-seo",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Cómo hacer una auditoría SEO paso a paso"
+ },
+ {
+  "path": "/blog/tech-seo/core-web-vitals-guide",
+  "slug": "core-web-vitals-guide",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Core Web Vitals guía para medir y corregir LCP INP y CLS"
+ },
+ {
+  "path": "/blog/seo/enlaces-internos-guia",
+  "slug": "enlaces-internos-guia",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Enlaces internos SEO cómo repartir autoridad"
+ },
+ {
+  "path": "/blog/seo/canibalizacion-seo",
+  "slug": "canibalizacion-seo",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Canibalización SEO qué es y cómo detectarla"
+ },
+ {
+  "path": "/blog/tech-seo/structured-data-seo",
+  "slug": "structured-data-seo",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Datos estructurados SEO qué tipos de schema usar"
+ },
+ {
+  "path": "/blog/cs-fundamentals/pilas-y-colas",
+  "slug": "pilas-y-colas",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Pilas y colas en Python LIFO y FIFO con ejemplos"
+ },
+ {
+  "path": "/blog/cs-fundamentals/pilas-y-colas",
+  "slug": "pilas-y-colas",
+  "kind": "post",
+  "field": "meta.description",
+  "value": "Qué son las pilas y las colas, cuándo usar LIFO o FIFO y cómo implementarlas en Python con ejemplos."
+ },
+ {
+  "path": "/blog/cs-fundamentals/recursividad",
+  "slug": "recursividad",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Recursividad en programación con ejemplos"
+ },
+ {
+  "path": "/blog/cs-fundamentals/recursividad",
+  "slug": "recursividad",
+  "kind": "post",
+  "field": "meta.description",
+  "value": "Qué es la recursividad, cómo funcionan el caso base y la llamada recursiva y cuándo conviene frente a un bucle."
+ },
+ {
+  "path": "/blog/cs-fundamentals/tablas-hash",
+  "slug": "tablas-hash",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Tablas hash qué son y cómo funcionan"
+ },
+ {
+  "path": "/blog/cs-fundamentals/tablas-hash",
+  "slug": "tablas-hash",
+  "kind": "post",
+  "field": "meta.description",
+  "value": "Las tablas hash guardan pares clave valor y permiten buscar, insertar y borrar en tiempo casi constante. Funcionamiento, colisiones y ejemplos."
+ },
+ {
+  "path": "/blog/cs-fundamentals/heap-data-structure",
+  "slug": "heap-data-structure",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Heap en programación qué es y cómo funciona"
+ },
+ {
+  "path": "/blog/cs-fundamentals/queue-data-structure",
+  "slug": "queue-data-structure",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Cola o queue en programación FIFO y tipos"
+ },
+ {
+  "path": "/blog/cs-fundamentals/data-structures",
+  "slug": "data-structures",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Estructuras de datos guía completa con ejemplos"
+ },
+ {
+  "path": "/blog/cs-fundamentals/data-structures",
+  "slug": "data-structures",
+  "kind": "post",
+  "field": "meta.description",
+  "value": "Qué son las estructuras de datos, cuáles existen y cuándo usar listas, colas, árboles y grafos para que tu código rinda mejor."
+ },
+ {
+  "path": "/blog/cs-fundamentals/dynamic-programming",
+  "slug": "dynamic-programming",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Programación dinámica explicada con ejemplos"
+ },
+ {
+  "path": "/blog/cs-fundamentals/time-complexity",
+  "slug": "time-complexity",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Complejidad temporal qué es y cómo se calcula"
+ },
+ {
+  "path": "/blog/cs-fundamentals/space-complexity",
+  "slug": "space-complexity",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Complejidad espacial qué es y cómo se calcula"
+ },
+ {
+  "path": "/blog/development/hidratacion-web",
+  "slug": "hidratacion-web",
+  "kind": "post",
+  "field": "meta.title",
+  "value": "Hidratación web qué es y cómo afecta al SEO"
+ },
+ {
+  "path": "/servicios",
+  "slug": "servicios",
+  "kind": "page",
+  "field": "meta.title",
+  "value": "Servicios de SEO técnico y desarrollo web"
+ },
+ {
+  "path": "/servicios/seo-consulting",
+  "slug": "seo-consulting",
+  "kind": "page",
+  "field": "meta.title",
+  "value": "Consultor SEO técnico para equipos con desarrollo propio"
+ },
+ {
+  "path": "/servicios/seo-technical-audit",
+  "slug": "seo-technical-audit",
+  "kind": "page",
+  "field": "meta.title",
+  "value": "Auditoría SEO técnica con plan priorizado"
+ },
+ {
+  "path": "/servicios/ai-seo-geo",
+  "slug": "ai-seo-geo",
+  "kind": "page",
+  "field": "meta.title",
+  "value": "GEO SEO para que ChatGPT y Perplexity citen tu sitio"
+ },
+ {
+  "path": "/en/blog/cs-fundamentals/quicksort-python",
+  "slug": "quicksort-python",
+  "kind": "post",
+  "field": "title+h1",
+  "value": "Quicksort in Python implementation and optimization",
+  "locale": "en"
+ }
+]

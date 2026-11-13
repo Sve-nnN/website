@@ -1,0 +1,587 @@
+{
+ "pillar": {
+  "title": "Pilar Estructuras de datos",
+  "keyword": "estructuras de datos",
+  "volume": 1600,
+  "template": "ultimate-guide",
+  "wordCount": 2314,
+  "url": "/blog/cs-fundamentals/data-structures"
+ },
+ "clusters": [
+  {
+   "name": "Lineales y hash",
+   "color": "#4E79A7",
+   "posts": [
+    {
+     "title": "Pilas y Colas",
+     "keyword": "pilas y colas",
+     "volume": 90,
+     "template": "explainer",
+     "wordCount": 1849,
+     "url": "/blog/cs-fundamentals/pilas-y-colas",
+     "status": "written"
+    },
+    {
+     "title": "Queue Data Structure: Todo lo que Necesitas Saber",
+     "keyword": "cola o queue",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2293,
+     "url": "/blog/cs-fundamentals/queue-data-structure",
+     "status": "written"
+    },
+    {
+     "title": "Tablas hash: Estructuras clave para un manejo eficiente de d",
+     "keyword": "tablas hash",
+     "volume": 390,
+     "template": "explainer",
+     "wordCount": 3163,
+     "url": "/blog/cs-fundamentals/tablas-hash",
+     "status": "written"
+    },
+    {
+     "title": "Heap Data Structure: guía práctica completa",
+     "keyword": "heap",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 1873,
+     "url": "/blog/cs-fundamentals/heap-data-structure",
+     "status": "written"
+    }
+   ]
+  },
+  {
+   "name": "Árboles y grafos",
+   "color": "#F28E2B",
+   "posts": [
+    {
+     "title": "Árboles binarios: Guía técnica de estructuras y algoritmos d",
+     "keyword": "árboles binarios",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 4157,
+     "url": "/blog/cs-fundamentals/arboles-binarios",
+     "status": "written"
+    },
+    {
+     "title": "Binary search tree: Guía completa para entender su funcionam",
+     "keyword": "árbol binario de búsqueda",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2285,
+     "url": "/blog/cs-fundamentals/binary-search-tree",
+     "status": "written"
+    },
+    {
+     "title": "Tree traversal: Guía práctica y aplicaciones en programación",
+     "keyword": "recorrido de árboles",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2066,
+     "url": "/blog/cs-fundamentals/tree-traversal",
+     "status": "written"
+    },
+    {
+     "title": "Graph algorithms: Claves para entender su importancia y apli",
+     "keyword": "algoritmos de grafos",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2006,
+     "url": "/blog/cs-fundamentals/graph-algorithms",
+     "status": "written"
+    }
+   ]
+  },
+  {
+   "name": "Complejidad",
+   "color": "#E15759",
+   "posts": [
+    {
+     "title": "Complejidad algorítmica: Guía técnica de rendim...",
+     "keyword": "complejidad algorítmica",
+     "volume": 170,
+     "template": "explainer",
+     "wordCount": 5726,
+     "url": "/blog/cs-fundamentals/complejidad-algoritmica",
+     "status": "written"
+    },
+    {
+     "title": "Complejidad temporal: guía práctica completa para 2026",
+     "keyword": "complejidad temporal",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 1490,
+     "url": "/blog/cs-fundamentals/time-complexity",
+     "status": "written"
+    },
+    {
+     "title": "Complejidad espacial: guía práctica completa para 2026",
+     "keyword": "complejidad espacial",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2181,
+     "url": "/blog/cs-fundamentals/space-complexity",
+     "status": "written"
+    }
+   ]
+  },
+  {
+   "name": "Algoritmos",
+   "color": "#76B7B2",
+   "posts": [
+    {
+     "title": "Algoritmos de ordenamiento: Guía técnica de eficiencia y opt",
+     "keyword": "algoritmos de ordenamiento",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 5465,
+     "url": "/blog/cs-fundamentals/algoritmos-ordenamiento",
+     "status": "written"
+    },
+    {
+     "title": "Merge Sort en Python: guía práctica completa para 2026",
+     "keyword": "merge sort",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 1870,
+     "url": "/blog/cs-fundamentals/merge-sort-python",
+     "status": "written"
+    },
+    {
+     "title": "Quicksort Python: Optimiza el Ordenamiento de Listas",
+     "keyword": "quicksort",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 2178,
+     "url": "/blog/cs-fundamentals/quicksort-python",
+     "status": "written"
+    },
+    {
+     "title": "Recursividad",
+     "keyword": "recursividad",
+     "volume": 2400,
+     "template": "explainer",
+     "wordCount": 4325,
+     "url": "/blog/cs-fundamentals/recursividad",
+     "status": "written"
+    },
+    {
+     "title": "Programación dinámica: guía práctica completa",
+     "keyword": "programación dinámica",
+     "volume": 210,
+     "template": "explainer",
+     "wordCount": 1522,
+     "url": "/blog/cs-fundamentals/dynamic-programming",
+     "status": "written"
+    }
+   ]
+  },
+  {
+   "name": "Bases de datos",
+   "color": "#59A14F",
+   "posts": [
+    {
+     "title": "Diseño de bases de datos: Guía completa de arquitectura y no",
+     "keyword": "diseño de bases de datos",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 4633,
+     "url": "/blog/cs-fundamentals/diseno-bases-datos",
+     "status": "written"
+    },
+    {
+     "title": "Normalización de Bases de Datos: Guía técnica de formas norm",
+     "keyword": "normalización",
+     "volume": 0,
+     "template": "explainer",
+     "wordCount": 3379,
+     "url": "/blog/cs-fundamentals/normalizacion-bases-datos",
+     "status": "written"
+    }
+   ]
+  }
+ ],
+ "links": [
+  {
+   "from": "cluster-0-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-0",
+   "to": "cluster-0-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-0",
+   "to": "cluster-0-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-1",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-1",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-1",
+   "to": "cluster-0-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-1",
+   "to": "cluster-0-post-3",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-2",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-2",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-2",
+   "to": "cluster-0-post-3",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-2",
+   "to": "cluster-0-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-3",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-0-post-3",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-0-post-3",
+   "to": "cluster-0-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-3",
+   "to": "cluster-0-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-0-post-0",
+   "to": "cluster-1-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-1-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "cluster-1-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "cluster-1-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-1",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-1-post-1",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-1-post-1",
+   "to": "cluster-1-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-1",
+   "to": "cluster-1-post-3",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-2",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-1-post-2",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-1-post-2",
+   "to": "cluster-1-post-3",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-2",
+   "to": "cluster-1-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-3",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-1-post-3",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-1-post-3",
+   "to": "cluster-1-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-3",
+   "to": "cluster-1-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-1-post-0",
+   "to": "cluster-2-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-2-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-2-post-0",
+   "to": "cluster-2-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-0",
+   "to": "cluster-2-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-1",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-2-post-1",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-2-post-1",
+   "to": "cluster-2-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-1",
+   "to": "cluster-2-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-2",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-2-post-2",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-2-post-2",
+   "to": "cluster-2-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-2",
+   "to": "cluster-2-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-2-post-0",
+   "to": "cluster-3-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-3-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-3-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-3-post-0",
+   "to": "cluster-3-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-3-post-0",
+   "to": "cluster-3-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-3-post-1",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-3-post-1",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-3-post-1",
+   "to": "cluster-3-post-2",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-3-post-1",
+   "to": "cluster-3-post-3",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-3-post-2",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-3-post-2",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-3-post-2",
+   "to": "cluster-3-post-3",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-3-post-2",
+   "to": "cluster-3-post-4",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-3-post-3",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-3-post-3",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-3-post-3",
+   "to": "cluster-3-post-4",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-3-post-3",
+   "to": "cluster-3-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-3-post-4",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-3-post-4",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-3-post-4",
+   "to": "cluster-3-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-3-post-4",
+   "to": "cluster-3-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-3-post-0",
+   "to": "cluster-4-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-4-post-0",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-4-post-0",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-4-post-0",
+   "to": "cluster-4-post-1",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-4-post-1",
+   "to": "pillar",
+   "type": "mandatory"
+  },
+  {
+   "from": "pillar",
+   "to": "cluster-4-post-1",
+   "type": "mandatory"
+  },
+  {
+   "from": "cluster-4-post-1",
+   "to": "cluster-4-post-0",
+   "type": "optional"
+  },
+  {
+   "from": "cluster-4-post-0",
+   "to": "cluster-0-post-0",
+   "type": "optional"
+  }
+ ],
+ "meta": {
+  "totalPosts": 19,
+  "totalClusters": 5,
+  "totalLinks": 75,
+  "estimatedWords": 54775
+ }
+}
