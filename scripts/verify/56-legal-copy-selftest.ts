@@ -199,9 +199,9 @@ check(
   validateDecisions(DECISIONS).join('; ') || `cantidad ${DECISIONS.length}: ${DECISIONS.map((d) => d.id).join(', ')}`,
 )
 check(
-  DECISIONS.filter((d) => DOC_IDS.includes(d.id)).every((d) => d.status === 'propuesto' && d.options !== undefined && d.recommended === 'propuesto' && d.chosen === 'propuesto'),
-  'las cuatro decisiones de documento quedan propuesto hasta que Juan responda',
-  'una decision de documento no esta propuesta',
+  DECISIONS.filter((d) => DOC_IDS.includes(d.id)).every((d) => d.status === 'aprobado' && d.options !== undefined && d.recommended === 'propuesto' && d.chosen === 'propuesto'),
+  'las cuatro decisiones de documento quedan aprobadas (Juan dijo defaults y continua con todo, 2026-11-14)',
+  'una decision de documento no esta aprobada',
 )
 check(
   DOC_IDS.every((id) => {

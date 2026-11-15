@@ -276,7 +276,7 @@ export const ABOUT_COPY_EN = {
 const ABOUT_EN_DECISION: Decision = {
   id: 'ABOUT-EN',
   label: 'Copia EN de Sobre mi (hoy /en/sobre-mi cae al espanol)',
-  status: 'propuesto',
+  status: 'aprobado',
   gate: 'aprobado',
   chosen: 'traduccion-fiel',
   recommended: 'traduccion-fiel',

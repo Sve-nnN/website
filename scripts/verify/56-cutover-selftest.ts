@@ -211,7 +211,11 @@ async function realData(): Promise<void> {
   const cur = stack ? strings(stack.current) : []
   expect('Arianna: el respaldo trae el stack que sirve hoy (Next.js, Payload CMS, Neon Postgres, Hostinger)', ['Next.js', 'Payload CMS', 'Neon Postgres', 'Hostinger'].every((t) => cur.includes(t)))
   const textos = CUTOVER_ITEMS.find((i) => i.id === 'CUT-websites-ariannalupi-textos')
-  expect('Arianna: highlights y retos quedan pendientes y sin texto inventado', !!textos && textos.status === 'pendiente' && textos.desired === undefined && !isEmptyValue(textos.current))
+  const textosDes = textos ? strings(textos.desired) : []
+  expect(
+    'Arianna: highlights y retos salen del hecho que Juan dio (Webflow a Astro), sin cifras ni Next.js',
+    !!textos && textos.status === 'aprobado' && textosDes.length > 0 && textosDes.some((t) => /Webflow/.test(t)) && textosDes.some((t) => /Astro/.test(t)) && !textosDes.some((t) => /\d|Next\.js|Payload|Neon|Hostinger/.test(t)) && !isEmptyValue(textos.current),
+  )
 
   // Otras filas: solo se afirma lo verificado
   const apturio = CUTOVER_ITEMS.find((i) => i.id === 'CUT-websites-apturio-com')
@@ -229,7 +233,8 @@ async function realData(): Promise<void> {
   // Testimonio (D-20) y recursividad (D-21)
   const t = CUTOVER_ITEMS.find((i) => i.kind === 'testimonial')
   const tc = (t?.current ?? {}) as { es?: string; en?: string }
-  expect('Testimonio: solo el de Patricia Ibarra, sin cita inventada (desired vacio con la opcion dejar)', !!t && t.chosen === 'dejar' && t.desired === undefined && tc.es === LIVE_TESTIMONIAL.es && tc.en === LIVE_TESTIMONIAL.en && /Patricia Ibarra/.test(t.target))
+  const td = (t?.desired ?? {}) as { es?: string; en?: string }
+  expect('Testimonio: solo el de Patricia Ibarra, con la cita optimizada por pedido de Juan y sin hechos nuevos', !!t && t.status === 'aprobado' && tc.es === LIVE_TESTIMONIAL.es && tc.en === LIVE_TESTIMONIAL.en && td.en === LIVE_TESTIMONIAL.en && /mejor decisión/.test(td.es ?? '') && /Patricia Ibarra/.test(t.target))
   expect('Testimonio: hay exactamente un testimonio registrado', CUTOVER_ITEMS.filter((i) => i.kind === 'testimonial').length === 1)
   const post = CUTOVER_ITEMS.find((i) => i.kind === 'post-translation')
   expect('Recursividad: registrada con su respaldo EN y la opcion recomendada aviso', !!post && post.id === 'CUT-post-translation-recursividad' && post.chosen === 'aviso' && /22 %/.test(show(post.current)) && post.status === 'aprobado')
@@ -240,6 +245,7 @@ async function realData(): Promise<void> {
     !!aDes &&
       aDes.es.experience[1].endDate === null &&
       aDes.en.experience[1].endDate === null &&
+      (aDes.es.experience[1] as { company?: string }).company === 'aprendoclub' &&
       aDes.es.experience[0].endDate === LIVE_AUTHOR_EXPERIENCE.es[0].endDate &&
       aDes.es.experience[2].endDate === LIVE_AUTHOR_EXPERIENCE.es[2].endDate,
   )
@@ -473,7 +479,7 @@ async function loaderTracer(): Promise<void> {
   // Dry-run sobre los items reales
   {
     const fake = fakeCases()
-    const r = await runLoader(baseOpts({ only: ['lessons'] }), fake)
+    const r = await runLoader(baseOpts({ only: ['lessons'] }), fake, { items: withLessonStatus('propuesto') })
     expect('cargador: el dry-run sale 0 y no escribe nada', r.code === 0 && fake.writes.length === 0, `codigo ${r.code}, escrituras ${fake.writes.length}`)
     expect('cargador: el dry-run imprime DRY-RUN y la base como host:puerto/base sin usuario', r.text.includes('DRY-RUN') && r.text.includes('127.0.0.1:15432/juantech') && !r.text.includes('x:y'))
     const sin = (r.text.match(/sin lecciones en la base/g) ?? []).length
@@ -507,7 +513,7 @@ async function loaderTracer(): Promise<void> {
   // Negativas por estado
   {
     const fake = fakeCases()
-    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['lessons'] }), fake)
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['lessons'] }), fake, { items: withLessonStatus('propuesto') })
     expect('cargador: --apply se niega ante lecciones propuestas con gate aprobado y no escribe', r.code === 1 && fake.writes.length === 0 && /sin aprobar/.test(r.text), `codigo ${r.code}`)
   }
   {
@@ -832,7 +838,8 @@ async function loaderRest(): Promise<void> {
   // Test 5: sin ningun item aprobado
   {
     const fake = fullFake()
-    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['testimonial'] }), fake)
+    const sinAprobar = CUTOVER_ITEMS.map((i) => (i.kind === 'testimonial' ? { ...i, status: 'propuesto' as const, gate: 'propuesto' as const, chosen: 'dejar', desired: undefined } : i))
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['testimonial'] }), fake, { items: sinAprobar })
     expect('cargador: sin ningun item aprobado termina sin escribir y lo dice', r.code === 0 && fake.writes.length === 0 && /Ningun item aprobado para cargar: no se escribe nada/.test(r.text))
   }
 

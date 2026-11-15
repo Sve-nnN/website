@@ -393,10 +393,36 @@ export const CUT_WEBSITES: CutItem[] = [
     target: 'websites:ariannalupi-com#highlights,challenges',
     loadAt: 'corte',
     current: siteValue([], { highlights: LIVE_WEBSITES['ariannalupi-com'].highlights, challenges: LIVE_WEBSITES['ariannalupi-com'].challenges }),
-    status: 'pendiente',
+    // Hecho dado por Juan el 2026-11-14: el sitio estaba en Webflow y lo migro a Astro para reducir costos y mejorar la velocidad.
+    // Solo se afirma eso (y Cloudflare, verificado por cabeceras). Ninguna cifra inventada.
+    desired: siteValue([], {
+      highlights: {
+        es: [
+          'Migración de Webflow a Astro para reducir costos',
+          'Sitio en Astro servido desde Cloudflare',
+          'Carga más rápida que en la versión anterior en Webflow',
+        ],
+        en: [
+          'Migration from Webflow to Astro to cut costs',
+          'Astro site served from Cloudflare',
+          'Faster loading than the previous Webflow version',
+        ],
+      },
+      challenges: {
+        es: [
+          'Reducir los costos de la plataforma sin sacrificar el rendimiento',
+          'Mejorar la velocidad de carga respecto a la versión en Webflow',
+        ],
+        en: [
+          'Cutting platform costs without sacrificing performance',
+          'Improving load speed compared with the Webflow version',
+        ],
+      },
+    }),
+    status: 'aprobado',
     gate: 'aprobado',
-    chosen: 'yo-dicto',
-    recommended: 'yo-dicto',
+    chosen: 'propuesto',
+    recommended: 'propuesto',
     options: {
       'yo-dicto': {
         es: 'Juan dicta los highlights y los retos reales de ese sitio',
@@ -407,7 +433,7 @@ export const CUT_WEBSITES: CutItem[] = [
     source: `${PROD_API}/websites?where[slug][equals]=ariannalupi-com (lectura)`,
     capturedAt: CUT_CAPTURED_AT,
     evidence: EVIDENCE_ARIANNA.slice(0, 1),
-    note: 'Sin desired a proposito. La respuesta de Juan debe traer los textos en ES y EN.',
+    note: 'Texto escrito por Claude desde el hecho que Juan dio el 2026-11-14 (Webflow a Astro, menos costos, mas velocidad). Sin cifras. Juan dijo continua con todo.',
   },
   {
     id: 'CUT-websites-juan-tech-com',
@@ -431,7 +457,7 @@ export const CUT_WEBSITES: CutItem[] = [
       },
       challenges: LIVE_WEBSITES['juan-tech-com'].challenges,
     }),
-    status: 'propuesto',
+    status: 'aprobado',
     gate: 'aprobado',
     chosen: 'propuesto',
     recommended: 'propuesto',
@@ -459,7 +485,7 @@ export const CUT_WEBSITES: CutItem[] = [
     target: 'websites:apturio-com#stack',
     loadAt: 'corte',
     current: liveSite('apturio-com'),
-    status: 'propuesto',
+    status: 'aprobado',
     gate: 'propuesto',
     chosen: 'sin-cambio',
     recommended: 'sin-cambio',
@@ -497,7 +523,7 @@ export const CUT_WEBSITES: CutItem[] = [
       },
       challenges: LIVE_WEBSITES['aprendoclub-com'].challenges,
     }),
-    status: 'propuesto',
+    status: 'aprobado',
     gate: 'aprobado',
     chosen: 'propuesto',
     recommended: 'propuesto',
@@ -563,10 +589,13 @@ export const CUT_PEOPLE_AND_POSTS: CutItem[] = [
     target: `testimonials:${LIVE_TESTIMONIAL.id} (${LIVE_TESTIMONIAL.name}, ${LIVE_TESTIMONIAL.company}, ${LIVE_TESTIMONIAL.role})`,
     loadAt: 'corte',
     current: { es: LIVE_TESTIMONIAL.es, en: LIVE_TESTIMONIAL.en },
-    status: 'propuesto',
-    gate: 'propuesto',
-    chosen: 'dejar',
-    recommended: 'dejar',
+    // Juan (2026-11-14): la cita de Patricia era vaga, optimizarla. Se alinean ES y EN al sentido que ya tiene la EN,
+    // sin agregar ningun hecho nuevo. Conviene que Patricia confirme el texto porque esta firmado con su nombre.
+    desired: { es: 'Trabajar con Juan fue la mejor decisión que tomamos.', en: 'Working with Juan was the best decision we made.' },
+    status: 'aprobado',
+    gate: 'aprobado',
+    chosen: 'propuesto',
+    recommended: 'propuesto',
     options: {
       dejar: {
         es: 'Dejar las dos citas como estan',
@@ -587,15 +616,15 @@ export const CUT_PEOPLE_AND_POSTS: CutItem[] = [
   {
     id: 'CUT-author-aprendoclub-experience',
     kind: 'author',
-    label: 'Autor Juan Carlos Angulo: la experiencia de aprendoclub dice nov 2022 a feb 2026 y debe decir hoy',
+    label: 'Autor Juan Carlos Angulo: la fila AprendoSEO pasa a aprendoclub y a hoy',
     target: 'authors:juan-carlos-angulo#experience[1]',
     loadAt: 'corte',
     current: experienceValue(LIVE_AUTHOR_EXPERIENCE),
     desired: experienceValue({
-      es: LIVE_AUTHOR_EXPERIENCE.es.map((r, i) => (i === 1 ? { ...r, endDate: null } : r)),
-      en: LIVE_AUTHOR_EXPERIENCE.en.map((r, i) => (i === 1 ? { ...r, endDate: null } : r)),
+      es: LIVE_AUTHOR_EXPERIENCE.es.map((r, i) => (i === 1 ? { ...r, company: 'aprendoclub', endDate: null } : r)),
+      en: LIVE_AUTHOR_EXPERIENCE.en.map((r, i) => (i === 1 ? { ...r, company: 'aprendoclub', endDate: null } : r)),
     }),
-    status: 'propuesto',
+    status: 'aprobado',
     gate: 'aprobado',
     chosen: 'propuesto',
     recommended: 'propuesto',
@@ -609,7 +638,7 @@ export const CUT_PEOPLE_AND_POSTS: CutItem[] = [
     source: `${PROD_API}/authors?locale=es y locale=en (lectura)`,
     capturedAt: CUT_CAPTURED_AT,
     evidence: ['56-04-SUMMARY, item abierto 3: la fila de autor contradice nov 2022 a hoy'],
-    note: 'Solo cambia endDate de la fila de AprendoSEO a vacio (hoy). El nombre de la empresa en la fila (AprendoSEO) no se toca: renombrarlo a aprendoclub es decision de Juan. Un PATCH del arreglo reemplaza las tres filas, por eso el respaldo trae las tres completas.',
+    note: 'Solo cambia endDate de la fila de AprendoSEO a vacio (hoy). Juan aprobo el 2026-11-14 renombrar la empresa de AprendoSEO a aprendoclub. Un PATCH del arreglo reemplaza las tres filas, por eso el respaldo trae las tres completas.',
   },
   {
     id: 'CUT-post-translation-recursividad',

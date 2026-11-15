@@ -516,7 +516,7 @@ export const DECISIONS: Decision[] = [
   {
     id: 'HOME-EN',
     label: 'Copia EN de la home y de Contacto (hoy /en cae al espanol)',
-    status: 'propuesto',
+    status: 'aprobado',
     gate: 'aprobado',
     chosen: 'traduccion-fiel',
     recommended: 'traduccion-fiel',

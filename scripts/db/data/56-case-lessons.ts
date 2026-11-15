@@ -77,7 +77,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
           textEn: `Dozens of articles on concrete Pennsylvania legal situations`,
         },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 2,
@@ -95,7 +95,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
           textEn: `Title, heading, and search-intent work applied systematically across the legal content catalog`,
         },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 3,
@@ -115,7 +115,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
           textEn: `support a much larger content volume without losing crawlability`,
         },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
   ],
 
@@ -135,7 +135,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
         { text: `327`, from: 78, to: 327, pct: 319 },
         { text: `presupuestos de contenido mucho mayores`, textEn: `far bigger content budgets` },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 2,
@@ -152,7 +152,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
         { text: `mantenimiento y limpieza de suelos hidráulicos`, textEn: `hydraulic-floor maintenance and cleaning` },
         { text: `búsquedas informacionales relacionadas con el producto`, textEn: `product-related informational searches` },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 3,
@@ -168,7 +168,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
         { text: `más de 300 modelos`, textEn: `300+ model catalog` },
         { text: `se rastree e indexe de forma consistente`, textEn: `gets crawled and indexed consistently` },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
   ],
 
@@ -188,7 +188,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
         { text: `39,323`, from: 9621, to: 39323, pct: 309 },
         { text: `casi por completo de búsquedas de marca`, textEn: `relied almost entirely on branded search` },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 2,
@@ -205,7 +205,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
         { text: `tiempos de trámite de la visa U`, textEn: `U visa processing times` },
         { text: `fue uno de los motores del salto`, textEn: `drove a meaningful share of the jump` },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 3,
@@ -225,7 +225,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
           textEn: `capturing informational demand that was not being served before`,
         },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
   ],
 
@@ -250,7 +250,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
           textEn: `crawled and indexed correctly by Google from scratch`,
         },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 2,
@@ -271,7 +271,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
           textEn: `capturing its first high-intent branded and local searches`,
         },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 3,
@@ -291,7 +291,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
           textEn: `the foundation you need before any content strategy can scale`,
         },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
   ],
 
@@ -311,7 +311,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
         { text: `8.0`, from: 43.8, to: 8.0, pct: -82 },
         { text: `multiplicando por 38 sus impresiones anuales`, textEn: `multiplying its annual impressions 38x` },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 2,
@@ -329,7 +329,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
           textEn: `went from zero recorded clicks to capturing real traffic`,
         },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 3,
@@ -346,7 +346,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
         { text: `243`, from: 48, to: 243, pct: 406 },
         { text: `se sostuvo a lo largo de un año completo`, textEn: `held up across a full year` },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
   ],
 
@@ -366,7 +366,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
         { text: `8.2`, from: 25.2, to: 8.2, pct: -67 },
         { text: `título, encabezados e intención de búsqueda`, textEn: `title, headings, and search intent` },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 2,
@@ -385,7 +385,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
         },
         { text: `billetes de juguete para imprimir`, textEn: `printable play money` },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 3,
@@ -405,7 +405,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
         },
         { text: `enero-junio 2026`, textEn: `Jan-Jun 2026` },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
   ],
 
@@ -428,7 +428,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
           textEn: `without a single week of traffic decline during cutover`,
         },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 2,
@@ -445,7 +445,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
         { text: `1.6s`, from: 4.2, to: 1.6, pct: -62 },
         { text: `generación estática incremental`, textEn: `incremental static generation` },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
     {
       n: 3,
@@ -464,7 +464,7 @@ export const CASE_LESSONS: Record<string, Lesson[]> = {
           textEn: `database-driven sitemap that always reflects the current catalog`,
         },
       ],
-      status: 'propuesto',
+      status: 'aprobado',
     },
   ],
 }

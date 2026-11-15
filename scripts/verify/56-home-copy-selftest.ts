@@ -138,7 +138,7 @@ expect('splitHeroTitle divide las opciones B a E sin perder texto', SPLITS.every
 // --- Construccion ---
 expect('buildHomeCopy("es") es estable y no comparte referencias', JSON.stringify(buildHomeCopy('es')) === JSON.stringify(HOME_COPY_ES) && buildHomeCopy('es') !== HOME_COPY_ES)
 expect('conteos del copy ES iguales a los de la 54', HOME_COPY_ES.services.items.length === 5 && HOME_COPY_ES.process.steps.length === 4 && HOME_COPY_ES.vitals.items.length === 4 && HOME_COPY_ES.faq.items.length === 5 && HOME_COPY_ES.contact.steps.length === 3 && HOME_COPY_ES.contact.infoRows.length === 3)
-expect('HOME-EN existe como decision propuesta con gate aprobado', DECISIONS.length === 1 && DECISIONS[0].id === 'HOME-EN' && DECISIONS[0].status === 'propuesto' && DECISIONS[0].gate === 'aprobado')
+expect('HOME-EN existe como decision aprobada con gate aprobado', DECISIONS.length === 1 && DECISIONS[0].id === 'HOME-EN' && DECISIONS[0].status === 'aprobado' && DECISIONS[0].gate === 'aprobado')
 
 // =====================  Parte EN (lote 2 EN, D-14)  =====================
 
@@ -208,7 +208,7 @@ expect('D-23: el EN tampoco trae title ni meta de pagina y sus claves existen en
 const badTitlesEn = allEn.filter(([p, v]) => titleKeys.includes(p.split('.').pop() ?? '') && !p.includes('[') && /[.,]/.test(v))
 expect('titulos EN sin punto ni coma', badTitlesEn.length === 0 && !/[.,]/.test((HOME_COPY_EN.hero?.titleLine1 ?? '') + (HOME_COPY_EN.hero?.titleLine2 ?? '')), JSON.stringify(badTitlesEn))
 expect('no se traducen las etiquetas tecnicas', ['LCP', 'CLS', 'TBT', 'TTFB'].every((n, i) => HOME_COPY_EN.vitals?.items?.[i]?.name === n))
-expect('los pasos de Contacto EN son traduccion fiel y quedan propuestos en HOME-EN', HOME_COPY_EN.contact?.steps?.[0]?.title === 'You tell me about the project' && DECISIONS[0].status === 'propuesto')
+expect('los pasos de Contacto EN son traduccion fiel y quedan aprobados en HOME-EN', HOME_COPY_EN.contact?.steps?.[0]?.title === 'You tell me about the project' && DECISIONS[0].status === 'aprobado')
 
 if (bad > 0) {
   console.log(`FAIL 56-home-copy-selftest: ${bad} caso(s)`)

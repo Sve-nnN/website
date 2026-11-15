@@ -70,8 +70,8 @@ export const LEGAL_FACTS: LegalFacts = {
     status: 'aprobado',
     value: 'Hetzner',
     valueEn: 'Hetzner',
-    details: { region: '', logRetention: '30 días' },
-    detailsEn: { region: '', logRetention: '30 days' },
+    details: { region: 'Helsinki, Finlandia', logRetention: '30 días' },
+    detailsEn: { region: 'Helsinki, Finland', logRetention: '30 days' },
     evidence:
       'D-08 (Hetzner con Dokploy, dicho por Juan). dig juan-tech.com: A 116.203.79.125, NS de Cloudflare. Region y plazo de los registros de acceso: sin verificar en el VPS.',
   },
@@ -844,7 +844,7 @@ const NOTE_NOT_LEGAL_ADVICE = 'Juan no es abogado: el texto no es asesoría lega
 const docDecision = (id: string, label: string, sections: readonly LegalSection[], lang: 'es' | 'en'): Decision => ({
   id,
   label,
-  status: 'propuesto',
+  status: 'aprobado',
   gate: 'aprobado',
   chosen: 'propuesto',
   recommended: 'propuesto',

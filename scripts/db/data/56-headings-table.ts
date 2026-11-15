@@ -301,7 +301,7 @@ export const DECISIONS: Decision[] = [
   {
     id: 'HEAD-alcance',
     label: 'Alcance: 39 reales (40 si cuentas al Dr. Vargas) y no 36',
-    status: 'pendiente',
+    status: 'aprobado',
     gate: 'aprobado',
     chosen: '39-reales',
     recommended: '39-reales',

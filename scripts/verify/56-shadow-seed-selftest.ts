@@ -157,12 +157,14 @@ async function main() {
   // EN opt-in
   {
     const fake = fakePayload({}, { fieldNames: fieldNames() })
-    const r = await runShadow(baseOpts({ apply: true, dbChecked: true, includeEn: true }), fake)
+    const proposed = shadow.DEFAULT_SOURCES.map((s) => ({ ...s, enStatus: 'propuesto' as const }))
+    const r = await runShadow(baseOpts({ apply: true, dbChecked: true, includeEn: true }), fake, PROD_URI, proposed)
     check('26: --include-en con el EN todavia propuesto aborta sin escribir', r.code === 1 && fake.writes.length === 0 && /propuesto/.test(r.text), `codigo ${r.code}, escrituras ${fake.writes.length}`)
   }
   {
     const fake = fakePayload({}, { fieldNames: fieldNames() })
-    const r = await runShadow(baseOpts({ apply: true, dbChecked: true, includeEn: true, allowProposedEn: true }), fake)
+    const proposed = shadow.DEFAULT_SOURCES.map((s) => ({ ...s, enStatus: 'propuesto' as const }))
+    const r = await runShadow(baseOpts({ apply: true, dbChecked: true, includeEn: true, allowProposedEn: true }), fake, PROD_URI, proposed)
     const order = fake.writes.map((w) => `${w.slug}:${w.locale}`).join(',')
     check(
       '26: --include-en --allow-proposed-en escribe es y luego en de cada global',
@@ -314,9 +316,10 @@ async function main() {
   }
   {
     const fake = fakePayload({})
-    const r = await runLegal(lOpts({ apply: true, dbChecked: true, includeEn: true }), fake)
+    const enProposed: legal.DecisionLite[] = ['LEGAL-PRIVACY-ES', 'LEGAL-TERMS-ES'].map((id) => ({ id, status: 'aprobado' as const, gate: 'aprobado' as const })).concat(['LEGAL-PRIVACY-EN', 'LEGAL-TERMS-EN'].map((id) => ({ id, status: 'propuesto' as never, gate: 'aprobado' as const })))
+    const r = await runLegal(lOpts({ apply: true, dbChecked: true, includeEn: true }), fake, PROD_URI, undefined, enProposed)
     check('27: --include-en con los documentos EN propuestos aborta sin escribir', r.code === 1 && fake.writes.length === 0 && /LEGAL-PRIVACY-EN/.test(r.text))
-    const ok = await runLegal(lOpts({ apply: true, dbChecked: true, includeEn: true, allowProposedEn: true }), fake)
+    const ok = await runLegal(lOpts({ apply: true, dbChecked: true, includeEn: true, allowProposedEn: true }), fake, PROD_URI, undefined, enProposed)
     check('27: --include-en --allow-proposed-en escribe es y en', ok.code === 0 && fake.writes.map((w) => w.locale).join(',') === 'es,en')
   }
   {
