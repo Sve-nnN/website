@@ -8,6 +8,14 @@ import { slugField } from '@/fields/slug'
 import { revalidatePostsCache, revalidatePostsCacheOnDelete } from '@/lib/cache-tags'
 import { AffiliateInlineBlock } from '@/blocks/AffiliateInlineBlock/config'
 import { EmailCaptureBlock } from '@/blocks/EmailCaptureBlock/config'
+import { Code } from '@/blocks/Code/config'
+import { FAQ } from '@/blocks/FAQ/config'
+
+// Los posts migrados de JuanPortfolio guardan bloques `faq` (10) y `code-block`
+// (87) que el editor no registraba: Payload rechazaba CUALQUIER update de esos
+// posts con "block node failed to validate: Block faq not found". El slug
+// guardado es `code-block`, no `code`. Sin interfaceName para no duplicar tipos.
+const LegacyCodeBlock = { ...Code, slug: 'code-block', interfaceName: undefined }
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -62,7 +70,7 @@ export const Posts: CollectionConfig = {
       editor: lexicalEditor({
         features: ({ rootFeatures }) => [
           ...rootFeatures,
-          BlocksFeature({ blocks: [AffiliateInlineBlock, EmailCaptureBlock] }),
+          BlocksFeature({ blocks: [AffiliateInlineBlock, EmailCaptureBlock, FAQ, LegacyCodeBlock] }),
         ],
       }),
     },

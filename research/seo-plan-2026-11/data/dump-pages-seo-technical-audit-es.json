@@ -1,0 +1,538 @@
+{
+  "id": 7,
+  "title": "Auditoría SEO Técnica",
+  "content": {
+    "layout": [
+      {
+        "id": "6a53ff608f92aa73aaf6d3ba",
+        "variant": "listing",
+        "media": null,
+        "ringSide": "right",
+        "ringOpacity": 0.25,
+        "ringFlipX": false,
+        "blockName": null,
+        "links": [],
+        "breadcrumbs": [],
+        "blockType": "hero",
+        "title": "Auditoría SEO Técnica",
+        "subtitle": "Si tu sitio pierde crawl budget en URLs que no importan, renderiza contenido que Google nunca llega a ver a tiempo, o tiene huecos de indexación que nadie detectó, ninguna estrategia de contenido compensa eso.",
+        "cityName": null,
+        "inlineStat": null
+      },
+      {
+        "id": "6a53ff608f92aa73aaf6d3bd",
+        "blockName": null,
+        "columns": [
+          {
+            "id": "6a53ff608f92aa73aaf6d3bb",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h2",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Tu sitio pierde tráfico y nadie te dice por qué",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Los buscadores no perdonan los errores técnicos silenciosos: crawl budget desperdiciado en URLs que no importan, JavaScript que tarda en renderizar, contenido que nunca llega a aparecer en el índice. Nada de esto se nota navegando el sitio a simple vista.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Para cuando la caída de tráfico aparece en Search Console, el problema ya lleva semanas instalado. Sin un diagnóstico técnico real, es casi imposible saber si la causa es de rastreo, de renderizado, de indexación o algo distinto por completo.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "content"
+      },
+      {
+        "id": "6a544f5c140e75434aba4dc6",
+        "blockName": null,
+        "blockType": "serviceScopeCard",
+        "title": "Alcance de esta auditoría",
+        "scope": "Diagnóstico completo de crawl budget, renderizado, Core Web Vitals e indexación, con los hallazgos ordenados por impacto real, no por orden alfabético.",
+        "outcome": "Un informe accionable que muestra qué está frenando tu posicionamiento y en qué orden conviene resolverlo, sin relleno.",
+        "timeline": "1 a 2 semanas"
+      },
+      {
+        "id": "6a53ff608f92aa73aaf6d3c4",
+        "blockName": null,
+        "links": [
+          {
+            "id": "6a53ff608f92aa73aaf6d3c3",
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/contact",
+              "label": "Pedir una auditoría",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "callToAction",
+        "richText": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "text": "Si sospechas que tienes un problema técnico y no sabes exactamente cuál, empecemos por ahí.",
+                    "type": "text",
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      },
+      {
+        "id": "6a544f5c140e75434aba4dc9",
+        "blockName": null,
+        "columns": [
+          {
+            "id": "6a544f5c140e75434aba4dc7",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h3",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Qué incluye",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Análisis de crawl budget y arquitectura de la información: qué rastrea Google hoy, qué debería rastrear, y en qué páginas de bajo valor se está desperdiciando ese presupuesto.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Diagnóstico de renderizado: la diferencia entre lo que sirve el servidor y lo que Google indexa realmente, con foco en JavaScript crítico y contenido que carga tarde.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Core Web Vitals medidos en condiciones reales, no solo en laboratorio, con la causa raíz identificada en el código y no solo el síntoma que reporta PageSpeed.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Revisión de indexación: canonicalización, robots.txt, sitemaps y páginas huérfanas que nunca reciben enlaces internos.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Auditoría de datos estructurados (schema.org) contra lo que Google realmente usa para mostrar rich results.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          },
+          {
+            "id": "6a544f5c140e75434aba4dc8",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h3",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Cómo trabajo",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "La auditoría no termina en un PDF que nadie lee. Entrego hallazgos priorizados por impacto real y esfuerzo de implementación, no una lista de doscientos ítems sin ningún orden.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Como también soy desarrollador, puedo implementar las correcciones directamente en tu código en vez de solo señalarlas. Cubro el diagnóstico y la solución, cuando el proyecto lo requiere.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "content"
+      },
+      {
+        "id": "6a9e39a572a081a76a47d0ef",
+        "blockName": null,
+        "blockType": "auditorCallout",
+        "heading": "También tengo un auditor automatizado, gratis",
+        "narrative": "Antes de encargar la auditoría completa, mi auditor automatizado corre 29 checks técnicos en 5 categorías, hasta 500 URLs por corrida, con Core Web Vitals vía PageSpeed Insights, y da un primer diagnóstico gratis. El límite es honesto: 1 auditoría por semana por email verificado."
+      },
+      {
+        "id": "6a544f5c140e75434aba4dca",
+        "blockName": null,
+        "blockType": "clientLogosBlock",
+        "title": "Clientes",
+        "clients": []
+      },
+      {
+        "id": "6a544f5c140e75434aba4dcb",
+        "showRating": true,
+        "limit": 3,
+        "blockName": null,
+        "blockType": "testimonialsCarousel",
+        "title": "Testimonios"
+      },
+      {
+        "id": "6a544f5c140e75434aba4dcc",
+        "caseStudy": 14,
+        "blockName": null,
+        "blockType": "relatedCaseStudyBlock",
+        "title": "Un caso real de cómo trabajo",
+        "framingText": "Todavía no tengo un caso publicado específico de auditorías técnicas, pero acá tenés un ejemplo real de cómo trabajo con clientes."
+      },
+      {
+        "id": "6a544f5c140e75434aba4dd1",
+        "blockName": null,
+        "faqs": [
+          {
+            "id": "6a544f5c140e75434aba4dcd",
+            "question": "¿Cuánto dura una auditoría técnica?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Depende del tamaño del sitio. Uno de tamaño medio, hasta unas 500 URLs indexables, suele tomar entre una y dos semanas, desde el acceso a las herramientas hasta la entrega del informe priorizado.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f5c140e75434aba4dce",
+            "question": "¿Entregan solo el informe o también implementan las correcciones?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Las dos opciones existen. Por defecto entrego un informe priorizado y accionable para que tu equipo lo implemente. Si prefieres que yo mismo implemente las correcciones en el código, lo conversamos como una extensión del alcance: no hace falta contratar a otra persona para la parte técnica.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f5c140e75434aba4dcf",
+            "question": "¿Qué herramientas usas?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Combino crawlers técnicos, Google Search Console y Analytics, Lighthouse y CrUX para medir Core Web Vitals en campo, y revisión manual de código para los casos que las herramientas automáticas no detectan, sobre todo problemas de renderizado en frameworks de JavaScript.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f5c140e75434aba4dd0",
+            "question": "¿La auditoría sirve si mi sitio no está construido por mí?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Sí. La mayoría de las auditorías que hago son sobre sitios que no construí yo. El diagnóstico es agnóstico de stack; la implementación de las correcciones depende de qué tan accesible sea tu codebase.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          }
+        ],
+        "blockType": "faq",
+        "title": "Preguntas frecuentes"
+      },
+      {
+        "id": "6a544f5c140e75434aba4dd3",
+        "blockName": null,
+        "links": [
+          {
+            "id": "6a544f5c140e75434aba4dd2",
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/contact",
+              "label": "Pedir una auditoría",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "callToAction",
+        "richText": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "text": "Si sospechas que tienes un problema técnico y no sabes exactamente cuál, empecemos por ahí.",
+                    "type": "text",
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      }
+    ]
+  },
+  "slug": "seo-technical-audit",
+  "targetKeyword": {
+    "en": null,
+    "es": null
+  },
+  "meta": {
+    "title": null,
+    "description": "Auditoría técnica SEO completa: rastreo, indexación, Core Web Vitals y datos estructurados, con un plan de corrección priorizado por impacto real.",
+    "image": null
+  },
+  "updatedAt": "2026-09-07T04:12:48.536Z",
+  "createdAt": "2026-07-12T20:56:00.226Z",
+  "_status": "published"
+}

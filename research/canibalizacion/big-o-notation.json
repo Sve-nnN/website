@@ -1,0 +1,4818 @@
+{
+  "es": {
+    "id": 72,
+    "title": "Notación Big O: Guía técnica de complejidad y escalabilidad",
+    "excerpt": "La notación Big O es la métrica estándar para medir la eficiencia y escalabilidad de los algoritmos. Esta guía explica cómo el tiempo de ejecución y el uso de memoria crecen según el tamaño de la entrada (n), cubriendo desde O(1) hasta O(n!) con ejemplos prácticos en Python y comparativas de rendimiento real.",
+    "content": {
+      "root": {
+        "type": "root",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+          {
+            "tag": "h1",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Notación Big O: Entendiendo la Complejidad Algorítmica",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La notación Big O es una herramienta clave para analizar la eficiencia de los ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "/blog/cs-fundamentals/data-structures",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Algoritmos y Estructuras de Datos",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": ". Permite clasificar y comparar algoritmos según cómo su tiempo de ejecución o uso de memoria se incrementa con el tamaño de los datos de entrada. Este artículo abordará sus fundamentos, tipos de complejidades y su aplicación práctica. Se explorarán diferentes escenarios y ejemplos para entender mejor el rendimiento algorítmico y la relevancia de la notación Big O en el desarrollo de software.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Fundamentos de la notación Big O",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La notación Big O se basa en varios conceptos clave que permiten clasificar ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "https://juan-tech.com/blog/cs-fundamentals/pilas-y-colas",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "algoritmos",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": " según su eficiencia. Esta sección describe cada uno de estos fundamentos esenciales para una comprensión adecuada de cómo se analizan los algoritmos en términos de su rendimiento.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Definición de función del tamaño de entrada",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Las funciones del tamaño de entrada son cruciales al establecer cómo un algoritmo se comporta a medida que aumenta el tamaño de los datos que procesa. Un algoritmo toma un conjunto de datos como entrada, y su tiempo de ejecución o consumo de recursos se relaciona directamente con esta entrada. Por lo general, se representa mediante una variable 'n', que indica el número de elementos a procesar. Esta relación ayuda a predecir cómo se comportará el algoritmo en escenarios prácticos.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Concepto de tasa de crecimiento y límites superiores",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La tasa de crecimiento describe cómo se incrementan el tiempo de ejecución o espacio utilizado por un algoritmo en relación con el crecimiento del tamaño de entrada. En este contexto, la notación Big O representa un límite superior, lo que permite estimar el rendimiento máximo en condiciones adversas. Esto es vital, ya que ofrece a los desarrolladores una guía confiable sobre cómo un algoritmo escalará frente a entradas cada vez más grandes.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(1): Tiempo de ejecución constante, independientemente del tamaño de la entrada.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(log n): Aumento logarítmico, que se observa en estructuras que dividen su entrada en partes menores, como en la búsqueda binaria.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(n): Complejidad lineal, donde el tiempo de ejecución aumenta directamente con el tamaño de entrada.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(n log n): Asocia el crecimiento lineal con una operación logarítmica, común en ",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "type": "link",
+                    "fields": {
+                      "url": "https://juan-tech.com/blog/cs-fundamentals/algoritmos-ordenamiento",
+                      "newTab": false,
+                      "linkType": "custom"
+                    },
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "mode": "normal",
+                        "text": "algoritmos de ordenamiento",
+                        "type": "text",
+                        "style": "",
+                        "detail": 0,
+                        "format": 0,
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " eficientes.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(n^2): Representa un crecimiento cuadrático, típico de algoritmos que procesan pares de elementos en matrices o listas.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(2^n): Refleja un crecimiento exponencial, normalmente asociado con métodos de fuerza bruta que exploran todas las combinaciones posibles.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(n!): Representa un crecimiento factorial, este es uno de los peores escenarios que puede tener un algoritmo.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Diferencia entre complejidad temporal y espacial",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "https://juan-tech.com/blog/cs-fundamentals/data-structures",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "complejidad temporal",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": " se refiere al tiempo que un algoritmo requiere para completar su ejecución a medida que cambia el tamaño de la entrada. Este parámetro es clave para evaluar la eficiencia de un algoritmo en términos de tiempo. Por otro lado, la ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "https://juan-tech.com/blog/cs-fundamentals/complejidad-algoritmica",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "complejidad espacial",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": " evalúa el espacio de memoria que un algoritmo necesita durante su ejecución. Por lo general, se espera que un diseño óptimo minimice el tiempo requerido para procesar los datos, y también la cantidad de memoria utilizada.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Comprender la diferencia entre ambos conceptos resulta clave para elegir la mejor estrategia algorítmica al abordar problemas específicos. Algoritmos que son eficientes en tiempo pueden no serlo necesariamente en espacio y viceversa. Esta dualidad en el análisis permite a los desarrolladores tomar decisiones informadas sobre qué algoritmos implementar en función del ambiente y los recursos disponibles.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Clasificación de la complejidad en algoritmos",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La clasificación de la complejidad en algoritmos resulta clave para comprender cómo el rendimiento de un algoritmo varía con el tamaño de la entrada. A continuación, se presentan los tipos más comunes de ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "https://juan-tech.com/blog/cs-fundamentals/data-structures",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "complejidad algorítmica",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": " y su funcionamiento.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Complejidad constante y su comportamiento en bucles simples",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La complejidad constante se refiere a aquellos algoritmos cuyo tiempo de ejecución no depende del tamaño de la entrada. Esto significa que, no importa cuántos datos se procesen, el tiempo de respuesta se mantiene igual.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Ejemplos de acceso a elemento en arreglo",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Un ejemplo clásico de complejidad constante es el acceso a un elemento en un arreglo. Si se desea obtener el primer elemento de una lista de datos, la operación requerirá el mismo tiempo independientemente de cuántos elementos contenga dicho arreglo. Este tipo de implementación es eficiente y rápida, ya que no hay necesidad de recorrer la lista.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "block",
+            "fields": {
+              "id": "1783285460090uyx6w9",
+              "code": "def get_first_element(arr):\n    \"\"\"\n    Función con complejidad O(1) para obtener el primer elemento de un arreglo.\n    El tiempo de ejecución no depende del tamaño del arreglo.\n    \"\"\"\n    if not arr:\n        return None\n    return arr[0]\n\n# Ejemplos de uso:\nmy_list_small = [1, 2, 3]\nmy_list_large = [i for i in range(1000000)]\n\nprint(f'Primer elemento (lista pequeña): {get_first_element(my_list_small)}\")\nprint(f'Primer elemento (lista grande): {get_first_element(my_list_large)}\")",
+              "language": "typescript",
+              "blockType": "code-block"
+            },
+            "format": "",
+            "indent": 0,
+            "version": 2
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Este ejemplo muestra cómo la operación de acceder a un elemento por su índice directo en una lista tiene una complejidad de O(1). No importa si la lista tiene 3 elementos o un millón, el tiempo para obtener el primer elemento es siempre el mismo.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Complejidad logarítmica y su aplicación en búsqueda binaria",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La complejidad logarítmica es común en algoritmos que dividen la entrada en partes más pequeñas, como sucede en la búsqueda binaria. Este tipo de algoritmo es muy eficiente ya que reduce el tamaño del problema a la mitad en cada paso.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Funcionamiento y crecimiento de O(log n)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "El comportamiento de este tipo de complejidad es tal que, si se tiene un conjunto de datos ordenados, el tiempo de ejecución del algoritmo aumentará lentamente a medida que se incremente el número de elementos. La función O(log n) indica este crecimiento gradual, siendo ideal para listas largas.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Ejemplo práctico de búsqueda en datos ordenados",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "En una búsqueda binaria, se compara el elemento que se busca con el elemento del medio de la lista. Si este es menor, se descartan los elementos mayores y se repite el proceso en la mitad que contiene los valores menores. Este enfoque hace que el algoritmo sea significativamente más rápido a medida que el tamaño de los datos crece.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "block",
+            "fields": {
+              "id": "1783285460090xktlkg",
+              "code": "def binary_search(arr, target):\n    \"\"\"\n    Función con complejidad O(log n) para buscar un elemento en un arreglo ordenado.\n    \"\"\"\n    low = 0\n    high = len(arr) - 1\n\n    while low <= high:\n        mid = (low + high) // 2\n        if arr[mid] == target:\n            return mid  # Elemento encontrado\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1  # Elemento no encontrado\n\n# Ejemplos de uso:\nsorted_list = [1, 5, 8, 12, 16, 23, 38, 56, 72, 91]\ntarget1 = 23\ntarget2 = 10\n\nprint(f'Buscando {target1} en {sorted_list}: Índice {binary_search(sorted_list, target1)}\")\nprint(f'Buscando {target2} en {sorted_list}: Índice {binary_search(sorted_list, target2)}\")",
+              "language": "typescript",
+              "blockType": "code-block"
+            },
+            "format": "",
+            "indent": 0,
+            "version": 2
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "El ejemplo de ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "binary_search",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " demuestra cómo la complejidad O(log n) se logra al reducir a la mitad el espacio de búsqueda en cada paso. Esto lo hace increíblemente eficiente para buscar en grandes conjuntos de datos ordenados.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Complejidad lineal y sus recorridos en elementos de entrada",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Los algoritmos de complejidad lineal son aquellos cuyo tiempo de ejecución aumenta directamente en proporción al tamaño de la entrada. Esto significa que, si el número de datos se duplica, el tiempo requerido también se duplicará.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Iteración de bucle y tiempos de ejecución proporcionales",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Un ejemplo típico de complejidad lineal es un bucle que recorre todos los elementos de una lista para calcular su suma o buscar un elemento específico. En estos casos, cada elemento es procesado una sola vez, lo que resulta en una ejecución eficiente y predecible.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "block",
+            "fields": {
+              "id": "1783285460090w0db9v",
+              "code": "def sum_list_elements(arr):\n    \"\"\"\n    Función con complejidad O(n) para sumar todos los elementos de un arreglo.\n    El tiempo de ejecución crece linealmente con el tamaño del arreglo.\n    \"\"\"\n    total = 0\n    for element in arr:\n        total += element\n    return total\n\n# Ejemplos de uso:\nmy_list_small = [1, 2, 3, 4, 5]\nmy_list_large = [i for i in range(100000)]\n\nprint(f'Suma de lista pequeña: {sum_list_elements(my_list_small)}\")\nprint(f'Suma de lista grande: {sum_list_elements(my_list_large)}\")",
+              "language": "typescript",
+              "blockType": "code-block"
+            },
+            "format": "",
+            "indent": 0,
+            "version": 2
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Este ejemplo de ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "sum_list_elements",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " muestra cómo un algoritmo con complejidad O(n) procesa cada elemento una vez. El tiempo total requerido aumenta directamente en proporción al número de elementos en la lista, haciendo que la ejecución sea predecible y eficiente para muchos casos de uso.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Complejidad lineal logarítmica en algoritmos de ordenamiento",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La complejidad lineal logarítmica O(n log n) se presenta en algoritmos que combinan recorridos y divisiones. Este tipo de complejidad es común en algoritmos de ordenamiento eficientes.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Explicación de O(n log n) mediante divisiones y combinaciones",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Algunos algoritmos de ordenamiento, como el Merge Sort, utilizan un enfoque de dividir y conquistar. Aquí, los datos se dividen repetidamente en listas más pequeñas hasta que son fácilmente ordenables. Luego, se combinan estas listas. El resultado es un crecimiento en el tiempo de ejecución de O(n log n), que es mucho más eficiente que el de otras complejidades como O(n^2).",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "block",
+            "fields": {
+              "id": "1783285460090ehhohi",
+              "code": "def merge_sort_nlogn(arr):\n    if len(arr) > 1:\n        mid = len(arr) // 2\n        L = arr[:mid]\n        R = arr[mid:]\n\n        merge_sort_nlogn(L)\n        merge_sort_nlogn(R)\n\n        i = j = k = 0\n\n        while i < len(L) and j < len(R):\n            if L[i] < R[j]:\n                arr[k] = L[i]\n                i += 1\n            else:\n                arr[k] = R[j]\n                j += 1\n            k += 1\n\n        while i < len(L):\n            arr[k] = L[i]\n            i += 1\n            k += 1\n\n        while j < len(R):\n            arr[k] = R[j]\n            j += 1\n            k += 1\n\n# Ejemplo de uso\ndata_nlogn = [12, 11, 13, 5, 6, 7]\nprint(\"Arreglo original (O(n log n)):\", data_nlogn)\nmerge_sort_nlogn(data_nlogn)\nprint(\"Arreglo ordenado (O(n log n)):\", data_nlogn)",
+              "language": "typescript",
+              "blockType": "code-block"
+            },
+            "format": "",
+            "indent": 0,
+            "version": 2
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Este ejemplo de ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "merge_sort_nlogn",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " en Python demuestra un algoritmo con complejidad O(n log n). Al dividir el problema repetidamente y luego combinar las soluciones, se logra una eficiencia superior a los algoritmos cuadráticos, siendo ideal para ordenar grandes volúmenes de datos.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Complejidad cuadrática y bucles anidados",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Los algoritmos de complejidad cuadrática tienen un comportamiento exponencial al procesar listas o conjuntos de datos, cuyas relaciones son comparadas entre sí. Este tipo de complejidad es común en algoritmos que involucran bucles anidados.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Ejemplo con comparación de elementos en arreglos",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Un ejemplo típico sería un algoritmo que compara todos los elementos de un arreglo con cada otro elemento. El tiempo de ejecución se incrementa cuadráticamente, es decir, si se tiene una lista de n elementos, el tiempo de ejecución asciende a O(n^2), haciendo que este tipo de algoritmo sea menos eficiente para listas grandes.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "block",
+            "fields": {
+              "id": "1783285460090jayy3h",
+              "code": "def print_all_pairs(arr):\n    \"\"\"\n    Función con complejidad O(n^2) para imprimir todos los pares posibles de un arreglo.\n    El tiempo de ejecución crece cuadráticamente con el tamaño del arreglo.\n    \"\"\"\n    n = len(arr)\n    for i in range(n):\n        for j in range(n):\n            print(f\"({arr[i]}, {arr[j]})\")\n\n# Ejemplos de uso:\nmy_list_small = [1, 2, 3]\nprint(\"Pares para lista pequeña:\")\nprint_all_pairs(my_list_small)\n\n# Para una lista más grande, esto sería significativamente más lento.\n# print_all_pairs([i for i in range(1000)]) # ¡Descomentar con precaución!",
+              "language": "typescript",
+              "blockType": "code-block"
+            },
+            "format": "",
+            "indent": 0,
+            "version": 2
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Este ejemplo de ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "print_all_pairs",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " ilustra la complejidad O(n^2) mediante bucles anidados. Cada elemento se compara con cada otro elemento, lo que hace que el tiempo de ejecución escale rápidamente con el tamaño de la entrada, volviéndose ineficiente para conjuntos de datos grandes.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Complejidades exponencial y factorial, sus causas y riesgos",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Las complejidades exponencial y factorial se observan en problemas más complejos y, por lo general, son menos eficientes debido a su rápido crecimiento. Estas complejidades suelen ser desaconsejadas en la práctica debido a los altos requerimientos computacionales.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Crecimiento de O(2^n) y generación de combinaciones",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La complejidad O(2^n) surge típicamente en algoritmos que generan todas las combinaciones posibles de un conjunto. A medida que se añaden elementos a la entrada, el tiempo de ejecución se duplica, lo que resulta en un rendimiento muy pobre a gran escala.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "block",
+            "fields": {
+              "id": "1783285460090gfoa2",
+              "code": "def fibonacci_exponential(n):\n    \"\"\"\n    Función con complejidad O(2^n) para calcular el n-ésimo número de Fibonacci.\n    El tiempo de ejecución crece exponencialmente con 'n'.\n    \"\"\"\n    if n <= 1:\n        return n\n    else:\n        return fibonacci_exponential(n-1) + fibonacci_exponential(n-2)\n\n# Ejemplos de uso (¡cuidado con valores altos de n!):\nprint(f'Fibonacci(5): {fibonacci_exponential(5)}\")\nprint(f'Fibonacci(10): {fibonacci_exponential(10)}\")\n# print(f'Fibonacci(30): {fibonacci_exponential(30)}\") # Descomentar con precaución, puede tardar",
+              "language": "typescript",
+              "blockType": "code-block"
+            },
+            "format": "",
+            "indent": 0,
+            "version": 2
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "El cálculo recursivo del número de Fibonacci (",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "fibonacci_exponential",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": ") es un claro ejemplo de complejidad O(2^n). Cada llamada a la función genera dos nuevas llamadas, duplicando el trabajo con cada incremento de ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "n",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": ". Esto demuestra por qué los algoritmos exponenciales son imprácticos para entradas medianas o grandes.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Complejidad factorial y permutaciones totales",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La complejidad factorial, O(n!), se encuentra en situaciones donde se buscan todas las permutaciones posibles de una lista. Esto significa que en cada paso se generan múltiples combinaciones, lo que hace que el crecimiento del tiempo de ejecución sea extremadamente alto, rápidamente volviéndose impracticable para listas relativamente cortas.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "3. Análisis práctico con ejemplos y ejercicios resueltos",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "El análisis práctico de algoritmos permite comprender cómo se comportan en escenarios reales. Se mostrarán ejemplos ilustrativos y ejercicios que faciliten el entendimiento de la ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "/blog/cs-fundamentals/complejidad-algoritmica",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "complejidad algorítmica",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": " mediante casos concretos.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Ejemplos ilustrativos de algoritmos con diferentes crecimientos",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Para entender cómo se manifiesta la complejidad en diferentes algoritmos, se presentan ejemplos que abarcan desde aquellos con crecimiento constante hasta los de tipo exponencial y factorial. Cada ejemplo ilustrará un caso específico de uso y el impacto en el rendimiento del algoritmo según el tamaño de la entrada.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Uso de funciones en Python para cálculos de complejidad",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Un enfoque práctico en la programación es utilizar lenguajes como Python para implementar ejemplos que demuestren cómo la notación Big O se aplica a funciones específicas. Por ejemplo, al definir una función que evalúe la suma de una lista, el tiempo de ejecución puede variar dependiendo de la complejidad de la función desarrollada:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Función lineal: suma todos los elementos de la lista, utilizando O(n).",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Función cuadrática: suma cada elemento comparándolo con todos los otros, ubicándose en O(n^2).",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Implementando estos ejemplos en Python, los desarrolladores pueden observar directamente la relación entre el tiempo de ejecución y el crecimiento del tamaño de entrada.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Ejercicios de cálculo de notación Big O en distintos escenarios",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Los ejercicios son una excelente manera de reforzar el aprendizaje sobre la complejidad algorítmica y su impacto práctico. A través de diferentes escenarios, los participantes podrán practicar el cálculo de la notación Big O.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Determinar complejidad en función del tamaño de entrada",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Un ejercicio común es analizar la complejidad de algoritmos que realizan búsquedas o recorridos en una lista. Por ejemplo:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Calcular la complejidad de una búsqueda lineal dentro de un arreglo de longitud n, con un rendimiento O(n).",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Analizar el resultado de una búsqueda binaria en un arreglo ordenado, cuyo tiempo de ejecución es O(log n).",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "De esta forma, se fomenta el entendimiento de cómo el tamaño de la entrada afecta directamente la eficiencia del algoritmo.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Ejercicios con bucles simples y anidados",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Para profundizar en la comprensión de la notación, puedes proponer ejercicios que incluyan tanto bucles simples como anidados. Ejemplos típicos incluyen:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Definir un algoritmo que suma todos los elementos en una lista utilizando un único bucle, analizando su complejidad O(n).",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Crear un algoritmo que compare todos los elementos de un arreglo con cada uno de los demás, establecido en O(n^2).",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Estos ejercicios pueden ser evaluados en términos de tiempo de ejecución y espacio requerido, proporcionando un análisis práctico y significativo de la complejidad.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Casos de estudio: evaluación y optimización de código",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Los casos de estudio permiten explorar implementaciones reales de algoritmos y su evaluación. Al examinar ejemplos específicos, puedes identificar diferentes maneras de optimizar el código, teniendo en cuenta su complejidad inicial y la forma en que esta puede mejorarse.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Examinar el caso de un algoritmo de ordenamiento, como el Quicksort, que en promedio tiene complejidad O(n log n), permite discutir cómo puedes implementar de manera más eficiente mediante la elección de pivotes adecuados. Esto ejemplifica la importancia de la optimización en el diseño algorítmico.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Revisar instancias de código que presentan una alta complejidad, como un algoritmo de fuerza bruta para la resolución de problemas de permutaciones, puede ser un gran ejercicio para demostrar cómo mejorar la eficiencia y reducir el tiempo de ejecución, bajando de O(n!) a O(n^2) utilizando estrategias de memorización.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Visualización y comparación de crecimiento en Big O",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La visualización del crecimiento en notación Big O resulta clave para entender cómo se comportan los algoritmos a medida que aumenta el tamaño de la entrada. A través de gráficos y comparaciones, puedes identificar rápidamente las eficiencias y deficiencias en el desempeño de diferentes algoritmos.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Gráficas típicas para complejidades comunes",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Las gráficas son herramientas efectivas para representar la complejidad de los algoritmos. A continuación se presentan algunos ejemplos de cómo lucen diferentes curvas según la notación Big O:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(1)",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": ": Representa una línea horizontal en el gráfico, indicando que el tiempo de ejecución se mantiene constante, sin importar el aumento del tamaño de la entrada.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(log n)",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": ": Esta curva sube lentamente, mostrando que el tiempo requerido aumenta de manera logarítmica, ideal para ",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "type": "link",
+                    "fields": {
+                      "url": "https://juan-tech.com/blog/cs-fundamentals/arboles-binarios",
+                      "newTab": false,
+                      "linkType": "custom"
+                    },
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "mode": "normal",
+                        "text": "algoritmos de búsqueda",
+                        "type": "text",
+                        "style": "",
+                        "detail": 0,
+                        "format": 0,
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " como la búsqueda binaria.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(n)",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": ": Se presenta como una línea diagonal, lo que indica un crecimiento lineal directo a medida que se incrementa la entrada.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(n log n)",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": ": Aquí, la curva inicia creciendo más despacio que O(n^2) pero más dinámicamente que O(n), convirtiéndose en una opción popular para algoritmos de ordenamiento.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(n^2)",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": ": Muestra un aumento exponencial, donde la curva se eleva rápidamente, especialmente para algoritmos con bucles anidados.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "O(2^n)",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " y ",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": "O(n!)",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": ": Ambas funciones tienen un crecimiento extremadamente rápido, con curvas que demuestran una escalabilidad desmesurada, convirtiéndolas en opciones poco prácticas para entradas grandes.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Interpretación de curvas logarítmicas, lineales y polinomiales",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "El análisis de las diferentes curvas es clave para comprender cómo los algoritmos se comportan en función del tamaño de los datos de entrada. Las curvas logarítmicas son ideales para sistemas que requieren una eficiencia casi óptima, mientras que las lineales son adecuadas para situaciones cotidianas que no exigen un rendimiento excepcional. Por su parte, las polinómicas, especialmente en el contexto de O(n^2), son menos deseables debido a su rápida escalabilidad en términos de tiempo de ejecución.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Impacto del crecimiento exponencial y factorial en tiempo y espacio",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Las complejidades exponenciales y factoriales son particularmente preocupantes en el ámbito de la eficiencia algorítmica. La función O(2^n) denota un tiempo de ejecución que se duplica con cada elemento añadido a la entrada, lo que hace que estos algoritmos sean prácticamente inviable para conjuntos de datos grandes. Por su parte, la complejidad factorial O(n!) representa un aumento drástico en el tiempo requerido a medida que se añaden elementos, afectando tanto el tiempo como el espacio de memoria usado. Esta comprensión es clave para la selección de algoritmos adecuados en función del contexto específico en el cual se aplicarán.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Factores que afectan el rendimiento más allá de la notación Big O",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "El rendimiento de los algoritmos no solamente puedes medir a través de la notación Big O. Existen varios elementos que influyen en la ejecución real de un algoritmo, y muchos de ellos pueden tener un impacto significativo en la velocidad y el uso de recursos.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Influencia del hardware y sistema operativo",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La configuración del hardware y el sistema operativo en el que se ejecuta un algoritmo juegan un papel fundamental en su rendimiento. El tipo de procesador, la cantidad de memoria RAM y la arquitectura del sistema son factores críticos. Un procesador más rápido puede ejecutar operaciones en menos tiempo, mientras que una mayor cantidad de RAM permite almacenar más datos en memoria, lo que reduce el acceso a disco.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Por ejemplo, los algoritmos que requieren operaciones intensivas en datos pueden beneficiarse considerablemente de un hardware optimizado. Sin embargo, un sistema que tiene limitaciones de hardware puede hacer que incluso los algoritmos más eficientes se comporten lentamente. Además, el sistema operativo es responsable de la gestión de recursos y puede introducir latencias que no están reflejadas en la notación Big O.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Relación entre datos de entrada y eficiencia real",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "No todos los conjuntos de datos tienen la misma distribución ni características. Los datos de entrada pueden variar significativamente en su estructura, lo que afecta la eficiencia de un algoritmo. Por ejemplo, un algoritmo de ordenamiento puede tener un rendimiento significativamente diferente dependiendo de si los datos están ya ordenados, desordenados o en un estado casi ordenado.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Los algoritmos de búsqueda pueden rendir mejor con datos que están ordenados, como es el caso de la búsqueda binaria, que falla en su eficiencia si se utilizan datos no ordenados.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Igualmente, algunos algoritmos se diseñan para trabajar eficientemente con ciertos patrones de datos, y su rendimiento puede degradarse si se les presenta entradas fuera de las expectativas.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Diferencias entre implementaciones y optimización práctica",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La forma en que se implementa un algoritmo puede influir drásticamente en su rendimiento. Diferentes lenguajes de programación, bibliotecas y técnicas de codificación pueden llevar a variaciones significativas en la ejecución. Un mismo algoritmo puede tener distintas implementaciones con diferentes resultados de rendimiento, lo que sugiere que la optimización práctica es clave.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Es posible que una implementación más sencilla sea más fácil de comprender, pero no siempre es la más eficiente. Los desarrolladores a menudo deben equilibrar la legibilidad del código con la necesidad de mejorar el rendimiento. La optimización puede incluir técnicas como la reducción de operaciones innecesarias, la elección de ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "/blog/cs-fundamentals/data-structures",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "estructuras de datos",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": " más adecuadas o la paralelización de procesos.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "La reutilización de resultados previos mediante ",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "type": "link",
+                    "fields": {
+                      "url": "https://juan-tech.com/blog/cs-fundamentals/dynamic-programming",
+                      "newTab": false,
+                      "linkType": "custom"
+                    },
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "mode": "normal",
+                        "text": "memoización",
+                        "type": "text",
+                        "style": "",
+                        "detail": 0,
+                        "format": 0,
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " o almacenamiento en caché puede ser clave en ciertos contextos.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Implementar algoritmos de manera que se minimicen las llamadas a funciones costosas o que se agrupe el procesamiento puede mejorar el rendimiento.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Consideraciones prácticas y el impacto de los factores constantes",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Si bien la notación Big O es una excelente herramienta teórica para comprender la escalabilidad, en el mundo real, los \"factores constantes\" también juegan un papel. Un algoritmo O(n) con un factor constante muy alto (debido a una implementación deficiente o un lenguaje de programación lento) podría ser más lento en la práctica para entradas pequeñas o medianas que un algoritmo O(n^2) con un factor constante muy bajo.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Esto significa que:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Lenguaje de programación y compilador/intérprete:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Un mismo algoritmo implementado en C++ (lenguaje compilado y de bajo nivel) generalmente se ejecutará más rápido que en Python (lenguaje interpretado y de alto nivel), aunque ambos tengan la misma complejidad Big O. Esto debes a que las operaciones básicas en C++ suelen ser más rápidas.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Optimización del hardware:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Las cachés del procesador, la velocidad de la memoria RAM y otras optimizaciones a nivel de hardware pueden hacer que un algoritmo se comporte mejor de lo esperado en la teoría, o peor si el hardware no es el ideal.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Implementación específica:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Pequeños detalles en cómo se escribe el código (por ejemplo, evitar la creación de objetos innecesarios, usar estructuras de datos nativas de manera eficiente) pueden reducir los factores constantes y mejorar el rendimiento real sin cambiar la complejidad Big O.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Por lo tanto, al elegir un algoritmo, es clave considerar tanto su complejidad asintótica (Big O) como los factores constantes relevantes para el entorno de ejecución y los requisitos específicos del problema.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Aplicaciones comunes de la notación Big O en algoritmos",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La notación Big O es clave en el análisis de algoritmos. Sus aplicaciones son variadas, especialmente en algoritmos de búsqueda y ordenamiento, donde la eficiencia es clave.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Uso en algoritmos de búsqueda y ordenamiento populares",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Los algoritmos de búsqueda y ordenamiento son esenciales en el manejo de datos. Su rendimiento puede variar significativamente dependiendo de la notación Big O asociada.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Búsqueda binaria versus búsqueda lineal",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La búsqueda binaria es un método más eficiente que la búsqueda lineal. Mientras que la búsqueda lineal tiene una complejidad de O(n), lo que significa que en el peor de los casos podría requerir examinar todos los elementos de una lista, la búsqueda binaria opera en O(log n), ya que este algoritmo reduce a la mitad la cantidad de elementos con cada comparación. Este enfoque requiere que los datos estén previamente ordenados, lo que es un factor a considerar al elegir el método a implementar.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Algoritmos eficientes basados en O(n log n)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Muchos algoritmos de ordenamiento eficientes, como el Merge Sort y el Heap Sort, tienen una complejidad de O(n log n). Este tipo de crecimiento es aceptable y a menudo preferible para conjuntos de datos grandes. Aplicar estos algoritmos permite una optimización del tiempo de ejecución en comparación con métodos más simples, como el Bubble Sort, que tienen una complejidad de O(n^2). Utilizar un algoritmo eficiente puede reducir drásticamente el tiempo necesario para procesar grandes volúmenes de datos.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Evaluación de algoritmos en funciones del tamaño de datos",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Evaluar algoritmos implica analizar su complejidad, y también su efectividad en función del tamaño de la entrada. La notación Big O permite anticipar el comportamiento de los algoritmos a medida que aumenta el volumen de los datos. Ponderar cómo se comporta una función en relación con sus entradas es clave para determinar qué método utilizar.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Consideraciones para elegir algoritmos según el problema y entrada",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La elección del algoritmo correcto depende del contexto del problema. Diferentes escenarios requieren distintos enfoques; por ejemplo, si se necesita realizar búsquedas frecuentes en un conjunto de datos estáticos, la búsqueda binaria podría ser la mejor opción. En cambio, para listas que cambian constantemente, la elección de un algoritmo de ordenamiento puede variar en función de su eficiencia en el promedio de casos. Algunas consideraciones incluyen:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "El tamaño de los datos: Algoritmos que son eficientes en pequeña escala pueden no ser apropiados para volúmenes grandes.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "La naturaleza de los datos: Datos ya ordenados pueden beneficiarse de algoritmos que asumen esta disposición.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Los recursos disponibles: Limitaciones de hardware o memoria pueden influir en la elección del algoritmo más adecuado.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Cuando eliges el algoritmo con esta información en la mano, en vez de por costumbre, la diferencia en rendimiento y en uso de recursos se nota, y se nota rápido.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          }
+        ],
+        "direction": "ltr"
+      }
+    },
+    "heroImage": null,
+    "author": 1,
+    "categories": [
+      4
+    ],
+    "publishedAt": "2026-02-10T00:00:00.000Z",
+    "slug": "big-o-notation",
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    },
+    "updatedAt": "2026-11-15T03:44:29.774Z",
+    "createdAt": "2026-07-10T02:13:46.410Z",
+    "_status": "published"
+  },
+  "en": {
+    "id": 72,
+    "title": "Big O Notation 2026: Mastering Algorithmic Complexity",
+    "excerpt": "Big O notation is the language of algorithm efficiency. This guide covers how to analyze time and space complexity, helping you build scalable and performant code for modern technical systems.",
+    "content": {
+      "root": {
+        "type": "root",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Big-O notation is the tool I reach for whenever I need to reason about ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "/en/blog/cs-fundamentals/data-structures",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Algorithms and Data Structures",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": ", because it tells you exactly how time and space requirements grow as your input does. Once the size of your data starts climbing, understanding Big-O stops being academic and becomes the thing that decides whether your application stays fast.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "In this guide I cover the fundamentals, the different complexity classes, and the practical applications of Big-O notation, in a way that should work whether you're a working developer or just getting into programming.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Big-O Notation Fundamentals",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "What Big-O Is and Why It Exists",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Big-O is a mathematical notation used to describe how an algorithm's time and space requirements grow as the input size (n) increases. Its whole purpose is to give you a clear, precise way to classify algorithms so you can actually compare how different approaches hold up against each other. By focusing only on the terms that matter most as n grows, Big-O cuts through the noise and lets you make an informed call on which algorithm to use in production.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "How to Read Big-O Notation",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Reading Big-O notation comes down to recognizing how an algorithm's performance changes as the input grows. It describes asymptotic behavior, meaning it cares about the upper bound of the time or space an algorithm could need, not the exact number of operations. An algorithm with O(n) complexity scales linearly with the input size. One with O(n²) grows quadratically, so with large datasets its performance takes a real hit. Once you can identify which complexity class an algorithm falls into, comparing your options stops being guesswork.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Worst, Average, and Best Case",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Big-O is typically used to describe three cases: worst, average, and best. The worst case is the most unfavorable scenario, the maximum time an algorithm could take. Linear search, for example, has a worst case of O(n), meaning it might need to check every element if the one you're looking for happens to be last. The average case estimates efficiency under typical conditions, while the best case describes the fastest the algorithm could possibly run. That best case is rare enough in real applications that I wouldn't put much weight on it compared to the other two.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Big-O Complexity Classes",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Classifying complexities this way lets you categorize algorithms by execution time and space required, which makes comparing methods a lot more concrete than just eyeballing the code. Here are the main classes you'll run into in everyday algorithms.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Constant Time: O(1)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "O(1) means constant time, the execution time stays the same whether you're processing one element or a million. Accessing an array by index or checking whether a number is even are both O(1). It's the complexity you want whenever you actually have a choice.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Logarithmic Time: O(log n)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "O(log n) shows up in algorithms that cut the dataset down by a constant proportion on every iteration. Binary search is the classic example: it splits a sorted dataset in half at each step. That's a lot more efficient than linear search once the data gets big, because the number of extra steps you need grows painfully slowly compared to n itself.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Linear Time: O(n)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "An O(n) algorithm does work directly proportional to the input size, so double the data and you double the runtime. Linear search is the textbook example here, checking every element against the value you're looking for. It's slower than a logarithmic algorithm, but it's also everywhere in real applications, and there's nothing wrong with that.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Linearithmic Time: O(n log n)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "O(n log n) is what you get from efficient sorting algorithms like Quicksort and Mergesort. They split the data into smaller pieces (log n) and do n work across each of those pieces. That efficiency matters a lot once you need to sort large datasets, since it beats a quadratic algorithm by a wide margin.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Quadratic Time: O(n²)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "O(n²) usually comes from nested loops, where every element gets compared against every other one. Bubble sort is the standard example. It falls apart fast as the input grows, which is exactly why I wouldn't reach for it on anything beyond a small dataset.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Exponential Growth: O(2ⁿ)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "O(2ⁿ) shows up in algorithms that generate every possible combination of a dataset, the knapsack problem being the usual example. That exponential growth turns into unusable runtimes fast as the input grows, so it only makes sense when n stays small.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Factorial Time: O(n!)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "O(n!) is about as bad as it gets, and you'll find it in permutation problems like the traveling salesman problem. The runtime spirals out of control as the number of elements grows, so an algorithm at this complexity only works on genuinely tiny datasets.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "table",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": true,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Complejidad",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": true,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Notación Big-O",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": true,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Descripción",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Tiempo constante",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(1)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Ejecuta una tarea en tiempo constante, independientemente del tamaño de la input.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Tiempo logarítmico",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(log n)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Reduce a la mitad el tamaño del conjunto de datos en cada iteración.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Tiempo lineal",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(n)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "El tiempo de ejecución es proporcional al tamaño de la entrada.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Tiempo lineal logarítmico",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(n log n)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Común en algoritmos de ordenamiento eficientes.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Tiempo cuadrático",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(n²)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "El tiempo de ejecución se incrementa cuadráticamente con el tamaño de la input.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Crecimiento exponencial",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(2ⁿ)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Proporcional a dos elevado al tamaño de la input.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Tiempo factorial",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(n!)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Extremadamente ineficiente, aplicable a problemas de permutación.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Knowing how each of these complexity classes is classified is what lets you actually evaluate an algorithm's efficiency instead of just trusting it. That matters most the moment you're dealing with large-scale problems in real software.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Big-O in Practice",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Big-O has real, practical uses in software development and algorithm analysis, letting you optimize your code based on actual reasoning instead of a hunch. Getting comfortable with it is what makes it possible to evaluate efficiency and compare solutions in a way that means something. Here are a few of the applications I run into most.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Analyzing Search Algorithms",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Search algorithms come up constantly in programming and data handling, and applying Big-O is how you figure out which one holds up as your data volume grows. For example:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Linear search has O(n) complexity, meaning in the worst case it has to walk through the entire list to find an element.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Binary search, on the other hand, runs at O(log n) and is far more efficient on sorted lists, since it cuts the search space in half on every iteration.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Once you can read Big-O through examples like these, picking the right search algorithm for your application stops being guesswork.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Analyzing Sorting Algorithms",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Sorting data is one of the most common tasks in software development, and applying Big-O here is how you weigh data volume against execution time. Different sorting techniques land at very different complexities:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Bubble sort: O(n²), fine for small lists or when you just need something simple.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Quicksort and Mergesort: O(n log n), the better choice for large lists, since they keep performing well even as the dataset grows.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Running this kind of analysis makes choosing a sorting method easier, and it shows up directly in how fast and efficient your program ends up being.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Reading Big-O in Real Problems",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Understanding Big-O is what lets you tackle real-world problems with some confidence instead of trial and error. A few examples:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Picking the right algorithm to process large data volumes, like in e-commerce applications.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Optimizing search system performance, like the internal search engine on a website.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Evaluating how well different solutions scale, so you know the system can handle whatever growth comes next.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Big-O ends up being one of those tools that quietly pays for itself: once you know it, deploying effective, efficient solutions stops being luck and starts being a decision you can defend.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          }
+        ],
+        "direction": "ltr"
+      }
+    },
+    "heroImage": null,
+    "author": 1,
+    "categories": [
+      4
+    ],
+    "publishedAt": "2026-02-10T00:00:00.000Z",
+    "slug": "big-o-notation",
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    },
+    "updatedAt": "2026-11-15T03:44:29.774Z",
+    "createdAt": "2026-07-10T02:13:46.410Z",
+    "_status": "published"
+  }
+}

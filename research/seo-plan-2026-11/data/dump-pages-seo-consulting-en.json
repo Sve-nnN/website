@@ -1,0 +1,531 @@
+{
+  "id": 8,
+  "title": "SEO Consulting",
+  "content": {
+    "layout": [
+      {
+        "id": "6a53ff748f92aa73aaf6d3c5",
+        "variant": "listing",
+        "media": null,
+        "ringSide": "right",
+        "ringOpacity": 0.25,
+        "ringFlipX": false,
+        "blockName": null,
+        "links": [],
+        "breadcrumbs": [],
+        "blockType": "hero",
+        "title": "SEO Consulting",
+        "subtitle": "A one-off audit catches today's problem. A growing site needs someone monitoring, prioritizing, and adjusting the technical strategy continuously, not a snapshot taken once a year.",
+        "cityName": null,
+        "inlineStat": null
+      },
+      {
+        "id": "6a53ff748f92aa73aaf6d3c8",
+        "blockName": null,
+        "columns": [
+          {
+            "id": "6a53ff748f92aa73aaf6d3c6",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h2",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "The report goes stale, the site never stops changing",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "An audit report goes out of date fast. A site that changes every week, with releases, migrations, and content updates, needs someone tracking the SEO impact of each change, not a review that happens once a year.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Most SEO consultants only speak the content side of the language. When the problem lives in the code, like a botched migration or a deploy that broke rendering, those recommendations need translating to someone else, and that's where whole weeks get lost.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "content"
+      },
+      {
+        "id": "6a544f71140e75434aba4dd4",
+        "blockName": null,
+        "blockType": "serviceScopeCard",
+        "title": "Scope of this engagement",
+        "scope": "Ongoing monitoring of Search Console, rankings, and Core Web Vitals, with review of every release that could affect technical SEO before it ships.",
+        "outcome": "A technical roadmap that adjusts based on the site's real data, instead of a fixed plan that goes stale a month after it's written.",
+        "timeline": "Ongoing, scoped per engagement"
+      },
+      {
+        "id": "6a53ff748f92aa73aaf6d3cf",
+        "blockName": null,
+        "links": [
+          {
+            "id": "6a53ff748f92aa73aaf6d3ce",
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/contact",
+              "label": "Talk about consulting",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "callToAction",
+        "richText": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "text": "If your site changes constantly and you need someone watching technical SEO on an ongoing basis, let's talk about how to structure it.",
+                    "type": "text",
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      },
+      {
+        "id": "6a544f71140e75434aba4dd7",
+        "blockName": null,
+        "columns": [
+          {
+            "id": "6a544f71140e75434aba4dd5",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h3",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "What's included",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Ongoing technical strategy: a prioritized roadmap that adjusts based on what the data shows, not a fixed plan written once.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Search Console, rankings, and Core Web Vitals monitoring over time, to catch regressions before they turn into traffic drops.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Direct collaboration with your dev and marketing teams. I speak both technical languages, which is uncommon among consultants who only know the content side.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Review of every release or deploy with potential SEO impact (architecture changes, migrations, redesigns) before it ships, not after.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          },
+          {
+            "id": "6a544f71140e75434aba4dd6",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h3",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "How I work",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Cadence is set based on the site's size and rate of change: from monthly reviews to weekly involvement on projects with frequent releases.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Every cycle delivers prioritized findings and a clear report of what changed, what got implemented, and what impact it had. No dashboards nobody interprets.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Since I also build (Next.js, headless CMS), I can review pull requests or implement the technical changes directly, not just recommend them.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "content"
+      },
+      {
+        "id": "6a544f71140e75434aba4dd8",
+        "blockName": null,
+        "blockType": "clientLogosBlock",
+        "title": "Clients",
+        "clients": []
+      },
+      {
+        "id": "6a544f71140e75434aba4dd9",
+        "showRating": true,
+        "limit": 3,
+        "blockName": null,
+        "blockType": "testimonialsCarousel",
+        "title": "Testimonios"
+      },
+      {
+        "id": "6a544f71140e75434aba4dda",
+        "caseStudy": 14,
+        "blockName": null,
+        "blockType": "relatedCaseStudyBlock",
+        "title": "A real example of how I work",
+        "framingText": "There isn't a published case study for ongoing consulting yet, but here's a genuine example of how I approach working with clients."
+      },
+      {
+        "id": "6a544f71140e75434aba4ddf",
+        "blockName": null,
+        "faqs": [
+          {
+            "id": "6a544f71140e75434aba4ddb",
+            "question": "How is an ongoing consulting engagement structured?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "We set a cadence (monthly, biweekly, or weekly depending on need) with a clear scope for what gets reviewed each cycle. It's not an open-ended contract with no goals: every cycle has concrete deliverables, and scope can adjust over time.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f71140e75434aba4ddc",
+            "question": "How is this different from the technical audit?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "The audit is a point-in-time diagnostic focused on a specific moment. Consulting is continuous: monitoring, re-prioritizing, and reviewing changes over time, for sites that keep evolving and can't rely on a single snapshot.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f71140e75434aba4ddd",
+            "question": "Do you work directly with my dev team?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Yes, and that's where I add the most value versus a traditional consultant. Since I'm also a full-stack developer, I can review code, take part in architecture decisions, or implement changes myself, instead of just handing off recommendations the dev team has to translate.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f71140e75434aba4dde",
+            "question": "What's the minimum commitment?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "It depends on the project. We figure it out based on the site's current state and expected rate of change. There's no fixed package: the quote is scoped after understanding the context.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          }
+        ],
+        "blockType": "faq",
+        "title": "Frequently asked questions"
+      },
+      {
+        "id": "6a544f71140e75434aba4de1",
+        "blockName": null,
+        "links": [
+          {
+            "id": "6a544f71140e75434aba4de0",
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/contact",
+              "label": "Talk about consulting",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "callToAction",
+        "richText": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "text": "If your site changes constantly and you need someone watching technical SEO on an ongoing basis, let's talk about how to structure it.",
+                    "type": "text",
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      }
+    ]
+  },
+  "slug": "seo-consulting",
+  "targetKeyword": {
+    "en": null,
+    "es": null
+  },
+  "meta": {
+    "title": null,
+    "description": "Ongoing SEO consulting for teams that need someone who understands both the code and the rankings, no translation layer between agency and dev.",
+    "image": null
+  },
+  "updatedAt": "2026-07-17T03:19:30.674Z",
+  "createdAt": "2026-07-12T20:56:20.204Z",
+  "_status": "published"
+}

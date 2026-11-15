@@ -1,0 +1,109 @@
+{
+  "id": 1,
+  "columns": [
+    {
+      "id": "6a511f8cdd2028f384cdbb53",
+      "links": [
+        {
+          "id": "6a511f8cdd2028f384cdbb50",
+          "link": {
+            "type": "custom",
+            "newTab": false,
+            "url": "/blog",
+            "label": "Blog"
+          }
+        },
+        {
+          "id": "6a511f8cdd2028f384cdbb51",
+          "link": {
+            "type": "custom",
+            "newTab": false,
+            "url": "/case-studies",
+            "label": "Case Studies"
+          }
+        },
+        {
+          "id": "6a511f8cdd2028f384cdbb52",
+          "link": {
+            "type": "custom",
+            "newTab": false,
+            "url": "/authors",
+            "label": "Authors"
+          }
+        }
+      ],
+      "title": "Site"
+    },
+    {
+      "id": "6a511f8cdd2028f384cdbb56",
+      "links": [
+        {
+          "id": "6a511f8cdd2028f384cdbb54",
+          "link": {
+            "type": "custom",
+            "newTab": false,
+            "url": "/contact",
+            "label": "Contact me"
+          }
+        },
+        {
+          "id": "6a511f8cdd2028f384cdbb55",
+          "link": {
+            "type": "custom",
+            "newTab": false,
+            "url": "/search",
+            "label": "Search"
+          }
+        }
+      ],
+      "title": "Contact"
+    }
+  ],
+  "dynamicColumns": [
+    {
+      "id": "6a511f8cdd2028f384cdbb57",
+      "source": "latestPosts",
+      "limit": 5,
+      "title": "Latest posts"
+    },
+    {
+      "id": "6a511f8cdd2028f384cdbb58",
+      "source": "latestCaseStudies",
+      "limit": 5,
+      "title": "Latest case studies"
+    }
+  ],
+  "socialLinks": [
+    {
+      "id": "6a511f8cdd2028f384cdbb59",
+      "platform": "linkedin",
+      "url": "https://linkedin.com/in/juancangulo"
+    }
+  ],
+  "legalLinks": [
+    {
+      "id": "6a511f8cdd2028f384cdbb5a",
+      "href": "/privacy",
+      "label": "Privacy"
+    },
+    {
+      "id": "6a511f8cdd2028f384cdbb5b",
+      "href": "/terms",
+      "label": "Terms"
+    },
+    {
+      "id": "6a52e95d4362c60a51b19ce1",
+      "href": "/sitemap.html",
+      "label": "Sitemap"
+    },
+    {
+      "id": "6a9c82625d15f72665d362e9",
+      "href": "/stack",
+      "label": "My stack"
+    }
+  ],
+  "copyrightText": "© 2026 Juan Carlos Angulo. All rights reserved.",
+  "updatedAt": "2026-07-10T16:36:25.510Z",
+  "createdAt": "2026-07-10T16:36:25.510Z",
+  "globalType": "footer"
+}

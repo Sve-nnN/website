@@ -1,0 +1,4976 @@
+{
+  "es": {
+    "id": 65,
+    "title": "Programación Dinámica: Guía técnica de optimizaci...",
+    "excerpt": "La Programación Dinámica es una técnica avanzada de diseño algorítmico que optimiza la resolución de problemas complejos mediante la descomposición en subproblemas y el almacenamiento de sus resultados. Esta guía profundiza en los pilares de subestructura óptima y subproblemas superpuestos, comparando métodos de memoización y tabulación para maximizar la eficiencia en software de alto rendimiento.",
+    "content": {
+      "root": {
+        "type": "root",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "¿Alguna vez te has enfrentado a un problema tan grande que no sabías por dónde empezar? O peor aún, ¿resolviste un subproblema solo para darte cuenta de que tenías que resolverlo una y otra vez? La programación dinámica (PD) es una poderosa técnica que nos enseña a abordar estos desafíos de manera inteligente y eficiente. No se trata de un ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "https://juan-tech.com/blog/cs-fundamentals/pilas-y-colas",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "algoritmo",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": " específico, sino de una ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "metodología de diseño de ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "/blog/cs-fundamentals/data-structures",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Algoritmos y Estructuras de Datos",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": " que permite transformar soluciones recursivas ineficientes en soluciones óptimas, tanto en tiempo como en espacio.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Esta técnica se usa en campos que van desde la informática, con aplicaciones en optimización de rutas, inteligencia artificial y procesamiento de datos, hasta la economía, la biología y la ingeniería. Su esencia está en una observación simple pero profunda: muchos problemas complejos tienen estructuras que se repiten y soluciones óptimas que pueden construirse a partir de componentes más pequeños.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "En este artículo desgloso la Programación Dinámica: sus conceptos fundamentales, sus dos enfoques principales (memoización y tabulación), algoritmos clásicos y ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "https://juan-tech.com/blog/cs-fundamentals/data-structures",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "aplicaciones prácticas",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": ", todo con ejemplos de código claros para que puedas aplicarla en tus propios proyectos.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Fundamentos Clave de la Programación Dinámica",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La programación dinámica se asienta sobre dos pilares conceptuales que la distinguen de otras técnicas algorítmicas como \"divide y vencerás\". Entender estos fundamentos es el primer paso para dominar la PD.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "1. Subestructura Óptima: La Base de la Solución",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La subestructura óptima es la característica que nos dice que ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "una solución óptima a un problema puede ser construida a partir de las soluciones óptimas de sus subproblemas",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": ". Es como preparar una comida elaborada: si cada pequeño plato (subproblema) se cocina a la perfección (solución óptima del subproblema), la comida entera (problema original) también será óptima.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Ejemplo:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " Para encontrar el camino más corto entre dos ciudades en un mapa, si sabemos que el camino más corto de A a B pasa por un punto intermedio C, entonces el segmento de A a C debe ser el camino más corto entre A y C, y el segmento de C a B debe ser el camino más corto entre C y B. Si no fuera así, podríamos mejorar el camino total mejorando uno de los segmentos.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "2. Subproblemas Superpuestos: Evitando el Trabajo Redundante",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Los subproblemas superpuestos ocurren cuando ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "un algoritmo recursivo resuelve los mismos subproblemas una y otra vez",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": ". Aquí es donde la PD brilla, ya que almacena las soluciones de estos subproblemas para no tener que recalcularlas.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Imagina que estás construyendo un edificio y necesitas calcular la resistencia de ciertas vigas. Si cada vez que necesitas saber la resistencia de una viga específica, la calculas desde cero, perderías mucho tiempo. Los subproblemas superpuestos son como necesitar la resistencia de la misma viga varias veces. La PD te dice: \"Calcula la resistencia una vez, anótala, y la próxima vez que la necesites, simplemente consúltala.\"",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "3. Relaciones Recursivas: La Ecuación de Bellman",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Las relaciones recursivas, a menudo expresadas a través de una \"ecuación de Bellman\" (en un contexto más amplio de control óptimo), definen cómo la solución de un problema depende de las soluciones de sus subproblemas. Es la \"fórmula\" que describe la transición de un estado a otro o cómo se combina una solución óptima a partir de sus partes.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Por ejemplo, para calcular la N-ésima secuencia de Fibonacci, la relación recursiva es ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "F(n) = F(n-1) + F(n-2)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": ". La PD busca implementar esta relación de manera eficiente.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "4. Almacenamiento de Soluciones Intermedias: Memoización y Tabulación",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Aquí es donde los fundamentos teóricos se convierten en técnicas prácticas:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Memoización (Top-Down):",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Es una estrategia que combina la recursión con el almacenamiento de resultados. Cuando un subproblema se resuelve por primera vez, su resultado se guarda (se \"memoiza\"). Si el mismo subproblema se encuentra de nuevo, el valor almacenado se devuelve directamente, evitando el recálculo. Piensa en esto como una caché para tus ",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "type": "link",
+                    "fields": {
+                      "url": "https://juan-tech.com/blog/cs-fundamentals/recursividad",
+                      "newTab": false,
+                      "linkType": "custom"
+                    },
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "mode": "normal",
+                        "text": "funciones recursivas",
+                        "type": "text",
+                        "style": "",
+                        "detail": 0,
+                        "format": 0,
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "mode": "normal",
+                    "text": ".",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Tabulación (Bottom-Up):",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Implica resolver los subproblemas en un orden específico (usualmente de menor a mayor tamaño/complejidad) y almacenar sus resultados en una tabla (generalmente un array o matriz). Los problemas más grandes se resuelven utilizando los resultados ya computados de los subproblemas más pequeños. Es un enfoque iterativo que construye la solución final \"desde abajo hacia arriba\".",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Algoritmos Clásicos y Aplicaciones Comunes",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La Programación Dinámica es la espina dorsal de la solución de muchos problemas computacionales que, de otra forma, serían intratables por su alta complejidad.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "1. Cálculo de Secuencias y Series: El Ejemplo de Fibonacci",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La secuencia de Fibonacci es el ejemplo por excelencia para ilustrar la necesidad y los beneficios de la Programación Dinámica.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Definición:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "F(0) = 0",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": ", ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "F(1) = 1",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": ", ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "F(n) = F(n-1) + F(n-2)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " para ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "n > 1",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": ".",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Enfoque Recursivo Naive (sin PD)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Una implementación directa de la definición recursiva resulta en una ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "https://juan-tech.com/blog/cs-fundamentals/complejidad-algoritmica",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "complejidad temporal",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": " exponencial, debido a la repetición de cálculos.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "block",
+            "fields": {
+              "id": "1783285582603nuczxf",
+              "code": "def fibonacci_naive(n: int) -> int:\n    if n <= 1:\n        return n\n    return fibonacci_naive(n - 1) + fibonacci_naive(n - 2)\n\n# Ejemplo de ejecución\n# print(fibonacci_naive(10)) # Salida: 55\n# print(fibonacci_naive(35)) # Esto tomará mucho tiempo!",
+              "language": "typescript",
+              "blockType": "code-block"
+            },
+            "format": "",
+            "indent": 0,
+            "version": 2
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Análisis de Complejidad:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Tiempo:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " O(2^n) - Exponencial, muy ineficiente para ",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": "n",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 16,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " grandes.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Espacio:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " O(n) - Debido a la profundidad de la pila de llamadas recursivas.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Enfoque Top-Down con Memoización (PD)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Para evitar los recálculos, usamos un diccionario o array para almacenar los resultados ya computados.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "block",
+            "fields": {
+              "id": "17832855826033zql3",
+              "code": "def fibonacci_memoization(n: int, memo: dict = None) -> int:\n    if memo is None:\n        memo = {}\n    if n in memo:\n        return memo[n]\n    if n <= 1:\n        return n\n    \n    memo[n] = fibonacci_memoization(n - 1, memo) + fibonacci_memoization(n - 2, memo)\n    return memo[n]\n\n# Ejemplo de ejecución\n# print(fibonacci_memoization(10)) # Salida: 55\n# print(fibonacci_memoization(100)) # ¡Rápido!",
+              "language": "typescript",
+              "blockType": "code-block"
+            },
+            "format": "",
+            "indent": 0,
+            "version": 2
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Análisis de Complejidad:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Tiempo:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " O(n) - Cada subproblema se resuelve una sola vez.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Espacio:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " O(n) - Para almacenar los resultados memoizados y la pila de recursión.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h4",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Enfoque Bottom-Up con Tabulación (PD)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Construimos la solución de manera iterativa, \"desde abajo hacia arriba\".",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "block",
+            "fields": {
+              "id": "178328558260370ud5n",
+              "code": "def fibonacci_tabulation(n: int) -> int:\n    if n <= 1:\n        return n\n    \n    dp = [0] * (n + 1)\n    dp[0] = 0\n    dp[1] = 1\n    \n    for i in range(2, n + 1):\n        dp[i] = dp[i - 1] + dp[i - 2]\n        \n    return dp[n]\n\n# Ejemplo de ejecución\n# print(fibonacci_tabulation(10)) # Salida: 55\n# print(fibonacci_tabulation(100)) # ¡Muy rápido!",
+              "language": "typescript",
+              "blockType": "code-block"
+            },
+            "format": "",
+            "indent": 0,
+            "version": 2
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Análisis de Complejidad:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Tiempo:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " O(n) - Bucle simple de ",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": "n",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 16,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " iteraciones.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Espacio:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " O(n) - Para la tabla ",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": "dp",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 16,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": ". Sin embargo, podemos optimizar el espacio a O(1) ya que solo necesitamos los dos valores anteriores:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "type": "block",
+            "fields": {
+              "id": "1783285582603kvfl2l",
+              "code": "def fibonacci_tabulation_optimized_space(n: int) -> int:\n    if n <= 1:\n        return n\n    \n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    return b\n\n# Ejemplo de ejecución\n# print(fibonacci_tabulation_optimized_space(10)) # Salida: 55\n# print(fibonacci_tabulation_optimized_space(100)) # ¡Muy rápido y eficiente en espacio!",
+              "language": "typescript",
+              "blockType": "code-block"
+            },
+            "format": "",
+            "indent": 0,
+            "version": 2
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "2. Problema del Camino Más Corto en Grafos",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Aunque Dijkstra es un algoritmo voraz, la Programación Dinámica entra en juego en problemas de caminos más cortos cuando hay pesos negativos o cuando se buscan caminos con propiedades específicas (como el número de aristas). Algoritmos como Bellman-Ford y Floyd-Warshall utilizan principios de PD para encontrar caminos más cortos en ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "type": "link",
+                "fields": {
+                  "url": "https://juan-tech.com/blog/cs-fundamentals/data-structures",
+                  "newTab": false,
+                  "linkType": "custom"
+                },
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "grafos",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "mode": "normal",
+                "text": ", incluso con ciclos negativos en el caso de Bellman-Ford (detectándolos) o entre todos los pares de nodos en el caso de Floyd-Warshall.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "3. Multiplicación Óptima de Cadenas de Matrices",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Dado un conjunto de matrices, ¿cuál es el orden óptimo para multiplicarlas de manera que se minimice el número total de multiplicaciones escalares? La PD permite encontrar esta secuencia óptima al descomponer el problema en subproblemas más pequeños de multiplicación de subcadenas de matrices.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "4. Problema de la Mochila 0/1 (Knapsack Problem)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Este es un problema clásico de optimización combinatoria: dados una mochila con una capacidad máxima ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "W",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " y una lista de ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "n",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " ítems, cada uno con un peso ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "w_i",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " y un valor ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "v_i",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": ", ¿qué ítems debemos elegir para maximizar el valor total sin exceder la capacidad de la mochila? (Cada ítem solo puede usarse una vez, de ahí \"0/1\").",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La solución con PD implica construir una tabla ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "dp[i][w]",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " que representa el valor máximo que se puede obtener con los primeros ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "i",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " ítems y una capacidad de mochila ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "w",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": ".",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Recurrencia:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "\n",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "dp[i][w] = max(dp[i-1][w], v_i + dp[i-1][w - w_i])",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " si ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "w_i <= w",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " (si el ítem ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "i",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " cabe, se compara incluirlo o no).\n",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "dp[i][w] = dp[i-1][w]",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " si ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "w_i > w",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " (si el ítem ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "i",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 16,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " no cabe, no se incluye).",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Ejemplo de Pseudocódigo (Bottom-Up):",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "block",
+            "fields": {
+              "id": "1783285582603g9gb17",
+              "code": "def knapsack_01(weights: list[int], values: list[int], capacity: int) -> int:\n    n = len(weights)\n    # dp[i][w] will store the maximum value with first i items and capacity w\n    dp = [[0 for _ in range(capacity + 1)] for _ in range(n + 1)]\n\n    for i in range(1, n + 1):\n        for w in range(1, capacity + 1):\n            current_weight = weights[i - 1]\n            current_value = values[i - 1]\n\n            if current_weight <= w:\n                # Option 1: Don't include item i (take value from dp[i-1][w])\n                # Option 2: Include item i (take value from current_value + dp[i-1][w - current_weight])\n                dp[i][w] = max(dp[i - 1][w], current_value + dp[i - 1][w - current_weight])\n            else:\n                # Item i cannot be included\n                dp[i][w] = dp[i - 1][w]\n\n    return dp[n][capacity]\n\n# Ejemplo:\n# weights = [1, 2, 3]\n# values = [6, 10, 12]\n# capacity = 5\n# print(knapsack_01(weights, values, capacity)) # Salida: 22 (ítems con pesos 2 y 3, valores 10 y 12)",
+              "language": "typescript",
+              "blockType": "code-block"
+            },
+            "format": "",
+            "indent": 0,
+            "version": 2
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Análisis de Complejidad:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Tiempo:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " O(n * W) - Donde ",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": "n",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 16,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " es el número de ítems y ",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": "W",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 16,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " es la capacidad de la mochila.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Espacio:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " O(n * W) - Para la tabla ",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": "dp",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 16,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": ". Puede optimizarse a O(W) si solo se usa la fila anterior para calcular la actual.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "5. Alineación de Secuencias en Bioinformática",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "En campos como la genómica, la PD se utiliza para comparar y alinear secuencias de ADN o proteínas. El algoritmo de ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "Needleman-Wunsch",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " (para alineación global) y ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "Smith-Waterman",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " (para alineación local) son ejemplos prominentes que utilizan la PD para encontrar la mejor correspondencia, minimizando la cantidad de \"huecos\" o \"mismatches\" y asignando puntuaciones para determinar la similitud evolutiva o funcional.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Programación Dinámica Determinística vs. Probabilística",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La PD se aplica en diversos escenarios, que pueden clasificarse según la naturaleza de la información disponible.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Programación Dinámica Determinística",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Se aplica a problemas donde ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "todas las variables y los resultados de las decisiones son conocidos con certeza",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": ". Las decisiones se toman para optimizar una función objetivo a lo largo del tiempo, y el estado futuro es completamente predecible dada la decisión actual.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Características:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Ejemplo:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Planificación de la producción en una fábrica, donde se conoce la demanda, la capacidad de la máquina y los costos. La ecuación de Bellman aquí define el costo o beneficio óptimo para cada estado en cada etapa.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Caso práctico: Optimización de Inventario:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Una empresa necesita decidir cuánto inventario de un producto mantener cada mes para satisfacer una demanda conocida, minimizando los costos de almacenamiento y los costos por falta de existencias. La PD determinística puede calcular la política óptima de inventario para cada período.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Programación Dinámica Probabilística (o Estocástica)",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Se utiliza cuando ",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": "las transiciones de estado o los resultados de las decisiones son inciertos y se rigen por distribuciones de probabilidad",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": ". El objetivo es optimizar el valor esperado de la función objetivo.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Características:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Modelos de Decisión bajo Incertidumbre:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Un ejemplo común son los Procesos de Decisión de Markov (MDPs), donde un agente toma decisiones en un entorno donde los resultados son probabilísticos. La ecuación de Bellman se extiende para incorporar expectativas sobre resultados futuros.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Aplicaciones:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Construcción de Algoritmos Utilizando Programación Dinámica: El Proceso",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Diseñar un algoritmo de Programación Dinámica puede parecer intimidante al principio, pero siguiendo un enfoque estructurado, se vuelve mucho más manejable.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ol",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "number",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Optimización y Eficiencia en Programación Dinámica",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La Programación Dinámica busca resolver problemas de la manera más eficiente posible.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Técnicas para Reducir el Uso de Memoria",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Si bien la memoización y la tabulación usan memoria para almacenar resultados, es posible optimizar el espacio en muchos problemas:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Reutilización de Filas/Columnas:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " En problemas de tabla DP (como la mochila), a menudo solo se necesita la fila o columna anterior para calcular la actual. Esto reduce la ",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "type": "link",
+                    "fields": {
+                      "url": "https://juan-tech.com/blog/cs-fundamentals/complejidad-algoritmica",
+                      "newTab": false,
+                      "linkType": "custom"
+                    },
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "mode": "normal",
+                        "text": "complejidad espacial",
+                        "type": "text",
+                        "style": "",
+                        "detail": 0,
+                        "format": 0,
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " de O(N*W) a O(W) o O(N).",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Variables Simples:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Como vimos en Fibonacci, si la relación de recurrencia solo depende de un número fijo de estados anteriores, podemos usar unas pocas variables para almacenar esos estados en lugar de una tabla completa, logrando O(1) de espacio.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Memoización vs. Tabulación: Cuándo Usar Cuál",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Ambas son técnicas de PD, pero tienen sus casos de uso preferidos:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "table",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": true,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Característica",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": true,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Memoización (Top-Down)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": true,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Tabulación (Bottom-Up)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Enfoque",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 1,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Recursivo, de problemas grandes a pequeños.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Iterativo, de problemas pequeños a grandes.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Implementación",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 1,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Generalmente más intuitiva si el problema es naturalmente recursivo.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Requiere determinar el orden de resolución de subproblemas.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Llamadas",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 1,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Solo calcula los subproblemas que son estrictamente necesarios.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Calcula todos los subproblemas, incluso si algunos no son alcanzables.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Pila de Llamadas",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 1,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Usa la pila de recursión (puede causar ",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          },
+                          {
+                            "mode": "normal",
+                            "text": "Stack Overflow",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 2,
+                            "version": 1
+                          },
+                          {
+                            "mode": "normal",
+                            "text": ").",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "No usa la pila de recursión (más robusto para problemas grandes).",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Depuración",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 1,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "A menudo más fácil de depurar debido a la naturaleza recursiva.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Puede ser más difícil de depurar si el orden de los subproblemas es complejo.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Uso de Memoria",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 1,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(N) para la tabla de memoización + O(N) para la pila de recursión.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(N) para la tabla, puede optimizarse más fácilmente a O(1) o O(W).",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Recomendación:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 1,
+                "version": 1
+              },
+              {
+                "mode": "normal",
+                "text": " Si el problema es naturalmente recursivo y la lógica de transición es sencilla, la memoización puede ser más rápida de implementar. Si el problema tiene una estructura de dependencia clara entre subproblemas y el espacio es una preocupación, la tabulación suele ser preferible y más eficiente en sistemas de producción.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Balance entre Velocidad y Recursos en la Solución Final",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La elección entre una solución con PD y otra puede depender de las restricciones del problema:",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Tiempo vs. Espacio:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Una solución de PD casi siempre reducirá la complejidad temporal de exponencial a polinomial. Sin embargo, a menudo a expensas de un mayor uso de memoria para la tabla DP. En la optimización de Fibonacci a O(1) espacio, se logra lo mejor de ambos mundos para ese problema específico.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Restricciones:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Para ciertos problemas, el tamaño de la entrada puede hacer que una tabla DP sea demasiado grande. En esos casos, se buscan variantes más avanzadas o algoritmos heurísticos.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Recursos y Formatos para el Aprendizaje Continuo",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Dominar la Programación Dinámica requiere práctica constante y el acceso a buenos recursos.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Documentos y Guías Técnicas Recomendadas",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Libros Clásicos:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Artículos y Tutoriales en Línea:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Busca blogs de programación competitiva que a menudo tienen excelentes explicaciones y ejemplos visuales.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Plataformas y Herramientas para Practicar Algoritmos",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La práctica es el pilar para solidificar tu comprensión de la PD.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "LeetCode:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Ofrece cientos de problemas de PD, clasificados por dificultad y tipo. Es excelente para practicar la implementación.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "HackerRank / Codeforces:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Plataformas similares con una gran cantidad de desafíos algorítmicos.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "GeeksforGeeks:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Una referencia excelente con explicaciones detalladas y soluciones para muchos problemas de PD.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Conclusión",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "La Programación Dinámica es una de las herramientas más elegantes y poderosas en el arsenal de cualquier desarrollador o científico de datos. Al entender sus fundamentos de subestructura óptima y subproblemas superpuestos, y al dominar las técnicas de memoización y tabulación, puedes transformar la forma en que abordas y resuelves problemas complejos.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Desde la optimización de la secuencia de Fibonacci hasta la resolución del problema de la mochila o la alineación de secuencias genéticas, la PD ofrece un marco para encontrar soluciones eficientes donde la recursión ingenua fracasaría. Invierte tiempo en practicar, entender los patrones y verás cómo tu capacidad para diseñar algoritmos se eleva a un nuevo nivel.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          }
+        ],
+        "direction": "ltr"
+      }
+    },
+    "heroImage": null,
+    "author": 1,
+    "categories": [
+      4
+    ],
+    "publishedAt": "2026-02-11T00:00:00.000Z",
+    "slug": "programacion-dinamica",
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    },
+    "updatedAt": "2026-11-15T03:45:33.902Z",
+    "createdAt": "2026-07-10T02:10:18.505Z",
+    "_status": "published"
+  },
+  "en": {
+    "id": 65,
+    "title": "Dynamic Programming 2026: Efficiency in Complexity",
+    "excerpt": "Dynamic programming is the key to solving complex overlapping problems. Discover the principles of memoization and tabulation to reduce algorithmic complexity and build highly efficient systems in 2026.",
+    "content": {
+      "root": {
+        "type": "root",
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Dynamic programming is one of those techniques that turns a complex problem into something manageable, by reusing values you've already computed instead of recalculating them every time. It's a small idea with a huge payoff in efficiency.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "In this guide I go through the core concepts, practical applications, and benefits of dynamic programming, including how it applies to classic problems and the kind of DP challenges you'll run into on LeetCode. By the end you should have a real handle on how to design efficient algorithms with it.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Understanding Dynamic Programming",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Dynamic programming is a powerful approach that significantly improves the efficiency of an algorithm. Break a complex problem into simpler subproblems and you can optimize the whole process and cut out unnecessary recalculation. It's essential if you need to deliver high-performance solutions, and it shows up constantly in technical interviews, especially the kind of DP problems you'll see on LeetCode.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Core Concepts and Definitions",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "At its core, dynamic programming works by storing the results of previous computations so you can reuse them later, instead of recalculating the same thing over and over. It applies whenever a problem breaks down into subproblems that share sub-subproblems. Remember previously computed results, whether through memoization or tabulation, and you avoid all that redundant work, which is where the performance gain comes from.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "The Thought Process Behind Dynamic Programming",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "At the heart of dynamic programming is a simple principle: optimize by preserving what you've already computed. It requires a shift in thinking, from a purely recursive mindset to one focused on computational efficiency. Memoization, for instance, stores intermediate results in a data structure, which is what fixes the time complexity problem that plagues naive recursive methods. This thinking shows up across software development and it's particularly useful for the algorithmic challenges you'll hit in technical interviews, including the classic dynamic programming LeetCode problems.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Memoization vs. Tabulation",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Memoization and tabulation are the two main strategies in dynamic programming, and they work differently. Memoization is top-down: it caches the results of expensive function calls and reuses them when the same input shows up again, useful when the number of unique subproblems stays relatively small. Tabulation is bottom-up: you store subproblem solutions in a table, built iteratively from the smallest subproblems up. Either one can take an algorithm from exponential to polynomial time in the best cases.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Practical Applications and Examples",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Dynamic programming is a solid framework for solving a wide range of complex problems by breaking them into simpler subproblems. It shows up constantly in real-world applications and coding challenges, computational biology, finance, resource allocation, anywhere you need to optimize an algorithm.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Classic Problems and Their Dynamic Programming Solutions",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Some of the most classic problems in computing have a DP solution that turns something intimidating into something manageable. The Fibonacci sequence, the knapsack problem, and longest common subsequence are staples of any computer science curriculum, for good reason.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Fibonacci Sequence:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Utilizing a memoization approach, the nth Fibonacci number can be calculated in O(n) time instead of the exponential time of the naive recursive method.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Knapsack Problem:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " This problem finds the optimal way to fill a knapsack with items of varying weights and values, maximizing total value without exceeding weight limits, achieving O(nW) time complexity where n is the number of items and W is the maximum weight.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Longest Common Subsequence:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " This algorithm identifies the longest subsequence common to two sequences, efficiently computed in O(n",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": "m) time.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Recursive Approaches Enhanced by Memoization",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "One hallmark of dynamic programming is taking a recursive function and improving it with memoization. Store the results you've already computed and performance improves dramatically.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Take calculating the nth Fibonacci number: plain recursion without memoization ends up doing exponentially many calculations. Add memoization and each Fibonacci number gets computed once and stored, dropping the time complexity to a clean O(n).",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Efficient Problem Solving: Finding Pairs with Target Sum",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Another practical DP-adjacent application: finding two numbers in an array that sum to a target value. The naive approach, nested loops, lands you at O(n²). A hash map gets that down to O(n).",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Dynamic Programming LeetCode Challenges and Strategies",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "LeetCode has a huge collection of challenges that are genuinely good for practicing dynamic programming. Working through them sharpens both your algorithmic thinking and your actual coding chops.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Climbing Stairs:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Determine the number of distinct ways to climb a staircase, optimizing the solution using DP.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Coin Change:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Calculate the minimum number of coins required to achieve a specific amount, showcasing the power of tabulation.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "mode": "normal",
+                    "text": "Edit Distance:",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 1,
+                    "version": 1
+                  },
+                  {
+                    "mode": "normal",
+                    "text": " Measure how dissimilar two strings are by counting the minimum operations needed to transform one string into another.",
+                    "type": "text",
+                    "style": "",
+                    "detail": 0,
+                    "format": 0,
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "These challenges reinforce the principles of dynamic programming and prepare you for technical interviews at the same time, giving you concrete examples of the theory in practice.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Benefits and Implementation Considerations",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Using dynamic programming brings several real advantages to problem-solving efficiency in software development. Understand the benefits and the trade-offs, and you can judge when it actually applies, including the kind of challenges you'll see on dynamic programming LeetCode problems.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Time Complexity Improvements",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "One of the biggest benefits of dynamic programming is cutting time complexity through smart problem decomposition. Store subproblem results and reuse them, and you avoid redundant computation entirely. Instead of recalculating values like a naive Fibonacci algorithm does, DP gets you to linear time, O(n), just by storing intermediate results. That difference matters a lot on larger datasets or more complex algorithms, anywhere time constraints are tight.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "table",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": true,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Algorithm",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": true,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Time Complexity (Naive)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": true,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Time Complexity (Dynamic Programming)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Fibonacci Sequence",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(2^n)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(n)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "0/1 Knapsack Problem",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(2^n)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(nW)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "tablerow",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "Longest Common Subsequence",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(m*n)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "tablecell",
+                    "format": "",
+                    "header": false,
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "O(m*n)",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr"
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Code Maintainability and Debugging Ease",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Another advantage that doesn't get talked about enough: code maintainability and easier debugging. Memoization simplifies recursive calls and keeps track of previously calculated results, which cuts down the odds of errors creeping into deep recursion and leaves you with clearer, more manageable code. Breaking the algorithm into smaller subproblems also makes the logic more transparent, so when something does go wrong, you find and fix it faster.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h3",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Scalability Across Diverse Problem Domains",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "Dynamic programming applies across a huge range of problem domains, which is what makes it such a versatile tool in application development. From optimization problems in operations research to algorithmic challenges in competitive programming, DP techniques adapt to a lot of different scenarios. If you're working through dynamic programming LeetCode problems, that flexibility is exactly why it's worth mastering, it sharpens your skill set and your ability to deliver solid software solutions.",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "h2",
+            "type": "heading",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "mode": "normal",
+                "text": "See Also",
+                "type": "text",
+                "style": "",
+                "detail": 0,
+                "format": 0,
+                "version": 1
+              }
+            ],
+            "direction": "ltr"
+          },
+          {
+            "tag": "ul",
+            "type": "list",
+            "start": 1,
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "link",
+                    "fields": {
+                      "url": "https://juan-tech.com/en/blog/cs-fundamentals/data-structures",
+                      "newTab": false,
+                      "linkType": "custom"
+                    },
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "mode": "normal",
+                        "text": "Algorithms and Data Structures 2026: The Engineer's Foundation",
+                        "type": "text",
+                        "style": "",
+                        "detail": 0,
+                        "format": 0,
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              },
+              {
+                "type": "listitem",
+                "value": 1,
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "link",
+                    "fields": {
+                      "url": "https://juan-tech.com/en/blog/cs-fundamentals/complejidad-algoritmica",
+                      "newTab": false,
+                      "linkType": "custom"
+                    },
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "mode": "normal",
+                        "text": "Algorithm Complexity 2026: Evaluating Performance Limits",
+                        "type": "text",
+                        "style": "",
+                        "detail": 0,
+                        "format": 0,
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "listType": "bullet",
+            "direction": "ltr"
+          }
+        ],
+        "direction": "ltr"
+      }
+    },
+    "heroImage": null,
+    "author": 1,
+    "categories": [
+      4
+    ],
+    "publishedAt": "2026-02-11T00:00:00.000Z",
+    "slug": "programacion-dinamica",
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    },
+    "updatedAt": "2026-11-15T03:45:33.902Z",
+    "createdAt": "2026-07-10T02:10:18.505Z",
+    "_status": "published"
+  }
+}

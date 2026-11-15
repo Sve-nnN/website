@@ -90,4 +90,4 @@ echo
 echo "Ctrl-C para cerrar el túnel (el relay se borra solo al salir)."
 echo
 
-ssh -i "$SSH_KEY" -N -L "${LOCAL_PORT}:127.0.0.1:${RELAY_PORT}" "$VPS"
+ssh -i "$SSH_KEY" -o ServerAliveInterval=15 -o ServerAliveCountMax=6 -o ExitOnForwardFailure=yes -N -L "${LOCAL_PORT}:127.0.0.1:${RELAY_PORT}" "$VPS"

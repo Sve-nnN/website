@@ -1,0 +1,545 @@
+{
+  "id": 9,
+  "title": "Desarrollo Full-Stack con SEO integrado",
+  "content": {
+    "layout": [
+      {
+        "id": "6a53ff888f92aa73aaf6d3d0",
+        "variant": "listing",
+        "media": null,
+        "ringSide": "right",
+        "ringOpacity": 0.25,
+        "ringFlipX": false,
+        "blockName": null,
+        "links": [],
+        "breadcrumbs": [],
+        "blockType": "hero",
+        "title": "Desarrollo Full-Stack con SEO integrado",
+        "subtitle": "Un sitio armado sobre WordPress genérico y parchado con plugins de SEO llega con el techo puesto: JavaScript que bloquea el renderizado, Core Web Vitals que nunca terminan de arreglarse del todo, y datos estructurados agregados a último momento. El SEO no se parchea, se diseña.",
+        "cityName": null,
+        "inlineStat": null
+      },
+      {
+        "id": "6a53ff888f92aa73aaf6d3d3",
+        "blockName": null,
+        "columns": [
+          {
+            "id": "6a53ff888f92aa73aaf6d3d1",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h2",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "El SEO que se agrega al final siempre deja un techo",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Un sitio armado sobre un builder genérico y parchado con plugins de SEO llega con límites ya incorporados: JavaScript que bloquea el renderizado, imágenes sin optimizar, datos estructurados agregados a último momento sin entender el contenido real del sitio.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Esos límites no se arreglan instalando otro plugin. Se arreglan diseñando la arquitectura, el modelo de contenido y el renderizado desde el principio, con el SEO adentro de esa decisión y no como una capa que se agrega encima después.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "content"
+      },
+      {
+        "id": "6a544f87140e75434aba4de2",
+        "blockName": null,
+        "blockType": "serviceScopeCard",
+        "title": "Alcance de este desarrollo",
+        "scope": "Desarrollo en Next.js con CMS headless, con el modelo de datos, el renderizado y los datos estructurados pensados juntos desde el primer commit.",
+        "outcome": "Un sitio con Core Web Vitals en rango bueno desde el lanzamiento, sin la deuda técnica de performance que suele aparecer recién meses después.",
+        "timeline": "Continuo, ajustado a alcance"
+      },
+      {
+        "id": "6a53ff888f92aa73aaf6d3da",
+        "blockName": null,
+        "links": [
+          {
+            "id": "6a53ff888f92aa73aaf6d3d9",
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/contact",
+              "label": "Contarme tu proyecto",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "callToAction",
+        "richText": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "text": "Si tu próximo sitio necesita rendimiento y SEO desde el primer día, no como una promesa para \"después del lanzamiento\", hablemos.",
+                    "type": "text",
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      },
+      {
+        "id": "6a544f87140e75434aba4de5",
+        "blockName": null,
+        "columns": [
+          {
+            "id": "6a544f87140e75434aba4de3",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h3",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Qué incluye",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Desarrollo en Next.js con renderizado en servidor y streaming, para que Google (y cualquier crawler) reciba contenido completo desde la primera respuesta, sin depender de que el JavaScript del cliente termine de ejecutarse.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "CMS headless (Payload) con el SEO modelado en el schema desde el día uno: metadatos, datos estructurados y campos editoriales viven en la misma capa que el contenido, no como un plugin aparte que puede romperse en cualquier actualización.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Core Web Vitals como parte de la arquitectura, no una optimización posterior: presupuesto de JavaScript, estrategia de imágenes y carga diferida, decididos antes de escribir la primera línea de código de una página.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Datos estructurados (schema.org) diseñados junto con el modelo de datos, no retrofiteados con un plugin genérico que no entiende el contenido real del sitio.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Sin builders ni page builders de terceros que generan HTML inflado. Código propio, auditable, sin dependencias que se abandonan.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          },
+          {
+            "id": "6a544f87140e75434aba4de4",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h3",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Cómo trabajo",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "El SEO entra en la conversación desde el diseño de la arquitectura y el modelo de datos, no en una revisión final antes del lanzamiento.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Cada decisión técnica, de rutas, de renderizado, de estructura del CMS, se evalúa también por su impacto en crawleabilidad e indexación, además de por rendimiento y mantenibilidad.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Este mismo sitio, el que estás viendo ahora, es la prueba: construido en Next.js y Payload, con SEO técnico integrado desde el primer commit, no agregado después.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "content"
+      },
+      {
+        "id": "6a544f87140e75434aba4de6",
+        "blockName": null,
+        "blockType": "clientLogosBlock",
+        "title": "Clientes",
+        "clients": []
+      },
+      {
+        "id": "6a544f87140e75434aba4de7",
+        "showRating": true,
+        "limit": 3,
+        "blockName": null,
+        "blockType": "testimonialsCarousel",
+        "title": "Testimonios"
+      },
+      {
+        "id": "6a544f87140e75434aba4de8",
+        "caseStudy": 14,
+        "blockName": null,
+        "blockType": "relatedCaseStudyBlock",
+        "title": "Un caso real de cómo trabajo",
+        "framingText": "Este es el único caso publicado que tengo por ahora. No es específico de desarrollo full-stack, pero muestra bien cómo trabajo de punta a punta."
+      },
+      {
+        "id": "6a544f87140e75434aba4ded",
+        "blockName": null,
+        "faqs": [
+          {
+            "id": "6a544f87140e75434aba4de9",
+            "question": "¿Por qué Next.js/Payload en vez de WordPress?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Por control real sobre el renderizado: en Next.js decido exactamente qué se sirve al crawler y cuándo, sin depender de un plugin de caché o un tema de terceros. Payload permite modelar campos de SEO y datos estructurados directamente en el schema del contenido, en vez de vivir como configuración externa en un plugin que se puede desactivar o romper en cualquier actualización. El resultado es menos bloat, menos dependencias frágiles y control total sobre cada aspecto técnico que afecta el posicionamiento.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f87140e75434aba4dea",
+            "question": "¿Esto significa que hay que migrar todo el sitio existente?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "No necesariamente. Puedo evaluar tu stack actual y proponer una migración completa si el sitio está genuinamente limitado por su plataforma, o trabajar sobre mejoras puntuales si el problema es más acotado. La auditoría técnica es un buen primer paso para saber cuál aplica.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f87140e75434aba4deb",
+            "question": "¿Qué tan rápido queda un sitio construido así?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "El objetivo son Core Web Vitals en el rango \"bueno\" desde el lanzamiento, no como meta a perseguir después. Al decidir la estrategia de renderizado y el presupuesto de JavaScript desde el diseño, se evita la deuda técnica de performance que normalmente aparece meses después de un lanzamiento.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f87140e75434aba4dec",
+            "question": "¿Puedo ver ejemplos de proyectos reales construidos así?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Sí. Los casos de éxito en este mismo sitio muestran proyectos reales, no mockups. Y el propio sitio que estás navegando es un ejemplo vivo de esta arquitectura en producción.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          }
+        ],
+        "blockType": "faq",
+        "title": "Preguntas frecuentes"
+      },
+      {
+        "id": "6a544f87140e75434aba4def",
+        "blockName": null,
+        "links": [
+          {
+            "id": "6a544f87140e75434aba4dee",
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/contact",
+              "label": "Contarme tu proyecto",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "callToAction",
+        "richText": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "text": "Si tu próximo sitio necesita rendimiento y SEO desde el primer día, no como una promesa para \"después del lanzamiento\", hablemos.",
+                    "type": "text",
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      }
+    ]
+  },
+  "slug": "fullstack-development",
+  "targetKeyword": {
+    "en": null,
+    "es": null
+  },
+  "meta": {
+    "title": null,
+    "description": "Desarrollo full-stack con Next.js y Payload CMS, pensado desde el primer commit para que el sitio rinda bien y sea indexable sin parches después.",
+    "image": null
+  },
+  "updatedAt": "2026-07-17T03:19:50.999Z",
+  "createdAt": "2026-07-12T20:56:40.177Z",
+  "_status": "published"
+}

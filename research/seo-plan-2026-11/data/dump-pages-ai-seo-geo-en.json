@@ -1,0 +1,605 @@
+{
+  "id": 10,
+  "title": "AI SEO / GEO",
+  "content": {
+    "layout": [
+      {
+        "id": "6a53ff9c8f92aa73aaf6d3db",
+        "variant": "listing",
+        "media": null,
+        "ringSide": "right",
+        "ringOpacity": 0.25,
+        "ringFlipX": false,
+        "blockName": null,
+        "links": [],
+        "breadcrumbs": [],
+        "blockType": "hero",
+        "title": "AI SEO / GEO",
+        "subtitle": "More and more searches end in an AI-generated answer (ChatGPT, Perplexity, Google AI Overviews) with no click on any result at all. If your content isn't structured for those systems to read and cite, the answer cites your competitor instead.",
+        "cityName": null,
+        "inlineStat": null
+      },
+      {
+        "id": "6a53ff9c8f92aa73aaf6d3e0",
+        "blockName": null,
+        "columns": [
+          {
+            "id": "6a53ff9c8f92aa73aaf6d3dc",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h2",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "If your content isn't citable, someone else gets the mention",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "More and more searches end in an AI-generated answer with no click on any result at all. If your content is scattered across the page, without clear, self-contained passages, an AI system can't pull it out or cite it.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "More content isn't the fix. The fix is restructuring what already exists so it's readable by both traditional search engines and the answer engines that are changing how people search.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "content"
+      },
+      {
+        "id": "6a544f9c140e75434aba4df0",
+        "blockName": null,
+        "blockType": "serviceScopeCard",
+        "title": "Scope of this work",
+        "scope": "Structuring content to be citable, plus implementing and maintaining a machine-readable manifest (`llms.txt`/`llms-full.txt`).",
+        "outcome": "Content with a better shot at getting cited in ChatGPT, Perplexity, and Google AI Overviews answers, not just indexed.",
+        "timeline": "2 to 3 weeks"
+      },
+      {
+        "id": "6a53ff9c8f92aa73aaf6d3e7",
+        "blockName": null,
+        "links": [
+          {
+            "id": "6a53ff9c8f92aa73aaf6d3e6",
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/contact",
+              "label": "Talk about GEO",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "callToAction",
+        "richText": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "text": "If you want your content to start showing up cited in AI answers instead of just search results, let's talk about how to structure it.",
+                    "type": "text",
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      },
+      {
+        "id": "6a544f9c140e75434aba4df5",
+        "blockName": null,
+        "columns": [
+          {
+            "id": "6a544f9c140e75434aba4df1",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h3",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "What's included",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Structuring content so AI answer engines can extract and cite specific passages, not just index the page as a whole.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Implementation and maintenance of a machine-readable content manifest (`llms.txt`/`llms-full.txt`): a file that explicitly describes what the site contains, in a format AI agents can consume directly.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Structured data and semantic markup that reinforce content understanding for both traditional search engines and generative AI systems.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "This very site already implements this infrastructure: check /llms.txt and /llms-full.txt for a real, working example, not a promise.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          },
+          {
+            "id": "6a544f9c140e75434aba4df2",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h3",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "How I work",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "I start by auditing how citable your content is today: whether it's structured into clear, self-contained passages, or depends on context scattered across the page that an AI system can't reconstruct.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "I implement and maintain the `llms.txt`/`llms-full.txt` manifest, updating it as the site adds new content. It's not a file generated once and forgotten.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "I review existing semantic markup and structured data, tuning it to give content a better shot at getting cited, not just indexed.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          },
+          {
+            "id": "6a544f9c140e75434aba4df3",
+            "size": "full",
+            "enableLink": true,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "This is exactly how I structure this site's content manifest so AI agents can read it directly. A real example, not a mockup.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/llms.txt",
+              "label": "View /llms.txt",
+              "appearance": "default"
+            }
+          },
+          {
+            "id": "6a544f9c140e75434aba4df4",
+            "size": "full",
+            "enableLink": true,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "The extended version of the manifest, with the full detail of the site's content in a machine-readable format.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/llms-full.txt",
+              "label": "View /llms-full.txt",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "content"
+      },
+      {
+        "id": "6a544f9c140e75434aba4df6",
+        "blockName": null,
+        "blockType": "clientLogosBlock",
+        "title": "Clients",
+        "clients": []
+      },
+      {
+        "id": "6a544f9c140e75434aba4df7",
+        "showRating": true,
+        "limit": 3,
+        "blockName": null,
+        "blockType": "testimonialsCarousel",
+        "title": "Testimonios"
+      },
+      {
+        "id": "6a544f9c140e75434aba4df8",
+        "caseStudy": 14,
+        "blockName": null,
+        "blockType": "relatedCaseStudyBlock",
+        "title": "A real example of how I work",
+        "framingText": "I haven't put together a GEO-specific case study yet, so here's the one real case study I do have published, as a reference for how I work."
+      },
+      {
+        "id": "6a544f9c140e75434aba4dfd",
+        "blockName": null,
+        "faqs": [
+          {
+            "id": "6a544f9c140e75434aba4df9",
+            "question": "What is GEO and how is it different from traditional SEO?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "GEO (Generative Engine Optimization) is optimizing content so AI answer engines cite it directly in their responses, instead of just ranking it in a results list. It shares fundamentals with traditional SEO (structure, semantics, authority) but adds a new layer: making content readable and citable by systems that generate text, not just crawlers that index pages.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f9c140e75434aba4dfa",
+            "question": "How do you measure the success of a GEO strategy?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "It's a newer field than traditional SEO, so metrics are still maturing. Today you can track whether your brand gets cited in ChatGPT, Perplexity, or AI Overviews responses for relevant queries, and monitor referral traffic from those platforms when they report it. There's no single 'ranking' yet like in Google, but there are verifiable citation signals.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f9c140e75434aba4dfb",
+            "question": "What exactly is the llms.txt file?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "It's a plain-text manifest meant to help AI agents quickly understand what your site is about and where to find relevant content, without having to crawl all the HTML. It's an emerging standard, similar in spirit to robots.txt, but aimed at AI instead of traditional crawlers. This site already implements it: you can see it at /llms.txt.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f9c140e75434aba4dfc",
+            "question": "Does this replace traditional SEO?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "No, it complements it. Traditional SEO is still necessary to show up in conventional search results. GEO is an additional layer for the fastest-growing search channel: AI-generated answers.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          }
+        ],
+        "blockType": "faq",
+        "title": "Frequently asked questions"
+      },
+      {
+        "id": "6a544f9c140e75434aba4dff",
+        "blockName": null,
+        "links": [
+          {
+            "id": "6a544f9c140e75434aba4dfe",
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/contact",
+              "label": "Talk about GEO",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "callToAction",
+        "richText": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "text": "If you want your content to start showing up cited in AI answers instead of just search results, let's talk about how to structure it.",
+                    "type": "text",
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      }
+    ]
+  },
+  "slug": "ai-seo-geo",
+  "targetKeyword": {
+    "en": null,
+    "es": null
+  },
+  "meta": {
+    "title": null,
+    "description": "Optimization so your content gets cited by ChatGPT, Perplexity, and Google AI answers, on top of traditional search rankings.",
+    "image": null
+  },
+  "updatedAt": "2026-07-17T03:20:11.724Z",
+  "createdAt": "2026-07-12T20:57:00.362Z",
+  "_status": "published"
+}

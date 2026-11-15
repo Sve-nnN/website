@@ -439,35 +439,56 @@ async function stepPages(payload: P) {
       Object.assign(contents[0], mkContent(contents[0], [s.why]), { id: contents[0].id })
       Object.assign(contents[1], mkContent(contents[1], s.columns), { id: contents[1].id })
 
-      // Bloque de precio (solo auditoría), justo después del bloque "Qué incluye".
+      // El layout es compartido entre idiomas: el primer idioma que se escribe
+      // crea los bloques nuevos y el segundo solo rellena sus campos localizados
+      // en el mismo lugar. Añadir bloques otra vez los duplicaría.
       const tmpl = contents[1]
       const extra = (specs: Spec[][]) => mkContent(tmpl, specs)
-      let idx = layout.indexOf(contents[1]) + 1
-      if (s.price) layout.splice(idx++, 0, extra([s.price]))
+      const structureDone = contents.length === 2 + (s.price ? 1 : 0) + (s.guides ? 1 : 0)
+      const fill = (target: Anyobj, specs: Spec[][]) => Object.assign(target, mkContent(tmpl, specs), { id: target.id })
 
-      // Casos reales: el bloque existente toma el primero; el resto se inserta detrás.
-      const rcIdx = layout.findIndex((b) => b.blockType === 'relatedCaseStudyBlock')
-      const rc = layout[rcIdx]
-      const blocks = s.cases.map((c, i) => {
-        const id = caseIds.get(c.slug)
-        const { id: _id, ...rest } = rc // eslint-disable-line @typescript-eslint/no-unused-vars
-        return i === 0
-          ? { ...rc, caseStudy: id ?? rc.caseStudy, title: c.title, framingText: c.framing }
-          : { ...rest, caseStudy: id ?? rc.caseStudy, title: c.title, framingText: c.framing }
-      })
-      layout.splice(rcIdx, 1, ...blocks)
+      if (structureDone) {
+        const cIdx = layout.indexOf(contents[1])
+        if (s.price) fill(layout[cIdx + 1], [s.price])
+        const faqAt = layout.findIndex((b) => b.blockType === 'faq')
+        if (s.guides) {
+          const gl = guideList(l, s.guides.slugs)
+          if (gl.length) fill(layout[faqAt - 1], [[['h2', s.guides.title], ['ul', gl]]])
+        }
+        const rcs = layout.filter((b) => b.blockType === 'relatedCaseStudyBlock')
+        s.cases.forEach((c, i) => { if (rcs[i]) { rcs[i].title = c.title; rcs[i].framingText = c.framing } })
+        const faqB = layout[faqAt]
+        const base = faqB.faqs.length - s.faqAppend.length
+        s.faqAppend.forEach((f, i) => { Object.assign(faqB.faqs[base + i], { question: f.q, answer: lexical(f.a, tpl) }) })
+      } else {
+        // Bloque de precio (solo auditoría), justo después del bloque "Qué incluye".
+        let idx = layout.indexOf(contents[1]) + 1
+        if (s.price) layout.splice(idx++, 0, extra([s.price]))
 
-      // Guías relacionadas, antes de la FAQ.
-      if (s.guides) {
-        const faqIdx = layout.findIndex((b) => b.blockType === 'faq')
-        const gl = guideList(l, s.guides.slugs)
-        if (gl.length) layout.splice(faqIdx, 0, extra([[['h2', s.guides.title], ['ul', gl]]]))
+        // Casos reales: el bloque existente toma el primero; el resto se inserta detrás.
+        const rcIdx = layout.findIndex((b) => b.blockType === 'relatedCaseStudyBlock')
+        const rc = layout[rcIdx]
+        const blocks = s.cases.map((c, i) => {
+          const id = caseIds.get(c.slug)
+          const { id: _id, ...rest } = rc // eslint-disable-line @typescript-eslint/no-unused-vars
+          return i === 0
+            ? { ...rc, caseStudy: id ?? rc.caseStudy, title: c.title, framingText: c.framing }
+            : { ...rest, caseStudy: id ?? rc.caseStudy, title: c.title, framingText: c.framing }
+        })
+        layout.splice(rcIdx, 1, ...blocks)
+
+        // Guías relacionadas, antes de la FAQ.
+        if (s.guides) {
+          const faqIdx = layout.findIndex((b) => b.blockType === 'faq')
+          const gl = guideList(l, s.guides.slugs)
+          if (gl.length) layout.splice(faqIdx, 0, extra([[['h2', s.guides.title], ['ul', gl]]]))
+        }
+
+        // FAQ: se conservan las preguntas actuales y se agregan las nuevas.
+        const faq = layout.find((b) => b.blockType === 'faq')!
+        for (const f of s.faqAppend)
+          faq.faqs.push({ question: f.q, answer: lexical(f.a, tpl) })
       }
-
-      // FAQ: se conservan las preguntas actuales y se agregan las nuevas.
-      const faq = layout.find((b) => b.blockType === 'faq')!
-      for (const f of s.faqAppend)
-        faq.faqs.push({ question: f.q, answer: lexical(f.a, tpl) })
 
       const meta = { ...(doc.meta ?? {}), title: s.metaTitle, description: s.metaDescription }
       console.log(`  ${APPLY ? 'ESCRIBE' : 'escribiría'} pages/${slug} [${l}]  bloques ${doc.content.layout.length} → ${layout.length}\n      meta.title: ${s.metaTitle}`)

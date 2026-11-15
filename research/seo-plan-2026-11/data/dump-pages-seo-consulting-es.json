@@ -1,0 +1,531 @@
+{
+  "id": 8,
+  "title": "Consultoría SEO",
+  "content": {
+    "layout": [
+      {
+        "id": "6a53ff748f92aa73aaf6d3c5",
+        "variant": "listing",
+        "media": null,
+        "ringSide": "right",
+        "ringOpacity": 0.25,
+        "ringFlipX": false,
+        "blockName": null,
+        "links": [],
+        "breadcrumbs": [],
+        "blockType": "hero",
+        "title": "Consultoría SEO",
+        "subtitle": "Una auditoría puntual detecta el problema de hoy. Un sitio que crece necesita a alguien monitoreando, priorizando y ajustando la estrategia técnica de forma continua, no una foto tomada una vez al año.",
+        "cityName": null,
+        "inlineStat": null
+      },
+      {
+        "id": "6a53ff748f92aa73aaf6d3c8",
+        "blockName": null,
+        "columns": [
+          {
+            "id": "6a53ff748f92aa73aaf6d3c6",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h2",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "El informe envejece, el sitio no deja de cambiar",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Un informe de auditoría queda desactualizado rápido. Un sitio que cambia cada semana, con lanzamientos, migraciones y ajustes de contenido, necesita a alguien monitoreando el impacto SEO de cada cambio, no una revisión que se hace una vez al año.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "La mayoría de los consultores de SEO solo hablan el idioma del contenido. Cuando el problema vive en el código, como una migración mal hecha o un deploy que rompió el renderizado, esas recomendaciones tienen que traducirse a otra persona, y ahí es donde se pierden semanas enteras.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "content"
+      },
+      {
+        "id": "6a544f71140e75434aba4dd4",
+        "blockName": null,
+        "blockType": "serviceScopeCard",
+        "title": "Alcance de esta consultoría",
+        "scope": "Monitoreo continuo de Search Console, rankings y Core Web Vitals, con revisión de cada release que pueda afectar el SEO técnico antes de que salga a producción.",
+        "outcome": "Un roadmap técnico que se ajusta según los datos reales del sitio, en vez de un plan fijo que queda obsoleto al mes de escribirlo.",
+        "timeline": "Continuo, ajustado a alcance"
+      },
+      {
+        "id": "6a53ff748f92aa73aaf6d3cf",
+        "blockName": null,
+        "links": [
+          {
+            "id": "6a53ff748f92aa73aaf6d3ce",
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/contact",
+              "label": "Conversar sobre consultoría",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "callToAction",
+        "richText": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "text": "Si tu sitio cambia constantemente y necesitas que alguien vigile el SEO técnico de forma continua, hablemos de cómo estructurar el acompañamiento.",
+                    "type": "text",
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      },
+      {
+        "id": "6a544f71140e75434aba4dd7",
+        "blockName": null,
+        "columns": [
+          {
+            "id": "6a544f71140e75434aba4dd5",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h3",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Qué incluye",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Estrategia técnica continua: un roadmap priorizado que se ajusta según lo que muestran los datos, no un plan fijo escrito una sola vez.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Monitoreo de Search Console, rankings y Core Web Vitals en el tiempo, para detectar regresiones antes de que se conviertan en caídas de tráfico.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Colaboración directa con tu equipo de desarrollo y de marketing. Hablo el idioma técnico de ambos, algo poco común en consultores que solo conocen el lado de contenido.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Revisión de cada release o deploy con impacto potencial en SEO (cambios de arquitectura, migraciones, rediseños) antes de que salga a producción, no después.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          },
+          {
+            "id": "6a544f71140e75434aba4dd6",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h3",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Cómo trabajo",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "La cadencia se define según el tamaño y la velocidad de cambio del sitio: desde revisiones mensuales hasta acompañamiento semanal en proyectos con lanzamientos frecuentes.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Cada ciclo entrega hallazgos priorizados y un reporte claro de qué cambió, qué se implementó y qué impacto tuvo. Nada de dashboards que nadie interpreta.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Como también desarrollo (Next.js, CMS headless), puedo revisar pull requests o implementar directamente los cambios técnicos, no solo recomendarlos.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "content"
+      },
+      {
+        "id": "6a544f71140e75434aba4dd8",
+        "blockName": null,
+        "blockType": "clientLogosBlock",
+        "title": "Clientes",
+        "clients": []
+      },
+      {
+        "id": "6a544f71140e75434aba4dd9",
+        "showRating": true,
+        "limit": 3,
+        "blockName": null,
+        "blockType": "testimonialsCarousel",
+        "title": "Testimonios"
+      },
+      {
+        "id": "6a544f71140e75434aba4dda",
+        "caseStudy": 14,
+        "blockName": null,
+        "blockType": "relatedCaseStudyBlock",
+        "title": "Un caso real de cómo trabajo",
+        "framingText": "No tengo todavía un caso publicado de consultoría continua, pero este es un ejemplo real de cómo encaro el trabajo con clientes."
+      },
+      {
+        "id": "6a544f71140e75434aba4ddf",
+        "blockName": null,
+        "faqs": [
+          {
+            "id": "6a544f71140e75434aba4ddb",
+            "question": "¿Cómo se estructura un contrato de consultoría continua?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Se define una cadencia (mensual, quincenal o semanal, según la necesidad) con un alcance claro de qué se revisa en cada ciclo. No es un contrato abierto sin objetivos: cada ciclo tiene entregables concretos y el alcance se puede ajustar con el tiempo.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f71140e75434aba4ddc",
+            "question": "¿En qué se diferencia de la auditoría técnica?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "La auditoría es un diagnóstico puntual, enfocado en un momento específico. La consultoría es continua: monitoreo, ajuste de prioridades y revisión de cambios en el tiempo, para sitios que evolucionan constantemente y no pueden depender de una sola foto.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f71140e75434aba4ddd",
+            "question": "¿Trabajas directamente con mi equipo de desarrollo?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Sí, y es donde más valor aporto frente a un consultor tradicional. Al ser también desarrollador full-stack, puedo revisar código, participar en decisiones de arquitectura o implementar cambios yo mismo, en vez de limitarme a entregar recomendaciones que el equipo de desarrollo tiene que traducir.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f71140e75434aba4dde",
+            "question": "¿Cuál es el compromiso mínimo?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Depende del proyecto. Lo conversamos según el estado actual del sitio y la velocidad de cambio esperada. No hay un paquete fijo: la cotización se arma a medida, después de entender el contexto.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          }
+        ],
+        "blockType": "faq",
+        "title": "Preguntas frecuentes"
+      },
+      {
+        "id": "6a544f71140e75434aba4de1",
+        "blockName": null,
+        "links": [
+          {
+            "id": "6a544f71140e75434aba4de0",
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/contact",
+              "label": "Conversar sobre consultoría",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "callToAction",
+        "richText": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "text": "Si tu sitio cambia constantemente y necesitas que alguien vigile el SEO técnico de forma continua, hablemos de cómo estructurar el acompañamiento.",
+                    "type": "text",
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      }
+    ]
+  },
+  "slug": "seo-consulting",
+  "targetKeyword": {
+    "en": null,
+    "es": null
+  },
+  "meta": {
+    "title": null,
+    "description": "Consultoría SEO continua para equipos que necesitan alguien que entienda tanto el código como el posicionamiento, sin traducir entre agencia y desarrollo.",
+    "image": null
+  },
+  "updatedAt": "2026-07-17T03:19:30.674Z",
+  "createdAt": "2026-07-12T20:56:20.204Z",
+  "_status": "published"
+}

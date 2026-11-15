@@ -1,0 +1,42 @@
+[
+  {
+    "id": 5,
+    "title": "SEO Técnico",
+    "description": "Guías sobre rastreo, indexación, renderizado y optimización de arquitectura web. Estrategias para alinear el código fuente con los motores de búsqueda y resolver cuellos de botella de infraestructura.",
+    "slug": "tech-seo",
+    "updatedAt": "2026-07-14T20:42:24.904Z",
+    "createdAt": "2026-07-10T02:00:47.907Z"
+  },
+  {
+    "id": 4,
+    "title": "Ciencias de la Computación",
+    "description": "Fundamentos teóricos y prácticos de la ingeniería de software. Análisis de complejidad algorítmica, estructuras de datos y evaluación de eficiencia de código.",
+    "slug": "cs-fundamentals",
+    "updatedAt": "2026-07-14T20:42:26.033Z",
+    "createdAt": "2026-07-10T02:00:45.882Z"
+  },
+  {
+    "id": 3,
+    "title": "General",
+    "description": "Sección general del blog. Hoy los artículos viven en Ciencias de la Computación, Desarrollo, Estrategia SEO y SEO Técnico, que es donde conviene mirar.",
+    "slug": "general",
+    "updatedAt": "2026-08-20T19:55:57.955Z",
+    "createdAt": "2026-07-10T02:00:42.480Z"
+  },
+  {
+    "id": 2,
+    "title": "Desarrollo",
+    "description": "Artículos de desarrollo web: Next.js, CMS headless, bases de datos y decisiones de arquitectura, con el detalle técnico que cambia el resultado.",
+    "slug": "development",
+    "updatedAt": "2026-08-20T19:55:55.814Z",
+    "createdAt": "2026-07-10T02:00:05.358Z"
+  },
+  {
+    "id": 1,
+    "title": "Estrategia SEO",
+    "description": "Metodologías de posicionamiento orgánico, arquitectura de información mediante topic clusters y optimización E-E-A-T. Estrategias basadas en datos para dominar las SERPs.",
+    "slug": "seo",
+    "updatedAt": "2026-07-14T20:42:30.582Z",
+    "createdAt": "2026-07-09T20:49:23.225Z"
+  }
+]

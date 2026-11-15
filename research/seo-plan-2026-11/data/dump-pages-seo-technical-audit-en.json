@@ -1,0 +1,538 @@
+{
+  "id": 7,
+  "title": "Technical SEO Audit",
+  "content": {
+    "layout": [
+      {
+        "id": "6a53ff608f92aa73aaf6d3ba",
+        "variant": "listing",
+        "media": null,
+        "ringSide": "right",
+        "ringOpacity": 0.25,
+        "ringFlipX": false,
+        "blockName": null,
+        "links": [],
+        "breadcrumbs": [],
+        "blockType": "hero",
+        "title": "Technical SEO Audit",
+        "subtitle": "If your site burns crawl budget on URLs that don't matter, renders content Google never sees in time, or has indexation gaps nobody caught, no content strategy makes up for that.",
+        "cityName": null,
+        "inlineStat": null
+      },
+      {
+        "id": "6a53ff608f92aa73aaf6d3bd",
+        "blockName": null,
+        "columns": [
+          {
+            "id": "6a53ff608f92aa73aaf6d3bb",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h2",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Losing traffic and nobody's telling you why",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Search engines don't forgive silent technical issues: wasted crawl budget on URLs that don't matter, JavaScript that takes too long to render, content that never quite makes it into the index. None of it shows up just from browsing the site.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "By the time the traffic drop shows up in Search Console, the problem has usually been sitting there for weeks. Without a real technical diagnostic, there's almost no way to tell if the cause is crawling, rendering, indexation, or something else altogether.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "content"
+      },
+      {
+        "id": "6a544f5c140e75434aba4dc6",
+        "blockName": null,
+        "blockType": "serviceScopeCard",
+        "title": "Scope of this audit",
+        "scope": "A full diagnostic of crawl budget, rendering, Core Web Vitals, and indexation, with findings ordered by real impact, not alphabetically.",
+        "outcome": "An actionable report showing what's holding back your rankings and the order to fix it in, with no filler.",
+        "timeline": "1 to 2 weeks"
+      },
+      {
+        "id": "6a53ff608f92aa73aaf6d3c4",
+        "blockName": null,
+        "links": [
+          {
+            "id": "6a53ff608f92aa73aaf6d3c3",
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/contact",
+              "label": "Request an audit",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "callToAction",
+        "richText": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "text": "If you suspect there's a technical problem and can't pinpoint it, let's start there.",
+                    "type": "text",
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      },
+      {
+        "id": "6a544f5c140e75434aba4dc9",
+        "blockName": null,
+        "columns": [
+          {
+            "id": "6a544f5c140e75434aba4dc7",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h3",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "What's included",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Crawl budget and information architecture analysis: what Google is actually crawling today, what it should be crawling, and which low-value pages are eating that budget.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Rendering diagnostics: the gap between what the server serves and what Google actually indexes, with a focus on render-blocking JavaScript and late-loading content.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Core Web Vitals measured under real conditions, not just in the lab, with root causes traced back to the code instead of just the symptom PageSpeed reports.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Indexation review: canonicalization, robots.txt, sitemaps, and orphaned pages that never get internal links.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Structured data (schema.org) audited against what Google actually uses to show rich results.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          },
+          {
+            "id": "6a544f5c140e75434aba4dc8",
+            "size": "full",
+            "enableLink": null,
+            "richText": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "tag": "h3",
+                    "type": "heading",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "How I work",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "The audit doesn't end at a PDF nobody reads. I deliver findings prioritized by real impact and implementation effort, not a 200-item list with no order.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  },
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Since I'm also a developer, I can implement the fixes directly in your codebase instead of just pointing at them. I cover both the diagnosis and the fix, when the project calls for it.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            },
+            "link": {
+              "type": "reference",
+              "newTab": null,
+              "url": null,
+              "label": null,
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "content"
+      },
+      {
+        "id": "6a9e39a572a081a76a47d0ef",
+        "blockName": null,
+        "blockType": "auditorCallout",
+        "heading": "I also built a free automated auditor",
+        "narrative": "Before hiring the full audit, my automated auditor runs 29 technical checks across 5 categories, up to 500 URLs per run, with Core Web Vitals via PageSpeed Insights, and gives you a free first read. The limit is honest: 1 audit per week per verified email."
+      },
+      {
+        "id": "6a544f5c140e75434aba4dca",
+        "blockName": null,
+        "blockType": "clientLogosBlock",
+        "title": "Clients",
+        "clients": []
+      },
+      {
+        "id": "6a544f5c140e75434aba4dcb",
+        "showRating": true,
+        "limit": 3,
+        "blockName": null,
+        "blockType": "testimonialsCarousel",
+        "title": "Testimonios"
+      },
+      {
+        "id": "6a544f5c140e75434aba4dcc",
+        "caseStudy": 14,
+        "blockName": null,
+        "blockType": "relatedCaseStudyBlock",
+        "title": "A real example of how I work",
+        "framingText": "I don't have a published case study specific to technical audits yet, but here's a real look at how I work with clients."
+      },
+      {
+        "id": "6a544f5c140e75434aba4dd1",
+        "blockName": null,
+        "faqs": [
+          {
+            "id": "6a544f5c140e75434aba4dcd",
+            "question": "How long does a technical audit take?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "It depends on the size of the site. A mid-sized one, up to around 500 indexable URLs, usually takes one to two weeks, from tool access to the prioritized report.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f5c140e75434aba4dce",
+            "question": "Do you just hand off a report, or do you also implement the fixes?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Both options exist. By default I deliver a prioritized, actionable report for your team to implement. If you'd rather I implement the fixes in the code myself, we scope that as an extension: no need to bring in a separate developer for the technical part.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f5c140e75434aba4dcf",
+            "question": "What tools do you use?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "A mix of technical crawlers, Google Search Console and Analytics, Lighthouse and CrUX for field Core Web Vitals, and manual code review for the cases automated tools miss, mostly rendering issues in JS frameworks.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          },
+          {
+            "id": "6a544f5c140e75434aba4dd0",
+            "question": "Does the audit work if I didn't build my own site?",
+            "answer": {
+              "root": {
+                "type": "root",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "type": "paragraph",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "text": "Yes. Most audits I run are on sites I didn't build. The diagnosis is stack-agnostic; implementing the fixes depends on how accessible your codebase is.",
+                        "type": "text",
+                        "version": 1
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                ],
+                "direction": "ltr"
+              }
+            }
+          }
+        ],
+        "blockType": "faq",
+        "title": "Frequently asked questions"
+      },
+      {
+        "id": "6a544f5c140e75434aba4dd3",
+        "blockName": null,
+        "links": [
+          {
+            "id": "6a544f5c140e75434aba4dd2",
+            "link": {
+              "type": "custom",
+              "newTab": null,
+              "url": "/contact",
+              "label": "Request an audit",
+              "appearance": "default"
+            }
+          }
+        ],
+        "blockType": "callToAction",
+        "richText": {
+          "root": {
+            "type": "root",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+              {
+                "type": "paragraph",
+                "format": "",
+                "indent": 0,
+                "version": 1,
+                "children": [
+                  {
+                    "text": "If you suspect there's a technical problem and can't pinpoint it, let's start there.",
+                    "type": "text",
+                    "version": 1
+                  }
+                ],
+                "direction": "ltr"
+              }
+            ],
+            "direction": "ltr"
+          }
+        }
+      }
+    ]
+  },
+  "slug": "seo-technical-audit",
+  "targetKeyword": {
+    "en": null,
+    "es": null
+  },
+  "meta": {
+    "title": null,
+    "description": "Full technical SEO audit: crawling, indexation, Core Web Vitals, and structured data, with a fix plan prioritized by real impact.",
+    "image": null
+  },
+  "updatedAt": "2026-09-07T04:12:48.536Z",
+  "createdAt": "2026-07-12T20:56:00.226Z",
+  "_status": "published"
+}
