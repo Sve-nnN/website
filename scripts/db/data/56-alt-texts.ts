@@ -191,9 +191,9 @@ export const CAPTURE_ALTS: AltRow[] = [
     en: 'Juan Tech home page: headline about technical SEO, a button to request the audit and a portrait of Juan in an orange circle',
     actualEs: currentCaptureAlt('Juan Tech'),
     actualEn: currentCaptureAlt('Juan Tech'),
-    status: 'pendiente',
-    loadable: false,
-    nota: 'ALT REDACTADO 2026-11-14 desde dev.juan-tech.com (no cita el titular, que cambia en el corte). La imagen que sirve produccion sigue siendo la pagina pausada de Vercel: hay que reemplazar el archivo DESPUES del corte con una captura nueva y recien entonces cargar este alt (loadable queda false hasta entonces; estado pendiente por la regla de que lo no cargable no se aprueba). Defecto anterior: DEFECTO DEL ARCHIVO, NO DEL TEXTO. La captura que sirve dev (1000 por 563 px, 5 KB) no muestra el sitio de Juan: es la página de Vercel "This deployment is temporarily paused" sobre fondo blanco, con un identificador gru1 al pie. El texto de arriba describe honestamente ese archivo y NO debe cargarse. Hay que recapturar juan-tech.com y recién entonces redactar el alt de lo que se vea (no se redacta uno de memoria: el sandbox muestra otro titular, Construyo software rápido, que ya no es el aprobado).',
+    status: 'aprobado',
+    loadable: true,
+    nota: 'ALT Y RECAPTURA 2026-11-14 (captura en .planning/phase-56-prep/captures/juan-tech-com.png, tomada de dev.juan-tech.com con la home nueva; el archivo se reemplaza en el corte con scripts/db/32-phase56-replace-captures.ts, ANTES del cargador) desde dev.juan-tech.com (no cita el titular, que cambia en el corte). La imagen que sirve produccion sigue siendo la pagina pausada de Vercel: hay que reemplazar el archivo DESPUES del corte con una captura nueva y recien entonces cargar este alt (loadable queda false hasta entonces; estado pendiente por la regla de que lo no cargable no se aprueba). Defecto anterior: DEFECTO DEL ARCHIVO, NO DEL TEXTO. La captura que sirve dev (1000 por 563 px, 5 KB) no muestra el sitio de Juan: es la página de Vercel "This deployment is temporarily paused" sobre fondo blanco, con un identificador gru1 al pie. El texto de arriba describe honestamente ese archivo y NO debe cargarse. Hay que recapturar juan-tech.com y recién entonces redactar el alt de lo que se vea (no se redacta uno de memoria: el sandbox muestra otro titular, Construyo software rápido, que ya no es el aprobado).',
     source: CAPTURE_SOURCE,
   },
 ]

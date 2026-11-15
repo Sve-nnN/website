@@ -161,7 +161,7 @@ check('datos: 4 fotos y 6 capturas, todas con valor actual', () => {
   assert(CAPTURE_ALTS.length === 6, `${CAPTURE_ALTS.length} capturas`)
   assert(ALL_ALTS.every((r) => r.actualEs.trim() && r.actualEn.trim()), 'falta un valor actual')
 })
-check('datos: solo esta aprobado lo cargable (Juan aprobo los alt el 2026-11-10; el de Juan Tech espera recaptura)', () => {
+check('datos: solo esta aprobado lo cargable (Juan aprobo los alt el 2026-11-10; el de Juan Tech se recapturo el 2026-11-14)', () => {
   assert(ALL_ALTS.every((r) => (r.status === 'aprobado') === r.loadable), 'un alt aprobado no es cargable, o uno cargable no esta aprobado')
 })
 

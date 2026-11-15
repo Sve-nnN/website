@@ -39,6 +39,7 @@ Cada paso con base de datos es un `checkpoint:human-action` de Juan, con el form
    - `node_modules/.bin/tsx scripts/db/04-which-database.ts`. Si el host o la base no son los de arriba, o los valores testigo no coinciden con el sitio, parar.
 6. Respaldo fresco fuera del repo: `node_modules/.bin/tsx scripts/db/28-phase56-cutover-load.ts --print-current > ~/respaldo-fase56-corte-AAAAMMDD.json`. Solo trae copy público.
 7. Dry-run: `node_modules/.bin/tsx scripts/db/28-phase56-cutover-load.ts`. Revisar que ningún item diga `SE NIEGA` o `PENDIENTE`, que no aparezca `DRIFT` sin explicación y que el diff coincida con lo aprobado.
+7b. Capturas (nuevo, 2026-11-15). Con el sitio ya desplegado, repite el dry-run `node_modules/.bin/tsx scripts/db/32-phase56-replace-captures.ts` y luego `--apply --db-checked`. Reemplaza el archivo y deja el alt ES y EN de Juan Tech, Arianna Lupi, Dr. Vargas y Estylopia con las recapturas de `.planning/phase-56-prep/captures/`. Si la home de Juan Tech cambia entre hoy y el corte, recaptura antes `juan-tech-com.png`. Las imágenes anteriores están en `~/respaldo-capturas-fase56/` (Cloudinary sobrescribe la misma ruta).
 8. Carga sin pasos destructivos, con `--apply --db-checked` y `--only` para lecciones, alt, autor, testimonio, botón del header, filas de Websites que solo crecen y la fecha legal: `node_modules/.bin/tsx scripts/db/28-phase56-cutover-load.ts --apply --db-checked --only lessons media-alt CUT-websites-juan-tech-com CUT-websites-aprendoclub-com author testimonial CUT-cta-master-header-cta legal-date`. El botón del header se elige por id porque `--only cta-master` también trae `audit-offer-cta`, que sigue pendiente y haría abortar la corrida. La fecha legal va al final de la misma corrida porque el cargador la ordena última.
 9. Cargas destructivas, cada una con la frase de Juan (ver la tabla de aprobaciones): el recorte del stack de Arianna con `--allow-shrink-rows`, y las lecciones con `--overwrite-lessons` solo si un caso ya trae lecciones distintas.
 10. Esperar el TTL de 60 s del `unstable_cache` y verificar contra el HTML servido, no contra el OK del cargador: `node scripts/verify/56-cases-lessons-live.mjs --expect-loaded` y `node scripts/verify/56-legal-live.mjs --expect-date`. Después correr la batería viva completa de la 56 contra producción.
@@ -136,3 +137,14 @@ Batería viva contra el preview, solo lectura HTTP: `BASE_URL=https://dev.juan-t
 El origen `feat/mui-redesign` lleva 49 commits de ventaja sobre lo que está en `origin`, y el checkpoint de 56-12 (migración y siembra sombra) sigue sin correr. Mientras eso no pase, esos cuatro pasos no pueden ponerse en verde. Los demás pasos vivos pasan, entre ellos `55-seo-parity` de home y legales (D-23), `56-cases-lessons-live` y toda la regresión de la 55.
 
 Dry-run del cargador contra la base: pendiente del checkpoint de Juan (plan 56-14, tarea 4). Su salida se pega en este documento cuando llegue.
+
+
+## Actualización 2026-11-15 (Juan dijo defaults y continúa con todo)
+
+- Pasaron a `aprobado`: las 21 lecciones, HOME-EN, ABOUT-EN, los 4 textos legales, Websites (Arianna Lupi con Webflow a Astro, Juan Tech con Cloudinary y Resend como tags, aprendoclub, Apturio sin cambio), la fila de autor (AprendoSEO pasa a aprendoclub) y la cita de Patricia. El gate solo falla por `CUT-legal-date-efectiva`, que se fija el día del corte.
+- Neon se conserva en aprendoclub y Apturio (Juan, 2026-11-14). Hetzner está en Helsinki y el texto legal lo dice.
+- Patricia Ibarra: la cita quedó como "Trabajar con Juan fue la mejor decisión que tomamos." y la EN igual a la existente, sin hechos nuevos. Conviene que ella la confirme antes del corte porque va firmada con su nombre.
+- Hecho en la base (aditivo): migración `phase56_legal_shadow`, siembra de home-page y legal-pages en ES y EN. Respaldos: `~/respaldo-fase56-sombra.json` y `~/respaldo-fase56-corte-20261115.json`.
+- Falta: el recorte de etapas de about-page (5 a 4) y la siembra de about-page, que esperan la frase de Juan, y los pasos 8 y 13 de 56-12 con el rol del preview.
+- El DRIFT en inglés de los 5 alt del simulacro es un artefacto de lectura (EN vacío contra respaldo con el ES por fallback), no un cambio real.
+- El contenido SEO (títulos, redirects, landings, footer) ya está en producción desde el 2026-11-14. Ver `feat/seo-pilares`: mergearla en la fase 57. El footer "Guías clave" ya está en la base: confirmar que el diseño nuevo lo renderiza.

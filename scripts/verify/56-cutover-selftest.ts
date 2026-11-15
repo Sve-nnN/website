@@ -180,7 +180,7 @@ async function realData(): Promise<void> {
       }),
   )
   const juanTechAlt = altItems.find((i) => i.governedBy === 'ALT-juan-tech')
-  expect('el alt de la captura de Juan Tech no se carga (pagina de Vercel en pausa)', !!juanTechAlt && juanTechAlt.desired === undefined && juanTechAlt.status === 'pendiente')
+  expect('el alt de la captura de Juan Tech se carga con la recaptura de dev (el archivo se reemplaza antes, con el script 32)', !!juanTechAlt && juanTechAlt.desired !== undefined && juanTechAlt.status === 'aprobado')
 
   // CTAs con loadAt corte
   const ctaItems = CUTOVER_ITEMS.filter((i) => i.kind === 'cta-master')
@@ -730,7 +730,8 @@ async function loaderRest(): Promise<void> {
   }
   {
     const fake = fullFake()
-    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['media-alt'] }), fake, { items: approve(MEDIA_IDS) })
+    const conPendiente = approve(MEDIA_IDS).map((i) => (i.id === 'CUT-media-alt-juan-tech' ? { ...i, status: 'pendiente' as const, desired: undefined } : i))
+    const r = await runLoader(baseOpts({ apply: true, dbChecked: true, only: ['media-alt'] }), fake, { items: conPendiente })
     expect('cargador media-alt: con la captura de Juan Tech pendiente entre los elegidos aborta sin escribir', r.code === 1 && fake.writes.length === 0)
   }
 
