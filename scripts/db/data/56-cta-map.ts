@@ -153,7 +153,7 @@ const META: Meta[] = [
     messageKeys: [],
     master: false,
     loadAt: 'ahora',
-    routes: HOME_ROUTES,
+    routes: CONTACT_ROUTES,
     nota: 'Lote 2: sigue pendiente de aprobacion explicita de Juan.',
   },
   {
@@ -165,7 +165,7 @@ const META: Meta[] = [
     messageKeys: [],
     master: false,
     loadAt: 'ahora',
-    routes: HOME_ROUTES,
+    routes: CONTACT_ROUTES,
     nota: 'Lote 2: sigue pendiente de aprobacion explicita de Juan.',
   },
   {
@@ -177,7 +177,7 @@ const META: Meta[] = [
     messageKeys: [],
     master: false,
     loadAt: 'ahora',
-    routes: HOME_ROUTES,
+    routes: CONTACT_ROUTES,
     nota: 'Lote 2: sigue pendiente de aprobacion explicita de Juan.',
   },
   {

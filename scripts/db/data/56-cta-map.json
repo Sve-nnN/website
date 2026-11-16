@@ -133,10 +133,10 @@
       "vigenteEs": "Me cuentas el proyecto",
       "routes": {
         "es": [
-          "/"
+          "/contact"
         ],
         "en": [
-          "/en"
+          "/en/contact"
         ]
       },
       "messageKeys": []
@@ -151,10 +151,10 @@
       "vigenteEs": "Miro qué ve Google hoy",
       "routes": {
         "es": [
-          "/"
+          "/contact"
         ],
         "en": [
-          "/en"
+          "/en/contact"
         ]
       },
       "messageKeys": []
@@ -169,10 +169,10 @@
       "vigenteEs": "Te digo por dónde empezar",
       "routes": {
         "es": [
-          "/"
+          "/contact"
         ],
         "en": [
-          "/en"
+          "/en/contact"
         ]
       },
       "messageKeys": []
