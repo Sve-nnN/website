@@ -1,0 +1,1343 @@
+{
+  "id": 75,
+  "title": "Qué es llms.txt y cuándo vale la pena crearlo",
+  "excerpt": "El llms.txt es un archivo en Markdown que le resume tu sitio a un modelo de lenguaje. Te explico el formato, quién lo usa de verdad, por qué Google lo ignora y cómo armé el de mi propio sitio.",
+  "content": {
+    "root": {
+      "type": "root",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "El llms.txt es un archivo de texto en formato Markdown que pones en la raíz de tu dominio, en tusitio.com/llms.txt, para darle a un modelo de lenguaje un resumen de tu sitio y una lista curada de las páginas que importan. Es una propuesta abierta, no un estándar, y forma parte de las tareas de ",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            },
+            {
+              "type": "link",
+              "fields": {
+                "url": "/blog/tech-seo/geo-seo-guia",
+                "newTab": false,
+                "linkType": "custom"
+              },
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "GEO SEO",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "mode": "normal",
+              "text": " que más ruido generan para el efecto real que tienen.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Lo mantengo en mi propio sitio y forma parte de mi servicio de SEO para IA, así que te cuento qué es, cómo se escribe y, sobre todo, qué puedes esperar de él y qué no.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "tag": "h2",
+          "type": "heading",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "De dónde sale el llms.txt",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr"
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "La propuesta la publicó Jeremy Howard, cofundador de Answer.AI y de fast.ai, en septiembre de 2024. El problema que quería resolver es concreto: un modelo que intenta leer un sitio web se encuentra con menús, scripts, banners de cookies y HTML pesado, y además tiene una ventana de contexto limitada. Un archivo plano con lo esencial le ahorra ese trabajo.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "La idea nació pensando en documentación técnica. Si le pides a un asistente de programación que use una librería, le sirve mucho más un índice limpio de la documentación que rastrear cien páginas con navegación repetida. Por eso las plataformas de documentación fueron las primeras en adoptarlo, y algunas lo generan solas.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "tag": "h2",
+          "type": "heading",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "El formato del archivo",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr"
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "La propuesta define una estructura sencilla, en este orden:",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "tag": "ol",
+          "type": "list",
+          "start": 1,
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "type": "listitem",
+              "value": 1,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Un título H1 con el nombre del proyecto o del sitio. Es el único elemento obligatorio.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 2,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Un bloque de cita con un resumen corto de qué es el sitio.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 3,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Párrafos o listas opcionales con contexto adicional.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 4,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Secciones con encabezados H2, cada una con una lista de enlaces en formato Markdown y una nota breve después de cada enlace.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 5,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Una sección opcional llamada \"Optional\" con enlaces que un modelo puede saltarse si le falta espacio.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            }
+          ],
+          "listType": "number",
+          "direction": "ltr"
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Un ejemplo mínimo se ve así:",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "type": "block",
+          "fields": {
+            "id": "1794935431878cf49f2",
+            "code": "# Nombre del sitio\n\n> Una o dos frases que dicen qué es el sitio y para quién.\n\n## Guías\n\n- [Guía de SEO técnico](https://tusitio.com/guia-seo-tecnico): fundamentos para desarrolladores.\n- [Checklist de auditoría](https://tusitio.com/checklist): lista de revisión por plantillas.\n\n## Optional\n\n- [Archivo del blog](https://tusitio.com/blog): todos los artículos.",
+            "language": "typescript",
+            "blockName": "",
+            "blockType": "code-block"
+          },
+          "format": "",
+          "version": 2
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Además del llms.txt existe una convención paralela, el llms-full.txt, que en lugar de enlaces contiene el texto completo de las páginas en un solo archivo. Tiene sentido en documentación, donde un agente quiere leerlo todo de una vez. En un sitio de contenido general suele quedar demasiado largo.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "tag": "h2",
+          "type": "heading",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "El llms.txt de este sitio",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr"
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "En juan-tech.com sirvo un /llms.txt y un /llms-full.txt. Te cuento las decisiones que tomé porque creo que sirven de referencia:",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "tag": "ul",
+          "type": "list",
+          "start": 1,
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "type": "listitem",
+              "value": 1,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Lo escribí a mano y no lo genero desde la base de datos. Son unas quince URLs estables: páginas principales, servicios y secciones. Un volcado de todo el sitemap ya existe en /sitemap.xml, y repetirlo no le aporta nada a nadie.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 2,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "El resumen dice en dos frases quién soy y qué hago, y aclara que el sitio es bilingüe, con el español sin prefijo y el inglés bajo /en.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 3,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Cada enlace lleva una nota de una línea que explica qué hay en esa página, escrita para que un modelo entienda cuándo le conviene abrirla.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            }
+          ],
+          "listType": "bullet",
+          "direction": "ltr"
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Hubo un detalle que me enseñó algo. Durante un tiempo la ruta servía un texto de prueba que había dejado al conectar la funcionalidad, con nombres internos del proyecto. Era público e indexable. Lo corregí por higiene, no porque esperara que moviera alguna posición, y esa es la actitud con la que te recomiendo encarar este archivo.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "tag": "h2",
+          "type": "heading",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Quién lee de verdad el llms.txt",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr"
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Esta es la parte que más se exagera, así que voy por partes.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Google no lo usa en su buscador. Gente del equipo de búsqueda de Google lo dijo en público más de una vez, y su documentación sobre las funciones de IA en la búsqueda no pide ningún archivo especial para aparecer en los AI Overviews o en el AI Mode. Si alguien te vende un llms.txt para subir en Google, desconfía.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "OpenAI, Anthropic y Perplexity no publicaron que sus motores de búsqueda usen el llms.txt para decidir qué citar. Puede que lo lean en algún caso, pero no conozco datos sólidos que lo muestren, y no voy a afirmar algo que no puedo comprobar.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Donde sí tiene uso real es en herramientas que alguien apunta a un sitio de forma explícita: asistentes de programación, agentes que navegan por encargo de un usuario y servidores que exponen documentación a un editor de código. En ese contexto el archivo ahorra tokens y mejora la respuesta, y por eso es casi un estándar de hecho en documentación de APIs.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Si quieres comprobarlo en tu caso, revisa los logs del servidor y busca peticiones a /llms.txt. En la mayoría de los sitios de contenido que reviso, las visitas a ese archivo son pocas y vienen sobre todo de herramientas y curiosos, no de los rastreadores de búsqueda.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "tag": "h2",
+          "type": "heading",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Cuándo vale la pena crearlo",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr"
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Mi criterio es este:",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "tag": "ul",
+          "type": "list",
+          "start": 1,
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "type": "listitem",
+              "value": 1,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Vale la pena si tienes documentación técnica, una API o un producto para desarrolladores. Ahí los agentes de programación lo usan y el beneficio es directo.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 2,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Vale la pena si te cuesta poco mantenerlo, por ejemplo si tu sitio tiene pocas páginas clave que casi no cambian. Media hora de trabajo y una revisión cada tanto.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 3,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "No vale la pena si lo haces en lugar de resolver lo que sí bloquea tu visibilidad en IA: bots bloqueados en robots.txt, contenido que solo aparece con JavaScript o páginas que nadie puede citar porque no responden nada concreto.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 4,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Tampoco vale la pena generar uno automático con miles de URLs. Pierde justamente lo que lo hace útil, que es la curaduría.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            }
+          ],
+          "listType": "bullet",
+          "direction": "ltr"
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Lo que más mueve la aguja para que te citen sigue siendo el texto. En mi guía sobre ",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            },
+            {
+              "type": "link",
+              "fields": {
+                "url": "/blog/tech-seo/citabilidad-contenido-ia",
+                "newTab": false,
+                "linkType": "custom"
+              },
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "contenido citable por IA",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "mode": "normal",
+              "text": " explico cómo reescribo una sección para que un modelo la pueda extraer y citar sin perder el sentido.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "tag": "h2",
+          "type": "heading",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Cómo crear tu llms.txt paso a paso",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr"
+        },
+        {
+          "tag": "ol",
+          "type": "list",
+          "start": 1,
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "type": "listitem",
+              "value": 1,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Haz una lista de las páginas que mejor explican tu negocio o tu proyecto. Con diez a veinte alcanza para la mayoría de los sitios.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 2,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Escribe el resumen en dos o tres frases, con datos concretos: qué haces, para quién y en qué idiomas está el sitio.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 3,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Agrupa los enlaces por secciones con H2 y escribe una nota de una línea para cada uno.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 4,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Guarda el archivo como texto plano UTF-8 y publícalo en la raíz del dominio. En Next.js lo sirvo desde un route handler que devuelve el contenido con Content-Type text/plain, y el texto vive en el CMS para poder editarlo sin desplegar.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 5,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Abre tusitio.com/llms.txt en el navegador y comprueba que responde con código 200 y que no hay redirecciones raras.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 6,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "Agenda una revisión cada pocos meses, o cuando cambien tus páginas principales. Un llms.txt con enlaces rotos es peor que no tenerlo.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            }
+          ],
+          "listType": "number",
+          "direction": "ltr"
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "No hace falta enlazarlo desde el sitemap ni declararlo en robots.txt. Quien lo busque lo va a pedir en la ruta convencional.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "tag": "h2",
+          "type": "heading",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Lo que el llms.txt no hace",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr"
+        },
+        {
+          "tag": "ul",
+          "type": "list",
+          "start": 1,
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "type": "listitem",
+              "value": 1,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "No bloquea ni permite rastreadores. Eso sigue siendo trabajo del robots.txt y de tu firewall.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 2,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "No reemplaza el sitemap, que es lo que usan los buscadores para descubrir URLs.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 3,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "No mejora tu posición en Google.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "type": "listitem",
+              "value": 4,
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "No garantiza que ChatGPT o Perplexity te citen.",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            }
+          ],
+          "listType": "bullet",
+          "direction": "ltr"
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Tampoco te sirve para saber si te citan. Para eso necesitas medir el tráfico que llega desde asistentes de IA y seguir un conjunto fijo de preguntas, algo que explico en mi guía para ",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            },
+            {
+              "type": "link",
+              "fields": {
+                "url": "/blog/tech-seo/medir-citas-ia",
+                "newTab": false,
+                "linkType": "custom"
+              },
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "medir citas en IA",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "mode": "normal",
+              "text": ".",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "type": "block",
+          "fields": {
+            "id": "1794935431878f3affd",
+            "faqs": [
+              {
+                "id": "f5a95b718e2507689a5832db",
+                "answer": {
+                  "root": {
+                    "type": "root",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "No. Es una propuesta abierta publicada en llmstxt.org en septiembre de 2024. Ningún buscador ni empresa de IA lo adoptó como requisito.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr",
+                        "textFormat": 0
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                },
+                "question": "¿El llms.txt es un estándar oficial?"
+              },
+              {
+                "id": "3bc6b335196c05e500ae9c5c",
+                "answer": {
+                  "root": {
+                    "type": "root",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "No en su buscador. Google no pide ningún archivo especial para aparecer en los AI Overviews ni en el AI Mode, y miembros de su equipo de búsqueda dijeron en público que no lo usan.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr",
+                        "textFormat": 0
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                },
+                "question": "¿Google usa el llms.txt?"
+              },
+              {
+                "id": "106cb21a7a4f7958afcaca62",
+                "answer": {
+                  "root": {
+                    "type": "root",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "El llms.txt es un índice con enlaces y notas cortas. El llms-full.txt reúne el texto completo de las páginas en un solo archivo, útil sobre todo para documentación técnica.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr",
+                        "textFormat": 0
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                },
+                "question": "¿Qué diferencia hay entre llms.txt y llms-full.txt?"
+              },
+              {
+                "id": "31c368bfba3decee296df222",
+                "answer": {
+                  "root": {
+                    "type": "root",
+                    "format": "",
+                    "indent": 0,
+                    "version": 1,
+                    "children": [
+                      {
+                        "type": "paragraph",
+                        "format": "",
+                        "indent": 0,
+                        "version": 1,
+                        "children": [
+                          {
+                            "mode": "normal",
+                            "text": "No, siempre que no exponga información interna ni contenido que no quieras publicar. Es un archivo público más y cualquiera lo puede leer.",
+                            "type": "text",
+                            "style": "",
+                            "detail": 0,
+                            "format": 0,
+                            "version": 1
+                          }
+                        ],
+                        "direction": "ltr",
+                        "textFormat": 0
+                      }
+                    ],
+                    "direction": "ltr"
+                  }
+                },
+                "question": "¿Puede perjudicar mi SEO tener un llms.txt?"
+              }
+            ],
+            "title": "Preguntas frecuentes sobre llms.txt",
+            "blockName": "",
+            "blockType": "faq"
+          },
+          "format": "",
+          "version": 2
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Si quieres que revise cómo leen tu sitio los motores de IA, con el llms.txt incluido pero sin quedarme en él, en mi servicio de ",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            },
+            {
+              "type": "link",
+              "fields": {
+                "url": "/servicios/ai-seo-geo",
+                "newTab": false,
+                "linkType": "custom"
+              },
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "SEO para IA",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "mode": "normal",
+              "text": " empiezo por el acceso de los bots y la estructura del contenido, que es donde suelen estar los bloqueos de verdad.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        },
+        {
+          "type": "paragraph",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+            {
+              "mode": "normal",
+              "text": "Lee también mi guía para ",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            },
+            {
+              "type": "link",
+              "fields": {
+                "url": "/blog/tech-seo/medir-citas-ia",
+                "newTab": false,
+                "linkType": "custom"
+              },
+              "format": "",
+              "indent": 0,
+              "version": 1,
+              "children": [
+                {
+                  "mode": "normal",
+                  "text": "medir citas en IA",
+                  "type": "text",
+                  "style": "",
+                  "detail": 0,
+                  "format": 0,
+                  "version": 1
+                }
+              ],
+              "direction": "ltr"
+            },
+            {
+              "mode": "normal",
+              "text": ", con el método que uso para saber si un cambio funcionó.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+            }
+          ],
+          "direction": "ltr",
+          "textFormat": 0
+        }
+      ],
+      "direction": "ltr"
+    }
+  },
+  "heroImage": null,
+  "author": 1,
+  "categories": [
+    5
+  ],
+  "publishedAt": "2026-11-17T17:10:32.301Z",
+  "slug": "llms-txt-guia",
+  "meta": {
+    "title": "llms.txt qué es y cómo crearlo con un ejemplo real",
+    "description": "Qué es el archivo llms.txt, qué formato tiene, quién lo lee de verdad y cuándo vale la pena crearlo. Con el ejemplo del llms.txt que mantengo en mi sitio.",
+    "image": null
+  },
+  "updatedAt": "2026-11-17T17:10:37.767Z",
+  "createdAt": "2026-11-17T17:10:32.507Z",
+  "_status": "draft"
+}

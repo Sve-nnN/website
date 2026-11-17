@@ -1,0 +1,772 @@
+[
+  {
+    "id": 71,
+    "slug": "complejidad-algoritmica",
+    "title": "Complejidad algorítmica guía de Big O con ejemplos",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Complejidad algorítmica guía de Big O con ejemplos",
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 70,
+    "slug": "sql-vs-nosql",
+    "title": "SQL vs NoSQL: Guía técnica para elegir la base de datos correcta",
+    "cats": [
+      2
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 69,
+    "slug": "algoritmos-ordenamiento",
+    "title": "Algoritmos de ordenamiento: Guía técnica de eficiencia y optimización",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 68,
+    "slug": "arboles-binarios",
+    "title": "Árboles binarios: Guía técnica de estructuras y algoritmos de búsqueda",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 67,
+    "slug": "diseno-bases-datos",
+    "title": "Diseño de bases de datos: Guía completa de arquitectura y normalización",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 66,
+    "slug": "normalizacion-bases-datos",
+    "title": "Normalización de bases de datos formas normales",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Normalización de bases de datos formas normales",
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 64,
+    "slug": "guia-eeat",
+    "title": "E-E-A-T en SEO guía para demostrar autoridad",
+    "cats": [
+      1
+    ],
+    "hero": null,
+    "meta": {
+      "title": "E-E-A-T en SEO guía para demostrar autoridad",
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 63,
+    "slug": "enlaces-internos-guia",
+    "title": "Estrategia de Enlaces Internos 2026: Guía Maestra",
+    "cats": [
+      1
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Enlaces internos SEO cómo repartir autoridad",
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 61,
+    "slug": "guia-keyword-research",
+    "title": "Guía Maestra de Keyword Research 2026: Entidades y Clústeres",
+    "cats": [
+      1
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 60,
+    "slug": "redaccion-seo",
+    "title": "Redacción SEO 2026: Cómo escribir contenidos que rankean",
+    "cats": [
+      1
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 59,
+    "slug": "experiencia-de-usuario",
+    "title": "Experiencia de usuario: Clave para el éxito del cliente",
+    "cats": [
+      2
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 58,
+    "slug": "mejores-cursos-seo-espanol",
+    "title": "Mejores Cursos de SEO en Español 2026: Guía Comparativa",
+    "cats": [
+      1
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 57,
+    "slug": "que-es-css",
+    "title": "¿Qué es CSS? Todo lo que necesitas saber sobre Hojas de Estilo en Cascada",
+    "cats": [
+      2
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "Qué es CSS y cómo funciona la cascada: selectores, especificidad, modelo de caja y layout, explicado desde cero y con ejemplos que podés copiar.",
+      "image": null
+    }
+  },
+  {
+    "id": 56,
+    "slug": "tablas-hash",
+    "title": "Tablas hash: Estructuras clave para un manejo eficiente de datos",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Tablas hash qué son y cómo funcionan",
+      "description": "Las tablas hash guardan pares clave valor y permiten buscar, insertar y borrar en tiempo casi constante. Funcionamiento, colisiones y ejemplos.",
+      "image": null
+    }
+  },
+  {
+    "id": 54,
+    "slug": "non-developers-guide",
+    "title": "SEO Técnico para No Desarrolladores 2026: Guía Sin Miedo",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 52,
+    "slug": "web-performance-guide",
+    "title": "Guía de Rendimiento Web 2026: Optimizando WPO para SEO",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 51,
+    "slug": "core-web-vitals-guide",
+    "title": "Guía de Core Web Vitals 2026: La Métrica de Oro del SEO",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Core Web Vitals guía para medir y corregir LCP INP y CLS",
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 50,
+    "slug": "robots-txt-best-practices",
+    "title": "Mejores Prácticas de Robots.txt 2026: Control de Rastreo Estratégico",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 49,
+    "slug": "schema-markup-guide",
+    "title": "Guía de Schema Markup 2026: Datos Estructurados para el Futuro",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 48,
+    "slug": "ssr-vs-csr-seo",
+    "title": "SSR vs CSR para SEO cuál elegir y por qué",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": "SSR vs CSR para SEO cuál elegir y por qué",
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 47,
+    "slug": "xml-sitemap-automation",
+    "title": "Automatización de Sitemaps XML: Guía Técnica 2026",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 46,
+    "slug": "headless-cms-seo",
+    "title": "Headless CMS SEO: guía práctica completa para 2026",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "SEO en un CMS headless: qué se rompe cuando el front se separa del contenido, y cómo resolver renderizado, metadatos y rendimiento sin perder.",
+      "image": null
+    }
+  },
+  {
+    "id": 39,
+    "slug": "topic-clusters-seo",
+    "title": "Topic clusters SEO cómo organizar tu contenido",
+    "cats": [
+      1
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Topic clusters SEO cómo organizar tu contenido",
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 38,
+    "slug": "estrategia-de-contenidos",
+    "title": "Estrategia de Contenidos SEO 2026: Dominando la Intención de Búsqueda",
+    "cats": [
+      1
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 37,
+    "slug": "estrategia-seo",
+    "title": "Estrategia SEO Global 2026: Arquitectura, Contenido y Autoridad",
+    "cats": [
+      1
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Estrategia SEO 2026 guía completa paso a paso",
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 36,
+    "slug": "seo-off-page-guia",
+    "title": "Guía de SEO Off-Page 2026: Más allá del Link Building",
+    "cats": [
+      1
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 33,
+    "slug": "pillar-page-seo",
+    "title": "Pillar Page SEO: La Clave para Organizar tu Contenido Web",
+    "cats": [
+      1
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Contenido pilar SEO cómo crear una página pilar",
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 31,
+    "slug": "data-structures",
+    "title": "Estructuras de Datos 2026: Fundamentos y Aplicaciones Reales",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Estructuras de datos guía completa con ejemplos",
+      "description": "Qué son las estructuras de datos, cuáles existen y cuándo usar listas, colas, árboles y grafos para que tu código rinda mejor.",
+      "image": null
+    }
+  },
+  {
+    "id": 30,
+    "slug": "binary-search-tree",
+    "title": "Binary search tree: Guía completa para entender su funcionamiento",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "Cómo funciona un árbol de búsqueda binaria: inserción, búsqueda y borrado, por qué importa el balanceo y los tres recorridos que vas a usar.",
+      "image": null
+    }
+  },
+  {
+    "id": 29,
+    "slug": "dynamic-programming",
+    "title": "Programación dinámica: guía práctica completa",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Programación dinámica explicada con ejemplos",
+      "description": "Cómo partir un problema en subproblemas y dejar de recalcular lo mismo: memoización, tabulación y ejemplos como la distancia de edición.",
+      "image": null
+    }
+  },
+  {
+    "id": 28,
+    "slug": "graph-algorithms",
+    "title": "Graph algorithms: Claves para entender su importancia y aplicaciones",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "Recorridos BFS y DFS, caminos más cortos y detección de ciclos, con los casos donde cada algoritmo de grafos conviene y dónde se te rompe.",
+      "image": null
+    }
+  },
+  {
+    "id": 27,
+    "slug": "heap-data-structure",
+    "title": "Heap Data Structure: guía práctica completa",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Heap en programación qué es y cómo funciona",
+      "description": "Qué es un heap y para qué sirve: propiedad de montículo, inserción y extracción, y por qué es la estructura detrás de las colas de prioridad.",
+      "image": null
+    }
+  },
+  {
+    "id": 26,
+    "slug": "merge-sort-python",
+    "title": "Merge Sort en Python: guía práctica completa para 2026",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "Merge sort en Python paso a paso: cómo divide y combina, el código completo y en qué casos conviene frente a otros ordenamientos.",
+      "image": null
+    }
+  },
+  {
+    "id": 25,
+    "slug": "queue-data-structure",
+    "title": "Queue Data Structure: Todo lo que Necesitas Saber",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Cola o queue en programación FIFO y tipos",
+      "description": "La cola explicada por su regla FIFO: cómo se implementa, qué variantes existen (circular, de prioridad, deque) y dónde aparece en algoritmos.",
+      "image": null
+    }
+  },
+  {
+    "id": 24,
+    "slug": "quicksort-python",
+    "title": "Quicksort Python: Optimiza el Ordenamiento de Listas",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "Quicksort en Python: cómo elige el pivote, el código listo para usar, su complejidad real y cuándo rinde mejor que merge sort.",
+      "image": null
+    }
+  },
+  {
+    "id": 23,
+    "slug": "space-complexity",
+    "title": "Complejidad espacial: guía práctica completa para 2026",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Complejidad espacial qué es y cómo se calcula",
+      "description": "Cuánta memoria consume un algoritmo según el tamaño de su entrada, cómo se mide en notación Big O y dónde choca con la complejidad temporal.",
+      "image": null
+    }
+  },
+  {
+    "id": 22,
+    "slug": "time-complexity",
+    "title": "Complejidad temporal: guía práctica completa para 2026",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Complejidad temporal qué es y cómo se calcula",
+      "description": "Qué es la complejidad temporal y cómo calcularla: las clases más comunes, cómo se clasifica un algoritmo y el análisis del de Prim.",
+      "image": null
+    }
+  },
+  {
+    "id": 21,
+    "slug": "tree-traversal",
+    "title": "Tree traversal: Guía práctica y aplicaciones en programación",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "Recorridos preorden, inorden, postorden y por niveles: qué hace cada uno, cuándo elegirlo y cómo se implementan con recursión o con una pila.",
+      "image": null
+    }
+  },
+  {
+    "id": 20,
+    "slug": "astro-vs-nextjs",
+    "title": "Astro vs Next.js cuál elegir para tu proyecto",
+    "cats": [
+      2
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Astro vs Next.js cuál elegir para tu proyecto",
+      "description": "Astro o Next.js según lo que estés construyendo: sitio de contenido o aplicación dinámica, con las diferencias de rendimiento y de hidratación.",
+      "image": null
+    }
+  },
+  {
+    "id": 19,
+    "slug": "headless-cms-comparison",
+    "title": "Headless CMS Comparison: Las Mejores Opciones para 2026",
+    "cats": [
+      2
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "Comparación de los CMS headless que valen la pena: modelo de contenido, API, precio y cuánto trabajo te ahorran de verdad al publicar.",
+      "image": null
+    }
+  },
+  {
+    "id": 18,
+    "slug": "nextjs-cms",
+    "title": "Next.js CMS: La Combinación Ideal para Tu Sitio Web",
+    "cats": [
+      2
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "Cómo conectar Next.js con un CMS sin perder rendimiento: opciones de renderizado, revalidación del contenido y qué mirar antes de elegir uno.",
+      "image": null
+    }
+  },
+  {
+    "id": 17,
+    "slug": "payload-cms-guide",
+    "title": "Payload CMS: guía práctica completa para 2026",
+    "cats": [
+      2
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "Payload CMS con lo que de verdad importa: colecciones, campos, la Local API y en qué proyectos conviene frente a los otros CMS headless.",
+      "image": null
+    }
+  },
+  {
+    "id": 14,
+    "slug": "auditoria-seo",
+    "title": "Auditoria Seo: guia completa y estrategia practica",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Cómo hacer una auditoría SEO paso a paso",
+      "description": "Qué revisa una auditoría SEO en serio: rastreo, indexación, rendimiento y datos estructurados, y cómo ordenar los hallazgos por impacto real.",
+      "image": null
+    }
+  },
+  {
+    "id": 13,
+    "slug": "nextjs-seo",
+    "title": "Next.js SEO: Mejora la Visibilidad de tu Sitio Web",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "SEO en Next.js sin adivinar: qué estrategia de renderizado conviene a cada página, cómo emitir los metadatos y qué mirar en Core Web Vitals.",
+      "image": null
+    }
+  },
+  {
+    "id": 12,
+    "slug": "seo-on-page-guia",
+    "title": "Seo ON Page: guia completa y estrategia practica",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "SEO on page sin checklists vacías: intención, títulos, encabezados, enlazado interno y los detalles técnicos que sí mueven el posicionamiento.",
+      "image": null
+    }
+  },
+  {
+    "id": 11,
+    "slug": "structured-data-seo",
+    "title": "Datos estructurados SEO: guía completa para mejorar tu visibilidad",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Datos estructurados SEO qué tipos de schema usar",
+      "description": "Datos estructurados que Google sí usa: qué tipos de schema conviene emitir, cómo validarlos y qué resultados enriquecidos podés esperar.",
+      "image": null
+    }
+  },
+  {
+    "id": 10,
+    "slug": "technical-seo-checklist",
+    "title": "Checklist de SEO técnico: guía práctica completa",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": "Checklist de SEO técnico con los diez puntos que de verdad mueven la aguja: HTTPS, errores de rastreo, enlaces rotos, estructura y velocidad.",
+      "image": null
+    }
+  },
+  {
+    "id": 9,
+    "slug": "technical-seo-guide",
+    "title": "Guía de SEO técnico: fundamentos para desarrolladores",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": "SEO técnico guía para desarrolladores",
+      "description": "SEO técnico para quien escribe el código: cómo ver tu sitio como lo ve Google y qué revisar antes de echarle la culpa al contenido.",
+      "image": null
+    }
+  },
+  {
+    "id": 8,
+    "slug": "pilas-y-colas",
+    "title": "Pilas y Colas",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Pilas y colas en Python LIFO y FIFO con ejemplos",
+      "description": "Qué son las pilas y las colas, cuándo usar LIFO o FIFO y cómo implementarlas en Python con ejemplos.",
+      "image": null
+    }
+  },
+  {
+    "id": 7,
+    "slug": "recursividad",
+    "title": "Recursividad",
+    "cats": [
+      4
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Recursividad en programación con ejemplos",
+      "description": "Qué es la recursividad, cómo funcionan el caso base y la llamada recursiva y cuándo conviene frente a un bucle.",
+      "image": null
+    }
+  },
+  {
+    "id": 6,
+    "slug": "hidratacion-web",
+    "title": "Hidratación Web",
+    "cats": [
+      2
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Hidratación web qué es y cómo afecta al SEO",
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 5,
+    "slug": "react-19",
+    "title": "React 19",
+    "cats": [
+      2
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 4,
+    "slug": "canibalizacion-seo",
+    "title": "Canibalización SEO",
+    "cats": [
+      1
+    ],
+    "hero": null,
+    "meta": {
+      "title": "Canibalización SEO qué es y cómo detectarla",
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 3,
+    "slug": "guia-google-search-console",
+    "title": "Google Search Console",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  },
+  {
+    "id": 2,
+    "slug": "javascript-seo",
+    "title": "Buenas prácticas de SEO para JavaScript",
+    "cats": [
+      5
+    ],
+    "hero": null,
+    "meta": {
+      "title": null,
+      "description": null,
+      "image": null
+    }
+  }
+]
