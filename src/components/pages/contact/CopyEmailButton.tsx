@@ -1,7 +1,7 @@
 'use client'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import Button, { type ButtonProps } from '@mui/material/Button'
 import { Copy } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
@@ -19,13 +19,24 @@ const HIDDEN = {
   border: 0,
 } as const
 
+type Props = {
+  email: string
+  /** Variante del boton. La pagina Contacto usa `outlined`; el panel oscuro, `text` con su propio `sx`. */
+  variant?: ButtonProps['variant']
+  /** Estilo extra del boton (el panel oscuro lo pinta claro sobre fondo oscuro). */
+  sx?: ButtonProps['sx']
+  /** Icono de copiar a la izquierda del texto. El panel oscuro no lo lleva. */
+  icon?: boolean
+}
+
 /**
- * Boton "Copiar correo". Al copiar cambia a "Correo copiado" durante 2 segundos
+ * Boton "Copiar correo", unica implementacion del sitio (la usan la pagina
+ * Contacto y CtaPanel). Al copiar cambia a "Correo copiado" durante 2 segundos
  * y una region `aria-live="polite"` repite el texto, para que el cambio se
  * anuncie sin mover el foco. Si el portapapeles falla (permiso denegado o
  * contexto no seguro) no cambia nada: el correo queda seleccionable.
  */
-export function CopyEmailButton({ email }: { email: string }) {
+export function CopyEmailButton({ email, variant = 'outlined', sx, icon = true }: Props) {
   const t = useTranslations('common')
   const [copied, setCopied] = useState(false)
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -52,10 +63,11 @@ export function CopyEmailButton({ email }: { email: string }) {
     <>
       <Button
         type="button"
-        variant="outlined"
+        variant={variant}
         size="small"
         onClick={copy}
-        startIcon={<Copy size={14} aria-hidden="true" />}
+        startIcon={icon ? <Copy size={14} aria-hidden="true" /> : undefined}
+        sx={sx}
       >
         {copied ? t('emailCopied') : t('copyEmail')}
       </Button>

@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { CheckCircle2 } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
-import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
+import { Fragment, useEffect, useId, useRef, useState, type FormEvent } from 'react'
 import { useFormStatus } from 'react-dom'
 
 import { sendContactMessage } from '@/app/actions/contact'
@@ -19,6 +19,50 @@ type FieldName = 'name' | 'email' | 'message'
 type Errors = Partial<Record<FieldName, string>>
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+/**
+ * Borrador del ultimo envio valido (IN-02). La accion del servidor responde con
+ * una redireccion completa a `?sent=false`, asi que el formulario vuelve vacio.
+ * Antes de enviar se guarda lo escrito en `sessionStorage` (solo esta pestana,
+ * nunca en la URL ni en la consola); con `?sent=false` se devuelve a los campos
+ * y se borra, y con `?sent=true` se borra sin usarlo. El contrato con la accion
+ * no cambia.
+ */
+export const DRAFT_KEY = 'jt-contact-draft'
+type Draft = Record<FieldName, string>
+
+function saveDraft(draft: Draft): void {
+  try {
+    window.sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft))
+  } catch {
+    // Sin almacenamiento (modo privado estricto o cuota llena): se envia igual.
+  }
+}
+
+function clearDraft(): void {
+  try {
+    window.sessionStorage.removeItem(DRAFT_KEY)
+  } catch {
+    // Nada que limpiar.
+  }
+}
+
+/** Lee el borrador una sola vez y lo borra. Devuelve null si falta o no tiene la forma esperada. */
+function takeDraft(): Draft | null {
+  try {
+    const raw = window.sessionStorage.getItem(DRAFT_KEY)
+    window.sessionStorage.removeItem(DRAFT_KEY)
+    if (!raw) return null
+    const parsed: unknown = JSON.parse(raw)
+    if (typeof parsed !== 'object' || parsed === null) return null
+    const rec = parsed as Record<string, unknown>
+    const str = (k: FieldName) => (typeof rec[k] === 'string' ? (rec[k] as string) : '')
+    const draft = { name: str('name'), email: str('email'), message: str('message') }
+    return draft.name || draft.email || draft.message ? draft : null
+  } catch {
+    return null
+  }
+}
 
 type Props = {
   /** `card` para la pagina Contacto, `panel` dentro de CtaPanel. */
@@ -57,6 +101,7 @@ export function ContactForm({ variant, status = null, email, headingId = 'form-t
   const locale = useLocale()
   const uid = useId()
   const [errors, setErrors] = useState<Errors>({})
+  const [draft, setDraft] = useState<Draft | null>(null)
   const statusRef = useRef<HTMLDivElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
   const panel = variant === 'panel'
@@ -67,6 +112,14 @@ export function ContactForm({ variant, status = null, email, headingId = 'form-t
     if (status) statusRef.current?.focus()
   }, [status])
 
+  // Tras un fallo, devuelve lo escrito a los campos; tras un exito, descarta el borrador.
+  useEffect(() => {
+    if (status === 'success') clearDraft()
+    if (status !== 'error') return
+    const saved = takeDraft()
+    if (saved) setDraft(saved)
+  }, [status])
+
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     const data = new FormData(e.currentTarget)
     const next: Errors = {}
@@ -75,7 +128,14 @@ export function ContactForm({ variant, status = null, email, headingId = 'form-t
     if (!String(data.get('message') ?? '').trim()) next.message = t('form.errors.message')
     setErrors(next)
     const first = (['name', 'email', 'message'] as const).find((k) => next[k])
-    if (!first) return
+    if (!first) {
+      saveDraft({
+        name: String(data.get('name') ?? ''),
+        email: String(data.get('email') ?? ''),
+        message: String(data.get('message') ?? ''),
+      })
+      return
+    }
     e.preventDefault()
     const el = formRef.current?.elements.namedItem(first)
     if (el instanceof HTMLElement) el.focus()
@@ -112,8 +172,10 @@ export function ContactForm({ variant, status = null, email, headingId = 'form-t
     fullWidth: true,
   } as const
 
+  // La key cambia al recuperar el borrador: los campos se montan de nuevo con su
+  // defaultValue y la etiqueta de MUI queda arriba, sin pisar el texto.
   const fields = (
-    <>
+    <Fragment key={draft ? 'draft' : 'blank'}>
       <input type="hidden" name="locale" value={locale} />
       {/* Trampa para bots: fuera de pantalla, oculta a la vista y a las
           tecnologias de apoyo, sin foco. Un bot que la llene es descartado. */}
@@ -130,6 +192,7 @@ export function ContactForm({ variant, status = null, email, headingId = 'form-t
         name="name"
         label={t('form.name')}
         autoComplete="name"
+        defaultValue={draft?.name}
         error={Boolean(errors.name)}
         helperText={errors.name}
       />
@@ -140,6 +203,7 @@ export function ContactForm({ variant, status = null, email, headingId = 'form-t
         type="email"
         label={t('form.email')}
         autoComplete="email"
+        defaultValue={draft?.email}
         error={Boolean(errors.email)}
         helperText={errors.email}
       />
@@ -150,6 +214,7 @@ export function ContactForm({ variant, status = null, email, headingId = 'form-t
         label={t('form.message')}
         multiline
         minRows={panel ? 4 : 5}
+        defaultValue={draft?.message}
         error={Boolean(errors.message)}
         helperText={errors.message}
       />
@@ -159,7 +224,7 @@ export function ContactForm({ variant, status = null, email, headingId = 'form-t
         </Typography>
       )}
       <SubmitButton label={t('form.submit')} />
-    </>
+    </Fragment>
   )
 
   const failure =

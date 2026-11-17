@@ -32,6 +32,14 @@
 //   (sin modo)  Corre contra BASE_URL (obligatoria).
 //   --submit    Agrega el envio con datos validos (ver SEGURIDAD).
 //
+// Fase 57 (57-04, IN-01 e IN-02):
+//   - --selftest tambien lee el codigo de ContactForm, CtaPanel y CopyEmailButton
+//     (checkDraftSource y checkCopySource): el formulario guarda el borrador antes
+//     de enviar y lo devuelve con ?sent=false, y "Copiar correo" tiene una sola
+//     implementacion. El render en cliente lo cubre 57-contact-draft.ts.
+//   - En vivo, siembra un borrador en sessionStorage y abre ?sent=false: los tres
+//     campos deben volver con lo escrito. No envia nada.
+//
 // Variables: BASE_URL.
 //
 // Cada comprobacion imprime PASS o FAIL motivo y se sale con 1 si hay algun FAIL.
@@ -41,7 +49,8 @@
 //   NODE_OPTIONS="--require <ruta del scratchpad de la sesion>/dnsfix.cjs"
 // Ese archivo es temporal de la sesion y nunca entra al repo.
 
-import { pathToFileURL } from 'node:url'
+import { readFileSync } from 'node:fs'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const REQUIRED_FIELDS = ['name', 'email', 'message']
 
@@ -157,6 +166,45 @@ export function checkValidationSnapshot(snap, nav) {
   return failures
 }
 
+// ------------------------------------------------- chequeos de codigo (fase 57)
+
+const ROOT = fileURLToPath(new URL('../../', import.meta.url))
+const readSource = (rel) => readFileSync(new URL(rel, `file://${ROOT}`), 'utf8')
+
+/**
+ * IN-02: ContactForm guarda lo escrito antes de enviar y lo devuelve tras un fallo.
+ * Nunca lo escribe en la URL ni en la consola (T-57-13).
+ * @param {string} src codigo de ContactForm.tsx
+ * @returns {string[]}
+ */
+export function checkDraftSource(src) {
+  const failures = []
+  if (!/sessionStorage\.setItem\(DRAFT_KEY/.test(src)) failures.push('ContactForm no guarda el borrador en sessionStorage')
+  if (!/if \(!first\) \{[\s\S]{0,200}saveDraft\(/.test(src)) failures.push('el borrador no se guarda en el envio valido')
+  if (!/status !== 'error'\) return[\s\S]{0,120}takeDraft\(\)/.test(src)) failures.push('el borrador no se recupera con status error')
+  if (!/status === 'success'\) clearDraft\(\)/.test(src)) failures.push('el borrador no se descarta tras el exito')
+  for (const f of ['name', 'email', 'message']) {
+    if (!new RegExp(`defaultValue=\\{draft\\?\\.${f}\\}`).test(src)) failures.push(`el campo ${f} no recibe el borrador`)
+  }
+  if (/console\.[a-z]+\([^)]*draft/i.test(src)) failures.push('el borrador sale por consola')
+  if (/history\.(push|replace)State|location\.(search|href|hash)\s*=|router\.(push|replace)\(/.test(src)) failures.push('ContactForm toca la URL')
+  return failures
+}
+
+/**
+ * IN-01: CtaPanel usa CopyEmailButton y no tiene su propio portapapeles.
+ * @param {{ cta: string, copy: string }} src
+ * @returns {string[]}
+ */
+export function checkCopySource({ cta, copy }) {
+  const failures = []
+  if (!/<CopyEmailButton\b/.test(cta)) failures.push('CtaPanel no usa CopyEmailButton')
+  if (/navigator\.clipboard/.test(cta)) failures.push('CtaPanel conserva su propia copia al portapapeles')
+  if ((copy.match(/navigator\.clipboard\.writeText/g) ?? []).length !== 1) failures.push('CopyEmailButton no tiene exactamente una copia al portapapeles')
+  if (!/aria-live="polite"/.test(copy)) failures.push('CopyEmailButton perdio la region aria-live')
+  return failures
+}
+
 // ---------------------------------------------------------------------- selftest
 
 /** @returns {Control} */
@@ -263,6 +311,18 @@ function selftest() {
   allowed('credenciales que imitan el host bloqueadas', 'https://dev.juan-tech.com@juan-tech.com', false)
   allowed('localhost bloqueado', 'http://localhost:3000', false)
   allowed('URL invalida bloqueada', 'no-es-url', false)
+
+  // Codigo real (fase 57) y versiones rotas a mano.
+  const formSrc = readSource('src/components/mui/ContactForm.tsx')
+  const copySrc = { cta: readSource('src/components/mui/CtaPanel.tsx'), copy: readSource('src/components/pages/contact/CopyEmailButton.tsx') }
+  expectClean('borrador: ContactForm real', checkDraftSource(formSrc))
+  expectBroken('borrador: sin guardar', checkDraftSource(formSrc.replace(/sessionStorage\.setItem\(DRAFT_KEY/, 'void (DRAFT_KEY')))
+  expectBroken('borrador: sin recuperar', checkDraftSource(formSrc.replace(/takeDraft\(\)\n/, 'null\n')))
+  expectBroken('borrador: campo sin defaultValue', checkDraftSource(formSrc.replace('defaultValue={draft?.message}', '')))
+  expectBroken('borrador: a la URL', checkDraftSource(`${formSrc}\nhistory.replaceState(null, '', '?m=' + draft)`))
+  expectClean('copiar: CtaPanel real', checkCopySource(copySrc))
+  expectBroken('copiar: CtaPanel con su propio portapapeles', checkCopySource({ ...copySrc, cta: `${copySrc.cta}\nnavigator.clipboard.writeText(email)` }))
+  expectBroken('copiar: CtaPanel sin CopyEmailButton', checkCopySource({ ...copySrc, cta: copySrc.cta.replace(/<CopyEmailButton\b/g, '<Button') }))
 
   if (bad === 0) console.log('PASS selftest 54-contact-form: fixtures validos sin fallos y defectuosos detectados')
   return bad > 0 ? 1 : 0
@@ -415,6 +475,35 @@ async function liveMode(base, { submit }) {
           }
         } catch (error) {
           report(path, [`error: ${message(error)}`])
+        } finally {
+          await context.close()
+        }
+      }
+
+      // Borrador tras un fallo (IN-02): se siembra a mano, sin enviar nada.
+      {
+        const context = await browser.newContext()
+        const page = await context.newPage()
+        const draft = { name: 'Prueba de borrador', email: 'borrador@example.com', message: 'Texto que no se pierde.' }
+        try {
+          await context.addInitScript((d) => {
+            if (!sessionStorage.getItem('jt-draft-seeded')) {
+              sessionStorage.setItem('jt-contact-draft', JSON.stringify(d))
+              sessionStorage.setItem('jt-draft-seeded', '1')
+            }
+          }, draft)
+          await visit(page, base, `${path}?sent=false`)
+          await waitHydrated(page)
+          await page.waitForTimeout(300)
+          const got = await page.evaluate(() => {
+            const form = [...document.forms].find((f) => f.querySelector('[name="message"]'))
+            const v = (n) => form?.querySelector(`[name="${n}"]`)?.value ?? null
+            return { name: v('name'), email: v('email'), message: v('message') }
+          })
+          const wrong = REQUIRED_FIELDS.filter((f) => got[f] !== draft[f]).map((f) => `${f} = ${JSON.stringify(got[f])}`)
+          report(`${path}?sent=false: el mensaje escrito vuelve tras el fallo`, wrong)
+        } catch (error) {
+          report(`${path}?sent=false borrador`, [`error: ${message(error)}`])
         } finally {
           await context.close()
         }

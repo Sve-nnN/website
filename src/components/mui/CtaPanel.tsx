@@ -1,15 +1,14 @@
 'use client'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import { useTranslations } from 'next-intl'
-import { useEffect, useRef, useState } from 'react'
+
+import { CopyEmailButton } from '@/components/pages/contact/CopyEmailButton'
 
 import { ContactForm } from './ContactForm'
 import { GrainBlob } from './GrainBlob'
-import { visuallyHidden } from './ScoreRing'
 
 export type CtaPanelProps = {
   title: string
@@ -26,33 +25,13 @@ export type CtaPanelProps = {
  * capa oscura propia sobre los blobs: el texto siempre cae sobre ella, asi el
  * contraste ya medido no depende del movimiento del blob.
  *
- * "Copiar correo" usa el portapapeles y repite "Correo copiado" dos segundos en
- * una region `aria-live` oculta; si el portapapeles falla no cambia nada y el
- * correo sigue seleccionable (`user-select: all`).
+ * "Copiar correo" es el mismo `CopyEmailButton` de la pagina Contacto (IN-01):
+ * repite "Correo copiado" dos segundos en una region `aria-live` oculta; si el
+ * portapapeles falla no cambia nada y el correo sigue seleccionable
+ * (`user-select: all`).
  */
 export function CtaPanel({ title, lead, email, avatarUrl, name }: CtaPanelProps) {
   const t = useTranslations('contact')
-  const tc = useTranslations('common')
-  const [copied, setCopied] = useState(false)
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  useEffect(
-    () => () => {
-      if (timer.current) clearTimeout(timer.current)
-    },
-    [],
-  )
-
-  const copy = async () => {
-    try {
-      await navigator.clipboard.writeText(email)
-    } catch {
-      return
-    }
-    setCopied(true)
-    if (timer.current) clearTimeout(timer.current)
-    timer.current = setTimeout(() => setCopied(false), 2000)
-  }
 
   return (
     <Box
@@ -150,13 +129,12 @@ export function CtaPanel({ title, lead, email, avatarUrl, name }: CtaPanelProps)
           >
             {email}
           </Typography>
-          <Button size="small" onClick={copy} sx={{ bgcolor: '#FAFAF7', color: '#12141C', '&:hover': { bgcolor: '#FFFFFF' } }}>
-            {copied ? tc('emailCopied') : tc('copyEmail')}
-          </Button>
-          {/* Anuncia el cambio sin mover el foco */}
-          <Box aria-live="polite" sx={visuallyHidden}>
-            {copied ? tc('emailCopied') : ''}
-          </Box>
+          <CopyEmailButton
+            email={email}
+            variant="text"
+            icon={false}
+            sx={{ bgcolor: '#FAFAF7', color: '#12141C', '&:hover': { bgcolor: '#FFFFFF' } }}
+          />
         </Stack>
         <Typography variant="caption" sx={{ color: 'rgba(250,250,247,0.75)' }}>
           {t('cta.responseNote')}

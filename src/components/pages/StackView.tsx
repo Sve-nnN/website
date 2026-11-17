@@ -171,7 +171,7 @@ export function StackView({ title, data }: Props) {
               }}
             >
               {category.tools.map((tool) => (
-                <StackToolCard key={tool.name} tool={tool} />
+                <StackToolCard key={tool.id} tool={tool} />
               ))}
             </UL>
           </Section>
@@ -236,7 +236,7 @@ export function StackView({ title, data }: Props) {
               {gear.map((item) => {
                 const Icon = gearIcon(item.name)
                 return (
-                  <Card key={item.name} component="li" sx={{ p: 2.5, display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <Card key={item.id} component="li" sx={{ p: 2.5, display: 'flex', alignItems: 'center', gap: 2 }}>
                     <Box
                       aria-hidden="true"
                       sx={{

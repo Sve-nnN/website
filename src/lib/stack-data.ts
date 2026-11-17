@@ -21,6 +21,8 @@ export type StackCta =
 export type StackReference = { label: string; href: string }
 
 export type StackTool = {
+  /** Clave estable para React: el id de la fila de Payload, o posicion y nombre si falta (IN-03). */
+  id: string
   name: string
   /** URL del logo, solo si `logo` es un Media poblado con url. Sin logo, null: no hay tile. */
   logoUrl: string | null
@@ -41,7 +43,8 @@ export type StackCategory = {
   tools: StackTool[]
 }
 
-export type StackGearItem = { name: string; href: string }
+/** `id`: clave estable para React, igual que en StackTool (IN-03). */
+export type StackGearItem = { id: string; name: string; href: string }
 
 export type StackViewData = {
   intro: string | null
@@ -89,13 +92,14 @@ function referenceOf(ref: ToolRow['referenceLink'], locale: NavLocale): StackRef
   return href ? { label: href, href } : null
 }
 
-function toolOf(row: ToolRow, locale: NavLocale): StackTool | null {
+function toolOf(row: ToolRow, index: number, locale: NavLocale): StackTool | null {
   const name = text(row.name)
   if (!name) return null
   // El primer argumento es el contrato de 48-RESEARCH: nunca leer subcampos sin comprobar el objeto poblado.
   const affiliate = row.affiliateLink as AffiliateLink | number | null | undefined
   const cta = resolveAffiliateCta(affiliate, name, '')
   return {
+    id: row.id ?? `${index}-${name}`,
     name,
     logoUrl: logoUrlOf(row.logo),
     narrative: text(row.narrative) ?? '',
@@ -128,7 +132,7 @@ export function buildStackViewData(block: ToolStackBlock, locale: NavLocale): St
     const heading = text(group.heading)
     if (!heading) continue
     const tools = (group.tools ?? [])
-      .map((row) => toolOf(row, locale))
+      .map((row, index) => toolOf(row, index, locale))
       .filter((tool): tool is StackTool => tool !== null)
     // Una categoria sin herramientas no deja encabezado huerfano.
     if (tools.length === 0) continue
@@ -141,10 +145,10 @@ export function buildStackViewData(block: ToolStackBlock, locale: NavLocale): St
   }
 
   const gear: StackGearItem[] = []
-  for (const item of block.gearItems ?? []) {
+  for (const [index, item] of (block.gearItems ?? []).entries()) {
     const name = text(item.name)
     const href = gearHrefOf(item.href, locale)
-    if (name && href) gear.push({ name, href })
+    if (name && href) gear.push({ id: item.id ?? `${index}-${name}`, name, href })
   }
 
   const pick = typeof block.noCommissionPick === 'object' && block.noCommissionPick !== null ? block.noCommissionPick : null
