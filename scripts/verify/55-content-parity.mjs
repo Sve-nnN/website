@@ -86,6 +86,9 @@ export function normalizeInternalLink(href, hosts) {
   if (value === '/en') value = '/'
   else if (value.startsWith('/en/') || value.startsWith('/en?')) value = value.slice(3)
   if (value.length > 1) value = value.replace(/\/(?=\?|$)/, '')
+  // El preview localiza la ruta de servicios en inglés (/en/services/...) y producción enlaza
+  // /servicios/... desde los posts EN: es la misma página, así que ambas formas cuentan igual.
+  value = value.replace(/^\/services(?=\/|\?|$)/, '/servicios')
   return value || '/'
 }
 
@@ -236,8 +239,11 @@ function selftest() {
     n('https://otro.com/x') === null &&
     n('#toc') === null &&
     n('mailto:a@b.c') === null &&
-    n('/engineering') === '/engineering'
-  if (normOk) console.log('PASS selftest normalizeInternalLink: quita origen, /en, barra y hash; ignora externos y /engineering se conserva')
+    n('/engineering') === '/engineering' &&
+    n('/en/services/seo-consulting') === '/servicios/seo-consulting' &&
+    n('/en/services') === '/servicios' &&
+    n('/servicesx') === '/servicesx'
+  if (normOk) console.log('PASS selftest normalizeInternalLink: quita origen, /en, barra y hash; /services equivale a /servicios; ignora externos y /engineering se conserva')
   else {
     bad += 1
     console.log('FAIL selftest normalizeInternalLink')
