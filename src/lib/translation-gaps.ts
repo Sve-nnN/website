@@ -67,3 +67,16 @@ export const EN_TRANSLATION_INCOMPLETE: ReadonlySet<string> = new Set([
 export function isEnTranslationIncomplete(locale: string, slug: string | undefined): boolean {
   return locale === 'en' && !!slug && EN_TRANSLATION_INCOMPLETE.has(slug)
 }
+
+/**
+ * Fase 57 (D-04 F4): href escrito a mano en el contenido (absoluto al propio
+ * sitio o con `/en` ya puesto) hacia el gemelo EN noindex de un post de la
+ * lista. Devuelve el mismo href sin el segmento `/en`, o sea la versión ES
+ * canónica, y deja intacto cualquier otro. No toca la base: corrige el enlace
+ * al renderizar. Solo reconoce `/en/blog/<categoría>/<slug>` exacto.
+ */
+export function rewriteIncompleteEnPostHref(href: string): string {
+  const m = href.match(/^((?:https?:\/\/(?:www\.)?juan-tech\.com)?)\/en(\/blog\/[^/?#]+\/([^/?#]+)\/?)([?#].*)?$/i)
+  if (!m || !EN_TRANSLATION_INCOMPLETE.has(m[3])) return href
+  return `${m[1]}${m[2]}${m[4] ?? ''}`
+}

@@ -14,6 +14,7 @@ import { useLocale, useTranslations } from 'next-intl'
 
 import { resolveLinkHref, sanitizeHref, type NavLinkInput } from '@/lib/nav-links'
 import { buildRichTextConverters, richTextConverters } from '@/components/richTextBlockConverters'
+import { rewriteIncompleteEnPostHref } from '@/lib/translation-gaps'
 
 import { UL, OL } from '../lists'
 import { muiBlockConverters, type RichTextOverrides, type Translate } from './blocks'
@@ -106,10 +107,13 @@ export function MuiRichText({ data, maxWidth = 760, headingIds, ctx, overrides }
     children: ReactNode,
     key?: string | number,
   ): ReactNode {
-    const href =
+    const rawHref =
       fields?.linkType === 'internal'
         ? resolveLinkHref({ type: 'reference', reference: fields.doc }, locale)
         : sanitizeHref(fields?.url, locale)
+    // Fase 57 (D-04 F4): un enlace del contenido al gemelo EN noindex de un post
+    // de EN_TRANSLATION_INCOMPLETE apunta a la versión ES canónica.
+    const href = rawHref ? rewriteIncompleteEnPostHref(rawHref) : rawHref
     // Esquema no permitido o sin destino: queda el texto, sin enlace (T-54-22).
     if (!href) return <span key={key}>{children}</span>
 
