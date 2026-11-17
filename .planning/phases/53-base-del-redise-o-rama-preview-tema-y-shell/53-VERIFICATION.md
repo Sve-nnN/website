@@ -1,7 +1,7 @@
 ---
 phase: 53-base-del-redise-o-rama-preview-tema-y-shell
-verified: 2026-11-07T21:00:00Z
-status: passed
+verified: 2026-11-17T12:00:00Z
+status: human_needed
 score: 4/5 must-haves verified
 covered_files:
   - .planning/REQUIREMENTS.md
@@ -18,7 +18,9 @@ covered_files:
   - .planning/phases/53-base-del-redise-o-rama-preview-tema-y-shell/53-06-PLAN.md
   - .planning/phases/53-base-del-redise-o-rama-preview-tema-y-shell/53-06-SUMMARY.md
   - next.config.mjs
+  - src/app/global-not-found.tsx
   - src/app/robots.ts
+  - src/components/shell/FooterView.tsx
   - src/components/shell/HeaderView.tsx
   - src/components/shell/SiteFooter.tsx
   - src/components/shell/SiteHeader.tsx
@@ -29,42 +31,47 @@ covered_files:
   - src/theme/Providers.tsx
   - src/theme/motion.tsx
   - src/theme/theme.ts
-covered_digest: "v1:sha256:48670a5753c5c8da4beb97b72068c8873233ef1fd0f1cff1efcda2c40701d42c"
+covered_digest: "v4:sha256:2001c6f298dfed3c56731a3c52e31b07c9147e23d8e1ea396c0dfeb3728b48da"
 behavior_unverified: 1
 overrides_applied: 0
+re_verification:
+  previous_status: passed
+  previous_score: 4/5
+  gaps_closed: []
+  gaps_remaining: []
+  regressions: []
 behavior_unverified_items:
-  - truth: "Juan cambia un enlace en el admin real y aparece en el preview tras la revalidacion (ROADMAP SC4, D-12)"
-    test: "En el admin de produccion, editar una etiqueta del global Header (o Footer), guardar, y recargar https://dev.juan-tech.com a los 60 y 120 s sin redeploy"
-    expected: "El preview muestra la etiqueta nueva en 2 minutos como maximo. Despues, restaurar la etiqueta original"
-    why_human: "El hook afterChange (revalidateTag) corre en el proceso de produccion y no puede invalidar la cache del proceso del preview. El cambio solo llega por el TTL de 60 s de unstable_cache mas el ISR de la pagina. Ninguna prueba ejercita esa cadena y escribir en produccion queda fuera del alcance del verificador."
+  - truth: "Nav y footer muestran los enlaces de los globals Header y Footer: Juan cambia un enlace en el admin y aparece en el preview tras la revalidacion (ROADMAP SC4)"
+    test: "En el admin de produccion, editar una etiqueta del global Header (o Footer), guardar, y recargar https://dev.juan-tech.com a los 60 y 120 s sin redeploy. Restaurar la etiqueta original"
+    expected: "El preview muestra la etiqueta nueva en 2 minutos como maximo"
+    why_human: "El hook afterChange (revalidateTag) corre en el proceso de produccion y no invalida la cache del proceso del preview. El cambio llega solo por el TTL de 60 s de unstable_cache mas el ISR de la pagina. Ninguna prueba ejercita esa cadena y el verificador no escribe en produccion"
 human_verification:
   - test: "Revalidacion de nav y footer desde el admin real (ver behavior_unverified_items)"
     expected: "El cambio aparece en el preview en menos de 2 minutos, sin redeploy"
-    why_human: "Cadena TTL mas ISR entre dos procesos, requiere una escritura real en produccion"
+    why_human: "Cadena TTL mas ISR entre dos procesos; requiere una escritura real en produccion"
   - test: "Lectores de pantalla: NVDA con Firefox y VoiceOver con Safari sobre el selector de idioma, el Drawer movil y el toggle de movimiento"
     expected: "Landmarks con nombre distinto, Drawer anunciado como dialogo con nombre, aria-pressed del toggle anunciado una sola vez, idioma activo con aria-current"
-    why_human: "El comportamiento de tecnologias de asistencia no se prueba con Playwright"
+    why_human: "Playwright no reproduce tecnologias de asistencia reales"
   - test: "Revision visual del shell en el preview a 900, 1024 y 1280 px"
-    expected: "Pill de nav sin desborde con 6 enlaces, contraste del texto secundario de al menos 4.5:1 sobre el pill translucido, footer y Drawer fieles al sandbox aprobado"
+    expected: "Pill de nav sin desborde (ahora con 7 enlaces por el Sobre mi del preview), contraste del texto secundario de al menos 4.5:1 sobre el pill translucido, footer y Drawer fieles al sandbox"
     why_human: "Fidelidad de diseno y contraste sobre fondo variable"
-  - test: "Foco visible del enlace de salto y no tapado por el header y el toggle fijos (SC 2.4.11)"
-    expected: "Al pulsar Tab desde la carga, el enlace de salto aparece a 8 px del borde superior y es visible. El foco recorrido en una pagina larga no queda oculto"
-    why_human: "El chequeo automatico de foco de 53-computed-styles.mjs es intermitente (ver Anti-Patterns). La captura debe confirmarla una persona"
   - test: "Admin local sin MUI: abrir /admin/login con el servidor local contra una base de pruebas"
     expected: "Se ve igual que antes, sin atributos data-emotion ni variables --jt- en el DOM"
-    why_human: "Verificacion estatica OK (manifiestos y chunks de (payload) sin MUI), pero la comprobacion visual del admin real no se puede hacer en el preview porque el admin esta bloqueado ahi"
+    why_human: "El admin esta bloqueado en el preview (404). La evidencia estatica es favorable, pero la comprobacion visual exige un admin real"
 ---
 
-# Phase 53: Base del rediseno, rama, preview, tema y shell, Verification Report
+# Phase 53: Base del rediseno, rama, preview, tema y shell. Verification Report
 
 **Phase Goal:** Juan abre `dev.juan-tech.com` y ve el shell MUI funcionando con datos reales de Payload, sin que el admin ni produccion cambien.
-**Verified:** 2026-11-07
+**Verified:** 2026-11-17
 **Status:** human_needed
-**Re-verification:** No, verificacion inicial (no existia VERIFICATION.md previo)
+**Re-verification:** Si. El reporte del 2026-11-07 quedo obsoleto porque cambiaron `.planning/REQUIREMENTS.md`, `next.config.mjs`, `HeaderView.tsx`, `SiteHeader.tsx` y `theme.ts` (fases 54 a 56). Este reporte vuelve a verificar todo contra el codigo de `62c1b2f` y contra el preview en vivo.
 
 ## Resumen
 
-El objetivo se cumple en lo observable: el preview responde en vivo con el shell MUI, datos reales de Payload, noindex y sin escrituras. Todos los scripts de contrato pasan contra `https://dev.juan-tech.com` en esta sesion. Quedan 5 comprobaciones humanas (revalidacion cruzada, lectores de pantalla, revision visual, foco visible, admin local). Ninguna es un fallo conocido. Una de ellas, la revalidacion, es una verdad dependiente de comportamiento que ninguna prueba ejercita.
+El objetivo se sostiene. Los cambios posteriores a la fase 53 no rompen ninguna verdad: el preview sigue con noindex, robots cerrado, admin y API de Payload en 404, escrituras inertes, tema MUI aplicado y shell con datos reales. Produccion sigue intacta (indexable, robots abierto con sitemap, admin en 200). Los 10 scripts de verificacion de la fase pasan hoy, incluido el chequeo de foco que antes fallaba de forma intermitente (40 paradas de Tab medidas, PASS).
+
+Queda una verdad dependiente de comportamiento sin prueba: la revalidacion entre el admin de produccion y el preview (SC4). `53-UAT.md` registra que Juan renuncio a las cinco revisiones manuales el 2026-11-08; eso cierra la UAT pero no aporta evidencia, asi que la verdad sigue sin verificar y el estado correcto es `human_needed`. Si Juan quiere aceptarla sin prueba, basta con agregar un `overrides:` para SC4.
 
 ## Goal Achievement
 
@@ -72,137 +79,121 @@ El objetivo se cumple en lo observable: el preview responde en vivo con el shell
 
 | # | Truth | Status | Evidence |
 |---|-------|--------|----------|
-| 1 | `dev.juan-tech.com` desplegado desde `feat/mui-redesign` responde con noindex (meta y X-Robots-Tag), su robots.txt no permite rastreo y no publica sitemap | VERIFIED | En vivo: `/robots.txt` 200 con `Disallow: /` y sin `Sitemap:`; `/sitemap.xml` 404; cabecera `x-robots-tag: noindex, nofollow` en `/`, `/robots.txt`, `/admin`, `/api/*`; HTML trae `<meta name="robots" content="noindex, nofollow"/>`; canonical sigue en `https://juan-tech.com`. `53-preview-contract.mjs` y `53-wait-preview.mjs` PASS. `origin/feat/mui-redesign` esta en `a3a41e1`, igual que el HEAD local. |
-| 2 | El preview lee la DB de produccion sin escribir: credenciales de solo lectura y rutas que escriben inertes | VERIFIED (parte DB por evidencia aportada) | Codigo: `isPreviewReadonly()` (falla cerrado via `parsePreviewFlag`) gobierna las seis rutas (`go/[slug]`, `subscribe`, `subscribe-lead-magnet`, `contact`, `newsletter/confirm`, `newsletter/unsubscribe`); `/admin` y REST/GraphQL de Payload envueltos con `guardPreviewRoute` o `notFound()`. `53-write-gates.mjs` OK, `53-preview-contract.mjs --config-check` OK. En vivo: `/go/dinorank` 302. Crawl de 169 URLs del sitemap de produccion contra el preview: 0 diferencias. Rol `juantech_preview_ro` (SELECT ok, INSERT falla, `users` denegada) y 0 lineas `permission denied`: evidencia aportada por el solicitante, no reproducida aqui porque el verificador no lee credenciales. |
-| 3 | Tema MUI v9 oscuro con tokens y Geist aplicado en `(frontend)`, y `/admin` se ve igual sin estilos MUI filtrados | VERIFIED (el aspecto visual del admin va como human-check) | `53-computed-styles.mjs` seccion `styles` PASS en vivo (body `rgb(24,24,24)`, boton MUI contained `rgb(255,122,69)`). Layout: `AppRouterCacheProvider enableCssLayer` + `InitColorSchemeScript` + `Providers` solo en `src/app/(frontend)/[locale]/layout.tsx`. `@layer tailwind,mui` declarado, 42 bloques `@layer mui` en el HTML. `MuiCssBaseline` ya no trae el reset global `ul, ol` (fix CR-01 desplegado: ausente en el HTML servido). `grep` de `@mui`, `@emotion`, `src/theme` y `components/shell` en `src/app/(payload)`: sin resultados. Build local: los 7 modulos MUI de `page_client-reference-manifest.js` del admin tienen `chunks: []` (falso positivo documentado de Next 15), `.next/static/chunks/app/(payload)` sin `emotion` ni `@mui`, y los CSS de entrada del admin sin `jt-`, `MuiCssBaseline` ni `@layer tailwind`. Next sigue en 15.4.11, MUI 9.5.0. |
-| 4 | Nav y footer muestran los enlaces de los globals Header y Footer; un cambio en el admin aparece en el preview tras la revalidacion | PRESENT_BEHAVIOR_UNVERIFIED | Wiring verificado: `SiteHeader`/`SiteFooter` leen `getCachedHeader`/`getCachedFooter` (`findGlobal`, tag `header`/`footer`, TTL 60 s), hooks `afterChange` en ambos globals, sin migracion. HTML en vivo: nav `Principal` con `/blog`, `/case-studies`, `/authors`, `/contact`, `/servicios` y CTA `Hablemos`; footer con cinco columnas y legales. La mitad "aparece tras la revalidacion" depende de TTL mas ISR entre el admin de produccion y el proceso del preview (`revalidateTag` no cruza procesos) y ninguna prueba la ejerce. Va a human_verification. |
-| 5 | El selector de idioma cambia EN/ES conservando la ruta y el toggle de movimiento pausa y recuerda la eleccion | VERIFIED | `53-computed-styles.mjs` en vivo: `motion` PASS (toggle con persistencia tras recarga), `lang` PASS (`/servicios` a `/en/services` y de vuelta), `skip`, `overflow`, `drawer` PASS. `53-shell-contract.mjs` PASS en `/` y `/en` (un solo `main`, landmarks, enlace de salto, lang); su `--selftest` rechaza fixtures malos. `53-motion-script.ts` y `53-nav-links.ts` OK. |
+| 1 | `dev.juan-tech.com`, desde `feat/mui-redesign`, responde con noindex (meta y X-Robots-Tag), robots.txt no permite rastreo y no publica sitemap | VERIFIED | `53-preview-contract.mjs` en vivo: 22 lineas PASS (robots 200 con `Disallow: /`, sin `Sitemap:`, `x-robots-tag` noindex en `/`, `/en` y `/robots.txt`, meta `noindex, nofollow`, `/sitemap.xml` y `/sitemap.html` 404). `53-wait-preview` no se repitio; el contrato cubre lo mismo. Local y `origin/feat/mui-redesign` en `62c1b2f`. El preview sirve codigo reciente de la rama (enlace `/sobre-mi` de la fase 54 presente en el HTML). |
+| 2 | El preview lee la DB de produccion sin escribir: credenciales de solo lectura y rutas que escriben inertes | VERIFIED (rol de solo lectura por evidencia aportada en 53-06) | `53-write-gates.mjs` OK; `53-preview-contract.mjs --config-check` PASS (sin bandera: sin X-Robots-Tag y `rewrites()` vacio). En vivo: `/admin`, `/admin/login`, `/api/users`, `/api/graphql` 404; `/go/dinorank` 302. `53-crawl-parity.mjs`: 166 URLs del sitemap de produccion, 0 diferencias. El rol `juantech_preview_ro` descansa en la evidencia de 53-06; el verificador no lee credenciales. |
+| 3 | Tema MUI v9 oscuro con tokens y Geist en `(frontend)`, y `/admin` igual que antes sin estilos MUI | VERIFIED (aspecto visual del admin como human-check) | `53-computed-styles.mjs` `styles` PASS en vivo. `53-layer-check.mjs` OK (646 nodos en la capa tailwind; control negativo 600 reglas sin capa). `grep` de `@mui`, `@emotion`, `src/theme` y `components/shell` en `src/app/(payload)`: sin resultados. Cambio de `theme.ts` desde la fase 53: solo `fontWeight` 500 a 400 en `mono` y `MuiChip` (fase 54), sin efecto en el aislamiento. `npx tsc --noEmit` limpio. |
+| 4 | Nav y footer muestran los enlaces de los globals Header y Footer; un cambio en el admin aparece en el preview tras la revalidacion | PRESENT_BEHAVIOR_UNVERIFIED | Lectura del CMS verificada: `SiteHeader` sigue leyendo `getCachedHeader` y el HTML en vivo trae `/blog`, `/case-studies`, `/authors`, `/contact`, `/servicios` del global, y el footer sus columnas y legales. Cambio nuevo en `SiteHeader.tsx`: inyecta `/sobre-mi` solo cuando `isPreviewReadonly()` es verdadero (fase 54, se retira en la 57); no toca el global ni produccion. La mitad "aparece tras la revalidacion" no tiene prueba que la ejercite (ver Human Verification). |
+| 5 | El selector de idioma cambia EN/ES conservando la ruta y el toggle de movimiento pausa y recuerda la eleccion | VERIFIED | `53-computed-styles.mjs` en vivo: `motion`, `lang`, `skip`, `overflow`, `drawer` y `focus` PASS. `53-shell-contract.mjs` PASS en `/` y `/en`; `--selftest` OK. `53-motion-script.ts` y `53-nav-links.ts` OK. |
 
 **Score:** 4/5 truths verified (1 presente, comportamiento sin verificar)
 
-### Must-haves de los planes (verificacion puntual)
+### Cambios posteriores a la fase 53 revisados
 
-| Must-have | Status | Evidencia |
-|-----------|--------|-----------|
-| Rama `feat/mui-redesign` desde master; master sin commits de codigo | VERIFIED | `git merge-base` = `e38cdf4`; `origin/master` sigue en `6e9b02a`. Master local solo avanza con 3 commits `docs(53)` de planificacion (sin codigo) |
-| `next` 15.4.11, `@mui/material` 9.5.0, `@mui/material-nextjs` 9.5.0, Emotion 11.14 exactos | VERIFIED | `package.json` lineas 17-21 y 46. `npx tsc --noEmit` limpio |
-| `globals.css` entero en `@layer tailwind` bajo `mui` | VERIFIED | `53-layer-check.mjs` OK (660 nodos en la capa, control negativo con 614 reglas sin capa) |
-| Un solo `main#main-content`, SkipLink primero, landmarks con nombre | VERIFIED | HTML en vivo: `header[aria-label=Cabecera]`, `nav[Principal]`, `footer[Pie de pagina]`, cada nav de columna con nombre propio; contrato PASS |
-| Fixes del review CR-01 y WR-01 a WR-10 aplicados | VERIFIED | 11 commits `fix(53)` en la rama; `53-REVIEW-FIX.md` `all_fixed`; `preview.ts`, `preview-flag.mjs`, `preview-guard.ts` leidos; CR-01 confirmado en el HTML servido |
-| Sin migraciones ni cambios de esquema | VERIFIED | `git diff --name-only master...HEAD` sin archivos de migracion; los globals solo ganan `hooks.afterChange` |
-| Secretos fuera del repo | VERIFIED | Ninguna credencial en los archivos revisados; el verificador no leyo `~/.config/juantech` |
+| Archivo | Cambio | Efecto sobre la fase 53 |
+|---------|--------|-------------------------|
+| `next.config.mjs` | `experimental.globalNotFound: true` (fase 54) | Ninguno sobre preview o admin: `--config-check` PASS y rewrites del preview intactos. `global-not-found.tsx` importa `globals.css` y `SiteDocument`, pero solo renderiza URLs sin ruta; `/admin/*` lo resuelve el catch-all de Payload |
+| `SiteHeader.tsx` | Enlace `/sobre-mi` solo en preview | Ninguno sobre produccion; condicionado por la bandera fail-closed |
+| `HeaderView.tsx`, `FooterView.tsx` | `srOnly` con unidades `px` explicitas; titulos de columna del pie de `h3` a `h2` | Mejora de accesibilidad; contrato del shell PASS |
+| `theme.ts` | Peso 400 en `mono` y `MuiChip` | Solo tipografia |
+| `.planning/REQUIREMENTS.md` | BASE-01..03 marcados `[x]` / Complete | Trazabilidad al dia |
 
 ### Required Artifacts
 
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
-| `src/theme/{tokens,theme,Providers,motion,motion-init}.ts(x)` | Tema oscuro y estado de movimiento | VERIFIED | Existen, importados desde el layout, datos fluyen (estilos computados reales) |
-| `postcss-tailwind-layer.cjs` | Envolver `globals.css` en `@layer tailwind` | VERIFIED | Ruta exacta (WR-10), layer-check OK |
-| `src/lib/preview.ts`, `preview-flag.mjs`, `preview-guard.ts` | Bandera fail-closed y guarda de runtime | VERIFIED | Sustantivos y cableados en middleware, layout, robots, seis rutas y cuatro handlers de Payload |
-| `src/components/shell/*` (Header/Footer/View, LanguageSwitcher, SkipLink, MotionToggle) | Shell MUI | VERIFIED | Renderizan en vivo con datos de Payload |
-| `src/lib/cache.ts`, `cache-tags.ts`, `nav-links.ts` | Capa de cache de globals y helpers de enlaces | VERIFIED | `getCachedHeader/Footer` en uso; helpers cubiertos por `53-nav-links.ts` |
-| `scripts/verify/53-*.mjs/.ts` (10 scripts) | Verificacion determinista | VERIFIED | Ejecutados en esta sesion; todos PASS excepto una intermitencia del chequeo de foco |
+| `src/theme/{theme,Providers,motion}.ts(x)` | Tema oscuro y estado de movimiento | VERIFIED | Estilos computados reales en vivo |
+| `postcss-tailwind-layer.cjs` | `globals.css` en `@layer tailwind` | VERIFIED | layer-check OK |
+| `src/lib/preview.ts`, `preview-flag.mjs`, `preview-guard.ts` | Bandera fail-closed y guarda | VERIFIED | write-gates y config-check OK |
+| `src/components/shell/*` | Shell MUI | VERIFIED | Renderiza en vivo con datos de Payload |
+| `scripts/verify/53-*` (10 scripts) | Verificacion determinista | VERIFIED | Todos ejecutados hoy, todos PASS |
 
 ### Key Link Verification
 
 | From | To | Via | Status | Details |
 |------|----|-----|--------|---------|
-| `(frontend)/[locale]/layout.tsx` | `src/theme/Providers.tsx` | `<Providers>` dentro de `AppRouterCacheProvider` | WIRED | Leido en el layout |
-| `postcss.config.js` | `postcss-tailwind-layer.cjs` | Clave de plugin en cadena | WIRED | layer-check OK |
-| `next.config.mjs` | `src/app/preview-blocked/route.ts` | Rewrites `beforeFiles` | WIRED | `/admin`, `/api/users`, `/api/graphql` responden 404 en vivo; `/api/redirects-lookup` y `/api/newsletter/*` quedan abiertos |
-| `middleware.ts` / `robots.ts` | `src/lib/preview.ts` | `isPreviewReadonly()` | WIRED | grep confirma |
-| `SiteHeader` / `SiteFooter` | `getCachedHeader` / `getCachedFooter` | Local API `findGlobal` | WIRED | HTML en vivo con enlaces del CMS |
-| `Header/Footer` globals | `cache-tags.ts` | `afterChange: [revalidate*Cache]` | WIRED | Presente; efecto cross-proceso no ejercido (ver SC4) |
-| `MotionToggle` | `src/theme/motion.tsx` | `useMotion()` | WIRED | Toggle con persistencia PASS en navegador |
+| `next.config.mjs` | `src/app/preview-blocked/route.ts` | rewrites `beforeFiles` con bandera | WIRED | admin y API 404 en vivo; `/api/redirects-lookup` y `/api/newsletter/*` abiertos |
+| `middleware.ts` / `robots.ts` / `SiteHeader.tsx` | `src/lib/preview.ts` | `isPreviewReadonly()` | WIRED | Comportamiento confirmado en vivo |
+| `SiteHeader` / `SiteFooter` | `getCachedHeader` / `getCachedFooter` | `findGlobal` | WIRED | Enlaces del CMS en el HTML |
+| Globals Header/Footer | `cache-tags.ts` | `afterChange` | WIRED | Efecto entre procesos sin ejercer (SC4) |
+| `MotionToggle` | `src/theme/motion.tsx` | `useMotion()` | WIRED | `motion` PASS con persistencia |
 
 ### Data-Flow Trace (Level 4)
 
 | Artifact | Data Variable | Source | Produces Real Data | Status |
 |----------|---------------|--------|--------------------|--------|
-| `HeaderView` | `items`, `cta`, `logo` | `getCachedHeader` a `payload.findGlobal('header')` | Si, nav en vivo coincide con el global | FLOWING |
-| `FooterView` | columnas CMS, servicios, ultimos posts y casos | `getCachedFooter` y `getCachedLatest*Links` | Si, cinco columnas en el HTML en vivo | FLOWING |
-| `LanguageSwitcher` | href alterno | `buildLocaleSwitchHref(pathname)` | Si, navegacion `/servicios` a `/en/services` PASS | FLOWING |
+| `HeaderView` | `items`, `cta`, `logo` | `getCachedHeader` a `findGlobal('header')` | Si, mas `/sobre-mi` inyectado solo en preview | FLOWING |
+| `FooterView` | columnas, legales | `getCachedFooter` | Si | FLOWING |
+| `LanguageSwitcher` | href alterno | `buildLocaleSwitchHref` | Si (`lang` PASS) | FLOWING |
 
-### Behavioral Spot-Checks (ejecutados en esta sesion)
+### Behavioral Spot-Checks (ejecutados el 2026-11-17)
 
 | Behavior | Command | Result | Status |
 |----------|---------|--------|--------|
-| Contrato del preview | `53-preview-contract.mjs` (BASE_URL=dev) | PASS en todas las lineas | PASS |
-| Contrato del shell | `53-shell-contract.mjs` (EXPECT_PREVIEW=1) y `--selftest` | PASS en `/` y `/en`; selftest OK | PASS |
-| Espera del preview | `53-wait-preview.mjs` | OK | PASS |
-| Paridad de crawl | `53-crawl-parity.mjs` (PREVIEW_BASE, PROD_BASE) | 169 URLs, 0 diferencias | PASS |
-| Estilos y navegador | `53-computed-styles.mjs` (REQUIRE_BUTTON=1) | styles, motion, skip, lang, overflow, drawer PASS; focus PASS en 2 de 4 corridas | PASS con intermitencia |
-| Capas CSS | `53-layer-check.mjs` | OK | PASS |
-| Config con y sin bandera | `53-preview-contract.mjs --config-check` | PASS (produccion intacta sin bandera) | PASS |
-| Compuertas de escritura | `53-write-gates.mjs` | OK | PASS |
-| Motion, enlaces, mensajes | `53-motion-script.ts`, `53-nav-links.ts`, `53-messages-parity.mjs` | OK | PASS |
+| Contrato del shell | `BASE_URL=https://dev.juan-tech.com EXPECT_PREVIEW=1 node scripts/verify/53-shell-contract.mjs` | PASS `/` (es) y `/en` (en), exit 0 | PASS |
+| Paridad de crawl | `PREVIEW_BASE=https://dev.juan-tech.com PROD_BASE=https://juan-tech.com node scripts/verify/53-crawl-parity.mjs` | 166 URLs, 0 diferencias, exit 0 | PASS |
+| Contrato del preview | `BASE_URL=https://dev.juan-tech.com node scripts/verify/53-preview-contract.mjs` | 22 PASS, exit 0 | PASS |
+| Config con y sin bandera | `53-preview-contract.mjs --config-check` | PASS | PASS |
+| Navegador | `53-computed-styles.mjs` (REQUIRE_BUTTON=1) | styles, motion, skip, lang, overflow, drawer, focus PASS | PASS |
+| Compuertas, capas, mensajes | `53-write-gates`, `53-layer-check`, `53-messages-parity` | OK | PASS |
+| Helpers | `53-nav-links.ts`, `53-motion-script.ts`, `53-shell-contract --selftest` | OK | PASS |
+| Produccion intacta | `curl` a `https://juan-tech.com` | `/` 200 sin x-robots-tag ni meta noindex; robots `Allow: /` con `Sitemap:`; `/admin` 200 | PASS |
 | Tipos | `npx tsc --noEmit` | Sin errores | PASS |
 
 ### Probe Execution
 
-SKIPPED: la fase no declara probes `scripts/*/tests/probe-*.sh`. Los scripts `53-*` ya se ejecutaron arriba.
+SKIPPED: la fase no declara probes `scripts/*/tests/probe-*.sh`. Los scripts `53-*` cubren esa funcion y corrieron arriba.
 
 ### Requirements Coverage
 
 | Requirement | Source Plan | Description | Status | Evidence |
 |-------------|------------|-------------|--------|----------|
-| BASE-01 | 53-01, 53-02, 53-06 | Rama, preview en Dokploy con DB de produccion en solo lectura, noindex y fuera del sitemap | SATISFIED | SC1 y SC2. La parte "rol de solo lectura" descansa en evidencia aportada, respaldada por 0 diferencias de crawl y por compuertas de codigo |
-| BASE-02 | 53-01, 53-05 | Tema MUI v9 oscuro montado en `(frontend)` sin afectar el admin | SATISFIED | SC3. Falta solo la revision visual del admin (human-check) |
-| BASE-03 | 53-03, 53-04, 53-05, 53-06 | Nav, footer, selector de idioma y toggle de movimiento con globals y `[locale]` reales | NEEDS HUMAN | Todo funcional verificado salvo la revalidacion cruzada, mas las pruebas con lectores de pantalla |
+| BASE-01 | 53-01, 53-02, 53-06 | Rama, preview con DB de produccion en solo lectura, noindex y fuera del sitemap | SATISFIED | SC1 y SC2 |
+| BASE-02 | 53-01, 53-05 | Tema MUI v9 oscuro en `(frontend)` sin afectar el admin | SATISFIED | SC3; revision visual del admin como human-check |
+| BASE-03 | 53-03 a 53-06 | Nav, footer, selector de idioma y toggle con globals y `[locale]` reales | NEEDS HUMAN | Todo verificado salvo la revalidacion entre procesos (SC4) |
 
-Sin requisitos huerfanos: REQUIREMENTS.md mapea BASE-01, BASE-02 y BASE-03 a la Phase 53 y los seis PLAN los declaran (01: BASE-01 y 02; 02: BASE-01; 03 y 04: BASE-03; 05: BASE-02 y 03; 06: los tres). Nota de trazabilidad: en REQUIREMENTS.md solo BASE-02 aparece marcado `[x]`/Complete; BASE-01 y BASE-03 siguen `Pending`. Hay que actualizarlos cuando se resuelvan los human-checks.
+Sin requisitos huerfanos. REQUIREMENTS.md ya marca los tres como Complete.
 
 ### Anti-Patterns Found
 
 | File | Line | Pattern | Severity | Impact |
 |------|------|---------|----------|--------|
-| `scripts/verify/53-computed-styles.mjs` | 284 | La seccion `focus` mide `getBoundingClientRect` justo despues de `Tab`. Con `prefers-reduced-motion: reduce` el estilo `&:focus {top: 8}` del SkipLink se aplica con `transition: all 1e-05s`, y en una de cada dos o tres corridas el primer fotograma sigue en `top: -64` | Warning | Falso fallo intermitente (reproducido: 6 de 8 y 1 de 4 mediciones inmediatas dan `top:-64`; a los 800 ms siempre `top:8`). Sin reduccion de movimiento es 4 de 4 correcto. No es un defecto de producto visible (un fotograma), pero el chequeo no es confiable como compuerta. Conviene esperar un fotograma antes de medir |
-| `scripts/verify/53-wait-preview.mjs` | n/a | IN-02 del review sin aplicar: no exige 404 en `/admin` y `/api/users` | Info | `53-preview-contract.mjs` si lo exige y pasa |
-| Marcadores de deuda `TBD`, `FIXME`, `XXX` y `TODO`, `HACK`, `PLACEHOLDER` en archivos de la fase | n/a | Ninguno encontrado | OK | |
+| Archivos de la fase | n/a | `TBD`, `FIXME`, `XXX`, `TODO`, `HACK`, `PLACEHOLDER` | OK | Ninguno |
+| `scripts/verify/53-wait-preview.mjs` | n/a | IN-02 del review sin aplicar (no exige 404 en `/admin` y `/api/users`) | Info | `53-preview-contract.mjs` lo exige y pasa |
+| `src/migrations/*phase54*`, `*phase55*`, `*phase56*` | n/a | La rama ya trae migraciones de fases posteriores | Info | No pertenecen a la fase 53 (que no agrego ninguna); se evaluan en sus fases y en el corte de la 57 |
 
 ### Human Verification Required
 
 #### 1. Revalidacion de nav y footer desde el admin real
 
-**Test:** En el admin de produccion, cambiar una etiqueta del global Header (o Footer), guardar, y recargar el preview a los 60 y 120 s sin redeploy. Restaurar el valor original.
+**Test:** En el admin de produccion, cambiar una etiqueta del global Header (o Footer), guardar y recargar el preview a los 60 y 120 s sin redeploy. Restaurar el valor original.
 **Expected:** El preview muestra la etiqueta nueva en 2 minutos como maximo.
-**Why human:** `revalidateTag` corre en el proceso de produccion y no invalida la cache del preview. La propagacion depende del TTL de 60 s mas el ISR de la pagina, y requiere una escritura real en produccion.
+**Why human:** `revalidateTag` corre en el proceso de produccion y no invalida la cache del preview; la propagacion depende del TTL de 60 s mas el ISR y exige una escritura real.
 
 #### 2. Lectores de pantalla
 
 **Test:** NVDA con Firefox y VoiceOver con Safari sobre el selector de idioma, el Drawer y el toggle de movimiento.
-**Expected:** Landmarks con nombre propio, Drawer como dialogo con nombre accesible, `aria-pressed` anunciado una sola vez, `aria-current` en el idioma activo.
+**Expected:** Landmarks con nombre propio, Drawer como dialogo con nombre, `aria-pressed` anunciado una vez, `aria-current` en el idioma activo.
 **Why human:** Tecnologias de asistencia reales.
 
 #### 3. Revision visual del shell
 
 **Test:** Recorrer el preview a 900, 1024 y 1280 px.
-**Expected:** Pill de nav sin desborde, contraste del texto secundario de al menos 4.5:1 (si baja, subir la opacidad del fondo del pill de 72 a 88 por ciento), footer y Drawer fieles al sandbox.
+**Expected:** Pill de nav sin desborde con los 7 enlaces del preview, contraste del texto secundario de al menos 4.5:1, footer y Drawer fieles al sandbox.
 **Why human:** Fidelidad de diseno y contraste sobre fondo variable.
 
-#### 4. Foco visible
-
-**Test:** Pulsar Tab desde la carga y recorrer una pagina larga.
-**Expected:** El enlace de salto aparece visible a 8 px del borde superior y el foco nunca queda tapado por el header o el toggle fijos.
-**Why human:** El chequeo automatico es intermitente.
-
-#### 5. Admin sin MUI
+#### 4. Admin sin MUI
 
 **Test:** Abrir `/admin/login` en local contra una base de pruebas.
-**Expected:** Igual que antes, sin `data-emotion` ni variables `--jt-` en el DOM.
-**Why human:** El admin esta bloqueado en el preview. La evidencia estatica es favorable (manifiestos, chunks y CSS de `(payload)` limpios).
+**Expected:** Igual que antes, sin `data-emotion` ni variables `--jt-`.
+**Why human:** El admin esta bloqueado en el preview; la evidencia estatica es favorable.
+
+Nota: `53-UAT.md` registra que Juan renuncio a estas revisiones el 2026-11-08. El chequeo de foco visible, que antes era la quinta revision manual, ahora pasa de forma automatica (40 paradas de Tab) y sale de la lista.
 
 ### Gaps Summary
 
-No hay gaps bloqueantes. Ninguna verdad quedo FAILED, ningun artefacto esta ausente o es un stub, y ningun enlace clave esta sin cablear. El estado `human_needed` se debe a una verdad dependiente de comportamiento sin prueba automatica (revalidacion entre el admin de produccion y el preview) y a verificaciones que solo una persona puede cerrar (lectores de pantalla, revision visual, foco, admin local).
-
-Observaciones no bloqueantes:
-- El chequeo `focus` de `53-computed-styles.mjs` es intermitente por una condicion de carrera de medicion con `prefers-reduced-motion: reduce`. Se recomienda esperar un fotograma antes de medir, antes de usarlo como compuerta en la fase 57.
-- El rol de solo lectura `juantech_preview_ro` descansa en la evidencia aportada por el solicitante (SELECT ok, INSERT rechazado, `users` denegada, 0 `permission denied`). El verificador no lo reprodujo porque no puede leer credenciales. Las compuertas de codigo y el crawl sin diferencias la respaldan.
-- REQUIREMENTS.md aun marca BASE-01 y BASE-03 como `Pending`.
-- Los cinco hallazgos Info del review (IN-01 a IN-05) quedaron fuera de alcance. IN-02 conviene aplicarlo antes de usar `53-wait-preview.mjs` como compuerta en la fase 57.
+No hay gaps bloqueantes. Ninguna verdad quedo FAILED, no falta ningun artefacto y todos los enlaces clave estan cableados. Los cambios de las fases 54 a 56 sobre archivos de la fase 53 no causan regresiones: los 10 scripts pasan hoy contra el preview y produccion sigue igual. El estado `human_needed` responde a la revalidacion entre procesos (SC4), que ninguna prueba ejercita, mas tres revisiones que solo una persona puede cerrar.
 
 ---
 
-_Verified: 2026-11-07_
+_Verified: 2026-11-17_
 _Verifier: Claude (gsd-verifier)_

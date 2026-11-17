@@ -83,3 +83,18 @@ Sigue pendiente de Juan (sin recomendación aceptada):
 
 ## Corrección pendiente de aplicar en el registro (2026-11-10)
 La fila 8 del lote 1 del registro tipado dice "Explorar servicio" / "Explore service", pero Juan aceptó la recomendación de **dejar "Ver servicio" / "View service"** en las tarjetas. Gana la recomendación aceptada: cambiar la fila 8 (`service-card-cta`) a "Ver servicio" / "View service" en `56-juan-inputs.json` y regenerar `56-cta-map.json` con `--export`. Revisar también el inglés de `audit-offer-cta` ("Request the audit"), que escribió Claude.
+
+## Aprobaciones de Juan en el chat (2026-11-14 al 2026-11-16)
+Cierra la lista "Sigue pendiente de Juan" de arriba. Cada respuesta quedó en el registro tipado correspondiente (commits f85744a, 3d58bf8, 4db5641, 62c1b2f).
+
+- Lecciones (21, en 7 casos), inglés de la home, de Sobre mí y del texto legal: "continua con todo" sobre la lista que Claude le presentó. Pasan a aprobado.
+- Arianna Lupi: el sitio estaba en Webflow y Juan lo migró a Astro para bajar costos y mejorar la velocidad. Highlights y retos se redactaron con ese dato, en ES y EN.
+- Stack de Juan Tech: "si pon toda esas tecnologias".
+- Neon: sigue en uso en aprendoclub y Apturio.
+- Patricia Ibarra: "me dio un texto vago asi que si puedes optimizarlo mejor". Cita optimizada: "Trabajar con Juan fue la mejor decisión que tomamos." Pendiente que Patricia la confirme antes del corte, porque va firmada con su nombre.
+- Autor: renombrar AprendoSEO a aprendoclub, sí.
+- Post "Topic clusters": el título queda como está.
+- Hetzner: región Helsinki, Finlandia.
+- Capturas: Juan pidió que Claude las tomara. Se recapturaron las 4 y se reemplazan en el corte con el script 32.
+- Valores por defecto en los textos largos: "defaults".
+- Recorte de etapas de Sobre mí (2026-11-16): Juan escribió exacto "apruebo recortar etapas de about-page de 5 a 4". Sembrado en ES y EN ese día.
