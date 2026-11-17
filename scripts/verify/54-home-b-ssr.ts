@@ -373,6 +373,12 @@ const legacy = mapLegacyBlocks(LAYOUT as never, 'es', 'Pedir auditoría 360')
     check(/<a[^>]*href="https:\/\/github\.com\/juantech\/juan-payload\/commit\/abc1234"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/.test(html) && html.includes('abc1234'), 'codefixes: el commit como chip con enlace externo en pestaña nueva', 'falta el chip del commit')
     check(countOf(html, /commit\/(abc1234|fff0000)/) === 2 && !/javascript:/.test(html), 'codefixes: el commit con esquema peligroso no llega al HTML', 'aparece javascript: o un enlace de mas')
     check(countOf(html, /se abre en otra pestaña/) === 3, 'codefixes: sufijo de nueva pestaña en repo y en los dos commits', `sufijos: ${countOf(html, /se abre en otra pestaña/)}`)
+    // IN-04 (57-04): sin sha, el chip del commit toma el rotulo de messages (home.codeFixes.commitFallback).
+    const noSha = { ...legacy.codeFixes, fixes: [{ ...legacy.codeFixes.fixes[0]!, commitSha: null }] }
+    for (const loc of ['es', 'en'] as const) {
+      const chip = strip(renderToHtml(createElement(CodeFixes, { block: noSha }), loc))
+      check(/commit\/abc1234"[\s\S]*?>commit</.test(chip) && !chip.includes('commitFallback'), `codefixes ${loc}: sin sha el chip dice commit desde messages`, 'falta el rotulo del commit')
+    }
     check(html.includes('&lt;script&gt;alert(1)&lt;/script&gt;') && !/<script>alert/.test(html), 'codefixes: el codigo se escapa como texto (sin HTML en crudo)', 'el codigo llego sin escapar')
     check(countOf(html, /<h3[\s>]/) === 3 && /<h2[^>]*id="codigo-t"/.test(html), 'codefixes: h2 y tres h3', JSON.stringify(headingLevels(html)))
     check(html.includes('src/lib/canonical.ts') && html.includes('Cero errores en Search Console') && html.includes('Ver el repositorio'), 'codefixes: archivo, resultado y enlace al repo', 'falta archivo, resultado o repo')

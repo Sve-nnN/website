@@ -14,6 +14,7 @@
  * Imprime PASS o FAIL motivo por caso y sale con 1 ante cualquier FAIL.
  * Sin JSX a proposito (jsx: preserve): todo con createElement.
  */
+import fs from 'node:fs'
 import * as React from 'react'
 import { createElement } from 'react'
 
@@ -285,15 +286,31 @@ async function main(): Promise<void> {
     'toMarqueeLogos omite ids sueltos y clientes sin logo con url',
     JSON.stringify(logos),
   )
-  const items = toTestimonialItems([
-    { id: 1, name: 'A', role: 'CEO', company: 'X', testimonial: 'Cita' },
-    { id: 2, name: 'B', role: 'CTO', company: 'Y', testimonial: '   ' },
-  ] as never)
-  check(
-    items.length === 1 && items[0]?.role === 'CEO · X',
-    'toTestimonialItems omite citas vacias y une rol y empresa',
-    JSON.stringify(items),
-  )
+  // IN-04 (57-04): el separador sale de messages (testimonialsCarousel.roleCompany), igual en ES y EN.
+  for (const loc of ['es', 'en'] as const) {
+    const template = (JSON.parse(fs.readFileSync(`messages/${loc}.json`, 'utf8')) as { testimonialsCarousel: { roleCompany: string } })
+      .testimonialsCarousel.roleCompany
+    const join = (role: string, company: string) => template.replace('{role}', role).replace('{company}', company)
+    const items = toTestimonialItems(
+      [
+        { id: 1, name: 'A', role: 'CEO', company: 'X', testimonial: 'Cita' },
+        { id: 2, name: 'B', role: 'CTO', company: 'Y', testimonial: '   ' },
+        { id: 3, name: 'C', role: 'CTO', company: null, testimonial: 'Otra' },
+        { id: 4, name: 'D', role: '  ', company: 'Z', testimonial: 'Mas' },
+        { id: 5, name: 'E', role: null, company: null, testimonial: 'Sola' },
+      ] as never,
+      join,
+    )
+    check(
+      items.length === 4 &&
+        items[0]?.role === 'CEO · X' &&
+        items[1]?.role === 'CTO' &&
+        items[2]?.role === 'Z' &&
+        items[3]?.role === null,
+      `toTestimonialItems ${loc}: omite citas vacias y une rol y empresa con la plantilla de messages`,
+      JSON.stringify(items),
+    )
+  }
 
   for (const locale of ['es', 'en'] as const) {
     try {

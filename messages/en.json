@@ -19,7 +19,8 @@
       "ariaLabel": "{name} for juan-tech.com: {label}, within the good range"
     },
     "codeFixes": {
-      "regionLabel": "Code for the fix {name}"
+      "regionLabel": "Code for the fix {name}",
+      "commitFallback": "commit"
     },
     "sites": {
       "screenshotAlt": "Screenshot of {domain}",
@@ -82,7 +83,8 @@
     "opensInNewTab": "opens in a new tab"
   },
   "testimonialsCarousel": {
-    "title": "Testimonials"
+    "title": "Testimonials",
+    "roleCompany": "{role} · {company}"
   },
   "affiliateDisclosure": {
     "generalDisclosure": "Some of the links on this page are affiliate links. If you buy through one, I may earn a small commission at no extra cost to you. I only recommend tools I've actually used.",
@@ -320,14 +322,12 @@
     "detail": {
       "visit": "Visit the site",
       "opensInNewTab": "opens in a new tab",
-      "externalNotice": "This link goes to an external site and opens in a new tab",
       "screenshotAlt": "Desktop screenshot of {domain}",
       "buildTitle": "What I built and what challenges it had",
       "highlightsTitle": "Highlights",
       "challengesTitle": "Challenges",
       "stackTitle": "Technology stack",
       "stackLabel": "Technologies",
-      "screenshotsTitle": "Screenshots",
       "scoresTitle": "Measured performance",
       "scoresLabel": "PageSpeed Insights scores",
       "scoreSuffix": "out of 100",

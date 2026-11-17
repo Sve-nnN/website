@@ -106,7 +106,7 @@ export function CodeFixes({ block }: { block: HomeCodeFixes }) {
                 sx={{ justifySelf: 'start' }}
                 label={
                   <>
-                    {fix.commitSha ?? 'commit'}
+                    {fix.commitSha ?? t('codeFixes.commitFallback')}
                     {newTab}
                   </>
                 }

@@ -19,7 +19,8 @@
       "ariaLabel": "{name} de juan-tech.com: {label}, dentro del rango bueno"
     },
     "codeFixes": {
-      "regionLabel": "Código del arreglo {name}"
+      "regionLabel": "Código del arreglo {name}",
+      "commitFallback": "commit"
     },
     "sites": {
       "screenshotAlt": "Captura de {domain}",
@@ -82,7 +83,8 @@
     "opensInNewTab": "se abre en una pestaña nueva"
   },
   "testimonialsCarousel": {
-    "title": "Testimonios"
+    "title": "Testimonios",
+    "roleCompany": "{role} · {company}"
   },
   "affiliateDisclosure": {
     "generalDisclosure": "Algunos enlaces de esta página son de afiliado. Si compras a través de alguno, puedo ganar una comisión pequeña sin costo adicional para ti. Solo recomiendo herramientas que uso de verdad.",
@@ -320,14 +322,12 @@
     "detail": {
       "visit": "Visitar el sitio",
       "opensInNewTab": "se abre en otra pestaña",
-      "externalNotice": "Este enlace lleva a un sitio externo y se abre en otra pestaña",
       "screenshotAlt": "Captura de escritorio de {domain}",
       "buildTitle": "Qué construí y qué retos tuvo",
       "highlightsTitle": "Aspectos destacados",
       "challengesTitle": "Retos",
       "stackTitle": "Stack tecnológico",
       "stackLabel": "Tecnologías",
-      "screenshotsTitle": "Capturas de pantalla",
       "scoresTitle": "Rendimiento medido",
       "scoresLabel": "Puntajes de PageSpeed Insights",
       "scoreSuffix": "de 100",

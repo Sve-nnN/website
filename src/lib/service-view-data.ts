@@ -4,6 +4,7 @@
 //
 // `toMarqueeLogos` y `toTestimonialItems` son mapeadores puros: no generan
 // ranuras de muestra, omiten lo que no tiene logo con url o cita.
+import { getTranslations } from 'next-intl/server'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
@@ -86,14 +87,24 @@ export function toMarqueeLogos(clients: Array<number | Cliente> | null | undefin
   return logos
 }
 
-/** Testimonios a props de TestimonialCards. Omite los que no traen cita. */
-export function toTestimonialItems(testimonials: Testimonial[] | null | undefined): TestimonialItem[] {
+/** Une rol y empresa cuando vienen los dos. Sale de messages: `testimonialsCarousel.roleCompany`. */
+export type JoinRole = (role: string, company: string) => string
+
+/**
+ * Testimonios a props de TestimonialCards. Omite los que no traen cita.
+ *
+ * IN-04 (54-REVIEW): el separador ya no vive en el codigo; lo pone `joinRole`
+ * con la plantilla de messages. Con solo rol o solo empresa sale ese dato tal cual.
+ */
+export function toTestimonialItems(testimonials: Testimonial[] | null | undefined, joinRole: JoinRole): TestimonialItem[] {
   const items: TestimonialItem[] = []
   for (const t of testimonials ?? []) {
     const quote = str(t.testimonial)
     if (!quote) continue
-    const role = [str(t.role), str(t.company)].filter(Boolean).join(' · ')
-    items.push({ id: t.id, quote, name: t.name, role: role === '' ? null : role })
+    const role = str(t.role)
+    const company = str(t.company)
+    const label = role && company ? joinRole(role, company) : (role ?? company)
+    items.push({ id: t.id, quote, name: t.name, role: label || null })
   }
   return items
 }
@@ -144,7 +155,8 @@ export async function getServiceTestimonials(
       depth: 0,
       overrideAccess: false,
     })
-    return toTestimonialItems(docs)
+    const t = await getTranslations({ locale, namespace: 'testimonialsCarousel' })
+    return toTestimonialItems(docs, (role, company) => t('roleCompany', { role, company }))
   } catch (err) {
     console.error('[services]', err)
     return []
