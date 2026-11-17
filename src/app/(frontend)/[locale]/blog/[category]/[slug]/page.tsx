@@ -30,46 +30,28 @@ import { websiteRef } from '@/lib/site-schema'
 import { EN_TRANSLATION_INCOMPLETE, isEnTranslationIncomplete } from '@/lib/translation-gaps'
 
 // SEO-06: estas rutas servian `cache-control: no-store` y re-ejecutaban el SSR
-// completo en cada request. Venia de `force-dynamic`, que estaba por una razon
-// real: el build de Dokploy corre en un contenedor sin red hacia
-// shared-postgres, asi que cualquier prerender en `next build` falla.
-//
-// ISR resolvia las dos cosas: `generateStaticParams` devuelve una lista VACIA,
-// o sea que el build no renderiza ni una ruta y nunca toca la base;
+// completo en cada request. El build de Dokploy corre en un contenedor sin red
+// hacia shared-postgres, asi que ningun prerender puede tocar la base en
+// `next build`: `generateStaticParams` devuelve una lista VACIA y
 // `dynamicParams` (true por defecto) deja que cada URL se renderice en la
-// primera visita y quede en la cache incremental, y de ahi salen las
-// siguientes.
+// primera visita y quede en la cache incremental.
 //
-// [Phase 49-03] `export const revalidate` fijo ya NO es compatible con esta
-// pagina: desde que lee `searchParams` (Phase 49-02, para el estado
-// pending/already/error del EmailCaptureBlock), cualquier intento de Next de
-// generar la ruta estaticamente en el fallback ISR (primera visita a un path
-// no listado en generateStaticParams, con `isStaticGeneration=true`) revienta
-// con `DynamicServerError`/digest `DYNAMIC_SERVER_USAGE` en cuanto toca
-// `searchParams` — confirmado en produccion local (`node
-// .next/standalone/server.js`), no solo en teoria: la pagina devolvia 500 en
-// TODAS las rutas de post antes de este fix. La lectura de `searchParams` ya
-// fuerza render dinamico por si sola (clasificacion todo-o-nada de Next), asi
-// que declarar ademas un `revalidate` numerico es contradictorio, no
-// redundante. Se elimina el TTL; la frescura sigue dependiendo de
-// `revalidatePath` (src/lib/cache-tags.ts) en los hooks de contenido, que ya
-// era el mecanismo real (el TTL nunca fue mas que una red de seguridad, per
-// el comentario original). `getCachedPost()` sigue cacheando la lectura de
-// Postgres via `unstable_cache` sin importar la clasificacion de la ruta.
+// Historia (Phase 49-03): la pagina leia `searchParams` para el estado
+// pending/already/error del bloque de captura de email, y esa lectura en el
+// fallback ISR revento con `DynamicServerError` (500 en TODOS los posts). Se
+// resolvio con `force-dynamic`, que dejo el post sin cache y con TTFB de 1,6 a
+// 2 s (hallazgo F1 de la muestra de auditoria).
 //
-// Quitar solo `revalidate` NO alcanzo: con `generateStaticParams` devolviendo
-// una lista vacia y `dynamicParams` en su default (true), Next seguia
-// intentando tratar la primera visita a cada path como una generacion
-// estatica candidata a cachear (`isStaticGeneration=true` en esa pasada), y
-// leer `searchParams` ahi adentro sigue disparando el mismo
-// `DynamicServerError` sin importar que `revalidate` ya no exista
-// (confirmado: seguia devolviendo 500 tras quitar solo el TTL). `dynamic =
-// 'force-dynamic'` es la forma explicita de decirle a Next que esta ruta
-// nunca es candidata a generacion estatica/ISR — coincide ademas, mejor que
-// antes, con la garantia original del comentario de arriba (build de Dokploy
-// sin red hacia shared-postgres: con `force-dynamic` ninguna pagina de esta
-// ruta se toca durante `next build`, ni siquiera intenta).
-export const dynamic = 'force-dynamic'
+// Fase 57 (D-04 F1): la pagina ya NO lee `searchParams`. El estado lo lee en el
+// cliente `EmailCaptureState` (useSearchParams dentro de Suspense, ver
+// src/components/mui/rich-text/blocks.tsx), y el HTML del servidor es el mismo
+// con o sin `?subscribed=`. Por eso la ruta vuelve a ISR con el mismo
+// `revalidate` que el resto de rutas de contenido. NO volver a leer
+// `searchParams` aqui: con `revalidate` eso devuelve 500 en todos los posts
+// (Pitfall 4 de 57-RESEARCH.md). La frescura sigue dependiendo de
+// `revalidatePath` en los hooks de contenido (src/lib/cache-tags.ts) y los tags
+// de `unstable_cache` no cambian.
+export const revalidate = 60
 
 export function generateStaticParams(): Array<{ locale: string; category: string; slug: string }> {
   return []
@@ -139,12 +121,10 @@ export async function generateMetadata({
 
 export default async function PostPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string; category: string; slug: string }>
-  searchParams: Promise<{ subscribed?: string }>
 }) {
-  const [{ locale: rawLocale, category, slug }, { subscribed }] = await Promise.all([params, searchParams])
+  const { locale: rawLocale, category, slug } = await params
   const locale = rawLocale as 'es' | 'en'
   const doc = await getPost(locale, slug)
 
@@ -178,7 +158,8 @@ export default async function PostPage({
 
   // MAIL-01: ruta del post con prefijo de idioma. La Server Action del bloque
   // email-capture redirige de vuelta a esta misma URL con `?subscribed=...`
-  // tras el envio, y el JSON-LD la usa como `mainEntityOfPage`.
+  // tras el envio (el estado se lee en el cliente, ver arriba), y el JSON-LD la
+  // usa como `mainEntityOfPage`.
   const localizedPostPath = localizeBlogPath(locale, blogPostPath(primaryCategorySlug, doc.slug ?? slug))
 
   // Ids de encabezado: UN mapa sobre el contenido COMPLETO (Pitfall 2). Las dos
@@ -239,7 +220,7 @@ export default async function PostPage({
         before={body.before}
         after={body.after}
         headingIds={headingIds}
-        ctx={{ subscribedState: subscribed, postPath: localizedPostPath }}
+        ctx={{ postPath: localizedPostPath }}
       />
       <JsonLd data={articleData} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />

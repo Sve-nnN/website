@@ -16,6 +16,7 @@
 //     propósito, pero las cabeceras de next.config se aplican igual por ruta
 // Sale con 0 si todo pasa y 1 ante cualquier FAIL.
 
+import { readFileSync } from 'node:fs'
 import { pathToFileURL } from 'node:url'
 import { resolve } from 'node:path'
 
@@ -26,6 +27,28 @@ import {
 } from '../../src/lib/client-hint-headers.mjs'
 
 const POST_PATH = '/blog/seo/estrategia-seo'
+const POST_PAGE = 'src/app/(frontend)/[locale]/blog/[category]/[slug]/page.tsx'
+const CAPTURE_BLOCKS = 'src/components/mui/rich-text/blocks.tsx'
+const CAPTURE_STATE = 'src/components/mui/rich-text/EmailCaptureState.tsx'
+
+/** Quita comentarios de línea y de bloque para mirar solo código. */
+function stripComments(src) {
+  return src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1')
+}
+
+/** Problemas de la ruta del post para ISR (F1, Pitfall 4). */
+export function postRouteProblems(pageSrc, blocksSrc, stateSrc) {
+  const code = stripComments(pageSrc)
+  const problems = []
+  if (/searchParams/.test(code)) problems.push('la página del post lee searchParams en el servidor')
+  if (/export\s+const\s+dynamic\s*=\s*['"]force-dynamic['"]/.test(code)) problems.push('la página conserva force-dynamic')
+  if (!/export\s+const\s+revalidate\s*=\s*\d+/.test(code)) problems.push('la página no exporta revalidate')
+  if (!/generateStaticParams\([^)]*\)[^\n]*\{\s*return\s*\[\]/.test(code)) problems.push('generateStaticParams no devuelve una lista vacía')
+  if (!/^'use client'/.test(stateSrc.trim())) problems.push('EmailCaptureState no es componente cliente')
+  if (!/useSearchParams\(\)/.test(stateSrc)) problems.push('EmailCaptureState no usa useSearchParams')
+  if (!/<Suspense\s+fallback=\{form\}>\s*<EmailCaptureState/.test(blocksSrc)) problems.push('EmailCaptureState no va dentro de Suspense con el formulario de fallback')
+  return problems
+}
 const SECURITY_KEYS = ['strict-transport-security', 'x-content-type-options', 'referrer-policy', 'x-frame-options']
 
 let failed = 0
@@ -150,6 +173,13 @@ function selftest() {
   )
   const otherVary = stripPublicClientHints([{ source: '/:path*', headers: [{ key: 'Vary', value: 'Accept-Language' }] }])
   check('filtro no toca un Vary ajeno a la pista', otherVary[0]?.headers?.[0]?.value === 'Accept-Language' && otherVary.length === 1, JSON.stringify(otherVary))
+  const okPage = "export const revalidate = 60\nexport function generateStaticParams() {\n  return []\n}\n// leia searchParams antes\nexport default async function P({ params }) {}"
+  const okBlocks = '<Suspense fallback={form}>\n  <EmailCaptureState forcedState={x}'
+  const okState = "'use client'\nconst p = useSearchParams()"
+  check('ruta de post correcta pasa (los comentarios no cuentan)', postRouteProblems(okPage, okBlocks, okState).length === 0, postRouteProblems(okPage, okBlocks, okState).join('; '))
+  const badPage = "export const dynamic = 'force-dynamic'\nexport function generateStaticParams() {\n  return []\n}\nexport default async function P({ params, searchParams }) {}"
+  check('ruta de post con force-dynamic y searchParams falla', postRouteProblems(badPage, okBlocks, okState).length === 3, postRouteProblems(badPage, okBlocks, okState).join('; '))
+  check('estado sin Suspense falla', postRouteProblems(okPage, '<EmailCaptureState />', okState).length === 1, 'no lo detectó')
   check('filtro no altera reglas de otras rutas', stripPublicClientHints([{ source: '/x', headers: [{ key: 'Accept-CH', value: COLOR_SCHEME_HINT }] }])[0].source === '/x', 'alteró la regla')
 }
 
@@ -160,6 +190,9 @@ async function staticMode() {
   const rules = await config.headers()
   const problems = rulesProblems(rules)
   check('headers() sin pistas públicas, con seguridad y con la regla /admin', problems.length === 0, problems.join('; '))
+  const read = (p) => readFileSync(resolve(process.cwd(), p), 'utf8')
+  const route = postRouteProblems(read(POST_PAGE), read(CAPTURE_BLOCKS), read(CAPTURE_STATE))
+  check('ruta del post lista para ISR (sin searchParams, con revalidate, estado en el cliente)', route.length === 0, route.join('; '))
 }
 
 async function get(url) {

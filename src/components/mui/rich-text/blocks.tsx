@@ -13,6 +13,8 @@
 import type { JSXConverter, JSXConverters, JSXConvertersFunction } from '@payloadcms/richtext-lexical/react'
 import type { ReactNode } from 'react'
 
+import { Suspense } from 'react'
+
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
@@ -33,6 +35,7 @@ import { resolveAffiliateCta } from '@/lib/affiliate-cta'
 import { FaqAccordion } from '../FaqAccordion'
 import { ScrollRegion } from '../ScrollRegion'
 import { CopyCodeButton } from './CopyCodeButton'
+import { EmailCaptureState } from './EmailCaptureState'
 import { RichTextLink } from './RichTextLink'
 
 /** Traductor mínimo: lo que devuelve `useTranslations(namespace)` en el servidor. */
@@ -399,25 +402,64 @@ function renderAffiliateInline(fields: AffiliateInlineFields, ctx: BlockCtx): Re
 // Captura de email
 // ---------------------------------------------------------------------------
 
-const SUBSCRIBED_STATES = ['pending', 'already', 'error'] as const
-type SubscribedState = (typeof SUBSCRIBED_STATES)[number]
-
-function isSubscribedState(value: string | undefined): value is SubscribedState {
-  return value !== undefined && (SUBSCRIBED_STATES as readonly string[]).includes(value)
-}
-
 /**
  * Captura de email del post. Publica a la misma acción de servidor de siempre
  * (subscribeToLeadMagnetAction) con los mismos campos: postPath, locale, email
  * y el honeypot company_website. Esa acción responde ?subscribed=pending bajo
  * PREVIEW_READONLY sin escribir (T-55-25); este archivo no la altera.
- * `subscribedState` solo elige cuál de tres textos fijos se muestra, nunca se
- * interpola crudo (T-49-08). Los textos de oferta y consentimiento salen de
- * messages (namespace emailCapture) como antes.
+ *
+ * Fase 57 (D-04 F1): el servidor renderiza los cinco bloques posibles (form,
+ * form con error, pending, already y error) y EmailCaptureState elige en el
+ * cliente según `?subscribed=`. El fallback del Suspense es el formulario
+ * normal, así que el HTML cacheado del post no depende del parámetro.
+ * `ctx.subscribedState` solo lo fijan las pruebas SSR. Los textos de oferta y
+ * consentimiento salen de messages (namespace emailCapture) como antes.
  */
 function renderEmailCapture(ctx: BlockCtx): ReactNode {
   const t = ctx.t.emailCapture
-  const state = isSubscribedState(ctx.subscribedState) ? ctx.subscribedState : null
+
+  const renderForm = (withError: boolean) => (
+    <Box component="form" action={subscribeToLeadMagnetAction} sx={{ mt: 2, display: 'grid', gap: 2 }}>
+      <input type="hidden" name="postPath" value={ctx.postPath ?? ''} />
+      <input type="hidden" name="locale" value={ctx.locale} />
+      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, alignItems: { sm: 'flex-start' } }}>
+        <TextField
+          id="email-capture-email"
+          name="email"
+          type="email"
+          label={t('emailLabel')}
+          placeholder={t('emailPlaceholder')}
+          required
+          autoComplete="email"
+          // Tras un error la pagina recarga completa: se marca el campo como
+          // invalido, se enlaza con el mensaje y se lleva el foco aqui para
+          // que un lector de pantalla y el teclado retomen donde fallo.
+          error={withError}
+          autoFocus={withError}
+          slotProps={{
+            htmlInput: withError ? { 'aria-describedby': 'email-capture-error' } : undefined,
+          }}
+          sx={{ flex: 1 }}
+        />
+        <Button type="submit" variant="contained" size="large" sx={{ flexShrink: 0 }}>
+          {t('submitLabel')}
+        </Button>
+      </Box>
+      {/* Honeypot: fuera de pantalla y fuera del orden de tabulación; un bot
+          que completa todos los campos cae aquí y la acción lo descarta. */}
+      <Box aria-hidden="true" sx={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}>
+        <label htmlFor="email-capture-company-website">Company website</label>
+        <input type="text" id="email-capture-company-website" name="company_website" tabIndex={-1} autoComplete="off" />
+      </Box>
+      <Typography variant="body2" component="p" sx={{ color: 'text.secondary' }}>
+        {t('privacyPrefix')}
+        <RichTextLink href="/privacy">{t('privacyLinkText')}</RichTextLink>
+        {t('privacySuffix')}
+      </Typography>
+    </Box>
+  )
+
+  const form = renderForm(false)
 
   return (
     <Box
@@ -443,81 +485,44 @@ function renderEmailCapture(ctx: BlockCtx): ReactNode {
         {t('description')}
       </Typography>
 
-      {state === 'pending' && (
-        <Box sx={{ mt: 2, display: 'grid', gap: 1 }}>
-          <Typography variant="h6" component="p" sx={{ color: 'text.primary' }}>
-            {t('pendingHeading')}
-          </Typography>
-          <Typography variant="body1" component="p" sx={{ color: 'text.primary' }}>
-            {t('pendingBody')}
-          </Typography>
-        </Box>
-      )}
-      {state === 'already' && (
-        <Box sx={{ mt: 2, display: 'grid', gap: 1 }}>
-          <Typography variant="h6" component="p" sx={{ color: 'text.primary' }}>
-            {t('alreadyHeading')}
-          </Typography>
-          <Typography variant="body1" component="p" sx={{ color: 'text.primary' }}>
-            {t('alreadyBody')}
-          </Typography>
-        </Box>
-      )}
-      {state === 'error' && (
-        <Typography
-          id="email-capture-error"
-          role="alert"
-          variant="body1"
-          component="p"
-          sx={{ mt: 2, color: 'error.main' }}
-        >
-          {t('errorBody')}
-        </Typography>
-      )}
-
-      {/* El formulario sigue visible tras ?subscribed=error para que la persona
-          corrija el correo y reintente sin editar la URL. Solo pending y already
-          lo reemplazan por su mensaje. */}
-      {(!state || state === 'error') && (
-        <Box component="form" action={subscribeToLeadMagnetAction} sx={{ mt: 2, display: 'grid', gap: 2 }}>
-          <input type="hidden" name="postPath" value={ctx.postPath ?? ''} />
-          <input type="hidden" name="locale" value={ctx.locale} />
-          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, alignItems: { sm: 'flex-start' } }}>
-            <TextField
-              id="email-capture-email"
-              name="email"
-              type="email"
-              label={t('emailLabel')}
-              placeholder={t('emailPlaceholder')}
-              required
-              autoComplete="email"
-              // Tras un error la pagina recarga completa: se marca el campo como
-              // invalido, se enlaza con el mensaje y se lleva el foco aqui para
-              // que un lector de pantalla y el teclado retomen donde fallo.
-              error={state === 'error'}
-              autoFocus={state === 'error'}
-              slotProps={{
-                htmlInput: state === 'error' ? { 'aria-describedby': 'email-capture-error' } : undefined,
-              }}
-              sx={{ flex: 1 }}
-            />
-            <Button type="submit" variant="contained" size="large" sx={{ flexShrink: 0 }}>
-              {t('submitLabel')}
-            </Button>
-          </Box>
-          {/* Honeypot: fuera de pantalla y fuera del orden de tabulación; un bot
-              que completa todos los campos cae aquí y la acción lo descarta. */}
-          <Box aria-hidden="true" sx={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}>
-            <label htmlFor="email-capture-company-website">Company website</label>
-            <input type="text" id="email-capture-company-website" name="company_website" tabIndex={-1} autoComplete="off" />
-          </Box>
-          <Typography variant="body2" component="p" sx={{ color: 'text.secondary' }}>
-            {t('privacyPrefix')}
-            <RichTextLink href="/privacy">{t('privacyLinkText')}</RichTextLink>
-            {t('privacySuffix')}
-          </Typography>
-        </Box>
-      )}
+      <Suspense fallback={form}>
+        <EmailCaptureState
+          forcedState={ctx.subscribedState}
+          form={form}
+          errorForm={renderForm(true)}
+          pending={
+            <Box sx={{ mt: 2, display: 'grid', gap: 1 }}>
+              <Typography variant="h6" component="p" sx={{ color: 'text.primary' }}>
+                {t('pendingHeading')}
+              </Typography>
+              <Typography variant="body1" component="p" sx={{ color: 'text.primary' }}>
+                {t('pendingBody')}
+              </Typography>
+            </Box>
+          }
+          already={
+            <Box sx={{ mt: 2, display: 'grid', gap: 1 }}>
+              <Typography variant="h6" component="p" sx={{ color: 'text.primary' }}>
+                {t('alreadyHeading')}
+              </Typography>
+              <Typography variant="body1" component="p" sx={{ color: 'text.primary' }}>
+                {t('alreadyBody')}
+              </Typography>
+            </Box>
+          }
+          error={
+            <Typography
+              id="email-capture-error"
+              role="alert"
+              variant="body1"
+              component="p"
+              sx={{ mt: 2, color: 'error.main' }}
+            >
+              {t('errorBody')}
+            </Typography>
+          }
+        />
+      </Suspense>
     </Box>
   )
 }
