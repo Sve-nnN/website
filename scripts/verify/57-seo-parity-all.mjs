@@ -276,7 +276,33 @@ export function evaluateUrl({ path, preview, prod, expectPreview = false, wordsT
  * No cambian el resultado PASS o FAIL: solo anotan cada diferencia en el JSON y el resumen.
  * Una diferencia sin regla queda como "sin-clasificar" y el resumen la cuenta aparte.
  */
-export const KNOWN_DIFFERENCES = []
+export const KNOWN_DIFFERENCES = [
+  {
+    field: 'enlace-gemelo-noindex',
+    clase: 'a',
+    motivo:
+      'F4: enlace interno a un gemelo EN noindex de EN_TRANSLATION_INCOMPLETE. Producción tiene los mismos (pie EN con estrategia-seo y technical-seo-guide en 80 páginas, listado y relacionados del blog EN). 57-06 los apunta a la versión ES o los quita',
+  },
+  {
+    path: /^\/en\/sitemap\.html$/,
+    field: 'enlace-roto',
+    clase: 'a',
+    motivo: 'El pie EN enlaza /en/sitemap.html, que da 404 también en producción. Debe apuntar a /sitemap.html (57-06)',
+  },
+  {
+    path: /^\/en\/llms(-full)?\.txt$/,
+    field: 'enlace-roto',
+    clase: 'a',
+    motivo: 'Regresión del preview: el texto enriquecido EN antepone /en a /llms.txt y /llms-full.txt; producción enlaza la ruta sin prefijo (57-06)',
+  },
+  {
+    path: /^(\/en)?\/blog\/general$/,
+    field: 'palabras',
+    clase: 'b',
+    motivo:
+      'Categoría general vacía: el rediseño quita el contador "0 artículos" y la fila repetida "Otros temas del blog" con sus cuatro enlaces. El copy propio de la página es idéntico. Juan lo acepta en 57-09',
+  },
+]
 
 export function classify(path, failure, rules = KNOWN_DIFFERENCES) {
   const rule = rules.find((r) => (!r.path || r.path.test(path)) && (!r.field || r.field === failure.field) && (!r.message || r.message.test(failure.message)))
@@ -841,6 +867,11 @@ function selftest() {
   some('snapshot con robots.txt distinto', diffSnapshot({ ...state(fixture()), files: { ...snap.files, 'robots.txt': { status: 200, sha: 'z', bytes: 11 } } }, snap), 'robots.txt')
   some('snapshot con un redirect perdido', diffSnapshot({ ...state(fixture()), redirects: { '/blog/x': { status: 404, location: '' } } }, snap), 'redirect')
   some('snapshot con una URL fuera del sitemap', diffSnapshot({ ...state(fixture()), files: { ...snap.files, 'sitemap.xml': { status: 200, sha: 'b', locs: ['/'] } } }, snap), 'sitemap')
+
+  const c1 = classify('/en/blog/development/react-19', { field: 'enlace-gemelo-noindex', message: 'x' })
+  const c2 = classify('/stack', { field: 'title', message: 'x' })
+  if (c1.clase === 'a' && c2.clase === 'sin-clasificar') pass('classify anota la clase conocida y deja sin clasificar lo nuevo')
+  else fail('classify', JSON.stringify([c1, c2]))
 
   if (templateOf('/en/blog/seo/a') === 'post' && templateOf('/servicios/seo-consulting') === 'servicio' && templateOf('/en/authors/x') === 'autor' && templateOf('/') === 'home') pass('templateOf agrupa por plantilla')
   else fail('templateOf', 'plantilla incorrecta')
