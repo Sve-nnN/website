@@ -122,7 +122,37 @@ export function buildIndexCards(
   return cards
 }
 
-/** Filas de la tabla comparativa: primer encabezado del primer `content`, outcome y timeline del scope. */
+/**
+ * Primera oración de un texto: corta en el primer `.`, `!`, `?` o `…` seguido de
+ * espacio y de una mayúscula (o de `¿`, `¡`, comillas o paréntesis), o al final.
+ * Así no corta en dominios ni en decimales ("juan-tech.com", "2.5 s"). Sin corte
+ * devuelve el texto entero.
+ */
+export function firstSentence(text: string): string {
+  const clean = text.replace(/\s+/g, ' ').trim()
+  const match = clean.match(/^.*?[.!?…](?=\s+[¿¡"“«(A-ZÁÉÍÓÚÜÑ]|$)/)
+  return (match?.[0] ?? clean).trim()
+}
+
+/**
+ * Celda "Te sirve si" de una landing: primera oración del primer párrafo de la
+ * primera columna del primer `content` (el bloque del porqué). Desde la
+ * reescritura de pilares ese bloque abre con un H2 ("Por qué tu tráfico baja y
+ * nadie sabe explicarlo") que se leía forzado como respuesta a "Te sirve si".
+ * Si el bloque no trae párrafo con texto, cae al primer encabezado, que era la
+ * fuente anterior.
+ */
+function fitsIfOf(doc: ServiceDocLike): string | null {
+  const content = layoutOf(doc).find((b) => b.blockType === 'content')
+  if (!content || content.blockType !== 'content') return null
+  const nodes = nodesOf(content.columns?.[0]?.richText)
+  const paragraph = nodes.find((n) => n.type === 'paragraph' && headingText(n).trim() !== '')
+  if (paragraph) return str(firstSentence(headingText(paragraph)))
+  const heading = nodes.find((n) => n.type === 'heading')
+  return heading ? str(headingText(heading)) : null
+}
+
+/** Filas de la tabla comparativa: "te sirve si" (ver `fitsIfOf`), outcome y timeline del scope. */
 export function buildCompareRows(
   servicePages: Array<ServiceDocLike | null | undefined>,
   locale: Locale,
@@ -131,12 +161,7 @@ export function buildCompareRows(
   servicePages.forEach((doc, i) => {
     const slug = SERVICE_SLUGS[i]
     if (!doc || !slug) return
-    const content = layoutOf(doc).find((b) => b.blockType === 'content')
-    let fitsIf: string | null = null
-    if (content && content.blockType === 'content') {
-      const first = nodesOf(content.columns?.[0]?.richText).find((n) => n.type === 'heading')
-      fitsIf = first ? str(headingText(first)) : null
-    }
+    const fitsIf = fitsIfOf(doc)
     const { outcome, timeline } = scopeOf(doc)
     rows.push({
       slug,

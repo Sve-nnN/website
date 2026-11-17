@@ -24,6 +24,7 @@ import { SERVICE_SLUGS, buildServiceHref } from '../../src/lib/service-slugs'
 import {
   buildCompareRows,
   buildIndexCards,
+  firstSentence,
   type IndexDocLike,
   type ServiceDocLike,
 } from '../../src/lib/services-index-data'
@@ -81,6 +82,14 @@ function columnParagraphs(doc: Doc): string[] {
     const p = nodes.find((n) => n.type === 'paragraph')
     return p ? headingText(p as never).trim() : ''
   })
+}
+
+/** Texto del primer nodo de ese tipo en la primera columna del primer content de un servicio, a mano. */
+function firstNodeText(doc: Doc, type: 'heading' | 'paragraph'): string {
+  const content = ((doc.content?.layout ?? []) as Block[]).find((b) => b.blockType === 'content')
+  const nodes = (content?.columns?.[0]?.richText as { root?: { children?: Array<{ type?: string }> } })?.root?.children ?? []
+  const node = nodes.find((n) => n.type === type && headingText(n as never).trim() !== '')
+  return node ? headingText(node as never).trim() : ''
 }
 
 function render(locale: 'es' | 'en', cards: ReturnType<typeof buildIndexCards>, rows: ReturnType<typeof buildCompareRows>) {
@@ -146,6 +155,28 @@ async function runLocale(locale: 'es' | 'en'): Promise<void> {
     rows.every((r) => r.fitsIf && r.achieves && r.time),
     `${tag}: cada fila trae te sirve si, logro y tiempo`,
     JSON.stringify(rows.map((r) => [!!r.fitsIf, !!r.achieves, !!r.time])),
+  )
+  // 57-04 (extra, aprobado por Juan el 2026-11-17): "Te sirve si" = primera oracion
+  // del primer parrafo del bloque del porque, nunca su H2.
+  const whyHeadings = servicePages.map((d) => firstNodeText(d, 'heading'))
+  const whyFirstSentences = servicePages.map((d) => {
+    const p = firstNodeText(d, 'paragraph')
+    return p ? firstSentence(p) : ''
+  })
+  check(
+    rows.every((r, i) => r.fitsIf !== null && r.fitsIf !== whyHeadings[i]),
+    `${tag}: te sirve si no repite el H2 del bloque del porque`,
+    JSON.stringify(rows.map((r, i) => [r.fitsIf, whyHeadings[i]])),
+  )
+  check(
+    rows.every((r, i) => whyFirstSentences[i] !== '' && r.fitsIf === whyFirstSentences[i]),
+    `${tag}: te sirve si = primera oracion del primer parrafo del bloque del porque`,
+    JSON.stringify(rows.map((r, i) => [r.fitsIf, whyFirstSentences[i]])),
+  )
+  check(
+    rows.every((r) => /[.!?…]$/.test(r.fitsIf ?? '') && !/[.!?…]\s+[¿¡A-ZÁÉÍÓÚÜÑ]/.test(r.fitsIf ?? '')),
+    `${tag}: te sirve si es una sola oracion completa`,
+    JSON.stringify(rows.map((r) => r.fitsIf)),
   )
   check(countOf(html, /<th[^>]*scope="col"/) === 4, `${tag}: cuatro encabezados de columna scope col`, `th col: ${countOf(html, /<th[^>]*scope="col"/)}`)
   check(countOf(html, /<th[^>]*scope="row"/) === 4, `${tag}: cuatro encabezados de fila scope row`, `th row: ${countOf(html, /<th[^>]*scope="row"/)}`)
@@ -245,6 +276,33 @@ function runSynthetic(): void {
   check(countOf(html, /<h2[\s>]/) >= 5, `${tag}: la vista pinta con datos sinteticos`, `h2: ${countOf(html, /<h2[\s>]/)}`)
   const empty = render('es', [], [])
   check(!/role="region"/.test(empty) && /<h1/.test(empty), `${tag}: sin filas no hay tabla vacia`, 'region presente sin filas')
+
+  // 57-04: "Te sirve si" desde el primer parrafo, con el H2 solo como respaldo.
+  const withWhy = (columns: unknown[]): ServiceDocLike => ({ title: 'S', content: { layout: [{ blockType: 'content', columns }] } as never })
+  const whyRows = buildCompareRows(
+    [
+      withWhy([col('Por que pasa esto', 'Primera oracion del porque. Segunda oracion que no entra.')]),
+      withWhy(noPara.content.layout[0].columns),
+      withWhy([col('Titulo', 'Una sola oracion sin punto final')]),
+      withWhy([]),
+    ],
+    'es',
+  )
+  check(
+    whyRows.map((r) => String(r.fitsIf)).join('|') === 'Primera oracion del porque.|H1|Una sola oracion sin punto final|null',
+    `${tag}: te sirve si toma la primera oracion del parrafo y cae al H2 sin parrafo`,
+    whyRows.map((r) => String(r.fitsIf)).join('|'),
+  )
+  const sentences: Array<[string, string]> = [
+    ['Uno. Dos.', 'Uno.'],
+    ['Mira juan-tech.com y el LCP de 2.5 s. Luego sigue.', 'Mira juan-tech.com y el LCP de 2.5 s.'],
+    ['¿Te pasa esto? ¡Pasa mucho!', '¿Te pasa esto?'],
+    ['Errores: rastreo, render. Otra.', 'Errores: rastreo, render.'],
+    ['  Sin   corte  ', 'Sin corte'],
+    ['Why it drops. Nobody knows.', 'Why it drops.'],
+  ]
+  const wrong = sentences.filter(([input, want]) => firstSentence(input) !== want)
+  check(wrong.length === 0, `${tag}: firstSentence corta en la primera oracion sin romper dominios ni decimales`, JSON.stringify(wrong.map(([i]) => [i, firstSentence(i)])))
 }
 
 async function main(): Promise<void> {
