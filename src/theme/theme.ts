@@ -51,6 +51,17 @@ const options: ThemeOptions = {
         // Preflight de Tailwind ya resetea las listas; las del shell lo declaran en su propio sx.
       }),
     },
+    // Fase 57 (A11Y.md seccion 4, hallazgo de 57-03): ButtonBase fija `outline: 0` y anulaba el
+    // `:focus-visible` global, asi que botones, chips, acordeones y enlaces con forma de boton no
+    // mostraban anillo al llegar con Tab. Se repone el mismo anillo de 2 px solo con foco de
+    // teclado (`Mui-focusVisible`); sin foco el aspecto no cambia.
+    MuiButtonBase: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          '&.Mui-focusVisible, &:focus-visible': { outline: `2px solid ${theme.vars.palette.accentText}`, outlineOffset: 2 },
+        }),
+      },
+    },
     MuiButton: {
       defaultProps: { disableElevation: true },
       styleOverrides: {
