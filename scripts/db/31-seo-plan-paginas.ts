@@ -35,6 +35,8 @@ import { EN_TRANSLATION_INCOMPLETE } from '../../src/lib/translation-gaps'
 const APPLY = process.argv.includes('--apply')
 const STEP = process.argv.find((a) => a.startsWith('--step='))?.split('=')[1] ?? 'all'
 const DATA = 'research/seo-plan-2026-11/data'
+// --repair-es: reescribe solo el ES en el lugar (bloques ya creados), conservando ids.
+const REPAIR = process.argv.includes('--repair-es')
 const want = (s: string) => STEP === 'all' || STEP === s
 type L = 'es' | 'en'
 type Anyobj = Record<string, any> // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -417,7 +419,7 @@ async function stepPages(payload: P) {
   }
 
   for (const slug of ['seo-consulting', 'seo-technical-audit', 'ai-seo-geo']) {
-    for (const l of ['es', 'en'] as L[]) {
+    for (const l of (REPAIR ? ['es'] : ['es', 'en']) as L[]) {
       const s = pageSpec(slug, l)
       const { docs } = await payload.find({
         collection: 'pages', where: { slug: { equals: slug } }, limit: 1, depth: 0, locale: l, fallbackLocale: false, draft: false,
@@ -426,18 +428,27 @@ async function stepPages(payload: P) {
       if (!doc) { console.log(`  SALTA ${slug} [${l}]: no existe`); continue }
       const layout: Anyobj[] = JSON.parse(JSON.stringify(doc.content.layout))
       const hero = layout.find((b) => b.blockType === 'hero')!
-      if (hero.title === s.heroTitle) { console.log(`  ya aplicado ${slug} [${l}]`); continue }
+      if (hero.title === s.heroTitle && !REPAIR) { console.log(`  ya aplicado ${slug} [${l}]`); continue }
       hero.title = s.heroTitle
       hero.subtitle = s.heroSubtitle
 
       const contents = layout.filter((b) => b.blockType === 'content')
       const strip = (cols: Anyobj[]) => cols.map(({ id, ...c }) => c) // eslint-disable-line @typescript-eslint/no-unused-vars
-      const mkContent = (tmpl: Anyobj, specs: Spec[][]) => {
+      // Los ids de columna se conservan cuando el bloque ya existe: el richText es
+      // localizado y va atado al id de la columna. Quitarlos (como hacía la primera
+      // versión) crea columnas nuevas y deja huérfano el texto del otro idioma.
+      const mkContent = (tmpl: Anyobj, specs: Spec[][], keep?: Anyobj) => {
         const { id, ...rest } = tmpl // eslint-disable-line @typescript-eslint/no-unused-vars
-        return { ...rest, columns: specs.map((sp) => ({ ...(strip(tmpl.columns)[0] ?? { size: 'full' }), richText: lexical(sp, tpl) })) }
+        return {
+          ...rest,
+          columns: specs.map((sp, i) => {
+            const prevId = keep?.columns?.[i]?.id
+            return { ...(strip(tmpl.columns)[0] ?? { size: 'full' }), ...(prevId ? { id: prevId } : {}), richText: lexical(sp, tpl) }
+          }),
+        }
       }
-      Object.assign(contents[0], mkContent(contents[0], [s.why]), { id: contents[0].id })
-      Object.assign(contents[1], mkContent(contents[1], s.columns), { id: contents[1].id })
+      Object.assign(contents[0], mkContent(contents[0], [s.why], contents[0]), { id: contents[0].id })
+      Object.assign(contents[1], mkContent(contents[1], s.columns, contents[1]), { id: contents[1].id })
 
       // El layout es compartido entre idiomas: el primer idioma que se escribe
       // crea los bloques nuevos y el segundo solo rellena sus campos localizados
@@ -445,7 +456,7 @@ async function stepPages(payload: P) {
       const tmpl = contents[1]
       const extra = (specs: Spec[][]) => mkContent(tmpl, specs)
       const structureDone = contents.length === 2 + (s.price ? 1 : 0) + (s.guides ? 1 : 0)
-      const fill = (target: Anyobj, specs: Spec[][]) => Object.assign(target, mkContent(tmpl, specs), { id: target.id })
+      const fill = (target: Anyobj, specs: Spec[][]) => Object.assign(target, mkContent(tmpl, specs, target), { id: target.id })
 
       if (structureDone) {
         const cIdx = layout.indexOf(contents[1])
