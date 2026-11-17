@@ -62,7 +62,7 @@ La imagen `juantech-preview-o247wi:latest` en uso (sha256:dc03142d...) se constr
 - `53-wait-preview` (BASE_URL=https://dev.juan-tech.com): OK, 200 con `x-robots-tag noindex`
 - `53-preview-contract`: todo en PASS (API cerrada en 404, `/preview-blocked` 404, noindex en `/` y `/en`, `/go/dinorank` redirige)
 
-### Batería viva de la 56 (`56-run-all --live --no-wait`, 16:58 a 17:20 UTC)
+### Batería viva de la 56 (`56-run-all --live --no-wait`, arrancó a las 16:58 UTC)
 
 27 pasos: 24 PASS y 3 FAIL. Los cuatro FAIL de despliegue que esperaba el handoff ya pasan: 56-no-marker-live (20 PASS), 56-cta-live (15 PASS), 56-legal-live (5 PASS) y 54-page-contract (61 PASS).
 
@@ -72,7 +72,7 @@ La imagen `juantech-preview-o247wi:latest` en uso (sha256:dc03142d...) se constr
 | 55-content-parity | 6 posts EN: el preview enlaza `/services/...` y producción `/servicios/...` | No es siembra ni defecto: el preview corrige el prefijo de idioma del enlace EN. `/en/services/seo-consulting`, `/en/services/fullstack-development` y `/en/services/seo-technical-audit` responden 200 en los dos sitios. Lo decide 57-08 como diferencia aceptada |
 | 54-about | `/en/sobre-mi` sin ninguna `img` con `alt` no vacío | Sin confirmar, tratar como posible defecto de contenido: la foto de Sobre mí tiene alt en ES y `alt=""` en EN. El cargador del corte (`28-phase56-cutover-load`, tarea `media-alt`) solo carga el alt de 6 capturas, así que puede no cubrir esta foto. 57-05 confirma si la carga lo resuelve; si no, falta el alt EN de la foto en Media |
 
-### Repetición de 55-seo-parity con el preview estable (17:2x UTC)
+### Repetición de 55-seo-parity con el preview estable (17:12 UTC)
 
 152 PASS y 4 FAIL en 156 rutas. Los 28 errores 500 y 502 desaparecieron: eran del reinicio de Swarm. Los 4 FAIL restantes son `jsonld[0].dateModified` en `data-structures` y `dynamic-programming` (ES y EN):
 
