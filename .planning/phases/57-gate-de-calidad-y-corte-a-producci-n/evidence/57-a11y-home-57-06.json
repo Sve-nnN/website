@@ -1,0 +1,1865 @@
+{
+  "measuredAt": "2026-11-17T20:19:33.674Z",
+  "base": "https://dev.juan-tech.com",
+  "axe": {
+    "version": "4.12.1",
+    "tags": [
+      "wcag2a",
+      "wcag2aa",
+      "wcag21a",
+      "wcag21aa",
+      "wcag22aa"
+    ]
+  },
+  "widths": [
+    375,
+    1280
+  ],
+  "summary": {
+    "urls": 4,
+    "fail": 0
+  },
+  "limits": "axe detecta solo una parte de WCAG; contraste sobre degradados, orden de lectura y significado de los alt los revisa Juan",
+  "results": [
+    {
+      "url": "https://dev.juan-tech.com/",
+      "width": 375,
+      "status": 200,
+      "violations": [],
+      "keyboard": {
+        "stops": 70,
+        "closed": true,
+        "firstStop": "a href=\"#main-content\" \"Saltar al contenido\"",
+        "problems": [],
+        "detail": [
+          {
+            "tag": "a",
+            "href": "#main-content",
+            "name": "Saltar al contenido",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/",
+            "name": "Juan Angulo, inicio",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Abrir menú",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "#contacto",
+            "name": "Pedir auditoría 360",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website",
+            "name": "Ver el repositorio completo (se abre en otra pestaña)",
+            "focusVisible": true
+          },
+          {
+            "tag": "div",
+            "href": null,
+            "name": "Código del arreglo Google recibía dos anotaciones de hreflang que se contradecían",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website/commit/23646a1",
+            "name": "23646a1 (se abre en otra pestaña)",
+            "focusVisible": true
+          },
+          {
+            "tag": "div",
+            "href": null,
+            "name": "Código del arreglo El sitemap devolvía 500 y un urlset vacío en producción",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website/commit/6849e95",
+            "name": "6849e95 (se abre en otra pestaña)",
+            "focusVisible": true
+          },
+          {
+            "tag": "div",
+            "href": null,
+            "name": "Código del arreglo Las imágenes salían en WebP aunque el navegador aceptaba AVIF",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website/commit/4f8942e",
+            "name": "4f8942e (se abre en otra pestaña)",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "#contacto",
+            "name": "Hablemos de tu sitio",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "SEO técnico",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/seo-technical-audit",
+            "name": "Ver servicio",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Desarrollo con Next.js y Payload",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Infraestructura y servidores",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Rendimiento web",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "SEO para IA y GEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+            "name": "Escalar el contenido legal educativo a más de 86,000 clics orgánicos anuales para un despacho de defensa criminal",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+            "name": "Más que duplicar el tráfico orgánico de un fabricante artesanal de baldosas hidráulicas en España",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/immigration-law-atlanta-seo",
+            "name": "Cuadruplicar el tráfico orgánico de un despacho de inmigración en Atlanta en un año",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies",
+            "name": "Ver todos los casos",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://auditor.juan-tech.com",
+            "name": "Probar el auditor (se abre en una pestaña nueva)",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/websites/juan-tech-com",
+            "name": "Juan Tech",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/websites/apturio-com",
+            "name": "Apturio",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/websites/drmanuelvargashidalgo-com",
+            "name": "Dr. Manuel A. Vargas Hidalgo",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/websites/estylopia-com",
+            "name": "Estylopia",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/websites/aprendoclub-com",
+            "name": "Aprendoclub",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/websites",
+            "name": "Ver todos los sitios",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "#contacto",
+            "name": "Pedir la auditoría",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "¿Qué incluye la Auditoría 360?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "¿Qué recibo y cuánto tarda?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "¿Trabajas con mi equipo de desarrollo?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "¿Cómo mido el éxito de las optimizaciones?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "¿En qué idiomas trabajas?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Copiar correo",
+            "focusVisible": true
+          },
+          {
+            "tag": "input",
+            "href": null,
+            "name": "Nombre",
+            "focusVisible": true
+          },
+          {
+            "tag": "input",
+            "href": null,
+            "name": "Correo electrónico",
+            "focusVisible": true
+          },
+          {
+            "tag": "textarea",
+            "href": null,
+            "name": "Mensaje",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Enviar mensaje",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/",
+            "name": "Juan Angulo, inicio",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/seo-technical-audit",
+            "name": "Auditoría SEO técnica",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/seo-consulting",
+            "name": "Consultor SEO técnico",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/fullstack-development",
+            "name": "Desarrollo Full-Stack con SEO integrado",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/ai-seo-geo",
+            "name": "SEO para IA y GEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios",
+            "name": "Todos los servicios",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/seo-tecnico-lima",
+            "name": "SEO Técnico en Lima",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/seo-tecnico-madrid",
+            "name": "SEO Técnico en Madrid / España",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog",
+            "name": "Blog",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies",
+            "name": "Casos de éxito",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/authors",
+            "name": "Autores",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/contact",
+            "name": "Contáctame",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/search",
+            "name": "Buscar",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog/seo/estrategia-seo",
+            "name": "Estrategia SEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog/tech-seo/technical-seo-guide",
+            "name": "SEO técnico",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog/cs-fundamentals/data-structures",
+            "name": "Estructuras de datos",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/seo-consulting",
+            "name": "Consultoría SEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/seo-technical-audit",
+            "name": "Auditoría SEO técnica",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/ai-seo-geo",
+            "name": "SEO para IA y GEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+            "name": "Escalar el contenido legal educativo a más de 86,000 clics orgánicos anuales para un despacho de defensa criminal",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+            "name": "Más que duplicar el tráfico orgánico de un fabricante artesanal de baldosas hidráulicas en España",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/immigration-law-atlanta-seo",
+            "name": "Cuadruplicar el tráfico orgánico de un despacho de inmigración en Atlanta en un año",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/talleres-costura-miami-lanzamiento-seo-local",
+            "name": "De cero a los primeros clics orgánicos reales para un negocio local de talleres",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/urologo-seo-local-salud-santiago-rd",
+            "name": "De casi cero visibilidad a un año de crecimiento sostenido para un urólogo",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/privacy",
+            "name": "Privacidad",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/terms",
+            "name": "Términos",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/sitemap.html",
+            "name": "Sitemap",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/stack",
+            "name": "Mi stack",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://linkedin.com/in/juancangulo",
+            "name": "LinkedIn (se abre en otra pestaña)",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "​ Pausar animaciones",
+            "focusVisible": true
+          }
+        ]
+      },
+      "problems": [],
+      "pass": true,
+      "template": "home",
+      "locale": "es",
+      "pathSource": "fija"
+    },
+    {
+      "url": "https://dev.juan-tech.com/",
+      "width": 1280,
+      "status": 200,
+      "violations": [],
+      "keyboard": {
+        "stops": 77,
+        "closed": true,
+        "firstStop": "a href=\"#main-content\" \"Saltar al contenido\"",
+        "problems": [],
+        "detail": [
+          {
+            "tag": "a",
+            "href": "#main-content",
+            "name": "Saltar al contenido",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/",
+            "name": "Juan Angulo, inicio",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog",
+            "name": "Blog",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies",
+            "name": "Casos de éxito",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/authors",
+            "name": "Autores",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/contact",
+            "name": "Contacto",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios",
+            "name": "Servicios",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/sobre-mi",
+            "name": "Sobre mí",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Idioma: Español",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/contact",
+            "name": "Hablemos",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "#contacto",
+            "name": "Pedir auditoría 360",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website",
+            "name": "Ver el repositorio completo (se abre en otra pestaña)",
+            "focusVisible": true
+          },
+          {
+            "tag": "div",
+            "href": null,
+            "name": "Código del arreglo Google recibía dos anotaciones de hreflang que se contradecían",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website/commit/23646a1",
+            "name": "23646a1 (se abre en otra pestaña)",
+            "focusVisible": true
+          },
+          {
+            "tag": "div",
+            "href": null,
+            "name": "Código del arreglo El sitemap devolvía 500 y un urlset vacío en producción",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website/commit/6849e95",
+            "name": "6849e95 (se abre en otra pestaña)",
+            "focusVisible": true
+          },
+          {
+            "tag": "div",
+            "href": null,
+            "name": "Código del arreglo Las imágenes salían en WebP aunque el navegador aceptaba AVIF",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website/commit/4f8942e",
+            "name": "4f8942e (se abre en otra pestaña)",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "#contacto",
+            "name": "Hablemos de tu sitio",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "SEO técnico",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/seo-technical-audit",
+            "name": "Ver servicio",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Desarrollo con Next.js y Payload",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Infraestructura y servidores",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Rendimiento web",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "SEO para IA y GEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+            "name": "Escalar el contenido legal educativo a más de 86,000 clics orgánicos anuales para un despacho de defensa criminal",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+            "name": "Más que duplicar el tráfico orgánico de un fabricante artesanal de baldosas hidráulicas en España",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/immigration-law-atlanta-seo",
+            "name": "Cuadruplicar el tráfico orgánico de un despacho de inmigración en Atlanta en un año",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies",
+            "name": "Ver todos los casos",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://auditor.juan-tech.com",
+            "name": "Probar el auditor (se abre en una pestaña nueva)",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/websites/juan-tech-com",
+            "name": "Juan Tech",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/websites/apturio-com",
+            "name": "Apturio",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/websites/drmanuelvargashidalgo-com",
+            "name": "Dr. Manuel A. Vargas Hidalgo",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/websites/estylopia-com",
+            "name": "Estylopia",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/websites/aprendoclub-com",
+            "name": "Aprendoclub",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/websites",
+            "name": "Ver todos los sitios",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "#contacto",
+            "name": "Pedir la auditoría",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "¿Qué incluye la Auditoría 360?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "¿Qué recibo y cuánto tarda?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "¿Trabajas con mi equipo de desarrollo?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "¿Cómo mido el éxito de las optimizaciones?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "¿En qué idiomas trabajas?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Copiar correo",
+            "focusVisible": true
+          },
+          {
+            "tag": "input",
+            "href": null,
+            "name": "Nombre",
+            "focusVisible": true
+          },
+          {
+            "tag": "input",
+            "href": null,
+            "name": "Correo electrónico",
+            "focusVisible": true
+          },
+          {
+            "tag": "textarea",
+            "href": null,
+            "name": "Mensaje",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Enviar mensaje",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/",
+            "name": "Juan Angulo, inicio",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/seo-technical-audit",
+            "name": "Auditoría SEO técnica",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/seo-consulting",
+            "name": "Consultor SEO técnico",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/fullstack-development",
+            "name": "Desarrollo Full-Stack con SEO integrado",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/ai-seo-geo",
+            "name": "SEO para IA y GEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios",
+            "name": "Todos los servicios",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/seo-tecnico-lima",
+            "name": "SEO Técnico en Lima",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/seo-tecnico-madrid",
+            "name": "SEO Técnico en Madrid / España",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog",
+            "name": "Blog",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies",
+            "name": "Casos de éxito",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/authors",
+            "name": "Autores",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/contact",
+            "name": "Contáctame",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/search",
+            "name": "Buscar",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog/seo/estrategia-seo",
+            "name": "Estrategia SEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog/tech-seo/technical-seo-guide",
+            "name": "SEO técnico",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog/cs-fundamentals/data-structures",
+            "name": "Estructuras de datos",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/seo-consulting",
+            "name": "Consultoría SEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/seo-technical-audit",
+            "name": "Auditoría SEO técnica",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/servicios/ai-seo-geo",
+            "name": "SEO para IA y GEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+            "name": "Escalar el contenido legal educativo a más de 86,000 clics orgánicos anuales para un despacho de defensa criminal",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+            "name": "Más que duplicar el tráfico orgánico de un fabricante artesanal de baldosas hidráulicas en España",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/immigration-law-atlanta-seo",
+            "name": "Cuadruplicar el tráfico orgánico de un despacho de inmigración en Atlanta en un año",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/talleres-costura-miami-lanzamiento-seo-local",
+            "name": "De cero a los primeros clics orgánicos reales para un negocio local de talleres",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/case-studies/urologo-seo-local-salud-santiago-rd",
+            "name": "De casi cero visibilidad a un año de crecimiento sostenido para un urólogo",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/privacy",
+            "name": "Privacidad",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/terms",
+            "name": "Términos",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/sitemap.html",
+            "name": "Sitemap",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/stack",
+            "name": "Mi stack",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://linkedin.com/in/juancangulo",
+            "name": "LinkedIn (se abre en otra pestaña)",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "​ Pausar animaciones",
+            "focusVisible": true
+          }
+        ]
+      },
+      "problems": [],
+      "pass": true,
+      "template": "home",
+      "locale": "es",
+      "pathSource": "fija"
+    },
+    {
+      "url": "https://dev.juan-tech.com/en",
+      "width": 375,
+      "status": 200,
+      "violations": [],
+      "keyboard": {
+        "stops": 70,
+        "closed": true,
+        "firstStop": "a href=\"#main-content\" \"Skip to content\"",
+        "problems": [],
+        "detail": [
+          {
+            "tag": "a",
+            "href": "#main-content",
+            "name": "Skip to content",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en",
+            "name": "Juan Angulo, home",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Open menu",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "#contacto",
+            "name": "Request a 360 audit",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website",
+            "name": "See the full repository (opens in a new tab)",
+            "focusVisible": true
+          },
+          {
+            "tag": "div",
+            "href": null,
+            "name": "Code for the fix Google was getting two hreflang annotations that contradicted each other",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website/commit/23646a1",
+            "name": "23646a1 (opens in a new tab)",
+            "focusVisible": true
+          },
+          {
+            "tag": "div",
+            "href": null,
+            "name": "Code for the fix The sitemap was returning 500s and an empty urlset in production",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website/commit/6849e95",
+            "name": "6849e95 (opens in a new tab)",
+            "focusVisible": true
+          },
+          {
+            "tag": "div",
+            "href": null,
+            "name": "Code for the fix Images were served as WebP even when the browser accepted AVIF",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website/commit/4f8942e",
+            "name": "4f8942e (opens in a new tab)",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "#contacto",
+            "name": "Let's talk about your site",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Technical SEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/seo-technical-audit",
+            "name": "View service",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Development with Next.js and Payload",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Infrastructure and servers",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Web performance",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "SEO for AI and GEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+            "name": "Scaling educational legal content to over 86,000 annual organic clicks for a criminal defense firm",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+            "name": "More than doubling organic traffic for a family-run artisan hydraulic tile manufacturer in Spain",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/immigration-law-atlanta-seo",
+            "name": "Quadrupling organic traffic for an Atlanta immigration law firm in one year",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies",
+            "name": "See all case studies",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://auditor.juan-tech.com",
+            "name": "Try the auditor (opens in a new tab)",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/websites/juan-tech-com",
+            "name": "Juan Tech",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/websites/apturio-com",
+            "name": "Apturio",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/websites/drmanuelvargashidalgo-com",
+            "name": "Dr. Manuel A. Vargas Hidalgo",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/websites/estylopia-com",
+            "name": "Estylopia",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/websites/aprendoclub-com",
+            "name": "Aprendoclub",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/websites",
+            "name": "See all websites",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "#contacto",
+            "name": "Request the audit",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "What does the 360 Audit include?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "What do I get and how long does it take?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Do you work with my development team?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "How do you measure the success of the optimizations?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Which languages do you work in?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Copy email",
+            "focusVisible": true
+          },
+          {
+            "tag": "input",
+            "href": null,
+            "name": "Name",
+            "focusVisible": true
+          },
+          {
+            "tag": "input",
+            "href": null,
+            "name": "Email address",
+            "focusVisible": true
+          },
+          {
+            "tag": "textarea",
+            "href": null,
+            "name": "Message",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Send message",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en",
+            "name": "Juan Angulo, home",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/seo-technical-audit",
+            "name": "Technical SEO audit",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/seo-consulting",
+            "name": "Technical SEO consultant",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/fullstack-development",
+            "name": "Full-Stack Development with SEO Built In",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/ai-seo-geo",
+            "name": "SEO for AI and GEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services",
+            "name": "All services",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/seo-tecnico-lima",
+            "name": "Technical SEO in Lima",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/seo-tecnico-madrid",
+            "name": "Technical SEO in Madrid / Spain",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/blog",
+            "name": "Blog",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies",
+            "name": "Casos de éxito",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/authors",
+            "name": "Autores",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/contact",
+            "name": "Contáctame",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/search",
+            "name": "Buscar",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog/seo/estrategia-seo",
+            "name": "SEO strategy",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog/tech-seo/technical-seo-guide",
+            "name": "Technical SEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/blog/cs-fundamentals/data-structures",
+            "name": "Data structures",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/seo-consulting",
+            "name": "SEO consulting",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/seo-technical-audit",
+            "name": "Technical SEO audit",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/ai-seo-geo",
+            "name": "SEO for AI and GEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+            "name": "Scaling educational legal content to over 86,000 annual organic clicks for a criminal defense firm",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+            "name": "More than doubling organic traffic for a family-run artisan hydraulic tile manufacturer in Spain",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/immigration-law-atlanta-seo",
+            "name": "Quadrupling organic traffic for an Atlanta immigration law firm in one year",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/talleres-costura-miami-lanzamiento-seo-local",
+            "name": "From zero to the first real organic clicks for a local workshop business",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/urologo-seo-local-salud-santiago-rd",
+            "name": "From near-zero visibility to a year of sustained growth for a urologist",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/privacy",
+            "name": "Privacy",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/terms",
+            "name": "Terms",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/sitemap.html",
+            "name": "Sitemap",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/stack",
+            "name": "My stack",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://linkedin.com/in/juancangulo",
+            "name": "LinkedIn (opens in a new tab)",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "​ Pause animations",
+            "focusVisible": true
+          }
+        ]
+      },
+      "problems": [],
+      "pass": true,
+      "template": "home",
+      "locale": "en",
+      "pathSource": "fija"
+    },
+    {
+      "url": "https://dev.juan-tech.com/en",
+      "width": 1280,
+      "status": 200,
+      "violations": [],
+      "keyboard": {
+        "stops": 77,
+        "closed": true,
+        "firstStop": "a href=\"#main-content\" \"Skip to content\"",
+        "problems": [],
+        "detail": [
+          {
+            "tag": "a",
+            "href": "#main-content",
+            "name": "Skip to content",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en",
+            "name": "Juan Angulo, home",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/blog",
+            "name": "Blog",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies",
+            "name": "Case Studies",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/authors",
+            "name": "Authors",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/contact",
+            "name": "Contact",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services",
+            "name": "Services",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/sobre-mi",
+            "name": "About me",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Language: English",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/contact",
+            "name": "Let's talk",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "#contacto",
+            "name": "Request a 360 audit",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website",
+            "name": "See the full repository (opens in a new tab)",
+            "focusVisible": true
+          },
+          {
+            "tag": "div",
+            "href": null,
+            "name": "Code for the fix Google was getting two hreflang annotations that contradicted each other",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website/commit/23646a1",
+            "name": "23646a1 (opens in a new tab)",
+            "focusVisible": true
+          },
+          {
+            "tag": "div",
+            "href": null,
+            "name": "Code for the fix The sitemap was returning 500s and an empty urlset in production",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website/commit/6849e95",
+            "name": "6849e95 (opens in a new tab)",
+            "focusVisible": true
+          },
+          {
+            "tag": "div",
+            "href": null,
+            "name": "Code for the fix Images were served as WebP even when the browser accepted AVIF",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://github.com/Sve-nnN/website/commit/4f8942e",
+            "name": "4f8942e (opens in a new tab)",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "#contacto",
+            "name": "Let's talk about your site",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Technical SEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/seo-technical-audit",
+            "name": "View service",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Development with Next.js and Payload",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Infrastructure and servers",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Web performance",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "SEO for AI and GEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+            "name": "Scaling educational legal content to over 86,000 annual organic clicks for a criminal defense firm",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+            "name": "More than doubling organic traffic for a family-run artisan hydraulic tile manufacturer in Spain",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/immigration-law-atlanta-seo",
+            "name": "Quadrupling organic traffic for an Atlanta immigration law firm in one year",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies",
+            "name": "See all case studies",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://auditor.juan-tech.com",
+            "name": "Try the auditor (opens in a new tab)",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/websites/juan-tech-com",
+            "name": "Juan Tech",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/websites/apturio-com",
+            "name": "Apturio",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/websites/drmanuelvargashidalgo-com",
+            "name": "Dr. Manuel A. Vargas Hidalgo",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/websites/estylopia-com",
+            "name": "Estylopia",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/websites/aprendoclub-com",
+            "name": "Aprendoclub",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/websites",
+            "name": "See all websites",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "#contacto",
+            "name": "Request the audit",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "What does the 360 Audit include?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "What do I get and how long does it take?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Do you work with my development team?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "How do you measure the success of the optimizations?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Which languages do you work in?",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Copy email",
+            "focusVisible": true
+          },
+          {
+            "tag": "input",
+            "href": null,
+            "name": "Name",
+            "focusVisible": true
+          },
+          {
+            "tag": "input",
+            "href": null,
+            "name": "Email address",
+            "focusVisible": true
+          },
+          {
+            "tag": "textarea",
+            "href": null,
+            "name": "Message",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "Send message",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en",
+            "name": "Juan Angulo, home",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/seo-technical-audit",
+            "name": "Technical SEO audit",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/seo-consulting",
+            "name": "Technical SEO consultant",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/fullstack-development",
+            "name": "Full-Stack Development with SEO Built In",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/ai-seo-geo",
+            "name": "SEO for AI and GEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services",
+            "name": "All services",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/seo-tecnico-lima",
+            "name": "Technical SEO in Lima",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/seo-tecnico-madrid",
+            "name": "Technical SEO in Madrid / Spain",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/blog",
+            "name": "Blog",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies",
+            "name": "Casos de éxito",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/authors",
+            "name": "Autores",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/contact",
+            "name": "Contáctame",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/search",
+            "name": "Buscar",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog/seo/estrategia-seo",
+            "name": "SEO strategy",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/blog/tech-seo/technical-seo-guide",
+            "name": "Technical SEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/blog/cs-fundamentals/data-structures",
+            "name": "Data structures",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/seo-consulting",
+            "name": "SEO consulting",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/seo-technical-audit",
+            "name": "Technical SEO audit",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/services/ai-seo-geo",
+            "name": "SEO for AI and GEO",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+            "name": "Scaling educational legal content to over 86,000 annual organic clicks for a criminal defense firm",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+            "name": "More than doubling organic traffic for a family-run artisan hydraulic tile manufacturer in Spain",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/immigration-law-atlanta-seo",
+            "name": "Quadrupling organic traffic for an Atlanta immigration law firm in one year",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/talleres-costura-miami-lanzamiento-seo-local",
+            "name": "From zero to the first real organic clicks for a local workshop business",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/case-studies/urologo-seo-local-salud-santiago-rd",
+            "name": "From near-zero visibility to a year of sustained growth for a urologist",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/privacy",
+            "name": "Privacy",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/terms",
+            "name": "Terms",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/sitemap.html",
+            "name": "Sitemap",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "/en/stack",
+            "name": "My stack",
+            "focusVisible": true
+          },
+          {
+            "tag": "a",
+            "href": "https://linkedin.com/in/juancangulo",
+            "name": "LinkedIn (opens in a new tab)",
+            "focusVisible": true
+          },
+          {
+            "tag": "button",
+            "href": null,
+            "name": "​ Pause animations",
+            "focusVisible": true
+          }
+        ]
+      },
+      "problems": [],
+      "pass": true,
+      "template": "home",
+      "locale": "en",
+      "pathSource": "fija"
+    }
+  ]
+}

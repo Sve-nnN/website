@@ -187,6 +187,7 @@ Juan las aprobó en el chat el 2026-11-17 ("esta bien eso que me dices. has todo
 | 14 | Pista de tema del admin | quitar Accept-CH, Vary y Critical-CH con Sec-CH-Prefers-Color-Scheme del sitio público y conservarlas solo en `/admin/:path*` | A1 | 57-06 (F2): además del filtro sobre `/:path*`, agrega la regla separada para `/admin/:path*` |
 | 15 | `scripts/_tmp-dump-b0303.ts` y `scripts/_tmp-extract-b0303.ts` | borrar | ninguno | el orquestador los borró el 2026-11-17; no estaban versionados, así que ningún commit los toca |
 | 16 | Fecha de corte D | 2026-12-01 como propuesta, antes si el gate queda en verde | D-15 | 57-09 y siguientes; no es compromiso |
+| 11b | Piso absoluto de la tolerancia de rendimiento (orquestador, 2026-11-17, en 57-06) | LCP, TTFB y TBT pasan si la mediana del preview es menor o igual a producción + max(10% de producción, 50 ms). Motivo: con TBT de 14 ms en producción el 10% dejaba 1,4 ms de margen, menos que el ruido de laboratorio. El 10% de Juan sigue mandando en métricas grandes (LCP de 5 s tolera 500 ms) | A4 | `DEFAULT_FLOOR_MS=50` en `scripts/verify/57-perf-compare.mjs` (commit d68832b), con autopruebas 2f a 2i |
 
 Este plan no cambia ningún script: los planes 57-01 a 57-03 y 57-06 ya traen o van a traer estos valores como variables de entorno por defecto.
 
