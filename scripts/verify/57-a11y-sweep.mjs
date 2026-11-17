@@ -222,6 +222,20 @@ async function activeInfo(page) {
       const notch = a.querySelector(':scope > .MuiOutlinedInput-notchedOutline')
       if (notch && parseFloat(getComputedStyle(notch).borderTopWidth) >= 2) focusVisible = true
     }
+    // Tarjetas con enlace estirado (ProjectCard, CaseMetricCard, SiteCard): el enlace lleva
+    // outline none y la tarjeta dibuja el anillo con `:has(a:focus-visible)`. Cuenta un ancestro
+    // cercano solo si contiene el foco visible y su outline de 2 px está puesto (57-06).
+    a = el.parentElement
+    for (let i = 0; !focusVisible && a && i < 4; i++, a = a.parentElement) {
+      let hasFocus = false
+      try {
+        hasFocus = a.matches(':has(:focus-visible)')
+      } catch {
+        hasFocus = false
+      }
+      const cs = getComputedStyle(a)
+      if (hasFocus && cs.outlineStyle !== 'none' && parseFloat(cs.outlineWidth) >= 2) focusVisible = true
+    }
     // Diagnóstico: ButtonBase de MUI fija outline 0 y solo deja ripple o cambio de fondo.
     const weak = !focusVisible && /(^|\s)Mui-focusVisible(\s|$)/.test(el.className || '') ? 'solo ripple o fondo de MUI, ButtonBase anula el outline' : null
     const href = el.getAttribute('href')
@@ -383,6 +397,9 @@ export const SELFTEST_PAGES = {
   '/trampa': page('Trampa de foco', `${SKIP}${MAIN('<label for="t">Nombre</label> <input id="t" type="text"><a href="/x">Siguiente</a>')}<script>document.getElementById('t').addEventListener('keydown', (e) => { if (e.key === 'Tab') e.preventDefault() })</script>`),
   // Test 4: la primera parada no es el enlace de salto.
   '/sin-salto': page('Sin enlace de salto', `<header><nav aria-label="Principal"><a href="/a">Inicio</a></nav></header>${SKIP}${MAIN('<p>Texto.</p>')}`),
+  // Test 6: tarjeta que dibuja el anillo con :has(a:focus-visible) pasa; sin esa regla falla.
+  '/tarjeta': page('Tarjeta con anillo', `<style>.card:has(a:focus-visible){outline:2px solid #f60;outline-offset:2px}.card a{outline:none}</style>${SKIP}${MAIN('<ul><li class="card"><a href="/x">Caso</a></li></ul>')}`),
+  '/tarjeta-sin-anillo': page('Tarjeta sin anillo', `<style>.card a{outline:none}</style>${SKIP}${MAIN('<ul><li class="card"><a href="/x">Caso</a></li></ul>')}`),
 }
 
 async function selftest() {
@@ -423,6 +440,10 @@ async function selftest() {
       'test 4: primera parada distinta del enlace de salto falla',
       noskip.problems.join('; ') || 'sin problemas',
     )
+    const card = await checkPage(browser, base + '/tarjeta', 1280)
+    check(card.pass, 'test 6: tarjeta con anillo por :has(a:focus-visible) pasa', card.problems.join('; '))
+    const cardBad = await checkPage(browser, base + '/tarjeta-sin-anillo', 1280)
+    check(!cardBad.pass && cardBad.problems.some((p) => p.includes('anillo')), 'test 6b: tarjeta sin anillo falla', cardBad.problems.join('; ') || 'sin problemas')
     // Lógica pura: plantillas y sitemap.
     const paths = sitemapPaths('<urlset><url><loc>https://juan-tech.com/servicios/seo-x</loc></url><url><loc>https://juan-tech.com/</loc></url></urlset>')
     const resolved = resolveTemplates(TEMPLATES, paths)
