@@ -98,3 +98,15 @@ Cierra la lista "Sigue pendiente de Juan" de arriba. Cada respuesta quedó en el
 - Capturas: Juan pidió que Claude las tomara. Se recapturaron las 4 y se reemplazan en el corte con el script 32.
 - Valores por defecto en los textos largos: "defaults".
 - Recorte de etapas de Sobre mí (2026-11-16): Juan escribió exacto "apruebo recortar etapas de about-page de 5 a 4". Sembrado en ES y EN ese día.
+
+## Checkpoint de 57-05, respuestas de Juan (2026-11-17)
+Juan respondió en el chat los 16 puntos del checkpoint de la tarea 2 de 57-05. Los puntos 1 a 10 ya tenían respuesta del 14 al 16 de noviembre (sección de arriba) y no se volvieron a preguntar. Los puntos 11 a 16 son nuevos; el detalle y el uso de cada umbral están en `.planning/phases/57-gate-de-calidad-y-corte-a-producci-n/evidence/57-gate-items.md`, sección "Decisiones de la fase 57".
+
+- 1 a 10: ver "Aprobaciones de Juan en el chat (2026-11-14 al 2026-11-16)". Lecciones, HOME-EN, ABOUT-EN y los cuatro legales aprobados; Arianna Lupi de Webflow a Astro; stack completo de Juan Tech; Neon sigue en aprendoclub y Apturio; cita optimizada de Patricia Ibarra, que ella confirma antes del corte; AprendoSEO pasa a aprendoclub; el título de "Topic clusters" se queda; Claude recapturó las 4 capturas y el script 32 las carga en el corte.
+- 11: tolerancia de rendimiento del preview contra producción, 10%. Aprobada.
+- 12: umbral de disco del VPS antes de cada build, menos de 80% de uso y más de 15 GB libres. Aprobado.
+- 13: tolerancia de palabras indexables 2% y presupuesto de HTML del autor 500 KB. Aprobados ("esta bien eso que me dices. has todo eso").
+- 14: quitar del sitio público las cabeceras de pista de tema de Payload (Accept-CH, Vary y Critical-CH con Sec-CH-Prefers-Color-Scheme) y dejarlas solo en /admin/:path*. Aprobado; lo implementa el plan dueño de F2.
+- 15: `scripts/_tmp-dump-b0303.ts` y `scripts/_tmp-extract-b0303.ts`: borrar. El orquestador los borró el 2026-11-17; no estaban versionados.
+- 16: fecha de corte D = 2026-12-01 como propuesta, antes si el gate queda en verde. Aprobada como propuesta, no como compromiso (D-15).
+- Checkpoint de la tarea 4 (migración aditiva y siembra sombra): ya resuelto. La migración `20261110_220805_phase56_legal_shadow` se aplicó el 2026-11-15 y `25-phase56-verify-schema.ts` la verificó; home-page y legal-pages se sembraron en ES y EN el 2026-11-15; about-page el 2026-11-16, tras la frase literal de arriba.

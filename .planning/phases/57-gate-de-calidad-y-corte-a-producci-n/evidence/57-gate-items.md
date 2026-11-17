@@ -156,3 +156,55 @@ FAIL 56-gate: 1 problema(s) impiden el corte
 ```
 
 Sin banderas, la misma corrida sale con exit 0 y cambia el FAIL de `CUT-legal-date-efectiva` por `INFO`.
+
+## Respuestas de Juan al checkpoint de la tarea 2 (2026-11-17)
+
+Los puntos 1 a 10 ya tenían respuesta escrita del 14 al 16 de noviembre y están en `.planning/phase-56-prep/aprobaciones-juan.md`, sección "Aprobaciones de Juan en el chat (2026-11-14 al 2026-11-16)", con los registros tipados en los commits f85744a, 3d58bf8, 4db5641 y 62c1b2f. La corrida del gate de arriba lo confirma: ninguno de esos ítems sigue abierto. No se volvieron a preguntar.
+
+| # | Ítem | Respuesta | Dónde quedó |
+|---|------|-----------|-------------|
+| 1 | 21 lecciones | aprobadas ("continua con todo") | `56-case-lessons.ts`, f85744a |
+| 2 | HOME-EN y ABOUT-EN | aprobadas | `56-home-copy.ts`, `56-about-copy.ts`, f85744a |
+| 3 | Cuatro legales | aprobados; revisión profesional opcional y posterior | `56-legal-copy.ts`, f85744a |
+| 4 | Textos de Arianna Lupi | Webflow a Astro para bajar costos y ganar velocidad, redactado en ES y EN | `56-cutover-data.ts`, f85744a |
+| 5 | Stack de Juan Tech | stack completo ("si pon toda esas tecnologias") | `56-cutover-data.ts`, f85744a |
+| 6 | Neon en aprendoclub y Apturio | sigue en uso | `56-cutover-data.ts`, f85744a |
+| 7 | Patricia Ibarra | cita optimizada "Trabajar con Juan fue la mejor decisión que tomamos." / "Working with Juan was the best decision we made."; Patricia la confirma antes del corte | `56-cutover-data.ts`, f85744a |
+| 8 | AprendoSEO en la fila de autor | se renombra a aprendoclub | `56-cutover-data.ts`, f85744a |
+| 9 | Título de "Topic clusters SEO" | se queda igual | `aprobaciones-juan.md` |
+| 10 | Recaptura de las 4 capturas | Claude las recapturó; el script 32 las carga en el corte | 3d58bf8, 4db5641, `scripts/db/32-phase56-replace-captures.ts` |
+
+## Decisiones de la fase 57
+
+Juan las aprobó en el chat el 2026-11-17 ("esta bien eso que me dices. has todo eso"). Dejan de ser supuestos.
+
+| # | Decisión | Valor | Supuesto que cierra | Quién lo consume |
+|---|----------|-------|---------------------|------------------|
+| 11 | Tolerancia de rendimiento del preview contra producción | 10%: mediana del preview menor o igual a 1,10 veces la de producción en LCP, TTFB y TBT; CLS menor o igual al mayor entre el de producción y 0,1 | A4 | `PERF_TOLERANCE=0.1` por defecto en el script de rendimiento de 57-03; el reporte de 57-08 lo cita |
+| 12 | Umbral de disco del VPS antes de cada build | menos de 80% de uso y más de 15 GB libres | A9 | `scripts/verify/57-vps-disk-check.mjs` de 57-01 ya trae `DISK_MAX_PCT=80` y `DISK_MIN_FREE_GB=15` por defecto; solo su texto de "supuesto A9" quedó viejo |
+| 13a | Tolerancia de palabras indexables | 2% | A4 | `WORDS_TOLERANCE=0.02` por defecto en `57-seo-parity-all.mjs` de 57-02 |
+| 13b | Presupuesto de HTML sin comprimir del perfil de autor | 500 KB | A4 | presupuesto de F5 en `57-seo-parity-all.mjs` de 57-02 |
+| 14 | Pista de tema del admin | quitar Accept-CH, Vary y Critical-CH con Sec-CH-Prefers-Color-Scheme del sitio público y conservarlas solo en `/admin/:path*` | A1 | 57-06 (F2): además del filtro sobre `/:path*`, agrega la regla separada para `/admin/:path*` |
+| 15 | `scripts/_tmp-dump-b0303.ts` y `scripts/_tmp-extract-b0303.ts` | borrar | ninguno | el orquestador los borró el 2026-11-17; no estaban versionados, así que ningún commit los toca |
+| 16 | Fecha de corte D | 2026-12-01 como propuesta, antes si el gate queda en verde | D-15 | 57-09 y siguientes; no es compromiso |
+
+Este plan no cambia ningún script: los planes 57-01 a 57-03 y 57-06 ya traen o van a traer estos valores como variables de entorno por defecto.
+
+## Checkpoint de la tarea 4: migración aditiva y siembra sombra
+
+Quedó resuelto antes de este plan, con evidencia de la 56:
+
+- 2026-11-15: Juan aplicó la migración `20261110_220805_phase56_legal_shadow` (aditiva, solo CREATE y ADD) contra la base de producción por el túnel, y `25-phase56-verify-schema.ts` la verificó.
+- 2026-11-15: siembra sombra de home-page y legal-pages en ES y EN.
+- 2026-11-16: siembra de about-page en ES y EN, después de que Juan escribió exacto "apruebo recortar etapas de about-page de 5 a 4".
+- 2026-11-16 y 17: dev verificado en vivo contra el HTML servido (commit 62c1b2f).
+
+Recomprobación de este plan, solo GET, 2026-11-17 a las 17:25 UTC, con `BASE_URL=https://dev.juan-tech.com PROD_BASE=https://juan-tech.com EXPECT_PREVIEW=1`:
+
+| Verificador | Exit | PASS | FAIL |
+|-------------|------|------|------|
+| `56-no-marker-live.mjs` | 0 | 20 | 0 |
+| `56-cta-live.mjs` | 0 | 15 | 0 |
+| `56-legal-live.mjs` | 0 | 5 | 0 |
+
+Autopruebas sin red: `56-cutover-selftest.ts` exit 0 y `56-content-guard.mjs --scripts` PASS (4 scripts revisados).
