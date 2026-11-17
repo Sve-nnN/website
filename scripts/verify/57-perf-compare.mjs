@@ -17,7 +17,10 @@
  * durationThreshold de 16 ms. Se imprime como "proxy de INP" (supuesto A5).
  *
  * Regla de no empeorar (PERF_TOLERANCE, por defecto 0.10, la confirma Juan en 57-05):
- *   LCP, TTFB y TBT: mediana preview <= (1 + tolerancia) x mediana producción
+ *   LCP, TTFB y TBT: mediana preview <= producción + max(tolerancia x producción, 50 ms)
+ *   El piso absoluto de 50 ms (PERF_FLOOR_MS, decisión del orquestador en 57-06) evita
+ *   que el ruido de laboratorio repruebe métricas pequeñas: con TBT de 14 ms en
+ *   producción, el 10% solo dejaba 1,4 ms de margen.
  *   CLS: mediana preview <= max(mediana producción, 0,1)
  *
  * Uso:
@@ -41,6 +44,7 @@ export const CATEGORIES = ['performance', 'accessibility']
 export const METRICS = ['lcp', 'ttfb', 'tbt', 'cls']
 const DEFAULT_TOLERANCE = 0.1
 const CLS_FLOOR = 0.1
+export const DEFAULT_FLOOR_MS = 50
 
 // ---------------------------------------------------------------------------
 // Lógica pura
@@ -54,13 +58,13 @@ export function median(values) {
 }
 
 /** Veredicto de una métrica. Devuelve { pass, limit }. */
-export function judgeMetric(metric, preview, prod, tolerance = DEFAULT_TOLERANCE) {
+export function judgeMetric(metric, preview, prod, tolerance = DEFAULT_TOLERANCE, floorMs = DEFAULT_FLOOR_MS) {
   if (preview == null || prod == null) return { pass: false, limit: null, reason: 'sin dato' }
   if (metric === 'cls') {
     const limit = Math.max(prod, CLS_FLOOR)
     return { pass: preview <= limit, limit }
   }
-  const limit = prod * (1 + tolerance)
+  const limit = prod + Math.max(prod * tolerance, floorMs)
   return { pass: preview <= limit, limit }
 }
 
@@ -282,7 +286,7 @@ const fmt = (m, v) => {
 const kb = (v) => (v == null ? 'sin dato' : `${(v / 1024).toFixed(1)} KB`)
 
 function printTable(results, tolerance) {
-  console.log(`\n== Rendimiento: mediana preview contra producción (tolerancia ${(tolerance * 100).toFixed(0)}%) ==`)
+  console.log(`\n== Rendimiento: mediana preview contra producción (tolerancia max(${(tolerance * 100).toFixed(0)}%, ${DEFAULT_FLOOR_MS} ms)) ==`)
   for (const r of results) {
     const { medians: md, verdict } = r.summary
     console.log(`\n${r.summary.pass ? 'PASS' : 'FAIL'} ${r.path} (${md.preview.runs} y ${md.prod.runs} corridas)`)
@@ -402,6 +406,10 @@ function selftest() {
   check(judgeMetric('lcp', 1110, 1000, 0.2).pass === true, 'test 2c: con tolerancia 0,2 la misma cifra pasa')
   check(judgeMetric('ttfb', 1200, 1000).pass === false && judgeMetric('tbt', 100, 100).pass === true, 'test 2d: TTFB y TBT usan la misma regla')
   check(judgeMetric('lcp', null, 1000).pass === false, 'test 2e: un dato faltante no pasa')
+  check(judgeMetric('tbt', 21, 14).pass === true && judgeMetric('tbt', 64, 14).pass === true, 'test 2f: TBT pequeño tolera el piso de 50 ms')
+  check(judgeMetric('tbt', 65, 14).pass === false, 'test 2g: TBT por encima de producción + 50 ms falla')
+  check(judgeMetric('ttfb', 447, 249).pass === false && judgeMetric('ttfb', 299, 249).pass === true, 'test 2h: TTFB 447 contra 249 falla y 299 pasa (piso de 50 ms)')
+  check(judgeMetric('tbt', 21, 14, 0.1, 0).pass === false, 'test 2i: sin piso vuelve la regla relativa pura')
   // Test 3: CLS.
   check(judgeMetric('cls', 0.08, 0.02).pass === true, 'test 3: CLS 0,08 con producción 0,02 pasa (tope 0,1)')
   check(judgeMetric('cls', 0.12, 0.02).pass === false, 'test 3b: CLS 0,12 con producción 0,02 falla')
