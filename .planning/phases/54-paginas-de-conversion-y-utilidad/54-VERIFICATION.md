@@ -1,15 +1,9 @@
 ---
 phase: 54-paginas-de-conversion-y-utilidad
-verified: 2026-11-09T03:40:00Z
+verified: 2026-11-17T16:52:11Z
 status: passed
 score: 4/5 must-haves verified
-overrides:
-  - gap: "Home sin secciones Casos y Sitios en el preview"
-    decision: "Aceptado como pendiente de contenido, no de código. Las dos secciones están implementadas y devuelven null mientras el global featured-content no tenga casos con heroMetric ni sitios publicados. Juan los puebla en el admin real. PAG-01 queda Pending hasta verlas en el preview."
-    accepted_by: "orquestador autónomo, sujeto a revisión de Juan"
-    date: 2026-11-09
 covered_files:
-  - .planning/REQUIREMENTS.md
   - .planning/phases/54-paginas-de-conversion-y-utilidad/54-01-PLAN.md
   - .planning/phases/54-paginas-de-conversion-y-utilidad/54-01-SUMMARY.md
   - .planning/phases/54-paginas-de-conversion-y-utilidad/54-02-PLAN.md
@@ -149,57 +143,55 @@ covered_files:
   - src/payload-types.ts
   - src/payload.config.ts
   - src/theme/theme.ts
-covered_digest: "v1:sha256:0fc13c40065724110a2b904cb61e57bf632d2f10711351e65df01340aa189731"
+covered_digest: "v4:sha256:bcaea0d5873962cdfab1b4dfb64a261181c0a4440b238cb8ccdd9d8c0a5337a0"
 behavior_unverified: 1
 overrides_applied: 0
-gaps:
-  - truth: "La home muestra todas sus secciones con datos de Pages y globals (ROADMAP SC1, PAG-01)"
-    status: partial
-    reason: "El HTML en vivo de la home (ES y EN) no contiene las secciones Casos ('Resultados en Search Console', id casos) ni Sitios ('Sitios web que construí', id sitios), aunque el texto de ambas está sembrado en el global home-page y el código las renderiza con datos. Las dos son condicionales (sin ítems devuelven null) y se alimentan de featured-content (featuredCaseStudies con heroMetric, featuredWebsites). Hoy no llegan ítems. 54-16 nunca comprobó su presencia y la batería en vivo no tiene ninguna comprobación sobre ellas, por eso 13/13 no lo detecta."
-    artifacts:
-      - path: "src/lib/home-data-b.ts"
-        issue: "assembleCases y assembleSites devuelven null con cero ítems; mapFeaturedCases omite entradas sin heroMetric; readHomeSites devuelve [] sin featuredWebsites"
-      - path: "src/components/home/HomeView.tsx"
-        issue: "Casos y Sitios solo se pintan si b.cases y b.sites existen; en el preview ambos son null"
-    missing:
-      - "Poblar featured-content en el admin real: hasta 3 featuredCaseStudies con heroMetric y hasta 5 featuredWebsites publicados, en ES y en EN si el global es localizado (acción de contenido de Juan; el verificador no escribe en la base)"
-      - "Confirmar con los logs del contenedor del preview que no hay líneas '[home]' de error de lectura en featured-content o websites, para descartar un permiso del rol juantech_preview_ro como causa"
-      - "Agregar a 54-page-contract.mjs o a 54-run-all --live la exigencia de #casos y #sitios en la home, para que la batería falle si vuelven a desaparecer"
+re_verification:
+  previous_status: gaps_found
+  previous_score: 3/5
+  gaps_closed:
+    - "La home muestra las secciones Casos y Sitios en ES y EN (respaldo D-26 de 55-08 en src/lib/home-data-b.ts)"
+    - "Texto ES de los bloques content de seo-technical-audit, seo-consulting y ai-seo-geo restaurado en la base de produccion el 2026-11-17 (causa: el script SEO 31 borro los ids de columna en la pasada EN). 54-index-ssr 44 PASS"
+    - "Que incluye ya no anida listas: commit 1ef3cc4 reparte cada listitem de un nodo list como item propio. HTML vivo ES y EN de seo-technical-audit: #incluye con 1 ul y 5 li. 54-service-ssr 47 PASS, 54-service-slots 14 PASS (AUDIT_SEQUENCE con los dos prose de pilares)"
+  gaps_remaining: []
+  regressions: []
+deferred:
+  - truth: "La foto de /en/sobre-mi tiene alt no vacio (54-about.mjs FAIL solo en esa ruta)"
+    addressed_in: "Phase 57"
+    evidence: "D-02 aceptado: el alt EN de Media id 76 lo carga el cargador del corte de la fase 57"
+  - truth: "La columna Te sirve si del indice de servicios muestra el primer H2 del bloque de por que ('Por que tu trafico baja y nadie sabe explicarlo'), que se lee forzado como respuesta a 'Te sirve si'"
+    addressed_in: "Phase 57"
+    evidence: "Pulido de copy y presentacion indicado por el coordinador el 2026-11-17; no es un gap de la fase 54"
 behavior_unverified_items:
   - truth: "Juan edita un campo en el admin y el cambio aparece en la home sin datos hardcodeados (ROADMAP SC1)"
-    test: "En el admin real, editar el título de un servicio, un testimonio o un cliente (campo que master ya conoce), guardar, y recargar https://dev.juan-tech.com a los 60 y 120 s sin redeploy. Restaurar el valor"
-    expected: "El preview muestra el valor nuevo en 2 minutos como máximo"
-    why_human: "revalidateTag corre en el proceso de producción y no invalida la caché del proceso del preview; el cambio llega por el TTL de 60 s más el ISR de la página. Ninguna prueba ejercita esa cadena y escribir en producción queda fuera del alcance del verificador"
+    test: "En el admin real, editar un campo que la home lee (titulo de servicio, testimonio o cliente), guardar y recargar https://dev.juan-tech.com a los 60 y 120 s sin redeploy. Restaurar el valor"
+    expected: "El preview muestra el valor nuevo en 2 minutos como maximo"
+    why_human: "revalidateTag corre en el proceso de produccion; al preview el cambio llega por TTL de 60 s mas ISR. Ninguna prueba ejercita esa cadena y el verificador no escribe en la base"
 human_verification:
-  - test: "Revalidación admin a preview de la home (ver behavior_unverified_items)"
+  - test: "Revalidacion admin a preview de la home (ver behavior_unverified_items)"
     expected: "El cambio aparece en menos de 2 minutos, sin redeploy"
-    why_human: "Cadena TTL más ISR entre dos procesos, requiere una escritura real"
-  - test: "Lectores de pantalla: NVDA con Firefox y VoiceOver con Safari sobre acordeones de FAQ, timeline de Sobre mí, formulario de Contacto (estados aria-live), índice lateral de Privacy y Terms y tabla comparativa de Servicios"
-    expected: "Landmarks con nombre propio, acordeones con estado expandido anunciado, timeline como lista legible, mensajes de éxito y error anunciados una sola vez, índice como navegación con nombre"
-    why_human: "Tecnologías de asistencia reales; Playwright no las prueba"
-  - test: "Revisión visual en el preview a 375, 900, 1024 y 1280 px y con zoom de 200 % (320 px equivalente)"
-    expected: "Sin desborde horizontal, tablas y collage de Sobre mí legibles, objetivos táctiles de 40, 44 y 56 px, contraste del texto secundario del nav sobre el blob más claro de cada hero, foco no tapado por el header en Servicios de la home, Stack y Legal"
-    why_human: "Fidelidad de diseño y contraste sobre fondo variable. La batería solo midió desborde y foco con Chromium"
-  - test: "Fidelidad frente al sandbox aprobado de las dos secciones que hoy no se ven (Casos y Sitios) una vez poblado featured-content"
-    expected: "Tarjetas de cifra sobre la franja band y tarjetas de sitio con anillos de puntaje, sin anillos con puntaje nulo"
-    why_human: "Depende de que Juan pueble el contenido; el aspecto no se puede probar antes"
-  - test: "Revisar el copy EN sin aprobar de los namespaces common, home, services, about, contact, stack y legal, y las claves nuevas listadas en 54-16-SUMMARY"
+    why_human: "Cadena TTL mas ISR entre dos procesos, requiere una escritura real"
+  - test: "Lectores de pantalla: NVDA con Firefox y VoiceOver con Safari sobre FAQ, timeline de Sobre mi, formulario de Contacto, indice de Privacy y Terms y tabla de Servicios"
+    expected: "Landmarks con nombre, estados de acordeon anunciados, timeline legible como lista, mensajes del formulario anunciados una sola vez"
+    why_human: "Tecnologias de asistencia reales; ya asignado al gate de calidad de la fase 57"
+  - test: "Revision visual del preview a 375, 900, 1024 y 1280 px y con zoom de 200 %"
+    expected: "Sin desborde, objetivos tactiles correctos, contraste del nav sobre el blob claro, foco no tapado por el header"
+    why_human: "Fidelidad de diseno y contraste sobre fondo variable; ya asignado al gate de la fase 57"
+  - test: "Revisar el copy EN sin aprobar de los namespaces nuevos de la fase"
     expected: "Juan aprueba o corrige cada cadena"
-    why_human: "Decisión editorial de Juan (traducción literal hecha por el planificador)"
+    why_human: "Decision editorial de Juan"
 ---
 
 # Phase 54: Páginas de conversión y utilidad, Verification Report
 
 **Phase Goal:** Juan recorre en el preview, en EN y ES, las páginas que convierten y las de utilidad (home, servicios, landings locales, búsqueda, sobre mí, contacto, stack, legales y 404) con el diseño MUI y datos de Payload.
-**Verified:** 2026-11-09
-**Status:** gaps_found
-**Re-verification:** No, verificación inicial (no existía VERIFICATION.md previo)
+**Verified:** 2026-11-17T16:52:11Z
+**Status:** human_needed
+**Re-verification:** Sí, tercera pasada del día. Se cerraron los dos gaps encontrados hoy: el coordinador restauró el texto ES en la base y corrigió las listas anidadas en el commit 1ef3cc4, ya desplegado en el preview.
 
 ## Resumen
 
-El objetivo se cumple en casi todo lo observable. Las 30 rutas responden, el SEO (title, description, canonical, hreflang, ld+json) iguala a producción en las rutas muestreadas, la 404 devuelve estado real dentro del shell, no hay datos del sandbox ni marcadores de deuda, y la migración es solo aditiva. La batería `--live` pasó 13/13 y `--selftests` 33/33 en esta sesión, con `tsc --noEmit` limpio.
-
-Hay un hueco real que la batería no ve: la home servida **no muestra las secciones Casos y Sitios** (ni en ES ni en EN). El criterio 1 del ROADMAP dice "todas sus secciones". La causa más probable es de contenido (featured-content sin ítems poblados), pero el verificador no puede leer la base ni los logs del preview, así que no descarta un fallo de lectura. Por eso el estado es `gaps_found` y no `human_needed`.
+No quedan gaps. La batería completa de autopruebas pasa (33 de 33), `tsc` no da errores y los verificadores en vivo (solo GET) pasan contra https://dev.juan-tech.com. Lo único que falla es el alt EN de la foto de `/en/sobre-mi`, que está diferido a la fase 57 por diseño (D-02). El estado es `human_needed` y no `passed` porque nadie probó todavía que una edición en el admin llegue a la home del preview, y quedan las revisiones humanas que ya pasaron al gate de la fase 57.
 
 ## Goal Achievement
 
@@ -207,135 +199,119 @@ Hay un hueco real que la batería no ve: la home servida **no muestra las seccio
 
 | # | Truth | Status | Evidence |
 |---|-------|--------|----------|
-| 1 | La home muestra todas sus secciones con datos de Pages y globals; Juan edita un campo y el cambio aparece, sin datos hardcodeados del sandbox | FAILED (parcial) | **Presentes en vivo (ES y EN):** hero (h1), marquesina de clientes, Vitals, errores reales, Servicios, auditor, Proceso, Sobre mí, Testimonios (Patricia Ibarra, Estylopia, dato real), oferta de auditoría, FAQ y cierre. **Ausentes:** Casos y Sitios. `grep` de "Resultados en Search Console" y "Sitios web que construí" en el HTML en vivo: 0 coincidencias (también con cache-buster). Los ids del HTML no incluyen `casos` ni `sitios`. Producción tampoco los muestra. `HomeView` los pinta solo si `b.cases`/`b.sites` no son null y esos devuelven null sin ítems. El copy de ambas ya está en `54-home-copy.ts`. La mitad "el cambio aparece tras editar" va como PRESENT_BEHAVIOR_UNVERIFIED (ver Human Verification). Sin sandbox: `54-no-sandbox-data` PASS (sin importaciones de `designs` ni `@/data`, sin `/img/` ni `/logos/` huérfanos, sin `{{ }}`) y 0 `lorem` en las 19 páginas descargadas. |
-| 2 | Índice de servicios, cuatro landings, Lima, Madrid y búsqueda en MUI desde Payload bajo las URLs duales; la búsqueda devuelve resultados reales | VERIFIED | En vivo 200: `/servicios`, `/services`, `/en/services`, `/en/servicios`, las cuatro landings (`seo-technical-audit`, `ai-seo-geo`, `seo-consulting`, `fullstack-development`) y sus variantes `/services/...` y `/en/services/...`, `/seo-tecnico-lima`, `/seo-tecnico-madrid`. Cada una con un h1 y noindex de preview. Paridad con producción en title, canonical, 3 hreflang y número de bloques ld+json: idénticos en `/servicios/seo-technical-audit` (4 bloques), `/seo-tecnico-lima` (2). `/search?q=seo` trae 34 enlaces a blog y casos reales; `/search?q=zzzxqqq` muestra "Sin resultados para ..." y `noindex, follow` igual que producción. `54-dual-urls` (24), `54-search` (9), `54-page-contract` (60 PASS, 0 FAIL) PASS en esta sesión. `/buscar` da 404 en preview y producción (no es una URL real). |
-| 3 | Sobre mí muestra timeline y foto nueva desde Payload; migración solo aditiva; no aparece en el sitio live antes del corte | VERIFIED | `/sobre-mi` y `/en/sobre-mi` 200 con `MuiTimeline*` y foto `p54-about-hero` (alt descriptivo) servida desde Cloudinary. Producción: `/sobre-mi` 404 y 0 entradas en su sitemap; preview sin sitemap (404). Migración `20261108_043335_phase54_shadow_content.ts`: solo `CREATE TABLE`/`ADD COLUMN` (32 sentencias) y cláusulas `ON DELETE cascade` de claves foráneas nuevas; ningún `DROP`, `TRUNCATE`, `DELETE` ni `ALTER COLUMN` en `up`. Colección Clientes: solo `onDark` (checkbox con default). `54-migration-additive` y `54-about` PASS. La fecha `{{pendiente}} fecha del cambio de nombre` se renderiza a propósito (aceptada, fase 56). |
-| 4 | Contacto conserva Resend y honeypot con FAQ MUI (envío simulado en preview, aceptado); Stack con logos y enlaces `/go` con divulgación y `rel="sponsored"` | VERIFIED | `src/app/actions/contact.ts`: el honeypot `company_website` se evalúa en la línea 73 y descarta antes de validar; `payload.sendEmail` (Resend) sin cambios; el único agregado frente a master es la compuerta `isPreviewReadonly()` que va después de validar y antes de enviar. El formulario en vivo trae el input `company_website` con `tabindex="-1"`. FAQ presente (`54-faq-ssr` 12 rutas PASS). Stack: 9 herramientas con logo (los 9 `p54-stack-*` responden 200 desde Cloudinary), 6 enlaces `/go/...` todos con `rel="sponsored nofollow noopener"` (0 sin `sponsored`) y texto de divulgación "Afiliado de Amazon...". `54-stack-affiliate`, `54-contact-form` (sin enviar) PASS. El envío real queda para la fase 57 (desviación aceptada el 2026-11-08). El honeypot en acción no tiene prueba automática en esta fase; se verificó leyendo el código, que no cambió respecto a master. |
-| 5 | Privacy y Terms con índice lateral; URL inexistente muestra la 404 dentro del shell con estado 404 real | VERIFIED | `/privacy`, `/terms`, `/en/privacy` 200 con `<nav aria-label="En este documento">` junto al breadcrumb. `/nada-existe-xyz` y `/en/nada-existe-xyz` devuelven HTTP 404 con `<header>`, `<footer>`, h1 "Esta página no existe" y `noindex`. `54-notfound-status` y `54-legal-ssr` (62) PASS. |
+| 1 | La home muestra todas sus secciones con datos de Pages y globals; Juan edita un campo y el cambio aparece, sin datos del sandbox | ⚠️ PRESENT_BEHAVIOR_UNVERIFIED | HTML en vivo ES y EN: los 14 ids de sección, incluidos `casos` y `sitios`. `home-data-b.ts` cae a `payload.find` sobre `case-studies` y `websites` con `overrideAccess: false` (D-26). `54-home-ssr` 57 PASS, `54-home-b-ssr` 133 PASS, `54-no-sandbox-data` PASS. La edición en el admin sigue sin prueba. |
+| 2 | Índice de servicios, cuatro landings, Lima, Madrid y búsqueda en MUI desde Payload bajo URLs duales; búsqueda con resultados reales | ✓ VERIFIED | `54-page-contract` 60 PASS, 0 FAIL en 30 rutas con paridad de SEO contra producción. `54-dual-urls` y `54-search` PASS. `54-index-ssr` 44 PASS, con texto en las 4 filas de la tabla ES y EN. `54-service-ssr` 47 PASS, `54-service-slots` 14 PASS. En vivo, `#incluye` de seo-technical-audit tiene 1 `ul` y 5 `li` en ES y EN. |
+| 3 | Sobre mí con timeline y foto nueva desde Payload; migración solo aditiva; fuera del live antes del corte | ✓ VERIFIED | `54-about`: `/sobre-mi` PASS, sitemap de producción sin `/sobre-mi`, sin desborde a 320 px. Único FAIL: alt vacío en `/en/sobre-mi`, diferido a la fase 57. `54-about-ssr` 76 PASS, `54-migration-additive` PASS. |
+| 4 | Contacto con Resend y honeypot y FAQ MUI; Stack con logos y `/go` con divulgación y `rel="sponsored"` | ✓ VERIFIED | `/contact` en vivo trae `name="company_website"`. `/stack`: 6 enlaces `/go/`, 6 con `sponsored`, divulgación visible. `54-contact-ssr` 51 PASS, `54-stack-ssr` 50 PASS, `56-cta-live` 14 rutas PASS. |
+| 5 | Privacy y Terms con índice lateral; URL inexistente con 404 real dentro del shell | ✓ VERIFIED | `/privacy` con `<nav aria-label="En este documento">`. `56-legal-live` 4 PASS, `54-legal-ssr` 62 PASS, `54-notfound-status` PASS; `/nada-xyz` 404 con header, footer y h1 propio. |
 
-**Score:** 4/5 verdades verificadas (1 presente-pero-comportamiento-no-ejercitado dentro de la verdad 1)
+**Score:** 4/5 verdades verificadas (1 presente, con el comportamiento sin ejercitar)
+
+### Deferred Items
+
+| # | Item | Addressed In | Evidence |
+|---|------|-------------|----------|
+| 1 | Alt EN vacío de la foto de `/en/sobre-mi` (Media id 76) | Phase 57 | D-02: el cargador del corte llena el alt EN |
+| 2 | "Te sirve si" muestra el primer H2 del bloque de por qué ("Por qué tu tráfico baja y nadie sabe explicarlo"), que se lee forzado | Phase 57 | Pulido de copy y presentación, no es gap de la 54 |
+
+### Advisory (New Scope, Unevidenced)
+
+| # | Finding | Category | Why Advisory |
+|---|---------|----------|--------------|
+| 1 | En `/en` el footer muestra encabezados en español ("Sitio", "Contacto", "Guías clave", "Últimos casos de éxito") | other | Shell de la fase 53 y global del footer; sin prueba que lo exija |
+| 2 | `splitColumn` (1ef3cc4) pasa los hijos de cada `listitem` a un párrafo: una sublista dentro de un ítem perdería su anidación | other | Ningún doc actual tiene sublistas; sin evidencia de impacto |
 
 ### Required Artifacts
 
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
-| `src/globals/HomePage`, `src/globals/AboutPage` | Esquema sombra aditivo | VERIFIED | Registrados en `payload.config.ts`; migración aditiva; leídos en vivo (la home sirve el copy sembrado) |
-| `src/lib/home-data.ts`, `home-data-b.ts` | Lectores sin 500 | VERIFIED | Nunca lanzan; `getHomeTestimonials` ya no cachea el fallo (WR-05) |
-| `src/components/home/*` | 13 secciones | VERIFIED con hueco | Casos y Sitios existen y se prueban con fixtures, pero no reciben datos en vivo |
-| `src/components/pages/*`, `src/components/mui/*` | Vistas MUI | VERIFIED | Sin stubs, sin marcadores de deuda; `RichTextLink` ('use client') corrige el límite RSC (CR-01), `54-rsc-boundary` PASS |
-| `src/migrations/20261108_043335_phase54_shadow_content.ts` | Migración aditiva | VERIFIED | Ver verdad 3 |
-| `scripts/verify/54-*.{mjs,ts}` | Batería | VERIFIED | `--selftests` 33/33, `--live` 13/13 |
+| `src/lib/home-data-b.ts` | Casos y Sitios con datos | ✓ VERIFIED | Respaldo D-26, secciones visibles en vivo |
+| `src/components/home/*` | 14 secciones | ✓ VERIFIED | SSR y HTML en vivo |
+| `src/components/pages/ServicesIndexView.tsx` | Tabla comparativa completa | ✓ VERIFIED | 4 filas con las 3 celdas. Sin respaldo si `fitsIf` llega `null` (Info) |
+| `src/components/pages/service/column-parts.ts` | Columnas repartidas en ítems | ✓ VERIFIED | Un `listitem` por ítem (1ef3cc4) |
+| `src/lib/service-slots.ts` | Ranuras por bloque | ✓ VERIFIED | Secuencia de pilares aceptada |
+| `src/migrations/20261108_043335_phase54_shadow_content.ts` | Aditiva | ✓ VERIFIED | `54-migration-additive` PASS |
+| `scripts/verify/54-*` | Batería | ✓ VERIFIED | `--selftests` 33 PASS, 0 FAIL |
 
 ### Key Link Verification
 
 | From | To | Via | Status | Details |
 |------|----|-----|--------|---------|
-| `page.tsx` (home) | `HomeView` | `getHomeData` y `getHomeSectionsB` | WIRED | Servicios, Vitals, Proceso, About, Testimonios y FAQ llegan con datos de Payload |
-| `HomeView` | Casos y Sitios | `data.sectionsB.cases` y `.sites` | NOT_WIRED en vivo | Cableado en código, null en datos |
-| `ContactForm` | `actions/contact.ts` | server action con honeypot y Resend | WIRED | Campo `company_website` en el HTML, acción sin cambios |
-| Stack | `/go/[slug]` | enlaces con `rel` sponsored | WIRED | 6 de 6 con `sponsored` |
-| `generateMetadata` de Contacto y landings locales | lecturas cacheadas con `overrideAccess: false` | WR-04 | WIRED | Title, canonical y hreflang idénticos a producción |
+| `HomeView` | Casos y Sitios | `getHomeSectionsB` con respaldo D-26 | WIRED | Ids `casos` y `sitios` en ES y EN |
+| `ServicesIndexView` | docs `pages` de servicios | `services-index-data.ts` | WIRED | Texto en las 4 filas ES y EN |
+| `ServiceIncludes` | columna de `content` | `splitColumn` | WIRED | 1 `ul`, 5 `li` en vivo |
+| `ContactForm` | `actions/contact.ts` | honeypot y Resend | WIRED | Campo en el HTML vivo |
+| Stack | `/go/[slug]` | `rel` sponsored | WIRED | 6 de 6 |
 
 ### Data-Flow Trace (Level 4)
 
 | Artifact | Data Variable | Source | Produces Real Data | Status |
 |----------|---------------|--------|--------------------|--------|
-| `Cases` | `cases.items` | `featured-content.featuredCaseStudies` | No: llega vacío al preview | HOLLOW (sección omitida) |
-| `Sites` | `sites.items` | `featured-content.featuredWebsites` y `websites` | No: llega vacío al preview | HOLLOW (sección omitida) |
-| `Testimonials` | `testimonials.items` | colección `testimonials` | Sí (1 real) | FLOWING |
-| `LogoMarquee` | `clients.logos` | `clientes` | Sí | FLOWING |
-| `StackView` | tools y logos | global de stack y `media` | Sí (9 logos 200) | FLOWING |
-| `AboutView` | timeline y foto | global `about-page` | Sí | FLOWING |
+| `Cases` | `cases.items` | `featured-content` o `case-studies` recientes | Sí | ✓ FLOWING |
+| `Sites` | `sites.items` | `featured-content` o `websites` recientes | Sí | ✓ FLOWING |
+| `ServicesIndexView` | `rows[].fitsIf` | primer heading del bloque problema | Sí, ES y EN | ✓ FLOWING |
+| `ServiceDetailPage` | secciones `content` | `pages.content.layout` | Sí, ES y EN | ✓ FLOWING |
+| `StackView` | herramientas y logos | global stack y media | Sí | ✓ FLOWING |
 
-### Behavioral Spot-Checks (ejecutados en esta sesión)
+### Behavioral Spot-Checks
 
 | Behavior | Command | Result | Status |
 |----------|---------|--------|--------|
-| Autopruebas sin preview | `node scripts/verify/54-run-all.mjs --selftests` | 33 pasos PASS, 0 FAIL | PASS |
-| Batería en vivo | `BASE_URL=https://dev.juan-tech.com PROD_BASE=https://juan-tech.com EXPECT_PREVIEW=1 REQUIRE_BUTTON=1 node scripts/verify/54-run-all.mjs --live --no-wait` | 13 pasos PASS, 0 FAIL | PASS |
-| Tipos | `npx tsc --noEmit` | Sin errores | PASS |
-| Estado de 18 rutas y 404 | `curl -s -o /dev/null -w "%{http_code}"` | 200 en las existentes, 404 en inexistentes | PASS |
-| Paridad de head | `curl` de title, canonical, hreflang y ld+json, preview contra producción | Idénticos en 5 rutas muestreadas | PASS |
-| Casos y Sitios en la home | `grep` del HTML en vivo | 0 coincidencias | FAIL |
-| SHA desplegado | `git rev-parse HEAD origin/feat/mui-redesign` | Ambos `fd9f03a`, el SHA que el solicitante indica desplegado en el preview | PASS |
+| Autopruebas | `node scripts/verify/54-run-all.mjs --selftests` | 33 PASS, 0 FAIL | PASS |
+| Ranuras, landings e índice | `node_modules/.bin/tsx scripts/verify/54-service-slots.ts`, `54-service-ssr.ts`, `54-index-ssr.ts` | 14, 47 y 44 PASS, 0 FAIL | PASS |
+| Tipos | `npx tsc --noEmit` | sin errores | PASS |
+| Contrato y paridad | `BASE_URL=https://dev.juan-tech.com PROD_BASE=https://juan-tech.com EXPECT_PREVIEW=1 node scripts/verify/54-page-contract.mjs` | 60 PASS, 0 FAIL, 40 WARN (encabezados con coma) | PASS |
+| URLs duales, búsqueda, 404 | `54-dual-urls`, `54-search`, `54-notfound-status` (mismo entorno) | salida 0 | PASS |
+| Sobre mí | `54-about.mjs` | 1 FAIL, solo el alt de `/en/sobre-mi` (diferido) | PASS con diferido |
+| Marcadores, CTAs, legales | `56-no-marker-live`, `56-cta-live` (14 rutas), `56-legal-live` (4 rutas) | salida 0 | PASS |
+| Lista de "Qué incluye" en vivo | `curl` de `#incluye` en ES y EN | 1 `ul`, 5 `li` | PASS |
+
+No corrí `54-run-all --live` porque incluye `write-gates` y la consigna limita el preview a GET.
 
 ### Probe Execution
 
-SKIPPED: la fase no declara probes `scripts/*/tests/probe-*.sh`. La batería `54-*` ya se ejecutó arriba.
+SKIPPED: la fase no declara probes `scripts/*/tests/probe-*.sh`.
 
 ### Requirements Coverage
 
 | Requirement | Source Plan | Description | Status | Evidence |
 |-------------|------------|-------------|--------|----------|
-| PAG-01 | 54-08, 54-14, 54-16 | La home muestra todas sus secciones con datos de Pages y globals | BLOCKED (parcial) | Faltan Casos y Sitios en vivo; ver gap. Más la revalidación sin probar |
-| PAG-02 | 54-09, 54-15, 54-16 | Servicios (índice y detalle) desde Payload | SATISFIED | Verdad 2 |
-| PAG-06 | 54-02, 54-04, 54-13 | Sobre mí con timeline y foto desde Payload, migración aditiva | SATISFIED | Verdad 3. Queda la fecha pendiente aceptada (fase 56) |
-| PAG-07 | 54-12 | Contacto con formulario (Resend, honeypot) y FAQ en MUI | SATISFIED | Verdad 4. Envío real en la fase 57 (aceptado) |
-| PAG-08 | 54-04, 54-12 | Stack con logos y enlaces `/go` con divulgación | SATISFIED | Verdad 4 |
-| PAG-09 | 54-10 | Privacy y Terms con índice lateral | SATISFIED | Verdad 5 |
-| PAG-11 | 54-01 | 404 dentro del shell con estado real | SATISFIED | Verdad 5 (ya estaba marcado) |
-| PAG-12 | 54-11, 54-15 | Landings Lima y Madrid y búsqueda en MUI | SATISFIED | Verdad 2 |
+| PAG-01 | 54-08, 54-14, 54-16 | Home con todas sus secciones desde Payload | ? NEEDS HUMAN | Secciones completas; falta la prueba de edición a preview |
+| PAG-02 | 54-09, 54-15, 54-16 | Servicios (índice y detalle) desde Payload | ✓ SATISFIED | Verdad 2 |
+| PAG-06 | 54-02, 54-04, 54-13 | Sobre mí | ✓ SATISFIED | Verdad 3 (alt EN diferido) |
+| PAG-07 | 54-12 | Contacto | ✓ SATISFIED | Verdad 4 |
+| PAG-08 | 54-04, 54-12 | Stack | ✓ SATISFIED | Verdad 4 |
+| PAG-09 | 54-10 | Privacy y Terms con índice | ✓ SATISFIED | Verdad 5 |
+| PAG-11 | 54-01 | 404 real | ✓ SATISFIED | Verdad 5 |
+| PAG-12 | 54-11, 54-15 | Lima, Madrid y búsqueda | ✓ SATISFIED | Verdad 2 |
 
-Sin requisitos huérfanos: REQUIREMENTS.md mapea exactamente PAG-01, 02, 06, 07, 08, 09, 11 y 12 a la Phase 54 y coinciden con el campo `Requirements` del ROADMAP. Los checkboxes de PAG-02, 06, 07, 08, 09 y 12 pasan a `[x]` con esta verificación; PAG-01 queda `[ ]`. Los pendientes humanos (lectores de pantalla y revisión visual) son transversales y no cambian el veredicto automatizado de cada requisito.
+Sin requisitos huérfanos.
 
 ### Anti-Patterns Found
 
 | File | Line | Pattern | Severity | Impact |
 |------|------|---------|----------|--------|
-| Archivos de la fase (`src`, `scripts/verify`, `scripts/db`) | n/a | `TBD`, `FIXME`, `XXX`, `TODO`, `HACK`, `PLACEHOLDER` | OK | Ninguno encontrado |
-| `scripts/verify/54-run-all.mjs`, `54-page-contract.mjs` | n/a | Ninguna comprobación exige las secciones Casos y Sitios en la home | Warning | Es la razón por la que 13/13 convive con el hueco |
-| Hallazgos Info del review (IN-01 a IN-09) | n/a | Copiar correo duplicado, formulario pierde el mensaje al fallar, `key` duplicable en StackView, cadenas fijas fuera de `messages`, lecturas cacheadas sin tag, scripts de DB, `limit ?? 8`, listas sin `role="list"`, `Section` con `aria-labelledby` frágil | Info | Abiertos, sin bloquear. IN-08 conviene revisarlo con VoiceOver |
-| `package.json` | 20 | `@mui/lab` en beta | Info | Aceptado |
+| Archivos cubiertos | n/a | `TBD`, `FIXME`, `XXX` | OK | Ninguno |
+| `src/components/pages/ServicesIndexView.tsx` | 176 | Celda sin respaldo para `null` | ℹ️ Info | Hoy no se ve; volvería a verse si un doc pierde su texto |
 
 ### Human Verification Required
 
-#### 1. Revalidación admin a preview de la home
+1. **Revalidación admin a preview de la home.** Editar un campo que la home lee, recargar a los 60 y 120 s y restaurar. Esperado: el cambio aparece en 2 minutos o menos.
+2. **Lectores de pantalla** (NVDA con Firefox, VoiceOver con Safari) sobre FAQ, timeline, formulario de Contacto, índice legal y tabla de Servicios.
+3. **Revisión visual** a 375, 900, 1024 y 1280 px y zoom 200 %.
+4. **Copy EN sin aprobar** de los namespaces nuevos.
 
-**Test:** Editar en el admin real el título de un servicio, un testimonio o un cliente, guardar, y recargar el preview a los 60 y 120 s sin redeploy. Restaurar.
-**Expected:** El valor nuevo aparece en 2 minutos como máximo.
-**Why human:** `revalidateTag` no cruza procesos; la propagación es TTL de 60 s más ISR y requiere una escritura real.
-
-#### 2. Lectores de pantalla
-
-**Test:** NVDA con Firefox y VoiceOver con Safari sobre acordeones, timeline de Sobre mí, formulario de Contacto, índice de Privacy y Terms y tabla de Servicios.
-**Expected:** Estados anunciados correctamente y una sola vez, landmarks con nombre.
-**Why human:** Tecnologías de asistencia reales.
-
-#### 3. Revisión visual y zoom
-
-**Test:** Recorrer el preview a 375, 900, 1024 y 1280 px y a 200 % de zoom.
-**Expected:** Sin desborde, objetivos táctiles correctos, contraste del nav sobre el blob claro, foco no tapado.
-**Why human:** Fidelidad de diseño y contraste sobre fondo variable.
-
-#### 4. Casos y Sitios tras poblar featured-content
-
-**Test:** Después de cerrar el gap, revisar las dos secciones frente al sandbox.
-**Expected:** Tarjetas de cifra y tarjetas de sitio fieles al diseño.
-**Why human:** Depende de contenido que solo Juan puede cargar.
-
-#### 5. Copy EN sin aprobar
-
-**Test:** Revisar las traducciones literales de los namespaces nuevos y el EN de las secciones sombra de la home y Sobre mí.
-**Expected:** Aprobación o corrección de Juan.
-**Why human:** Decisión editorial. En `/en` las secciones sombra de home y Sobre mí sirven español por fallback con aviso de traducción (aceptado, fases 56 y 57).
+Los ítems 2 a 4 ya están en el gate de calidad de la fase 57.
 
 ### Gaps Summary
 
-Un solo hueco bloquea el cierre: la home no muestra Casos ni Sitios. El código, el copy sembrado y las autopruebas existen, pero en el preview ambas secciones llegan sin ítems y se omiten en silencio. Es probable que baste con poblar `featured-content` (hasta 3 casos con `heroMetric` y hasta 5 sitios publicados) desde el admin, una acción de contenido de Juan. Antes de darlo por cerrado hay que descartar que la causa sea un permiso de lectura del rol `juantech_preview_ro` sobre `featured_content*` o `websites`, mirando los logs `[home]` del contenedor. Cuando se cierre, conviene que la batería exija `#casos` y `#sitios`.
-
-Lo demás cumple. Quedan cinco comprobaciones humanas (revalidación, lectores de pantalla, revisión visual, fidelidad de Casos y Sitios, copy EN). Ninguna es un fallo conocido.
-
-Observaciones no bloqueantes:
-- Aceptados y no reportados como gap: excepciones de escala del diseño, `{{pendiente}}` de la fecha del cambio de nombre en Sobre mí, secciones sombra EN en español, `@mui/lab` beta y `global-not-found` experimental.
-- Los nueve hallazgos Info del review siguen abiertos.
-- Una comprobación en vivo de CR-01 está cubierta: `/privacy`, `/terms` y las cuatro landings responden 200 con enlaces internos en el cuerpo.
-- `54-run-all --live` informa 13 pasos (la espera `--wait` se omitió con `--no-wait`); la corrida de 54-16 reportaba 14 al incluirla.
+No quedan gaps. Hoy se cerraron tres: Casos y Sitios en la home, el texto ES de las tres landings de servicio y la lista anidada de "Qué incluye". Dos ítems pasan a la fase 57: el alt EN de la foto de Sobre mí y el pulido de la columna "Te sirve si". La fase espera la verificación humana de la revalidación desde el admin.
 
 ---
 
-_Verified: 2026-11-09_
+_Verified: 2026-11-17T16:52:11Z_
 _Verifier: Claude (gsd-verifier)_
 
-## Cierre autónomo
+## Validación humana (2026-11-17)
 
-Las cinco comprobaciones humanas (revalidación admin a preview, NVDA y VoiceOver, revisión visual a 375, 900, 1024 y 1280 px con zoom 200 por ciento, fidelidad de Casos y Sitios, aprobación del copy EN) pasan al gate de calidad de la fase 57. Juan pidió seguir sin validar manualmente en la fase 53 y este cierre aplica el mismo criterio. PAG-01 sigue Pending hasta que Casos y Sitios aparezcan en el preview.
+El único ítem human_needed (probar a mano que una edición del admin llega a la home del preview) es del mismo tipo que los de 53 y 55, que Juan aceptó con "acepto todo lo que esta". Se registra igual; la fase 57 (SC2) cubre la revalidación con prueba.
