@@ -1,6 +1,7 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 import createNextIntlPlugin from 'next-intl/plugin'
 
+import { withoutPublicClientHints } from './src/lib/client-hint-headers.mjs'
 import { parsePreviewFlag } from './src/lib/preview-flag.mjs'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
@@ -17,6 +18,9 @@ const isPreview = parsePreviewFlag(process.env.PREVIEW_READONLY)
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  // Fase 57 (D-04 F13): sin `x-powered-by`. `withPayload` solo agrega su
+  // `x-powered-by: Next.js, Payload` cuando esto no esta en false.
+  poweredByHeader: false,
   // Fase 54 (PAG-11): habilita `src/app/global-not-found.tsx`, la unica 404 que
   // Next 15.4 renderiza completa en el servidor (header, footer y h1 dentro del
   // HTML). Ver el comentario de ese archivo. Es experimental en 15.4: si una
@@ -147,4 +151,8 @@ const nextConfig = {
   },
 }
 
-export default withPayload(withNextIntl(nextConfig))
+// Fase 57 (D-04 F2, decision 14): la pista de tema de Payload (Accept-CH, Vary y
+// Critical-CH con Sec-CH-Prefers-Color-Scheme) sale del sitio publico y queda
+// solo en /admin/:path*. Ver src/lib/client-hint-headers.mjs y
+// scripts/verify/57-headers-check.mjs.
+export default withoutPublicClientHints(withPayload(withNextIntl(nextConfig)))
