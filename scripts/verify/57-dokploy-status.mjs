@@ -34,6 +34,9 @@ import { join } from 'node:path'
 const PROJECT = 'juantech'
 const APPS = { web: 'web', preview: 'juantech-preview' }
 const POLL_MS = 20_000
+// La API de Dokploy responde lento mientras el VPS compila: sin plazo, una consulta colgada
+// bloquea el gate sin veredicto.
+const REQUEST_TIMEOUT_MS = 45_000
 const CRASH_WINDOW_MIN = 10
 const CRASH_MIN_EXITS = 3
 
@@ -124,6 +127,7 @@ export function makeClient({ url, token, fetchImpl = fetch }) {
     const res = await fetchImpl(`${base}/api/${procedure}${qs ? `?${qs}` : ''}`, {
       method: 'GET',
       headers: { 'x-api-key': token, accept: 'application/json' },
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     })
     if (!res.ok) throw new Error(`${procedure} respondio ${res.status}`)
     return res.json()
@@ -221,7 +225,16 @@ async function main(argv) {
     try {
       r = await readStatus(get, appLabel, appLabel === 'preview' ? creds.previewAppId : undefined)
     } catch (error) {
-      console.error(redact(`FAIL ${error instanceof Error ? error.message : String(error)}`))
+      const code = error?.cause?.code ? ` (${error.cause.code})` : ''
+      const msg = `${error instanceof Error ? error.message : String(error)}${code}`
+      // Bajo la carga de un build, el propio servicio de Dokploy se reinicia y rechaza
+      // conexiones un rato. Con --wait se reintenta hasta el plazo; sin --wait, falla.
+      if (Date.now() + POLL_MS < deadline) {
+        console.error(redact(`espera: la API no responde (${msg}), vuelvo a consultar en ${POLL_MS / 1000} s`))
+        await new Promise((resolve) => setTimeout(resolve, POLL_MS))
+        continue
+      }
+      console.error(redact(`FAIL ${msg}`))
       return 1
     }
     if (r.code === 2 && Date.now() + POLL_MS < deadline) {
