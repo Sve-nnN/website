@@ -33,6 +33,17 @@ export function splitColumn(richText: unknown): ColumnParts {
       }
     }
     if (node.type === 'paragraph' && headingText(node).trim() === '') continue
+    // Una lista de Lexical aporta un item por linea: cada listitem pasa a ser un
+    // parrafo propio, asi la vista pinta un solo ul con un check por linea y no
+    // una lista anidada dentro de un unico item.
+    if (node.type === 'list') {
+      for (const li of (node as { children?: LexicalNodeLike[] }).children ?? []) {
+        const kids = (li as { children?: LexicalNodeLike[] }).children ?? []
+        const para = { type: 'paragraph', format: '', indent: 0, version: 1, direction: 'ltr', children: kids } as unknown as LexicalNodeLike
+        if (headingText(para).trim() !== '') items.push(para)
+      }
+      continue
+    }
     items.push(node)
   }
   return { title, items }

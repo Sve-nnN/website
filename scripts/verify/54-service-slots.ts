@@ -25,10 +25,12 @@ const AUDIT_SEQUENCE = [
   'problem',
   'cta',
   'twoColumns',
+  'prose', // precio y garantia (plan SEO de pilares, 2026-11-14)
   'auditor',
   'logos',
   'testimonials',
   'caseProof',
+  'prose', // guias para entender el informe (pilares)
   'faq',
   'cta:closing',
 ]
