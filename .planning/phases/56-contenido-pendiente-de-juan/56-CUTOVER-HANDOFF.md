@@ -148,3 +148,11 @@ Dry-run del cargador contra la base: pendiente del checkpoint de Juan (plan 56-1
 - Falta: el recorte de etapas de about-page (5 a 4) y la siembra de about-page, que esperan la frase de Juan, y los pasos 8 y 13 de 56-12 con el rol del preview.
 - El DRIFT en inglés de los 5 alt del simulacro es un artefacto de lectura (EN vacío contra respaldo con el ES por fallback), no un cambio real.
 - El contenido SEO (títulos, redirects, landings, footer) ya está en producción desde el 2026-11-14. Ver `feat/seo-pilares`: mergearla en la fase 57. El footer "Guías clave" ya está en la base: confirmar que el diseño nuevo lo renderiza.
+
+## Actualización 2026-11-16 (sombra completa y dev verificado)
+
+- Juan escribió `apruebo recortar etapas de about-page de 5 a 4`. Se sembró about-page ES y EN con `--allow-shrink-stages` (descartó `experience.stages[4]`, el coach de mar 2025, ya presente en la etapa 4 del copy aprobado).
+- Legal sombra (privacy y terms, ES y EN) sembrado. Dev servía el texto viejo por caché: se redesplegó `juantech-preview` y `56-legal-live` pasó 4 de 4.
+- Dev verificado contra el HTML servido: `56-no-marker-live`, `56-cta-live` (14 rutas), `56-legal-live`, `54-page-contract`, `53-shell-contract`, `53-crawl-parity` (166 URLs, 0 diferencias), `55-seo-parity` con `EXPECT_PREVIEW=1` (156 de 156). Logs del preview: 0 `permission denied`, que cubre la intención de los pasos 8 y 13.
+- Corrección: los 3 pasos del contacto se verifican en `/contact` (CTA_MAP), no en la home.
+- Falla esperada hasta el corte: `54-about` en `/en/sobre-mi`. La foto no sale porque el alt EN del Media `p54-about-hero` (id 76) está vacío y `mapPhoto` exige alt. Lo carga el cargador 28 (item `about-hero`). Tras el corte, repetir `54-about`.
