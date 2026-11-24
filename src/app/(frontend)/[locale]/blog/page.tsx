@@ -12,14 +12,30 @@ import {
   getCachedCategories,
   getCachedPageBySlug,
 } from '@/lib/cache'
-import { parseNewsletterNotice, toBlogIndexProps, toClosingProps } from '@/lib/blog-data'
+import { toBlogIndexProps, toClosingProps } from '@/lib/blog-data'
 import { resolveBlogPromo } from '@/lib/blog-promo'
 
-// Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
-// network access to shared-postgres -- force dynamic (request-time)
-// rendering here so `next build` never tries to query the DB during
-// static generation. See infra/apps/LESSONS-LEARNED.md.
-export const dynamic = 'force-dynamic'
+// Rendimiento: el indice respondia `cache-control: private, no-cache, no-store`
+// (TTFB de 4 a 10 s en la auditoria movil de 2026-11-24) por dos causas
+// encadenadas. `force-dynamic` estaba por una razon real: el build de Dokploy
+// corre en un contenedor sin red hacia shared-postgres, asi que cualquier
+// prerender en `next build` falla. Y la pagina leia `searchParams`
+// (`?newsletter=`) para el aviso de los enlaces del correo, lectura que
+// vuelve dinamica toda la ruta aunque `revalidate` este declarado.
+//
+// Ahora igual que el resto de rutas de contenido: ISR con `generateStaticParams`
+// vacio (el build no renderiza ni toca la base) y `dynamicParams` por defecto
+// (cada locale se renderiza en la primera visita y queda en la cache
+// incremental). El aviso de `?newsletter=` se lee en el cliente
+// (BlogNewsletterWithNotice, useSearchParams dentro de Suspense), asi que el
+// HTML no depende del parametro. NO volver a leer `searchParams` aqui: con
+// `revalidate` eso devuelve 500 (Pitfall 4 de 57-RESEARCH.md). La frescura sigue
+// en `revalidatePath` de los hooks de contenido (src/lib/cache-tags.ts).
+export const revalidate = 60
+
+export function generateStaticParams(): Array<{ locale: string }> {
+  return []
+}
 
 async function getBlogPage(locale: string) {
   // 43-02: delegates to the shared 43-01 cache fetcher — no explicit depth,
@@ -51,14 +67,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
-export default async function BlogPage({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ locale: string }>
-  searchParams: Promise<{ newsletter?: string | string[] }>
-}) {
-  const [{ locale }, { newsletter }] = await Promise.all([params, searchParams])
+export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
   const loc = locale as 'es' | 'en'
   const doc = await getBlogPage(locale)
 
@@ -87,7 +97,6 @@ export default async function BlogPage({
       <BlogIndexView
         {...props}
         crumbs={trail.map((c) => ({ label: c.label, href: c.url }))}
-        newsletterNotice={parseNewsletterNotice(newsletter)}
         closing={closing}
       />
     </>

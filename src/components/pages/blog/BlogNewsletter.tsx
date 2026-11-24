@@ -5,13 +5,13 @@ import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
 
 import { subscribeAction, type SubscribeState } from '@/app/actions/subscribe'
-import type { BlogNewsletterData, NewsletterNotice } from '@/lib/blog-data'
+import { parseNewsletterNotice, type BlogNewsletterData, type NewsletterNotice } from '@/lib/blog-data'
 
 type Props = {
   data: BlogNewsletterData
@@ -129,4 +129,22 @@ export function BlogNewsletter({ data, notice }: Props) {
       </Container>
     </Box>
   )
+}
+
+/**
+ * Lee `?newsletter=` en el cliente. Rendimiento: leer `searchParams` en la
+ * pagina del indice la volvia dinamica (`cache-control: private, no-cache,
+ * no-store`, TTFB de 4 a 10 s en la auditoria movil). Con la lectura aqui el
+ * HTML del servidor no depende del parametro y la ruta vuelve a la cache
+ * incremental. Mismo patron que `EmailCaptureState` en los posts.
+ *
+ * El servidor pinta el `fallback` del Suspense (formulario sin aviso, igual que
+ * una visita sin parametro), asi que el HTML cacheado es el mismo para todos.
+ * El valor pasa por `parseNewsletterNotice`: solo elige entre textos fijos y
+ * nunca se interpola. `forced` lo usan las pruebas SSR.
+ */
+export function BlogNewsletterWithNotice({ data, forced }: { data: BlogNewsletterData; forced?: NewsletterNotice | null }) {
+  const params = useSearchParams()
+  const notice = forced ?? parseNewsletterNotice(params?.get('newsletter') ?? undefined)
+  return <BlogNewsletter data={data} notice={notice} />
 }
