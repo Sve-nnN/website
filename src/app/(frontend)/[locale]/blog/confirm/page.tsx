@@ -99,7 +99,9 @@ export default async function BlogConfirmPage({
       <Container maxWidth={false} sx={{ maxWidth: 448, py: 8, textAlign: 'center' }}>
         {downloadUrl ? (
           <>
-            <Box component={CheckCircle} aria-hidden="true" sx={{ width: 48, height: 48, mx: 'auto', color: 'primary.main' }} />
+            <Box aria-hidden="true" sx={{ display: 'flex', justifyContent: 'center', color: 'primary.main' }}>
+              <CheckCircle size={48} />
+            </Box>
             <Typography variant="h4" component="h1" sx={{ mt: 2 }}>
               {c.successHeading}
             </Typography>
@@ -112,7 +114,9 @@ export default async function BlogConfirmPage({
           </>
         ) : (
           <>
-            <Box component={XCircle} aria-hidden="true" sx={{ width: 48, height: 48, mx: 'auto', color: 'error.main' }} />
+            <Box aria-hidden="true" sx={{ display: 'flex', justifyContent: 'center', color: 'error.main' }}>
+              <XCircle size={48} />
+            </Box>
             <Typography variant="h4" component="h1" sx={{ mt: 2 }}>
               {c.errorHeading}
             </Typography>
