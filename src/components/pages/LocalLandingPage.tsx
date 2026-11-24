@@ -12,7 +12,6 @@ import Container from '@mui/material/Container'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 
-import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { JsonLd } from '@/components/JsonLd'
 import { CtaSection } from '@/components/mui/CtaSection'
 import { FaqAccordion } from '@/components/mui/FaqAccordion'
@@ -28,6 +27,7 @@ import { resolveLinkHref, type NavLinkInput } from '@/lib/nav-links'
 import { omitPlaceholder } from '@/lib/placeholder'
 import { SITE_URL } from '@/lib/sitemap-data'
 import { buildLocalService } from '@/lib/site-schema'
+import { warnUnrenderedBlock } from '@/lib/unrendered-block'
 
 import { LocalHeroActions, LocalHeroStat, LocalProof, type LocalAction } from './LocalLanding'
 import { ServiceCtaBand } from './service/ServiceCtaBand'
@@ -136,8 +136,11 @@ export async function LocalLandingPage({ locale, slug }: { locale: Locale; slug:
           </ServiceCtaBand>
         )
       default:
-        // Bloques sin vista propia: el registro anterior, para no perder texto.
-        return <RenderBlocks key={key} blocks={[s.block]} />
+        // Bloque sin vista MUI: no se pinta y el servidor deja un aviso con su tipo.
+        // Antes caía en el registro viejo (RenderBlocks), que traía Tailwind de vuelta.
+        // El barrido de 57-02 confirmó que ninguna URL del sitio llega aquí (57-07, D-06).
+        warnUnrenderedBlock('LocalLandingPage', s.block.blockType)
+        return null
     }
   }
 

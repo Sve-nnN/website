@@ -13,7 +13,6 @@ import { notFound } from 'next/navigation'
 import { Fragment } from 'react'
 import { getTranslations } from 'next-intl/server'
 
-import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { JsonLd } from '@/components/JsonLd'
 import { FaqAccordion } from '@/components/mui/FaqAccordion'
 import { LogoMarquee } from '@/components/mui/LogoMarquee'
@@ -34,6 +33,7 @@ import {
   getServiceTestimonials,
 } from '@/lib/service-view-data'
 import { getServicePage } from '@/lib/services-data'
+import { warnUnrenderedBlock } from '@/lib/unrendered-block'
 
 import { OtherServices } from './service/OtherServices'
 import { ServiceCaseProof } from './service/ServiceCaseProof'
@@ -166,8 +166,11 @@ export async function ServiceDetailPage({ locale, slug }: { locale: Locale; slug
         )
       }
       default:
-        // Bloques sin vista propia: el registro anterior, para no perder texto.
-        return <RenderBlocks key={key} blocks={[s.block]} />
+        // Bloque sin vista MUI: no se pinta y el servidor deja un aviso con su tipo.
+        // Antes caía en el registro viejo (RenderBlocks), que traía Tailwind de vuelta.
+        // El barrido de 57-02 confirmó que ninguna URL del sitio llega aquí (57-07, D-06).
+        warnUnrenderedBlock('ServiceDetailPage', s.block.blockType)
+        return null
     }
   }
 
