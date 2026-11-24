@@ -29,18 +29,32 @@ Leyenda: CUMPLIDO, ABIERTO (bloquea el merge hasta que Juan responda), DIFERIDO 
 | 17 | Rollback ensayado | CUMPLIDO | `57-ROLLBACK.md`, ensayado en un worktree temporal en 57-08. |
 | 18 | Plan de monitoreo escrito | CUMPLIDO | `57-MONITOREO.md` (28 días), escrito en 57-08. |
 | 19 | Snapshot de producción previo al corte (D-13) | CUMPLIDO | `evidence/57-prod-snapshot-pre.json`, tomado el 2026-11-24 08:48 UTC: 174 URLs (172 con 200; `/sobre-mi` y `/en/sobre-mi` dan 404 en producción, es la página nueva), sitemap de 166 locs, 38 redirects, `robots.txt`, `llms.txt` y `llms-full.txt` con 200. Sin cookies ni cabeceras de sesión. |
-| 20 | Diff de sitemap y llms contra el snapshot vacío | CUMPLIDO | Producción contra su propio snapshot, minutos después: 0 diferencias en estado, head, JSON-LD, palabras, sitemap, `robots.txt`, `llms.txt`, `llms-full.txt` y redirects. El único ruido son 15 hallazgos de enlaces internos que ya tiene producción (14 enlaces a gemelos EN noindex y `/en/sitemap.html` con 404), es decir el F4 original que el preview ya corrigió. Siguen en la línea base como defecto de producción, no como cambio. |
+| 20 | Diff de sitemap y llms contra el snapshot vacío | CUMPLIDO | Repetido en 57-10 (2026-11-24, ~5 horas después del snapshot): `57-seo-parity-all --live-prod --vs-snapshot` sale 1 con 29 hallazgos, ninguno es un cambio de producción: 14 de `contrato-ruta-nueva` (`/sobre-mi` y `/en/sobre-mi` responden 404 en producción porque la página es nueva, esperado antes del corte), 14 de `enlace-gemelo-noindex` y 1 de `enlace-roto` (`/en/sitemap.html`), que son el F4 original de producción ya presente en la línea base. Diferencias de estado, head, JSON-LD, palabras, sitemap, `robots.txt`, `llms.txt`, `llms-full.txt` y los 38 redirects: **0**. |
 | 21 | Revisión humana de accesibilidad y diseño (CAL-01, tarea 2) | **DIFERIDO** | Diferida por Juan a la revisión en producción tras el corte. Juan, 2026-11-24: "con respecto a la revision humana difierela y la reviso todo en produccion." No está hecha: ver "Riesgos y puntos abiertos conocidos". |
 | 22 | Revalidación de admin a preview (T-55-15) | DIFERIDO (decidido) | Juan, 2026-11-24: "Acepto todo, ejecuta T-55-15". Se ejecuta tras el corte como cambio inocuo y reversible. No se ejecutó y no hay escrituras en producción desde este plan. |
 | 23 | Una respuesta escrita de Juan por cada excepción y diferencia (tarea 3) | CUMPLIDO | Respuestas literales del 2026-11-24 en `57-exceptions.md`: fecha legal, alt EN, las 2 diferencias de palabras, F1 a F5 y F13 sin excepción necesaria, proxy de INP aceptado, 10 ítems `propuesto` al handoff. |
+| 24 | Respaldo verificado de la base juantech (D-10, plan 57-10) | CUMPLIDO | `~/respaldo-juantech-20261124.dump`, fuera del repo, 16.467.370 bytes, sha256 `1b51473a...f4e1`. `pg_restore --list` con 345 `TABLE DATA` y las tablas `posts`, `pages`, `case_studies`, `websites` y `media`. Filas del volcado iguales a las de la base viva (`posts` 76, `media` 61, `case_studies` 7). Base confirmada: `shared-postgres` de Dokploy, base `juantech`, el mismo host que usan el sitio live y el preview; valor testigo igual al H1 de producción. Detalle en `57-backup.md`. |
+| 25 | Respaldo nativo en Dokploy (supuesto A7) | **NO existe** | Dokploy no tiene a `shared-postgres` como servicio con respaldos. La crontab del VPS solo programa `smoketest` y esa línea no corre (lleva `root` dentro de la crontab de root, el log solo dice `root: not found`). El volcado manual es el único respaldo de `juantech`. Programar uno es decisión y escritura de Juan fuera de este plan. |
 
-## Qué queda abierto
+## Cierre de la checklist (plan 57-10, tarea 2), verificado el 2026-11-24
 
-Juan ya respondió todo lo que se le preguntó (`57-exceptions.md`). Lo que sigue abierto es ejecución, no decisión:
+Resultado: **LISTO PARA PEDIR LA FRASE DEL MERGE, con 5 filas abiertas que son decisiones de Juan ya tomadas, no huecos.** Ninguna fila abierta aparece como resuelta. Comandos corridos en esta tarea:
+
+| Comprobación | Resultado |
+|---|---|
+| `tsx scripts/verify/56-gate.ts --gate` | Sale **1**. Un solo FAIL: `CUT-legal-date-efectiva`, más 10 WARN de ítems `propuesto` (aceptados por Juan, van al handoff). No sale 0 antes del merge por diseño: el ítem pasa a `aprobado` en 57-11 el día del merge, y 57-11 exige primero la frase de 57-10. Es una dependencia circular del plan, no un olvido. |
+| `57-run-all --selftests --strict` | Sale 0, 15 PASS. |
+| Respuesta escrita por fila del reporte | Completa, en `57-exceptions.md`. |
+| `57-human-review.md` | No existe: Juan difirió la revisión humana, no hay hallazgos que bloqueen ni que no. |
+| `git status` de la fase | Solo archivos de evidencia de la fase; los demás cambios sin commit (`.planning/state.json`, `research/`, `designs/`, etc.) son de Juan y no son de esta fase. |
+| Diff de sitemap y llms contra el snapshot | Vacío en sitemap, `robots.txt`, `llms.txt`, `llms-full.txt` y redirects (fila 20). Los 29 hallazgos del script son la ruta nueva sin equivalente en producción y el F4 que ya traía la línea base. |
+| Volcado verificado y sin credenciales en la constancia | Sí (filas 24 y 25; `grep` de aceptación limpio). |
+
+Filas abiertas, todas con decisión de Juan registrada:
 
 1. `CUT-legal-date-efectiva`: se fija en el código en 57-11 el día del merge. Si el merge no cae el 2026-11-24, 57-11 se detiene y avisa.
-2. `54-about`: escribir el alt EN en el Media `p54-about-hero` (escritura aditiva, 57-10 o 57-12).
-3. GO-02: la frase literal de Juan para el merge (57-10, tarea 3).
+2. `54-about`: escribir el alt EN en el Media `p54-about-hero` (escritura aditiva). Juan: "Escribirlo en 57-10". Pendiente, se hace en el paso del cargador (57-10 o 57-12), no antes.
+3. GO-02: la frase literal de Juan para el merge (57-10, tarea 3). Nadie la dio todavía.
 4. CAL-01: revisión humana diferida a producción (fila 21).
 5. T-55-15: se ejecuta tras el corte (fila 22).
 
@@ -51,4 +65,5 @@ No bloquea: los 10 ítems `propuesto` de la fila 14 van al handoff y el proxy de
 - **CAL-01 no está cumplido.** La revisión con NVDA, VoiceOver, 375/900/1024/1280 px, zoom al 200% y teclado, que ninguna herramienta reemplaza, queda aplazada a producción por decisión explícita de Juan. axe cubre solo una parte de WCAG (T-57-34: falso verde por dar CAL-01 con solo axe). Mientras no se haga, CAL-01 se considera pendiente, no resuelto, y cualquier hallazgo de severidad "bloquea" aparecerá con el sitio ya publicado, no antes del corte. El rollback de `57-ROLLBACK.md` es la salida si pasa.
 - **T-55-15 sin probar en vivo**: la revalidación de admin a preview no se ejercitó. Tras el corte admin y sitio comparten proceso, así que el riesgo baja, pero la prueba no existe.
 - **Falso positivo intermitente** de `53-computed-styles` sin causa leída (fila 13).
+- **Sin respaldo programado de `juantech`** (fila 25): hasta que Juan programe uno, el volcado de `57-backup.md` es el único. Un volcado sin segunda copia vive en un solo disco.
 - **Producción mantiene su F4** (14 enlaces a gemelos EN noindex, `/en/sitemap.html` con 404) hasta el corte.
