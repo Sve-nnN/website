@@ -1,0 +1,84 @@
+{
+  "generado": "2026-11-24T06:30:11.536Z",
+  "base": "https://dev.juan-tech.com",
+  "prodBase": "https://juan-tech.com",
+  "strict": true,
+  "steps": [
+    {
+      "name": "53-crawl-parity",
+      "ok": true,
+      "skipped": false,
+      "code": 0,
+      "ms": 167203,
+      "failLines": []
+    },
+    {
+      "name": "57-seo-parity-all",
+      "ok": false,
+      "skipped": false,
+      "code": 1,
+      "ms": 245111,
+      "failLines": [
+        "FAIL /blog/general [palabras] palabras en main: 120 contra 135 en producción (11.1% menos; tolerancia 2%)",
+        "FAIL /en/blog/general [palabras] palabras en main: 124 contra 138 en producción (10.1% menos; tolerancia 2%)",
+        "FAIL /blog/confirm [estado] el preview responde 500 (producción 200)",
+        "FAIL /en/blog/confirm [estado] el preview responde 500 (producción 200)",
+        "FAIL 57-seo-parity-all: 170 de 174 URLs sin diferencias (166 del sitemap, 6 fuera, 2 nuevas); 0 fallos de enlaces en 177 destinos; 0 redirects distintos de 38"
+      ]
+    },
+    {
+      "name": "57-legacy-render-sweep",
+      "ok": true,
+      "skipped": false,
+      "code": 0,
+      "ms": 68033,
+      "failLines": []
+    },
+    {
+      "name": "57-headers-check",
+      "ok": true,
+      "skipped": false,
+      "code": 0,
+      "ms": 3964,
+      "failLines": []
+    },
+    {
+      "name": "57-a11y-sweep",
+      "ok": true,
+      "skipped": false,
+      "code": 0,
+      "ms": 333459,
+      "failLines": []
+    },
+    {
+      "name": "57-perf-compare",
+      "ok": true,
+      "skipped": false,
+      "code": 0,
+      "ms": 716573,
+      "failLines": []
+    },
+    {
+      "name": "57-bundle-weight",
+      "ok": true,
+      "skipped": false,
+      "code": 0,
+      "ms": 19486,
+      "failLines": []
+    },
+    {
+      "name": "56-run-all --live",
+      "ok": false,
+      "skipped": false,
+      "code": 1,
+      "ms": 875457,
+      "failLines": [
+        "FAIL 55 regresion: 54 regresion: 54-about (4 PASS, 1 FAIL, 0 WARN lineas, salida 1, 10.0s)",
+        "FAIL 55 regresion: 54 regresion: 53-computed-styles (6 PASS, 2 FAIL, 0 WARN lineas, salida 1, 75.1s)",
+        "FAIL 55 regresion: 54 regresion: 54-about",
+        "FAIL 55 regresion: 54 regresion: 53-computed-styles",
+        "FAIL 56-run-all --live"
+      ]
+    }
+  ]
+}

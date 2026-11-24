@@ -1,0 +1,1294 @@
+{
+  "generado": "2026-11-24T05:57:42.577Z",
+  "base": "https://dev.juan-tech.com",
+  "produccion": "https://juan-tech.com",
+  "gate": "PASS",
+  "control": [
+    {
+      "path": "/",
+      "status": 200,
+      "count": 1408,
+      "legacy": 148,
+      "sample": [
+        "sr-only",
+        "focus:left-4",
+        "focus:top-4",
+        "focus:inline-flex",
+        "focus:h-10",
+        "focus:items-center",
+        "focus:rounded-md",
+        "focus:bg-primary"
+      ]
+    },
+    {
+      "path": "/stack",
+      "status": 200,
+      "count": 942,
+      "legacy": 160,
+      "sample": [
+        "sr-only",
+        "focus:left-4",
+        "focus:top-4",
+        "focus:inline-flex",
+        "focus:h-10",
+        "focus:items-center",
+        "focus:rounded-md",
+        "focus:bg-primary"
+      ]
+    },
+    {
+      "path": "/blog/cs-fundamentals/complejidad-algoritmica",
+      "status": 200,
+      "count": 747,
+      "legacy": 97,
+      "sample": [
+        "sr-only",
+        "focus:left-4",
+        "focus:top-4",
+        "focus:inline-flex",
+        "focus:h-10",
+        "focus:items-center",
+        "focus:rounded-md",
+        "focus:bg-primary"
+      ]
+    },
+    {
+      "path": "/servicios",
+      "status": 200,
+      "count": 411,
+      "legacy": 50,
+      "sample": [
+        "sr-only",
+        "focus:left-4",
+        "focus:top-4",
+        "focus:inline-flex",
+        "focus:h-10",
+        "focus:items-center",
+        "focus:rounded-md",
+        "focus:bg-primary"
+      ]
+    }
+  ],
+  "controlFailures": [],
+  "urls": [
+    {
+      "path": "/stack",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/stack",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/seo-tecnico-madrid",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/seo-tecnico-madrid",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/seo-tecnico-lima",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/seo-tecnico-lima",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/servicios/ai-seo-geo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/services/ai-seo-geo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/servicios/fullstack-development",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/services/fullstack-development",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/servicios/seo-consulting",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/services/seo-consulting",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/servicios/seo-technical-audit",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/services/seo-technical-audit",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/servicios",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/services",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/terms",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/terms",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/privacy",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/contact",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/contact",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/complejidad-algoritmica",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/development/sql-vs-nosql",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/algoritmos-ordenamiento",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/algoritmos-ordenamiento",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/arboles-binarios",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/arboles-binarios",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/diseno-bases-datos",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/diseno-bases-datos",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/normalizacion-bases-datos",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/normalizacion-bases-datos",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/seo/guia-eeat",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/seo/guia-eeat",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/seo/enlaces-internos-guia",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/seo/enlaces-internos-guia",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/seo/guia-keyword-research",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/seo/guia-keyword-research",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/seo/redaccion-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/seo/redaccion-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/development/experiencia-de-usuario",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/development/experiencia-de-usuario",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/seo/mejores-cursos-seo-espanol",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/development/que-es-css",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/tablas-hash",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/non-developers-guide",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/non-developers-guide",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/web-performance-guide",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/web-performance-guide",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/core-web-vitals-guide",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/core-web-vitals-guide",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/robots-txt-best-practices",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/schema-markup-guide",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/schema-markup-guide",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/ssr-vs-csr-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/ssr-vs-csr-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/xml-sitemap-automation",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/headless-cms-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/headless-cms-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/seo/topic-clusters-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/seo/topic-clusters-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/seo/estrategia-de-contenidos",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/seo/estrategia-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/seo/seo-off-page-guia",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/seo/pillar-page-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/seo/pillar-page-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/data-structures",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/data-structures",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/binary-search-tree",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/binary-search-tree",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/dynamic-programming",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/dynamic-programming",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/graph-algorithms",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/graph-algorithms",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/heap-data-structure",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/heap-data-structure",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/merge-sort-python",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/merge-sort-python",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/queue-data-structure",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/queue-data-structure",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/quicksort-python",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/quicksort-python",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/space-complexity",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/space-complexity",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/time-complexity",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/time-complexity",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/tree-traversal",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/tree-traversal",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/development/astro-vs-nextjs",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/development/astro-vs-nextjs",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/development/headless-cms-comparison",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/development/headless-cms-comparison",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/development/nextjs-cms",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/development/nextjs-cms",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/development/payload-cms-guide",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/development/payload-cms-guide",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/auditoria-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/auditoria-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/nextjs-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/nextjs-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/seo-on-page-guia",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/seo-on-page-guia",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/structured-data-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/structured-data-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/technical-seo-checklist",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/technical-seo-checklist",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/technical-seo-guide",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/pilas-y-colas",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/pilas-y-colas",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals/recursividad",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/development/hidratacion-web",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/development/react-19",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/seo/canibalizacion-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/seo/canibalizacion-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/guia-google-search-console",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/guia-google-search-console",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo/javascript-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo/javascript-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/case-studies/immigration-law-atlanta-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/case-studies/immigration-law-atlanta-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/case-studies/talleres-costura-miami-lanzamiento-seo-local",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/case-studies/talleres-costura-miami-lanzamiento-seo-local",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/case-studies/urologo-seo-local-salud-santiago-rd",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/case-studies/urologo-seo-local-salud-santiago-rd",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/case-studies/edtech-financiera-infantil-crecimiento-organico-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/case-studies/edtech-financiera-infantil-crecimiento-organico-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/case-studies/migracion-ecommerce-nextjs-seo-tecnico",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/case-studies/migracion-ecommerce-nextjs-seo-tecnico",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/authors/juan-carlos-angulo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/authors/juan-carlos-angulo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/websites/juan-tech-com",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/websites/juan-tech-com",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/websites/apturio-com",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/websites/apturio-com",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/websites/drmanuelvargashidalgo-com",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/websites/drmanuelvargashidalgo-com",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/websites/estylopia-com",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/websites/estylopia-com",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/websites/aprendoclub-com",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/websites/aprendoclub-com",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/websites/ariannalupi-com",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/websites/ariannalupi-com",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/tech-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/tech-seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/cs-fundamentals",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/cs-fundamentals",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/general",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/general",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/development",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/development",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/blog/seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/blog/seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/websites",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/websites",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/case-studies",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/case-studies",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/authors",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/authors",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/esta-ruta-no-existe-57",
+      "status": 404,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/esta-ruta-no-existe-57",
+      "status": 404,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/search",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/search",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/search?q=seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/search?q=seo",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/sobre-mi",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    },
+    {
+      "path": "/en/sobre-mi",
+      "status": 200,
+      "count": 0,
+      "legacy": 0,
+      "sample": []
+    }
+  ],
+  "respaldoRenderBlocks": []
+}

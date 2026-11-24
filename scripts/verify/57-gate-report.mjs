@@ -37,6 +37,8 @@ export const FILES = {
   bundle: '57-final-bundle.json',
   bundleBefore: '57-bundle-before.json',
   steps: '57-final-steps.json',
+  // Clasificación escrita por quien corre la batería: cada FAIL con su causa y dueño (T-57-29).
+  clasificacion: '57-final-clasificacion.json',
 }
 
 // ---------------------------------------------------------------------------
@@ -160,7 +162,11 @@ export function evaluate(data) {
   for (const s of steps) {
     if (s.skipped || s.ok) continue
     if (OWNED.has(s.name)) continue // su veredicto sale de los datos, arriba
-    block('Batería', `El paso ${s.name} da FAIL`, (s.failLines ?? []).slice(0, 3).join(' | ') || `salida ${s.code}`)
+    // 56-run-all anida la regresión de 53 a 56: un bloqueo por cada paso interno que falla.
+    const inner = (s.failLines ?? []).filter((l) => /\(\d+ PASS, \d+ FAIL/.test(l))
+    if (inner.length) {
+      for (const l of inner) block('Batería', `${s.name}: ${l.replace(/^FAIL\s+/, '').replace(/\s*\(\d+ PASS.*$/, '')} da FAIL`, l.replace(/^FAIL\s+/, ''))
+    } else block('Batería', `El paso ${s.name} da FAIL`, (s.failLines ?? []).slice(0, 3).join(' | ') || `salida ${s.code}`)
   }
   if (!data.steps) block('Batería', 'No hay registro de pasos de la batería', 'falta 57-final-steps.json')
 
@@ -188,6 +194,22 @@ export function evaluate(data) {
   const gate = { sinDato: !data.gate, problemas: data.gate?.problems ?? [], advertencias: data.gate?.warnings ?? [], total: data.gate?.total ?? 0 }
   if (!data.gate) block('Gate de decisiones', 'No se pudo leer el gate de decisiones de la 56', 'falló 56-gate.ts --json', 'decisión de Juan')
   for (const p of gate.problemas) block('Gate de decisiones', p.split(':')[0], p, 'decisión de Juan')
+
+  // Clasificación escrita por el operador: reemplaza la clase y agrega la causa y el dueño.
+  for (const rule of data.clasificacion ?? []) {
+    let re
+    try {
+      re = new RegExp(rule.match, 'i')
+    } catch {
+      continue
+    }
+    for (const b of blockers) {
+      if (b.clasificado || !re.test(`${b.area} ${b.que}`)) continue
+      b.clase = rule.clase ?? b.clase
+      b.causa = [rule.causa, rule.dueno ? `Dueño: ${rule.dueno}` : null].filter(Boolean).join(' ')
+      b.clasificado = true
+    }
+  }
 
   const porArea = (area) => blockers.filter((b) => b.area === area).length
   const areas = [
@@ -421,6 +443,7 @@ export function collect({ evidenceDir, withGate = true }) {
     bundle: read('bundle'),
     bundleBefore: read('bundleBefore'),
     steps: read('steps'),
+    clasificacion: read('clasificacion'),
     gate: withGate ? readGate() : null,
     manual: existsSync(manualPath) ? parseManual(readFileSync(manualPath, 'utf8')) : [],
   }
@@ -505,6 +528,14 @@ function selftest() {
   const h = synthetic()
   h.gate.problems = ['CUT-legal-date-efectiva: estado pendiente']
   check(evaluate(h).blockers.some((b) => b.clase === 'decisión de Juan'), 'test 5c: una decisión pendiente bloquea como decisión de Juan')
+  // Clasificación del operador y desglose de pasos anidados.
+  const k = synthetic()
+  k.steps.steps.push({ name: '56-run-all --live', ok: false, code: 1, failLines: ['FAIL 55 regresion: 54-about (4 PASS, 1 FAIL, 0 WARN lineas, salida 1, 10.0s)', 'FAIL 56-run-all --live'] })
+  k.clasificacion = [{ match: '54-about', clase: 'defecto de contenido', causa: 'Falta el alt EN.', dueno: 'Juan' }]
+  const mk = evaluate(k)
+  const nested = mk.blockers.find((b) => b.que.includes('54-about'))
+  check(!!nested && nested.clase === 'defecto de contenido' && nested.causa.includes('Dueño: Juan'), 'test 5d: un paso anidado se desglosa y toma su clasificación', JSON.stringify(nested))
+  check(!mk.blockers.some((b) => b.que.includes('56-run-all --live da FAIL')), 'test 5e: el desglose no deja un bloqueo genérico duplicado')
   // Lista manual.
   const pm = parseManual('## 1. A\n- [ ] uno\n- [ ] dos\n## Hallazgos\ntexto\n## 2. B\n- [ ] tres\n')
   check(pm.length === 2 && pm[0].items.length === 2, 'test 6: parseManual agrupa los ítems por encabezado')
