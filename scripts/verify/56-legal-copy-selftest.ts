@@ -174,7 +174,11 @@ function section(title: string, text = 'texto', evidence = 'evidencia'): LegalSe
 
 // ---------------------------------------------------------------- hechos y decisiones
 
-check(LEGAL_EFFECTIVE_DATE === '', 'LEGAL_EFFECTIVE_DATE vacia hasta el corte (D-09)', `vale "${LEGAL_EFFECTIVE_DATE}"`)
+check(
+  LEGAL_EFFECTIVE_DATE === '' || /^\d{4}-\d{2}-\d{2}$/.test(LEGAL_EFFECTIVE_DATE),
+  'LEGAL_EFFECTIVE_DATE esta vacia hasta el corte o es una fecha AAAA-MM-DD fijada el dia del corte (D-09)',
+  `vale "${LEGAL_EFFECTIVE_DATE}"`,
+)
 
 const FACT_KEYS = ['HOSTING', 'MAILBOX_PROVIDER', 'RETENTION_CONTACT_EMAIL', 'RETENTION_SUBSCRIBERS', 'COOKIE_BANNER', 'GOVERNING_LAW'] as const
 check(

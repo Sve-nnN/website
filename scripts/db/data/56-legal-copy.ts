@@ -28,8 +28,8 @@
 import type { Decision, DecisionStatus } from './56-content-decisions'
 import type { InlineContent, LegalBlock, LegalSection } from './56-legal-lexical'
 
-/** D-09: vacia hasta el dia del corte. La fija 56-14, nunca este plan. */
-export const LEGAL_EFFECTIVE_DATE = ''
+/** D-09: el dia del corte. Fijada el 2026-11-24 en 57-11 con la fecha que dio Juan ("Hoy, 2026-11-24"). */
+export const LEGAL_EFFECTIVE_DATE = '2026-11-24'
 
 export type LegalFact = {
   label: string
