@@ -47,7 +47,11 @@ export type HomeCaseItem = {
   /** Etiqueta que venia en el dato. null cae a metricSuffix al ensamblar. */
   label: string | null
   title: string
+  /** Captura del grafico de Search Console (heroImage del caso). null si el caso no la tiene. */
+  image: HomeCaseImage | null
 }
+
+export type HomeCaseImage = { url: string; alt: string; width: number | null; height: number | null }
 
 export type HomeCasesText = {
   title: string
@@ -294,6 +298,7 @@ export function mapFeaturedCases(featured: ReadonlyArray<unknown> | null | undef
       metric,
       label,
       title,
+      image: null,
     })
     if (items.length >= HOME_CASES_MAX) break
   }
@@ -342,6 +347,61 @@ function readLatestCases(locale: Locale): Promise<HomeCaseItem[]> {
 }
 
 /**
+ * Mapeo puro de la portada de un caso (heroImage poblada a depth 1) a la
+ * captura de la tarjeta. Sin url, o con alt vacio, devuelve null: una tarjeta
+ * sin captura degrada a solo cifra (no se reserva un recuadro vacio).
+ */
+export function mapCaseImage(heroImage: unknown): HomeCaseImage | null {
+  if (!heroImage || typeof heroImage !== 'object') return null
+  const m = heroImage as Partial<Media>
+  const url = text(m.url)
+  const alt = text(m.alt)
+  if (!url || !alt) return null
+  return {
+    url,
+    alt,
+    width: typeof m.width === 'number' ? m.width : null,
+    height: typeof m.height === 'number' ? m.height : null,
+  }
+}
+
+function readCaseImages(locale: Locale, ids: ReadonlyArray<number | string>): Promise<Record<string, HomeCaseImage | null>> {
+  const key = ids.join(',')
+  return unstable_cache(
+    async (): Promise<Record<string, HomeCaseImage | null>> => {
+      const payload = await getPayload({ config })
+      const { docs } = await payload.find({
+        collection: 'case-studies',
+        locale,
+        where: { id: { in: [...ids] } },
+        limit: ids.length,
+        pagination: false,
+        depth: 1,
+        overrideAccess: false,
+        select: { heroImage: true },
+      })
+      const out: Record<string, HomeCaseImage | null> = {}
+      for (const d of docs) out[String(d.id)] = mapCaseImage(d.heroImage)
+      return out
+    },
+    ['home-cases-images', locale, key],
+    { tags: [CACHE_TAGS.featuredContent(), CACHE_TAGS.caseStudies()], revalidate: CACHE_TTL_SECONDS },
+  )()
+}
+
+/** Anade la captura a cada tarjeta. Un fallo de lectura deja las tarjetas sin imagen (nunca rompe la home). */
+async function withCaseImages(items: HomeCaseItem[], locale: Locale): Promise<HomeCaseItem[]> {
+  if (items.length === 0) return items
+  try {
+    const images = await readCaseImages(locale, items.map((i) => i.id))
+    return items.map((i) => ({ ...i, image: images[String(i.id)] ?? null }))
+  } catch (err) {
+    console.error('[home]', err)
+    return items
+  }
+}
+
+/**
  * Casos de la home: primero los curados en featured-content (capa cacheada, no
  * abre otra consulta) y, si no hay ninguno, el respaldo de solo lectura con los
  * mas recientes de la coleccion (D-26). Nunca lanza: un error de lectura se
@@ -351,8 +411,8 @@ export async function getHomeCases(locale: Locale): Promise<HomeCaseItem[] | nul
   try {
     const featured = await getCachedFeaturedContent(locale)
     const curated = mapFeaturedCases(featured.featuredCaseStudies)
-    if (curated.length > 0) return curated
-    return selectCasesOrFallback(curated, await readLatestCases(locale))
+    const items = curated.length > 0 ? curated : selectCasesOrFallback(curated, await readLatestCases(locale))
+    return await withCaseImages(items, locale)
   } catch (err) {
     console.error('[home]', err)
     return null
