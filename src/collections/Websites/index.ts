@@ -3,6 +3,7 @@ import type { CollectionConfig } from 'payload'
 import { authenticated } from '@/access/authenticated'
 import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
+import { revalidateWebsitesCache, revalidateWebsitesCacheOnDelete } from '@/lib/cache-tags'
 
 export const Websites: CollectionConfig = {
   slug: 'websites',
@@ -14,6 +15,11 @@ export const Websites: CollectionConfig = {
     update: authenticated,
   },
   admin: { useAsTitle: 'title', defaultColumns: ['title', 'client', 'year', 'updatedAt'] },
+  // Fase 55 (D-03, IN-05): invalida websites:all, el tag del índice y del detalle.
+  hooks: {
+    afterChange: [revalidateWebsitesCache],
+    afterDelete: [revalidateWebsitesCacheOnDelete],
+  },
   versions: {
     drafts: { autosave: { interval: 100 }, schedulePublish: true },
     maxPerDoc: 50,

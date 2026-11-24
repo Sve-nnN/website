@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { linkGroup } from '@/fields/linkGroup'
+import { revalidateFooterCache } from '@/lib/cache-tags'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
@@ -8,6 +9,9 @@ export const Footer: GlobalConfig = {
   admin: {
     group: 'Site',
     description: 'Footer columns, social links, legal links, and copyright text.',
+  },
+  hooks: {
+    afterChange: [revalidateFooterCache],
   },
   fields: [
     {

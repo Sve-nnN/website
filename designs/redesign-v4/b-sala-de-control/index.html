@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SEO técnico e ingeniería de software | Juan Carlos Angulo</title>
+<meta name="description" content="Soy ingeniero de software y consultor de SEO técnico: auditorías, rendimiento web y arquitectura Next.js y Payload para posicionar tu sitio en Google.">
+<meta name="theme-color" content="#F2F1EC">
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.classList.add('js');if(!CSS.supports('animation-timeline','view()'))document.documentElement.classList.add('no-sda');</script>
+</head>
+<body>
+<a class="skip" href="#main" data-en="Skip to content">Saltar al contenido</a>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="nav" id="nav" data-hide="false">
+  <div class="nav-in">
+    <a class="brand" href="#inicio"><b aria-hidden="true"></b><span class="full">Juan Carlos Angulo</span><span class="short">Juan Angulo</span></a>
+    <nav aria-label="Principal" data-en-label="Main">
+      <ul class="links" id="links">
+        <li><a href="#servicios" data-en="Services">Servicios</a></li>
+        <li><a href="#casos" data-en="Case studies">Casos</a></li>
+        <li><a href="#proceso" data-en="Process">Proceso</a></li>
+        <li><a href="#sobre" data-en="About">Sobre mí</a></li>
+        <li><a href="#faq" data-en="FAQ">Preguntas</a></li>
+        <li><a class="cta" href="#contacto" data-en="Contact">Contacto</a></li>
+      </ul>
+    </nav>
+    <div class="lang" role="group" aria-label="Idioma" data-en-label="Language">
+      <button type="button" data-lang="es" aria-pressed="true" lang="es">ES</button>
+      <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+    </div>
+    <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="links" data-en="Menu">Menú</button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- 1. HERO -->
+<section class="hero" id="inicio" aria-labelledby="h1">
+  <div class="badge-wrap" aria-hidden="true">
+    <svg class="badge" viewBox="0 0 120 120"><defs><path id="circ" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs><text><textPath href="#circ">SEO técnico + Next.js + Payload + </textPath></text></svg>
+  </div>
+  <span class="sq a" aria-hidden="true"></span><span class="sq b" aria-hidden="true"></span>
+  <div class="wrap">
+    <p class="tag mono"><i aria-hidden="true">+</i><span data-en="Lima + Madrid / ES + EN">Lima + Madrid / ES + EN</span></p>
+    <h1 class="h1" id="h1" data-en='<span class="w" style="--i:0"><span>I</span></span> <span class="w" style="--i:1"><span>fix</span></span> <span class="w" style="--i:2"><span class="hl">SEO</span></span> <span class="w" style="--i:3"><span>from</span></span> <span class="w" style="--i:4"><span>the</span></span> <span class="w" style="--i:5"><span>code</span></span>'><span class="w" style="--i:0"><span>Arreglo</span></span> <span class="w" style="--i:1"><span>el</span></span> <span class="w" style="--i:2"><span class="hl">SEO</span></span> <span class="w" style="--i:3"><span>desde</span></span> <span class="w" style="--i:4"><span>el</span></span> <span class="w" style="--i:5"><span>código</span></span></h1>
+    <div class="hero-row">
+      <div class="hero-copy">
+        <p class="lead" data-en="I'm a software engineer and technical SEO consultant for Lima and Madrid. I audit, fix the code and measure.">Soy ingeniero de software y consultor SEO técnico. Audito, corrijo en el código y mido, para Lima y Madrid.</p>
+        <div class="cta-row">
+          <a class="btn" href="#contacto"><span data-en="Request an audit">Pedir auditoría</span><span class="ar" aria-hidden="true">→</span></a>
+          <a class="btn alt" href="#casos"><span data-en="See case studies">Ver casos</span></a>
+        </div>
+      </div>
+      <div class="audit" id="audit" role="group" aria-label="Demostración ilustrativa de una auditoría en marcha" data-en-label="Illustrative demo of an audit in progress">
+        <div class="audit-head"><span class="mono" data-en="audit in progress">auditoría en marcha</span><span class="chip lime" data-en="Illustrative">Ilustrativa</span></div>
+        <ul class="checks">
+          <li data-s="ok"><span class="box"></span><span data-en="Crawling: robots.txt and sitemap">Rastreo: robots.txt y sitemap</span><span class="st">OK</span></li>
+          <li data-s="ok" data-fix="1"><span class="box"></span><span data-en="Indexing: canonical and noindex">Indexación: canonical y noindex</span><span class="st">Corregido</span></li>
+          <li data-s="ok"><span class="box"></span><span data-en="Hreflang between ES and EN">Hreflang entre ES y EN</span><span class="st">OK</span></li>
+          <li data-s="ok"><span class="box"></span><span data-en="Structured data">Datos estructurados</span><span class="st">OK</span></li>
+          <li data-s="ok" data-fix="1"><span class="box"></span><span data-en="Mobile LCP">LCP en móvil</span><span class="st">Corregido</span></li>
+          <li data-s="ok"><span class="box"></span><span data-en="Broken internal links">Enlaces internos rotos</span><span class="st">OK</span></li>
+        </ul>
+        <div class="audit-foot">
+          <div class="gauge" id="auditGauge" aria-hidden="true">
+            <svg viewBox="0 0 120 70"><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#0B0B12" style="stroke-width:15"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#FF5B3A" stroke-dasharray="40 100"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#2A3BFF" stroke-dasharray="0 40 30 100"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#C8F31D" stroke-dasharray="0 70 30 100"/><g class="needle" style="--ang:68deg"><line x1="60" y1="60" x2="60" y2="18" stroke="#0B0B12" stroke-width="4"/></g><circle class="hub" cx="60" cy="60" r="7"/></svg>
+          </div>
+          <div>
+            <div class="score"><span id="score">94</span><small data-en="/100 sample">/100 muestra</small></div>
+            <p data-en="Sample score. It does not come from any real site.">Puntaje de muestra. No viene de ningún sitio real.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marq-wrap"><div class="marquee" aria-label="Áreas de trabajo" data-en-label="Areas of work">
+  <div class="marquee-track">
+    <ul><li data-en="Technical SEO">SEO técnico</li><li>Next.js</li><li>Payload CMS</li><li data-en="Web performance">Rendimiento web</li><li data-en="Servers">Servidores</li><li data-en="SEO for AI">SEO para IA</li><li data-en="Audits">Auditorías</li></ul>
+    <ul aria-hidden="true"><li data-en="Technical SEO">SEO técnico</li><li>Next.js</li><li>Payload CMS</li><li data-en="Web performance">Rendimiento web</li><li data-en="Servers">Servidores</li><li data-en="SEO for AI">SEO para IA</li><li data-en="Audits">Auditorías</li></ul>
+  </div>
+</div></div>
+
+<!-- 2. INSTRUMENTOS -->
+<section class="instr on-dark sec" id="medicion" aria-labelledby="h-med">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="chap" aria-hidden="true">00</span>
+      <div>
+        <h2 class="h2" id="h-med" data-en="Four numbers I check first">Cuatro números que reviso primero</h2>
+        <p class="intro" data-en="They are the Core Web Vitals plus TTFB. Google measures them on mobile with real users. The values below are samples and do not come from any site of mine.">Son los Core Web Vitals más el TTFB. Google los mide en móvil con usuarios reales. Los valores de abajo son de muestra y no vienen de ningún sitio mío.</p>
+      </div>
+    </div>
+    <div class="tiles" data-io>
+      <article class="tile reveal" style="--d:0" data-io>
+        <h3>LCP</h3>
+        <p class="what" data-en="How long the biggest element on screen takes to appear.">Cuánto tarda en aparecer el elemento más grande de la pantalla.</p>
+        <div class="gauge" aria-hidden="true"><svg viewBox="0 0 120 70"><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#0B0B12" style="stroke-width:15"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#FF5B3A" stroke-dasharray="0 80 20 100"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#2A3BFF" stroke-dasharray="0 50 30 100"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#C8F31D" stroke-dasharray="50 100"/><g class="needle" style="--ang:-22deg"><line x1="60" y1="60" x2="60" y2="18" stroke="#0B0B12" stroke-width="4"/></g><circle class="hub" cx="60" cy="60" r="7"/></svg></div>
+        <p class="val"><span data-count="1.9" data-dec="1" data-suf=" s">1,9 s</span><small data-en="sample">muestra</small></p>
+        <svg class="spark" viewBox="0 0 120 30" aria-hidden="true" preserveAspectRatio="none"><path d="M2 8 L18 14 L34 10 L50 20 L66 16 L82 24 L98 20 L118 26" pathLength="1"/></svg>
+        <p class="goal" data-en="Good threshold: 2.5 s or less">Umbral bueno: 2,5 s o menos</p>
+        <p class="chips"><span class="chip coral" data-en="Pending: measure">PENDIENTE medir</span><span class="chip" data-en="Illustrative">Ilustrativo</span></p>
+      </article>
+      <article class="tile reveal" style="--d:1" data-io>
+        <h3>CLS</h3>
+        <p class="what" data-en="How much the layout jumps around while the page loads.">Cuánto se mueve el diseño mientras la página carga.</p>
+        <div class="gauge" aria-hidden="true"><svg viewBox="0 0 120 70"><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#0B0B12" style="stroke-width:15"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#FF5B3A" stroke-dasharray="0 80 20 100"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#2A3BFF" stroke-dasharray="0 50 30 100"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#C8F31D" stroke-dasharray="50 100"/><g class="needle" style="--ang:-58deg"><line x1="60" y1="60" x2="60" y2="18" stroke="#0B0B12" stroke-width="4"/></g><circle class="hub" cx="60" cy="60" r="7"/></svg></div>
+        <p class="val"><span data-count="0.04" data-dec="2" data-suf="">0,04</span><small data-en="sample">muestra</small></p>
+        <svg class="spark" viewBox="0 0 120 30" aria-hidden="true" preserveAspectRatio="none"><path d="M2 22 L18 18 L34 24 L50 12 L66 18 L82 10 L98 16 L118 8" pathLength="1"/></svg>
+        <p class="goal" data-en="Good threshold: 0.1 or less">Umbral bueno: 0,1 o menos</p>
+        <p class="chips"><span class="chip coral" data-en="Pending: measure">PENDIENTE medir</span><span class="chip" data-en="Illustrative">Ilustrativo</span></p>
+      </article>
+      <article class="tile reveal" style="--d:2" data-io>
+        <h3>INP</h3>
+        <p class="what" data-en="How long the page takes to react to a click or a tap.">Cuánto tarda la página en reaccionar a un clic o un toque.</p>
+        <div class="gauge" aria-hidden="true"><svg viewBox="0 0 120 70"><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#0B0B12" style="stroke-width:15"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#FF5B3A" stroke-dasharray="0 80 20 100"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#2A3BFF" stroke-dasharray="0 50 30 100"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#C8F31D" stroke-dasharray="50 100"/><g class="needle" style="--ang:-38deg"><line x1="60" y1="60" x2="60" y2="18" stroke="#0B0B12" stroke-width="4"/></g><circle class="hub" cx="60" cy="60" r="7"/></svg></div>
+        <p class="val"><span data-count="140" data-dec="0" data-suf=" ms">140 ms</span><small data-en="sample">muestra</small></p>
+        <svg class="spark" viewBox="0 0 120 30" aria-hidden="true" preserveAspectRatio="none"><path d="M2 14 L18 20 L34 8 L50 16 L66 22 L82 12 L98 18 L118 14" pathLength="1"/></svg>
+        <p class="goal" data-en="Good threshold: 200 ms or less">Umbral bueno: 200 ms o menos</p>
+        <p class="chips"><span class="chip coral" data-en="Pending: measure">PENDIENTE medir</span><span class="chip" data-en="Illustrative">Ilustrativo</span></p>
+      </article>
+      <article class="tile reveal" style="--d:3" data-io>
+        <h3>TTFB</h3>
+        <p class="what" data-en="How long the server takes to send the first byte.">Cuánto tarda el servidor en enviar el primer byte.</p>
+        <div class="gauge" aria-hidden="true"><svg viewBox="0 0 120 70"><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#0B0B12" style="stroke-width:15"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#FF5B3A" stroke-dasharray="0 80 20 100"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#2A3BFF" stroke-dasharray="0 50 30 100"/><path class="band" d="M10 60 A50 50 0 0 1 110 60" pathLength="100" stroke="#C8F31D" stroke-dasharray="50 100"/><g class="needle" style="--ang:-30deg"><line x1="60" y1="60" x2="60" y2="18" stroke="#0B0B12" stroke-width="4"/></g><circle class="hub" cx="60" cy="60" r="7"/></svg></div>
+        <p class="val"><span data-count="0.5" data-dec="1" data-suf=" s">0,5 s</span><small data-en="sample">muestra</small></p>
+        <svg class="spark" viewBox="0 0 120 30" aria-hidden="true" preserveAspectRatio="none"><path d="M2 18 L18 12 L34 20 L50 14 L66 24 L82 16 L98 22 L118 12" pathLength="1"/></svg>
+        <p class="goal" data-en="Good threshold: 0.8 s or less">Umbral bueno: 0,8 s o menos</p>
+        <p class="chips"><span class="chip coral" data-en="Pending: measure">PENDIENTE medir</span><span class="chip" data-en="Illustrative">Ilustrativo</span></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 3. SERVICIOS -->
+<section class="sec" id="servicios" aria-labelledby="h-serv">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="chap" aria-hidden="true">01</span>
+      <h2 class="h2" id="h-serv" data-en="What I fix and how">Qué arreglo y cómo lo hago</h2>
+    </div>
+    <div class="bento">
+      <article class="card lime a reveal">
+        <h3 data-en="Technical SEO">SEO técnico</h3>
+        <p data-en="First I check what Googlebot sees. Then I decide what to touch: crawling, indexing, canonicals, hreflang and structured data.">Primero reviso qué ve Googlebot. Luego decido qué tocar: rastreo, indexación, canonicals, hreflang y datos estructurados.</p>
+        <svg class="crawl" viewBox="0 0 340 150" aria-hidden="true"><line x1="170" y1="25" x2="70" y2="75"/><line x1="170" y1="25" x2="170" y2="75"/><line x1="170" y1="25" x2="270" y2="75"/><line x1="70" y1="75" x2="40" y2="125"/><line x1="70" y1="75" x2="110" y2="125"/><line x1="270" y1="75" x2="270" y2="125"/><circle class="n" cx="170" cy="25" r="11"/><circle class="n" cx="70" cy="75" r="11"/><circle class="n" cx="170" cy="75" r="11"/><circle class="n" cx="270" cy="75" r="11"/><circle class="n" cx="40" cy="125" r="11"/><circle class="n" cx="110" cy="125" r="11"/><circle class="n" cx="270" cy="125" r="11"/></svg>
+        <p class="tip"><b data-en="Learn this">Aprende esto</b><span data-en="If a URL does not show up in Google, check the canonical and the noindex before blaming the content.">Si una URL no aparece en Google, revisa el canonical y el noindex antes de culpar al contenido.</span></p>
+      </article>
+      <article class="card cobalt b reveal" style="--d:1">
+        <h3 data-en="Development with Next.js and Payload">Desarrollo con Next.js y Payload</h3>
+        <p data-en="I build sites where SEO starts in the first commit: clean routes, metadata and server rendering.">Construyo sitios donde el SEO nace en el primer commit: rutas limpias, metadatos y render en servidor.</p>
+        <div class="stack" aria-hidden="true"><span>Next.js</span><span>Payload</span><span>PostgreSQL</span><span>TypeScript</span></div>
+      </article>
+      <article class="card ink c reveal" style="--d:2">
+        <h3 data-en="Infrastructure and servers">Infraestructura y servidores</h3>
+        <p data-en="I deploy, cache and watch the server. A high TTFB usually gets fixed here, not in the front end.">Despliego, cacheo y vigilo el servidor. Un TTFB alto casi siempre se arregla aquí y no en el front.</p>
+        <svg class="beat" viewBox="0 0 200 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 24 H50 L60 8 L72 40 L84 14 L92 24 H200" pathLength="1"/></svg>
+      </article>
+      <article class="card paper d reveal" style="--d:1">
+        <h3 data-en="Web performance">Rendimiento web</h3>
+        <p data-en="I measure LCP, CLS and INP on mobile and remove what weighs too much: images, fonts and JavaScript nobody uses.">Mido LCP, CLS e INP en móvil y quito lo que pesa: imágenes, fuentes y JavaScript que nadie usa.</p>
+      </article>
+      <article class="card paper e reveal" style="--d:2">
+        <h3 data-en="SEO for AI and GEO">SEO para IA y GEO</h3>
+        <p data-en="I prepare your pages so ChatGPT, Perplexity and Google AI answers can cite them: one question, one clear answer.">Preparo tus páginas para que ChatGPT, Perplexity y las respuestas de IA de Google las citen: una pregunta, una respuesta clara.</p>
+        <p class="tip"><b data-en="Learn this">Aprende esto</b><span data-en="Put the answer in the first paragraph under the heading. Assistants quote that block.">Pon la respuesta en el primer párrafo bajo el encabezado. Los asistentes citan ese bloque.</span></p>
+      </article>
+      <article class="card lime f reveal">
+        <div class="offer">
+          <div>
+            <h3 data-en="Technical audit">Auditoría técnica</h3>
+            <ul>
+              <li data-en="Crawling and indexing">Rastreo e indexación</li>
+              <li data-en="Core Web Vitals">Core Web Vitals</li>
+              <li data-en="Structured data">Datos estructurados</li>
+              <li data-en="A fix plan sorted by impact">Un plan de corrección ordenado por impacto</li>
+            </ul>
+            <p style="margin-top:20px"><a class="btn dark" href="#contacto"><span data-en="Request an audit">Pedir auditoría</span><span class="ar" aria-hidden="true">→</span></a></p>
+          </div>
+          <div class="price"><span>600</span> USD<small data-en="Credited to the work if we go on. Delivered in 10 business days.">Los acredito al trabajo si seguimos. Entrego en 10 días hábiles.</small></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 4. CASOS -->
+<section class="sec" id="casos" aria-labelledby="h-casos" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="chap" aria-hidden="true">02</span>
+      <div>
+        <h2 class="h2" id="h-casos" data-en="Results measured in Search Console">Resultados medidos en Search Console</h2>
+        <p class="intro" data-en="Three cases with real figures. I compare one year of clicks against the previous year, and the clients stay anonymous.">Tres casos con cifras reales. Comparo los clics de un año contra el año anterior y los clientes siguen anónimos.</p>
+      </div>
+    </div>
+    <div class="cases">
+      <article class="case c1" style="--i:0" data-io>
+        <p class="big" aria-label="más 406 por ciento" data-en-label="plus 406 percent">+<span data-count="406" data-dec="0" data-suf="">406</span>%</p>
+        <div>
+          <span class="chip sector" data-en="Healthcare, urology">Salud, urología</span>
+          <h3 data-en="From near-zero visibility to a year of sustained growth for a urologist">De casi cero visibilidad a un año de crecimiento sostenido para un urólogo</h3>
+          <p class="read" data-en="How to read it: +406% means this year's clicks were a little over five times last year's.">Cómo leerlo: +406% significa que los clics de este año fueron algo más de cinco veces los del año anterior.</p>
+          <a class="btn dark" href="https://juan-tech.com/case-studies"><span data-en="Read the full case">Leer el caso completo</span><span class="ar" aria-hidden="true">→</span></a>
+        </div>
+      </article>
+      <article class="case c2" style="--i:1" data-io>
+        <p class="big" aria-label="más 309 por ciento" data-en-label="plus 309 percent">+<span data-count="309" data-dec="0" data-suf="">309</span>%</p>
+        <div>
+          <span class="chip sector" data-en="Legal services, immigration">Servicios legales, inmigración</span>
+          <h3 data-en="Quadrupling organic traffic for an immigration law firm in one year">Cuadruplicar el tráfico orgánico de un despacho de inmigración en un año</h3>
+          <p class="read" data-en="How to read it: +309% is a little over four times the clicks of the previous year.">Cómo leerlo: +309% es algo más de cuatro veces los clics del año anterior.</p>
+          <a class="btn" href="https://juan-tech.com/case-studies"><span data-en="Read the full case">Leer el caso completo</span><span class="ar" aria-hidden="true">→</span></a>
+        </div>
+      </article>
+      <article class="case c3" style="--i:2" data-io>
+        <p class="big" aria-label="más 83 por ciento" data-en-label="plus 83 percent">+<span data-count="83" data-dec="0" data-suf="">83</span>%</p>
+        <div>
+          <span class="chip sector" data-en="Legal services, criminal defense">Servicios legales, defensa criminal</span>
+          <h3 data-en="Scaling educational legal content to over 86,000 annual organic clicks for a criminal defense firm">Escalar el contenido legal educativo a más de 86 000 clics orgánicos anuales para un despacho de defensa criminal</h3>
+          <p class="read" data-en="How to read it: +83% is almost double the clicks of the previous year.">Cómo leerlo: +83% es casi el doble de los clics del año anterior.</p>
+          <a class="btn dark" href="https://juan-tech.com/case-studies"><span data-en="Read the full case">Leer el caso completo</span><span class="ar" aria-hidden="true">→</span></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 5. PROCESO -->
+<section class="sec" id="proceso" aria-labelledby="h-proc" style="padding-top:clamp(40px,6vw,80px)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="chap" aria-hidden="true">03</span>
+      <h2 class="h2" id="h-proc" data-en="How I work in four steps">Cómo trabajo en cuatro pasos</h2>
+    </div>
+    <ol class="steps">
+      <li class="step reveal"><span class="n" aria-hidden="true">01</span><div><h3 data-en="Audit">Auditar</h3><p data-en="Crawling, indexing and Core Web Vitals in a single pass.">Rastreo, indexación y Core Web Vitals en una sola pasada.</p></div><p class="tip" data-en="I audit by template, not page by page. One broken template affects hundreds of URLs.">Audito por plantillas y no página por página. Una plantilla rota afecta a cientos de URLs.</p></li>
+      <li class="step reveal"><span class="n" aria-hidden="true">02</span><div><h3 data-en="Prioritize">Priorizar</h3><p data-en="I sort every finding by impact and effort.">Ordeno cada hallazgo por impacto y esfuerzo.</p></div><p class="tip" data-en="What blocks indexing goes before what is cosmetic.">Lo que bloquea la indexación va antes que lo cosmético.</p></li>
+      <li class="step reveal"><span class="n" aria-hidden="true">03</span><div><h3 data-en="Fix">Corregir</h3><p data-en="I open the repository and fix it myself, or I document the change for your team.">Abro el repositorio y lo corrijo yo mismo, o documento el cambio para tu equipo.</p></div><p class="tip" data-en="A plugin rarely solves it. The fix usually lives in the template or the server.">Un plugin rara vez lo resuelve. El arreglo suele vivir en la plantilla o en el servidor.</p></li>
+      <li class="step reveal"><span class="n" aria-hidden="true">04</span><div><h3 data-en="Measure">Medir</h3><p data-en="I measure again with Search Console and Core Web Vitals and explain what changed and why.">Vuelvo a medir con Search Console y Core Web Vitals y te explico qué cambió y por qué.</p></div><p class="tip" data-en="Always compare the same date range and the same device.">Compara siempre el mismo rango de fechas y el mismo dispositivo.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 6. WEBSITES -->
+<section class="sec" id="websites" aria-labelledby="h-web" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="chap" aria-hidden="true">04</span>
+      <div>
+        <h2 class="h2" id="h-web" data-en="Sites I built">Sitios que construí</h2>
+        <p class="intro" data-en="A Lighthouse score changes with the device and the network, so I will log the date and the tool next to every figure.">Un puntaje de Lighthouse cambia con el dispositivo y la red, por eso anotaré la fecha y la herramienta junto a cada cifra.</p>
+      </div>
+    </div>
+    <div class="sites">
+      <article class="card lime reveal" data-io>
+        <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="Rendimiento 83" data-en-label="Performance 83"><circle class="trk" cx="60" cy="60" r="48"/><circle class="bar" cx="60" cy="60" r="48" pathLength="100" style="--v:83"/><text x="60" y="72" text-anchor="middle" data-count="83" data-dec="0" data-suf="">83</text></svg>
+        <h3>Apturio</h3>
+        <p class="site-meta" data-en="Software / SaaS">Software / SaaS</p>
+        <p style="margin-top:12px"><span class="pend" data-en="Pending: date and tool of the measurement">PENDIENTE fecha y herramienta de la medición</span></p>
+      </article>
+      <article class="card paper reveal" style="--d:1" data-io>
+        <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="Rendimiento 73" data-en-label="Performance 73"><circle class="trk" cx="60" cy="60" r="48"/><circle class="bar" cx="60" cy="60" r="48" pathLength="100" style="--v:73"/><text x="60" y="72" text-anchor="middle" data-count="73" data-dec="0" data-suf="">73</text></svg>
+        <h3>Arianna Lupi</h3>
+        <p class="site-meta" data-en="Personal brand / coaching">Marca personal / coaching</p>
+        <p style="margin-top:12px"><span class="pend" data-en="Pending: date and tool of the measurement">PENDIENTE fecha y herramienta de la medición</span></p>
+      </article>
+      <article class="card cobalt reveal" style="--d:2" data-io>
+        <svg class="ring" viewBox="0 0 120 120" role="img" aria-label="Rendimiento 67" data-en-label="Performance 67" style="--ringc:#fff"><circle class="trk" cx="60" cy="60" r="48" style="stroke:rgb(255 255 255/.25)"/><circle class="bar" cx="60" cy="60" r="48" pathLength="100" style="--v:67;stroke:#C8F31D"/><text x="60" y="72" text-anchor="middle" data-count="67" data-dec="0" data-suf="">67</text></svg>
+        <h3>Estylopia</h3>
+        <p class="site-meta" data-en="Retail / personal styling">Retail / estilo personal</p>
+        <p style="margin-top:12px"><span class="pend" data-en="Pending: date and tool of the measurement">PENDIENTE fecha y herramienta de la medición</span></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 7. SOBRE -->
+<section class="sec" id="sobre" aria-labelledby="h-sobre" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="chap" aria-hidden="true">05</span>
+      <h2 class="h2" id="h-sobre" data-en="Engineer who audits and fixes">Ingeniero que audita y corrige</h2>
+    </div>
+    <div class="about">
+      <div class="portrait reveal" role="img" aria-label="Espacio reservado para el retrato de Juan" data-en-label="Placeholder for Juan's portrait"><span class="pend" data-en="Pending: portrait of Juan">PENDIENTE retrato de Juan</span></div>
+      <div class="reveal" style="--d:1">
+        <p data-en="I'm Juan Carlos Angulo, a software engineer and technical SEO consultant. I work from Lima and serve clients in Lima and Madrid, in Spanish and English.">Soy Juan Carlos Angulo, ingeniero de software y consultor SEO técnico. Trabajo desde Lima y atiendo clientes en Lima y Madrid, en español y en inglés.</p>
+        <p data-en="I do not hand over reports that end up in a drawer. I open the repository, fix the code and measure the result. When a tool I need does not exist, I build it.">No entrego informes que se quedan en un cajón. Abro el repositorio, corrijo el código y mido el resultado. Cuando falta una herramienta, la construyo.</p>
+        <div class="facts">
+          <p class="fact"><b><span data-count="15" data-dec="0" data-suf="">15</span></b><span data-en="clients in SEO">clientes en SEO</span></p>
+          <p class="fact"><b><span data-count="13" data-dec="0" data-suf="">13</span></b><span data-en="clients in development">clientes en desarrollo</span></p>
+          <p class="fact"><b><span data-count="29" data-dec="0" data-suf="">29</span></b><span data-en="technical checks in my own auditor">checks técnicos en mi propio auditor</span></p>
+        </div>
+        <a class="btn alt" href="https://auditor.juan-tech.com" target="_blank" rel="noopener"><span data-en="Try my auditor (opens in a new tab)">Probar mi auditor (se abre en una pestaña nueva)</span><span class="ar" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. TESTIMONIO -->
+<section class="quote sec" id="testimonio" aria-labelledby="h-test">
+  <div class="wrap">
+    <h2 class="sr" id="h-test" data-en="Testimonial">Testimonio</h2>
+    <figure class="reveal">
+      <blockquote data-en="Working with Juan was the best.">Trabajar con Juan fue lo mejor.</blockquote>
+      <figcaption><span>Patricia Ibarra, <span data-en="CEO of Estylopia">CEO de Estylopia</span></span><span class="pend" data-en="Pending: confirm the English translation">PENDIENTE confirmar la traducción al inglés</span><span class="pend" data-en="Pending: more real testimonials">PENDIENTE más testimonios reales</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- 9. FAQ -->
+<section class="sec" id="faq" aria-labelledby="h-faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="chap" aria-hidden="true">06</span>
+      <h2 class="h2" id="h-faq" data-en="Frequently asked questions">Preguntas frecuentes</h2>
+    </div>
+    <div class="faq reveal">
+      <details><summary><span data-en="What is the difference between traditional SEO and technical SEO?">¿Qué diferencia hay entre el SEO tradicional y el SEO técnico?</span><span class="pm" aria-hidden="true"></span></summary><p class="ans" data-en="Traditional SEO focuses on writing content and earning links. My work goes straight into the infrastructure of the site: I optimize crawl budget, rendering patterns and information architecture to fix whatever keeps your site from indexing well.">El SEO tradicional se enfoca en redactar contenido y conseguir enlaces. Mi trabajo entra directo a la infraestructura del sitio: optimizo el crawl budget, los patrones de renderizado y la arquitectura de información para resolver lo que impide que tu sitio se indexe bien.</p></details>
+      <details><summary><span data-en="Do you only deliver the audit or do you also fix the code?">¿Solo entregas la auditoría o también corriges el código?</span><span class="pm" aria-hidden="true"></span></summary><p class="ans" data-en="I cover both phases. I find the problems, design the technical fix, and then we decide together whether I implement it in the code or document it for your team.">Cubro las dos fases. Encuentro los problemas, diseño la solución técnica y después decido contigo si la implemento yo en el código o la documento para que tu equipo la ejecute.</p></details>
+      <details><summary><span data-en="Which stack and platforms do you work with?">¿Con qué stack y plataformas trabajas?</span><span class="pm" aria-hidden="true"></span></summary><p class="ans" data-en="Mostly modern headless architectures. Next.js and React on the framework side, Payload CMS for content, and platforms like Shopify or WordPress when the project already lives there.">Sobre todo con arquitecturas modernas y headless. Uso Next.js y React como framework, Payload CMS para el contenido, y plataformas como Shopify o WordPress cuando el proyecto ya vive ahí.</p></details>
+      <details><summary><span data-en="How do I measure the success of the optimizations?">¿Cómo mido el éxito de las optimizaciones?</span><span class="pm" aria-hidden="true"></span></summary><p class="ans" data-en="With data, not impressions. I track Core Web Vitals (LCP, INP, CLS) for performance, and on the search side I track the errors fixed in Search Console and the share of URLs indexed correctly.">Con datos y no con impresiones. Reviso la evolución de los Core Web Vitals (LCP, INP y CLS) para el rendimiento, y del lado de buscadores reviso los errores corregidos en Search Console y el porcentaje de URLs indexadas correctamente.</p></details>
+      <details><summary><span data-en="What is the first step to work with you?">¿Cuál es el primer paso para trabajar contigo?</span><span class="pm" aria-hidden="true"></span></summary><p class="ans" data-en="I almost always start with a technical SEO audit. It shows me the real health of your infrastructure, the rendering blockers, and it gives me a prioritized roadmap before I touch a single line of development.">Casi siempre empiezo con una auditoría de SEO técnico. Me deja ver la salud real de tu infraestructura, encontrar los bloqueos de renderizado y armar una hoja de ruta priorizada antes de tocar una sola línea de desarrollo.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 10. CONTACTO -->
+<section class="contact sec" id="contacto" aria-labelledby="h-cont">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="side reveal">
+        <h2 class="h2" id="h-cont" data-en="Tell me what your site needs">Cuéntame qué necesita tu sitio</h2>
+        <p data-en="Available for software engineering and technical SEO consulting. Write a few lines and I will reply with the first thing I would check.">Disponible para consultoría de ingeniería de software y SEO técnico. Escribe unas líneas y te respondo con lo primero que revisaría.</p>
+        <p><span class="pend" data-en="Pending: real response time">PENDIENTE plazo de respuesta real</span></p>
+        <a class="mail" href="mailto:hello@juan-tech.com">hello@juan-tech.com</a>
+      </div>
+      <form class="form reveal" id="form" novalidate style="--d:1">
+        <div class="field"><label for="f-name" data-en="Name">Nombre</label><input id="f-name" name="name" type="text" autocomplete="name"></div>
+        <div class="field"><label for="f-mail" data-en="Email">Correo electrónico</label><input id="f-mail" name="email" type="email" autocomplete="email"></div>
+        <div class="field"><label for="f-msg" data-en="Message">Mensaje</label><textarea id="f-msg" name="message"></textarea></div>
+        <button class="btn dark" type="submit"><span data-en="Send message">Enviar mensaje</span><span class="ar" aria-hidden="true">→</span></button>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- 11. PIE -->
+<footer class="foot on-dark" id="pie">
+  <div class="wrap">
+    <p class="mega" aria-hidden="true">Juan Carlos Angulo</p>
+    <div class="cols">
+      <div><p data-en="Software engineer and technical SEO consultant. Lima, Peru.">Ingeniero de software y consultor SEO técnico. Lima, Perú.</p></div>
+      <nav aria-labelledby="f1"><h2 id="f1" data-en="Services">Servicios</h2><a href="#servicios" data-en="What I fix">Qué arreglo</a><a href="https://juan-tech.com/servicios" data-en="Technical SEO in Lima">SEO técnico en Lima</a><a href="https://juan-tech.com/servicios" data-en="Technical SEO in Madrid">SEO técnico en Madrid</a></nav>
+      <nav aria-labelledby="f2"><h2 id="f2" data-en="Site">Sitio</h2><a href="https://juan-tech.com/blog">Blog</a><a href="#casos" data-en="Case studies">Casos de éxito</a><a href="https://juan-tech.com/authors" data-en="Authors">Autores</a></nav>
+      <nav aria-labelledby="f3"><h2 id="f3" data-en="Contact">Contacto</h2><a href="mailto:hello@juan-tech.com">hello@juan-tech.com</a><a href="https://linkedin.com/in/juancangulo" target="_blank" rel="noopener">LinkedIn</a></nav>
+    </div>
+    <p class="legal" data-en="© 2026 Juan Carlos Angulo. All rights reserved.">© 2026 Juan Carlos Angulo. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<button class="pause" id="pause" type="button" aria-pressed="false" aria-label="Pausar animaciones" data-en-label="Pause animations"><i aria-hidden="true"></i><span data-en="Pause animations">Pausar animaciones</span></button>
+
+<script src="assets/js/app.js" defer></script>
+</body>
+</html>

@@ -7,14 +7,56 @@
   },
   "home": {
     "heroTitle": "Juan Carlos Angulo: Ingeniería de Software y SEO Técnico",
-    "heroSubtitle": "Arquitecturas de alto rendimiento y estrategias de crecimiento orgánico"
+    "heroSubtitle": "Arquitecturas de alto rendimiento y estrategias de crecimiento orgánico",
+    "areasLabel": "Áreas",
+    "taglineLabel": "Lo que prometo",
+    "heroPortraitLabel": "Retrato de Juan Carlos Angulo dibujado con caracteres ASCII",
+    "marquee": {
+      "groupLabel": "Logos de clientes"
+    },
+    "vitals": {
+      "groupLabel": "Lecturas de medición",
+      "ariaLabel": "{name} de juan-tech.com: {label}, dentro del rango bueno"
+    },
+    "codeFixes": {
+      "regionLabel": "Código del arreglo {name}",
+      "commitFallback": "commit"
+    },
+    "sites": {
+      "screenshotAlt": "Captura de {domain}",
+      "note": "Puntajes de PageSpeed Insights en móvil, medidos el {date}. Las tecnologías salen de los encabezados y el código de cada sitio.",
+      "scoresLabel": "Puntajes de PageSpeed en móvil",
+      "scoreSuffix": "de 100",
+      "rings": {
+        "performance": "Rendimiento",
+        "accessibility": "Accesibilidad",
+        "bestPractices": "Buenas prácticas",
+        "seo": "SEO"
+      }
+    },
+    "testimonials": {
+      "roleAt": "{role} de {company}"
+    }
   },
   "common": {
     "readMore": "Leer más",
-    "viewAll": "Ver todos"
+    "viewAll": "Ver todos",
+    "breadcrumbHome": "Inicio",
+    "breadcrumbsLabel": "Ruta de navegación",
+    "opensInNewTab": "se abre en otra pestaña",
+    "opensInNewTabAffiliate": "se abre en otra pestaña, enlace de afiliado",
+    "step": "Paso {n}",
+    "seeService": "Ver servicio",
+    "topicsLabel": "Temas",
+    "copyEmail": "Copiar correo",
+    "emailCopied": "Correo copiado",
+    "translationNotice": {
+      "text": "Esta página todavía no está disponible en inglés. Estás viendo el contenido en español.",
+      "link": "Ver en español"
+    }
   },
   "servicesShowcase": {
-    "cta": "Explorar servicio",
+    "cta": "Ver servicio",
     "sectionHeading": "Servicios"
   },
   "auditorHighlight": {
@@ -41,7 +83,8 @@
     "opensInNewTab": "se abre en una pestaña nueva"
   },
   "testimonialsCarousel": {
-    "title": "Testimonios"
+    "title": "Testimonios",
+    "roleCompany": "{role} · {company}"
   },
   "affiliateDisclosure": {
     "generalDisclosure": "Algunos enlaces de esta página son de afiliado. Si compras a través de alguno, puedo ganar una comisión pequeña sin costo adicional para ti. Solo recomiendo herramientas que uso de verdad.",
@@ -72,17 +115,391 @@
   "emailCapture": {
     "eyebrow": "Descarga gratis",
     "heading": "Checklist de auditoría SEO técnica",
-    "description": "5 categorías, decenas de checks accionables — el mismo criterio que uso en mis propias auditorías.",
+    "description": "5 categorías y decenas de checks accionables, el mismo criterio que uso en mis propias auditorías.",
     "emailLabel": "Correo electrónico",
     "emailPlaceholder": "tucorreo@ejemplo.com",
     "submitLabel": "Enviarme el checklist",
-    "privacyPrefix": "Al suscribirte aceptas nuestra ",
+    "privacyPrefix": "Al suscribirte aceptas mi ",
     "privacyLinkText": "política de privacidad",
-    "privacySuffix": ". Solo te escribiremos para confirmar la descarga, sin spam.",
+    "privacySuffix": ". Solo te escribo para confirmar la descarga, sin spam.",
     "pendingHeading": "Revisa tu correo",
     "pendingBody": "Te enviamos un enlace para confirmar tu suscripción y desbloquear la descarga.",
     "alreadyHeading": "Ya estás suscrito",
-    "alreadyBody": "Revisa tu bandeja — ya deberías tener el checklist.",
-    "errorBody": "Algo salió mal. No pudimos registrar tu correo — intenta de nuevo en un momento."
+    "alreadyBody": "Revisa tu bandeja. Ya deberías tener el checklist.",
+    "errorBody": "Algo salió mal y no pude registrar tu correo. Intenta de nuevo en un momento."
+  },
+  "richText": {
+    "copyCode": "Copiar",
+    "codeNoun": "código",
+    "codeCopied": "Copiado",
+    "codeCopiedStatus": "Código copiado",
+    "codeCopyFailedStatus": "No se pudo copiar el código",
+    "codeRegionLabel": "Código con desplazamiento horizontal",
+    "tableRegionLabel": "Tabla con desplazamiento horizontal",
+    "readPost": "Leer el artículo"
+  },
+  "shell": {
+    "skipLink": "Saltar al contenido",
+    "brandAria": "Juan Angulo, inicio",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "langButtonAria": "Idioma: Español",
+    "langGroup": "Idioma",
+    "motionToggle": "Pausar animaciones",
+    "ctaFallback": "Pedir auditoría 360",
+    "tagline": "Ingeniero de software y consultor SEO técnico",
+    "opensInNewTab": "(se abre en otra pestaña)",
+    "servicesTitle": "Servicios",
+    "servicesIndex": "Todos los servicios",
+    "groupLabel": "Enlaces de {title}",
+    "legalLabel": "Enlaces legales",
+    "socialLabel": "Redes",
+    "landmarks": {
+      "header": "Cabecera",
+      "navMain": "Principal",
+      "menu": "Menú",
+      "navFooter": "Enlaces del pie",
+      "footer": "Pie de página",
+      "main": "Contenido principal"
+    }
+  },
+  "notFound": {
+    "metaTitle": "Página no encontrada",
+    "heading": "Esta página no existe",
+    "body": "La dirección que escribiste no corresponde a ninguna página del sitio. Puede que la hayamos movido o que el enlace tenga un error.",
+    "backHome": "Volver al inicio",
+    "writeToJuan": "Escribir a Juan",
+    "suggestedLabel": "Páginas sugeridas",
+    "suggestedHeading": "Quizá buscabas",
+    "links": {
+      "services": {
+        "label": "Servicios",
+        "description": "Auditoría, consultoría, desarrollo y SEO para IA"
+      },
+      "cases": {
+        "label": "Casos de éxito",
+        "description": "Resultados reales medidos en Search Console"
+      },
+      "blog": {
+        "label": "Blog",
+        "description": "Artículos de SEO técnico y software"
+      },
+      "contact": {
+        "label": "Contacto",
+        "description": "Cuéntame de tu proyecto"
+      }
+    }
+  },
+  "search": {
+    "title": "Buscar",
+    "fieldLabel": "Buscar",
+    "placeholder": "Buscar artículos, casos de éxito, autores...",
+    "submit": "Buscar en el sitio",
+    "formAria": "Búsqueda en el sitio",
+    "resultCount": "{count, plural, one {# resultado} other {# resultados}}",
+    "noResultsHeading": "Sin resultados para \"{q}\"",
+    "noResultsBody": "Prueba con otro término, o explora artículos y casos de estudio directamente.",
+    "errorHeading": "La búsqueda no está disponible por el momento. Intenta de nuevo en unos minutos.",
+    "blogLink": "Blog",
+    "casesLink": "Casos de éxito",
+    "typeLabels": {
+      "posts": "Artículo",
+      "case-studies": "Caso de éxito",
+      "authors": "Autor"
+    }
+  },
+  "services": {
+    "index": {
+      "eyebrow": "Lo que hago",
+      "listLabel": "Lista de servicios",
+      "compareTitle": "Qué servicio es para ti",
+      "compareLabel": "Qué servicio te conviene según lo que te está pasando",
+      "columns": {
+        "service": "Servicio",
+        "fitsIf": "Te sirve si",
+        "outcome": "Qué vas a lograr",
+        "time": "Tiempo estimado"
+      },
+      "unsure": "¿No estás seguro de cuál servicio necesitas? Cuéntame qué problema tienes y te digo por dónde empezar.",
+      "talkCta": "Hablar con Juan",
+      "viewService": "Ver servicio"
+    },
+    "detail": {
+      "eyebrow": "Servicio",
+      "durationLabel": "Duración",
+      "faqTitle": "Preguntas frecuentes",
+      "otherTitle": "Otros servicios"
+    }
+  },
+  "about": {
+    "crumb": "Sobre mí",
+    "seeServices": "Ver servicios",
+    "myStack": "Mi stack",
+    "timelineLabel": "Recorrido profesional",
+    "by": "por {name}",
+    "dateRange": "{from} a {to}",
+    "dateRangeOpen": "{from} a hoy",
+    "attendees": "{count, plural, one {# asistente} other {# asistentes}}"
+  },
+  "contact": {
+    "eyebrow": "Hablemos",
+    "sectionLabel": "Formulario y datos de contacto",
+    "emailLabel": "Correo",
+    "writeEmail": "Escribir un correo",
+    "servicesPrompt": "¿Todavía no sabes cuál servicio necesitas?",
+    "servicesLink": "Mira los servicios",
+    "form": {
+      "title": "Cuéntame de tu proyecto",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "message": "Mensaje",
+      "submit": "Enviar mensaje",
+      "honeypotLabel": "Sitio web de la empresa",
+      "errors": {
+        "name": "Escribe tu nombre.",
+        "email": "Escribe un correo válido, por ejemplo nombre@dominio.com.",
+        "message": "Cuéntame de qué trata tu proyecto.",
+        "summary": "Revisa los campos marcados."
+      },
+      "success": {
+        "title": "Mensaje enviado",
+        "body": "Gracias por escribir. Suelo responder en menos de 48 horas.",
+        "again": "Enviar otro mensaje"
+      },
+      "failure": "Algo salió mal al enviar tu mensaje. Intenta de nuevo, o escribe directamente a {email}."
+    },
+    "cta": {
+      "sectionLabel": "Contacto",
+      "formLabel": "Formulario de contacto",
+      "responseNote": "Suelo responder en menos de 48 horas."
+    }
+  },
+  "stack": {
+    "eyebrow": "Herramientas",
+    "categoriesLabel": "Categorías del stack",
+    "toolsLabel": "Herramientas de {category}",
+    "chip": {
+      "active": "Enlace de afiliado",
+      "none": "Sin programa de afiliados"
+    }
+  },
+  "legal": {
+    "eyebrow": "Legal",
+    "tocLabel": "En este documento",
+    "tocAria": "Índice del documento",
+    "effectiveOn": "Vigente desde el {date}"
+  },
+  "websites": {
+    "index": {
+      "listTitle": "Proyectos",
+      "listLabel": "Lista de proyectos",
+      "filterLabel": "Filtrar proyectos por tecnología",
+      "filterAll": "Todos",
+      "filterOption": "{label} ({count})",
+      "kinds": {
+        "nextjs": "Next.js",
+        "wordpress": "WordPress",
+        "other": "Otras tecnologías"
+      },
+      "count": "{count, plural, one {# proyecto} other {# proyectos}}",
+      "countWithKind": "{count, plural, one {# proyecto} other {# proyectos}} con {kind}",
+      "featured": "Proyecto destacado",
+      "viewProject": "Ver el proyecto",
+      "emptyTitle": "Próximamente",
+      "emptyText": "Estoy preparando nuevos casos de sitios web. Vuelve pronto.",
+      "screenshotAlt": "Captura de {domain}",
+      "stackLabel": "Tecnologías",
+      "scoresLabel": "Puntajes de PageSpeed Insights",
+      "scoreSuffix": "de 100",
+      "scoresNote": "Puntajes de PageSpeed Insights, medidos el {date}.",
+      "rings": {
+        "performance": "Rendimiento",
+        "accessibility": "Accesibilidad",
+        "bestPractices": "Buenas prácticas",
+        "seo": "SEO"
+      }
+    },
+    "detail": {
+      "visit": "Visitar el sitio",
+      "opensInNewTab": "se abre en otra pestaña",
+      "screenshotAlt": "Captura de escritorio de {domain}",
+      "buildTitle": "Qué construí y qué retos tuvo",
+      "highlightsTitle": "Aspectos destacados",
+      "challengesTitle": "Retos",
+      "stackTitle": "Stack tecnológico",
+      "stackLabel": "Tecnologías",
+      "scoresTitle": "Rendimiento medido",
+      "scoresLabel": "Puntajes de PageSpeed Insights",
+      "scoreSuffix": "de 100",
+      "scoresNote": "Puntajes de PageSpeed Insights, medidos el {date}.",
+      "rings": {
+        "performance": "Rendimiento",
+        "accessibility": "Accesibilidad",
+        "bestPractices": "Buenas prácticas",
+        "seo": "SEO"
+      },
+      "relatedCaseTitle": "Caso de éxito relacionado",
+      "relatedCaseLink": "Ver el caso de éxito",
+      "navLabel": "Navegar entre proyectos",
+      "previous": "Anterior: {title}",
+      "next": "Siguiente: {title}",
+      "moreTitle": "Más proyectos",
+      "viewAll": "Ver todos"
+    }
+  },
+  "cases": {
+    "index": {
+      "listTitle": "Todos los casos",
+      "listLabel": "Lista de casos de éxito",
+      "viewCase": "Ver el caso completo",
+      "emptyTitle": "Próximamente",
+      "emptyText": "Estoy preparando nuevos casos de éxito. Vuelve pronto."
+    },
+    "detail": {
+      "statsTitle": "Los números del caso",
+      "contextTitle": "El cliente y el reto",
+      "clientTitle": "El cliente",
+      "challengeTitle": "El reto",
+      "solutionTitle": "La solución",
+      "resultsTitle": "Resultados",
+      "periodBefore": "Antes: {period}.",
+      "periodAfter": "Después: {period}.",
+      "before": "Antes",
+      "after": "Después",
+      "resultsCaption": "Resultados del caso, antes y después",
+      "metricColumn": "Métrica",
+      "changeColumn": "Cambio",
+      "noBase": "Sin base de comparación",
+      "conclusionTitle": "Conclusiones",
+      "authorLabel": "Sobre el autor",
+      "moreTitle": "Más casos de éxito",
+      "viewAll": "Ver todos",
+      "compareTitle": "Cómo se compara con mis otros casos",
+      "compareCaption": "Clics orgánicos anuales de cada caso, el año anterior contra el periodo medido",
+      "compareRankBoth": "Este caso ocupa el lugar {pct} de {pctTotal} en crecimiento porcentual y el lugar {abs} de {absTotal} en clics absolutos.",
+      "compareRankAbs": "Este caso ocupa el lugar {abs} de {absTotal} en clics absolutos. No tiene crecimiento porcentual porque partió de cero.",
+      "compareNote": "Los casos que miden otra métrica, como el tráfico mensual, no entran en esta comparación de clics anuales.",
+      "compareScrollLabel": "Tabla de comparación con desplazamiento horizontal",
+      "compareThis": "Este caso",
+      "compareNoBase": "Sin base",
+      "caseColumn": "Caso",
+      "sectorColumn": "Sector",
+      "scaleColumn": "Escala",
+      "lessonsTitle": "Lecciones aprendidas"
+    }
+  },
+  "blog": {
+    "nav": {
+      "label": "Categorías del blog",
+      "all": "Todas"
+    },
+    "category": {
+      "listTitle": "Artículos de esta categoría",
+      "listLabel": "Lista de artículos de la categoría",
+      "count": "{count, plural, one {# artículo} other {# artículos}}",
+      "emptyTitle": "Todavía no hay artículos en esta categoría",
+      "emptyText": "Explora el resto del blog mientras tanto.",
+      "backToBlog": "Ver todo el blog"
+    },
+    "closing": {
+      "pointsLabel": "Puntos clave"
+    },
+    "index": {
+      "latestTitle": "Lo más reciente",
+      "sectionListLabel": "Artículos de {category}",
+      "count": "{count, plural, one {# artículo} other {# artículos}}",
+      "viewMore": "Ver más"
+    },
+    "newsletter": {
+      "emailLabel": "Tu correo",
+      "submitLabel": "Suscribirme",
+      "sending": "Enviando…",
+      "success": "Revisa tu correo: te mandé un enlace para confirmar el alta. Sin ese clic no queda activa.",
+      "invalid": "Ese correo no parece válido. Revísalo e inténtalo otra vez.",
+      "error": "No se pudo completar el alta. Inténtalo de nuevo en un rato.",
+      "unconfigured": "El alta no está disponible en este momento. Escríbeme por el formulario de contacto.",
+      "confirmed": "Listo, tu correo quedó confirmado. Vas a recibir los artículos nuevos.",
+      "unsubscribed": "Te diste de baja. No vas a recibir más correos míos.",
+      "invalidLink": "Ese enlace ya no sirve. Si querías suscribirte, deja tu correo otra vez aquí abajo.",
+      "honeypotLabel": "Company website"
+    },
+    "search": {
+      "formAria": "Buscar en el blog",
+      "fieldLabel": "Buscar artículos",
+      "submit": "Buscar",
+      "resultCount": "{count, plural, =0 {Sin resultados} one {# resultado} other {# resultados}}",
+      "resultsTitle": "Resultados de la búsqueda",
+      "noResults": "No hay artículos que coincidan con tu búsqueda.",
+      "siteSearch": "Buscar en todo el sitio"
+    }
+  },
+  "post": {
+    "toc": {
+      "label": "Tabla de contenidos"
+    },
+    "readingTime": "{minutes} min de lectura",
+    "categoriesLabel": "Categorías del artículo",
+    "progress": {
+      "label": "Progreso de lectura"
+    },
+    "offer": {
+      "label": "Información destacada"
+    },
+    "author": {
+      "title": "Sobre el autor",
+      "credentialsLabel": "Credenciales",
+      "years": "{years}+ años de experiencia",
+      "profile": "Ver el perfil de {name}"
+    },
+    "related": {
+      "title": "Artículos relacionados",
+      "listLabel": "Lista de artículos relacionados"
+    },
+    "nav": {
+      "label": "Entrada anterior y siguiente",
+      "previous": "Anterior",
+      "next": "Siguiente"
+    }
+  },
+  "authors": {
+    "index": {
+      "listLabel": "Lista de autores",
+      "emptyTitle": "Próximamente",
+      "emptyText": "Todavía no hay autores publicados.",
+      "viewProfile": "Ver el perfil"
+    },
+    "profile": {
+      "credentialsTitle": "Credenciales",
+      "credentialsLabel": "Lista de credenciales",
+      "expertiseTitle": "Áreas de especialización",
+      "expertiseLabel": "Lista de áreas de especialización",
+      "experienceTitle": "Experiencia",
+      "experienceLabel": "Experiencia profesional",
+      "educationTitle": "Educación y certificaciones",
+      "educationLabel": "Educación y certificaciones",
+      "eventsTitle": "Eventos donde he sido ponente",
+      "eventsLabel": "Lista de eventos",
+      "postsTitle": "Artículos",
+      "postsLabel": "Lista de artículos del autor",
+      "casesTitle": "Casos de éxito",
+      "casesLabel": "Lista de casos de éxito del autor",
+      "dateRange": "{from} a {to}",
+      "dateRangeOpen": "{from} a hoy",
+      "current": "En curso",
+      "years": "{years}+ años de experiencia",
+      "by": "por {name}",
+      "attendees": "{count, plural, one {# asistente} other {# asistentes}}",
+      "coSpeakers": "Con {names}",
+      "eventLink": "Ver más",
+      "socialLabel": "Perfiles de {name} en otras plataformas",
+      "platforms": {
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "x": "X",
+        "website": "Sitio web"
+      },
+      "aboutLink": "Más sobre mí",
+      "stackLink": "Ver mi stack de herramientas"
+    }
   }
 }

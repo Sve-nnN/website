@@ -1,0 +1,378 @@
+{
+  "generatedAt": "2026-10-22T00:35:51.449Z",
+  "lighthouseVersion": "13.4.1",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+  "chromeFlags": "--headless=new --use-angle=swiftshader --enable-unsafe-swiftshader --ignore-gpu-blocklist",
+  "server": "servidor estatico propio con brotli calidad 11 en 127.0.0.1",
+  "buildSha256": "1a7c933d8fd7237f31eb85cafb0a92fcf7cfb74f369d7fbcf6addb71926750af",
+  "label": "final",
+  "runsPerCombination": 3,
+  "thresholds": {
+    "accessibility": 100,
+    "cls": 0,
+    "performanceMobileMedian": 90,
+    "lcpMobileMedianMs": 2000
+  },
+  "combos": [
+    {
+      "lang": "en",
+      "factor": "desktop",
+      "path": "/en",
+      "runs": [
+        {
+          "performance": 64,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 967,
+          "cls": 0,
+          "tbtMs": 676,
+          "transferBytes": 224317,
+          "jsBytes": 94425,
+          "cssBytes": 11158,
+          "chunksRequested": [
+            "Dither-D6vutHxJ.js",
+            "Dither-C5uArhRq.css",
+            "StarBorder-DfjcLlWG.js",
+            "StarBorder-DKyPqfZK.css",
+            "SpotlightCard-CINnH8K7.js",
+            "SpotlightCard-DYVtI0ff.css",
+            "Noise-D6KsuDAr.js",
+            "Noise-1ihRq-dN.css"
+          ],
+          "requests": 44,
+          "originalChunkRequested": true,
+          "colorContrast": "pass",
+          "lcpElement": "section#top > div.wrap > div.hero-copy > p.lede"
+        },
+        {
+          "performance": 59,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 1236,
+          "cls": 0,
+          "tbtMs": 1172,
+          "transferBytes": 224317,
+          "jsBytes": 94425,
+          "cssBytes": 11158,
+          "chunksRequested": [
+            "Dither-D6vutHxJ.js",
+            "Dither-C5uArhRq.css",
+            "StarBorder-DfjcLlWG.js",
+            "StarBorder-DKyPqfZK.css",
+            "SpotlightCard-CINnH8K7.js",
+            "SpotlightCard-DYVtI0ff.css",
+            "Noise-D6KsuDAr.js",
+            "Noise-1ihRq-dN.css"
+          ],
+          "requests": 44,
+          "originalChunkRequested": true,
+          "colorContrast": "pass",
+          "lcpElement": "section#top > div.wrap > div.hero-copy > p.lede"
+        },
+        {
+          "performance": 85,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 431,
+          "cls": 0,
+          "tbtMs": 262,
+          "transferBytes": 224317,
+          "jsBytes": 94425,
+          "cssBytes": 11158,
+          "chunksRequested": [
+            "Dither-D6vutHxJ.js",
+            "Dither-C5uArhRq.css",
+            "StarBorder-DfjcLlWG.js",
+            "StarBorder-DKyPqfZK.css",
+            "SpotlightCard-CINnH8K7.js",
+            "SpotlightCard-DYVtI0ff.css",
+            "Noise-D6KsuDAr.js",
+            "Noise-1ihRq-dN.css"
+          ],
+          "requests": 44,
+          "originalChunkRequested": true,
+          "colorContrast": "pass",
+          "lcpElement": "section#top > div.wrap > div.hero-copy > p.lede"
+        }
+      ],
+      "median": {
+        "performance": 64,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "lcpMs": 967,
+        "cls": 0,
+        "tbtMs": 676,
+        "transferBytes": 224317,
+        "jsBytes": 94425,
+        "cssBytes": 11158,
+        "requests": 44
+      },
+      "representativeRun": {
+        "performance": 64,
+        "lcpMs": 967
+      },
+      "report": "lighthouse-en-desktop.report.html"
+    },
+    {
+      "lang": "en",
+      "factor": "mobile",
+      "path": "/en",
+      "runs": [
+        {
+          "performance": 94,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 1892,
+          "cls": 0,
+          "tbtMs": 56,
+          "transferBytes": 207690,
+          "jsBytes": 79559,
+          "cssBytes": 9397,
+          "chunksRequested": [],
+          "requests": 34,
+          "originalChunkRequested": false,
+          "colorContrast": "pass",
+          "lcpElement": "section#top > div.wrap > div.hero-copy > p.lede"
+        },
+        {
+          "performance": 90,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 1873,
+          "cls": 0,
+          "tbtMs": 110,
+          "transferBytes": 207690,
+          "jsBytes": 79559,
+          "cssBytes": 9397,
+          "chunksRequested": [],
+          "requests": 34,
+          "originalChunkRequested": false,
+          "colorContrast": "pass",
+          "lcpElement": "section#top > div.wrap > div.hero-copy > p.lede"
+        },
+        {
+          "performance": 96,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 1957,
+          "cls": 0,
+          "tbtMs": 36,
+          "transferBytes": 207690,
+          "jsBytes": 79559,
+          "cssBytes": 9397,
+          "chunksRequested": [],
+          "requests": 34,
+          "originalChunkRequested": false,
+          "colorContrast": "pass",
+          "lcpElement": "section#top > div.wrap > div.hero-copy > p.lede"
+        }
+      ],
+      "median": {
+        "performance": 94,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "lcpMs": 1892,
+        "cls": 0,
+        "tbtMs": 56,
+        "transferBytes": 207690,
+        "jsBytes": 79559,
+        "cssBytes": 9397,
+        "requests": 34
+      },
+      "representativeRun": {
+        "performance": 94,
+        "lcpMs": 1892
+      },
+      "report": "lighthouse-en-mobile.report.html"
+    },
+    {
+      "lang": "es",
+      "factor": "desktop",
+      "path": "/",
+      "runs": [
+        {
+          "performance": 79,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 438,
+          "cls": 0,
+          "tbtMs": 352,
+          "transferBytes": 224317,
+          "jsBytes": 94425,
+          "cssBytes": 11158,
+          "chunksRequested": [
+            "",
+            "Dither-D6vutHxJ.js",
+            "Dither-C5uArhRq.css",
+            "StarBorder-DfjcLlWG.js",
+            "StarBorder-DKyPqfZK.css",
+            "SpotlightCard-CINnH8K7.js",
+            "SpotlightCard-DYVtI0ff.css",
+            "Noise-D6KsuDAr.js",
+            "Noise-1ihRq-dN.css"
+          ],
+          "requests": 44,
+          "originalChunkRequested": true,
+          "colorContrast": "pass",
+          "lcpElement": "h1#h1 > span.ln > span > span.wd"
+        },
+        {
+          "performance": 70,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 401,
+          "cls": 0,
+          "tbtMs": 588,
+          "transferBytes": 224317,
+          "jsBytes": 94425,
+          "cssBytes": 11158,
+          "chunksRequested": [
+            "",
+            "Dither-D6vutHxJ.js",
+            "Dither-C5uArhRq.css",
+            "StarBorder-DfjcLlWG.js",
+            "StarBorder-DKyPqfZK.css",
+            "SpotlightCard-CINnH8K7.js",
+            "SpotlightCard-DYVtI0ff.css",
+            "Noise-D6KsuDAr.js",
+            "Noise-1ihRq-dN.css"
+          ],
+          "requests": 44,
+          "originalChunkRequested": true,
+          "colorContrast": "pass",
+          "lcpElement": "h1#h1 > span.ln > span > span.wd"
+        },
+        {
+          "performance": 75,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 402,
+          "cls": 0,
+          "tbtMs": 394,
+          "transferBytes": 224317,
+          "jsBytes": 94425,
+          "cssBytes": 11158,
+          "chunksRequested": [
+            "",
+            "Dither-D6vutHxJ.js",
+            "Dither-C5uArhRq.css",
+            "StarBorder-DfjcLlWG.js",
+            "StarBorder-DKyPqfZK.css",
+            "SpotlightCard-CINnH8K7.js",
+            "SpotlightCard-DYVtI0ff.css",
+            "Noise-D6KsuDAr.js",
+            "Noise-1ihRq-dN.css"
+          ],
+          "requests": 44,
+          "originalChunkRequested": true,
+          "colorContrast": "pass",
+          "lcpElement": "h1#h1 > span.ln > span > span.wd"
+        }
+      ],
+      "median": {
+        "performance": 75,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "lcpMs": 402,
+        "cls": 0,
+        "tbtMs": 394,
+        "transferBytes": 224317,
+        "jsBytes": 94425,
+        "cssBytes": 11158,
+        "requests": 44
+      },
+      "representativeRun": {
+        "performance": 75,
+        "lcpMs": 402
+      },
+      "report": "lighthouse-es-desktop.report.html"
+    },
+    {
+      "lang": "es",
+      "factor": "mobile",
+      "path": "/",
+      "runs": [
+        {
+          "performance": 91,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 1912,
+          "cls": 0,
+          "tbtMs": 95,
+          "transferBytes": 207690,
+          "jsBytes": 79559,
+          "cssBytes": 9397,
+          "chunksRequested": [
+            ""
+          ],
+          "requests": 34,
+          "originalChunkRequested": false,
+          "colorContrast": "pass",
+          "lcpElement": "section#top > div.wrap > div.hero-copy > p.lede"
+        },
+        {
+          "performance": 91,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 1909,
+          "cls": 0,
+          "tbtMs": 152,
+          "transferBytes": 207690,
+          "jsBytes": 79559,
+          "cssBytes": 9397,
+          "chunksRequested": [
+            ""
+          ],
+          "requests": 34,
+          "originalChunkRequested": false,
+          "colorContrast": "pass",
+          "lcpElement": "section#top > div.wrap > div.hero-copy > p.lede"
+        },
+        {
+          "performance": 94,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 1875,
+          "cls": 0,
+          "tbtMs": 69,
+          "transferBytes": 207690,
+          "jsBytes": 79559,
+          "cssBytes": 9397,
+          "chunksRequested": [
+            ""
+          ],
+          "requests": 34,
+          "originalChunkRequested": false,
+          "colorContrast": "pass",
+          "lcpElement": "section#top > div.wrap > div.hero-copy > p.lede"
+        }
+      ],
+      "median": {
+        "performance": 91,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "lcpMs": 1909,
+        "cls": 0,
+        "tbtMs": 95,
+        "transferBytes": 207690,
+        "jsBytes": 79559,
+        "cssBytes": 9397,
+        "requests": 34
+      },
+      "representativeRun": {
+        "performance": 91,
+        "lcpMs": 1912
+      },
+      "report": "lighthouse-es-mobile.report.html"
+    }
+  ],
+  "gates": {
+    "accesibilidad 100 en todas las corridas": "PASS",
+    "CLS 0 en todas las corridas mobile": "PASS",
+    "performance mobile, mediana >= 90": "PASS",
+    "LCP mobile, mediana < 2000 ms": "PASS",
+    "color-contrast aprobado en todas las corridas": "PASS",
+    "ningun chunk de React Bits pedido en mobile": "PASS"
+  },
+  "tbtNote": "Chromium headless renderiza WebGL por software (SwiftShader): el TBT y el LCP de desktop salen exagerados. Se confirman en una GPU real. Son informativos, no compuertas (D-11)."
+}

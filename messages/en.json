@@ -7,14 +7,56 @@
   },
   "home": {
     "heroTitle": "Juan Carlos Angulo: Software Engineering & Technical SEO",
-    "heroSubtitle": "High-performance architectures and organic growth strategies"
+    "heroSubtitle": "High-performance architectures and organic growth strategies",
+    "areasLabel": "Areas",
+    "taglineLabel": "What I promise",
+    "heroPortraitLabel": "Portrait of Juan Carlos Angulo drawn with ASCII characters",
+    "marquee": {
+      "groupLabel": "Client logos"
+    },
+    "vitals": {
+      "groupLabel": "Measurement readings",
+      "ariaLabel": "{name} for juan-tech.com: {label}, within the good range"
+    },
+    "codeFixes": {
+      "regionLabel": "Code for the fix {name}",
+      "commitFallback": "commit"
+    },
+    "sites": {
+      "screenshotAlt": "Screenshot of {domain}",
+      "note": "PageSpeed Insights mobile scores, measured on {date}. The technologies come from each site's headers and code.",
+      "scoresLabel": "PageSpeed mobile scores",
+      "scoreSuffix": "out of 100",
+      "rings": {
+        "performance": "Performance",
+        "accessibility": "Accessibility",
+        "bestPractices": "Best practices",
+        "seo": "SEO"
+      }
+    },
+    "testimonials": {
+      "roleAt": "{role} at {company}"
+    }
   },
   "common": {
     "readMore": "Read more",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "breadcrumbHome": "Home",
+    "breadcrumbsLabel": "Breadcrumb",
+    "opensInNewTab": "opens in a new tab",
+    "opensInNewTabAffiliate": "opens in a new tab, affiliate link",
+    "step": "Step {n}",
+    "seeService": "View service",
+    "topicsLabel": "Topics",
+    "copyEmail": "Copy email",
+    "emailCopied": "Email copied",
+    "translationNotice": {
+      "text": "This page is not available in English yet. You are viewing the Spanish content.",
+      "link": "Ver en español"
+    }
   },
   "servicesShowcase": {
-    "cta": "Explore service",
+    "cta": "View service",
     "sectionHeading": "Services"
   },
   "auditorHighlight": {
@@ -41,7 +83,8 @@
     "opensInNewTab": "opens in a new tab"
   },
   "testimonialsCarousel": {
-    "title": "Testimonials"
+    "title": "Testimonials",
+    "roleCompany": "{role} · {company}"
   },
   "affiliateDisclosure": {
     "generalDisclosure": "Some of the links on this page are affiliate links. If you buy through one, I may earn a small commission at no extra cost to you. I only recommend tools I've actually used.",
@@ -72,17 +115,391 @@
   "emailCapture": {
     "eyebrow": "Free download",
     "heading": "Technical SEO audit checklist",
-    "description": "5 categories, dozens of actionable checks — the same criteria I use in my own audits.",
+    "description": "5 categories and dozens of actionable checks, the same criteria I use in my own audits.",
     "emailLabel": "Email address",
     "emailPlaceholder": "you@example.com",
     "submitLabel": "Send me the checklist",
-    "privacyPrefix": "By subscribing you accept our ",
+    "privacyPrefix": "By subscribing you accept my ",
     "privacyLinkText": "privacy policy",
-    "privacySuffix": ". We'll only email you to confirm your download — no spam.",
+    "privacySuffix": ". I'll only email you to confirm your download, no spam.",
     "pendingHeading": "Check your email",
-    "pendingBody": "We sent you a link to confirm your subscription and unlock the download.",
+    "pendingBody": "I sent you a link to confirm your subscription and unlock the download.",
     "alreadyHeading": "You're already subscribed",
-    "alreadyBody": "Check your inbox — you should already have the checklist.",
-    "errorBody": "Something went wrong. We couldn't register your email — please try again in a moment."
+    "alreadyBody": "Check your inbox. You should already have the checklist.",
+    "errorBody": "Something went wrong and I couldn't register your email. Please try again in a moment."
+  },
+  "richText": {
+    "copyCode": "Copy",
+    "codeNoun": "code",
+    "codeCopied": "Copied",
+    "codeCopiedStatus": "Code copied",
+    "codeCopyFailedStatus": "The code could not be copied",
+    "codeRegionLabel": "Code with horizontal scrolling",
+    "tableRegionLabel": "Table with horizontal scrolling",
+    "readPost": "Read the article"
+  },
+  "shell": {
+    "skipLink": "Skip to content",
+    "brandAria": "Juan Angulo, home",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "langButtonAria": "Language: English",
+    "langGroup": "Language",
+    "motionToggle": "Pause animations",
+    "ctaFallback": "Request a 360 audit",
+    "tagline": "Software engineer and technical SEO consultant",
+    "opensInNewTab": "(opens in a new tab)",
+    "servicesTitle": "Services",
+    "servicesIndex": "All services",
+    "groupLabel": "{title} links",
+    "legalLabel": "Legal links",
+    "socialLabel": "Social",
+    "landmarks": {
+      "header": "Header",
+      "navMain": "Main",
+      "menu": "Menu",
+      "navFooter": "Footer links",
+      "footer": "Site footer",
+      "main": "Main content"
+    }
+  },
+  "notFound": {
+    "metaTitle": "Page not found",
+    "heading": "This page does not exist",
+    "body": "The address you typed does not match any page on the site. We may have moved it, or the link may have a mistake.",
+    "backHome": "Back to home",
+    "writeToJuan": "Write to Juan",
+    "suggestedLabel": "Suggested pages",
+    "suggestedHeading": "Maybe you were looking for",
+    "links": {
+      "services": {
+        "label": "Services",
+        "description": "Audit, consulting, development and SEO for AI"
+      },
+      "cases": {
+        "label": "Case studies",
+        "description": "Real results measured in Search Console"
+      },
+      "blog": {
+        "label": "Blog",
+        "description": "Articles on technical SEO and software"
+      },
+      "contact": {
+        "label": "Contact",
+        "description": "Tell me about your project"
+      }
+    }
+  },
+  "search": {
+    "title": "Search",
+    "fieldLabel": "Search",
+    "placeholder": "Search posts, case studies, authors...",
+    "submit": "Search the site",
+    "formAria": "Site search",
+    "resultCount": "{count, plural, one {# result} other {# results}}",
+    "noResultsHeading": "No results for \"{q}\"",
+    "noResultsBody": "Try a different term, or browse posts and case studies directly.",
+    "errorHeading": "Search is temporarily unavailable. Please try again in a moment.",
+    "blogLink": "Blog",
+    "casesLink": "Case studies",
+    "typeLabels": {
+      "posts": "Post",
+      "case-studies": "Case Study",
+      "authors": "Author"
+    }
+  },
+  "services": {
+    "index": {
+      "eyebrow": "What I do",
+      "listLabel": "List of services",
+      "compareTitle": "Which service is for you",
+      "compareLabel": "Which service fits you depending on what is happening to you",
+      "columns": {
+        "service": "Service",
+        "fitsIf": "It fits if",
+        "outcome": "What you will achieve",
+        "time": "Estimated time"
+      },
+      "unsure": "Not sure which service you need? Tell me what problem you have and I'll tell you where to start.",
+      "talkCta": "Talk to Juan",
+      "viewService": "View service"
+    },
+    "detail": {
+      "eyebrow": "Service",
+      "durationLabel": "Duration",
+      "faqTitle": "Frequently asked questions",
+      "otherTitle": "Other services"
+    }
+  },
+  "about": {
+    "crumb": "About me",
+    "seeServices": "View services",
+    "myStack": "My stack",
+    "timelineLabel": "Professional timeline",
+    "by": "by {name}",
+    "dateRange": "{from} to {to}",
+    "dateRangeOpen": "{from} to today",
+    "attendees": "{count, plural, one {# attendee} other {# attendees}}"
+  },
+  "contact": {
+    "eyebrow": "Let's talk",
+    "sectionLabel": "Contact form and details",
+    "emailLabel": "Email",
+    "writeEmail": "Write an email",
+    "servicesPrompt": "Still don't know which service you need?",
+    "servicesLink": "See the services",
+    "form": {
+      "title": "Tell me about your project",
+      "name": "Name",
+      "email": "Email address",
+      "message": "Message",
+      "submit": "Send message",
+      "honeypotLabel": "Company website",
+      "errors": {
+        "name": "Enter your name.",
+        "email": "Enter a valid email, for example name@domain.com.",
+        "message": "Tell me what your project is about.",
+        "summary": "Check the marked fields."
+      },
+      "success": {
+        "title": "Message sent",
+        "body": "Thanks for writing. I usually reply within 48 hours.",
+        "again": "Send another message"
+      },
+      "failure": "Something went wrong sending your message. Please try again, or email {email} directly."
+    },
+    "cta": {
+      "sectionLabel": "Contact",
+      "formLabel": "Contact form",
+      "responseNote": "I usually reply within 48 hours."
+    }
+  },
+  "stack": {
+    "eyebrow": "Tools",
+    "categoriesLabel": "Stack categories",
+    "toolsLabel": "Tools for {category}",
+    "chip": {
+      "active": "Affiliate link",
+      "none": "No affiliate program"
+    }
+  },
+  "legal": {
+    "eyebrow": "Legal",
+    "tocLabel": "In this document",
+    "tocAria": "Document index",
+    "effectiveOn": "Effective as of {date}"
+  },
+  "websites": {
+    "index": {
+      "listTitle": "Projects",
+      "listLabel": "Project list",
+      "filterLabel": "Filter projects by technology",
+      "filterAll": "All",
+      "filterOption": "{label} ({count})",
+      "kinds": {
+        "nextjs": "Next.js",
+        "wordpress": "WordPress",
+        "other": "Other technologies"
+      },
+      "count": "{count, plural, one {# project} other {# projects}}",
+      "countWithKind": "{count, plural, one {# project} other {# projects}} with {kind}",
+      "featured": "Featured project",
+      "viewProject": "View the project",
+      "emptyTitle": "Coming soon",
+      "emptyText": "I'm preparing new website case studies. Check back soon.",
+      "screenshotAlt": "Screenshot of {domain}",
+      "stackLabel": "Technologies",
+      "scoresLabel": "PageSpeed Insights scores",
+      "scoreSuffix": "out of 100",
+      "scoresNote": "PageSpeed Insights scores, measured on {date}.",
+      "rings": {
+        "performance": "Performance",
+        "accessibility": "Accessibility",
+        "bestPractices": "Best practices",
+        "seo": "SEO"
+      }
+    },
+    "detail": {
+      "visit": "Visit the site",
+      "opensInNewTab": "opens in a new tab",
+      "screenshotAlt": "Desktop screenshot of {domain}",
+      "buildTitle": "What I built and what challenges it had",
+      "highlightsTitle": "Highlights",
+      "challengesTitle": "Challenges",
+      "stackTitle": "Technology stack",
+      "stackLabel": "Technologies",
+      "scoresTitle": "Measured performance",
+      "scoresLabel": "PageSpeed Insights scores",
+      "scoreSuffix": "out of 100",
+      "scoresNote": "PageSpeed Insights scores, measured on {date}.",
+      "rings": {
+        "performance": "Performance",
+        "accessibility": "Accessibility",
+        "bestPractices": "Best practices",
+        "seo": "SEO"
+      },
+      "relatedCaseTitle": "Related case study",
+      "relatedCaseLink": "View the case study",
+      "navLabel": "Navigate between projects",
+      "previous": "Previous: {title}",
+      "next": "Next: {title}",
+      "moreTitle": "More projects",
+      "viewAll": "View all"
+    }
+  },
+  "cases": {
+    "index": {
+      "listTitle": "All case studies",
+      "listLabel": "Case study list",
+      "viewCase": "View the full case study",
+      "emptyTitle": "Coming soon",
+      "emptyText": "I'm preparing new case studies. Check back soon."
+    },
+    "detail": {
+      "statsTitle": "The numbers behind the case",
+      "contextTitle": "The client and the challenge",
+      "clientTitle": "The client",
+      "challengeTitle": "The challenge",
+      "solutionTitle": "The solution",
+      "resultsTitle": "Results",
+      "periodBefore": "Before: {period}.",
+      "periodAfter": "After: {period}.",
+      "before": "Before",
+      "after": "After",
+      "resultsCaption": "Case results, before and after",
+      "metricColumn": "Metric",
+      "changeColumn": "Change",
+      "noBase": "No baseline to compare",
+      "conclusionTitle": "Conclusions",
+      "authorLabel": "About the author",
+      "moreTitle": "More case studies",
+      "viewAll": "View all",
+      "compareTitle": "How it compares with my other cases",
+      "compareCaption": "Annual organic clicks for each case, the previous year against the measured period",
+      "compareRankBoth": "This case ranks number {pct} of {pctTotal} in percentage growth and number {abs} of {absTotal} in absolute clicks.",
+      "compareRankAbs": "This case ranks number {abs} of {absTotal} in absolute clicks. It has no percentage growth because it started from zero.",
+      "compareNote": "Cases that measure a different metric, such as monthly traffic, are left out of this comparison of annual clicks.",
+      "compareScrollLabel": "Comparison table with horizontal scrolling",
+      "compareThis": "This case",
+      "compareNoBase": "No baseline",
+      "caseColumn": "Case",
+      "sectorColumn": "Sector",
+      "scaleColumn": "Scale",
+      "lessonsTitle": "Lessons learned"
+    }
+  },
+  "blog": {
+    "nav": {
+      "label": "Blog categories",
+      "all": "All"
+    },
+    "category": {
+      "listTitle": "Posts in this category",
+      "listLabel": "List of posts in the category",
+      "count": "{count, plural, one {# post} other {# posts}}",
+      "emptyTitle": "No posts in this category yet",
+      "emptyText": "Browse the rest of the blog in the meantime.",
+      "backToBlog": "Browse the whole blog"
+    },
+    "closing": {
+      "pointsLabel": "Key points"
+    },
+    "index": {
+      "latestTitle": "Latest",
+      "sectionListLabel": "Posts about {category}",
+      "count": "{count, plural, one {# post} other {# posts}}",
+      "viewMore": "View more"
+    },
+    "newsletter": {
+      "emailLabel": "Your email",
+      "submitLabel": "Subscribe",
+      "sending": "Sending…",
+      "success": "Check your inbox: I sent you a link to confirm. Without that click the signup is not active.",
+      "invalid": "That email doesn't look valid. Check it and try again.",
+      "error": "Couldn't complete the signup. Try again in a bit.",
+      "unconfigured": "Signup is unavailable right now. Reach me through the contact form instead.",
+      "confirmed": "Confirmed. You will get new articles from now on.",
+      "unsubscribed": "You are unsubscribed. No more emails from me.",
+      "invalidLink": "That link is no longer valid. If you wanted to subscribe, leave your email again below.",
+      "honeypotLabel": "Company website"
+    },
+    "search": {
+      "formAria": "Search the blog",
+      "fieldLabel": "Search posts",
+      "submit": "Search",
+      "resultCount": "{count, plural, =0 {No results} one {# result} other {# results}}",
+      "resultsTitle": "Search results",
+      "noResults": "No posts match your search.",
+      "siteSearch": "Search the whole site"
+    }
+  },
+  "post": {
+    "toc": {
+      "label": "Table of contents"
+    },
+    "readingTime": "{minutes} min read",
+    "categoriesLabel": "Post categories",
+    "progress": {
+      "label": "Reading progress"
+    },
+    "offer": {
+      "label": "Featured information"
+    },
+    "author": {
+      "title": "About the author",
+      "credentialsLabel": "Credentials",
+      "years": "{years}+ years of experience",
+      "profile": "View {name}'s profile"
+    },
+    "related": {
+      "title": "Related posts",
+      "listLabel": "List of related posts"
+    },
+    "nav": {
+      "label": "Previous and next post",
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+  "authors": {
+    "index": {
+      "listLabel": "List of authors",
+      "emptyTitle": "Coming soon",
+      "emptyText": "There are no published authors yet.",
+      "viewProfile": "View profile"
+    },
+    "profile": {
+      "credentialsTitle": "Credentials",
+      "credentialsLabel": "List of credentials",
+      "expertiseTitle": "Areas of expertise",
+      "expertiseLabel": "List of areas of expertise",
+      "experienceTitle": "Experience",
+      "experienceLabel": "Professional experience",
+      "educationTitle": "Education and certifications",
+      "educationLabel": "Education and certifications",
+      "eventsTitle": "Speaking events",
+      "eventsLabel": "List of events",
+      "postsTitle": "Posts",
+      "postsLabel": "List of the author's posts",
+      "casesTitle": "Case studies",
+      "casesLabel": "List of the author's case studies",
+      "dateRange": "{from} to {to}",
+      "dateRangeOpen": "{from} to today",
+      "current": "Ongoing",
+      "years": "{years}+ years of experience",
+      "by": "by {name}",
+      "attendees": "{count, plural, one {# attendee} other {# attendees}}",
+      "coSpeakers": "With {names}",
+      "eventLink": "Learn more",
+      "socialLabel": "{name} on other platforms",
+      "platforms": {
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "x": "X",
+        "website": "Website"
+      },
+      "aboutLink": "More about me",
+      "stackLink": "See my tool stack"
+    }
   }
 }

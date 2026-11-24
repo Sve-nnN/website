@@ -20,7 +20,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Author, Media } from '@/payload-types'
 import { SITE_URL } from '@/lib/sitemap-data'
-import { CACHE_TTL_SECONDS } from '@/lib/cache-tags'
+import { CACHE_TAGS, CACHE_TTL_SECONDS } from '@/lib/cache-tags'
 import type { Locale } from '@/lib/cache'
 
 /** Slug del autor que representa al dueño del sitio. */
@@ -59,7 +59,7 @@ const getCachedSitePerson = unstable_cache(
     return docs[0] ?? null
   },
   ['site-person'],
-  { revalidate: CACHE_TTL_SECONDS },
+  { tags: [CACHE_TAGS.authors()], revalidate: CACHE_TTL_SECONDS },
 )
 
 /**

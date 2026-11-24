@@ -7,6 +7,7 @@ import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import { ConfirmSubscription } from '@/emails/ConfirmSubscription'
+import { isPreviewReadonly } from '@/lib/preview'
 import { resolveSiteUrl } from '@/lib/resolve-site-url'
 
 /**
@@ -89,6 +90,11 @@ export async function subscribeAction(
   }
 
   if (await isRateLimited()) return { status: 'error' }
+
+  // Preview de solo lectura (fase 53, D-03): responde lo mismo que un alta real
+  // sin tocar la base ni mandar correo. Va después de validar y antes de cualquier
+  // escritura.
+  if (isPreviewReadonly()) return { status: 'success' }
 
   try {
     const payload = await getPayload({ config })

@@ -1,0 +1,136 @@
+{
+  "generated": "2026-10-15",
+  "note": "Procedencia, tamano, sha256 y cobertura de cada fuente. verify-states.mjs (stage fonts) recalcula bytes y sha256.",
+  "fallbackMetrics": {
+    "method": "Ancho de una cadena fija a 100 px (Playwright, Chromium) en cada fuente contra Arial, peso 400. size-adjust = ancho fuente / ancho Arial. Los overrides salen de hhea (fontTools) divididos por size-adjust. Nada se estimo a ojo.",
+    "string": "Ingeniero de software y experto SEO. Auditoría técnica, rendimiento y contenido 0123456789",
+    "array": {
+      "hhea": {
+        "ascent": 1400,
+        "descent": -300,
+        "lineGap": 140,
+        "unitsPerEm": 1600
+      },
+      "widthWebfontPx": 3831.25,
+      "widthArialPx": 4136.0,
+      "sizeAdjustPct": 92.63,
+      "ascentOverridePct": 94.46,
+      "descentOverridePct": 20.24,
+      "lineGapOverridePct": 9.45
+    },
+    "geist": {
+      "hhea": {
+        "ascent": 1005,
+        "descent": -295,
+        "lineGap": 0,
+        "unitsPerEm": 1000
+      },
+      "widthWebfontPx": 4224.609375,
+      "widthArialPx": 4136.0,
+      "sizeAdjustPct": 102.14,
+      "ascentOverridePct": 98.39,
+      "descentOverridePct": 28.88,
+      "lineGapOverridePct": 0.0
+    }
+  },
+  "files": [
+    {
+      "file": "Array-Regular.woff2",
+      "family": "Array",
+      "role": "display",
+      "source": "src/fonts/Array-Regular.woff2 (copia exacta, sin modificar)",
+      "sourceUrl": "https://www.fontshare.com/fonts/array",
+      "license": "Fontshare Free Font License (Indian Type Foundry). Uso web propio; no redistribuir; no modificar.",
+      "modified": false,
+      "coverage": {
+        "required": "A y a (sin recorte, archivo original)",
+        "requiredCount": 2,
+        "missing": [],
+        "exempt": []
+      },
+      "bytes": 20832,
+      "sha256": "85104fe27cdf0e211c876606ae1ff885a13412f1c12b6dde2c8f570eb613b8a2",
+      "glyphs": 424,
+      "date": "2026-10-15"
+    },
+    {
+      "file": "Geist-latin-var.woff2",
+      "family": "Geist",
+      "role": "body",
+      "source": "fonts.gstatic.com (Google Fonts, bloque latin de Geist), sin modificar",
+      "sourceUrl": "https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFWNOITd.woff2",
+      "license": "SIL Open Font License 1.1 (The Geist Project Authors)",
+      "modified": false,
+      "variable": "wght 400..700",
+      "coverage": {
+        "required": "U+0020-007E, U+00A0-00FF",
+        "requiredCount": 190,
+        "missing": [],
+        "exempt": [
+          "U+00AD"
+        ]
+      },
+      "coverageNote": "U+00AD (guion blando, no imprimible) no existe en la fuente y queda exento.",
+      "bytes": 29288,
+      "sha256": "9b6f5ff45b278c744b5f379a2c4ecbaf858a842b8eaf82ac8d21b699ca16c608",
+      "glyphs": 288,
+      "date": "2026-10-15"
+    },
+    {
+      "file": "GeistMono-400-latin.woff2",
+      "family": "Geist Mono",
+      "role": "ascii-and-code-labels",
+      "source": "fonts.gstatic.com (Geist Mono latin variable), instanciada a wght=400 y recortada",
+      "sourceUrl": "https://fonts.gstatic.com/s/geistmono/v6/or3nQ6H-1_WfwkMZI_qYFrcdmhHkjko.woff2",
+      "license": "SIL Open Font License 1.1 (The Geist Project Authors)",
+      "modified": true,
+      "commands": [
+        "fonttools varLib.instancer geistmono.woff2 wght=400 -o gm400.woff2",
+        "pyftsubset gm400.woff2 --unicodes=\"U+0020-007E,U+00A0-00FF\" --flavor=woff2 --no-hinting --layout-features= --drop-tables+=GSUB,GPOS,GDEF,STAT"
+      ],
+      "tools": "fonttools 4.67.0, Brotli (venv temporal fuera del repo)",
+      "costNote": "Costo explicito de la fase: solo para ASCII y etiquetas de codigo.",
+      "coverage": {
+        "required": "U+0020-007E, U+00A0-00FF",
+        "requiredCount": 190,
+        "missing": [],
+        "exempt": [
+          "U+00AD"
+        ]
+      },
+      "coverageNote": "U+00AD (guion blando, no imprimible) no existe en la fuente original y queda exento.",
+      "bytes": 7140,
+      "sha256": "54ce345123a37c23c9bb502d900c1fb21af9d7f492220bd95710e194ff04c3b0",
+      "glyphs": 208,
+      "date": "2026-10-15"
+    },
+    {
+      "file": "GeistPixel-Square-upper.woff2",
+      "family": "Pixel Label",
+      "role": "short-labels-uppercase",
+      "source": "github.com/vercel/geist-pixel-font, fonts/webfonts/GeistPixel-Square.woff2, recortada",
+      "sourceUrl": "https://raw.githubusercontent.com/vercel/geist-pixel-font/main/fonts/webfonts/GeistPixel-Square.woff2",
+      "license": "SIL Open Font License 1.1 (The Geist-Pixel-Font.Git Project Authors)",
+      "modified": true,
+      "commands": [
+        "pyftsubset GeistPixel-Square.woff2 --unicodes=\"U+0020-005F,U+00C1,U+00C9,U+00CD,U+00D1,U+00D3,U+00DA,U+00DC,U+2192\" --flavor=woff2 --no-hinting --layout-features= --drop-tables+=GSUB,GPOS,GDEF"
+      ],
+      "tools": "fonttools 4.67.0, Brotli (venv temporal fuera del repo)",
+      "reservedFontName": {
+        "declared": false,
+        "note": "El OFL.txt de geist-pixel-font no declara Reserved Font Name; no se renombro la tabla name. El font-family publico es siempre \"Pixel Label\"."
+      },
+      "planB": "Silkscreen latin (OFL, 3.5 KB) si el archivo desaparece o el recorte falla; no fue necesario.",
+      "coverage": {
+        "required": "U+0020-005F (mayusculas, digitos, signos), U+00C1 U+00C9 U+00CD U+00D1 U+00D3 U+00DA U+00DC, U+2192",
+        "requiredCount": 72,
+        "missing": [],
+        "exempt": []
+      },
+      "bytes": 2384,
+      "sha256": "7f2e84bbf7d0cee2192562c468f743ae711c1b9c2b72f381d50d6f8a1fb877dc",
+      "glyphs": 76,
+      "date": "2026-10-15"
+    }
+  ]
+}

@@ -1,0 +1,2331 @@
+{
+  "measuredAt": "2026-11-24T08:29:45.741Z",
+  "previewBase": "https://dev.juan-tech.com",
+  "prodBase": "https://juan-tech.com",
+  "tolerance": 0.1,
+  "runsPerEnv": 5,
+  "categories": [
+    "performance",
+    "accessibility"
+  ],
+  "lighthouseVersion": "13.4.1",
+  "rule": "LCP, TTFB y TBT: mediana preview <= (1 + tolerancia) x producción; CLS <= max(producción, 0,1); accesibilidad Lighthouse = 1",
+  "inpNote": "proxy de INP medido con Playwright (menú y selector de idioma, CPU x4); no es INP de campo",
+  "lcpElements": {
+    "/": {
+      "preview": {
+        "kind": "texto o bloque sin recurso",
+        "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+        "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+        "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+        "hasResource": false,
+        "subparts": [
+          {
+            "subpart": "timeToFirstByte",
+            "ms": 792.609
+          },
+          {
+            "subpart": "elementRenderDelay",
+            "ms": 742.427
+          }
+        ]
+      },
+      "prod": {
+        "kind": "imagen",
+        "selector": "div.mx-auto > div.grid > div > img.w-48",
+        "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+        "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+        "hasResource": true,
+        "subparts": [
+          {
+            "subpart": "timeToFirstByte",
+            "ms": 1071.894
+          },
+          {
+            "subpart": "resourceLoadDelay",
+            "ms": 151.072
+          },
+          {
+            "subpart": "resourceLoadDuration",
+            "ms": 495.374
+          },
+          {
+            "subpart": "elementRenderDelay",
+            "ms": 48.464
+          }
+        ]
+      }
+    },
+    "/en": {
+      "preview": {
+        "kind": "texto o bloque sin recurso",
+        "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+        "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+        "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+        "hasResource": false,
+        "subparts": [
+          {
+            "subpart": "timeToFirstByte",
+            "ms": 843.647
+          },
+          {
+            "subpart": "elementRenderDelay",
+            "ms": 798.678
+          }
+        ]
+      },
+      "prod": {
+        "kind": "imagen",
+        "selector": "div.mx-auto > div.grid > div > img.w-48",
+        "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+        "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+        "hasResource": true,
+        "subparts": [
+          {
+            "subpart": "timeToFirstByte",
+            "ms": 1054.318
+          },
+          {
+            "subpart": "resourceLoadDelay",
+            "ms": 178.444
+          },
+          {
+            "subpart": "resourceLoadDuration",
+            "ms": 542.132
+          },
+          {
+            "subpart": "elementRenderDelay",
+            "ms": 27.763
+          }
+        ]
+      }
+    },
+    "/servicios/ai-seo-geo": {
+      "preview": {
+        "kind": "texto o bloque sin recurso",
+        "selector": "section.MuiBox-root > div.MuiContainer-root > div.MuiBox-root > p.MuiTypography-root",
+        "nodeLabel": "Cada vez más búsquedas terminan en una respuesta generada por IA sin que nadie …",
+        "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-q5n8e1\">",
+        "hasResource": false,
+        "subparts": [
+          {
+            "subpart": "timeToFirstByte",
+            "ms": 811.1589999847412
+          },
+          {
+            "subpart": "elementRenderDelay",
+            "ms": 621.4360000152587
+          }
+        ]
+      },
+      "prod": {
+        "kind": "texto o bloque sin recurso",
+        "selector": "div.md:col-span-12 > div.font-sans > div.payload-richtext > p",
+        "nodeLabel": "Escribir más contenido no lo arregla. Lo que suele faltar es estructura: respue…",
+        "snippet": "<p>",
+        "hasResource": false,
+        "subparts": [
+          {
+            "subpart": "timeToFirstByte",
+            "ms": 1068.854
+          },
+          {
+            "subpart": "elementRenderDelay",
+            "ms": 717.447
+          }
+        ]
+      }
+    },
+    "/blog/seo/estrategia-seo": {
+      "preview": {
+        "kind": "texto o bloque sin recurso",
+        "selector": "div.MuiBox-root > article#post-body > div.MuiBox-root > p.MuiTypography-root",
+        "nodeLabel": "La estrategia SEO se ha consolidado como un factor clave para el éxito de cualq…",
+        "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-tvvptl\">",
+        "hasResource": false,
+        "subparts": [
+          {
+            "subpart": "timeToFirstByte",
+            "ms": 805.606
+          },
+          {
+            "subpart": "elementRenderDelay",
+            "ms": 836.594
+          }
+        ]
+      },
+      "prod": {
+        "kind": "imagen",
+        "selector": "main > section.relative > div.absolute > img.object-cover",
+        "nodeLabel": "main > section.relative > div.absolute > img.object-cover",
+        "snippet": "<img alt=\"\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover opacity-45\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"100vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+        "hasResource": true,
+        "subparts": [
+          {
+            "subpart": "timeToFirstByte",
+            "ms": 3735.135000015259
+          },
+          {
+            "subpart": "resourceLoadDelay",
+            "ms": 26.06599998474121
+          },
+          {
+            "subpart": "resourceLoadDuration",
+            "ms": 514.587
+          },
+          {
+            "subpart": "elementRenderDelay",
+            "ms": 46.058
+          }
+        ]
+      }
+    }
+  },
+  "pass": true,
+  "results": [
+    {
+      "path": "/",
+      "warm": {
+        "preview": "200 HIT",
+        "prod": "200 STALE"
+      },
+      "runs": [
+        {
+          "env": "preview",
+          "run": 1,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 2437.6245000000004,
+            "ttfb": 276,
+            "tbt": 36.5,
+            "cls": 0,
+            "fcp": 2181.1215,
+            "performanceScore": 0.93,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 792.609
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 742.427
+                }
+              ]
+            },
+            "htmlTransfer": 53632,
+            "htmlResource": 369769,
+            "jsTransfer": 276663,
+            "jsResource": 869559,
+            "totalByteWeight": 620037,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 1,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 3490.8377199999995,
+            "ttfb": 274,
+            "tbt": 16.5,
+            "cls": 0,
+            "fcp": 2018.1282899999997,
+            "performanceScore": 0.88,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.mx-auto > div.grid > div > img.w-48",
+              "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+              "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1071.894
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 151.072
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 495.374
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 48.464
+                }
+              ]
+            },
+            "htmlTransfer": 32022,
+            "htmlResource": 205702,
+            "jsTransfer": 189408,
+            "jsResource": 590519,
+            "totalByteWeight": 515485,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 2,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 2537.0735000000004,
+            "ttfb": 286,
+            "tbt": 31.5,
+            "cls": 0,
+            "fcp": 2097.085,
+            "performanceScore": 0.94,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 809.939
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 800.89
+                }
+              ]
+            },
+            "htmlTransfer": 53624,
+            "htmlResource": 369758,
+            "jsTransfer": 276717,
+            "jsResource": 869559,
+            "totalByteWeight": 620159,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 2,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 3436.74428,
+            "ttfb": 275,
+            "tbt": 4,
+            "cls": 0,
+            "fcp": 1977.55821,
+            "performanceScore": 0.88,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.mx-auto > div.grid > div > img.w-48",
+              "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+              "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1067.9140000152588
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 154.30699998474122
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 528.384
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 25.699
+                }
+              ]
+            },
+            "htmlTransfer": 32022,
+            "htmlResource": 205702,
+            "jsTransfer": 189381,
+            "jsResource": 590519,
+            "totalByteWeight": 515499,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 3,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 2481.0305000000003,
+            "ttfb": 268,
+            "tbt": 21,
+            "cls": 0,
+            "fcp": 2061.0330000000004,
+            "performanceScore": 0.94,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 764.726
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 767.849
+                }
+              ]
+            },
+            "htmlTransfer": 53624,
+            "htmlResource": 369758,
+            "jsTransfer": 276726,
+            "jsResource": 869559,
+            "totalByteWeight": 620303,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 3,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 4698.23022,
+            "ttfb": 282,
+            "tbt": 32,
+            "cls": 0,
+            "fcp": 1974.11511,
+            "performanceScore": 0.81,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.mx-auto > div.grid > div > img.w-48",
+              "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+              "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1074.488
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 198.997
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 754.971
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 5.918
+                }
+              ]
+            },
+            "htmlTransfer": 32045,
+            "htmlResource": 205702,
+            "jsTransfer": 189449,
+            "jsResource": 590519,
+            "totalByteWeight": 515582,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 4,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 2462.179,
+            "ttfb": 275,
+            "tbt": 24,
+            "cls": 0,
+            "fcp": 2047.584,
+            "performanceScore": 0.95,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 789.1379999847412
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 790.9120000152587
+                }
+              ]
+            },
+            "htmlTransfer": 53624,
+            "htmlResource": 369758,
+            "jsTransfer": 276708,
+            "jsResource": 869559,
+            "totalByteWeight": 620519,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 4,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 3437.564085,
+            "ttfb": 276,
+            "tbt": 16,
+            "cls": 0,
+            "fcp": 1991.7093899999998,
+            "performanceScore": 0.89,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.mx-auto > div.grid > div > img.w-48",
+              "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+              "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1072.496
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 179.812
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 530.87
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 114.68
+                }
+              ]
+            },
+            "htmlTransfer": 32022,
+            "htmlResource": 205702,
+            "jsTransfer": 189533,
+            "jsResource": 590519,
+            "totalByteWeight": 515533,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 5,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 2384.9509999999996,
+            "ttfb": 270,
+            "tbt": 39.5,
+            "cls": 0,
+            "fcp": 1998.5665,
+            "performanceScore": 0.95,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 767.601
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 807.226
+                }
+              ]
+            },
+            "htmlTransfer": 53624,
+            "htmlResource": 369758,
+            "jsTransfer": 276726,
+            "jsResource": 869559,
+            "totalByteWeight": 619947,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 5,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 4065.7915599999997,
+            "ttfb": 270,
+            "tbt": 4,
+            "cls": 0,
+            "fcp": 2674.3436699999997,
+            "performanceScore": 0.81,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.mx-auto > div.grid > div > img.w-48",
+              "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+              "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1062.925
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 192.585
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 537.611
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 10.375
+                }
+              ]
+            },
+            "htmlTransfer": 32022,
+            "htmlResource": 205702,
+            "jsTransfer": 189412,
+            "jsResource": 590519,
+            "totalByteWeight": 515509,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        }
+      ],
+      "inp": {
+        "preview": {
+          "proxyInpMs": 152,
+          "interactions": 2,
+          "notes": [
+            "selector de idioma no visible a 375 px"
+          ]
+        },
+        "prod": {
+          "proxyInpMs": 56,
+          "interactions": 2,
+          "notes": [
+            "selector de idioma no visible a 375 px"
+          ]
+        }
+      },
+      "summary": {
+        "medians": {
+          "preview": {
+            "lcp": 2462.179,
+            "ttfb": 275,
+            "tbt": 31.5,
+            "cls": 0,
+            "fcp": 2061.0330000000004,
+            "performanceScore": 0.94,
+            "accessibilityScore": 1,
+            "htmlTransfer": 53624,
+            "htmlResource": 369758,
+            "jsTransfer": 276717,
+            "jsResource": 869559,
+            "totalByteWeight": 620159,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 792.609
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 742.427
+                }
+              ]
+            },
+            "lcpKind": "texto o bloque sin recurso",
+            "cache": [
+              "200 HIT",
+              "200 STALE",
+              "200 HIT",
+              "200 STALE",
+              "200 HIT"
+            ],
+            "runs": 5
+          },
+          "prod": {
+            "lcp": 3490.8377199999995,
+            "ttfb": 275,
+            "tbt": 16,
+            "cls": 0,
+            "fcp": 1991.7093899999998,
+            "performanceScore": 0.88,
+            "accessibilityScore": 1,
+            "htmlTransfer": 32022,
+            "htmlResource": 205702,
+            "jsTransfer": 189412,
+            "jsResource": 590519,
+            "totalByteWeight": 515509,
+            "lcpElement": {
+              "selector": "div.mx-auto > div.grid > div > img.w-48",
+              "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+              "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1071.894
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 151.072
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 495.374
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 48.464
+                }
+              ]
+            },
+            "lcpKind": "imagen",
+            "cache": [
+              "200 HIT",
+              "200 HIT",
+              "200 STALE",
+              "200 HIT",
+              "200 STALE"
+            ],
+            "runs": 5
+          }
+        },
+        "verdict": {
+          "lcp": {
+            "pass": true,
+            "limit": 3839.9214919999995
+          },
+          "ttfb": {
+            "pass": true,
+            "limit": 325
+          },
+          "tbt": {
+            "pass": true,
+            "limit": 66
+          },
+          "cls": {
+            "pass": true,
+            "limit": 0.1
+          },
+          "a11y": {
+            "pass": true,
+            "limit": 1
+          }
+        },
+        "pass": true
+      }
+    },
+    {
+      "path": "/en",
+      "warm": {
+        "preview": "200 HIT",
+        "prod": "200 HIT"
+      },
+      "runs": [
+        {
+          "env": "preview",
+          "run": 1,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 2542.059,
+            "ttfb": 350,
+            "tbt": 55,
+            "cls": 0,
+            "fcp": 2121.6165,
+            "performanceScore": 0.94,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 843.647
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 798.678
+                }
+              ]
+            },
+            "htmlTransfer": 52183,
+            "htmlResource": 366794,
+            "jsTransfer": 276676,
+            "jsResource": 869559,
+            "totalByteWeight": 618817,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 1,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 3811.6446000000005,
+            "ttfb": 271,
+            "tbt": 58.5,
+            "cls": 0,
+            "fcp": 1980.8223000000003,
+            "performanceScore": 0.86,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.mx-auto > div.grid > div > img.w-48",
+              "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+              "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1054.318
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 178.444
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 542.132
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 27.763
+                }
+              ]
+            },
+            "htmlTransfer": 31792,
+            "htmlResource": 204434,
+            "jsTransfer": 189501,
+            "jsResource": 590519,
+            "totalByteWeight": 515060,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 2,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 2491.5719999999997,
+            "ttfb": 271,
+            "tbt": 50.5,
+            "cls": 0,
+            "fcp": 2065.7019999999998,
+            "performanceScore": 0.95,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 790.3010000152588
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 812.4639999847412
+                }
+              ]
+            },
+            "htmlTransfer": 52183,
+            "htmlResource": 366794,
+            "jsTransfer": 276717,
+            "jsResource": 869559,
+            "totalByteWeight": 618931,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 2,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 3857.45968,
+            "ttfb": 277,
+            "tbt": 60.5,
+            "cls": 0,
+            "fcp": 2180.59476,
+            "performanceScore": 0.85,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.mx-auto > div.grid > div > img.w-48",
+              "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+              "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1072.665
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 205.196
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 497.031
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 48.898
+                }
+              ]
+            },
+            "htmlTransfer": 31792,
+            "htmlResource": 204434,
+            "jsTransfer": 189457,
+            "jsResource": 590519,
+            "totalByteWeight": 515011,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 3,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 2488.1854999999996,
+            "ttfb": 273,
+            "tbt": 46.5,
+            "cls": 0,
+            "fcp": 2058.6115,
+            "performanceScore": 0.95,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 758.9660000152588
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 773.1889999847413
+                }
+              ]
+            },
+            "htmlTransfer": 52165,
+            "htmlResource": 366740,
+            "jsTransfer": 276717,
+            "jsResource": 869559,
+            "totalByteWeight": 618679,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 3,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 3718.6102,
+            "ttfb": 282,
+            "tbt": 73.5,
+            "cls": 0,
+            "fcp": 1991.1661199999999,
+            "performanceScore": 0.86,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.mx-auto > div.grid > div > img.w-48",
+              "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+              "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1098.0929999847413
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 168.5950000152588
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 519.028
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 42.318
+                }
+              ]
+            },
+            "htmlTransfer": 31749,
+            "htmlResource": 204423,
+            "jsTransfer": 189495,
+            "jsResource": 590519,
+            "totalByteWeight": 515058,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 4,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 2696.6815000000006,
+            "ttfb": 273,
+            "tbt": 40,
+            "cls": 0,
+            "fcp": 2269.726,
+            "performanceScore": 0.93,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 767.916
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 798.96
+                }
+              ]
+            },
+            "htmlTransfer": 52174,
+            "htmlResource": 366740,
+            "jsTransfer": 276699,
+            "jsResource": 869559,
+            "totalByteWeight": 618722,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 4,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 3392.2444499999997,
+            "ttfb": 313,
+            "tbt": 38,
+            "cls": 0,
+            "fcp": 1975.3466699999997,
+            "performanceScore": 0.89,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.mx-auto > div.grid > div > img.w-48",
+              "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+              "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1171.53
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 186.232
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 515.661
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 45.882
+                }
+              ]
+            },
+            "htmlTransfer": 31749,
+            "htmlResource": 204423,
+            "jsTransfer": 189519,
+            "jsResource": 590519,
+            "totalByteWeight": 515017,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 5,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 2562.357,
+            "ttfb": 275,
+            "tbt": 59.5,
+            "cls": 0,
+            "fcp": 2127.5885,
+            "performanceScore": 0.94,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 797.1370000152588
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 797.9309999847412
+                }
+              ]
+            },
+            "htmlTransfer": 52174,
+            "htmlResource": 366783,
+            "jsTransfer": 276749,
+            "jsResource": 869559,
+            "totalByteWeight": 618940,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 5,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 5392.88816,
+            "ttfb": 262,
+            "tbt": 63.5,
+            "cls": 0,
+            "fcp": 2153.58306,
+            "performanceScore": 0.76,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.mx-auto > div.grid > div > img.w-48",
+              "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+              "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1068.918
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 177.719
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 732.276
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 61.152
+                }
+              ]
+            },
+            "htmlTransfer": 31759,
+            "htmlResource": 204423,
+            "jsTransfer": 189421,
+            "jsResource": 590519,
+            "totalByteWeight": 514860,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        }
+      ],
+      "inp": {
+        "preview": {
+          "proxyInpMs": 152,
+          "interactions": 2,
+          "notes": [
+            "selector de idioma no visible a 375 px"
+          ]
+        },
+        "prod": {
+          "proxyInpMs": 56,
+          "interactions": 2,
+          "notes": [
+            "selector de idioma no visible a 375 px"
+          ]
+        }
+      },
+      "summary": {
+        "medians": {
+          "preview": {
+            "lcp": 2542.059,
+            "ttfb": 273,
+            "tbt": 50.5,
+            "cls": 0,
+            "fcp": 2121.6165,
+            "performanceScore": 0.94,
+            "accessibilityScore": 1,
+            "htmlTransfer": 52174,
+            "htmlResource": 366783,
+            "jsTransfer": 276717,
+            "jsResource": 869559,
+            "totalByteWeight": 618817,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "nodeLabel": "div.MuiBox-root > div.MuiBox-root > div.MuiBox-root > div.MuiBox-root",
+              "snippet": "<div class=\"MuiBox-root mui-1x9v0gr\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 843.647
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 798.678
+                }
+              ]
+            },
+            "lcpKind": "texto o bloque sin recurso",
+            "cache": [
+              "200 HIT",
+              "200 HIT",
+              "200 STALE",
+              "200 HIT",
+              "200 STALE"
+            ],
+            "runs": 5
+          },
+          "prod": {
+            "lcp": 3811.6446000000005,
+            "ttfb": 277,
+            "tbt": 60.5,
+            "cls": 0,
+            "fcp": 1991.1661199999999,
+            "performanceScore": 0.86,
+            "accessibilityScore": 1,
+            "htmlTransfer": 31759,
+            "htmlResource": 204423,
+            "jsTransfer": 189495,
+            "jsResource": 590519,
+            "totalByteWeight": 515017,
+            "lcpElement": {
+              "selector": "div.mx-auto > div.grid > div > img.w-48",
+              "nodeLabel": "Juan Carlos Angulo, ingeniero de software y consultor SEO técnico",
+              "snippet": "<img alt=\"Juan Carlos Angulo, ingeniero de software y consultor SEO técnico\" width=\"520\" height=\"650\" decoding=\"async\" data-nimg=\"1\" class=\"w-48 md:w-[22rem] rounded-2xl border border-secondary-foreground/20 object…\" style=\"color:transparent\" sizes=\"(min-width: 768px) 22rem, 60vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1054.318
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 178.444
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 542.132
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 27.763
+                }
+              ]
+            },
+            "lcpKind": "imagen",
+            "cache": [
+              "200 HIT",
+              "200 HIT",
+              "200 STALE",
+              "200 HIT",
+              "200 STALE"
+            ],
+            "runs": 5
+          }
+        },
+        "verdict": {
+          "lcp": {
+            "pass": true,
+            "limit": 4192.8090600000005
+          },
+          "ttfb": {
+            "pass": true,
+            "limit": 327
+          },
+          "tbt": {
+            "pass": true,
+            "limit": 110.5
+          },
+          "cls": {
+            "pass": true,
+            "limit": 0.1
+          },
+          "a11y": {
+            "pass": true,
+            "limit": 1
+          }
+        },
+        "pass": true
+      }
+    },
+    {
+      "path": "/servicios/ai-seo-geo",
+      "warm": {
+        "preview": "200 STALE",
+        "prod": "200 STALE"
+      },
+      "runs": [
+        {
+          "env": "preview",
+          "run": 1,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 2424.6125,
+            "ttfb": 299,
+            "tbt": 16.5,
+            "cls": 0,
+            "fcp": 2252.613,
+            "performanceScore": 0.93,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "section.MuiBox-root > div.MuiContainer-root > div.MuiBox-root > p.MuiTypography-root",
+              "nodeLabel": "Cada vez más búsquedas terminan en una respuesta generada por IA sin que nadie …",
+              "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-q5n8e1\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 811.1589999847412
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 621.4360000152587
+                }
+              ]
+            },
+            "htmlTransfer": 42250,
+            "htmlResource": 271201,
+            "jsTransfer": 293655,
+            "jsResource": 915086,
+            "totalByteWeight": 655269,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 1,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 3494.9932000000003,
+            "ttfb": 273,
+            "tbt": 3.5,
+            "cls": 0,
+            "fcp": 2036.99592,
+            "performanceScore": 0.88,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.md:col-span-12 > div.font-sans > div.payload-richtext > p",
+              "nodeLabel": "Escribir más contenido no lo arregla. Lo que suele faltar es estructura: respue…",
+              "snippet": "<p>",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1068.854
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 717.447
+                }
+              ]
+            },
+            "htmlTransfer": 24719,
+            "htmlResource": 179086,
+            "jsTransfer": 189478,
+            "jsResource": 590458,
+            "totalByteWeight": 406464,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 2,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 2473.4550000000004,
+            "ttfb": 276,
+            "tbt": 14,
+            "cls": 0,
+            "fcp": 2114.2250000000004,
+            "performanceScore": 0.93,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "section.MuiBox-root > div.MuiContainer-root > div.MuiBox-root > p.MuiTypography-root",
+              "nodeLabel": "Cada vez más búsquedas terminan en una respuesta generada por IA sin que nadie …",
+              "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-q5n8e1\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 799.022
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 780.309
+                }
+              ]
+            },
+            "htmlTransfer": 42250,
+            "htmlResource": 271201,
+            "jsTransfer": 293604,
+            "jsResource": 915086,
+            "totalByteWeight": 655343,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 2,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 4449.59705,
+            "ttfb": 299,
+            "tbt": 24.5,
+            "cls": 0,
+            "fcp": 1979.75823,
+            "performanceScore": 0.82,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.md:col-span-12 > div.font-sans > div.payload-richtext > p",
+              "nodeLabel": "Escribir más contenido no lo arregla. Lo que suele faltar es estructura: respue…",
+              "snippet": "<p>",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1097.51
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 948.705
+                }
+              ]
+            },
+            "htmlTransfer": 24719,
+            "htmlResource": 179086,
+            "jsTransfer": 189331,
+            "jsResource": 590458,
+            "totalByteWeight": 406491,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 3,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 2236.8710000000005,
+            "ttfb": 280,
+            "tbt": 12,
+            "cls": 0,
+            "fcp": 1922.0090000000005,
+            "performanceScore": 0.95,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "section.MuiBox-root > div.MuiContainer-root > div.MuiBox-root > p.MuiTypography-root",
+              "nodeLabel": "Cada vez más búsquedas terminan en una respuesta generada por IA sin que nadie …",
+              "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-q5n8e1\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 769.081
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 813.616
+                }
+              ]
+            },
+            "htmlTransfer": 42250,
+            "htmlResource": 271201,
+            "jsTransfer": 293703,
+            "jsResource": 915086,
+            "totalByteWeight": 662090,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 3,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 3542.4365000000003,
+            "ttfb": 296,
+            "tbt": 4,
+            "cls": 0,
+            "fcp": 2065.4619,
+            "performanceScore": 0.88,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.md:col-span-12 > div.font-sans > div.payload-richtext > p",
+              "nodeLabel": "Escribir más contenido no lo arregla. Lo que suele faltar es estructura: respue…",
+              "snippet": "<p>",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1121.723
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 673.655
+                }
+              ]
+            },
+            "htmlTransfer": 24731,
+            "htmlResource": 179000,
+            "jsTransfer": 189545,
+            "jsResource": 590458,
+            "totalByteWeight": 406474,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 4,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 2275.3450000000003,
+            "ttfb": 272,
+            "tbt": 4.5,
+            "cls": 0,
+            "fcp": 1955.413,
+            "performanceScore": 0.95,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "section.MuiBox-root > div.MuiContainer-root > div.MuiBox-root > p.MuiTypography-root",
+              "nodeLabel": "Cada vez más búsquedas terminan en una respuesta generada por IA sin que nadie …",
+              "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-q5n8e1\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 791.07
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 785.869
+                }
+              ]
+            },
+            "htmlTransfer": 42250,
+            "htmlResource": 271201,
+            "jsTransfer": 293632,
+            "jsResource": 915086,
+            "totalByteWeight": 655139,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 4,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 3765.1277199999995,
+            "ttfb": 472,
+            "tbt": 52.5,
+            "cls": 0,
+            "fcp": 2673.8457899999994,
+            "performanceScore": 0.83,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.md:col-span-12 > div.font-sans > div.payload-richtext > p",
+              "nodeLabel": "Escribir más contenido no lo arregla. Lo que suele faltar es estructura: respue…",
+              "snippet": "<p>",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1276.0840000152589
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 1066.8989999847413
+                }
+              ]
+            },
+            "htmlTransfer": 24731,
+            "htmlResource": 179000,
+            "jsTransfer": 189336,
+            "jsResource": 590458,
+            "totalByteWeight": 406560,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 5,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 2280.6799999999994,
+            "ttfb": 273,
+            "tbt": 12,
+            "cls": 0,
+            "fcp": 1955.4759999999997,
+            "performanceScore": 0.96,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "section.MuiBox-root > div.MuiContainer-root > div.MuiBox-root > p.MuiTypography-root",
+              "nodeLabel": "Cada vez más búsquedas terminan en una respuesta generada por IA sin que nadie …",
+              "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-q5n8e1\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 768.411
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 823.075
+                }
+              ]
+            },
+            "htmlTransfer": 42250,
+            "htmlResource": 271201,
+            "jsTransfer": 293694,
+            "jsResource": 915086,
+            "totalByteWeight": 662047,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 5,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 4093.2248,
+            "ttfb": 282,
+            "tbt": 16.5,
+            "cls": 0,
+            "fcp": 2019.9186,
+            "performanceScore": 0.84,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.md:col-span-12 > div.font-sans > div.payload-richtext > p",
+              "nodeLabel": "Escribir más contenido no lo arregla. Lo que suele faltar es estructura: respue…",
+              "snippet": "<p>",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1085.8919999847412
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 754.2730000152588
+                }
+              ]
+            },
+            "htmlTransfer": 24723,
+            "htmlResource": 179086,
+            "jsTransfer": 189432,
+            "jsResource": 590458,
+            "totalByteWeight": 406558,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        }
+      ],
+      "inp": {
+        "preview": {
+          "proxyInpMs": 136,
+          "interactions": 2,
+          "notes": [
+            "selector de idioma no visible a 375 px"
+          ]
+        },
+        "prod": {
+          "proxyInpMs": 56,
+          "interactions": 2,
+          "notes": [
+            "selector de idioma no visible a 375 px"
+          ]
+        }
+      },
+      "summary": {
+        "medians": {
+          "preview": {
+            "lcp": 2280.6799999999994,
+            "ttfb": 276,
+            "tbt": 12,
+            "cls": 0,
+            "fcp": 1955.4759999999997,
+            "performanceScore": 0.95,
+            "accessibilityScore": 1,
+            "htmlTransfer": 42250,
+            "htmlResource": 271201,
+            "jsTransfer": 293655,
+            "jsResource": 915086,
+            "totalByteWeight": 655343,
+            "lcpElement": {
+              "selector": "section.MuiBox-root > div.MuiContainer-root > div.MuiBox-root > p.MuiTypography-root",
+              "nodeLabel": "Cada vez más búsquedas terminan en una respuesta generada por IA sin que nadie …",
+              "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-q5n8e1\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 811.1589999847412
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 621.4360000152587
+                }
+              ]
+            },
+            "lcpKind": "texto o bloque sin recurso",
+            "cache": [
+              "200 HIT",
+              "200 HIT",
+              "200 STALE",
+              "200 HIT",
+              "200 STALE"
+            ],
+            "runs": 5
+          },
+          "prod": {
+            "lcp": 3765.1277199999995,
+            "ttfb": 296,
+            "tbt": 16.5,
+            "cls": 0,
+            "fcp": 2036.99592,
+            "performanceScore": 0.84,
+            "accessibilityScore": 1,
+            "htmlTransfer": 24723,
+            "htmlResource": 179086,
+            "jsTransfer": 189432,
+            "jsResource": 590458,
+            "totalByteWeight": 406491,
+            "lcpElement": {
+              "selector": "div.md:col-span-12 > div.font-sans > div.payload-richtext > p",
+              "nodeLabel": "Escribir más contenido no lo arregla. Lo que suele faltar es estructura: respue…",
+              "snippet": "<p>",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 1068.854
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 717.447
+                }
+              ]
+            },
+            "lcpKind": "texto o bloque sin recurso",
+            "cache": [
+              "200 HIT",
+              "200 HIT",
+              "200 STALE",
+              "200 HIT",
+              "200 STALE"
+            ],
+            "runs": 5
+          }
+        },
+        "verdict": {
+          "lcp": {
+            "pass": true,
+            "limit": 4141.6404919999995
+          },
+          "ttfb": {
+            "pass": true,
+            "limit": 346
+          },
+          "tbt": {
+            "pass": true,
+            "limit": 66.5
+          },
+          "cls": {
+            "pass": true,
+            "limit": 0.1
+          },
+          "a11y": {
+            "pass": true,
+            "limit": 1
+          }
+        },
+        "pass": true
+      }
+    },
+    {
+      "path": "/blog/seo/estrategia-seo",
+      "warm": {
+        "preview": "200 STALE",
+        "prod": "200 sin cabecera"
+      },
+      "runs": [
+        {
+          "env": "preview",
+          "run": 1,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 2474.9875,
+            "ttfb": 277,
+            "tbt": 30.5,
+            "cls": 0,
+            "fcp": 2055.275,
+            "performanceScore": 0.93,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > article#post-body > div.MuiBox-root > p.MuiTypography-root",
+              "nodeLabel": "La estrategia SEO se ha consolidado como un factor clave para el éxito de cualq…",
+              "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-tvvptl\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 805.606
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 836.594
+                }
+              ]
+            },
+            "htmlTransfer": 57447,
+            "htmlResource": 342685,
+            "jsTransfer": 306633,
+            "jsResource": 957131,
+            "totalByteWeight": 547750,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 1,
+          "cache": "200 sin cabecera",
+          "metrics": {
+            "lcp": 5253.49092,
+            "ttfb": 1580,
+            "tbt": 26,
+            "cls": 0.01313986049762397,
+            "fcp": 2541.74546,
+            "performanceScore": 0.69,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "main > section.relative > div.absolute > img.object-cover",
+              "nodeLabel": "main > section.relative > div.absolute > img.object-cover",
+              "snippet": "<img alt=\"\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover opacity-45\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"100vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 3735.135000015259
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 26.06599998474121
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 514.587
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 46.058
+                }
+              ]
+            },
+            "htmlTransfer": 79750,
+            "htmlResource": 307377,
+            "jsTransfer": 200154,
+            "jsResource": 616790,
+            "totalByteWeight": 788097,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 2,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 2682.5885,
+            "ttfb": 293,
+            "tbt": 31,
+            "cls": 0,
+            "fcp": 2212.283,
+            "performanceScore": 0.92,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > article#post-body > div.MuiBox-root > p.MuiTypography-root",
+              "nodeLabel": "La estrategia SEO se ha consolidado como un factor clave para el éxito de cualq…",
+              "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-tvvptl\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 822.079
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 793.194
+                }
+              ]
+            },
+            "htmlTransfer": 57447,
+            "htmlResource": 342685,
+            "jsTransfer": 306619,
+            "jsResource": 957131,
+            "totalByteWeight": 547663,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 2,
+          "cache": "200 sin cabecera",
+          "metrics": {
+            "lcp": 4278.14766,
+            "ttfb": 1364,
+            "tbt": 34.5,
+            "cls": 0.01313986049762397,
+            "fcp": 2529.0984399999998,
+            "performanceScore": 0.75,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "main > section.relative > div.absolute > img.object-cover",
+              "nodeLabel": "main > section.relative > div.absolute > img.object-cover",
+              "snippet": "<img alt=\"\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover opacity-45\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"100vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 3582.72
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 26.729
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 498.104
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 48.25
+                }
+              ]
+            },
+            "htmlTransfer": 79723,
+            "htmlResource": 307377,
+            "jsTransfer": 200131,
+            "jsResource": 616790,
+            "totalByteWeight": 788200,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 3,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 2730.4700000000003,
+            "ttfb": 255,
+            "tbt": 31,
+            "cls": 0,
+            "fcp": 2278.764,
+            "performanceScore": 0.93,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > article#post-body > div.MuiBox-root > p.MuiTypography-root",
+              "nodeLabel": "La estrategia SEO se ha consolidado como un factor clave para el éxito de cualq…",
+              "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-tvvptl\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 796.5109999847413
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 789.9880000152588
+                }
+              ]
+            },
+            "htmlTransfer": 57490,
+            "htmlResource": 342642,
+            "jsTransfer": 306642,
+            "jsResource": 957131,
+            "totalByteWeight": 547823,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 3,
+          "cache": "200 sin cabecera",
+          "metrics": {
+            "lcp": 4443.864869999999,
+            "ttfb": 1547,
+            "tbt": 35,
+            "cls": 0.01313986049762397,
+            "fcp": 2539.57658,
+            "performanceScore": 0.73,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "main > section.relative > div.absolute > img.object-cover",
+              "nodeLabel": "main > section.relative > div.absolute > img.object-cover",
+              "snippet": "<img alt=\"\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover opacity-45\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"100vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 4102.343000015258
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 32.00299998474121
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 505.873
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 57.788
+                }
+              ]
+            },
+            "htmlTransfer": 79741,
+            "htmlResource": 307377,
+            "jsTransfer": 200149,
+            "jsResource": 616790,
+            "totalByteWeight": 788156,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 4,
+          "cache": "200 HIT",
+          "metrics": {
+            "lcp": 2488.4649999999992,
+            "ttfb": 270,
+            "tbt": 34.5,
+            "cls": 0,
+            "fcp": 2062.9339999999993,
+            "performanceScore": 0.94,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > article#post-body > div.MuiBox-root > p.MuiTypography-root",
+              "nodeLabel": "La estrategia SEO se ha consolidado como un factor clave para el éxito de cualq…",
+              "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-tvvptl\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 779.982
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 800.698
+                }
+              ]
+            },
+            "htmlTransfer": 57490,
+            "htmlResource": 342642,
+            "jsTransfer": 306638,
+            "jsResource": 957131,
+            "totalByteWeight": 547816,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 4,
+          "cache": "200 sin cabecera",
+          "metrics": {
+            "lcp": 4289.21823,
+            "ttfb": 1463,
+            "tbt": 27,
+            "cls": 0.01313986049762397,
+            "fcp": 2492.4788200000003,
+            "performanceScore": 0.75,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "main > section.relative > div.absolute > img.object-cover",
+              "nodeLabel": "main > section.relative > div.absolute > img.object-cover",
+              "snippet": "<img alt=\"\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover opacity-45\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"100vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 3692.758
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 26.852
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 504.456
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 34.761
+                }
+              ]
+            },
+            "htmlTransfer": 79828,
+            "htmlResource": 307420,
+            "jsTransfer": 200173,
+            "jsResource": 616790,
+            "totalByteWeight": 788105,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "preview",
+          "run": 5,
+          "cache": "200 STALE",
+          "metrics": {
+            "lcp": 2621.8945000000003,
+            "ttfb": 290,
+            "tbt": 33.5,
+            "cls": 0,
+            "fcp": 2170.6780000000003,
+            "performanceScore": 0.94,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > article#post-body > div.MuiBox-root > p.MuiTypography-root",
+              "nodeLabel": "La estrategia SEO se ha consolidado como un factor clave para el éxito de cualq…",
+              "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-tvvptl\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 795.986
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 835.304
+                }
+              ]
+            },
+            "htmlTransfer": 57573,
+            "htmlResource": 342685,
+            "jsTransfer": 306651,
+            "jsResource": 957131,
+            "totalByteWeight": 547757,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        },
+        {
+          "env": "prod",
+          "run": 5,
+          "cache": "200 sin cabecera",
+          "metrics": {
+            "lcp": 4260.87303,
+            "ttfb": 1506,
+            "tbt": 28.5,
+            "cls": 0.01313986049762397,
+            "fcp": 2563.58202,
+            "performanceScore": 0.75,
+            "accessibilityScore": 1,
+            "lcpElement": {
+              "selector": "main > section.relative > div.absolute > img.object-cover",
+              "nodeLabel": "main > section.relative > div.absolute > img.object-cover",
+              "snippet": "<img alt=\"\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover opacity-45\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"100vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 3632.903
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 24.339
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 495.603
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 61.049
+                }
+              ]
+            },
+            "htmlTransfer": 79714,
+            "htmlResource": 307377,
+            "jsTransfer": 200071,
+            "jsResource": 616790,
+            "totalByteWeight": 788154,
+            "lighthouseVersion": "13.4.1"
+          },
+          "error": null
+        }
+      ],
+      "inp": {
+        "preview": {
+          "proxyInpMs": 152,
+          "interactions": 2,
+          "notes": [
+            "selector de idioma no visible a 375 px"
+          ]
+        },
+        "prod": {
+          "proxyInpMs": 56,
+          "interactions": 2,
+          "notes": [
+            "selector de idioma no visible a 375 px"
+          ]
+        }
+      },
+      "summary": {
+        "medians": {
+          "preview": {
+            "lcp": 2621.8945000000003,
+            "ttfb": 277,
+            "tbt": 31,
+            "cls": 0,
+            "fcp": 2170.6780000000003,
+            "performanceScore": 0.93,
+            "accessibilityScore": 1,
+            "htmlTransfer": 57490,
+            "htmlResource": 342685,
+            "jsTransfer": 306638,
+            "jsResource": 957131,
+            "totalByteWeight": 547757,
+            "lcpElement": {
+              "selector": "div.MuiBox-root > article#post-body > div.MuiBox-root > p.MuiTypography-root",
+              "nodeLabel": "La estrategia SEO se ha consolidado como un factor clave para el éxito de cualq…",
+              "snippet": "<p class=\"MuiTypography-root MuiTypography-body1 mui-tvvptl\">",
+              "hasResource": false,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 805.606
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 836.594
+                }
+              ]
+            },
+            "lcpKind": "texto o bloque sin recurso",
+            "cache": [
+              "200 HIT",
+              "200 HIT",
+              "200 STALE",
+              "200 HIT",
+              "200 STALE"
+            ],
+            "runs": 5
+          },
+          "prod": {
+            "lcp": 4289.21823,
+            "ttfb": 1506,
+            "tbt": 28.5,
+            "cls": 0.01313986049762397,
+            "fcp": 2539.57658,
+            "performanceScore": 0.75,
+            "accessibilityScore": 1,
+            "htmlTransfer": 79741,
+            "htmlResource": 307377,
+            "jsTransfer": 200149,
+            "jsResource": 616790,
+            "totalByteWeight": 788154,
+            "lcpElement": {
+              "selector": "main > section.relative > div.absolute > img.object-cover",
+              "nodeLabel": "main > section.relative > div.absolute > img.object-cover",
+              "snippet": "<img alt=\"\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover opacity-45\" style=\"position: absolute; height: 100%; width: 100%; inset: 0px;\" sizes=\"100vw\" srcset=\"/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdmufha3qv%2Fimage%2Fup…\" src=\"https://juan-tech.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fd…\">",
+              "hasResource": true,
+              "subparts": [
+                {
+                  "subpart": "timeToFirstByte",
+                  "ms": 3735.135000015259
+                },
+                {
+                  "subpart": "resourceLoadDelay",
+                  "ms": 26.06599998474121
+                },
+                {
+                  "subpart": "resourceLoadDuration",
+                  "ms": 514.587
+                },
+                {
+                  "subpart": "elementRenderDelay",
+                  "ms": 46.058
+                }
+              ]
+            },
+            "lcpKind": "imagen",
+            "cache": [
+              "200 sin cabecera",
+              "200 sin cabecera",
+              "200 sin cabecera",
+              "200 sin cabecera",
+              "200 sin cabecera"
+            ],
+            "runs": 5
+          }
+        },
+        "verdict": {
+          "lcp": {
+            "pass": true,
+            "limit": 4718.140053
+          },
+          "ttfb": {
+            "pass": true,
+            "limit": 1656.6
+          },
+          "tbt": {
+            "pass": true,
+            "limit": 78.5
+          },
+          "cls": {
+            "pass": true,
+            "limit": 0.1
+          },
+          "a11y": {
+            "pass": true,
+            "limit": 1
+          }
+        },
+        "pass": true
+      }
+    }
+  ]
+}

@@ -1,5 +1,26 @@
 # Milestones
 
+## v2.1 Monetización del Sitio (Research + Fundaciones) (Shipped: 2026-09-22)
+
+**Phases completed:** 8 phases, 19 plans, 32 tasks
+
+**Key accomplishments:**
+
+- Las cinco decisiones del milestone quedan escritas con su multiplicación y su fuente, y el hallazgo que las gatilla (el reloj de Amazon corriendo hasta el 2027-02-09) ya está propagado al roadmap y al research.
+- Script hermano `capture-head-links-snapshot.mjs` capturando canonical/hreflang, mas H1/JSON-LD, de las 14 rutas criticas contra produccion live, con el esqueleto de `45-REGRESSION-BASELINE.md` listo para que 45-02/45-03 completen Lighthouse y Search Console.
+- Mediana de Lighthouse mobile (3 o 5 corridas segun ruta) de las 14 rutas criticas contra produccion live, con shape diffeable identico a lh-phase32-baseline.json, listo para el gate de la Phase 50.
+- Snapshot de Search Console de 190 paginas via el hub MCP, numero de trafico organico real (22 clics/mes) documentado con metodo, V(stack) = 0 resuelto en DECISIONS.md de la Phase 44 sin tocar la formula ni la tabla de tramos, y el baseline cerrado con veredicto humanizado.
+- Los 6 docs affiliate-links restantes, el ToolStack completo con 9 herramientas humanizadas (>=100 palabras/locale), 13 gear items de Amazon, y los links de footer/autor a /stack, todo verificado contra el Postgres real de Dokploy vía túnel SSH
+- Bloque Lexical `affiliate-inline` en `posts.content` (cero migración) que reutiliza `AffiliateLink`/`resolveAffiliateCta` de la página `/stack`, con un escaneo puro que inyecta el disclosure legal automáticamente antes del cuerpo de cualquier post que lo use — demostrado sobre un post real y publicado (`guia-keyword-research`, DinoRANK).
+- Bloque Payload `AuditorHighlight` (schema, migracion aditiva, registro, i18n y contenido real bilingue) publicado en Home, entre `ServicesShowcase` y `AboutSection`, con CTA nativo a `auditor.juan-tech.com`.
+- `StackHighlightCallout` generalizado a `linkHref`/`linkLabel`/`linkOpensInNewTabLabel` y nuevo bloque `AuditorCallout` (schema, migración aditiva, registro, i18n, contenido real bilingüe) publicado en la landing "Auditoría SEO Técnica", inmediatamente después de `ServiceScopeCard`.
+- Mecanismo completo de doble opt-in propio → entrega de lead magnet vía URL firmada de Cloudinary, extendiendo (no duplicando) la colección `Subscribers` que ya vive en producción, verificado de punta a punta contra Dokploy/Cloudinary/Resend reales — camino feliz, camino degradado (MAIL-04) y anti-enumeración, los tres con evidencia automatizada.
+- Bloque Lexical `email-capture` (cero JS de cliente, mismo patrón `<form action={fn}>` de `ContactFormBlockComponent`) registrado en `posts.content`, con una factory por-request nueva (`buildRichTextConverters`) que le permite leer `searchParams.subscribed` de la página del post sin tocar los 8 call sites existentes de `RichTextRenderer` — insertado y verificado con Playwright real en el post `technical-seo-checklist` (es+en).
+- Gate empírico de Lighthouse confirmó que leer `searchParams` en `blog/[category]/[slug]/page.tsx` no degrada el rendimiento del post real más allá del bar de GATE-01 — pero el build de producción reveló un 500 real (no solo un riesgo de performance) causado por combinar `revalidate` fijo con esa misma lectura, corregido con `dynamic = 'force-dynamic'`; los 5 requirements de la fase (MAIL-01..05) quedaron verificados como una sola cadena sobre el sistema completo y descubrible, cerrando la Phase 49.
+- Crawl real de HTML (rel=sponsored, orden de disclosure, /go/, paridad de locales, overrideAccess) sobre las 5 superficies de afiliación de Phases 46-49 — GATE-02: PASS, con un hallazgo crítico de alcance: el código nunca se desplegó a producción.
+
+---
+
 ## v1.7 — Local Landing Design + Component Polish Pass (Shipped: 2026-07-14)
 
 **Fases:** 32, 33, 34, 35, 36 (13/13 requirements)

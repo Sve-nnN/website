@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { slugField } from '@/fields/slug'
+import { revalidateAuthorsCache, revalidateAuthorsCacheOnDelete } from '@/lib/cache-tags'
 import { targetKeywordField } from '@/fields/targetKeyword'
 
 /**
@@ -22,6 +23,11 @@ export const Authors: CollectionConfig = {
   slug: 'authors',
   access: {
     read: () => true,
+  },
+  // Fase 55 (D-03, IN-05): invalida authors:all (y posts:all por la firma).
+  hooks: {
+    afterChange: [revalidateAuthorsCache],
+    afterDelete: [revalidateAuthorsCacheOnDelete],
   },
   admin: {
     useAsTitle: 'name',

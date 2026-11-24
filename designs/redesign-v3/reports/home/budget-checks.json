@@ -1,0 +1,96 @@
+{
+  "fecha": "2026-10-21T23:53:50.942Z",
+  "buildSha256": "1a7c933d8fd7237f31eb85cafb0a92fcf7cfb74f369d7fbcf6addb71926750af",
+  "etapas": {
+    "budget": {
+      "pass": 14,
+      "fail": 0
+    }
+  },
+  "checks": [
+    {
+      "etapa": "budget",
+      "name": "b0. MAX_EFFECTS_PER_PAGE es 2 y claimEffectId aguanta repetidos y lanza al tercer id distinto nombrando el id",
+      "ok": true,
+      "detail": "max=2 lanzaAlTercero=true"
+    },
+    {
+      "etapa": "budget",
+      "name": "b4. ningun original esta en el cierre estatico del chunk de entrada del manifiesto ni referenciado desde index.html",
+      "ok": true,
+      "detail": "entrada=1 chunks, en la entrada=0, en html=0"
+    },
+    {
+      "etapa": "budget",
+      "name": "b10. ningun archivo de src/home/sections/ importa originales de React Bits directamente (todos pasan por src/home/fx/)",
+      "ok": true,
+      "detail": "13 secciones revisadas"
+    },
+    {
+      "etapa": "budget",
+      "name": "b1. recorrido completo (85 pasos): maximo 1 canvas de banda simultaneos (limite 1) y ids de efecto dither,halftone (maximo 2: dither y halftone)",
+      "ok": true,
+      "detail": "maxBandCanvas=1 maxCanvasTotal=4 ids=dither,halftone contextosWebGL=3 maxVivosWebGL=1"
+    },
+    {
+      "etapa": "budget",
+      "name": "b1b. contextos WebGL vivos a la vez: como maximo 1 (informa el solape de desmontaje y montaje)",
+      "ok": true,
+      "detail": "maxVivos=1 creados=3"
+    },
+    {
+      "etapa": "budget",
+      "name": "b3. cada chunk de original (Dither, HalftoneReveal) se pide despues de loadEventEnd (no bloquea la carga inicial)",
+      "ok": true,
+      "detail": "chunks=Dither-D6vutHxJ.js@3397 Dither-C5uArhRq.css@3397 HalftoneReveal-ChkMdQYM.js@38611 HalftoneReveal-zn6FqNYG.css@38612 loadEventEnd=571 primerLCP=3252 ultimoLCP=9972"
+    },
+    {
+      "etapa": "budget",
+      "name": "b5. las 6 secciones de lectura (#faq, #contacto, #sobre, #testimonios, #proceso, #medicion) no contienen canvas durante todo el recorrido (D-10)",
+      "ok": true,
+      "detail": "maximoVisto=0 ahora=0"
+    },
+    {
+      "etapa": "budget",
+      "name": "b0b. 0 pageerror y 0 console.error durante el recorrido en escritorio",
+      "ok": true,
+      "detail": "pageerror=0 consola=0"
+    },
+    {
+      "etapa": "budget",
+      "name": "b2. con el puntero sobre la captura de websites el hero deja de estar montado y al volver arriba vuelve a montarse el del hero",
+      "ok": true,
+      "detail": "hero@617ms halftone@464ms enCaptura=halftone(1 canvas banda) arriba=dither"
+    },
+    {
+      "etapa": "budget",
+      "name": "b9. Pausar animaciones en mitad del recorrido deja 0 canvas, y al soltar vuelve el efecto de la zona visible en menos de 3000 ms",
+      "ok": true,
+      "detail": "pausa en 8ms, sigue en 0=true, vuelve en 22ms (previo 154ms)"
+    },
+    {
+      "etapa": "budget",
+      "name": "b7. movil 390x844 con isMobile y hasTouch: recorrido completo (99 pasos) con 0 canvas de banda, 0 efectos montados y 0 peticiones a chunks del motor pesado (Dither, HalftoneReveal)",
+      "ok": true,
+      "detail": "maxBandCanvas=0 maxCanvasTotal=0 ids=0 contextosWebGL=0 chunksPesados=0 (todos los originales=0)"
+    },
+    {
+      "etapa": "budget",
+      "name": "b8a. prefers-reduced-motion: reduce: recorrido completo (89 pasos) con 0 canvas de banda, 0 efectos montados y 0 peticiones a chunks del motor pesado (Dither, HalftoneReveal)",
+      "ok": true,
+      "detail": "maxBandCanvas=0 maxCanvasTotal=1 ids=0 contextosWebGL=0 chunksPesados=0 (todos los originales=2)"
+    },
+    {
+      "etapa": "budget",
+      "name": "b8b. navigator.connection.saveData: recorrido completo (85 pasos) con 0 canvas de banda, 0 efectos montados y 0 peticiones a chunks del motor pesado (Dither, HalftoneReveal)",
+      "ok": true,
+      "detail": "maxBandCanvas=0 maxCanvasTotal=0 ids=0 contextosWebGL=0 chunksPesados=0 (todos los originales=0)"
+    },
+    {
+      "etapa": "budget",
+      "name": "b11. budget.json guardado con maximo de canvas, ids, contextos WebGL y pesos gzip y brotli de entrada, chunks del manifiesto y originales, sin rutas locales",
+      "ok": true,
+      "detail": "entrada 90.2 KB gzip, 77.5 KB brotli; chunksManifiesto=23; secciones=0; Dither 6.0 KB gzip, HalftoneReveal 7.3 KB gzip"
+    }
+  ]
+}

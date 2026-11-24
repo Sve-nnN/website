@@ -117,14 +117,15 @@ const getCachedSitemapEntries = unstable_cache(
   fetchSitemapEntries,
   ['sitemap-entries'],
   {
-    // Only `posts`, `case-studies` and `categories` have a collection-wide tag
-    // that anything actually calls `revalidateTag` on (see cache-tags.ts).
-    // `Pages` only revalidates per-slug (`pages:<slug>`), and Authors/Websites
-    // have no cache-tag hooks at all — including `CACHE_TAGS.page('*')` or an
-    // invented `authors:all`/`websites:all` here would look like real
-    // invalidation coverage while doing nothing, since Next's cache tags are
-    // exact-string matches, not globs. Freshness for a new Page/Author/Website
-    // showing up in the sitemap rests entirely on the `revalidate` below.
+    // The sitemap listens to the collection-wide tags of `posts`,
+    // `case-studies` and `categories`. `Pages` only revalidates per-slug
+    // (`pages:<slug>`), and `CACHE_TAGS.page('*')` would match nothing, since
+    // Next's cache tags are exact-string matches, not globs. Authors and
+    // Websites DO have hooks now (`CACHE_TAGS.authors()` / `websites()` in
+    // cache-tags.ts), but this list deliberately leaves them out: SEO-02
+    // (phase 57) requires the sitemap to stay identical to master, so a new
+    // Page/Author/Website still reaches the sitemap through the `revalidate`
+    // below.
     tags: [CACHE_TAGS.posts(), CACHE_TAGS.caseStudies(), CACHE_TAGS.categories()],
     // Longer than the 60s TTL the rest of the cache layer uses: the sitemap is
     // read by crawlers on their own schedule, not by a visitor waiting on a

@@ -1,0 +1,5678 @@
+{
+  "generado": "2026-11-24T08:09:52.186Z",
+  "modo": "preview-contra-produccion",
+  "preview": "https://dev.juan-tech.com",
+  "produccion": "https://juan-tech.com",
+  "expectPreview": true,
+  "toleranciaPalabras": 0.02,
+  "presupuestoAutorBytes": 500000,
+  "gate": "FAIL",
+  "total": {
+    "urlsRevisadas": 174,
+    "delSitemap": 166,
+    "fueraDelSitemap": 6,
+    "rutasNuevas": 2,
+    "urlsPass": 172,
+    "urlsFail": 2,
+    "enlacesInternosRevisados": 177,
+    "enlacesFail": 0,
+    "redirectsRevisados": 38,
+    "redirectsFail": 0,
+    "diferencias": 2,
+    "porClase": {
+      "b": 2
+    }
+  },
+  "diferencias": [
+    {
+      "path": "/blog/general",
+      "field": "palabras",
+      "message": "palabras en main: 120 contra 135 en producción (11.1% menos; tolerancia 2%)",
+      "clase": "b",
+      "motivo": "Categoría general vacía: el rediseño quita el contador \"0 artículos\" y la fila repetida \"Otros temas del blog\" con sus cuatro enlaces. El copy propio de la página es idéntico. Juan lo acepta en 57-09"
+    },
+    {
+      "path": "/en/blog/general",
+      "field": "palabras",
+      "message": "palabras en main: 124 contra 138 en producción (10.1% menos; tolerancia 2%)",
+      "clase": "b",
+      "motivo": "Categoría general vacía: el rediseño quita el contador \"0 artículos\" y la fila repetida \"Otros temas del blog\" con sus cuatro enlaces. El copy propio de la página es idéntico. Juan lo acepta en 57-09"
+    }
+  ],
+  "urls": [
+    {
+      "path": "/stack",
+      "origen": "sitemap",
+      "plantilla": "stack",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 233153,
+        "produccion": 173828
+      },
+      "palabras": {
+        "preview": {
+          "main": 2323,
+          "body": 2499
+        },
+        "produccion": {
+          "main": 2070,
+          "body": 2249
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 33
+    },
+    {
+      "path": "/en/stack",
+      "origen": "sitemap",
+      "plantilla": "stack",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 230288,
+        "produccion": 171657
+      },
+      "palabras": {
+        "preview": {
+          "main": 2219,
+          "body": 2383
+        },
+        "produccion": {
+          "main": 1995,
+          "body": 2163
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 33
+    },
+    {
+      "path": "/seo-tecnico-madrid",
+      "origen": "sitemap",
+      "plantilla": "landing-local",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 205147,
+        "produccion": 101193
+      },
+      "palabras": {
+        "preview": {
+          "main": 578,
+          "body": 754
+        },
+        "produccion": {
+          "main": 544,
+          "body": 723
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/en/seo-tecnico-madrid",
+      "origen": "sitemap",
+      "plantilla": "landing-local",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 203366,
+        "produccion": 100089
+      },
+      "palabras": {
+        "preview": {
+          "main": 538,
+          "body": 702
+        },
+        "produccion": {
+          "main": 507,
+          "body": 675
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/seo-tecnico-lima",
+      "origen": "sitemap",
+      "plantilla": "landing-local",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 216829,
+        "produccion": 103585
+      },
+      "palabras": {
+        "preview": {
+          "main": 569,
+          "body": 745
+        },
+        "produccion": {
+          "main": 536,
+          "body": 715
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/en/seo-tecnico-lima",
+      "origen": "sitemap",
+      "plantilla": "landing-local",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 215131,
+        "produccion": 102655
+      },
+      "palabras": {
+        "preview": {
+          "main": 536,
+          "body": 700
+        },
+        "produccion": {
+          "main": 506,
+          "body": 674
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/servicios/ai-seo-geo",
+      "origen": "sitemap",
+      "plantilla": "servicio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 271201,
+        "produccion": 179043
+      },
+      "palabras": {
+        "preview": {
+          "main": 796,
+          "body": 972
+        },
+        "produccion": {
+          "main": 738,
+          "body": 917
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 31
+    },
+    {
+      "path": "/en/services/ai-seo-geo",
+      "origen": "sitemap",
+      "plantilla": "servicio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 268847,
+        "produccion": 177249
+      },
+      "palabras": {
+        "preview": {
+          "main": 769,
+          "body": 933
+        },
+        "produccion": {
+          "main": 710,
+          "body": 878
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 31
+    },
+    {
+      "path": "/servicios/fullstack-development",
+      "origen": "sitemap",
+      "plantilla": "servicio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 282195,
+        "produccion": 173936
+      },
+      "palabras": {
+        "preview": {
+          "main": 846,
+          "body": 1022
+        },
+        "produccion": {
+          "main": 785,
+          "body": 964
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 27
+    },
+    {
+      "path": "/en/services/fullstack-development",
+      "origen": "sitemap",
+      "plantilla": "servicio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 280033,
+        "produccion": 172252
+      },
+      "palabras": {
+        "preview": {
+          "main": 793,
+          "body": 957
+        },
+        "produccion": {
+          "main": 732,
+          "body": 900
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 27
+    },
+    {
+      "path": "/servicios/seo-consulting",
+      "origen": "sitemap",
+      "plantilla": "servicio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 294515,
+        "produccion": 190928
+      },
+      "palabras": {
+        "preview": {
+          "main": 884,
+          "body": 1060
+        },
+        "produccion": {
+          "main": 814,
+          "body": 993
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 29
+    },
+    {
+      "path": "/en/services/seo-consulting",
+      "origen": "sitemap",
+      "plantilla": "servicio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 291947,
+        "produccion": 189078
+      },
+      "palabras": {
+        "preview": {
+          "main": 836,
+          "body": 1000
+        },
+        "produccion": {
+          "main": 767,
+          "body": 935
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 29
+    },
+    {
+      "path": "/servicios/seo-technical-audit",
+      "origen": "sitemap",
+      "plantilla": "servicio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 303109,
+        "produccion": 188964
+      },
+      "palabras": {
+        "preview": {
+          "main": 916,
+          "body": 1092
+        },
+        "produccion": {
+          "main": 856,
+          "body": 1035
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 30
+    },
+    {
+      "path": "/en/services/seo-technical-audit",
+      "origen": "sitemap",
+      "plantilla": "servicio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 300214,
+        "produccion": 186763
+      },
+      "palabras": {
+        "preview": {
+          "main": 898,
+          "body": 1062
+        },
+        "produccion": {
+          "main": 836,
+          "body": 1004
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 30
+    },
+    {
+      "path": "/servicios",
+      "origen": "sitemap",
+      "plantilla": "servicios",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 193535,
+        "produccion": 87381
+      },
+      "palabras": {
+        "preview": {
+          "main": 432,
+          "body": 608
+        },
+        "produccion": {
+          "main": 149,
+          "body": 328
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/en/services",
+      "origen": "sitemap",
+      "plantilla": "servicios",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 191970,
+        "produccion": 86167
+      },
+      "palabras": {
+        "preview": {
+          "main": 427,
+          "body": 591
+        },
+        "produccion": {
+          "main": 150,
+          "body": 318
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/terms",
+      "origen": "sitemap",
+      "plantilla": "legal",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 155714,
+        "produccion": 65955
+      },
+      "palabras": {
+        "preview": {
+          "main": 552,
+          "body": 728
+        },
+        "produccion": {
+          "main": 163,
+          "body": 342
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/en/terms",
+      "origen": "sitemap",
+      "plantilla": "legal",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 154083,
+        "produccion": 65260
+      },
+      "palabras": {
+        "preview": {
+          "main": 583,
+          "body": 747
+        },
+        "produccion": {
+          "main": 158,
+          "body": 326
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/privacy",
+      "origen": "sitemap",
+      "plantilla": "legal",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 174539,
+        "produccion": 68292
+      },
+      "palabras": {
+        "preview": {
+          "main": 1206,
+          "body": 1382
+        },
+        "produccion": {
+          "main": 328,
+          "body": 507
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/en/privacy",
+      "origen": "sitemap",
+      "plantilla": "legal",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 172792,
+        "produccion": 67155
+      },
+      "palabras": {
+        "preview": {
+          "main": 1277,
+          "body": 1441
+        },
+        "produccion": {
+          "main": 317,
+          "body": 485
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/contact",
+      "origen": "sitemap",
+      "plantilla": "contacto",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 190004,
+        "produccion": 71436
+      },
+      "palabras": {
+        "preview": {
+          "main": 254,
+          "body": 430
+        },
+        "produccion": {
+          "main": 45,
+          "body": 224
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/en/contact",
+      "origen": "sitemap",
+      "plantilla": "contacto",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 188791,
+        "produccion": 70854
+      },
+      "palabras": {
+        "preview": {
+          "main": 288,
+          "body": 452
+        },
+        "produccion": {
+          "main": 42,
+          "body": 210
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/blog",
+      "origen": "sitemap",
+      "plantilla": "blog",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 265434,
+        "produccion": 151610
+      },
+      "palabras": {
+        "preview": {
+          "main": 1048,
+          "body": 1224
+        },
+        "produccion": {
+          "main": 700,
+          "body": 879
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 54
+    },
+    {
+      "path": "/en/blog",
+      "origen": "sitemap",
+      "plantilla": "blog",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 261670,
+        "produccion": 150533
+      },
+      "palabras": {
+        "preview": {
+          "main": 951,
+          "body": 1115
+        },
+        "produccion": {
+          "main": 655,
+          "body": 823
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 54
+    },
+    {
+      "path": "/",
+      "origen": "sitemap",
+      "plantilla": "home",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 369758,
+        "produccion": 205659
+      },
+      "palabras": {
+        "preview": {
+          "main": 1525,
+          "body": 1701
+        },
+        "produccion": {
+          "main": 975,
+          "body": 1154
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 32
+    },
+    {
+      "path": "/en",
+      "origen": "sitemap",
+      "plantilla": "home",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 366794,
+        "produccion": 204380
+      },
+      "palabras": {
+        "preview": {
+          "main": 1552,
+          "body": 1716
+        },
+        "produccion": {
+          "main": 983,
+          "body": 1151
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 32
+    },
+    {
+      "path": "/blog/cs-fundamentals/complejidad-algoritmica",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 469082,
+        "produccion": 528813
+      },
+      "palabras": {
+        "preview": {
+          "main": 7078,
+          "body": 7254
+        },
+        "produccion": {
+          "main": 6251,
+          "body": 6430
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 41
+    },
+    {
+      "path": "/blog/development/sql-vs-nosql",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 333366,
+        "produccion": 319247
+      },
+      "palabras": {
+        "preview": {
+          "main": 4836,
+          "body": 5012
+        },
+        "produccion": {
+          "main": 4391,
+          "body": 4570
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/cs-fundamentals/algoritmos-ordenamiento",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 419293,
+        "produccion": 556371
+      },
+      "palabras": {
+        "preview": {
+          "main": 5562,
+          "body": 5738
+        },
+        "produccion": {
+          "main": 5227,
+          "body": 5406
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/algoritmos-ordenamiento",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 339667,
+        "produccion": 337436
+      },
+      "palabras": {
+        "preview": {
+          "main": 3887,
+          "body": 4051
+        },
+        "produccion": {
+          "main": 3624,
+          "body": 3792
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/cs-fundamentals/arboles-binarios",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 392326,
+        "produccion": 532622
+      },
+      "palabras": {
+        "preview": {
+          "main": 4461,
+          "body": 4637
+        },
+        "produccion": {
+          "main": 4091,
+          "body": 4270
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/arboles-binarios",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 346438,
+        "produccion": 334658
+      },
+      "palabras": {
+        "preview": {
+          "main": 3789,
+          "body": 3953
+        },
+        "produccion": {
+          "main": 3468,
+          "body": 3636
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/blog/cs-fundamentals/diseno-bases-datos",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 376106,
+        "produccion": 535538
+      },
+      "palabras": {
+        "preview": {
+          "main": 5312,
+          "body": 5488
+        },
+        "produccion": {
+          "main": 4663,
+          "body": 4842
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/diseno-bases-datos",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 329630,
+        "produccion": 336773
+      },
+      "palabras": {
+        "preview": {
+          "main": 4083,
+          "body": 4247
+        },
+        "produccion": {
+          "main": 3669,
+          "body": 3837
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/blog/cs-fundamentals/normalizacion-bases-datos",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 441383,
+        "produccion": 594585
+      },
+      "palabras": {
+        "preview": {
+          "main": 3790,
+          "body": 3966
+        },
+        "produccion": {
+          "main": 3401,
+          "body": 3580
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/normalizacion-bases-datos",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 312345,
+        "produccion": 323675
+      },
+      "palabras": {
+        "preview": {
+          "main": 2956,
+          "body": 3120
+        },
+        "produccion": {
+          "main": 2729,
+          "body": 2897
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/seo/guia-eeat",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 303232,
+        "produccion": 307606
+      },
+      "palabras": {
+        "preview": {
+          "main": 1835,
+          "body": 2011
+        },
+        "produccion": {
+          "main": 1642,
+          "body": 1821
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/en/blog/seo/guia-eeat",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 314951,
+        "produccion": 282200
+      },
+      "palabras": {
+        "preview": {
+          "main": 3415,
+          "body": 3579
+        },
+        "produccion": {
+          "main": 3042,
+          "body": 3210
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/seo/enlaces-internos-guia",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 327834,
+        "produccion": 311847
+      },
+      "palabras": {
+        "preview": {
+          "main": 3878,
+          "body": 4054
+        },
+        "produccion": {
+          "main": 3458,
+          "body": 3637
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/en/blog/seo/enlaces-internos-guia",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 300010,
+        "produccion": 282214
+      },
+      "palabras": {
+        "preview": {
+          "main": 2551,
+          "body": 2715
+        },
+        "produccion": {
+          "main": 2339,
+          "body": 2507
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/blog/seo/guia-keyword-research",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 301014,
+        "produccion": 311226
+      },
+      "palabras": {
+        "preview": {
+          "main": 2308,
+          "body": 2484
+        },
+        "produccion": {
+          "main": 2118,
+          "body": 2297
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/en/blog/seo/guia-keyword-research",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 291405,
+        "produccion": 283768
+      },
+      "palabras": {
+        "preview": {
+          "main": 1991,
+          "body": 2155
+        },
+        "produccion": {
+          "main": 1812,
+          "body": 1980
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/seo/redaccion-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 330480,
+        "produccion": 307570
+      },
+      "palabras": {
+        "preview": {
+          "main": 4519,
+          "body": 4695
+        },
+        "produccion": {
+          "main": 3950,
+          "body": 4129
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 40
+    },
+    {
+      "path": "/en/blog/seo/redaccion-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 299342,
+        "produccion": 283388
+      },
+      "palabras": {
+        "preview": {
+          "main": 3385,
+          "body": 3549
+        },
+        "produccion": {
+          "main": 3072,
+          "body": 3240
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/blog/development/experiencia-de-usuario",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 323070,
+        "produccion": 321702
+      },
+      "palabras": {
+        "preview": {
+          "main": 4407,
+          "body": 4583
+        },
+        "produccion": {
+          "main": 4194,
+          "body": 4373
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/en/blog/development/experiencia-de-usuario",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 313612,
+        "produccion": 275783
+      },
+      "palabras": {
+        "preview": {
+          "main": 2941,
+          "body": 3105
+        },
+        "produccion": {
+          "main": 2673,
+          "body": 2841
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/blog/seo/mejores-cursos-seo-espanol",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 274265,
+        "produccion": 268324
+      },
+      "palabras": {
+        "preview": {
+          "main": 1363,
+          "body": 1539
+        },
+        "produccion": {
+          "main": 1248,
+          "body": 1427
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/blog/development/que-es-css",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 258985,
+        "produccion": 311737
+      },
+      "palabras": {
+        "preview": {
+          "main": 1291,
+          "body": 1467
+        },
+        "produccion": {
+          "main": 1172,
+          "body": 1351
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 33
+    },
+    {
+      "path": "/blog/cs-fundamentals/tablas-hash",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 293717,
+        "produccion": 502574
+      },
+      "palabras": {
+        "preview": {
+          "main": 3242,
+          "body": 3418
+        },
+        "produccion": {
+          "main": 3198,
+          "body": 3377
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/blog/tech-seo/non-developers-guide",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 314364,
+        "produccion": 331142
+      },
+      "palabras": {
+        "preview": {
+          "main": 3288,
+          "body": 3464
+        },
+        "produccion": {
+          "main": 2890,
+          "body": 3069
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/en/blog/tech-seo/non-developers-guide",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 284040,
+        "produccion": 266578
+      },
+      "palabras": {
+        "preview": {
+          "main": 1783,
+          "body": 1947
+        },
+        "produccion": {
+          "main": 1675,
+          "body": 1843
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/tech-seo/web-performance-guide",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 294399,
+        "produccion": 328380
+      },
+      "palabras": {
+        "preview": {
+          "main": 2220,
+          "body": 2396
+        },
+        "produccion": {
+          "main": 2010,
+          "body": 2189
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/en/blog/tech-seo/web-performance-guide",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 282806,
+        "produccion": 266312
+      },
+      "palabras": {
+        "preview": {
+          "main": 1554,
+          "body": 1718
+        },
+        "produccion": {
+          "main": 1437,
+          "body": 1605
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/tech-seo/core-web-vitals-guide",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 326759,
+        "produccion": 323448
+      },
+      "palabras": {
+        "preview": {
+          "main": 3569,
+          "body": 3745
+        },
+        "produccion": {
+          "main": 3204,
+          "body": 3383
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/en/blog/tech-seo/core-web-vitals-guide",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 316666,
+        "produccion": 268102
+      },
+      "palabras": {
+        "preview": {
+          "main": 2983,
+          "body": 3147
+        },
+        "produccion": {
+          "main": 2658,
+          "body": 2826
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/blog/tech-seo/robots-txt-best-practices",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 353751,
+        "produccion": 325860
+      },
+      "palabras": {
+        "preview": {
+          "main": 3888,
+          "body": 4064
+        },
+        "produccion": {
+          "main": 3498,
+          "body": 3677
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/tech-seo/schema-markup-guide",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 329977,
+        "produccion": 320331
+      },
+      "palabras": {
+        "preview": {
+          "main": 3726,
+          "body": 3902
+        },
+        "produccion": {
+          "main": 3439,
+          "body": 3618
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/en/blog/tech-seo/schema-markup-guide",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 327798,
+        "produccion": 287700
+      },
+      "palabras": {
+        "preview": {
+          "main": 3282,
+          "body": 3446
+        },
+        "produccion": {
+          "main": 2909,
+          "body": 3077
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/blog/tech-seo/ssr-vs-csr-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 283345,
+        "produccion": 293845
+      },
+      "palabras": {
+        "preview": {
+          "main": 1487,
+          "body": 1663
+        },
+        "produccion": {
+          "main": 1405,
+          "body": 1584
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/en/blog/tech-seo/ssr-vs-csr-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 316201,
+        "produccion": 287137
+      },
+      "palabras": {
+        "preview": {
+          "main": 3712,
+          "body": 3876
+        },
+        "produccion": {
+          "main": 3329,
+          "body": 3497
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/blog/tech-seo/xml-sitemap-automation",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 282160,
+        "produccion": 292433
+      },
+      "palabras": {
+        "preview": {
+          "main": 1811,
+          "body": 1987
+        },
+        "produccion": {
+          "main": 1688,
+          "body": 1867
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/tech-seo/headless-cms-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 312756,
+        "produccion": 310728
+      },
+      "palabras": {
+        "preview": {
+          "main": 3612,
+          "body": 3788
+        },
+        "produccion": {
+          "main": 3171,
+          "body": 3350
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 40
+    },
+    {
+      "path": "/en/blog/tech-seo/headless-cms-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 290028,
+        "produccion": 270865
+      },
+      "palabras": {
+        "preview": {
+          "main": 2650,
+          "body": 2814
+        },
+        "produccion": {
+          "main": 2400,
+          "body": 2568
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/blog/seo/topic-clusters-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 307174,
+        "produccion": 280066
+      },
+      "palabras": {
+        "preview": {
+          "main": 2850,
+          "body": 3026
+        },
+        "produccion": {
+          "main": 2317,
+          "body": 2496
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 38
+    },
+    {
+      "path": "/en/blog/seo/topic-clusters-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 289115,
+        "produccion": 270311
+      },
+      "palabras": {
+        "preview": {
+          "main": 2163,
+          "body": 2327
+        },
+        "produccion": {
+          "main": 1987,
+          "body": 2155
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/blog/seo/estrategia-de-contenidos",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 337571,
+        "produccion": 303025
+      },
+      "palabras": {
+        "preview": {
+          "main": 4167,
+          "body": 4343
+        },
+        "produccion": {
+          "main": 3718,
+          "body": 3897
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/blog/seo/estrategia-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 342685,
+        "produccion": 307377
+      },
+      "palabras": {
+        "preview": {
+          "main": 4708,
+          "body": 4884
+        },
+        "produccion": {
+          "main": 4151,
+          "body": 4330
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 44
+    },
+    {
+      "path": "/blog/seo/seo-off-page-guia",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 336186,
+        "produccion": 304417
+      },
+      "palabras": {
+        "preview": {
+          "main": 4156,
+          "body": 4332
+        },
+        "produccion": {
+          "main": 3678,
+          "body": 3857
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 38
+    },
+    {
+      "path": "/blog/seo/pillar-page-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 278194,
+        "produccion": 274955
+      },
+      "palabras": {
+        "preview": {
+          "main": 2270,
+          "body": 2446
+        },
+        "produccion": {
+          "main": 2131,
+          "body": 2310
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/en/blog/seo/pillar-page-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 318374,
+        "produccion": 288323
+      },
+      "palabras": {
+        "preview": {
+          "main": 3308,
+          "body": 3472
+        },
+        "produccion": {
+          "main": 2969,
+          "body": 3137
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/blog/cs-fundamentals/data-structures",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 347842,
+        "produccion": 508448
+      },
+      "palabras": {
+        "preview": {
+          "main": 3527,
+          "body": 3703
+        },
+        "produccion": {
+          "main": 3137,
+          "body": 3316
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 46
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/data-structures",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 351034,
+        "produccion": 336146
+      },
+      "palabras": {
+        "preview": {
+          "main": 3161,
+          "body": 3325
+        },
+        "produccion": {
+          "main": 2840,
+          "body": 3008
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 47
+    },
+    {
+      "path": "/blog/cs-fundamentals/binary-search-tree",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 302532,
+        "produccion": 486151
+      },
+      "palabras": {
+        "preview": {
+          "main": 2696,
+          "body": 2872
+        },
+        "produccion": {
+          "main": 2317,
+          "body": 2496
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/binary-search-tree",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 257250,
+        "produccion": 290176
+      },
+      "palabras": {
+        "preview": {
+          "main": 1383,
+          "body": 1547
+        },
+        "produccion": {
+          "main": 1268,
+          "body": 1436
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/blog/cs-fundamentals/dynamic-programming",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 317594,
+        "produccion": 491691
+      },
+      "palabras": {
+        "preview": {
+          "main": 2682,
+          "body": 2858
+        },
+        "produccion": {
+          "main": 2501,
+          "body": 2680
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/dynamic-programming",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 311416,
+        "produccion": 311010
+      },
+      "palabras": {
+        "preview": {
+          "main": 2449,
+          "body": 2613
+        },
+        "produccion": {
+          "main": 2216,
+          "body": 2384
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/cs-fundamentals/graph-algorithms",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 276250,
+        "produccion": 481859
+      },
+      "palabras": {
+        "preview": {
+          "main": 2120,
+          "body": 2296
+        },
+        "produccion": {
+          "main": 2031,
+          "body": 2210
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/graph-algorithms",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 291848,
+        "produccion": 308462
+      },
+      "palabras": {
+        "preview": {
+          "main": 2469,
+          "body": 2633
+        },
+        "produccion": {
+          "main": 2256,
+          "body": 2424
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/blog/cs-fundamentals/heap-data-structure",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 273460,
+        "produccion": 476567
+      },
+      "palabras": {
+        "preview": {
+          "main": 2048,
+          "body": 2224
+        },
+        "produccion": {
+          "main": 1884,
+          "body": 2063
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/heap-data-structure",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 269763,
+        "produccion": 299346
+      },
+      "palabras": {
+        "preview": {
+          "main": 1978,
+          "body": 2142
+        },
+        "produccion": {
+          "main": 1819,
+          "body": 1987
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/blog/cs-fundamentals/merge-sort-python",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 288001,
+        "produccion": 478974
+      },
+      "palabras": {
+        "preview": {
+          "main": 2017,
+          "body": 2193
+        },
+        "produccion": {
+          "main": 1872,
+          "body": 2051
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/merge-sort-python",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 279745,
+        "produccion": 299800
+      },
+      "palabras": {
+        "preview": {
+          "main": 1978,
+          "body": 2142
+        },
+        "produccion": {
+          "main": 1863,
+          "body": 2031
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/cs-fundamentals/queue-data-structure",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 306564,
+        "produccion": 494217
+      },
+      "palabras": {
+        "preview": {
+          "main": 2595,
+          "body": 2771
+        },
+        "produccion": {
+          "main": 2329,
+          "body": 2508
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/queue-data-structure",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 280931,
+        "produccion": 297438
+      },
+      "palabras": {
+        "preview": {
+          "main": 1632,
+          "body": 1796
+        },
+        "produccion": {
+          "main": 1520,
+          "body": 1688
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/cs-fundamentals/quicksort-python",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 312305,
+        "produccion": 491596
+      },
+      "palabras": {
+        "preview": {
+          "main": 2448,
+          "body": 2624
+        },
+        "produccion": {
+          "main": 2200,
+          "body": 2379
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/quicksort-python",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 307476,
+        "produccion": 316936
+      },
+      "palabras": {
+        "preview": {
+          "main": 2937,
+          "body": 3101
+        },
+        "produccion": {
+          "main": 2759,
+          "body": 2927
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/blog/cs-fundamentals/space-complexity",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 286103,
+        "produccion": 484468
+      },
+      "palabras": {
+        "preview": {
+          "main": 2436,
+          "body": 2612
+        },
+        "produccion": {
+          "main": 2204,
+          "body": 2383
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/space-complexity",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 298717,
+        "produccion": 313610
+      },
+      "palabras": {
+        "preview": {
+          "main": 2242,
+          "body": 2406
+        },
+        "produccion": {
+          "main": 2025,
+          "body": 2193
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/blog/cs-fundamentals/time-complexity",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 268862,
+        "produccion": 473079
+      },
+      "palabras": {
+        "preview": {
+          "main": 1655,
+          "body": 1831
+        },
+        "produccion": {
+          "main": 1506,
+          "body": 1685
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 33
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/time-complexity",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 306470,
+        "produccion": 317672
+      },
+      "palabras": {
+        "preview": {
+          "main": 2532,
+          "body": 2696
+        },
+        "produccion": {
+          "main": 2273,
+          "body": 2441
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/blog/cs-fundamentals/tree-traversal",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 315585,
+        "produccion": 486460
+      },
+      "palabras": {
+        "preview": {
+          "main": 2474,
+          "body": 2650
+        },
+        "produccion": {
+          "main": 2078,
+          "body": 2257
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/tree-traversal",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 260210,
+        "produccion": 293948
+      },
+      "palabras": {
+        "preview": {
+          "main": 1566,
+          "body": 1730
+        },
+        "produccion": {
+          "main": 1465,
+          "body": 1633
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/blog/development/astro-vs-nextjs",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 289164,
+        "produccion": 313382
+      },
+      "palabras": {
+        "preview": {
+          "main": 2534,
+          "body": 2710
+        },
+        "produccion": {
+          "main": 2260,
+          "body": 2439
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/en/blog/development/astro-vs-nextjs",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 326633,
+        "produccion": 279494
+      },
+      "palabras": {
+        "preview": {
+          "main": 3695,
+          "body": 3859
+        },
+        "produccion": {
+          "main": 3425,
+          "body": 3593
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/blog/development/headless-cms-comparison",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 304987,
+        "produccion": 318688
+      },
+      "palabras": {
+        "preview": {
+          "main": 2719,
+          "body": 2895
+        },
+        "produccion": {
+          "main": 2345,
+          "body": 2524
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 33
+    },
+    {
+      "path": "/en/blog/development/headless-cms-comparison",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 282614,
+        "produccion": 252014
+      },
+      "palabras": {
+        "preview": {
+          "main": 1788,
+          "body": 1952
+        },
+        "produccion": {
+          "main": 1666,
+          "body": 1834
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/blog/development/nextjs-cms",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 294061,
+        "produccion": 313137
+      },
+      "palabras": {
+        "preview": {
+          "main": 2608,
+          "body": 2784
+        },
+        "produccion": {
+          "main": 2233,
+          "body": 2412
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/en/blog/development/nextjs-cms",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 333004,
+        "produccion": 279768
+      },
+      "palabras": {
+        "preview": {
+          "main": 3836,
+          "body": 4000
+        },
+        "produccion": {
+          "main": 3422,
+          "body": 3590
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 33
+    },
+    {
+      "path": "/blog/development/payload-cms-guide",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 274720,
+        "produccion": 307885
+      },
+      "palabras": {
+        "preview": {
+          "main": 2095,
+          "body": 2271
+        },
+        "produccion": {
+          "main": 1963,
+          "body": 2142
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/en/blog/development/payload-cms-guide",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 284799,
+        "produccion": 252172
+      },
+      "palabras": {
+        "preview": {
+          "main": 1900,
+          "body": 2064
+        },
+        "produccion": {
+          "main": 1754,
+          "body": 1922
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/blog/tech-seo/auditoria-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 305881,
+        "produccion": 303913
+      },
+      "palabras": {
+        "preview": {
+          "main": 3098,
+          "body": 3274
+        },
+        "produccion": {
+          "main": 2759,
+          "body": 2938
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 40
+    },
+    {
+      "path": "/en/blog/tech-seo/auditoria-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 297129,
+        "produccion": 271873
+      },
+      "palabras": {
+        "preview": {
+          "main": 2688,
+          "body": 2852
+        },
+        "produccion": {
+          "main": 2404,
+          "body": 2572
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 42
+    },
+    {
+      "path": "/blog/tech-seo/nextjs-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 297679,
+        "produccion": 294778
+      },
+      "palabras": {
+        "preview": {
+          "main": 2614,
+          "body": 2790
+        },
+        "produccion": {
+          "main": 2153,
+          "body": 2332
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 39
+    },
+    {
+      "path": "/en/blog/tech-seo/nextjs-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 299691,
+        "produccion": 264732
+      },
+      "palabras": {
+        "preview": {
+          "main": 1882,
+          "body": 2046
+        },
+        "produccion": {
+          "main": 1700,
+          "body": 1868
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/blog/tech-seo/seo-on-page-guia",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 318236,
+        "produccion": 313540
+      },
+      "palabras": {
+        "preview": {
+          "main": 3733,
+          "body": 3909
+        },
+        "produccion": {
+          "main": 3338,
+          "body": 3517
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/en/blog/tech-seo/seo-on-page-guia",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 310158,
+        "produccion": 281377
+      },
+      "palabras": {
+        "preview": {
+          "main": 3243,
+          "body": 3407
+        },
+        "produccion": {
+          "main": 2906,
+          "body": 3074
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 39
+    },
+    {
+      "path": "/blog/tech-seo/structured-data-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 330343,
+        "produccion": 314916
+      },
+      "palabras": {
+        "preview": {
+          "main": 3991,
+          "body": 4167
+        },
+        "produccion": {
+          "main": 3409,
+          "body": 3588
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 38
+    },
+    {
+      "path": "/en/blog/tech-seo/structured-data-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 317192,
+        "produccion": 283450
+      },
+      "palabras": {
+        "preview": {
+          "main": 3324,
+          "body": 3488
+        },
+        "produccion": {
+          "main": 2987,
+          "body": 3155
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/blog/tech-seo/technical-seo-checklist",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 327250,
+        "produccion": 307795
+      },
+      "palabras": {
+        "preview": {
+          "main": 2941,
+          "body": 3117
+        },
+        "produccion": {
+          "main": 2617,
+          "body": 2796
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 39
+    },
+    {
+      "path": "/en/blog/tech-seo/technical-seo-checklist",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 331765,
+        "produccion": 283579
+      },
+      "palabras": {
+        "preview": {
+          "main": 3162,
+          "body": 3326
+        },
+        "produccion": {
+          "main": 2915,
+          "body": 3083
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 37
+    },
+    {
+      "path": "/blog/tech-seo/technical-seo-guide",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 295957,
+        "produccion": 324094
+      },
+      "palabras": {
+        "preview": {
+          "main": 3645,
+          "body": 3821
+        },
+        "produccion": {
+          "main": 3672,
+          "body": 3851
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 45
+    },
+    {
+      "path": "/blog/cs-fundamentals/pilas-y-colas",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 284067,
+        "produccion": 477458
+      },
+      "palabras": {
+        "preview": {
+          "main": 1952,
+          "body": 2128
+        },
+        "produccion": {
+          "main": 1850,
+          "body": 2029
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/en/blog/cs-fundamentals/pilas-y-colas",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 288072,
+        "produccion": 296624
+      },
+      "palabras": {
+        "preview": {
+          "main": 1124,
+          "body": 1288
+        },
+        "produccion": {
+          "main": 1012,
+          "body": 1180
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 33
+    },
+    {
+      "path": "/blog/cs-fundamentals/recursividad",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 350503,
+        "produccion": 517748
+      },
+      "palabras": {
+        "preview": {
+          "main": 4661,
+          "body": 4837
+        },
+        "produccion": {
+          "main": 4332,
+          "body": 4511
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/blog/development/hidratacion-web",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 309456,
+        "produccion": 330632
+      },
+      "palabras": {
+        "preview": {
+          "main": 3243,
+          "body": 3419
+        },
+        "produccion": {
+          "main": 2991,
+          "body": 3170
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/blog/development/react-19",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 292176,
+        "produccion": 315791
+      },
+      "palabras": {
+        "preview": {
+          "main": 2320,
+          "body": 2496
+        },
+        "produccion": {
+          "main": 2156,
+          "body": 2335
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 34
+    },
+    {
+      "path": "/blog/seo/canibalizacion-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 271958,
+        "produccion": 271005
+      },
+      "palabras": {
+        "preview": {
+          "main": 2392,
+          "body": 2568
+        },
+        "produccion": {
+          "main": 2153,
+          "body": 2332
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/en/blog/seo/canibalizacion-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 262009,
+        "produccion": 253061
+      },
+      "palabras": {
+        "preview": {
+          "main": 1226,
+          "body": 1390
+        },
+        "produccion": {
+          "main": 1090,
+          "body": 1258
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 33
+    },
+    {
+      "path": "/blog/tech-seo/guia-google-search-console",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 265062,
+        "produccion": 287783
+      },
+      "palabras": {
+        "preview": {
+          "main": 1996,
+          "body": 2172
+        },
+        "produccion": {
+          "main": 1812,
+          "body": 1991
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 36
+    },
+    {
+      "path": "/en/blog/tech-seo/guia-google-search-console",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 245177,
+        "produccion": 251999
+      },
+      "palabras": {
+        "preview": {
+          "main": 1500,
+          "body": 1664
+        },
+        "produccion": {
+          "main": 1467,
+          "body": 1635
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 33
+    },
+    {
+      "path": "/blog/tech-seo/javascript-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 288853,
+        "produccion": 286763
+      },
+      "palabras": {
+        "preview": {
+          "main": 1534,
+          "body": 1710
+        },
+        "produccion": {
+          "main": 1435,
+          "body": 1614
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 35
+    },
+    {
+      "path": "/en/blog/tech-seo/javascript-seo",
+      "origen": "sitemap",
+      "plantilla": "post",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 284542,
+        "produccion": 258083
+      },
+      "palabras": {
+        "preview": {
+          "main": 1423,
+          "body": 1587
+        },
+        "produccion": {
+          "main": 1333,
+          "body": 1501
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 33
+    },
+    {
+      "path": "/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 247585,
+        "produccion": 116604
+      },
+      "palabras": {
+        "preview": {
+          "main": 989,
+          "body": 1165
+        },
+        "produccion": {
+          "main": 599,
+          "body": 778
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 28
+    },
+    {
+      "path": "/en/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 244546,
+        "produccion": 114433
+      },
+      "palabras": {
+        "preview": {
+          "main": 869,
+          "body": 1033
+        },
+        "produccion": {
+          "main": 502,
+          "body": 670
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 28
+    },
+    {
+      "path": "/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 246935,
+        "produccion": 116070
+      },
+      "palabras": {
+        "preview": {
+          "main": 920,
+          "body": 1096
+        },
+        "produccion": {
+          "main": 530,
+          "body": 709
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 28
+    },
+    {
+      "path": "/en/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 243982,
+        "produccion": 113942
+      },
+      "palabras": {
+        "preview": {
+          "main": 828,
+          "body": 992
+        },
+        "produccion": {
+          "main": 461,
+          "body": 629
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 28
+    },
+    {
+      "path": "/case-studies/immigration-law-atlanta-seo",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 246318,
+        "produccion": 115138
+      },
+      "palabras": {
+        "preview": {
+          "main": 965,
+          "body": 1141
+        },
+        "produccion": {
+          "main": 567,
+          "body": 746
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 28
+    },
+    {
+      "path": "/en/case-studies/immigration-law-atlanta-seo",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 243616,
+        "produccion": 113281
+      },
+      "palabras": {
+        "preview": {
+          "main": 857,
+          "body": 1021
+        },
+        "produccion": {
+          "main": 486,
+          "body": 654
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 28
+    },
+    {
+      "path": "/case-studies/talleres-costura-miami-lanzamiento-seo-local",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 244389,
+        "produccion": 111215
+      },
+      "palabras": {
+        "preview": {
+          "main": 928,
+          "body": 1104
+        },
+        "produccion": {
+          "main": 517,
+          "body": 696
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 28
+    },
+    {
+      "path": "/en/case-studies/talleres-costura-miami-lanzamiento-seo-local",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 242122,
+        "produccion": 109875
+      },
+      "palabras": {
+        "preview": {
+          "main": 844,
+          "body": 1008
+        },
+        "produccion": {
+          "main": 458,
+          "body": 626
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 28
+    },
+    {
+      "path": "/case-studies/urologo-seo-local-salud-santiago-rd",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 245714,
+        "produccion": 114479
+      },
+      "palabras": {
+        "preview": {
+          "main": 910,
+          "body": 1086
+        },
+        "produccion": {
+          "main": 512,
+          "body": 691
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 28
+    },
+    {
+      "path": "/en/case-studies/urologo-seo-local-salud-santiago-rd",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 243183,
+        "produccion": 112968
+      },
+      "palabras": {
+        "preview": {
+          "main": 815,
+          "body": 979
+        },
+        "produccion": {
+          "main": 443,
+          "body": 611
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 28
+    },
+    {
+      "path": "/case-studies/edtech-financiera-infantil-crecimiento-organico-seo",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 247355,
+        "produccion": 116071
+      },
+      "palabras": {
+        "preview": {
+          "main": 996,
+          "body": 1172
+        },
+        "produccion": {
+          "main": 595,
+          "body": 774
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 27
+    },
+    {
+      "path": "/en/case-studies/edtech-financiera-infantil-crecimiento-organico-seo",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 244145,
+        "produccion": 113774
+      },
+      "palabras": {
+        "preview": {
+          "main": 889,
+          "body": 1053
+        },
+        "produccion": {
+          "main": 515,
+          "body": 683
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 27
+    },
+    {
+      "path": "/case-studies/migracion-ecommerce-nextjs-seo-tecnico",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 225805,
+        "produccion": 112879
+      },
+      "palabras": {
+        "preview": {
+          "main": 692,
+          "body": 868
+        },
+        "produccion": {
+          "main": 473,
+          "body": 652
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 27
+    },
+    {
+      "path": "/en/case-studies/migracion-ecommerce-nextjs-seo-tecnico",
+      "origen": "sitemap",
+      "plantilla": "caso",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 223370,
+        "produccion": 111222
+      },
+      "palabras": {
+        "preview": {
+          "main": 618,
+          "body": 782
+        },
+        "produccion": {
+          "main": 413,
+          "body": 581
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 27
+    },
+    {
+      "path": "/authors/juan-carlos-angulo",
+      "origen": "sitemap",
+      "plantilla": "autor",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 360441,
+        "produccion": 2785008
+      },
+      "palabras": {
+        "preview": {
+          "main": 2986,
+          "body": 3162
+        },
+        "produccion": {
+          "main": 2320,
+          "body": 2499
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 80
+    },
+    {
+      "path": "/en/authors/juan-carlos-angulo",
+      "origen": "sitemap",
+      "plantilla": "autor",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 354390,
+        "produccion": 2247901
+      },
+      "palabras": {
+        "preview": {
+          "main": 2494,
+          "body": 2658
+        },
+        "produccion": {
+          "main": 1953,
+          "body": 2121
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 81
+    },
+    {
+      "path": "/websites/juan-tech-com",
+      "origen": "sitemap",
+      "plantilla": "sitio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 215543,
+        "produccion": 75801
+      },
+      "palabras": {
+        "preview": {
+          "main": 277,
+          "body": 453
+        },
+        "produccion": {
+          "main": 80,
+          "body": 259
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 30
+    },
+    {
+      "path": "/en/websites/juan-tech-com",
+      "origen": "sitemap",
+      "plantilla": "sitio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 214366,
+        "produccion": 75087
+      },
+      "palabras": {
+        "preview": {
+          "main": 279,
+          "body": 443
+        },
+        "produccion": {
+          "main": 78,
+          "body": 246
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 31
+    },
+    {
+      "path": "/websites/apturio-com",
+      "origen": "sitemap",
+      "plantilla": "sitio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 218169,
+        "produccion": 75586
+      },
+      "palabras": {
+        "preview": {
+          "main": 275,
+          "body": 451
+        },
+        "produccion": {
+          "main": 71,
+          "body": 250
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 31
+    },
+    {
+      "path": "/en/websites/apturio-com",
+      "origen": "sitemap",
+      "plantilla": "sitio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 217006,
+        "produccion": 74852
+      },
+      "palabras": {
+        "preview": {
+          "main": 275,
+          "body": 439
+        },
+        "produccion": {
+          "main": 67,
+          "body": 235
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 31
+    },
+    {
+      "path": "/websites/drmanuelvargashidalgo-com",
+      "origen": "sitemap",
+      "plantilla": "sitio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 219297,
+        "produccion": 75583
+      },
+      "palabras": {
+        "preview": {
+          "main": 269,
+          "body": 445
+        },
+        "produccion": {
+          "main": 79,
+          "body": 258
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 30
+    },
+    {
+      "path": "/en/websites/drmanuelvargashidalgo-com",
+      "origen": "sitemap",
+      "plantilla": "sitio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 218028,
+        "produccion": 74787
+      },
+      "palabras": {
+        "preview": {
+          "main": 266,
+          "body": 430
+        },
+        "produccion": {
+          "main": 72,
+          "body": 240
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 30
+    },
+    {
+      "path": "/websites/estylopia-com",
+      "origen": "sitemap",
+      "plantilla": "sitio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 218375,
+        "produccion": 74695
+      },
+      "palabras": {
+        "preview": {
+          "main": 270,
+          "body": 446
+        },
+        "produccion": {
+          "main": 68,
+          "body": 247
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 31
+    },
+    {
+      "path": "/en/websites/estylopia-com",
+      "origen": "sitemap",
+      "plantilla": "sitio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 217075,
+        "produccion": 73856
+      },
+      "palabras": {
+        "preview": {
+          "main": 265,
+          "body": 429
+        },
+        "produccion": {
+          "main": 59,
+          "body": 227
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 31
+    },
+    {
+      "path": "/websites/aprendoclub-com",
+      "origen": "sitemap",
+      "plantilla": "sitio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 217896,
+        "produccion": 75870
+      },
+      "palabras": {
+        "preview": {
+          "main": 272,
+          "body": 448
+        },
+        "produccion": {
+          "main": 72,
+          "body": 251
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 31
+    },
+    {
+      "path": "/en/websites/aprendoclub-com",
+      "origen": "sitemap",
+      "plantilla": "sitio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 216689,
+        "produccion": 75108
+      },
+      "palabras": {
+        "preview": {
+          "main": 268,
+          "body": 432
+        },
+        "produccion": {
+          "main": 64,
+          "body": 232
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 31
+    },
+    {
+      "path": "/websites/ariannalupi-com",
+      "origen": "sitemap",
+      "plantilla": "sitio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 218494,
+        "produccion": 76161
+      },
+      "palabras": {
+        "preview": {
+          "main": 282,
+          "body": 458
+        },
+        "produccion": {
+          "main": 88,
+          "body": 267
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 30
+    },
+    {
+      "path": "/en/websites/ariannalupi-com",
+      "origen": "sitemap",
+      "plantilla": "sitio",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 217321,
+        "produccion": 75431
+      },
+      "palabras": {
+        "preview": {
+          "main": 276,
+          "body": 440
+        },
+        "produccion": {
+          "main": 78,
+          "body": 246
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 30
+    },
+    {
+      "path": "/blog/tech-seo",
+      "origen": "sitemap",
+      "plantilla": "blog-categoria",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 178131,
+        "produccion": 147012
+      },
+      "palabras": {
+        "preview": {
+          "main": 677,
+          "body": 853
+        },
+        "produccion": {
+          "main": 644,
+          "body": 823
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 45
+    },
+    {
+      "path": "/en/blog/tech-seo",
+      "origen": "sitemap",
+      "plantilla": "blog-categoria",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 176670,
+        "produccion": 146086
+      },
+      "palabras": {
+        "preview": {
+          "main": 616,
+          "body": 780
+        },
+        "produccion": {
+          "main": 614,
+          "body": 782
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 45
+    },
+    {
+      "path": "/blog/cs-fundamentals",
+      "origen": "sitemap",
+      "plantilla": "blog-categoria",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 185610,
+        "produccion": 159111
+      },
+      "palabras": {
+        "preview": {
+          "main": 812,
+          "body": 988
+        },
+        "produccion": {
+          "main": 806,
+          "body": 985
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 48
+    },
+    {
+      "path": "/en/blog/cs-fundamentals",
+      "origen": "sitemap",
+      "plantilla": "blog-categoria",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 181761,
+        "produccion": 155798
+      },
+      "palabras": {
+        "preview": {
+          "main": 610,
+          "body": 774
+        },
+        "produccion": {
+          "main": 605,
+          "body": 773
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 48
+    },
+    {
+      "path": "/blog/general",
+      "origen": "sitemap",
+      "plantilla": "blog-categoria",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 147001,
+        "produccion": 84787
+      },
+      "palabras": {
+        "preview": {
+          "main": 120,
+          "body": 296
+        },
+        "produccion": {
+          "main": 135,
+          "body": 314
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [
+        {
+          "field": "palabras",
+          "message": "palabras en main: 120 contra 135 en producción (11.1% menos; tolerancia 2%)",
+          "clase": "b",
+          "motivo": "Categoría general vacía: el rediseño quita el contador \"0 artículos\" y la fila repetida \"Otros temas del blog\" con sus cuatro enlaces. El copy propio de la página es idéntico. Juan lo acepta en 57-09"
+        }
+      ],
+      "enlacesInternos": 30
+    },
+    {
+      "path": "/en/blog/general",
+      "origen": "sitemap",
+      "plantilla": "blog-categoria",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 145768,
+        "produccion": 83988
+      },
+      "palabras": {
+        "preview": {
+          "main": 124,
+          "body": 288
+        },
+        "produccion": {
+          "main": 138,
+          "body": 306
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [
+        {
+          "field": "palabras",
+          "message": "palabras en main: 124 contra 138 en producción (10.1% menos; tolerancia 2%)",
+          "clase": "b",
+          "motivo": "Categoría general vacía: el rediseño quita el contador \"0 artículos\" y la fila repetida \"Otros temas del blog\" con sus cuatro enlaces. El copy propio de la página es idéntico. Juan lo acepta en 57-09"
+        }
+      ],
+      "enlacesInternos": 30
+    },
+    {
+      "path": "/blog/development",
+      "origen": "sitemap",
+      "plantilla": "blog-categoria",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 164352,
+        "produccion": 121312
+      },
+      "palabras": {
+        "preview": {
+          "main": 399,
+          "body": 575
+        },
+        "produccion": {
+          "main": 379,
+          "body": 558
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 39
+    },
+    {
+      "path": "/en/blog/development",
+      "origen": "sitemap",
+      "plantilla": "blog-categoria",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 162045,
+        "produccion": 119280
+      },
+      "palabras": {
+        "preview": {
+          "main": 323,
+          "body": 487
+        },
+        "produccion": {
+          "main": 320,
+          "body": 488
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 39
+    },
+    {
+      "path": "/blog/seo",
+      "origen": "sitemap",
+      "plantilla": "blog-categoria",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 171272,
+        "produccion": 131773
+      },
+      "palabras": {
+        "preview": {
+          "main": 688,
+          "body": 864
+        },
+        "produccion": {
+          "main": 670,
+          "body": 849
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 40
+    },
+    {
+      "path": "/en/blog/seo",
+      "origen": "sitemap",
+      "plantilla": "blog-categoria",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 169500,
+        "produccion": 130570
+      },
+      "palabras": {
+        "preview": {
+          "main": 628,
+          "body": 792
+        },
+        "produccion": {
+          "main": 631,
+          "body": 799
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 40
+    },
+    {
+      "path": "/websites",
+      "origen": "sitemap",
+      "plantilla": "sitios",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 207132,
+        "produccion": 70950
+      },
+      "palabras": {
+        "preview": {
+          "main": 310,
+          "body": 486
+        },
+        "produccion": {
+          "main": 56,
+          "body": 235
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 32
+    },
+    {
+      "path": "/en/websites",
+      "origen": "sitemap",
+      "plantilla": "sitios",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 205868,
+        "produccion": 70356
+      },
+      "palabras": {
+        "preview": {
+          "main": 311,
+          "body": 475
+        },
+        "produccion": {
+          "main": 53,
+          "body": 221
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 32
+    },
+    {
+      "path": "/case-studies",
+      "origen": "sitemap",
+      "plantilla": "casos",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 185231,
+        "produccion": 80978
+      },
+      "palabras": {
+        "preview": {
+          "main": 362,
+          "body": 538
+        },
+        "produccion": {
+          "main": 191,
+          "body": 370
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 28
+    },
+    {
+      "path": "/en/case-studies",
+      "origen": "sitemap",
+      "plantilla": "casos",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 183656,
+        "produccion": 80111
+      },
+      "palabras": {
+        "preview": {
+          "main": 344,
+          "body": 508
+        },
+        "produccion": {
+          "main": 175,
+          "body": 343
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 28
+    },
+    {
+      "path": "/authors",
+      "origen": "sitemap",
+      "plantilla": "autores",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 162415,
+        "produccion": 63068
+      },
+      "palabras": {
+        "preview": {
+          "main": 104,
+          "body": 280
+        },
+        "produccion": {
+          "main": 13,
+          "body": 192
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 27
+    },
+    {
+      "path": "/en/authors",
+      "origen": "sitemap",
+      "plantilla": "autores",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 161944,
+        "produccion": 62553
+      },
+      "palabras": {
+        "preview": {
+          "main": 141,
+          "body": 305
+        },
+        "produccion": {
+          "main": 11,
+          "body": 179
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 27
+    },
+    {
+      "path": "/search",
+      "origen": "fuera-del-sitemap",
+      "plantilla": "busqueda",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 132631,
+        "produccion": 60294
+      },
+      "palabras": {
+        "preview": {
+          "main": 9,
+          "body": 185
+        },
+        "produccion": {
+          "main": 2,
+          "body": 181
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/en/search",
+      "origen": "fuera-del-sitemap",
+      "plantilla": "busqueda",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 131510,
+        "produccion": 59847
+      },
+      "palabras": {
+        "preview": {
+          "main": 8,
+          "body": 172
+        },
+        "produccion": {
+          "main": 2,
+          "body": 170
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/blog/confirm",
+      "origen": "fuera-del-sitemap",
+      "plantilla": "blog-confirmacion",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 108457,
+        "produccion": 56783
+      },
+      "palabras": {
+        "preview": {
+          "main": 28,
+          "body": 204
+        },
+        "produccion": {
+          "main": 28,
+          "body": 207
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/en/blog/confirm",
+      "origen": "fuera-del-sitemap",
+      "plantilla": "blog-confirmacion",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 107332,
+        "produccion": 56318
+      },
+      "palabras": {
+        "preview": {
+          "main": 29,
+          "body": 193
+        },
+        "produccion": {
+          "main": 29,
+          "body": 197
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/services",
+      "origen": "fuera-del-sitemap",
+      "plantilla": "servicios",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 193454,
+        "produccion": 87354
+      },
+      "palabras": {
+        "preview": {
+          "main": 432,
+          "body": 608
+        },
+        "produccion": {
+          "main": 149,
+          "body": 328
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/en/servicios",
+      "origen": "fuera-del-sitemap",
+      "plantilla": "servicios",
+      "estado": {
+        "preview": 200,
+        "produccion": 200
+      },
+      "bytes": {
+        "preview": 192000,
+        "produccion": 86156
+      },
+      "palabras": {
+        "preview": {
+          "main": 427,
+          "body": 591
+        },
+        "produccion": {
+          "main": 150,
+          "body": 318
+        }
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/sobre-mi",
+      "origen": "nueva",
+      "plantilla": "sobre-mi",
+      "estado": {
+        "preview": 200,
+        "produccion": 404
+      },
+      "bytes": {
+        "preview": 209579,
+        "produccion": 5312
+      },
+      "palabras": {
+        "preview": {
+          "main": 556,
+          "body": 732
+        },
+        "produccion": null
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    },
+    {
+      "path": "/en/sobre-mi",
+      "origen": "nueva",
+      "plantilla": "sobre-mi",
+      "estado": {
+        "preview": 200,
+        "produccion": 404
+      },
+      "bytes": {
+        "preview": 205791,
+        "produccion": 5319
+      },
+      "palabras": {
+        "preview": {
+          "main": 512,
+          "body": 676
+        },
+        "produccion": null
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
+    }
+  ],
+  "enlaces": {
+    "fallos": [],
+    "gemelosNoindexEnProduccion": [
+      {
+        "target": "/en/blog/seo/estrategia-seo",
+        "from": [
+          "/en/stack",
+          "/en/seo-tecnico-madrid",
+          "/en/seo-tecnico-lima",
+          "/en/services/ai-seo-geo",
+          "/en/services/fullstack-development",
+          "/en/services/seo-consulting",
+          "/en/services/seo-technical-audit",
+          "/en/services",
+          "/en/terms",
+          "/en/privacy",
+          "/en/contact",
+          "/en/blog",
+          "/en",
+          "/en/blog/cs-fundamentals/algoritmos-ordenamiento",
+          "/en/blog/cs-fundamentals/arboles-binarios",
+          "/en/blog/cs-fundamentals/diseno-bases-datos",
+          "/en/blog/cs-fundamentals/normalizacion-bases-datos",
+          "/en/blog/seo/guia-eeat",
+          "/en/blog/seo/enlaces-internos-guia",
+          "/en/blog/seo/guia-keyword-research",
+          "/en/blog/seo/redaccion-seo",
+          "/en/blog/development/experiencia-de-usuario",
+          "/en/blog/tech-seo/non-developers-guide",
+          "/en/blog/tech-seo/web-performance-guide",
+          "/en/blog/tech-seo/core-web-vitals-guide",
+          "/en/blog/tech-seo/schema-markup-guide",
+          "/en/blog/tech-seo/ssr-vs-csr-seo",
+          "/en/blog/tech-seo/headless-cms-seo",
+          "/en/blog/seo/topic-clusters-seo",
+          "/blog/seo/estrategia-seo",
+          "/en/blog/seo/pillar-page-seo",
+          "/en/blog/cs-fundamentals/data-structures",
+          "/en/blog/cs-fundamentals/binary-search-tree",
+          "/en/blog/cs-fundamentals/dynamic-programming",
+          "/en/blog/cs-fundamentals/graph-algorithms",
+          "/en/blog/cs-fundamentals/heap-data-structure",
+          "/en/blog/cs-fundamentals/merge-sort-python",
+          "/en/blog/cs-fundamentals/queue-data-structure",
+          "/en/blog/cs-fundamentals/quicksort-python",
+          "/en/blog/cs-fundamentals/space-complexity",
+          "/en/blog/cs-fundamentals/time-complexity",
+          "/en/blog/cs-fundamentals/tree-traversal",
+          "/en/blog/development/astro-vs-nextjs",
+          "/en/blog/development/headless-cms-comparison",
+          "/en/blog/development/nextjs-cms",
+          "/en/blog/development/payload-cms-guide",
+          "/en/blog/tech-seo/auditoria-seo",
+          "/en/blog/tech-seo/nextjs-seo",
+          "/en/blog/tech-seo/seo-on-page-guia",
+          "/en/blog/tech-seo/structured-data-seo",
+          "/en/blog/tech-seo/technical-seo-checklist",
+          "/en/blog/cs-fundamentals/pilas-y-colas",
+          "/en/blog/seo/canibalizacion-seo",
+          "/en/blog/tech-seo/guia-google-search-console",
+          "/en/blog/tech-seo/javascript-seo",
+          "/en/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+          "/en/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+          "/en/case-studies/immigration-law-atlanta-seo",
+          "/en/case-studies/talleres-costura-miami-lanzamiento-seo-local",
+          "/en/case-studies/urologo-seo-local-salud-santiago-rd",
+          "/en/case-studies/edtech-financiera-infantil-crecimiento-organico-seo",
+          "/en/case-studies/migracion-ecommerce-nextjs-seo-tecnico",
+          "/en/authors/juan-carlos-angulo",
+          "/en/websites/juan-tech-com",
+          "/en/websites/apturio-com",
+          "/en/websites/drmanuelvargashidalgo-com",
+          "/en/websites/estylopia-com",
+          "/en/websites/aprendoclub-com",
+          "/en/websites/ariannalupi-com",
+          "/en/blog/tech-seo",
+          "/en/blog/cs-fundamentals",
+          "/en/blog/general",
+          "/en/blog/development",
+          "/en/blog/seo",
+          "/en/websites",
+          "/en/case-studies",
+          "/en/authors",
+          "/en/search",
+          "/en/blog/confirm",
+          "/en/servicios"
+        ]
+      },
+      {
+        "target": "/en/blog/tech-seo/technical-seo-guide",
+        "from": [
+          "/en/stack",
+          "/en/seo-tecnico-madrid",
+          "/en/seo-tecnico-lima",
+          "/en/services/ai-seo-geo",
+          "/en/services/fullstack-development",
+          "/en/services/seo-consulting",
+          "/en/services/seo-technical-audit",
+          "/en/services",
+          "/en/terms",
+          "/en/privacy",
+          "/en/contact",
+          "/en/blog",
+          "/en",
+          "/en/blog/cs-fundamentals/algoritmos-ordenamiento",
+          "/en/blog/cs-fundamentals/arboles-binarios",
+          "/en/blog/cs-fundamentals/diseno-bases-datos",
+          "/en/blog/cs-fundamentals/normalizacion-bases-datos",
+          "/en/blog/seo/guia-eeat",
+          "/en/blog/seo/enlaces-internos-guia",
+          "/en/blog/seo/guia-keyword-research",
+          "/en/blog/seo/redaccion-seo",
+          "/en/blog/development/experiencia-de-usuario",
+          "/en/blog/tech-seo/non-developers-guide",
+          "/en/blog/tech-seo/web-performance-guide",
+          "/en/blog/tech-seo/core-web-vitals-guide",
+          "/en/blog/tech-seo/schema-markup-guide",
+          "/en/blog/tech-seo/ssr-vs-csr-seo",
+          "/en/blog/tech-seo/headless-cms-seo",
+          "/en/blog/seo/topic-clusters-seo",
+          "/en/blog/seo/pillar-page-seo",
+          "/en/blog/cs-fundamentals/data-structures",
+          "/en/blog/cs-fundamentals/binary-search-tree",
+          "/en/blog/cs-fundamentals/dynamic-programming",
+          "/en/blog/cs-fundamentals/graph-algorithms",
+          "/en/blog/cs-fundamentals/heap-data-structure",
+          "/en/blog/cs-fundamentals/merge-sort-python",
+          "/en/blog/cs-fundamentals/queue-data-structure",
+          "/en/blog/cs-fundamentals/quicksort-python",
+          "/en/blog/cs-fundamentals/space-complexity",
+          "/en/blog/cs-fundamentals/time-complexity",
+          "/en/blog/cs-fundamentals/tree-traversal",
+          "/en/blog/development/astro-vs-nextjs",
+          "/en/blog/development/headless-cms-comparison",
+          "/en/blog/development/nextjs-cms",
+          "/en/blog/development/payload-cms-guide",
+          "/en/blog/tech-seo/auditoria-seo",
+          "/en/blog/tech-seo/nextjs-seo",
+          "/en/blog/tech-seo/seo-on-page-guia",
+          "/en/blog/tech-seo/structured-data-seo",
+          "/en/blog/tech-seo/technical-seo-checklist",
+          "/blog/tech-seo/technical-seo-guide",
+          "/en/blog/cs-fundamentals/pilas-y-colas",
+          "/en/blog/seo/canibalizacion-seo",
+          "/en/blog/tech-seo/guia-google-search-console",
+          "/en/blog/tech-seo/javascript-seo",
+          "/en/case-studies/pittsburgh-criminal-defense-legal-content-seo",
+          "/en/case-studies/fabricante-baldosa-hidraulica-seo-espana",
+          "/en/case-studies/immigration-law-atlanta-seo",
+          "/en/case-studies/talleres-costura-miami-lanzamiento-seo-local",
+          "/en/case-studies/urologo-seo-local-salud-santiago-rd",
+          "/en/case-studies/edtech-financiera-infantil-crecimiento-organico-seo",
+          "/en/case-studies/migracion-ecommerce-nextjs-seo-tecnico",
+          "/en/authors/juan-carlos-angulo",
+          "/en/websites/juan-tech-com",
+          "/en/websites/apturio-com",
+          "/en/websites/drmanuelvargashidalgo-com",
+          "/en/websites/estylopia-com",
+          "/en/websites/aprendoclub-com",
+          "/en/websites/ariannalupi-com",
+          "/en/blog/tech-seo",
+          "/en/blog/cs-fundamentals",
+          "/en/blog/general",
+          "/en/blog/development",
+          "/en/blog/seo",
+          "/en/websites",
+          "/en/case-studies",
+          "/en/authors",
+          "/en/search",
+          "/en/blog/confirm",
+          "/en/servicios"
+        ]
+      },
+      {
+        "target": "/en/blog/cs-fundamentals/recursividad",
+        "from": [
+          "/en/blog",
+          "/en/blog/cs-fundamentals/pilas-y-colas",
+          "/blog/cs-fundamentals/recursividad",
+          "/en/authors/juan-carlos-angulo",
+          "/en/blog/cs-fundamentals"
+        ]
+      },
+      {
+        "target": "/en/blog/cs-fundamentals/tablas-hash",
+        "from": [
+          "/en/blog",
+          "/blog/cs-fundamentals/tablas-hash",
+          "/en/authors/juan-carlos-angulo",
+          "/en/blog/cs-fundamentals"
+        ]
+      },
+      {
+        "target": "/en/blog/development/hidratacion-web",
+        "from": [
+          "/en/blog",
+          "/en/blog/development/experiencia-de-usuario",
+          "/blog/development/hidratacion-web",
+          "/en/blog/development"
+        ]
+      },
+      {
+        "target": "/en/blog/development/react-19",
+        "from": [
+          "/en/blog",
+          "/blog/development/react-19",
+          "/en/blog/development"
+        ]
+      },
+      {
+        "target": "/en/blog/seo/estrategia-de-contenidos",
+        "from": [
+          "/en/blog",
+          "/blog/seo/estrategia-de-contenidos",
+          "/en/authors/juan-carlos-angulo",
+          "/en/blog/seo"
+        ]
+      },
+      {
+        "target": "/en/blog/seo/mejores-cursos-seo-espanol",
+        "from": [
+          "/en/blog",
+          "/blog/seo/mejores-cursos-seo-espanol",
+          "/en/authors/juan-carlos-angulo",
+          "/en/blog/seo"
+        ]
+      },
+      {
+        "target": "/en/blog/cs-fundamentals/complejidad-algoritmica",
+        "from": [
+          "/blog/cs-fundamentals/complejidad-algoritmica",
+          "/en/blog/cs-fundamentals/algoritmos-ordenamiento",
+          "/en/blog/cs-fundamentals/arboles-binarios",
+          "/en/blog/cs-fundamentals/diseno-bases-datos",
+          "/en/blog/cs-fundamentals/normalizacion-bases-datos",
+          "/en/blog/cs-fundamentals/data-structures",
+          "/en/blog/cs-fundamentals/binary-search-tree",
+          "/en/blog/cs-fundamentals/dynamic-programming",
+          "/en/blog/cs-fundamentals/graph-algorithms",
+          "/en/blog/cs-fundamentals/heap-data-structure",
+          "/en/blog/cs-fundamentals/merge-sort-python",
+          "/en/blog/cs-fundamentals/queue-data-structure",
+          "/en/blog/cs-fundamentals/quicksort-python",
+          "/en/blog/cs-fundamentals/space-complexity",
+          "/en/blog/cs-fundamentals/time-complexity",
+          "/en/blog/cs-fundamentals/tree-traversal",
+          "/en/blog/cs-fundamentals/pilas-y-colas",
+          "/en/authors/juan-carlos-angulo",
+          "/en/blog/cs-fundamentals"
+        ]
+      },
+      {
+        "target": "/en/blog/development/sql-vs-nosql",
+        "from": [
+          "/blog/development/sql-vs-nosql",
+          "/en/blog/cs-fundamentals/arboles-binarios",
+          "/en/blog/cs-fundamentals/diseno-bases-datos",
+          "/en/blog/cs-fundamentals/normalizacion-bases-datos",
+          "/en/blog/development/experiencia-de-usuario",
+          "/en/blog/development/astro-vs-nextjs",
+          "/en/blog/development/headless-cms-comparison",
+          "/en/blog/development/nextjs-cms",
+          "/en/blog/development/payload-cms-guide",
+          "/en/authors/juan-carlos-angulo",
+          "/en/blog/development"
+        ]
+      },
+      {
+        "target": "/en/blog/development/que-es-css",
+        "from": [
+          "/en/blog/development/experiencia-de-usuario",
+          "/blog/development/que-es-css",
+          "/en/blog/development/astro-vs-nextjs",
+          "/en/blog/development/headless-cms-comparison",
+          "/en/blog/development/nextjs-cms",
+          "/en/blog/development/payload-cms-guide",
+          "/en/authors/juan-carlos-angulo",
+          "/en/blog/development"
+        ]
+      },
+      {
+        "target": "/en/blog/tech-seo/robots-txt-best-practices",
+        "from": [
+          "/en/blog/tech-seo/non-developers-guide",
+          "/en/blog/tech-seo/web-performance-guide",
+          "/en/blog/tech-seo/core-web-vitals-guide",
+          "/blog/tech-seo/robots-txt-best-practices",
+          "/en/blog/tech-seo/schema-markup-guide",
+          "/en/blog/tech-seo/ssr-vs-csr-seo",
+          "/en/blog/tech-seo/headless-cms-seo",
+          "/en/blog/tech-seo/nextjs-seo",
+          "/en/blog/tech-seo/technical-seo-checklist",
+          "/en/authors/juan-carlos-angulo",
+          "/en/blog/tech-seo"
+        ]
+      },
+      {
+        "target": "/en/blog/tech-seo/xml-sitemap-automation",
+        "from": [
+          "/blog/tech-seo/xml-sitemap-automation",
+          "/en/blog/tech-seo/headless-cms-seo",
+          "/en/blog/tech-seo/nextjs-seo",
+          "/en/blog/tech-seo/technical-seo-checklist",
+          "/en/authors/juan-carlos-angulo",
+          "/en/blog/tech-seo"
+        ]
+      },
+      {
+        "target": "/en/blog/seo/seo-off-page-guia",
+        "from": [
+          "/blog/seo/seo-off-page-guia",
+          "/en/authors/juan-carlos-angulo",
+          "/en/blog/seo"
+        ]
+      }
+    ]
+  },
+  "redirects": {
+    "filas": [
+      {
+        "from": "/en/blog/cs-fundamentals/big-o-notation",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/cs-fundamentals/complejidad-algoritmica"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/cs-fundamentals/complejidad-algoritmica"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/cs-fundamentals/big-o-notation",
+        "preview": {
+          "status": 308,
+          "location": "/blog/cs-fundamentals/complejidad-algoritmica"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/cs-fundamentals/complejidad-algoritmica"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/cs-fundamentals/algoritmos-estructuras-datos",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/cs-fundamentals/data-structures"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/cs-fundamentals/data-structures"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/cs-fundamentals/algoritmos-estructuras-datos",
+        "preview": {
+          "status": 308,
+          "location": "/blog/cs-fundamentals/data-structures"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/cs-fundamentals/data-structures"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/cs-fundamentals/programacion-dinamica",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/cs-fundamentals/dynamic-programming"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/cs-fundamentals/dynamic-programming"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/cs-fundamentals/programacion-dinamica",
+        "preview": {
+          "status": 308,
+          "location": "/blog/cs-fundamentals/dynamic-programming"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/cs-fundamentals/dynamic-programming"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/tech-seo/nextjs-seo-optimization",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/tech-seo/nextjs-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/tech-seo/nextjs-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/seo/keyword-research-guide",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/seo/guia-keyword-research"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/seo/guia-keyword-research"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/seo/seo-copywriting-guide",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/seo/redaccion-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/seo/redaccion-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/seo/seo-copywriting",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/seo/redaccion-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/seo/redaccion-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/seo/seo-content-strategy",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/seo/estrategia-de-contenidos"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/seo/estrategia-de-contenidos"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/seo/content-pillar",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/seo/pillar-page-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/seo/pillar-page-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/tech-seo/tech-seo-guide",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/tech-seo/technical-seo-guide"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/tech-seo/technical-seo-guide"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/seo/estrategia-topic-clusters",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/seo/topic-clusters-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/seo/topic-clusters-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/payloadcms-seo",
+        "preview": {
+          "status": 308,
+          "location": "/blog/development/payload-cms-guide"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/development/payload-cms-guide"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/seo-content-strategy",
+        "preview": {
+          "status": 308,
+          "location": "/blog/seo/estrategia-de-contenidos"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/seo/estrategia-de-contenidos"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/seo-copywriting",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/seo/redaccion-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/seo/redaccion-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/seo-copywriting-guide",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/seo/redaccion-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/seo/redaccion-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/nextjs-portfolio",
+        "preview": {
+          "status": 308,
+          "location": "/en/websites/juan-tech-com"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/websites/juan-tech-com"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/nextjs-portfolio",
+        "preview": {
+          "status": 308,
+          "location": "/websites/juan-tech-com"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/websites/juan-tech-com"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/content-pillar",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/seo/pillar-page-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/seo/pillar-page-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/content-pillar",
+        "preview": {
+          "status": 308,
+          "location": "/blog/seo/pillar-page-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/seo/pillar-page-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/seo/seo-content-strategy",
+        "preview": {
+          "status": 308,
+          "location": "/blog/seo/estrategia-de-contenidos"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/seo/estrategia-de-contenidos"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/seo/seo-copywriting-guide",
+        "preview": {
+          "status": 308,
+          "location": "/blog/seo/redaccion-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/seo/redaccion-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/seo/seo-copywriting",
+        "preview": {
+          "status": 308,
+          "location": "/blog/seo/redaccion-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/seo/redaccion-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/tech-seo/tech-seo-guide",
+        "preview": {
+          "status": 308,
+          "location": "/blog/tech-seo/technical-seo-guide"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/tech-seo/technical-seo-guide"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/seo/keyword-research-guide",
+        "preview": {
+          "status": 308,
+          "location": "/blog/seo/guia-keyword-research"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/seo/guia-keyword-research"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/tech-seo/nextjs-seo-optimization",
+        "preview": {
+          "status": 308,
+          "location": "/blog/tech-seo/nextjs-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/tech-seo/nextjs-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/seo/content-pillar",
+        "preview": {
+          "status": 308,
+          "location": "/blog/seo/pillar-page-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/seo/pillar-page-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/seo/estrategia-topic-clusters",
+        "preview": {
+          "status": 308,
+          "location": "/blog/seo/topic-clusters-seo"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/seo/topic-clusters-seo"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/seo/guia-google-search-console",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/tech-seo/guia-google-search-console"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/tech-seo/guia-google-search-console"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/seo/guia-google-search-console",
+        "preview": {
+          "status": 308,
+          "location": "/blog/tech-seo/guia-google-search-console"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/tech-seo/guia-google-search-console"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/cs-fundamentals/sql-vs-nosql",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/development/sql-vs-nosql"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/development/sql-vs-nosql"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/cs-fundamentals/sql-vs-nosql",
+        "preview": {
+          "status": 308,
+          "location": "/blog/development/sql-vs-nosql"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/development/sql-vs-nosql"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/cs-fundamentals/experiencia-de-usuario",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/development/experiencia-de-usuario"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/development/experiencia-de-usuario"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/cs-fundamentals/experiencia-de-usuario",
+        "preview": {
+          "status": 308,
+          "location": "/blog/development/experiencia-de-usuario"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/development/experiencia-de-usuario"
+        },
+        "ok": true
+      },
+      {
+        "from": "/en/blog/cs-fundamentals/que-es-css",
+        "preview": {
+          "status": 308,
+          "location": "/en/blog/development/que-es-css"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/en/blog/development/que-es-css"
+        },
+        "ok": true
+      },
+      {
+        "from": "/blog/cs-fundamentals/que-es-css",
+        "preview": {
+          "status": 308,
+          "location": "/blog/development/que-es-css"
+        },
+        "produccion": {
+          "status": 308,
+          "location": "/blog/development/que-es-css"
+        },
+        "ok": true
+      }
+    ]
+  },
+  "pesoPorPlantilla": {
+    "stack": {
+      "urls": 2,
+      "previewMax": 233153,
+      "produccionMax": 173828,
+      "previewMedio": 231721,
+      "produccionMedio": 172743
+    },
+    "landing-local": {
+      "urls": 4,
+      "previewMax": 216829,
+      "produccionMax": 103585,
+      "previewMedio": 210118,
+      "produccionMedio": 101881
+    },
+    "servicio": {
+      "urls": 8,
+      "previewMax": 303109,
+      "produccionMax": 190928,
+      "previewMedio": 286508,
+      "produccionMedio": 182277
+    },
+    "servicios": {
+      "urls": 4,
+      "previewMax": 193535,
+      "produccionMax": 87381,
+      "previewMedio": 192740,
+      "produccionMedio": 86765
+    },
+    "legal": {
+      "urls": 4,
+      "previewMax": 174539,
+      "produccionMax": 68292,
+      "previewMedio": 164282,
+      "produccionMedio": 66666
+    },
+    "contacto": {
+      "urls": 2,
+      "previewMax": 190004,
+      "produccionMax": 71436,
+      "previewMedio": 189398,
+      "produccionMedio": 71145
+    },
+    "blog": {
+      "urls": 2,
+      "previewMax": 265434,
+      "produccionMax": 151610,
+      "previewMedio": 263552,
+      "produccionMedio": 151072
+    },
+    "home": {
+      "urls": 2,
+      "previewMax": 369758,
+      "produccionMax": 205659,
+      "previewMedio": 368276,
+      "produccionMedio": 205020
+    },
+    "post": {
+      "urls": 96,
+      "previewMax": 469082,
+      "produccionMax": 594585,
+      "previewMedio": 309260,
+      "produccionMedio": 338506
+    },
+    "caso": {
+      "urls": 14,
+      "previewMax": 247585,
+      "produccionMax": 116604,
+      "previewMedio": 242076,
+      "produccionMedio": 113711
+    },
+    "autor": {
+      "urls": 2,
+      "previewMax": 360441,
+      "produccionMax": 2785008,
+      "previewMedio": 357416,
+      "produccionMedio": 2516455
+    },
+    "sitio": {
+      "urls": 12,
+      "previewMax": 219297,
+      "produccionMax": 76161,
+      "previewMedio": 217355,
+      "produccionMedio": 75235
+    },
+    "blog-categoria": {
+      "urls": 10,
+      "previewMax": 185610,
+      "produccionMax": 159111,
+      "previewMedio": 168211,
+      "produccionMedio": 127972
+    },
+    "sitios": {
+      "urls": 2,
+      "previewMax": 207132,
+      "produccionMax": 70950,
+      "previewMedio": 206500,
+      "produccionMedio": 70653
+    },
+    "casos": {
+      "urls": 2,
+      "previewMax": 185231,
+      "produccionMax": 80978,
+      "previewMedio": 184444,
+      "produccionMedio": 80545
+    },
+    "autores": {
+      "urls": 2,
+      "previewMax": 162415,
+      "produccionMax": 63068,
+      "previewMedio": 162180,
+      "produccionMedio": 62811
+    },
+    "busqueda": {
+      "urls": 2,
+      "previewMax": 132631,
+      "produccionMax": 60294,
+      "previewMedio": 132071,
+      "produccionMedio": 60071
+    },
+    "blog-confirmacion": {
+      "urls": 2,
+      "previewMax": 108457,
+      "produccionMax": 56783,
+      "previewMedio": 107895,
+      "produccionMedio": 56551
+    },
+    "sobre-mi": {
+      "urls": 2,
+      "previewMax": 209579,
+      "produccionMax": 5319,
+      "previewMedio": 207685,
+      "produccionMedio": 5316
+    }
+  },
+  "presupuestoAutor": [
+    {
+      "path": "/authors/juan-carlos-angulo",
+      "bytes": 360441,
+      "produccion": 2785008,
+      "presupuesto": 500000,
+      "ok": true
+    },
+    {
+      "path": "/en/authors/juan-carlos-angulo",
+      "bytes": 354390,
+      "produccion": 2247901,
+      "presupuesto": 500000,
+      "ok": true
+    }
+  ]
+}

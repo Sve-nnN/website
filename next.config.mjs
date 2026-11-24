@@ -1,11 +1,34 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 import createNextIntlPlugin from 'next-intl/plugin'
 
+import { withoutPublicClientHints } from './src/lib/client-hint-headers.mjs'
+import { parsePreviewFlag } from './src/lib/preview-flag.mjs'
+
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
+
+// Fase 53 (D-04, D-05): el preview del rediseño (dev.juan-tech.com) corre este
+// mismo código contra la base de producción. `PREVIEW_READONLY=true` debe estar
+// presente AL CONSTRUIR: `headers()` y `rewrites()` se evalúan en el build y
+// quedan fijos en el manifiesto. Sin la variable (producción) ambas funciones
+// devuelven exactamente lo de antes. El código de servidor lee la misma bandera
+// en runtime con `isPreviewReadonly()` (src/lib/preview.ts).
+// La regla de lectura es la misma que usa `isPreviewReadonly()` (falla cerrado).
+const isPreview = parsePreviewFlag(process.env.PREVIEW_READONLY)
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  // Fase 57 (D-04 F13): sin `x-powered-by`. `withPayload` solo agrega su
+  // `x-powered-by: Next.js, Payload` cuando esto no esta en false.
+  poweredByHeader: false,
+  // Fase 54 (PAG-11): habilita `src/app/global-not-found.tsx`, la unica 404 que
+  // Next 15.4 renderiza completa en el servidor (header, footer y h1 dentro del
+  // HTML). Ver el comentario de ese archivo. Es experimental en 15.4: si una
+  // actualizacion de Next lo cambia, scripts/verify/54-notfound-status.mjs lo
+  // detecta.
+  experimental: {
+    globalNotFound: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -50,9 +73,40 @@ const nextConfig = {
           // SAMEORIGIN y no DENY: el admin de Payload usa iframes de mismo
           // origen para las vistas de preview.
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          // Preview: ninguna respuesta se indexa. Cubre también las rutas que el
+          // matcher del middleware excluye a propósito (robots.txt, sitemaps,
+          // assets), donde el middleware nunca corre.
+          ...(isPreview ? [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] : []),
         ],
       },
     ]
+  },
+  // Preview (D-04, D-05): 404 plano para el admin, la API de Payload y los
+  // sitemaps. `beforeFiles` corre antes de resolver rutas, así que alcanza lo
+  // que el matcher del middleware deja fuera. Sin la bandera no hay rewrites.
+  async rewrites() {
+    if (!isPreview) return []
+
+    const blocked = '/preview-blocked'
+
+    return {
+      beforeFiles: [
+        { source: '/admin', destination: blocked },
+        { source: '/admin/:path*', destination: blocked },
+        { source: '/api', destination: blocked },
+        // Todo /api salvo dos prefijos que deben seguir vivos: /api/redirects-lookup
+        // (el middleware lo llama por loopback en cada petición; bloquearlo
+        // rompería los redirects de todo el sitio) y /api/newsletter/* (los
+        // enlaces de los correos; son inertes por código, ver isPreviewReadonly).
+        {
+          source: '/api/:path((?!redirects-lookup(?:/|$)|newsletter(?:/|$)).+)',
+          destination: blocked,
+        },
+        // El preview no anuncia sitemap (robots.txt tampoco lo menciona).
+        { source: '/sitemap.xml', destination: blocked },
+        { source: '/sitemap.html', destination: blocked },
+      ],
+    }
   },
   async redirects() {
     return [
@@ -97,4 +151,8 @@ const nextConfig = {
   },
 }
 
-export default withPayload(withNextIntl(nextConfig))
+// Fase 57 (D-04 F2, decision 14): la pista de tema de Payload (Accept-CH, Vary y
+// Critical-CH con Sec-CH-Prefers-Color-Scheme) sale del sitio publico y queda
+// solo en /admin/:path*. Ver src/lib/client-hint-headers.mjs y
+// scripts/verify/57-headers-check.mjs.
+export default withoutPublicClientHints(withPayload(withNextIntl(nextConfig)))

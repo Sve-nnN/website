@@ -38,6 +38,9 @@ import * as migration_20260907_033042_phase48_5_auditor_highlight from './202609
 import * as migration_20260907_040039_phase48_5_auditor_callout from './20260907_040039_phase48_5_auditor_callout';
 import * as migration_20260907_042330_phase48_5_tool_stack_auditor_highlight from './20260907_042330_phase48_5_tool_stack_auditor_highlight';
 import * as migration_20260908_014507_phase49_subscribers_lead_magnets from './20260908_014507_phase49_subscribers_lead_magnets';
+import * as migration_20261108_043335_phase54_shadow_content from './20261108_043335_phase54_shadow_content';
+import * as migration_20261109_044123_phase55_case_lessons from './20261109_044123_phase55_case_lessons';
+import * as migration_20261110_220805_phase56_legal_shadow from './20261110_220805_phase56_legal_shadow';
 
 export const migrations = [
   {
@@ -238,6 +241,21 @@ export const migrations = [
   {
     up: migration_20260908_014507_phase49_subscribers_lead_magnets.up,
     down: migration_20260908_014507_phase49_subscribers_lead_magnets.down,
-    name: '20260908_014507_phase49_subscribers_lead_magnets'
+    name: '20260908_014507_phase49_subscribers_lead_magnets',
+  },
+  {
+    up: migration_20261108_043335_phase54_shadow_content.up,
+    down: migration_20261108_043335_phase54_shadow_content.down,
+    name: '20261108_043335_phase54_shadow_content',
+  },
+  {
+    up: migration_20261109_044123_phase55_case_lessons.up,
+    down: migration_20261109_044123_phase55_case_lessons.down,
+    name: '20261109_044123_phase55_case_lessons',
+  },
+  {
+    up: migration_20261110_220805_phase56_legal_shadow.up,
+    down: migration_20261110_220805_phase56_legal_shadow.down,
+    name: '20261110_220805_phase56_legal_shadow'
   },
 ];

@@ -35,6 +35,9 @@ import { Header } from './globals/Header'
 import { Footer } from './globals/Footer'
 import { FeaturedContent } from './globals/FeaturedContent'
 import { BlogPromo } from './globals/BlogPromo'
+import { HomePage } from './globals/HomePage'
+import { AboutPage } from './globals/AboutPage'
+import { LegalPages } from './globals/LegalPages'
 import { beforeSyncWithSearch } from './search/beforeSync'
 import { searchFields } from './search/fieldOverrides'
 
@@ -125,7 +128,7 @@ export default buildConfig({
     // (Phase 49-01).
     LeadMagnets,
   ],
-  globals: [Llms, Header, Footer, FeaturedContent, BlogPromo],
+  globals: [Llms, Header, Footer, FeaturedContent, BlogPromo, HomePage, AboutPage, LegalPages],
   plugins: [
     seoPlugin({
       collections: ['pages', 'posts', 'case-studies', 'authors', 'websites'],

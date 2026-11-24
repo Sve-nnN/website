@@ -1,0 +1,385 @@
+{
+  "lote1": [
+    {
+      "id": "hero-cta",
+      "origen": "global sombra home-page, hero.ctaLabel",
+      "carga": "ahora",
+      "vigenteEs": "Pedir auditoría 360",
+      "es": "Pedir auditoría 360",
+      "en": "Request a 360 audit"
+    },
+    {
+      "id": "services-cta",
+      "origen": "global sombra home-page, services.ctaLabel",
+      "carga": "ahora",
+      "vigenteEs": "Hablemos de tu sitio",
+      "es": "Hablemos de tu sitio",
+      "en": "Let's talk about your site"
+    },
+    {
+      "id": "cierre-titulo",
+      "origen": "global sombra home-page, cta.title",
+      "carga": "ahora",
+      "vigenteEs": "Hablemos de tu sitio",
+      "es": "Hablemos de tu sitio",
+      "en": "Let's talk about your site"
+    },
+    {
+      "id": "cierre-lead",
+      "origen": "global sombra home-page, cta.lead",
+      "carga": "ahora",
+      "vigenteEs": "¿Tienes un proyecto en mente? Cuéntame de qué se trata y empiezo por mirar qué ve Google hoy.",
+      "es": "¿Tienes un proyecto en mente? Cuéntame de qué se trata.",
+      "en": "Have a project in mind? Tell me what it is about."
+    },
+    {
+      "id": "cases-cta",
+      "origen": "global sombra home-page, cases.ctaLabel",
+      "carga": "ahora",
+      "vigenteEs": "Ver todos los casos",
+      "es": "Ver todos los casos",
+      "en": "See all case studies"
+    },
+    {
+      "id": "sites-cta",
+      "origen": "global sombra home-page, sites.ctaLabel",
+      "carga": "ahora",
+      "vigenteEs": "Ver todos los sitios",
+      "es": "Ver todos los sitios",
+      "en": "See all websites"
+    },
+    {
+      "id": "contact-step-1",
+      "origen": "global sombra home-page, contact.steps[0].title",
+      "carga": "ahora",
+      "vigenteEs": "Me cuentas el proyecto",
+      "es": "Me cuentas el proyecto",
+      "en": "You tell me about the project"
+    },
+    {
+      "id": "contact-step-2",
+      "origen": "global sombra home-page, contact.steps[1].title",
+      "carga": "ahora",
+      "vigenteEs": "Miro qué ve Google hoy",
+      "es": "Miro qué ve Google hoy",
+      "en": "I look at what Google sees today"
+    },
+    {
+      "id": "contact-step-3",
+      "origen": "global sombra home-page, contact.steps[2].title",
+      "carga": "ahora",
+      "vigenteEs": "Te digo por dónde empezar",
+      "es": "Te digo por dónde empezar",
+      "en": "I tell you where to start"
+    },
+    {
+      "id": "header-cta",
+      "origen": "global header, ctaButton (lo lee master)",
+      "carga": "corte",
+      "vigenteEs": "Hablemos",
+      "es": "Pedir auditoría 360",
+      "en": "Request a 360 audit"
+    },
+    {
+      "id": "audit-offer-cta",
+      "origen": "bloque auditOfferBlock del doc pages home (lo lee master)",
+      "carga": "corte",
+      "vigenteEs": "Pedir la auditoría",
+      "es": "Pedir la auditoría",
+      "en": "Request the audit"
+    },
+    {
+      "id": "auditor-cta",
+      "origen": "bloque auditorHighlight o messages auditorHighlight.cta (lo lee master)",
+      "carga": "corte",
+      "vigenteEs": "Probar el auditor",
+      "es": "Probar el auditor",
+      "en": "Try the auditor"
+    },
+    {
+      "id": "services-index-talk",
+      "origen": "messages, services.index.talkCta",
+      "carga": "ahora",
+      "vigenteEs": "Hablar con Juan",
+      "es": "Hablar con Juan",
+      "en": "Talk to Juan"
+    },
+    {
+      "id": "service-card-cta",
+      "origen": "messages, servicesShowcase.cta",
+      "carga": "ahora",
+      "vigenteEs": "Explorar servicio",
+      "es": "Ver servicio",
+      "en": "View service"
+    },
+    {
+      "id": "auditor-notice-cta",
+      "origen": "messages, serviceScopeCard.auditorCta",
+      "carga": "ahora",
+      "vigenteEs": "Ir al auditor",
+      "es": "Ir al auditor",
+      "en": "Go to the auditor"
+    },
+    {
+      "id": "stack-tool-link",
+      "origen": "messages, serviceScopeCard.ctaDefault",
+      "carga": "ahora",
+      "vigenteEs": "Probar {tool}",
+      "es": "Probar {tool}",
+      "en": "Try {tool}"
+    },
+    {
+      "id": "stack-amazon",
+      "origen": "messages, serviceScopeCard.ctaAmazon",
+      "carga": "ahora",
+      "vigenteEs": "Ver en Amazon",
+      "es": "Ver en Amazon",
+      "en": "View on Amazon"
+    },
+    {
+      "id": "contact-response-note",
+      "origen": "global sombra home-page contact.infoRows[0].text y messages contact.cta.responseNote",
+      "carga": "ahora",
+      "vigenteEs": "Suelo responder en menos de 48 horas.",
+      "es": "Suelo responder en menos de 48 horas.",
+      "en": "I usually reply within 48 hours."
+    },
+    {
+      "id": "contact-write-email",
+      "origen": "messages, contact.writeEmail",
+      "carga": "ahora",
+      "vigenteEs": "Escribir un correo",
+      "es": "Escribir un correo",
+      "en": "Write an email"
+    },
+    {
+      "id": "contact-submit",
+      "origen": "messages, contact.form.submit",
+      "carga": "ahora",
+      "vigenteEs": "Enviar mensaje",
+      "es": "Enviar mensaje",
+      "en": "Send message"
+    },
+    {
+      "id": "emailcapture-submit",
+      "origen": "messages, emailCapture.submitLabel",
+      "carga": "ahora",
+      "vigenteEs": "Enviarme el checklist",
+      "es": "Enviarme el checklist",
+      "en": "Send me the checklist"
+    },
+    {
+      "id": "newsletter-submit",
+      "origen": "messages, blog.newsletter.submitLabel",
+      "carga": "ahora",
+      "vigenteEs": "Suscribirme",
+      "es": "Suscribirme",
+      "en": "Subscribe"
+    }
+  ],
+  "decisions": {
+    "D-22a": {
+      "title": "Título del hero",
+      "vigente": "Arreglo el SEO desde el código",
+      "recommended": "A",
+      "chosen": "A",
+      "estado": "aprobado",
+      "nota": "Juan eligió A y pidió el inglés \"Technical SEO consultant who also codes\". La etiqueta sobre el título (\"Ingeniero de software\") se conserva tal cual, decisión de Juan.",
+      "options": {
+        "A": {
+          "es": "Consultor SEO técnico que también programa",
+          "en": "Technical SEO consultant who also codes"
+        },
+        "B": {
+          "es": "Consultor SEO técnico que corrige el problema en el código",
+          "en": "Technical SEO consultant who fixes the problem in the code"
+        },
+        "C": {
+          "es": "Consultoría SEO técnica con ingeniería detrás",
+          "en": "Technical SEO consulting backed by engineering"
+        },
+        "D": {
+          "es": "Consultor SEO técnico con mentalidad de ingeniero",
+          "en": "Technical SEO consultant with an engineer's mindset"
+        },
+        "E": {
+          "es": "Consultor SEO técnico para sitios que viven del tráfico orgánico",
+          "en": "Technical SEO consultant for sites that live on organic traffic"
+        }
+      }
+    },
+    "D-22b": {
+      "title": "Texto del hero",
+      "vigente": "Entro al código, corrijo lo que frena a Google en tu sitio y mido el resultado en Search Console. Trabajo en español e inglés.",
+      "recommended": "1",
+      "chosen": "2",
+      "estado": "aprobado",
+      "nota": "Juan eligió la opción 2 y confirmó que son más de 18 clientes internacionales.",
+      "options": {
+        "1": {
+          "es": "Encuentro lo que frena tu tráfico orgánico, lo corrijo yo mismo o dejo el cambio exacto para tu equipo, y compruebo el efecto en Search Console. Trabajo en español e inglés.",
+          "en": "I find what holds back your organic traffic, fix it myself or leave the exact change for your team, and check the effect in Search Console. I work in Spanish and English."
+        },
+        "2": {
+          "es": "Soy ingeniero de software y llevo el SEO técnico de más de 18 clientes internacionales. Audito, corrijo en el código y mido el resultado.",
+          "en": "I'm a software engineer and I run the technical SEO of more than 18 international clients. I audit, fix in the code and measure the result."
+        },
+        "3": {
+          "es": "Consultoría SEO técnica para empresas y agencias que quieren más tráfico orgánico: auditoría, corrección en el código y medición.",
+          "en": "Technical SEO consulting for companies and agencies that want more organic traffic: audit, fix in the code and measurement."
+        }
+      }
+    },
+    "D-22c": {
+      "title": "Estadística del hero",
+      "vigente": "+406 % clics interanuales en un caso de salud",
+      "recommended": "atlanta",
+      "chosen": "ninguna",
+      "estado": "aprobado",
+      "nota": "Juan decidió no mostrar ninguna cifra en el hero. Las candidatas quedan registradas con sus cifras de origen por si cambia de idea; su leyenda en inglés no se pega mientras la elegida sea ninguna.",
+      "options": {
+        "atlanta": {
+          "valor": "+309 %",
+          "desde": 9621,
+          "hasta": 39323,
+          "leyenda": "clics interanuales en un caso de inmigración"
+        },
+        "urologia": {
+          "valor": "+406 %",
+          "desde": 48,
+          "hasta": 243,
+          "leyenda": "clics interanuales en un caso de salud"
+        },
+        "baldosa": {
+          "valor": "+143 %",
+          "desde": 9629,
+          "hasta": 23410,
+          "leyenda": "clics interanuales en un fabricante de baldosa hidráulica"
+        },
+        "edtech": {
+          "valor": "+104 %",
+          "desde": 6113,
+          "hasta": 12485,
+          "leyenda": "clics interanuales en un caso de educación financiera infantil"
+        },
+        "migracion": {
+          "valor": "+68 %",
+          "desde": 82000,
+          "hasta": 138000,
+          "leyenda": "tráfico mensual tras migrar un e-commerce a Next.js",
+          "nota": "es tráfico MENSUAL, no clics anuales: la leyenda debe decirlo"
+        },
+        "clientes18": {
+          "valor": "+18",
+          "desde": null,
+          "hasta": null,
+          "leyenda": "clientes internacionales",
+          "nota": "sin respaldo medido, por confirmar"
+        },
+        "ninguna": {
+          "sinCifra": true,
+          "nota": "el hero no muestra estadística"
+        }
+      }
+    },
+    "D-22d": {
+      "title": "Tagline bajo el hero",
+      "vigente": "Abro tu código, encuentro lo que Google no logra leer y lo arreglo yo mismo. Después vuelvo a Search Console para ver si el cambio funcionó.",
+      "recommended": "1",
+      "chosen": "2",
+      "estado": "aprobado",
+      "nota": null,
+      "options": {
+        "1": {
+          "es": "Un consultor SEO que sabe programar: encuentro el problema, lo corrijo en el código y te muestro el resultado.",
+          "en": "An SEO consultant who knows how to code: I find the problem, fix it in the code and show you the result."
+        },
+        "2": {
+          "es": "Diagnóstico, corrección y medición en una sola persona, sin intermediarios entre el hallazgo y el código.",
+          "en": "Diagnosis, fix and measurement in one person, with no go-between from finding to code."
+        },
+        "3": {
+          "es": "Menos reuniones entre el informe y el cambio: el que audita tu sitio es quien lo arregla.",
+          "en": "Fewer meetings between the report and the change: the person who audits your site is the one who fixes it."
+        }
+      }
+    },
+    "D-22e": {
+      "title": "Título de la medición",
+      "vigente": "Medición antes de tocar el código",
+      "recommended": "1",
+      "chosen": "3",
+      "estado": "aprobado",
+      "nota": "se conservan las descripciones de LCP, CLS, TBT y TTFB y se quitan las notas \"Bueno: hasta\".",
+      "options": {
+        "1": {
+          "es": "Cuatro números que reviso primero",
+          "en": "Four numbers I check first"
+        },
+        "2": {
+          "es": "Así mido el rendimiento de un sitio",
+          "en": "How I measure a site's performance"
+        },
+        "3": {
+          "es": "Cómo ve Google la velocidad de tu sitio",
+          "en": "How Google sees your site's speed"
+        }
+      }
+    },
+    "D-22f": {
+      "title": "Texto de la medición",
+      "vigente": "Cuatro lecturas me dicen dónde duele un sitio. La barra de cada una marca el rango que Google considera bueno, mejorable y pobre.",
+      "recommended": "1",
+      "chosen": "2",
+      "estado": "aprobado",
+      "nota": null,
+      "options": {
+        "1": {
+          "es": "Estas cuatro métricas me dicen si un sitio carga rápido, se mantiene estable y responde bien desde el servidor. Estas son las de este sitio.",
+          "en": "These four metrics tell me whether a site loads fast, stays stable and responds well from the server. These are this site's."
+        },
+        "2": {
+          "es": "Las reviso en cada auditoría porque marcan cómo viven tu sitio Google y tus visitantes.",
+          "en": "I check them in every audit because they show how Google and your visitors experience your site."
+        }
+      }
+    },
+    "D-22g": {
+      "title": "Lead de servicios",
+      "vigente": "Trabajo yo mismo en cada proyecto. Empiezo por lo que ve Googlebot y de ahí decido qué tocar.",
+      "recommended": "1",
+      "chosen": "3",
+      "estado": "aprobado",
+      "nota": "Juan rechazó las opciones 1 y 2 y aprobó la opción 3, propuesta después.",
+      "options": {
+        "1": {
+          "es": "Cada proyecto lo hago yo mismo, del diagnóstico al cambio en el código.",
+          "en": "I handle every project myself, from diagnosis to the change in the code."
+        },
+        "2": {
+          "es": "Diagnostico, corrijo en el código y mido el efecto. Elijo el servicio según lo que frena tu tráfico.",
+          "en": "I diagnose, fix in the code and measure the effect. I pick the service based on what holds your traffic back."
+        },
+        "3": {
+          "es": "Desde la auditoría hasta el código en producción, con resultados que puedes medir.",
+          "en": "From the audit to the code in production, with results you can measure."
+        }
+      },
+      "quitarFraseGooglebot": true
+    },
+    "D-22g-item": {
+      "title": "Texto del ítem SEO técnico",
+      "vigente": "Audito rastreo, indexación y datos estructurados. Empiezo por lo que ve Googlebot y de ahí decido qué tocar.",
+      "recommended": "1",
+      "chosen": "1",
+      "estado": "aprobado",
+      "nota": "Juan mantiene el ítem y aprobó este texto nuevo.",
+      "options": {
+        "1": {
+          "es": "Audito rastreo, indexación y datos estructurados, y corrijo lo que impide que Google entienda y posicione tus páginas.",
+          "en": "I audit crawling, indexing and structured data, and fix what keeps Google from understanding and ranking your pages."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "generatedAt": "2026-10-15T23:39:38.165Z",
+  "url": "http://127.0.0.1:4173/system.html",
+  "lighthouse": "13.4.1",
+  "runs": 3,
+  "thresholds": {
+    "accesibilidad >= 95 en las 6 corridas": "PASS",
+    "CLS igual a 0 en las 6 corridas": "PASS",
+    "mobile: performance mediana >= 90": "PASS",
+    "mobile: LCP mediano < 2000 ms": "PASS"
+  },
+  "factors": {
+    "mobile": {
+      "runs": [
+        {
+          "performance": 99,
+          "accessibility": 97,
+          "bestPractices": 96,
+          "lcpMs": 1777,
+          "cls": 0,
+          "tbtMs": 0,
+          "effectsJsRequested": true
+        },
+        {
+          "performance": 99,
+          "accessibility": 97,
+          "bestPractices": 96,
+          "lcpMs": 1769,
+          "cls": 0,
+          "tbtMs": 0,
+          "effectsJsRequested": true
+        },
+        {
+          "performance": 89,
+          "accessibility": 97,
+          "bestPractices": 96,
+          "lcpMs": 1928,
+          "cls": 0,
+          "tbtMs": 404,
+          "effectsJsRequested": true
+        }
+      ],
+      "median": {
+        "performance": 99,
+        "accessibility": 97,
+        "bestPractices": 96,
+        "lcpMs": 1777,
+        "cls": 0,
+        "tbtMs": 0
+      },
+      "reportHtml": "reports/lighthouse-system-mobile.report.html",
+      "reportRun": "corrida de performance 99 y LCP 1769 ms",
+      "effectsJsRequestedInAnyRun": true,
+      "note": "El viewport emulado de 412 px cae bajo el gate de 767 px: mobile mide el fallback CSS, no el shader."
+    },
+    "desktop": {
+      "runs": [
+        {
+          "performance": 100,
+          "accessibility": 97,
+          "bestPractices": 96,
+          "lcpMs": 456,
+          "cls": 0,
+          "tbtMs": 0,
+          "effectsJsRequested": true
+        },
+        {
+          "performance": 100,
+          "accessibility": 97,
+          "bestPractices": 96,
+          "lcpMs": 469,
+          "cls": 0,
+          "tbtMs": 0,
+          "effectsJsRequested": true
+        },
+        {
+          "performance": 100,
+          "accessibility": 97,
+          "bestPractices": 96,
+          "lcpMs": 467,
+          "cls": 0,
+          "tbtMs": 30,
+          "effectsJsRequested": true
+        }
+      ],
+      "median": {
+        "performance": 100,
+        "accessibility": 97,
+        "bestPractices": 96,
+        "lcpMs": 467,
+        "cls": 0,
+        "tbtMs": 0
+      },
+      "reportHtml": "reports/lighthouse-system-desktop.report.html",
+      "reportRun": "corrida de performance 100 y LCP 467 ms",
+      "effectsJsRequestedInAnyRun": true,
+      "note": "Con el preset desktop el shader corre: effects.js aparece en las peticiones de red."
+    }
+  },
+  "result": "PASS"
+}

@@ -2,6 +2,7 @@ import createIntlMiddleware from 'next-intl/middleware'
 import { NextResponse, type NextRequest } from 'next/server'
 
 import { routing } from './i18n/routing'
+import { isPreviewReadonly } from './lib/preview'
 
 // DEVIATION from plan (documented in 02-03-SUMMARY.md, Rule 3 blocking-issue
 // fix): the plan called for `export const runtime = 'nodejs'` here so this
@@ -24,7 +25,7 @@ import { routing } from './i18n/routing'
 // are preserved — see the route handler for the actual resolution logic.
 const intlMiddleware = createIntlMiddleware(routing)
 
-export async function middleware(request: NextRequest) {
+async function handle(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   // SEO-11.5: con `localePrefix: 'as-needed'`, next-intl saca el prefijo del
@@ -59,6 +60,28 @@ export async function middleware(request: NextRequest) {
   }
 
   return stripIntlAlternateLinks(intlMiddleware(request))
+}
+
+// Fase 53 (D-05): envoltorio para el preview de solo lectura. `handle` es el
+// middleware original sin cambios; aquí solo se agrega `X-Robots-Tag` cuando la
+// bandera está activa. Sin la bandera devuelve la respuesta tal cual, así que
+// producción no cambia. La bandera se lee en runtime (el sandbox Edge copia
+// `process.env` al arrancar). Las rutas que el matcher excluye las cubre
+// `headers()` de next.config.mjs.
+export async function middleware(request: NextRequest) {
+  if (!isPreviewReadonly()) return handle(request)
+
+  // `/preview-blocked` es el destino de las rewrites del preview. Cuando llega
+  // por rewrite no pasa por el middleware, pero una petición directa sí entra
+  // por el matcher: next-intl la reescribiría a `/es/preview-blocked` y el
+  // resultado sería una redirección 308 en vez del 404 plano. Se deja pasar
+  // tal cual para que la ruta responda su 404.
+  const response =
+    request.nextUrl.pathname === '/preview-blocked' ? NextResponse.next() : await handle(request)
+
+  response.headers.set('X-Robots-Tag', 'noindex, nofollow')
+
+  return response
 }
 
 // next-intl's middleware advertises hreflang alternates in an HTTP `Link`

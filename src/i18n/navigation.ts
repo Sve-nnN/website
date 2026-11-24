@@ -1,5 +1,7 @@
 import { createNavigation } from 'next-intl/navigation'
 
+import { EN_TRANSLATION_INCOMPLETE } from '@/lib/translation-gaps'
+
 import { routing } from './routing'
 
 /**
@@ -56,5 +58,42 @@ export function isPrefixableHref(href: string): boolean {
   const firstSegment = href.slice(1).split(/[/?#]/)[0]
   if ((routing.locales as readonly string[]).includes(firstSegment)) return false
 
+  // Fase 57 (57-02, enlaces rotos): recursos de la raíz que no viven bajo
+  // `[locale]` (route handlers y archivos que el matcher del middleware deja
+  // fuera). Prefijarlos en inglés daba `/en/sitemap.html` en el pie EN y
+  // `/en/llms.txt` en el texto enriquecido del servicio de AI SEO: 404 los tres.
+  if (UNLOCALIZED_ROOT_FILES.has(firstSegment) || UNLOCALIZED_ROOT_SEGMENTS.has(firstSegment)) return false
+
+  // Fase 57 (D-04 F4): un post con la traducción EN incompleta tiene su gemelo
+  // `/en/...` en noindex (src/lib/translation-gaps.ts). Un enlace interno hacia
+  // ese gemelo le pasa autoridad a una URL que no queremos en el índice, así
+  // que el enlace sale sin prefijo y apunta a la versión en español, que es la
+  // canónica. En español el resultado no cambia (el idioma por defecto no lleva
+  // prefijo). Cubre el pie (contenido de Payload), el listado, los relacionados
+  // y el autor, que pasan todos por aquí.
+  if (isIncompleteEnPostPath(href)) return false
+
   return true
 }
+
+/** True si `href` es `/blog/<categoría>/<slug>` de un post con la traducción EN incompleta. */
+export function isIncompleteEnPostPath(href: string): boolean {
+  const segments = href.split(/[?#]/)[0].split('/').filter(Boolean)
+  return segments.length === 3 && segments[0] === 'blog' && EN_TRANSLATION_INCOMPLETE.has(segments[2])
+}
+
+/** Archivos de la raíz sin versión por idioma (mismo listado que el matcher de src/middleware.ts). */
+const UNLOCALIZED_ROOT_FILES = new Set([
+  'robots.txt',
+  'sitemap.xml',
+  'sitemap.xsl',
+  'sitemap.html',
+  'llms.txt',
+  'llms-full.txt',
+  'site.webmanifest',
+  'favicon.ico',
+  'favicon.svg',
+])
+
+/** Segmentos completos fuera del sitio localizado: API y admin de Payload, afiliados `/go/`. */
+const UNLOCALIZED_ROOT_SEGMENTS = new Set(['api', 'admin', 'go'])

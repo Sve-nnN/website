@@ -1,0 +1,189 @@
+{
+  "description": "Fuente unica del catálogo de origen React Bits de la fase 51. weight.mjs lo lee, mide los marcadores fx: y arma las tablas de system.html. Los nombres son los del indice vivo https://reactbits.dev/llms.txt.",
+  "rows": [
+    {
+      "id": "grain", "effect": "Grainy gradient", "name": "Grainient", "indexName": "Grainient",
+      "category": "Backgrounds", "url": "https://reactbits.dev/backgrounds/grainient",
+      "registry": "https://reactbits.dev/r/Grainient-JS-CSS.json", "dependencies": [],
+      "description": "Flowing grainy gradients you can stir with the cursor.",
+      "cost": "GL", "originalWeight": { "min": 13.9, "gzip": 5.8, "source": "esbuild sobre el código del componente, sin React ni ogl" },
+      "cssMarkers": ["grain"], "jsMarkers": ["grain"], "canvas": "sí, permanente", "component": true,
+      "decision": "Único WebGL permanente: shader original de una pasada con fallback CSS de tres gradientes y grano SVG"
+    },
+    {
+      "id": "waves", "effect": "Pattern waves", "name": "PatternWaves", "indexName": "Pattern Waves",
+      "category": "Backgrounds", "url": "https://reactbits.dev/backgrounds/pattern-waves",
+      "registry": "https://reactbits.dev/r/PatternWaves-JS-CSS.json", "dependencies": ["ogl@^1.0.11"],
+      "description": "A lit halftone surface of dots, lines or glyphs that moves like draped silk.",
+      "cost": "GL", "originalWeight": { "min": 19.1, "gzip": 7.1, "source": "esbuild sobre el código del componente, sin React ni ogl" },
+      "cssMarkers": ["waves"], "jsMarkers": ["halftone"], "canvas": "sí, demo con slot único", "component": true,
+      "decision": "CSS en producción; shader halftone solo como demo opt-in"
+    },
+    {
+      "id": "crt", "effect": "CRT warp", "name": "CRTWarp", "indexName": "CRT Warp",
+      "category": "Backgrounds", "url": "https://reactbits.dev/backgrounds/crt-warp",
+      "registry": "https://reactbits.dev/r/CRTWarp-JS-CSS.json", "dependencies": [],
+      "description": "A blocky plasma glowing on a curved CRT, with real scanlines, a phosphor mask, afterglow and a power-on intro.",
+      "cost": "GL", "originalWeight": { "min": 19.7, "gzip": 7.5, "source": "esbuild sobre el código del componente, sin React ni ogl" },
+      "cssMarkers": ["crt"], "jsMarkers": ["crt"], "canvas": "sí, demo con slot único", "component": true,
+      "decision": "CSS en producción; shader de barril, scanlines y mascara de fosforo solo como demo opt-in"
+    },
+    {
+      "id": "slats", "effect": "Micro slats", "name": "MicroSlats", "indexName": "Micro Slats",
+      "category": "Backgrounds", "url": "https://reactbits.dev/backgrounds/micro-slats",
+      "registry": "https://reactbits.dev/r/MicroSlats-JS-CSS.json", "dependencies": ["ogl@^1.0.11"],
+      "description": "A wall of tiny slats that becomes a rolling sea in perspective, with glinting crests.",
+      "cost": "GL", "originalWeight": { "min": 18.7, "gzip": 6.7, "source": "esbuild sobre el código del componente, sin React ni ogl" },
+      "cssMarkers": ["slats"], "jsMarkers": ["slats"], "canvas": "sí, demo con slot único", "component": true,
+      "decision": "CSS en producción; columnas ondulantes solo como demo opt-in"
+    },
+    {
+      "id": "pixel-blast", "effect": "Pixel (fondo)", "name": "PixelBlast", "indexName": "Pixel Blast",
+      "category": "Backgrounds", "url": "https://reactbits.dev/backgrounds/pixel-blast",
+      "registry": "https://reactbits.dev/r/PixelBlast-JS-CSS.json", "dependencies": [],
+      "description": "Dithered pixel clouds that drift, shimmer and light up under the cursor, with ripples, shapes and a perspective floor.",
+      "cost": "GL", "originalWeight": { "min": 22.6, "gzip": 8.1, "source": "esbuild sobre el código del componente, sin React ni ogl" },
+      "cssMarkers": ["pixel"], "jsMarkers": [], "canvas": "no, CSS", "component": true,
+      "decision": "Solo CSS: tramado conic-gradient de 6 px; sin shader"
+    },
+    {
+      "id": "pixel-card", "effect": "Pixel (tarjeta)", "name": "PixelCard", "indexName": "Pixel Card",
+      "category": "Components", "url": "https://reactbits.dev/components/pixel-card",
+      "registry": "https://reactbits.dev/r/PixelCard-JS-CSS.json", "dependencies": [],
+      "description": "A card that fills with twinkling pixels on hover, rippling out from the center or the cursor.",
+      "cost": "C2D", "originalWeight": { "min": 10.2, "gzip": 4.2, "source": "esbuild sobre el código del componente, sin React ni ogl" },
+      "cssMarkers": ["pixel"], "jsMarkers": [], "canvas": "no, CSS", "component": true,
+      "decision": "Solo CSS: la disolución en hover y en foco usa steps(); sin canvas 2D"
+    },
+    {
+      "id": "gradient-ascii", "effect": "ASCII (fondo)", "name": "GradientASCII", "indexName": "Gradient ASCII",
+      "category": "Backgrounds", "url": "https://reactbits.dev/backgrounds/gradient-ascii",
+      "registry": "https://reactbits.dev/r/GradientASCII-JS-CSS.json", "dependencies": [],
+      "description": "Soft gradient glows drawn in ASCII characters that scramble under the cursor.",
+      "cost": "GL", "originalWeight": { "min": 20.8, "gzip": 7.7, "source": "esbuild sobre el código del componente, sin React ni ogl" },
+      "cssMarkers": ["ascii"], "jsMarkers": ["ascii"], "canvas": "no, DOM", "component": true,
+      "decision": "pre aria-hidden con el juego .:-=+*#%@ y ticker de texto a 10 fps"
+    },
+    {
+      "id": "ascii-text", "effect": "ASCII (texto)", "name": "ASCIIText", "indexName": "ASCII Text",
+      "category": "Text Animations", "url": "https://reactbits.dev/text-animations/ascii-text",
+      "registry": "https://reactbits.dev/r/ASCIIText-JS-CSS.json", "dependencies": [],
+      "description": "Waving ASCII text that tilts toward the pointer, scrambles on hover and ripples on click.",
+      "cost": "GL", "originalWeight": { "min": 12.9, "gzip": 5.3, "source": "esbuild sobre el código del componente, sin React ni ogl" },
+      "cssMarkers": ["ascii"], "jsMarkers": ["ascii"], "canvas": "no, DOM", "component": true,
+      "decision": "Comparte el pre y el ticker de GradientASCII; el texto real vive en el DOM"
+    },
+    {
+      "id": "noise", "effect": "Scout: grano global casi gratis", "name": "Noise", "indexName": "Noise",
+      "category": "Animations", "url": "https://www.reactbits.dev/animations/noise",
+      "registry": "https://reactbits.dev/r/Noise-JS-CSS.json", "dependencies": [],
+      "description": "Film grain overlay for photos and pages, from fine 35mm grain to dust, paper and TV static.",
+      "cost": "CSS", "originalWeight": { "gzip": 3.3, "source": "archivo del registro, cota superior" },
+      "cssMarkers": ["noise"], "jsMarkers": [], "canvas": "no, CSS", "component": true,
+      "decision": "Capa SVG feTurbulence estática; variante viva en 4 posiciones discretas a 2 por segundo"
+    },
+    {
+      "id": "dither", "effect": "Scout: dithering real", "name": "Dither", "indexName": "Dither",
+      "category": "Backgrounds", "url": "https://www.reactbits.dev/backgrounds/dither",
+      "registry": "https://reactbits.dev/r/Dither-JS-CSS.json", "dependencies": [],
+      "description": "Retro dithered waves with Bayer, halftone, line and noise patterns, palettes and cursor trails.",
+      "cost": "GL", "originalWeight": { "gzip": 7.1, "source": "archivo del registro, cota superior" },
+      "cssMarkers": ["dither"], "jsMarkers": [], "canvas": "no, CSS", "component": true,
+      "decision": "Tramado Bayer 4x4 estático en tres densidades; sin shader"
+    },
+    {
+      "id": "halftone-reveal", "effect": "Scout: imagen que se revela con trama", "name": "Halftone Reveal", "indexName": "Halftone Reveal",
+      "category": "Animations", "url": "https://www.reactbits.dev/animations/halftone-reveal",
+      "registry": "https://reactbits.dev/r/HalftoneReveal-JS-CSS.json", "dependencies": [],
+      "description": "A halftone print of an image whose dots swell into the real photo under the cursor.",
+      "cost": "GL", "originalWeight": { "gzip": 8.6, "source": "archivo del registro, cota superior" },
+      "cssMarkers": ["reveal"], "jsMarkers": ["reveal"], "canvas": "no, CSS", "component": true,
+      "decision": "img real visible sin JS; trama de puntos que se disuelve una sola vez; sin canvas"
+    },
+    {
+      "id": "pixel-transition", "effect": "Scout: hover de tarjeta pixelado", "name": "Pixel Transition", "indexName": "Pixel Transition",
+      "category": "Animations", "url": "https://www.reactbits.dev/animations/pixel-transition",
+      "registry": "https://reactbits.dev/r/PixelTransition-JS-CSS.json", "dependencies": [],
+      "description": "Retro pixel dissolve that covers a card in solid pixels, swaps the content underneath and clears again.",
+      "cost": "CSS", "originalWeight": { "gzip": 4.5, "source": "archivo del registro, cota superior" },
+      "cssMarkers": ["transition"], "jsMarkers": [], "canvas": "no, CSS", "component": true,
+      "decision": "CSS puro con steps(); el foco por teclado dispara el mismo cambio que el hover"
+    },
+    {
+      "id": "faulty-terminal", "effect": "Scout: terminal CRT para 404 y contacto", "name": "Faulty Terminal", "indexName": "Faulty Terminal",
+      "category": "Backgrounds", "url": "https://www.reactbits.dev/backgrounds/faulty-terminal",
+      "registry": "https://reactbits.dev/r/FaultyTerminal-JS-CSS.json", "dependencies": [],
+      "description": "A flickering CRT terminal of glowing glyphs, with phosphor trails under the cursor and glitches on click.",
+      "cost": "GL", "originalWeight": { "gzip": 8.8, "source": "archivo del registro, cota superior" },
+      "cssMarkers": ["crt"], "jsMarkers": ["crt"], "canvas": "no, solo catálogo", "component": false,
+      "decision": "Solo catálogo: su fallback estático es el de CRT warp (.fx-crt); no agrega shader"
+    },
+    {
+      "id": "spotlight-card", "effect": "Scout: hover profesional de bajo costo", "name": "Spotlight Card", "indexName": "Spotlight Card",
+      "category": "Components", "url": "https://www.reactbits.dev/components/spotlight-card",
+      "registry": "https://reactbits.dev/r/SpotlightCard-JS-CSS.json", "dependencies": [],
+      "description": "Card lit by a soft spotlight that follows the pointer, catches its edge and reaches nearby cards.",
+      "cost": "CSS", "originalWeight": { "gzip": 3.6, "source": "archivo del registro, cota superior" },
+      "cssMarkers": ["spotlight"], "jsMarkers": ["spotlight"], "canvas": "no, CSS", "component": true,
+      "decision": "radial-gradient con --mx y --my; el JS solo sigue al puntero fino"
+    },
+    {
+      "id": "gradient-blinds", "effect": "Scout: slats con gradiente", "name": "Gradient Blinds", "indexName": "Gradient Blinds",
+      "category": "Backgrounds", "url": "https://www.reactbits.dev/backgrounds/gradient-blinds",
+      "registry": "https://reactbits.dev/r/GradientBlinds-JS-CSS.json", "dependencies": [],
+      "description": "Satin gradient blinds lit by a spotlight that follows the cursor, swaying and turning toward the light.",
+      "cost": "GL", "originalWeight": { "gzip": 6.2, "source": "archivo del registro, cota superior" },
+      "cssMarkers": ["blinds"], "jsMarkers": [], "canvas": "no, CSS", "component": true,
+      "decision": "Estático: --grad visto a través de una mascara de persianas; sin shader"
+    },
+    {
+      "id": "star-border", "effect": "Scout: borde de luz para el CTA", "name": "Star Border", "indexName": "Star Border",
+      "category": "Animations", "url": "https://www.reactbits.dev/animations/star-border",
+      "registry": "https://reactbits.dev/r/StarBorder-JS-CSS.json", "dependencies": [],
+      "description": "A twinkling star that travels the exact outline of any button, pill or card, trailing light and stardust.",
+      "cost": "CSS", "originalWeight": { "gzip": 6.3, "source": "archivo del registro, cota superior" },
+      "cssMarkers": ["star"], "jsMarkers": [], "canvas": "no, CSS", "component": true,
+      "decision": "Aproximación en CSS: anillo conic-gradient con @property en vez de una estrella que recorre el contorno"
+    },
+    {
+      "id": "dot-grid", "effect": "Mención del scout: fondo de lectura", "name": "Dot Grid", "indexName": "Dot Grid", "mention": true,
+      "category": "Backgrounds", "url": "https://www.reactbits.dev/backgrounds/dot-grid",
+      "registry": "https://reactbits.dev/r/DotGrid-JS-CSS.json", "dependencies": [],
+      "description": "A springy dot grid that the cursor flicks and drags through like jelly, with click shockwaves.",
+      "cost": "CSS", "originalWeight": { "gzip": 6.2, "source": "archivo del registro, cota superior" },
+      "cssMarkers": ["dotgrid"], "jsMarkers": [], "canvas": "no, CSS", "component": true,
+      "decision": "Solo la forma estática, unica decoracion admitida junto al grano en superficies de lectura"
+    }
+  ],
+  "excluded": [
+    { "name": "Topography", "reason": "Pesa 15 KB en el registro, muy por encima del presupuesto de 1 a 2 KB por efecto" },
+    { "name": "Folder", "reason": "Pesa 20 KB en el registro y es una carpeta 3D" },
+    { "name": "AeroShards", "reason": "Pesa 21 KB y depende de vgpu" },
+    { "name": "GridScan", "reason": "Pesa 11 KB; solo valdria si sustituyera a otro shader" },
+    { "name": "Pixel Snow", "reason": "Look estacional, fuera de la estética técnica" },
+    { "name": "Plasma", "reason": "Look genérico, sin ventaja sobre Grainient" },
+    { "name": "Silk", "reason": "Fuera del tono ASCII, pixel y tinta" },
+    { "name": "Iridescence", "reason": "No encaja con tinta y fosforo" },
+    { "name": "Glass Surface", "reason": "Contradice tinta y grano, con bajo contraste y 9 KB" }
+  ],
+  "neighbors": ["Waves", "Letter Glitch", "Line Waves", "Glitch Text", "Glare Hover"],
+  "sources": [
+    "https://reactbits.dev/llms.txt",
+    "https://github.com/DavidHDev/react-bits/tree/main/src/content",
+    "https://reactbits.dev/r/NOMBRE-JS-CSS.json"
+  ],
+  "license": {
+    "name": "MIT más Commons Clause",
+    "url": "https://raw.githubusercontent.com/DavidHDev/react-bits/main/LICENSE.md",
+    "note": "Los shaders y el CSS de este kit son originales: no se copio GLSL ni JavaScript de React Bits. Solo se citan los nombres de origen."
+  },
+  "budgets": {
+    "effectsJs": 5632,
+    "effectsCss": 6144,
+    "kitCss": 14336,
+    "kitJsCss": 24576,
+    "fontsRaw": 65536,
+    "perEffect": 2048,
+    "note": "Valores de diseño derivados de la investigacion (1 a 2 KB gzip por port original). Juan puede revisarlos."
+  }
+}

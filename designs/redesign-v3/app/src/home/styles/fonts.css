@@ -1,0 +1,7 @@
+/* Home v4 "manual editorial" portada a React. Fuente de diseno: designs/redesign-v4/c-manual (aprobada por Juan).
+   Array (puntos) SOLO en h1 y h2. Iconos Lucide (ISC) desde un sprite inline. Sin peticiones externas. */
+@font-face{font-family:"Array";src:url("/home/fonts/Array-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist";src:url("/home/fonts/Geist-latin-var.woff2") format("woff2");font-weight:400 700;font-style:normal;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url("/home/fonts/GeistMono-400-latin.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Array Fallback";src:local("Arial");size-adjust:92.63%;ascent-override:94.46%;descent-override:20.24%;line-gap-override:9.45%}
+@font-face{font-family:"Geist Fallback";src:local("Arial");size-adjust:102.14%;ascent-override:98.39%;descent-override:28.88%;line-gap-override:0%}

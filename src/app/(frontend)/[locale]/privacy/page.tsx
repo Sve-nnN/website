@@ -1,10 +1,9 @@
 import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
+import { getTranslations } from 'next-intl/server'
 
-import config from '@payload-config'
-import { RenderBlocks } from '@/blocks/RenderBlocks'
-import { Container } from '@/components/Container'
-import { PageHero } from '@/components/PageHero'
+import { LegalView } from '@/components/pages/LegalView'
+import { getCachedLegalPages, getCachedPageBySlug } from '@/lib/cache'
+import { legalEffective, pickLegalSource } from '@/lib/legal-source'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
@@ -30,14 +29,7 @@ export function generateStaticParams(): Array<{ locale: string }> {
 }
 
 async function getPage(locale: string) {
-  const payload = await getPayload({ config })
-  const { docs } = await payload.find({
-    collection: 'pages',
-    where: { slug: { equals: 'privacy' } },
-    locale: locale as 'es' | 'en',
-    limit: 1,
-  })
-  return docs[0]
+  return getCachedPageBySlug('privacy', locale as 'es' | 'en')
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
@@ -66,19 +58,37 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function PrivacyPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-  const doc = await getPage(locale)
+  // En paralelo: el doc pages manda en title, meta y migas (paridad de SEO, 54-16);
+  // el global legal-pages aporta el texto nuevo y la fecha efectiva (fase 56, D-02 y D-09).
+  const [doc, legal] = await Promise.all([
+    getPage(locale),
+    getCachedLegalPages(locale as 'es' | 'en'),
+  ])
 
   if (!doc) {
     notFound()
   }
 
-  return (
-    <main>
-      <PageHero variant="index" title={doc.title} />
+  const [t, tCommon] = await Promise.all([getTranslations('legal'), getTranslations('common')])
 
-      <Container className="py-12 md:py-16 max-w-3xl">
-        <RenderBlocks blocks={doc.content?.layout ?? []} />
-      </Container>
-    </main>
+  // Si el cuerpo de este idioma esta vacio en el global (o la tabla aun no existe),
+  // pickLegalSource devuelve el texto del doc pages del mismo idioma y sin fecha.
+  const source = pickLegalSource(doc, legal, 'privacy')
+  const effective = legalEffective(source.effectiveDate, locale as 'es' | 'en')
+
+  // Sin JSON-LD: la ruta no lo emitia antes y el contrato de SEO no cambia (SEO-01).
+  return (
+    <LegalView
+      title={doc.title}
+      crumbs={[
+        { label: tCommon('breadcrumbHome'), href: '/' },
+        { label: doc.title },
+      ]}
+      richTexts={source.richTexts}
+      eyebrow={t('eyebrow')}
+      tocLabel={t('tocLabel')}
+      effectiveLabel={effective ? t('effectiveOn', { date: effective.formatted }) : null}
+      effectiveDateIso={effective?.iso ?? null}
+    />
   )
 }

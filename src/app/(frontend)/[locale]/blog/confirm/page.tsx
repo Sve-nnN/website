@@ -1,9 +1,11 @@
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
 import { CheckCircle, XCircle } from 'lucide-react'
 import { getPayload } from 'payload'
 
 import config from '@payload-config'
-import { Container } from '@/components/Container'
-import { Button } from '@/components/ui/button'
 import { verifyDownloadToken } from '@/lib/download-token'
 import { resolveSignedDownloadUrl } from '@/lib/secure-download'
 
@@ -90,28 +92,40 @@ export default async function BlogConfirmPage({
 
   const downloadUrl = await resolveDownloadUrl(token)
 
+  // Plan 57-07 (D-06): la vista pasó de utilidades Tailwind a MUI sin cambiar la composición:
+  // columna centrada de 448 px (max-w-md), 64 px de aire vertical (py-16) y el icono de 48 px.
   return (
-    <main>
-      <Container className="py-16">
-        <div className="mx-auto max-w-md text-center">
-          {downloadUrl ? (
-            <>
-              <CheckCircle className="size-12 text-primary mx-auto" aria-hidden="true" />
-              <h1 className="font-heading text-heading mt-4">{c.successHeading}</h1>
-              <p className="text-body text-muted-foreground mt-3">{c.successBody}</p>
-              <Button asChild className="mt-6 h-11">
-                <a href={downloadUrl}>{c.downloadLabel}</a>
-              </Button>
-            </>
-          ) : (
-            <>
-              <XCircle className="size-12 text-destructive mx-auto" aria-hidden="true" />
-              <h1 className="font-heading text-heading mt-4">{c.errorHeading}</h1>
-              <p className="text-body text-muted-foreground mt-3">{c.errorBody}</p>
-            </>
-          )}
-        </div>
+    <Box>
+      <Container maxWidth={false} sx={{ maxWidth: 448, py: 8, textAlign: 'center' }}>
+        {downloadUrl ? (
+          <>
+            <Box aria-hidden="true" sx={{ display: 'flex', justifyContent: 'center', color: 'primary.main' }}>
+              <CheckCircle size={48} />
+            </Box>
+            <Typography variant="h4" component="h1" sx={{ mt: 2 }}>
+              {c.successHeading}
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 1.5, color: 'text.secondary' }}>
+              {c.successBody}
+            </Typography>
+            <Button component="a" href={downloadUrl} variant="contained" sx={{ mt: 3 }}>
+              {c.downloadLabel}
+            </Button>
+          </>
+        ) : (
+          <>
+            <Box aria-hidden="true" sx={{ display: 'flex', justifyContent: 'center', color: 'error.main' }}>
+              <XCircle size={48} />
+            </Box>
+            <Typography variant="h4" component="h1" sx={{ mt: 2 }}>
+              {c.errorHeading}
+            </Typography>
+            <Typography variant="body1" sx={{ mt: 1.5, color: 'text.secondary' }}>
+              {c.errorBody}
+            </Typography>
+          </>
+        )}
       </Container>
-    </main>
+    </Box>
   )
 }

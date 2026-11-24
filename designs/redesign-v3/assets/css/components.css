@@ -1,0 +1,735 @@
+/*
+ * components.css: biblioteca de componentes del sistema visual v3.
+ * Se enlaza despues de base.css y antes de effects.css. Solo var(--token) para colores:
+ * ningun hex suelto. Los componentes componen las clases .fx-* de effects.css y no las redefinen.
+ *
+ * Estados forzables para mostrar un estado sin interaccion: .is-hover, .is-focus, .is-reduced.
+ * Los estados reales son :hover, :focus-visible, [disabled], [aria-disabled="true"] y el
+ * movimiento reducido por prefers-reduced-motion o data-motion="reduced".
+ *
+ * Todo movimiento nuevo vive bajo prefers-reduced-motion: no-preference y
+ * :root sin data-motion="reduced" ni data-saver="on". Los bucles duran 1 s o mas.
+ * Sin backdrop-filter ni filter: blur.
+ */
+
+/*
+ * El inline box de code usa la fuente mono, que carga despues. Con line-height heredado el cambio
+ * de metricas del swap mueve la linea un pixel y suma CLS. Con line-height 1 no supera al strut.
+ */
+code,
+kbd,
+samp {
+  line-height: 1;
+}
+
+/* ---------- Estados forzables ---------- */
+
+.is-focus {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--ink);
+}
+
+.is-reduced,
+.is-reduced *,
+.is-reduced *::before,
+.is-reduced *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion="reduced"]):not([data-saver="on"]) .btn,
+  :root:not([data-motion="reduced"]):not([data-saver="on"]) .input,
+  :root:not([data-motion="reduced"]):not([data-saver="on"]) .card,
+  :root:not([data-motion="reduced"]):not([data-saver="on"]) .nav a {
+    transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+  }
+}
+
+/* ---------- Botones ---------- */
+
+.btn {
+  --btn-bg: var(--violet);
+  --btn-fg: var(--paper);
+  --btn-bg-hover: color-mix(in srgb, var(--violet) 78%, var(--ink));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-width: var(--tap);
+  min-height: var(--tap);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-2);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font: inherit;
+  font-weight: 600;
+  line-height: var(--leading-snug);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn--primary {
+  --btn-bg: var(--violet);
+  --btn-fg: var(--paper);
+  --btn-bg-hover: color-mix(in srgb, var(--violet) 78%, var(--ink));
+}
+
+.btn--coral {
+  --btn-bg: var(--coral);
+  --btn-fg: var(--ink);
+  --btn-bg-hover: color-mix(in srgb, var(--coral) 80%, var(--paper));
+}
+
+.btn--amber {
+  --btn-bg: var(--amber);
+  --btn-fg: var(--ink);
+  --btn-bg-hover: color-mix(in srgb, var(--amber) 80%, var(--paper));
+}
+
+.btn--phosphor {
+  --btn-bg: var(--phosphor);
+  --btn-fg: var(--ink);
+  --btn-bg-hover: color-mix(in srgb, var(--phosphor) 80%, var(--paper));
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--paper);
+  --btn-bg-hover: var(--ink-top);
+  border-color: var(--quiet);
+}
+
+.btn:hover,
+.btn.is-hover {
+  background: var(--btn-bg-hover);
+}
+
+.btn--ghost:hover,
+.btn--ghost.is-hover {
+  border-color: var(--paper);
+}
+
+/* Interruptor: el estado lo comunica aria-pressed y un indicador de forma, no solo el color. */
+/* Ancho constante: la etiqueta cambia de ancho al cargar Geist y movia la cabecera (CLS medido). */
+.pause-toggle {
+  min-width: 14rem;
+}
+
+.btn[aria-pressed]::before {
+  content: "";
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border: 2px solid currentColor;
+}
+
+.btn[aria-pressed="true"]::before {
+  border-color: var(--phosphor);
+  background: var(--phosphor);
+}
+
+.btn--ghost[aria-pressed="true"] {
+  border-color: var(--phosphor);
+  background: var(--ink-top);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  background: var(--ink-top);
+  color: var(--quiet);
+  border-color: transparent;
+  cursor: not-allowed;
+}
+
+.btn--ghost:disabled,
+.btn--ghost[aria-disabled="true"] {
+  border-color: var(--ink-top);
+}
+
+/* ---------- Enlace en linea ---------- */
+
+.link-inline {
+  padding-block: .2em;
+  color: var(--violet-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+}
+
+.link-inline:hover,
+.link-inline.is-hover {
+  text-decoration-thickness: 2px;
+}
+
+.card .link-inline,
+.fx-transition__detail .link-inline {
+  color: var(--violet-text-raised);
+}
+
+/* ---------- Cards ---------- */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-4);
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-top);
+  border-radius: var(--radius-2);
+  color: var(--paper);
+}
+
+.card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: var(--leading-tight);
+}
+
+.card__text {
+  margin: 0;
+}
+
+.card__meta {
+  margin: 0;
+  color: var(--quiet);
+  font-size: var(--text-sm);
+}
+
+/* Deshabilitada: contenido no disponible, sin efecto, sin hover y con borde discontinuo. */
+.card[aria-disabled="true"] {
+  background: var(--ink-raised);
+  border-style: dashed;
+  color: var(--quiet);
+  cursor: not-allowed;
+}
+
+.card--gradient.card {
+  flex-direction: row;
+  align-items: flex-end;
+  min-height: 12rem;
+  padding: var(--space-3);
+  border-color: transparent;
+}
+
+.card--gradient .fx-content {
+  width: 100%;
+  max-width: none;
+  padding: var(--space-3);
+}
+
+.card--gradient .fx-content > * + * {
+  margin-top: var(--space-2);
+}
+
+.card--spotlight.card {
+  min-height: 12rem;
+}
+
+.card--pixel.card {
+  justify-content: flex-end;
+  min-height: 12rem;
+  padding: var(--space-3);
+  border-color: transparent;
+}
+
+.card--pixel .fx-content {
+  max-width: none;
+  padding: var(--space-3);
+}
+
+.card--pixel .fx-content > * + * {
+  margin-top: var(--space-2);
+}
+
+.card--transition.card {
+  display: block;
+  padding: 0;
+}
+
+.card--transition .fx-content {
+  max-width: none;
+  padding: var(--space-3);
+}
+
+/* Card clicable: el enlace del titulo se estira sobre toda la tarjeta. */
+.card--link a {
+  color: var(--paper);
+  text-decoration: none;
+}
+
+.card--link a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* El anillo visible vive en la tarjeta; el del enlace queda transparente para modo de alto contraste. */
+.card--link a:focus-visible {
+  outline: 2px solid transparent;
+  box-shadow: none;
+}
+
+.card--link:has(a:focus-visible),
+.card--link.is-focus {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--ink);
+}
+
+.card--link:hover,
+.card--link.is-hover,
+.card--spotlight:hover,
+.card--spotlight.is-hover,
+.card--transition:hover,
+.card--transition.is-hover {
+  border-color: var(--violet-text-raised);
+}
+
+.card--link:hover .card__title,
+.card--link.is-hover .card__title {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.card--link[aria-disabled="true"] a {
+  color: var(--quiet);
+  pointer-events: none;
+}
+
+/* Estados forzados de los efectos compuestos (los reales viven en effects.css).
+   .is-focus-within imita :focus-within sin pintar un anillo sobre una tarjeta que no recibe foco. */
+.fx-spotlight.is-hover {
+  --mx: 50%;
+  --my: 40%;
+}
+
+.fx-pixel-card.is-hover::after,
+.fx-pixel-card.is-focus-within::after {
+  opacity: 0;
+}
+
+.fx-transition.is-hover .fx-transition__cover,
+.fx-transition.is-focus-within .fx-transition__cover,
+.fx-transition.is-hover .fx-transition__detail::after,
+.fx-transition.is-focus-within .fx-transition__detail::after {
+  opacity: 0;
+}
+
+/* ---------- Badges ---------- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--ink-top);
+  border-radius: var(--radius-1);
+  background: var(--ink-raised);
+  color: var(--quiet);
+  font-family: var(--font-pixel);
+  font-size: var(--text-xs);
+  letter-spacing: .04em;
+  line-height: var(--leading-snug);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.badge--state {
+  background: var(--ink);
+  border-color: var(--phosphor);
+  color: var(--phosphor);
+}
+
+.badge--warn {
+  background: var(--ink);
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.badge--violet {
+  background: var(--ink-raised);
+  border-color: var(--violet-text-raised);
+  color: var(--violet-text-raised);
+}
+
+/* Dato pendiente: borde discontinuo ambar y la palabra "Pendiente" visible. */
+.badge--pending {
+  background: var(--ink);
+  border: 1px dashed var(--amber);
+  color: var(--amber);
+}
+
+/* ---------- Cabecera y navegacion ---------- */
+
+.site-header {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--ink-top);
+}
+
+/*
+ * Ancho minimo fijo: el texto de la marca cambia de ancho al cargar Array y movia la navegacion
+ * (CLS medido). Con la caja constante, el swap de la fuente no mueve a los vecinos.
+ */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  min-width: 11rem;
+  min-height: var(--tap);
+  color: var(--paper);
+  text-decoration: none;
+}
+
+.nav {
+  flex: 1 1 auto;
+}
+
+.nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tap);
+  min-height: var(--tap);
+  padding: 0 var(--space-1);
+  border-bottom: 2px solid transparent;
+  color: var(--paper);
+  text-decoration: none;
+}
+
+.nav a:hover,
+.nav a.is-hover {
+  border-bottom-color: var(--quiet);
+}
+
+.nav a[aria-current="page"] {
+  border-bottom-color: var(--phosphor);
+}
+
+.nav a[aria-disabled="true"] {
+  border-bottom-color: transparent;
+  color: var(--quiet);
+  cursor: not-allowed;
+}
+
+/* Menu colapsado: details y summary, funciona sin JavaScript. */
+.nav__menu {
+  display: none;
+}
+
+.nav__menu summary {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--tap);
+  padding: 0 var(--space-3);
+  border: 1px solid var(--quiet);
+  border-radius: var(--radius-2);
+  color: var(--paper);
+  cursor: pointer;
+  list-style: none;
+}
+
+.nav__menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav__menu summary::after {
+  content: "+";
+  font-family: var(--font-mono);
+}
+
+.nav__menu[open] summary::after {
+  content: "-";
+}
+
+.nav__menu summary:hover,
+.nav__menu summary.is-hover {
+  background: var(--ink-top);
+  border-color: var(--paper);
+}
+
+.nav__menu .nav__list {
+  flex-direction: column;
+  margin-top: var(--space-2);
+}
+
+.nav--collapsed .nav__list--bar {
+  display: none;
+}
+
+.nav--collapsed .nav__menu {
+  display: block;
+}
+
+.site-header__tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+.lang {
+  display: flex;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lang a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tap);
+  min-height: var(--tap);
+  border-bottom: 2px solid transparent;
+  color: var(--quiet);
+  text-decoration: none;
+}
+
+.lang a:hover,
+.lang a.is-hover {
+  color: var(--paper);
+}
+
+.lang a[aria-current="true"] {
+  border-bottom-color: var(--phosphor);
+  color: var(--paper);
+}
+
+@media (max-width: 767px) {
+  .nav__list--bar {
+    display: none;
+  }
+
+  .nav__menu {
+    display: block;
+  }
+}
+
+/* ---------- Pie de pagina ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--ink-top);
+}
+
+.site-footer__cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: var(--space-5);
+}
+
+.site-footer__title {
+  margin: 0 0 var(--space-2);
+  color: var(--paper);
+}
+
+.site-footer ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-width: var(--tap);
+  min-height: var(--tap);
+  color: var(--paper);
+  text-decoration: none;
+  text-underline-offset: .2em;
+}
+
+.site-footer a:hover,
+.site-footer a.is-hover {
+  text-decoration: underline;
+}
+
+.site-footer a[aria-disabled="true"] {
+  color: var(--quiet);
+  cursor: not-allowed;
+}
+
+.site-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-5);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--ink-top);
+}
+
+.site-footer__legal p {
+  margin: 0;
+}
+
+/* ---------- Formulario ---------- */
+
+.form {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 36rem;
+}
+
+.field {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.field > .btn {
+  justify-self: start;
+}
+
+.field > label {
+  font-weight: 600;
+}
+
+.field-help {
+  margin: 0;
+  color: var(--quiet);
+  font-size: var(--text-sm);
+}
+
+.input {
+  display: block;
+  width: 100%;
+  min-height: var(--tap);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--quiet);
+  border-radius: var(--radius-2);
+  background: var(--ink-raised);
+  color: var(--paper);
+  color-scheme: dark;
+  font: inherit;
+}
+
+textarea.input {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.input:hover,
+.input.is-hover {
+  border-color: var(--paper);
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--coral);
+  box-shadow: inset 0 0 0 1px var(--coral);
+}
+
+.input:disabled {
+  border-color: var(--ink-top);
+  background: var(--ink-higher);
+  color: var(--quiet);
+  cursor: not-allowed;
+}
+
+.field-error {
+  display: flex;
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--coral);
+  font-size: var(--text-sm);
+}
+
+.field-error__icon {
+  flex: none;
+  font-family: var(--font-mono);
+}
+
+.field-error strong {
+  font-weight: 600;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--tap);
+}
+
+.check input {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  accent-color: var(--violet);
+  color-scheme: dark;
+}
+
+.form-status {
+  margin: 0;
+  color: var(--phosphor);
+}
+
+.form-status:empty {
+  display: none;
+}
+
+/* ---------- Bloque terminal CRT ---------- */
+
+.crt {
+  margin: 0;
+  max-width: 32rem;
+}
+
+.crt-screen {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+  white-space: pre-wrap;
+}
+
+.crt-cursor {
+  display: inline-block;
+  width: .6em;
+  height: 1.1em;
+  background: var(--phosphor);
+  vertical-align: text-bottom;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion="reduced"]):not([data-saver="on"]) .crt-cursor {
+    animation: crt-blink 1.2s steps(1) infinite;
+  }
+}
+
+@keyframes crt-blink {
+  0%, 49.99% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* ---------- Bloque ASCII ---------- */
+
+.ascii-block {
+  max-width: 32rem;
+}
+
+.ascii-block__note {
+  margin: var(--space-2) 0 0;
+  color: var(--quiet);
+  font-size: var(--text-sm);
+}

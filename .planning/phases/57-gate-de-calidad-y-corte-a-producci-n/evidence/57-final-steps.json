@@ -1,0 +1,80 @@
+{
+  "generado": "2026-11-24T08:44:57.318Z",
+  "base": "https://dev.juan-tech.com",
+  "prodBase": "https://juan-tech.com",
+  "strict": true,
+  "steps": [
+    {
+      "name": "53-crawl-parity",
+      "ok": true,
+      "skipped": false,
+      "code": 0,
+      "ms": 173466,
+      "failLines": []
+    },
+    {
+      "name": "57-seo-parity-all",
+      "ok": false,
+      "skipped": false,
+      "code": 1,
+      "ms": 264931,
+      "failLines": [
+        "FAIL /blog/general [palabras] palabras en main: 120 contra 135 en producción (11.1% menos; tolerancia 2%)",
+        "FAIL /en/blog/general [palabras] palabras en main: 124 contra 138 en producción (10.1% menos; tolerancia 2%)",
+        "FAIL 57-seo-parity-all: 172 de 174 URLs sin diferencias (166 del sitemap, 6 fuera, 2 nuevas); 0 fallos de enlaces en 177 destinos; 0 redirects distintos de 38"
+      ]
+    },
+    {
+      "name": "57-legacy-render-sweep",
+      "ok": true,
+      "skipped": false,
+      "code": 0,
+      "ms": 78466,
+      "failLines": []
+    },
+    {
+      "name": "57-headers-check",
+      "ok": true,
+      "skipped": false,
+      "code": 0,
+      "ms": 5254,
+      "failLines": []
+    },
+    {
+      "name": "57-a11y-sweep",
+      "ok": true,
+      "skipped": false,
+      "code": 0,
+      "ms": 372390,
+      "failLines": []
+    },
+    {
+      "name": "57-perf-compare",
+      "ok": true,
+      "skipped": false,
+      "code": 0,
+      "ms": 737424,
+      "failLines": []
+    },
+    {
+      "name": "57-bundle-weight",
+      "ok": true,
+      "skipped": false,
+      "code": 0,
+      "ms": 22125,
+      "failLines": []
+    },
+    {
+      "name": "56-run-all --live",
+      "ok": false,
+      "skipped": false,
+      "code": 1,
+      "ms": 889443,
+      "failLines": [
+        "FAIL 55 regresion: 54 regresion: 54-about (4 PASS, 1 FAIL, 0 WARN lineas, salida 1, 7.3s)",
+        "FAIL 55 regresion: 54 regresion: 54-about",
+        "FAIL 56-run-all --live"
+      ]
+    }
+  ]
+}

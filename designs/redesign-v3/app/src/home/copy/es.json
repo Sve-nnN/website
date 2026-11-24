@@ -1,0 +1,243 @@
+{
+  "meta": {
+    "title": "SEO técnico e ingeniería de software | Juan Carlos Angulo",
+    "description": "Soy ingeniero de software y consultor de SEO técnico: auditorías, rendimiento web y arquitectura Next.js/Payload para posicionar tu sitio en Google."
+  },
+  "a11y": {
+    "skip": "Saltar al contenido",
+    "mainNav": "Principal",
+    "langGroup": "Idioma / Language",
+    "esLabel": "ES, Español",
+    "enLabel": "EN, English",
+    "pause": "Pausar animaciones",
+    "resume": "Reanudar animaciones",
+    "menu": "Menú",
+    "menuDialog": "Menú / Menu",
+    "blockedPaused": "Animaciones en pausa.",
+    "newTab": "Abrir {0} en otra pestaña"
+  },
+  "nav": { "servicios": "Servicios", "casos": "Casos", "proceso": "Proceso", "testimonios": "Testimonios", "contacto": "Contacto" },
+  "mnav": [
+    { "id": "servicios", "icon": "wrench", "label": "Servicios" },
+    { "id": "casos", "icon": "chart-line", "label": "Casos" },
+    { "id": "proceso", "icon": "workflow", "label": "Proceso" },
+    { "id": "websites", "icon": "monitor", "label": "Websites" },
+    { "id": "sobre", "icon": "user", "label": "Sobre mí" },
+    { "id": "testimonios", "icon": "quote", "label": "Testimonios" },
+    { "id": "faq", "icon": "circle-question-mark", "label": "Preguntas" },
+    { "id": "contacto", "icon": "mail", "label": "Contacto" }
+  ],
+  "cta": "Pedir auditoría 360",
+  "hero": {
+    "h1": [["Arreglo", "el", "*SEO"], ["desde", "el", "código"]],
+    "lede": "Soy ingeniero de software y consultor SEO técnico. Entro al código, corrijo lo que frena a Google en tu sitio y mido el resultado en Search Console.",
+    "seeCases": "Ver casos",
+    "scopeTitle": "auditoria-360",
+    "scope": [
+      { "icon": "search", "title": "Rastreo", "sub": "robots, sitemap, enlaces" },
+      { "icon": "file-search", "title": "Indexación", "sub": "canonical, noindex, hreflang" },
+      { "icon": "gauge", "title": "Core Web Vitals", "sub": "LCP, CLS, INP" },
+      { "icon": "code", "title": "Datos estructurados", "sub": "schema.org JSON-LD" },
+      { "icon": "file-text", "title": "Contenido", "sub": "intención y duplicados" },
+      { "icon": "bot", "title": "SEO para IA", "sub": "citas en ChatGPT y Perplexity" }
+    ],
+    "seal": "AUDITO + CORRIJO + MIDO + PUBLICO +"
+  },
+  "clients": {
+    "title": "Con quiénes trabajé",
+    "lead": "Cada nombre es un sitio que audité o construí.",
+    "seo": "proyectos de SEO",
+    "dev": "proyectos de desarrollo"
+  },
+  "marquee": { "label": "Temas que trabajo / Topics I work on", "items": ["Core Web Vitals", "Next.js", "hreflang", "Payload CMS", "canonical", "LCP", "sitemap", "schema", "TTFB", "crawl budget", "GEO", "INP"] },
+  "medicion": {
+    "title": "Medición antes de tocar el código",
+    "intro": "Cuatro lecturas me dicen dónde duele un sitio. La barra de cada una marca el rango que Google considera bueno, mejorable y pobre.",
+    "pending": "PENDIENTE medir",
+    "note": "Los valores de esta franja son de muestra. No son mediciones reales de ningún sitio.",
+    "legend": { "good": "Bueno", "mid": "Mejorable", "bad": "Pobre" },
+    "gauges": [
+      { "id": "lcp", "name": "LCP", "what": "Cuánto tarda en pintarse el elemento principal", "value": 1.8, "dec": 1, "unit": " s", "pos": "36%", "g": "50%", "m": "80%", "thr": "Bueno: hasta 2.5 s" },
+      { "id": "cls", "name": "CLS", "what": "Cuánto se mueve el diseño mientras carga", "value": 0.05, "dec": 2, "unit": "", "pos": "10%", "g": "20%", "m": "50%", "thr": "Bueno: hasta 0.1" },
+      { "id": "inp", "name": "INP", "what": "Cuánto tarda la página en responder a un toque", "value": 120, "dec": 0, "unit": " ms", "pos": "15%", "g": "25%", "m": "62.5%", "thr": "Bueno: hasta 200 ms" },
+      { "id": "ttfb", "name": "TTFB", "what": "Cuánto tarda el servidor en dar el primer byte", "value": 0.4, "dec": 1, "unit": " s", "pos": "13%", "g": "27%", "m": "60%", "thr": "Bueno: hasta 0.8 s" }
+    ]
+  },
+  "servicios": {
+    "title": "Servicios de SEO técnico y desarrollo",
+    "tecnico": { "title": "SEO técnico", "text": "Audito rastreo, indexación y datos estructurados. Empiezo por lo que ve Googlebot y de ahí decido qué tocar.", "chips": ["hreflang", "canonical", "sitemap", "schema"] },
+    "dev": { "title": "Desarrollo Next.js y Payload", "text": "Construyo con Next.js y Payload CMS y dejo el SEO resuelto desde el primer commit: rutas, metadatos, sitemap y datos estructurados.", "layers": ["Next.js", "Payload CMS", "PostgreSQL", "Servidor"] },
+    "rows": [
+      { "title": "Infraestructura y servidores", "text": "Configuro el servidor, los headers y la caché. Cuando el TTFB sube, casi siempre el problema está en el servidor.", "keys": "TTFB · headers · caché" },
+      { "title": "Rendimiento web", "text": "Mido LCP, CLS e INP y ataco primero lo que más pesa: imágenes, fuentes y JavaScript.", "keys": "LCP · CLS · INP" },
+      { "title": "SEO para IA y GEO", "text": "Estructuro el contenido para que ChatGPT, Perplexity y las respuestas de IA de Google puedan citarlo.", "keys": "ChatGPT · Perplexity · Google AI" }
+    ],
+    "audit": { "title": "Auditoría 360", "text": "Reviso rastreo, indexación, Core Web Vitals, datos estructurados, contenido y SEO para IA en un solo informe. Recibes un plan ordenado por impacto, listo para aplicar, en 10 días hábiles." }
+  },
+  "casos": {
+    "title": "Resultados en Search Console",
+    "yoy": "clics interanuales",
+    "items": [
+      { "sector": "Salud, urología", "value": 406, "title": "De casi cero visibilidad a un año de crecimiento sostenido para un urólogo" },
+      { "sector": "Servicios legales, inmigración", "value": 309, "title": "Cuadruplicar el tráfico orgánico de un despacho de inmigración en un año" },
+      { "sector": "Servicios legales, defensa criminal", "value": 83, "title": "Escalar el contenido legal educativo a más de 86 000 clics orgánicos anuales" }
+    ],
+    "note": "Cada cifra compara los clics de un año contra el año anterior, en el mismo periodo, con datos de Search Console. Mantengo anónimos a los clientes.",
+    "all": "Ver todos los casos",
+    "allHref": "https://juan-tech.com/case-studies"
+  },
+  "proceso": {
+    "title": "Mi proceso de la auditoría a la medición",
+    "steps": [
+      { "icon": "search", "title": "Audito", "text": "Reviso rastreo, indexación, Core Web Vitals y datos estructurados. Parto de lo que Google ve hoy." },
+      { "icon": "list-ordered", "title": "Priorizo", "text": "Ordeno los hallazgos por el impacto que tienen en el tráfico, sin importar cuántos avisos genere cada herramienta." },
+      { "icon": "wrench", "title": "Corrijo", "text": "Aplico el cambio en el código o dejo el cambio exacto para que lo aplique tu equipo." },
+      { "icon": "chart-line", "title": "Mido", "text": "Comparo Search Console y los Core Web Vitals reales antes y después." }
+    ]
+  },
+  "websites": {
+    "title": "Sitios web que construí",
+    "pending": "PENDIENTE",
+    "note": "Fecha y herramienta de la medición de cada puntaje.",
+    "all": "Ver todos los sitios",
+    "allHref": "https://juan-tech.com/websites",
+    "items": [
+      { "id": "apturio", "host": "apturio.com", "name": "Apturio", "kind": "Software y SaaS", "score": 83, "alt": "Página de inicio de Apturio, un CRM con IA: fondo oscuro, titular y dos botones" },
+      { "id": "arianna", "host": "ariannalupi.com", "name": "Arianna Lupi", "kind": "Marca personal y coaching", "score": 73, "alt": "Página de inicio de Arianna Lupi: titular de presentación y retrato" },
+      { "id": "estylopia", "host": "estylopia.com", "name": "Estylopia", "kind": "Retail y estilo personal", "score": 67, "alt": "Página de inicio de Estylopia: bienvenida y explicación del servicio de asesoría de estilo" }
+    ]
+  },
+  "sobre": {
+    "title": "Ingeniero de software que trabaja el SEO",
+    "portrait": "RETRATO PENDIENTE",
+    "portraitSub": "Se carga desde Media",
+    "p1": "Trabajo el SEO desde el código. Construyo con Next.js y con un CMS headless como Payload, resuelvo el SEO desde el primer commit y audito antes de construir.",
+    "p2": "Cuido la accesibilidad y el diseño mobile-first. Trabajo en español e inglés.",
+    "chips": [
+      { "icon": "scan-search", "label": "SEO técnico" },
+      { "icon": "gauge", "label": "Rendimiento web" },
+      { "icon": "server", "label": "Infraestructura" },
+      { "icon": "layers", "label": "Arquitectura escalable" },
+      { "icon": "users", "label": "Accesibilidad" }
+    ]
+  },
+  "testimonios": {
+    "title": "Clientes que trabajaron conmigo",
+    "previewGroup": "Vista de maqueta: cantidad de testimonios / Mockup view: number of testimonials",
+    "preview": "Previsualizar con",
+    "quote": "Trabajar con Juan fue lo mejor.",
+    "who": "Patricia Ibarra",
+    "role": "CEO de Estylopia",
+    "stamp": "Testimonio pendiente, ejemplo de maqueta",
+    "role0": "Rol",
+    "company0": "empresa",
+    "pending": "PENDIENTE",
+    "note": "Solo existe una cita real. Las demás tarjetas son ranuras de muestra para ver cómo escala la sección. La traducción al inglés de la cita real es provisional y falta confirmarla con la clienta."
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      { "icon": "file-search", "q": "¿Qué incluye la Auditoría 360?", "a": "Reviso rastreo, indexación, Core Web Vitals, datos estructurados, contenido y SEO para IA. Entrego un plan de corrección ordenado por impacto." },
+      { "icon": "clock", "q": "¿Qué recibo y cuánto tarda?", "a": "Recibes un informe con el plan de corrección ordenado por impacto, y lo entrego en 10 días hábiles. Escríbeme y te cuento cómo lo adapto al tamaño de tu sitio." },
+      { "icon": "users", "q": "¿Trabajas con mi equipo de desarrollo?", "a": "Sí. Corrijo el código yo mismo o dejo el cambio exacto para que tu equipo lo aplique." },
+      { "icon": "chart-line", "q": "¿Cómo mido el éxito de las optimizaciones?", "a": "Comparo Search Console y Core Web Vitals reales antes y después. Las cifras de los casos salen de ahí." },
+      { "icon": "globe", "q": "¿En qué idiomas trabajas?", "a": "Trabajo en español e inglés. Audito, escribo y construyo en los dos idiomas." }
+    ]
+  },
+  "contacto": {
+    "title": "Hablemos de tu sitio",
+    "text": "¿Tienes un proyecto en mente? Cuéntame de qué se trata y empiezo por mirar qué ve Google hoy.",
+    "email": "hello@juan-tech.com",
+    "pending": "PENDIENTE",
+    "note": "Plazo de respuesta real.",
+    "name": "Nombre",
+    "mail": "Correo electrónico",
+    "message": "Mensaje",
+    "send": "Enviar mensaje",
+    "missing": "Faltan datos. Completa nombre, correo y mensaje para poder responderte.",
+    "mock": "Este formulario es un mockup, no envía nada."
+  },
+  "footer": {
+    "ctaTitle": "Auditoría 360 de tu sitio",
+    "ctaText": "Reviso rastreo, indexación, Core Web Vitals, datos estructurados, contenido y SEO para IA. Recibes un plan ordenado por impacto.",
+    "dirLabel": "Directorio del sitio / Site directory",
+    "columns": [
+      {
+        "icon": "newspaper",
+        "title": "Artículos del blog",
+        "items": [
+          { "label": "Headless CMS SEO: guía práctica completa para 2026", "href": "https://juan-tech.com/blog/tech-seo/headless-cms-seo" },
+          { "label": "Payload CMS: guía práctica completa para 2026", "href": "https://juan-tech.com/blog/development/payload-cms-guide" },
+          { "label": "Guía de Core Web Vitals 2026: La Métrica de Oro del SEO", "href": "https://juan-tech.com/blog/tech-seo/core-web-vitals-guide" },
+          { "label": "Buenas prácticas de SEO para JavaScript", "href": "https://juan-tech.com/blog/tech-seo/javascript-seo" },
+          { "label": "Canibalización SEO", "href": "https://juan-tech.com/blog/seo/canibalizacion-seo" }
+        ],
+        "all": { "label": "Ver todo el blog", "href": "https://juan-tech.com/blog" }
+      },
+      {
+        "icon": "tag",
+        "title": "Categorías del blog",
+        "items": [
+          { "icon": "scan-search", "label": "SEO Técnico", "href": "https://juan-tech.com/blog/tech-seo" },
+          { "icon": "compass", "label": "Estrategia SEO", "href": "https://juan-tech.com/blog/seo" },
+          { "icon": "code", "label": "Desarrollo", "href": "https://juan-tech.com/blog/development" },
+          { "icon": "cpu", "label": "Ciencias de la Computación", "href": "https://juan-tech.com/blog/cs-fundamentals" }
+        ]
+      },
+      {
+        "icon": "wrench",
+        "title": "Servicios",
+        "items": [
+          { "icon": "clipboard-check", "label": "Auditoría SEO técnica", "href": "https://juan-tech.com/servicios/seo-technical-audit" },
+          { "icon": "telescope", "label": "Consultoría SEO", "href": "https://juan-tech.com/servicios/seo-consulting" },
+          { "icon": "code", "label": "Desarrollo full-stack", "href": "https://juan-tech.com/servicios/fullstack-development" },
+          { "icon": "bot", "label": "SEO para IA y GEO", "href": "https://juan-tech.com/servicios/ai-seo-geo" }
+        ],
+        "all": { "label": "Todos los servicios", "href": "https://juan-tech.com/servicios" }
+      },
+      {
+        "icon": "briefcase",
+        "title": "Casos de estudio",
+        "items": [
+          { "icon": "rocket", "label": "Migración a Next.js sin perder tráfico orgánico", "href": "https://juan-tech.com/case-studies/migracion-ecommerce-nextjs-seo-tecnico" },
+          { "icon": "chart-line", "label": "Duplicar el tráfico orgánico de una plataforma de educación financiera infantil", "href": "https://juan-tech.com/case-studies/edtech-financiera-infantil-crecimiento-organico-seo" },
+          { "icon": "layers", "label": "Más que duplicar el tráfico orgánico de un fabricante de baldosas hidráulicas", "href": "https://juan-tech.com/case-studies/fabricante-baldosa-hidraulica-seo-espana" }
+        ],
+        "all": { "label": "Ver todos los casos", "href": "https://juan-tech.com/case-studies" }
+      },
+      {
+        "icon": "compass",
+        "title": "Páginas del sitio",
+        "two": true,
+        "items": [
+          { "icon": "wrench", "label": "Servicios", "href": "https://juan-tech.com/servicios" },
+          { "icon": "briefcase", "label": "Casos", "href": "https://juan-tech.com/case-studies" },
+          { "icon": "monitor", "label": "Websites", "href": "https://juan-tech.com/websites" },
+          { "icon": "layers", "label": "Stack", "href": "https://juan-tech.com/stack" },
+          { "icon": "user", "label": "Sobre mí", "href": "https://juan-tech.com/authors/juan-carlos-angulo" },
+          { "icon": "mail", "label": "Contacto", "href": "https://juan-tech.com/contact" },
+          { "icon": "search", "label": "Búsqueda", "href": "https://juan-tech.com/search" },
+          { "icon": "lock", "label": "Privacidad", "href": "https://juan-tech.com/privacy" },
+          { "icon": "scroll-text", "label": "Términos", "href": "https://juan-tech.com/terms" }
+        ]
+      },
+      {
+        "icon": "network",
+        "title": "Para máquinas y redes",
+        "items": [
+          { "icon": "rss", "label": "Sitemap XML", "href": "https://juan-tech.com/sitemap.xml" },
+          { "icon": "link", "label": "LinkedIn", "href": "https://linkedin.com/in/juancangulo" }
+        ]
+      }
+    ],
+    "copy": "Ingeniero de software y consultor SEO técnico. © 2026 Juan Carlos Angulo. Todos los derechos reservados.",
+    "top": "Volver arriba"
+  },
+  "palette": {
+    "button": "Paleta de prueba",
+    "group": "Paleta de prueba / Test palette",
+    "iconOnly": "Solo icono",
+    "hide": "Ocultar selector",
+    "restore": "Para volver a verlo, agrega ?selector=1 a la dirección."
+  }
+}

@@ -1,0 +1,18 @@
+[
+  { "name": "Grainient", "catalogId": "grain", "group": "base" },
+  { "name": "PatternWaves", "catalogId": "waves", "group": "base" },
+  { "name": "CRTWarp", "catalogId": "crt", "group": "base" },
+  { "name": "MicroSlats", "catalogId": "slats", "group": "base" },
+  { "name": "PixelBlast", "catalogId": "pixel-blast", "group": "base" },
+  { "name": "PixelCard", "catalogId": "pixel-card", "group": "base" },
+  { "name": "GradientASCII", "catalogId": "gradient-ascii", "group": "base" },
+  { "name": "ASCIIText", "catalogId": "ascii-text", "group": "base" },
+  { "name": "Noise", "catalogId": "noise", "group": "scout" },
+  { "name": "Dither", "catalogId": "dither", "group": "scout" },
+  { "name": "HalftoneReveal", "catalogId": "halftone-reveal", "group": "scout" },
+  { "name": "PixelTransition", "catalogId": "pixel-transition", "group": "scout" },
+  { "name": "FaultyTerminal", "catalogId": "faulty-terminal", "group": "scout" },
+  { "name": "SpotlightCard", "catalogId": "spotlight-card", "group": "scout" },
+  { "name": "GradientBlinds", "catalogId": "gradient-blinds", "group": "scout" },
+  { "name": "StarBorder", "catalogId": "star-border", "group": "scout" }
+]

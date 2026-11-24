@@ -80,5 +80,18 @@ export const Clientes: CollectionConfig = {
           'Cliente reconocible: se muestra primero y más grande dentro de su grupo. Usalo con avaricia, cuatro o cinco a lo sumo.',
       },
     },
+    /**
+     * Fase 54 (aditivo): marca un logo claro que se pierde sobre la franja
+     * clara de la página y necesita un chip oscuro detrás.
+     */
+    {
+      name: 'onDark',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        description:
+          'Marca un logo claro que necesita un chip oscuro detrás cuando se muestra sobre la franja clara.',
+      },
+    },
   ],
 }

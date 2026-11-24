@@ -1,0 +1,1137 @@
+{
+  "measuredAt": "2026-11-17T17:29:56.250Z",
+  "base": "https://dev.juan-tech.com",
+  "totals": {
+    "css": {
+      "count": 1,
+      "raw": 54814,
+      "gzip": 10295
+    },
+    "js": {
+      "count": 47,
+      "raw": 1275502,
+      "gzip": 416070
+    }
+  },
+  "templates": [
+    {
+      "id": "home",
+      "path": "/",
+      "status": 200,
+      "html": {
+        "raw": 366426,
+        "gzip": 52991
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 20,
+        "raw": 985542,
+        "gzip": 315416
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/3808-15caeee6c3453589.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/page-115f9dba0fbf4e19.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "home-en",
+      "path": "/en",
+      "status": 200,
+      "html": {
+        "raw": 363445,
+        "gzip": 51525
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 20,
+        "raw": 985542,
+        "gzip": 315416
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/3808-15caeee6c3453589.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/page-115f9dba0fbf4e19.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "servicios-indice",
+      "path": "/servicios",
+      "status": 200,
+      "html": {
+        "raw": 191792,
+        "gzip": 30861
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 25,
+        "raw": 1016524,
+        "gzip": 327428
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/3808-15caeee6c3453589.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/page-115f9dba0fbf4e19.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/9997-22aa34eaff19e966.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1935-e7c5ea165384f655.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/servicios/page-1e280ec4f2ee5536.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "servicios-detalle",
+      "path": "/servicios/seo-technical-audit",
+      "status": 200,
+      "html": {
+        "raw": 302061,
+        "gzip": 44633
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 25,
+        "raw": 1022623,
+        "gzip": 331190
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/9997-22aa34eaff19e966.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1747-6fac4aa3600a5ef3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/2472-ff5f6463c232615d.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5417-a310d183c9b42a58.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/servicios/%5Bslug%5D/page-3b44d2b9ef6c933d.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "blog-indice",
+      "path": "/blog",
+      "status": 200,
+      "html": {
+        "raw": 264404,
+        "gzip": 40671
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 24,
+        "raw": 1018057,
+        "gzip": 328238
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/9360-d11083f8e13d963b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/blog/page-dcab5cfc234c9209.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/3808-15caeee6c3453589.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/page-115f9dba0fbf4e19.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "blog-categoria",
+      "path": "/blog/seo",
+      "status": 200,
+      "html": {
+        "raw": 170510,
+        "gzip": 28327
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 25,
+        "raw": 1012825,
+        "gzip": 326667
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/902-c368e54390aafab0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/9360-d11083f8e13d963b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/blog/%5Bcategory%5D/page-fc3706bdade56aba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/3808-15caeee6c3453589.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/page-115f9dba0fbf4e19.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "blog-post",
+      "path": "/blog/seo/estrategia-seo",
+      "status": 200,
+      "html": {
+        "raw": 338637,
+        "gzip": 55970
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 20,
+        "raw": 949915,
+        "gzip": 305157
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/9997-22aa34eaff19e966.js",
+          "https://dev.juan-tech.com/_next/static/chunks/982-d609225b549c0b9f.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/blog/%5Bcategory%5D/%5Bslug%5D/page-75a561b5e49fbbf0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "casos-indice",
+      "path": "/case-studies",
+      "status": 200,
+      "html": {
+        "raw": 184327,
+        "gzip": 29827
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 23,
+        "raw": 1004652,
+        "gzip": 323645
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/3808-15caeee6c3453589.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/page-115f9dba0fbf4e19.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/case-studies/page-aa3967206cc0ebcc.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "casos-detalle",
+      "path": "/case-studies/immigration-law-atlanta-seo",
+      "status": 200,
+      "html": {
+        "raw": 245247,
+        "gzip": 38955
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 23,
+        "raw": 975911,
+        "gzip": 314440
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/9997-22aa34eaff19e966.js",
+          "https://dev.juan-tech.com/_next/static/chunks/9543-f0cdfb46545b593a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/case-studies/%5Bslug%5D/page-696608d424afb904.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "websites-indice",
+      "path": "/websites",
+      "status": 200,
+      "html": {
+        "raw": 205895,
+        "gzip": 31836
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 24,
+        "raw": 1018314,
+        "gzip": 327744
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/3808-15caeee6c3453589.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/page-115f9dba0fbf4e19.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/9639-999644b5980e06da.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/websites/page-173e81f9b9b6dde5.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "autores-perfil",
+      "path": "/authors/juan-carlos-angulo",
+      "status": 200,
+      "html": {
+        "raw": 359155,
+        "gzip": 51604
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 24,
+        "raw": 1022561,
+        "gzip": 328586
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/3808-15caeee6c3453589.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/page-115f9dba0fbf4e19.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4714-42e1ac9edd809090.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/authors/%5Bslug%5D/page-445f9b73600ece24.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "sobre-mi",
+      "path": "/sobre-mi",
+      "status": 200,
+      "html": {
+        "raw": 208456,
+        "gzip": 34051
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 24,
+        "raw": 1020571,
+        "gzip": 328311
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/3808-15caeee6c3453589.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/page-115f9dba0fbf4e19.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4714-42e1ac9edd809090.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/sobre-mi/page-39a98867bed69cd6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "contacto",
+      "path": "/contact",
+      "status": 200,
+      "html": {
+        "raw": 188917,
+        "gzip": 29824
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 23,
+        "raw": 1015141,
+        "gzip": 326870
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/contact/page-6c4f944d1a05b695.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/3808-15caeee6c3453589.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/page-115f9dba0fbf4e19.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "stack",
+      "path": "/stack",
+      "status": 200,
+      "html": {
+        "raw": 231334,
+        "gzip": 39063
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 24,
+        "raw": 1017562,
+        "gzip": 327648
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/3808-15caeee6c3453589.js",
+          "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/page-115f9dba0fbf4e19.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5370-109ff56c7886d291.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/stack/page-4547246c831c6181.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    },
+    {
+      "id": "busqueda",
+      "path": "/search",
+      "status": 200,
+      "html": {
+        "raw": 131902,
+        "gzip": 23645
+      },
+      "css": {
+        "count": 1,
+        "raw": 54814,
+        "gzip": 10295
+      },
+      "js": {
+        "count": 19,
+        "raw": 925447,
+        "gzip": 298400
+      },
+      "assets": {
+        "css": [
+          "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css"
+        ],
+        "js": [
+          "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+          "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+          "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+          "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+          "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+          "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+          "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/search/page-15e8f97d0deee14e.js",
+          "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+          "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+          "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+          "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+          "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js"
+        ]
+      }
+    }
+  ],
+  "assets": [
+    {
+      "kind": "css",
+      "url": "https://dev.juan-tech.com/_next/static/css/68a29e2c05df7aa5.css",
+      "status": 200,
+      "raw": 54814,
+      "gzip": 10295,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/4bd1b696-cc729d47eba2cee4.js",
+      "status": 200,
+      "raw": 172735,
+      "gzip": 54260,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/5964-217149ecc4b4e5f3.js",
+      "status": 200,
+      "raw": 166866,
+      "gzip": 44191,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/main-app-7bd318ff7dcde053.js",
+      "status": 200,
+      "raw": 574,
+      "gzip": 236,
+      "gzipSource": "local"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/1728-82951761a2e2ba05.js",
+      "status": 200,
+      "raw": 10817,
+      "gzip": 4204,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/6840-c6eef353be5684ff.js",
+      "status": 200,
+      "raw": 173953,
+      "gzip": 56494,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/4194-c7f9617085686c5c.js",
+      "status": 200,
+      "raw": 44873,
+      "gzip": 15033,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/4207-f86befe5563b16ba.js",
+      "status": 200,
+      "raw": 52940,
+      "gzip": 18679,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/8734-bd9205727ae02cc8.js",
+      "status": 200,
+      "raw": 70669,
+      "gzip": 25036,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/8395-ba1e2bb122c4d516.js",
+      "status": 200,
+      "raw": 21107,
+      "gzip": 7085,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/layout-459caa42bf2d95c0.js",
+      "status": 200,
+      "raw": 756,
+      "gzip": 259,
+      "gzipSource": "local"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/984-4040dc17d30fbd35.js",
+      "status": 200,
+      "raw": 49179,
+      "gzip": 13837,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/4781-132737744936aff6.js",
+      "status": 200,
+      "raw": 9311,
+      "gzip": 3264,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/1035-dcfe87607ed737fd.js",
+      "status": 200,
+      "raw": 8798,
+      "gzip": 2828,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/1501-8cbb81fdc60ba0cd.js",
+      "status": 200,
+      "raw": 11278,
+      "gzip": 3658,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/3808-15caeee6c3453589.js",
+      "status": 200,
+      "raw": 9006,
+      "gzip": 3523,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/676-ebc7590018884143.js",
+      "status": 200,
+      "raw": 8071,
+      "gzip": 3197,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/page-115f9dba0fbf4e19.js",
+      "status": 200,
+      "raw": 47990,
+      "gzip": 13647,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/not-found-52956315cfc3cbec.js",
+      "status": 200,
+      "raw": 8040,
+      "gzip": 3458,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/polyfills-42372ed130431b0a.js",
+      "status": 200,
+      "raw": 112594,
+      "gzip": 39473,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/webpack-c62b9176c6281e58.js",
+      "status": 200,
+      "raw": 5985,
+      "gzip": 3054,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/635-7f456805155b453b.js",
+      "status": 200,
+      "raw": 6254,
+      "gzip": 2568,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/9997-22aa34eaff19e966.js",
+      "status": 200,
+      "raw": 7261,
+      "gzip": 2238,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/1935-e7c5ea165384f655.js",
+      "status": 200,
+      "raw": 6036,
+      "gzip": 2400,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/5721-b0b7640bba6d81d7.js",
+      "status": 200,
+      "raw": 6400,
+      "gzip": 2866,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/servicios/page-1e280ec4f2ee5536.js",
+      "status": 200,
+      "raw": 5031,
+      "gzip": 1940,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/1747-6fac4aa3600a5ef3.js",
+      "status": 200,
+      "raw": 41028,
+      "gzip": 13835,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/2472-ff5f6463c232615d.js",
+      "status": 200,
+      "raw": 18632,
+      "gzip": 6818,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/5417-a310d183c9b42a58.js",
+      "status": 200,
+      "raw": 14305,
+      "gzip": 4454,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/servicios/%5Bslug%5D/page-3b44d2b9ef6c933d.js",
+      "status": 200,
+      "raw": 197,
+      "gzip": 165,
+      "gzipSource": "local"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/9360-d11083f8e13d963b.js",
+      "status": 200,
+      "raw": 7722,
+      "gzip": 2916,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/blog/page-dcab5cfc234c9209.js",
+      "status": 200,
+      "raw": 12139,
+      "gzip": 4472,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/902-c368e54390aafab0.js",
+      "status": 200,
+      "raw": 4934,
+      "gzip": 1919,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/blog/%5Bcategory%5D/page-fc3706bdade56aba.js",
+      "status": 200,
+      "raw": 1973,
+      "gzip": 982,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/982-d609225b549c0b9f.js",
+      "status": 200,
+      "raw": 5327,
+      "gzip": 2294,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/blog/%5Bcategory%5D/%5Bslug%5D/page-75a561b5e49fbbf0.js",
+      "status": 200,
+      "raw": 22307,
+      "gzip": 6234,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/case-studies/page-aa3967206cc0ebcc.js",
+      "status": 200,
+      "raw": 6456,
+      "gzip": 2795,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/9543-f0cdfb46545b593a.js",
+      "status": 200,
+      "raw": 6826,
+      "gzip": 2988,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/case-studies/%5Bslug%5D/page-696608d424afb904.js",
+      "status": 200,
+      "raw": 20624,
+      "gzip": 5534,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/9639-999644b5980e06da.js",
+      "status": 200,
+      "raw": 10191,
+      "gzip": 3532,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/websites/page-173e81f9b9b6dde5.js",
+      "status": 200,
+      "raw": 9927,
+      "gzip": 3362,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/4714-42e1ac9edd809090.js",
+      "status": 200,
+      "raw": 10257,
+      "gzip": 3248,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/authors/%5Bslug%5D/page-445f9b73600ece24.js",
+      "status": 200,
+      "raw": 14108,
+      "gzip": 4488,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/sobre-mi/page-39a98867bed69cd6.js",
+      "status": 200,
+      "raw": 12118,
+      "gzip": 4213,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/contact/page-6c4f944d1a05b695.js",
+      "status": 200,
+      "raw": 16945,
+      "gzip": 6020,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/5370-109ff56c7886d291.js",
+      "status": 200,
+      "raw": 9512,
+      "gzip": 3330,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/stack/page-4547246c831c6181.js",
+      "status": 200,
+      "raw": 9854,
+      "gzip": 3468,
+      "gzipSource": "servidor"
+    },
+    {
+      "kind": "js",
+      "url": "https://dev.juan-tech.com/_next/static/chunks/app/(frontend)/%5Blocale%5D/search/page-15e8f97d0deee14e.js",
+      "status": 200,
+      "raw": 3596,
+      "gzip": 1575,
+      "gzipSource": "servidor"
+    }
+  ]
+}

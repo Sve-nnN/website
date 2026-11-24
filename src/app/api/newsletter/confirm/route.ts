@@ -3,6 +3,7 @@ import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import { publicOrigin } from '@/lib/public-origin'
+import { isPreviewReadonly } from '@/lib/preview'
 import { mintDownloadToken } from '@/lib/download-token'
 
 // Local API + driver de Postgres: runtime Node, nunca Edge.
@@ -31,6 +32,14 @@ export async function GET(request: NextRequest) {
   const home = new URL('/', origin)
 
   if (!token) return NextResponse.redirect(home)
+
+  // Preview de solo lectura (fase 53, D-03): no consulta ni escribe la base.
+  // Responde como una confirmación exitosa del newsletter.
+  if (isPreviewReadonly()) {
+    const target = new URL('/blog', origin)
+    target.searchParams.set('newsletter', 'confirmed')
+    return NextResponse.redirect(target)
+  }
 
   try {
     const payload = await getPayload({ config })

@@ -1,0 +1,272 @@
+{
+  "generatedAt": "2026-10-22T00:31:04.222Z",
+  "lighthouseVersion": "13.4.1",
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+  "chromeFlags": "--headless=new --use-angle=swiftshader --enable-unsafe-swiftshader --ignore-gpu-blocklist",
+  "server": "servidor estatico propio con brotli calidad 11 en 127.0.0.1",
+  "buildSha256": "1a7c933d8fd7237f31eb85cafb0a92fcf7cfb74f369d7fbcf6addb71926750af",
+  "runsPerCombination": 3,
+  "combos": [
+    {
+      "target": "baseline",
+      "label": "Baseline /system",
+      "path": "/system",
+      "factor": "mobile",
+      "runs": [
+        {
+          "performance": 93,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 2408,
+          "cls": 0,
+          "tbtMs": 0,
+          "transferBytes": 161926,
+          "scriptBytes": 84826,
+          "requests": 14,
+          "originalChunkRequested": false
+        },
+        {
+          "performance": 97,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 2186,
+          "cls": 0,
+          "tbtMs": 0,
+          "transferBytes": 161926,
+          "scriptBytes": 84826,
+          "requests": 14,
+          "originalChunkRequested": false
+        },
+        {
+          "performance": 95,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 2236,
+          "cls": 0,
+          "tbtMs": 0,
+          "transferBytes": 161926,
+          "scriptBytes": 84826,
+          "requests": 14,
+          "originalChunkRequested": false
+        }
+      ],
+      "median": {
+        "performance": 95,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "lcpMs": 2236,
+        "cls": 0,
+        "tbtMs": 0,
+        "transferBytes": 161926,
+        "scriptBytes": 84826,
+        "requests": 14
+      },
+      "representativeRun": {
+        "performance": 95,
+        "lcpMs": 2236
+      },
+      "originalChunkRequestedInAllRuns": false,
+      "originalChunkRequestedInAnyRun": false
+    },
+    {
+      "target": "baseline",
+      "label": "Baseline /system",
+      "path": "/system",
+      "factor": "desktop",
+      "runs": [
+        {
+          "performance": 93,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 476,
+          "cls": 0,
+          "tbtMs": 0,
+          "transferBytes": 161926,
+          "scriptBytes": 84826,
+          "requests": 14,
+          "originalChunkRequested": false
+        },
+        {
+          "performance": 94,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 486,
+          "cls": 0,
+          "tbtMs": 0,
+          "transferBytes": 161926,
+          "scriptBytes": 84826,
+          "requests": 14,
+          "originalChunkRequested": false
+        },
+        {
+          "performance": 92,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 486,
+          "cls": 0,
+          "tbtMs": 0,
+          "transferBytes": 161926,
+          "scriptBytes": 84826,
+          "requests": 14,
+          "originalChunkRequested": false
+        }
+      ],
+      "median": {
+        "performance": 93,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "lcpMs": 486,
+        "cls": 0,
+        "tbtMs": 0,
+        "transferBytes": 161926,
+        "scriptBytes": 84826,
+        "requests": 14
+      },
+      "representativeRun": {
+        "performance": 93,
+        "lcpMs": 476
+      },
+      "originalChunkRequestedInAllRuns": false,
+      "originalChunkRequestedInAnyRun": false
+    },
+    {
+      "target": "mounted",
+      "label": "Con Grainient montado",
+      "path": "/system?mount=grainient",
+      "factor": "mobile",
+      "runs": [
+        {
+          "performance": 45,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 4589,
+          "cls": 0,
+          "tbtMs": 4886,
+          "transferBytes": 167723,
+          "scriptBytes": 90319,
+          "requests": 16,
+          "originalChunkRequested": true
+        },
+        {
+          "performance": 41,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 4986,
+          "cls": 0,
+          "tbtMs": 5596,
+          "transferBytes": 167723,
+          "scriptBytes": 90319,
+          "requests": 16,
+          "originalChunkRequested": true
+        },
+        {
+          "performance": 39,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 5708,
+          "cls": 0,
+          "tbtMs": 7034,
+          "transferBytes": 167723,
+          "scriptBytes": 90319,
+          "requests": 16,
+          "originalChunkRequested": true
+        }
+      ],
+      "median": {
+        "performance": 41,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "lcpMs": 4986,
+        "cls": 0,
+        "tbtMs": 5596,
+        "transferBytes": 167723,
+        "scriptBytes": 90319,
+        "requests": 16
+      },
+      "representativeRun": {
+        "performance": 41,
+        "lcpMs": 4986
+      },
+      "originalChunkRequestedInAllRuns": true,
+      "originalChunkRequestedInAnyRun": true
+    },
+    {
+      "target": "mounted",
+      "label": "Con Grainient montado",
+      "path": "/system?mount=grainient",
+      "factor": "desktop",
+      "runs": [
+        {
+          "performance": 54,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 1752,
+          "cls": 0,
+          "tbtMs": 2497,
+          "transferBytes": 167723,
+          "scriptBytes": 90319,
+          "requests": 16,
+          "originalChunkRequested": true
+        },
+        {
+          "performance": 62,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 1144,
+          "cls": 0,
+          "tbtMs": 1277,
+          "transferBytes": 167723,
+          "scriptBytes": 90319,
+          "requests": 16,
+          "originalChunkRequested": true
+        },
+        {
+          "performance": 62,
+          "accessibility": 100,
+          "bestPractices": 100,
+          "lcpMs": 1062,
+          "cls": 0,
+          "tbtMs": 1044,
+          "transferBytes": 167723,
+          "scriptBytes": 90319,
+          "requests": 16,
+          "originalChunkRequested": true
+        }
+      ],
+      "median": {
+        "performance": 62,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "lcpMs": 1144,
+        "cls": 0,
+        "tbtMs": 1277,
+        "transferBytes": 167723,
+        "scriptBytes": 90319,
+        "requests": 16
+      },
+      "representativeRun": {
+        "performance": 62,
+        "lcpMs": 1062
+      },
+      "originalChunkRequestedInAllRuns": true,
+      "originalChunkRequestedInAnyRun": true
+    }
+  ],
+  "gates": {
+    "accesibilidad >= 95 en las 12 corridas": "PASS",
+    "CLS <= 0.01 en las 6 corridas del baseline": "PASS",
+    "ningun chunk de original pedido en las 6 corridas del baseline": "PASS",
+    "chunk del original pedido en las 6 corridas con ?mount=grainient": "PASS"
+  },
+  "verdicts": {
+    "mobile baseline: performance mediana >= 90": {
+      "result": "PASS",
+      "value": 95
+    },
+    "mobile baseline: LCP mediano < 2000 ms": {
+      "result": "NO CUMPLE",
+      "value": 2236
+    }
+  },
+  "caveat": "Chromium headless renderiza WebGL por software (SwiftShader): el tiempo de hilo principal y el TBT salen exagerados. Hay que confirmarlo en una GPU real."
+}

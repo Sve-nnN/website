@@ -1,87 +1,57 @@
 import { notFound, permanentRedirect } from 'next/navigation'
+import { getTranslations } from 'next-intl/server'
 
-import type { Author, Category, Post } from '@/payload-types'
-import { Link } from '@/i18n/navigation'
+import type { Category } from '@/payload-types'
 import { JsonLd } from '@/components/JsonLd'
-import { Container } from '@/components/Container'
-import { PageHero } from '@/components/PageHero'
-import { Badge } from '@/components/ui/badge'
-import { AuthorByline } from '@/components/AuthorByline'
-import { AuthorCard } from '@/components/AuthorCard'
-import { RichTextRenderer } from '@/components/RichTextRenderer'
-import { buildRichTextConverters } from '@/components/richTextBlockConverters'
-import { AffiliateDisclosureFrame } from '@/components/AffiliateDisclosureFrame'
-import {
-  postHasAffiliateInline,
-  postHasAmazonAffiliateInline,
-} from '@/lib/post-affiliate-scan'
-import { RelatedPostsComponent } from '@/blocks/RelatedPosts/Component'
-import { TableOfContentsBlockComponent } from '@/blocks/TableOfContentsBlock/Component'
-import { getFallbackHeroImage } from '@/lib/heroImageFallback'
+import { PostView } from '@/components/pages/blog/PostView'
+import { buildHeadingIdMap, type LexicalRootLike } from '@/components/mui/rich-text/lexical-toc'
 import { buildOpenGraph } from '@/lib/og-image'
 import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
 import { buildBlogTrail, buildBreadcrumbJsonLd } from '@/lib/breadcrumbs'
 import { SITE_URL } from '@/lib/sitemap-data'
-import { getCachedPost, getCachedBlogPromo } from '@/lib/cache'
-import { estimateReadingTime, readingTimeLabel } from '@/lib/reading-time'
-import { splitContentForOffer } from '@/lib/lexical-split'
-import { resolveBlogPromo } from '@/lib/blog-promo'
-import { InlineOffer } from '@/components/InlineOffer'
-import { RailOffer } from '@/components/RailOffer'
-import { ReadingProgress } from '@/components/ReadingProgress'
-import { BlogClosing } from '@/components/BlogClosing'
+import { getCachedBlogPostList, getCachedBlogPromo, getCachedPost } from '@/lib/cache'
 import {
-  blogCategoryPath,
-  blogPostPath,
-  localizeBlogPath,
-  resolvePrimaryCategorySlug,
-} from '@/lib/blog-paths'
+  buildArticleJsonLd,
+  categoryItems,
+  pickPrevNext,
+  pickRelated,
+  toClosingProps,
+  toInlineOffer,
+  toPostViewProps,
+  toRailOffer,
+} from '@/lib/blog-data'
+import { resolveBlogPromo } from '@/lib/blog-promo'
+import { postHasAffiliateInline, postHasAmazonAffiliateInline } from '@/lib/post-affiliate-scan'
+import { splitContentForOffer } from '@/lib/lexical-split'
+import { blogPostPath, localizeBlogPath, resolvePrimaryCategorySlug } from '@/lib/blog-paths'
 import { personRef, SITE_PERSON_SLUG } from '@/lib/person'
 import { websiteRef } from '@/lib/site-schema'
 import { EN_TRANSLATION_INCOMPLETE, isEnTranslationIncomplete } from '@/lib/translation-gaps'
 
 // SEO-06: estas rutas servian `cache-control: no-store` y re-ejecutaban el SSR
-// completo en cada request. Venia de `force-dynamic`, que estaba por una razon
-// real: el build de Dokploy corre en un contenedor sin red hacia
-// shared-postgres, asi que cualquier prerender en `next build` falla.
-//
-// ISR resolvia las dos cosas: `generateStaticParams` devuelve una lista VACIA,
-// o sea que el build no renderiza ni una ruta y nunca toca la base;
+// completo en cada request. El build de Dokploy corre en un contenedor sin red
+// hacia shared-postgres, asi que ningun prerender puede tocar la base en
+// `next build`: `generateStaticParams` devuelve una lista VACIA y
 // `dynamicParams` (true por defecto) deja que cada URL se renderice en la
-// primera visita y quede en la cache incremental, y de ahi salen las
-// siguientes.
+// primera visita y quede en la cache incremental.
 //
-// [Phase 49-03] `export const revalidate` fijo ya NO es compatible con esta
-// pagina: desde que lee `searchParams` (Phase 49-02, para el estado
-// pending/already/error del EmailCaptureBlock), cualquier intento de Next de
-// generar la ruta estaticamente en el fallback ISR (primera visita a un path
-// no listado en generateStaticParams, con `isStaticGeneration=true`) revienta
-// con `DynamicServerError`/digest `DYNAMIC_SERVER_USAGE` en cuanto toca
-// `searchParams` — confirmado en produccion local (`node
-// .next/standalone/server.js`), no solo en teoria: la pagina devolvia 500 en
-// TODAS las rutas de post antes de este fix. La lectura de `searchParams` ya
-// fuerza render dinamico por si sola (clasificacion todo-o-nada de Next), asi
-// que declarar ademas un `revalidate` numerico es contradictorio, no
-// redundante. Se elimina el TTL; la frescura sigue dependiendo de
-// `revalidatePath` (src/lib/cache-tags.ts) en los hooks de contenido, que ya
-// era el mecanismo real (el TTL nunca fue mas que una red de seguridad, per
-// el comentario original). `getCachedPost()` sigue cacheando la lectura de
-// Postgres via `unstable_cache` sin importar la clasificacion de la ruta.
+// Historia (Phase 49-03): la pagina leia `searchParams` para el estado
+// pending/already/error del bloque de captura de email, y esa lectura en el
+// fallback ISR revento con `DynamicServerError` (500 en TODOS los posts). Se
+// resolvio con `force-dynamic`, que dejo el post sin cache y con TTFB de 1,6 a
+// 2 s (hallazgo F1 de la muestra de auditoria).
 //
-// Quitar solo `revalidate` NO alcanzo: con `generateStaticParams` devolviendo
-// una lista vacia y `dynamicParams` en su default (true), Next seguia
-// intentando tratar la primera visita a cada path como una generacion
-// estatica candidata a cachear (`isStaticGeneration=true` en esa pasada), y
-// leer `searchParams` ahi adentro sigue disparando el mismo
-// `DynamicServerError` sin importar que `revalidate` ya no exista
-// (confirmado: seguia devolviendo 500 tras quitar solo el TTL). `dynamic =
-// 'force-dynamic'` es la forma explicita de decirle a Next que esta ruta
-// nunca es candidata a generacion estatica/ISR — coincide ademas, mejor que
-// antes, con la garantia original del comentario de arriba (build de Dokploy
-// sin red hacia shared-postgres: con `force-dynamic` ninguna pagina de esta
-// ruta se toca durante `next build`, ni siquiera intenta).
-export const dynamic = 'force-dynamic'
+// Fase 57 (D-04 F1): la pagina ya NO lee `searchParams`. El estado lo lee en el
+// cliente `EmailCaptureState` (useSearchParams dentro de Suspense, ver
+// src/components/mui/rich-text/blocks.tsx), y el HTML del servidor es el mismo
+// con o sin `?subscribed=`. Por eso la ruta vuelve a ISR con el mismo
+// `revalidate` que el resto de rutas de contenido. NO volver a leer
+// `searchParams` aqui: con `revalidate` eso devuelve 500 en todos los posts
+// (Pitfall 4 de 57-RESEARCH.md). La frescura sigue dependiendo de
+// `revalidatePath` en los hooks de contenido (src/lib/cache-tags.ts) y los tags
+// de `unstable_cache` no cambian.
+export const revalidate = 60
 
 export function generateStaticParams(): Array<{ locale: string; category: string; slug: string }> {
   return []
@@ -151,12 +121,11 @@ export async function generateMetadata({
 
 export default async function PostPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string; category: string; slug: string }>
-  searchParams: Promise<{ subscribed?: string }>
 }) {
-  const [{ locale, category, slug }, { subscribed }] = await Promise.all([params, searchParams])
+  const { locale: rawLocale, category, slug } = await params
+  const locale = rawLocale as 'es' | 'en'
   const doc = await getPost(locale, slug)
 
   if (!doc) {
@@ -176,210 +145,85 @@ export default async function PostPage({
     )
   }
 
-  const author = typeof doc.author === 'object' ? (doc.author as Author) : undefined
   const categories = (doc.categories ?? []).filter(
     (c): c is Category => typeof c === 'object' && c !== null,
   )
-
-  const heroImage = typeof doc.heroImage === 'object' ? doc.heroImage : null
-  const heroImageUrl = heroImage?.url ?? getFallbackHeroImage(doc.slug ?? String(doc.id))
-
-  const readingTimeMinutes = estimateReadingTime(doc.content)
-
   const primaryCategory = categories[0]
 
-  // Los textos de conversión se resuelven contra la categoría primaria: es la
-  // que define la URL del post y también el problema con el que llegó el lector.
-  const promo = resolveBlogPromo(
-    await getCachedBlogPromo(locale as 'es' | 'en'),
-    primaryCategory?.id,
-  )
-  const body = splitContentForOffer(doc.content)
   const trail = buildBlogTrail(
-    locale as 'es' | 'en',
+    locale,
     { slug: primaryCategorySlug, title: primaryCategory?.title ?? primaryCategorySlug },
     { slug: doc.slug ?? slug, title: doc.title },
   )
 
-  // SEO-09. Every key below names a real Payload source. Anything without one is
-  // omitted rather than filled in — fabricated structured data is a Google
-  // Structured Data Guidelines violation, not a cosmetic gap. That is why there
-  // is no `publisher.logo` here: the repo has no real logo asset to point at.
-  //
-  // `mainEntityOfPage` and `image` must be absolute, so they go through
-  // SITE_URL. `heroImageUrl` can already be absolute (Cloudinary) or a root
-  // path (local/fallback), hence the conditional.
-  // MAIL-01: mismo path que `articleUrl` construye para el JSON-LD, extraído
-  // acá porque `buildRichTextConverters` (abajo) también lo necesita como
-  // `postPath` — la Server Action del bloque redirige de vuelta a esta misma
-  // URL con `?subscribed=...` tras el submit.
-  const localizedPostPath = localizeBlogPath(
-    locale as 'es' | 'en',
-    blogPostPath(primaryCategorySlug, doc.slug ?? slug),
-  )
-  const articleUrl = `${SITE_URL}${localizedPostPath}`
-  const articleImage = heroImageUrl.startsWith('http')
-    ? heroImageUrl
-    : `${SITE_URL}${heroImageUrl}`
+  // MAIL-01: ruta del post con prefijo de idioma. La Server Action del bloque
+  // email-capture redirige de vuelta a esta misma URL con `?subscribed=...`
+  // tras el envio (el estado se lee en el cliente, ver arriba), y el JSON-LD la
+  // usa como `mainEntityOfPage`.
+  const localizedPostPath = localizeBlogPath(locale, blogPostPath(primaryCategorySlug, doc.slug ?? slug))
 
-  // MAIL-01: factory por-request — el `email-capture` embebido en `doc.content`
-  // necesita leer `searchParams.subscribed` para mostrar el estado correcto
-  // tras el redirect de la Server Action. Construida una sola vez, pasada a
-  // AMBAS mitades del cuerpo (el bloque puede caer en cualquiera de las dos,
-  // ver `splitContentForOffer`).
-  const converters = buildRichTextConverters({ subscribedState: subscribed, postPath: localizedPostPath })
+  // Ids de encabezado: UN mapa sobre el contenido COMPLETO (Pitfall 2). Las dos
+  // mitades del cuerpo (la oferta inline va entre ellas) y el indice salen de
+  // aqui, asi que comparten numeracion y ningun id se repite.
+  const body = splitContentForOffer(doc.content)
+  const headingIds = buildHeadingIdMap(doc.content?.root as unknown as LexicalRootLike | undefined)
 
-  const articleData = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: doc.title,
-    // Previously emitted `""` on ES and `null` on EN. Omit instead.
-    ...(doc.excerpt ? { description: doc.excerpt } : {}),
-    datePublished: doc.publishedAt,
-    // Real Payload timestamp — deliberately NOT a copy of datePublished, which
-    // would assert a modification date the CMS never recorded.
-    ...(doc.updatedAt ? { dateModified: doc.updatedAt } : {}),
-    // SEO-03.3: cuando el autor es el dueno del sitio, el Article referencia
-    // el @id canonico en vez de repetir un Person suelto. Asi cada articulo
-    // suma al mismo nodo de entidad en lugar de crear uno nuevo por pagina.
-    ...(author?.name
-      ? {
-          author: {
-            '@type': 'Person',
-            name: author.name,
-            ...(author.slug === SITE_PERSON_SLUG ? personRef : {}),
-          },
-        }
-      : {}),
-    // Personal portfolio, not an organisation: the publisher IS the person.
-    publisher: { '@type': 'Person', name: 'Juan Carlos Angulo', url: SITE_URL },
-    mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
-    image: articleImage,
-    articleSection: primaryCategory?.title ?? primaryCategorySlug,
-    // SEO-48: ninguno de los 105 Article declaraba `inLanguage`. En un sitio
-    // bilingue donde cada articulo existe en dos URLs emparejadas por hreflang,
-    // es la senal de desambiguacion mas barata que hay: sin ella, lo unico que
-    // dice en que idioma esta el contenido es el `<html lang>`.
-    inLanguage: locale === 'en' ? 'en' : 'es',
-    isPartOf: websiteRef,
-  }
+  const t = await getTranslations({ locale, namespace: 'post' })
+  const view = toPostViewProps(doc, { locale, routeSlug: slug })
+
+  // Los textos de conversion se resuelven contra la categoria primaria: es la
+  // que define la URL del post y tambien el problema con el que llego el lector.
+  const promo = resolveBlogPromo(await getCachedBlogPromo(locale), primaryCategory?.id)
+
+  // Relacionados y anterior/siguiente salen de la lista ligera cacheada, que se
+  // lee con `overrideAccess: false` (un borrador no entra, T-55-42). La lectura
+  // lanza si falla y aqui se deja propagar (500): una lista vacia por un fallo
+  // transitorio se serviria sin relacionados con 200 durante el TTL.
+  const posts = await getCachedBlogPostList(locale)
+  const related = pickRelated(posts, {
+    slug: doc.slug ?? slug,
+    categorySlugs: categories.flatMap((c) => (c.slug ? [c.slug] : [])),
+  })
+  const prevNext = pickPrevNext(categoryItems(posts, primaryCategorySlug), doc.slug ?? slug)
+
+  // INL-02: el escaneo cubre `doc.content` ENTERO (no `body.before` ni
+  // `body.after`, recortados por splitContentForOffer): la divulgacion debe
+  // aparecer antes del cuerpo sin importar en que punto inserto el editor el
+  // bloque inline.
+  const disclosure = postHasAffiliateInline(doc.content)
+    ? { amazon: postHasAmazonAffiliateInline(doc.content) }
+    : null
+
+  // SEO-09. Cada clave nombra una fuente real de Payload; lo que no la tiene se
+  // omite (ver buildArticleJsonLd, extraido sin cambios).
+  const articleData = buildArticleJsonLd(doc, {
+    locale,
+    routeSlug: slug,
+    localizedPostPath,
+    categoryTitle: primaryCategory?.title ?? primaryCategorySlug,
+    refs: { siteUrl: SITE_URL, sitePersonSlug: SITE_PERSON_SLUG, personRef, websiteRef },
+  })
 
   return (
-    <main>
-      {/* POLISH: the hero used to stack a 21/9 image band ABOVE the copy, the
-          same shape a case study already moved away from — on a 1440x812
-          viewport it ate the whole fold and pushed the h1 below it. The image
-          is now the hero's scrimmed background and the page renders the shared
-          `detail` template, so post, case study and website heroes finally
-          agree. The category chips moved out of the slot above the title
-          (where they read as a kicker) into the metadata row. */}
-      <PageHero
-        variant="detail"
-        trail={trail}
-        title={doc.title}
-        image={{ url: heroImageUrl, alt: heroImage?.alt ?? doc.title }}
-        metaSlot={
-          <>
-            {author && <AuthorByline author={author} tone="dark" />}
-            <div className="text-label text-secondary-foreground/80">
-              {doc.publishedAt && (
-                <time dateTime={doc.publishedAt}>
-                  {new Date(doc.publishedAt).toLocaleDateString(locale)}
-                </time>
-              )}
-              {' · '}
-              {readingTimeLabel(readingTimeMinutes, locale as 'es' | 'en')}
-            </div>
-            {categories.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {categories.map((cat) => (
-                  <Link key={cat.id} href={blogCategoryPath(cat.slug ?? primaryCategorySlug)}>
-                    <Badge variant="onDark">{cat.title}</Badge>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </>
-        }
+    <>
+      <PostView
+        post={view}
+        crumbs={trail.map((c) => ({ label: c.label, href: c.url }))}
+        tocLabel={t('toc.label')}
+        progressLabel={t('progress.label')}
+        disclosure={disclosure}
+        inlineOffer={toInlineOffer(promo.inline, locale)}
+        railOffer={toRailOffer(promo.rail, locale)}
+        related={related}
+        prevNext={prevNext}
+        closing={toClosingProps(promo.closing, locale)}
+        before={body.before}
+        after={body.after}
+        headingIds={headingIds}
+        ctx={{ postPath: localizedPostPath }}
       />
-
-      {/* Mide el artículo, no la página: ver ReadingProgress. Va acá y no
-          dentro del Container para poder ocupar el ancho completo. */}
-      <ReadingProgress targetId="post-body" />
-
-      {/* INL-02: el escaneo cubre `doc.content` ENTERO (no `body.before`/
-          `body.after`, recortados por splitContentForOffer) — el disclosure
-          debe aparecer antes del cuerpo sin importar en qué punto del
-          artículo el editor insertó el bloque inline. */}
-      {postHasAffiliateInline(doc.content) && (
-        <Container className="py-4">
-          <AffiliateDisclosureFrame
-            hasAmazonLinks={postHasAmazonAffiliateInline(doc.content)}
-            locale={locale as 'es' | 'en'}
-          />
-        </Container>
-      )}
-
-      <Container className="py-8 grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_16rem] gap-12">
-        {/* Las dos mitades viven dentro del MISMO <article>: la tabla de
-            contenidos lee `article h2` del DOM, así que partirlo en dos
-            elementos le escondería la mitad de los encabezados. */}
-        <article id="post-body">
-          <RichTextRenderer data={body.before} converters={converters} />
-          {body.after && (
-            <>
-              <InlineOffer
-                title={promo.inline.title}
-                text={promo.inline.text}
-                linkLabel={promo.inline.linkLabel}
-                linkUrl={promo.inline.linkUrl}
-              />
-              <RichTextRenderer data={body.after} converters={converters} />
-            </>
-          )}
-        </article>
-        {/* La columna derecha es ahora un riel: índice arriba, oferta debajo.
-            El sticky vive acá y no en el índice, para que ambos suban y bajen
-            como una sola pieza; el bloque del índice se renderiza sin su
-            propio sticky para no anidar dos contextos que compiten. */}
-        <aside className="order-first flex flex-col md:order-last md:sticky md:top-24 md:self-start">
-          <TableOfContentsBlockComponent
-            blockType="tableOfContentsBlock"
-            title={locale === 'es' ? 'Tabla de contenidos' : 'Table of contents'}
-            position="left"
-            sticky={false}
-            minHeadingLevel="2"
-          />
-          <RailOffer
-            title={promo.rail.title}
-            body={promo.rail.body}
-            linkLabel={promo.rail.linkLabel}
-            linkUrl={promo.rail.linkUrl}
-          />
-        </aside>
-      </Container>
-
-      {author && (
-        <Container className="py-8">
-          <AuthorCard author={author} />
-        </Container>
-      )}
-
-      <RelatedPostsComponent
-        blockType="relatedPosts"
-        title={locale === 'es' ? 'Artículos relacionados' : 'Related Posts'}
-        autoSelect
-        limit={3}
-        currentPostId={doc.id}
-        currentCategoryIds={categories.map((c) => c.id)}
-      />
-
-      {/* Escalera de cierre: autor, relacionados, y recién ahí el pedido. El
-          lector ya recibió el artículo completo antes de que se le pida algo. */}
-      <BlogClosing locale={locale as 'es' | 'en'} categoryId={primaryCategory?.id} />
-
       <JsonLd data={articleData} />
       <JsonLd data={buildBreadcrumbJsonLd(trail)} />
-    </main>
+    </>
   )
 }

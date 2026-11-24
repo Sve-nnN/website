@@ -1,0 +1,243 @@
+{
+  "meta": {
+    "title": "Technical SEO Consultant | Juan Carlos Angulo",
+    "description": "I am a software engineer and technical SEO consultant: audits, web performance and Next.js/Payload architecture to rank your site on Google."
+  },
+  "a11y": {
+    "skip": "Skip to content",
+    "mainNav": "Main",
+    "langGroup": "Idioma / Language",
+    "esLabel": "ES, Español",
+    "enLabel": "EN, English",
+    "pause": "Pause animations",
+    "resume": "Resume animations",
+    "menu": "Menu",
+    "menuDialog": "Menú / Menu",
+    "blockedPaused": "Animations paused.",
+    "newTab": "Open {0} in a new tab"
+  },
+  "nav": { "servicios": "Services", "casos": "Case studies", "proceso": "Process", "testimonios": "Testimonials", "contacto": "Contact" },
+  "mnav": [
+    { "id": "servicios", "icon": "wrench", "label": "Services" },
+    { "id": "casos", "icon": "chart-line", "label": "Case studies" },
+    { "id": "proceso", "icon": "workflow", "label": "Process" },
+    { "id": "websites", "icon": "monitor", "label": "Websites" },
+    { "id": "sobre", "icon": "user", "label": "About me" },
+    { "id": "testimonios", "icon": "quote", "label": "Testimonials" },
+    { "id": "faq", "icon": "circle-question-mark", "label": "Questions" },
+    { "id": "contacto", "icon": "mail", "label": "Contact" }
+  ],
+  "cta": "Request a 360 audit",
+  "hero": {
+    "h1": [["I", "fix", "*SEO"], ["from", "the", "code"]],
+    "lede": "I am a software engineer and technical SEO consultant. I go into the code, fix what holds Google back on your site and measure the result in Search Console.",
+    "seeCases": "See case studies",
+    "scopeTitle": "360-audit",
+    "scope": [
+      { "icon": "search", "title": "Crawling", "sub": "robots, sitemap, links" },
+      { "icon": "file-search", "title": "Indexation", "sub": "canonical, noindex, hreflang" },
+      { "icon": "gauge", "title": "Core Web Vitals", "sub": "LCP, CLS, INP" },
+      { "icon": "code", "title": "Structured data", "sub": "schema.org JSON-LD" },
+      { "icon": "file-text", "title": "Content", "sub": "intent and duplicates" },
+      { "icon": "bot", "title": "AI SEO", "sub": "citations in ChatGPT and Perplexity" }
+    ],
+    "seal": "AUDIT + FIX + MEASURE + SHIP + AUDIT +"
+  },
+  "clients": {
+    "title": "Who I have worked with",
+    "lead": "Every name is a site I audited or built.",
+    "seo": "SEO projects",
+    "dev": "development projects"
+  },
+  "marquee": { "label": "Temas que trabajo / Topics I work on", "items": ["Core Web Vitals", "Next.js", "hreflang", "Payload CMS", "canonical", "LCP", "sitemap", "schema", "TTFB", "crawl budget", "GEO", "INP"] },
+  "medicion": {
+    "title": "Measurement before I touch the code",
+    "intro": "Four readings tell me where a site hurts. The bar on each one shows the range Google rates good, needs improvement and poor.",
+    "pending": "PENDING measurement",
+    "note": "The values in this strip are samples. They are not real measurements of any site.",
+    "legend": { "good": "Good", "mid": "Needs work", "bad": "Poor" },
+    "gauges": [
+      { "id": "lcp", "name": "LCP", "what": "How long the main element takes to paint", "value": 1.8, "dec": 1, "unit": " s", "pos": "36%", "g": "50%", "m": "80%", "thr": "Good: up to 2.5 s" },
+      { "id": "cls", "name": "CLS", "what": "How much the layout shifts while loading", "value": 0.05, "dec": 2, "unit": "", "pos": "10%", "g": "20%", "m": "50%", "thr": "Good: up to 0.1" },
+      { "id": "inp", "name": "INP", "what": "How long the page takes to respond to a tap", "value": 120, "dec": 0, "unit": " ms", "pos": "15%", "g": "25%", "m": "62.5%", "thr": "Good: up to 200 ms" },
+      { "id": "ttfb", "name": "TTFB", "what": "How long the server takes to send the first byte", "value": 0.4, "dec": 1, "unit": " s", "pos": "13%", "g": "27%", "m": "60%", "thr": "Good: up to 0.8 s" }
+    ]
+  },
+  "servicios": {
+    "title": "Technical SEO and development services",
+    "tecnico": { "title": "Technical SEO", "text": "I audit crawling, indexation and structured data. I start with what Googlebot sees and decide from there what to touch.", "chips": ["hreflang", "canonical", "sitemap", "schema"] },
+    "dev": { "title": "Next.js and Payload development", "text": "I build with Next.js and Payload CMS and settle the SEO from the first commit: routes, metadata, sitemap and structured data.", "layers": ["Next.js", "Payload CMS", "PostgreSQL", "Server"] },
+    "rows": [
+      { "title": "Infrastructure and servers", "text": "I configure the server, headers and cache. When TTFB goes up, the problem is almost always on the server.", "keys": "TTFB · headers · cache" },
+      { "title": "Web performance", "text": "I measure LCP, CLS and INP and go first after what weighs most: images, fonts and JavaScript.", "keys": "LCP · CLS · INP" },
+      { "title": "AI SEO and GEO", "text": "I structure content so ChatGPT, Perplexity and Google AI answers can cite it.", "keys": "ChatGPT · Perplexity · Google AI" }
+    ],
+    "audit": { "title": "360 Audit", "text": "I review crawling, indexation, Core Web Vitals, structured data, content and AI SEO in one report. You receive a plan ranked by impact, ready to apply, in 10 business days." }
+  },
+  "casos": {
+    "title": "Results in Search Console",
+    "yoy": "year over year clicks",
+    "items": [
+      { "sector": "Healthcare, urology", "value": 406, "title": "From near-zero visibility to a year of sustained growth for a urologist" },
+      { "sector": "Legal services, immigration", "value": 309, "title": "Quadrupling organic traffic for an immigration law firm in one year" },
+      { "sector": "Legal services, criminal defense", "value": 83, "title": "Scaling educational legal content to over 86 000 annual organic clicks" }
+    ],
+    "note": "Each figure compares one year of clicks against the previous year, over the same period, with Search Console data. I keep clients anonymous.",
+    "all": "See all case studies",
+    "allHref": "https://juan-tech.com/en/case-studies"
+  },
+  "proceso": {
+    "title": "My process from audit to measurement",
+    "steps": [
+      { "icon": "search", "title": "Audit", "text": "I review crawling, indexation, Core Web Vitals and structured data. I start from what Google sees today." },
+      { "icon": "list-ordered", "title": "Prioritize", "text": "I rank findings by the impact they have on traffic, no matter how many warnings each tool raises." },
+      { "icon": "wrench", "title": "Fix", "text": "I apply the change in the code or I leave the exact change for your team to apply." },
+      { "icon": "chart-line", "title": "Measure", "text": "I compare Search Console and real Core Web Vitals before and after." }
+    ]
+  },
+  "websites": {
+    "title": "Websites I built",
+    "pending": "PENDING",
+    "note": "Date and tool for each score.",
+    "all": "See all websites",
+    "allHref": "https://juan-tech.com/en/websites",
+    "items": [
+      { "id": "apturio", "host": "apturio.com", "name": "Apturio", "kind": "Software and SaaS", "score": 83, "alt": "Apturio home page, an AI CRM: dark background, headline and two buttons" },
+      { "id": "arianna", "host": "ariannalupi.com", "name": "Arianna Lupi", "kind": "Personal brand and coaching", "score": 73, "alt": "Arianna Lupi home page: introduction headline and portrait" },
+      { "id": "estylopia", "host": "estylopia.com", "name": "Estylopia", "kind": "Retail and personal styling", "score": 67, "alt": "Estylopia home page: welcome and explanation of the personal styling service" }
+    ]
+  },
+  "sobre": {
+    "title": "Software engineer who works on SEO",
+    "portrait": "PORTRAIT PENDING",
+    "portraitSub": "Loaded from Media",
+    "p1": "I work on SEO from the code. I build with Next.js and a headless CMS like Payload, I settle SEO from the first commit and I audit before I build.",
+    "p2": "I care about accessibility and mobile-first design. I work in Spanish and English.",
+    "chips": [
+      { "icon": "scan-search", "label": "Technical SEO" },
+      { "icon": "gauge", "label": "Web performance" },
+      { "icon": "server", "label": "Infrastructure" },
+      { "icon": "layers", "label": "Scalable architecture" },
+      { "icon": "users", "label": "Accessibility" }
+    ]
+  },
+  "testimonios": {
+    "title": "Clients who worked with me",
+    "previewGroup": "Vista de maqueta: cantidad de testimonios / Mockup view: number of testimonials",
+    "preview": "Preview with",
+    "quote": "Working with Juan was the best.",
+    "who": "Patricia Ibarra",
+    "role": "CEO of Estylopia",
+    "stamp": "Testimonial pending, mockup example",
+    "role0": "Role",
+    "company0": "company",
+    "pending": "PENDING",
+    "note": "Only one quote is real. The other cards are sample slots to show how the section scales. The English translation of the real quote is provisional and still needs the client's confirmation."
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "items": [
+      { "icon": "file-search", "q": "What does the 360 Audit include?", "a": "I review crawling, indexation, Core Web Vitals, structured data, content and AI SEO. I deliver a fix plan ranked by impact." },
+      { "icon": "clock", "q": "What do I receive and how long does it take?", "a": "You receive a report with the fix plan ranked by impact, and I deliver it in 10 business days. Write to me and I tell you how I adapt it to the size of your site." },
+      { "icon": "users", "q": "Do you work with my development team?", "a": "Yes. I fix the code myself or I leave the exact change for your team to apply." },
+      { "icon": "chart-line", "q": "How do I measure the success of the optimizations?", "a": "I compare Search Console and real Core Web Vitals before and after. The figures in the cases come from there." },
+      { "icon": "globe", "q": "Which languages do you work in?", "a": "I work in Spanish and English. I audit, write and build in both languages." }
+    ]
+  },
+  "contacto": {
+    "title": "Let's talk about your site",
+    "text": "Got a project in mind? Tell me about it and I start by looking at what Google sees today.",
+    "email": "hello@juan-tech.com",
+    "pending": "PENDING",
+    "note": "Real response time.",
+    "name": "Name",
+    "mail": "Email",
+    "message": "Message",
+    "send": "Send message",
+    "missing": "Some fields are empty. Fill in name, email and message so I can reply.",
+    "mock": "This form is a mockup, it sends nothing."
+  },
+  "footer": {
+    "ctaTitle": "360 Audit of your site",
+    "ctaText": "I review crawling, indexation, Core Web Vitals, structured data, content and AI SEO. You receive a plan ranked by impact.",
+    "dirLabel": "Directorio del sitio / Site directory",
+    "columns": [
+      {
+        "icon": "newspaper",
+        "title": "Blog articles",
+        "items": [
+          { "label": "Headless CMS SEO: Complete Guide for Better Search Visibility", "href": "https://juan-tech.com/en/blog/tech-seo/headless-cms-seo" },
+          { "label": "Payload CMS: A Modern Solution for Content Management", "href": "https://juan-tech.com/en/blog/development/payload-cms-guide" },
+          { "label": "Core Web Vitals Guide 2026: Optimizing LCP, CLS, and INP", "href": "https://juan-tech.com/en/blog/tech-seo/core-web-vitals-guide" },
+          { "label": "JavaScript SEO Best Practices", "href": "https://juan-tech.com/en/blog/tech-seo/javascript-seo" },
+          { "label": "SEO Cannibalization", "href": "https://juan-tech.com/en/blog/seo/canibalizacion-seo" }
+        ],
+        "all": { "label": "See the whole blog", "href": "https://juan-tech.com/en/blog" }
+      },
+      {
+        "icon": "tag",
+        "title": "Blog categories",
+        "items": [
+          { "icon": "scan-search", "label": "Technical SEO", "href": "https://juan-tech.com/en/blog/tech-seo" },
+          { "icon": "compass", "label": "SEO Strategy", "href": "https://juan-tech.com/en/blog/seo" },
+          { "icon": "code", "label": "Development", "href": "https://juan-tech.com/en/blog/development" },
+          { "icon": "cpu", "label": "CS Fundamentals", "href": "https://juan-tech.com/en/blog/cs-fundamentals" }
+        ]
+      },
+      {
+        "icon": "wrench",
+        "title": "Services",
+        "items": [
+          { "icon": "clipboard-check", "label": "Technical SEO audit", "href": "https://juan-tech.com/en/services/seo-technical-audit" },
+          { "icon": "telescope", "label": "SEO consulting", "href": "https://juan-tech.com/en/services/seo-consulting" },
+          { "icon": "code", "label": "Full-stack development", "href": "https://juan-tech.com/en/services/fullstack-development" },
+          { "icon": "bot", "label": "AI SEO and GEO", "href": "https://juan-tech.com/en/services/ai-seo-geo" }
+        ],
+        "all": { "label": "All services", "href": "https://juan-tech.com/en/services" }
+      },
+      {
+        "icon": "briefcase",
+        "title": "Case studies",
+        "items": [
+          { "icon": "rocket", "label": "Migrating to Next.js without losing organic traffic", "href": "https://juan-tech.com/en/case-studies/migracion-ecommerce-nextjs-seo-tecnico" },
+          { "icon": "chart-line", "label": "Doubling organic traffic for a kids' financial-literacy platform", "href": "https://juan-tech.com/en/case-studies/edtech-financiera-infantil-crecimiento-organico-seo" },
+          { "icon": "layers", "label": "More than doubling organic traffic for an artisan hydraulic tile maker", "href": "https://juan-tech.com/en/case-studies/fabricante-baldosa-hidraulica-seo-espana" }
+        ],
+        "all": { "label": "See all case studies", "href": "https://juan-tech.com/en/case-studies" }
+      },
+      {
+        "icon": "compass",
+        "title": "Site pages",
+        "two": true,
+        "items": [
+          { "icon": "wrench", "label": "Services", "href": "https://juan-tech.com/en/services" },
+          { "icon": "briefcase", "label": "Case studies", "href": "https://juan-tech.com/en/case-studies" },
+          { "icon": "monitor", "label": "Websites", "href": "https://juan-tech.com/en/websites" },
+          { "icon": "layers", "label": "Stack", "href": "https://juan-tech.com/en/stack" },
+          { "icon": "user", "label": "About me", "href": "https://juan-tech.com/en/authors/juan-carlos-angulo" },
+          { "icon": "mail", "label": "Contact", "href": "https://juan-tech.com/en/contact" },
+          { "icon": "search", "label": "Search", "href": "https://juan-tech.com/en/search" },
+          { "icon": "lock", "label": "Privacy", "href": "https://juan-tech.com/en/privacy" },
+          { "icon": "scroll-text", "label": "Terms", "href": "https://juan-tech.com/en/terms" }
+        ]
+      },
+      {
+        "icon": "network",
+        "title": "For machines and networks",
+        "items": [
+          { "icon": "rss", "label": "Sitemap XML", "href": "https://juan-tech.com/sitemap.xml" },
+          { "icon": "link", "label": "LinkedIn", "href": "https://linkedin.com/in/juancangulo" }
+        ]
+      }
+    ],
+    "copy": "Software engineer and technical SEO consultant. © 2026 Juan Carlos Angulo. All rights reserved.",
+    "top": "Back to top"
+  },
+  "palette": {
+    "button": "Test palette",
+    "group": "Paleta de prueba / Test palette",
+    "iconOnly": "Icon only",
+    "hide": "Hide selector",
+    "restore": "To bring it back, add ?selector=1 to the address."
+  }
+}

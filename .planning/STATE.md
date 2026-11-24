@@ -1,44 +1,44 @@
 ---
 gsd_state_version: "1.0"
-milestone: v2.1
-current_phase: 50
-current_phase_name: Gate de Cierre de Monetización
+milestone: v2.4
+milestone_name: Rediseño MUI en producción
+current_phase: 6
+current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: planning
-stopped_at: "Completado 50-03-PLAN.md -- Phase 50 cerrada, milestone v2.1 tecnicamente cerrado (MILESTONE GATE: PASS)"
-last_updated: "2026-09-10T18:15:21.405Z"
-last_activity: 2026-09-10
-last_activity_desc: "Phase 50 (Gate de Cierre de Monetizacion) cerrada 3/3: GATE-01 re-medido contra baseline Phase 45 (CLS 0.00 y JS-cliente 0KB limpios, salvedad de medicion documentada en performance/TBT por contencion de CPU); GATE-02 crawl real de afiliacion (sponsored/disclosure/go-route/overrideAccess) PASS limpio. 50-03 sintetizo ambos veredictos en 50-REGRESSION-DIFF.md: MILESTONE GATE: PASS. REQUIREMENTS.md actualizado (GATE-01/GATE-02 Complete). Hallazgo critico pendiente: docs/seo-handoff sigue sin mergear a master (Dokploy solo despliega desde master), asi que el milestone v2.1 esta tecnicamente cerrado pero no desplegado en juan-tech.com todavia."
-state_head: ab0cbff54b336b7375bff3b940fc8a4b35f6d013
+stopped_at: Completed 57-10-PLAN.md; 57-11 en curso (fecha legal, merge, deploy)
+last_updated: "2026-11-24T14:05:34.867Z"
+last_activity: 2026-11-10
+last_activity_desc: Phase 55 complete, transitioned to Phase 6
+state_head: 243cd2e58c1324e00349dd6e5eba508250e1f875
 progress:
-  total_phases: 51
-  completed_phases: 7
-  total_plans: 19
-  completed_plans: 18
-milestone_name: Monetizacion del Sitio - Research + Fundaciones
+  total_phases: 5
+  completed_phases: 3
+  total_plans: 61
+  completed_plans: 59
+  percent: 60
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-07-31)
+See: .planning/PROJECT.md (updated 2026-11-06)
 
 **Core value:** El sitio debe demostrar de forma tangible la pericia de Juan como ingeniero de software y experto SEO — tanto en contenido como en ejecución técnica (rendimiento y SEO impecables).
-**Current focus:** Phase 50 — Gate de Cierre de Monetización (milestone v2.1, Phases 44-50) — CERRADA, milestone v2.1 tecnicamente completo
+**Current focus:** Phase 55 — Casos, websites, blog y autores
 
 ## Current Position
 
-Phase: 50 — Gate de Cierre de Monetización (Phase 49 cerrada 2026-09-08; Phase 48 y 48.5 cerradas; Phase 47 cerrada 2026-09-04; Phase 46 cerrada; Phase 45 cerrada 2026-09-03; Phase 44 cerrada 2026-08-30) — **Phase 50 cerrada (3/3 plans), milestone v2.1 (Phases 44-50) tecnicamente cerrado**
-Plan: 50-03 — completo (sintesis final de GATE-01 + GATE-02 en `50-REGRESSION-DIFF.md`: **MILESTONE GATE: PASS**; REQUIREMENTS.md actualizado con GATE-01/GATE-02 marcados Complete; Task 3 checkpoint saltado por no haber FAIL)
-Status: 50-03 verificado de punta a punta. Task 1: leidos `50-gate01-findings.md` y `50-gate02-findings.md` completos, veredicto explicito por cada uno de los 4 Success Criteria del ROADMAP Phase 50 (perf/CWV/CLS/JS-cliente PASS con salvedad de medicion por contencion de CPU; sponsored/disclosure/go-route PASS limpio; paridad de locales PASS limpio; overrideAccess/exclusion de colecciones PASS limpio) -- `50-REGRESSION-DIFF.md` con `MILESTONE GATE: PASS`. Task 2: `Edit` (no `Write`) sobre REQUIREMENTS.md, GATE-01 pasado de Pending/`[ ]` a Complete/`[x]` (GATE-02 ya estaba Complete de una edicion previa); `50-FAIL-CHECKPOINT.md` no se creo, confirmando la rama PASS. Hallazgo critico propagado y no resuelto en esta fase: `docs/seo-handoff` sigue 106-110 commits por delante de `master`, Dokploy solo despliega desde `master`, asi que ninguna superficie de Phases 46-49 (`/stack`, `/go/*`, disclosure, AuditorHighlight, EmailCaptureBlock) esta hoy en `juan-tech.com` -- el gate certifica el codigo, no el deploy real. Siguiente paso operativo fuera de esta fase: mergear `docs/seo-handoff` a `master` para que Dokploy despliegue el milestone completo.
-Last activity: 2026-09-10 — Phase 50 Plan 03 ejecutado y verificado; Phase 50 cerrada; milestone v2.1 tecnicamente cerrado (deploy real pendiente).
-Previa: Phase 50 Plan 02 completo 2026-09-10 (GATE-02 PASS: crawl real de afiliacion sobre HTML servido por build local contra Postgres real de Dokploy via tunel SSH, porque el codigo del milestone no esta desplegado a `master` todavia).
+Phase: 6 — deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-11-10 — Phase 55 complete, transitioned to Phase 6
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 15
+- Total plans completed: 50
 - Average duration: - min
 - Total execution time: 0 hours
 
@@ -48,6 +48,9 @@ Previa: Phase 50 Plan 02 completo 2026-09-10 (GATE-02 PASS: crawl real de afilia
 |-------|-------|-------|----------|
 | 01 | 10 | - | - |
 | 02 | 5 | - | - |
+| 53 | 6 | - | - |
+| 54 | 16 | - | - |
+| 55 | 13 | - | - |
 
 **Recent Trend:**
 
@@ -141,6 +144,40 @@ Previa: Phase 50 Plan 02 completo 2026-09-10 (GATE-02 PASS: crawl real de afilia
 | Phase 49 P02 | 62min | 2 tasks | 11 files |
 | Phase 49 P03 | 75min | 2 tasks | 4 files |
 | Phase 50 P02 | 120min | 3 tasks | 2 files |
+| Phase 52 P06 | ~2h | 3 tasks | 19 files |
+| Phase 52 P07 | 105m | 2 tasks | 19 files |
+| Phase 53 P01 | 40min | 3 tasks | 12 files |
+| Phase 53 P02 | 30min | 3 tasks | 14 files |
+| Phase 53 P03 | 25min | 4 tasks | 14 files |
+| Phase 53 P04 | 20min | 2 tasks | 8 files |
+| Phase 53 P05 | 30min | 2 tasks | 29 files |
+| Phase 54 P01 | 42min | 3 tasks | 12 files |
+| Phase 54 P02 | 17min | 3 tasks | 13 files |
+| Phase 54 P03 | 25min | 2 tasks | 4 files |
+| Phase 54 P04 | 25min | 3 tasks | 8 files |
+| Phase 54 P05 | 15min | 3 tasks | 10 files |
+| Phase 54 P06 | 35min | 3 tasks | 13 files |
+| Phase 54 P07 | tareas 2-3: ~25min | 3 tasks | 3 files |
+| Phase 54 P08 | 50min | 3 tasks | 11 files |
+| Phase 54 P09 | 45min | 3 tasks | 16 files |
+| Phase 54 P10 | 25min | 2 tasks | 4 files |
+| Phase 54 P11 | 20min | 2 tasks | 4 files |
+| Phase 54 P12 | 55min | 3 tasks | 13 files |
+| Phase 54 P13 | 14min | 3 tasks | 8 files |
+| Phase 54 P14 | 95min | 3 tasks | 14 files |
+| Phase 54 P15 | 50min | 3 tasks | 15 files |
+| Phase 54 P16 | 120min | 3 tasks | 14 files |
+| Phase 55 P01 | 25min | 3 tasks | 12 files |
+| Phase 55 P06 | 55min | 3 tasks | 2 files |
+| Phase 55 P09 | 55min | 3 tasks | 12 files |
+| Phase 55 P10 | 80min | 3 tasks | 17 files |
+| Phase 55 P11 | 95min | 3 tasks | 17 files |
+| Phase 55 P13 | 32min | 3 tasks | 2 files |
+| Phase 56 P01 | 12min | 3 tasks | 12 files |
+| Phase 57 P07 | ~1h | 3 tasks | 105 files |
+| Phase 57 P08 | ~3h50m | 3 tasks | 12 files |
+| Phase 57 P09 | 3 sesiones | 3 tasks | 4 files |
+| Phase 57 P10 | 20 min | 3 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -149,6 +186,7 @@ Previa: Phase 50 Plan 02 completo 2026-09-10 (GATE-02 PASS: crawl real de afilia
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- [Milestone v2.3]: Roadmap: 5 fases (51-55) derivadas de los 17 requirements (SYS-01..05, HOME-01..04, PERF-01..04, PAGE-01..04), continuando la numeración desde Phase 50 (v2.1). v2.2 (Productos Digitales y Tienda Polar) queda en cola sin fases y no se renumera. Orden por dependencia real: Phase 51 (sistema visual, SYS) primero porque tokens, componentes y fallbacks son la base de todo mockup; Phase 52 (home + PERF-01..04) establece el presupuesto de performance y accesibilidad sobre la primera página y cierra con un gate humano explícito: Juan aprueba o da feedback antes de que arranquen las Phases 53-55. Phases 53 (PAGE-01), 54 (PAGE-02) y 55 (PAGE-03, PAGE-04) agrupan familias de páginas por afinidad de plantilla y solo dependen de la aprobación de Phase 52, no entre sí. PERF-01..04 se mapean a Phase 52 donde se establecen y miden, y las Phases 53-55 los heredan como criterio de aceptación por página. Granularity=coarse sugiere 2-4 fases; se mantienen 5 por pedido explícito de Juan y porque el gate humano en la home es una frontera real de entrega. Restricción dura repetida en cada goal: solo HTML estático bajo `designs/redesign-v3/`.
 - [Milestone v2.1]: Roadmap: 6 fases nuevas (44-49), continuando la numeración desde Phase 43 (v2.0). No se tocan ni se renumeran Phase 6 (Deploy + Cutover), Phase 37 ni las Phases 29-31 — las tres siguen pausadas. Los 9 pasos conceptuales que adjudicó `research/SUMMARY.md` ("Resolved Conflicts" #3: BASELINE → DECIDE → LEGAL → LINK-SCHEMA → GO-ROUTE → STACK-PAGE → LEXICAL-INLINE → EMAIL → GATE) se comprimen a 6 fases por granularity=coarse, con 3 merges justificados y 4 boundaries respetados. Merges: (1) DEC entra en la fase de BASELINE (Phase 44) porque ambas son medición/documentación con cero cambio renderizado, y porque el número de tráfico real de BASE-03 es literalmente el parámetro `V` del modelo de ingresos de DEC-02 y el umbral que ordena las postulaciones de DEC-04 — separarlas obligaría a abrir Search Console dos veces; (2) LEGAL entra con LINK-SCHEMA (Phase 45) porque son la misma clase de trabajo, la capa que el CMS no puede editar (disclosure en `messages/{es,en}.json`, `rel` emitido desde código, matriz de localización congelada), y porque la mitad legal aporta cero DDL: la migración de `affiliate-links` sigue siendo la única de la fase y se lee en aislamiento contra Neon; el trabajo legal se completa primero dentro de la fase para desbloquear la reactivación de Amazon y la postulación a Kinsta, que exigen el disclosure publicado; (3) LEXICAL-INLINE entra con STACK-PAGE (Phase 47) porque son la misma UI sobre dos superficies (mismo leaf `AffiliateLink`, mismo `AffiliateDisclosure`) y la parte inline no toca schema — construirlas separadas es exactamente cómo se cuela un anchor sin `sponsored`. Boundaries respetados sin excepción: Phase 44 (baseline) es la primera y nada renderizado cambia antes; Phase 45 es la única fase que reshapea schema de afiliados y su migración se lee sola; Phase 46 aísla el fix de una línea del matcher de middleware (GO-02, radio de impacto sitewide, defecto confirmado por 2 investigadores independientes: hoy `/go/*` entra al matcher y devolvería 404 en cada clic) para curl-verificarlo contra rutas control antes de que exista UI que emita hrefs `/go/`; Phase 49 (gate) es la última y compara contra el baseline de Phase 44. EMAIL (Phase 48) queda penúltima por factibilidad y no por valor: `RESEND_API_KEY` sigue siendo placeholder (misma credencial que bloquea Phase 6) y su bloqueo real es contenido que Juan debe escribir (el lead magnet). Constraints duras propagadas a las fases: links de Amazon directos y sin cloaking (Program Policies 2026-04-14 prohíben Redirecting Links; `/go/` solo para no-Amazon); matriz de localización de `affiliate-links` congelada y aprobada ANTES de cargar contenido (retrofittear `localized: true` sobre columna poblada es la forma exacta del incidente del 2026-07-12); `rel="sponsored nofollow noopener"` estructural desde código, nunca campo editable; `/stack` fuera del nav principal en v2.1 y con segmento único compartido en ambos locales (confirmado por Juan); cero tracking que dispare consentimiento y ≤5 KB de JS de cliente agregado.
 - [Milestone v1.9]: Roadmap: 3 fases nuevas (38-40), continuando la numeración desde Phase 37 (que queda en cola, no se toca ni renumera — tiene CONTEXT.md/UI-SPEC.md ya aprobados para v1.8, retoma cuando v1.9 cierre). Estructura sigue directamente la recomendación de `research/SUMMARY-v1.9.md`: Phase 38 (schema `Websites`, WEB-01..05) primero porque todo lo demás depende de que el schema exista con las cardinalidades/fechas correctas — más barato de arreglar aquí que con contenido real ya cargado; Phase 39 (componentes/rutas de frontend, WEB-06..11) porque necesita el schema ya existente antes de poder consultarlo; Phase 40 (poblado de contenido real, WEB-12..16) va última para que el poblado interactivo con Juan (stack sitio por sitio) y la captura de screenshots/Lighthouse apunten a una UI que ya renderiza, permitiendo verificación visual inmediata de cada doc. Nota de ejecución explícita en Phase 40: Juan quiere que se le pregunte el stack de cada uno de los 6 sitios al momento de montarlos, no asumir todo de una vez; Lighthouse/screenshots son captura manual puntual, nunca en vivo/recurrente (viola el límite arquitectónico "sin SEO tooling en vivo" del proyecto) — de ahí el campo `lighthouseCapturedAt` obligatorio desde Phase 38. Granularity=coarse per config.json, 3 fases mantiene el milestone lean.
 - [Milestone v1.8]: Roadmap: 1 fase nueva (Phase 37), continuando la numeración desde Phase 36. Los 6 requirements (CASE-01..06) son un solo bug-fix de contenido coherente sobre los mismos 6 docs — auditoría, fix bilingüe, anonimización, fetch de datos GSC reales y verificación con JSON crudo son todos pasos de la misma unidad de trabajo, no fases separadas (granularity=coarse, milestone acotado). Nota de riesgo de ejecución explícita en la fase: un intento previo de Local API scripting falló en silencio en el shell de Juan — el plan debe verificar output real antes de confiar en cualquier script y devolver JSON crudo completo para verificación manual, no un resumen.
@@ -292,6 +330,31 @@ Recent decisions affecting current work:
 - [Phase 49]: [Phase 49] 49-03: revalidate=60 fijo + lectura incondicional de searchParams -> DYNAMIC_SERVER_USAGE, 500 real en todas las rutas de post en produccion; corregido con dynamic='force-dynamic' explicito
 - [Phase 49]: [Phase 50-02] GATE-02: PASS (5/5 aserciones) verificado sobre HTML real y grep de codigo. Hallazgo critico: codigo de Phases 46-49 (rama docs/seo-handoff) nunca se desplego a produccion -- 106 commits por delante de master, Dokploy solo construye desde master. Crawl hecho contra next build+start local tunelado a la Postgres real de Dokploy (mismo patron ya usado en Phase 48.5-03). Registrado en WINDOWS.md id 9 para visibilidad en /gsd:ship.
 - [Phase 50]: [Phase 50]: 50-03 sintetizo GATE-01 (PASS con salvedad de medicion por contencion de CPU, CLS 0.00 y JS-cliente 0KB limpios) y GATE-02 (PASS limpio) en MILESTONE GATE: PASS -- REQUIREMENTS.md cerrado (GATE-01/GATE-02 Complete); milestone v2.1 tecnicamente cerrado pero docs/seo-handoff sigue sin mergear a master, asi que el deploy real a juan-tech.com queda como accion pendiente fuera de esta fase
+- [Phase 52-06]: El montaje de una banda de efecto se detecta con data-mounted="true" (Dither) o la clase .is-on (Halftone): el DOM v4 no pone data-mounted en el halftone
+- [Phase 52-06]: El cupo de efectos (D-08) se mide sobre el motor pesado (div[data-fx] canvas); Noise, StarBorder y SpotlightCard son acentos decorativos fuera del presupuesto y Noise sobrevive a reduced-motion por diseno (staticFxOk)
+- [Phase 52-06]: Isolation valida la base por hash explicito (cat-file + rev-parse HEAD != BASE + merge-base --is-ancestor), nunca por asunto ni git log -n 1
+- [Phase 52-06]: Cada excepcion a un chequeo vive en una constante nombrada (SAME_ALLOWED, ALLOW, S6_EXEMPT, S7_LOG_EXEMPT) y se documenta; nunca se borra un chequeo ni se baja un umbral
+- [Phase 52]: La medicion final se corre sobre un resumen limpio (sin fusion de buildSha256 previo) y ninguna palanca L1-L4 se aplico
+- [Phase 52]: TBT y LCP de desktop son informativos (SwiftShader) y se confirman en la GPU real de Juan (D-11)
+- [Phase 52]: El runner --final-shots se implemento y el chequeo d2 del tracer se corrigio para el pivote v4 (desviaciones Rule 3 y Rule 1)
+- [Phase 53]: Phase 53-01: capas CSS con plugin PostCSS (@layer tailwind, mui) en vez de receta Tailwind v4; Next se queda en 15.4.11
+- [Phase 53]: 53-05: el layout posee el unico main#main-content; las 22 paginas usan div. Etiqueta del toggle de movimiento constante, estado solo en aria-pressed
+- [Phase 6]: 54-01: la 404 de URL sin ruta usa global-not-found (experimental.globalNotFound) y SiteDocument compartido, porque en Next 15.4 un notFound() de pagina o catch-all no trae shell en el HTML
+- [Phase 6]: 54-01: un not-found de segmento no puede leer headers (getLocale ni getTranslations sin locale): las paginas con ISR responden 500
+- [Phase 6]: 54-02: globals home-page y about-page privados (sin access ni versions), fetchers con isFallback; tablas del bloque toolStack son groups_tools y _groups_v_tools
+- [Phase 6]: 54-03: namespaces de interfaz de la fase en es y en con guardia de paridad (54-messages-parity.mjs) y arnes de render (54-ssr-harness.ts); search.errorHeading exento de la regla de encabezados por ser una oracion existente
+- [Phase 54-04]: los scripts de siembra 20, 21 y 22 abortan antes de cargar Payload ante base equivocada, falta de credenciales de Cloudinary o falta de --alts-confirmed; en el script 22 el ES se omite si tras escribir EN ya muestra los logos (logo no es campo localizado)
+- [Phase 6]: 54-13: @mui/lab 9.0.0-beta.10 instalado con version exacta tras aprobacion delegada del checkpoint; Sobre mi vive en un global y su enlace de nav solo existe con isPreviewReadonly()
+- [Phase 6]: 54-14: HomeData gana sectionsB; el enlace de SiteCard va a /websites/<slug>; los verificadores de la fase 48 se retiran en el corte de la fase 57
+- [Phase 6]: 54-15: el inlineStat de Madrid tambien es un marcador y no pinta aside; los botones del hero de las landings locales se conservan como LocalHeroActions; el contrato 54-dual-urls.mjs ya pasa contra produccion como linea base
+- [Phase 6]: 55-09: lecciones de casos ocultas sin datos; comparativos de clics calculados en el servidor desde results.metrics (sin dato nuevo)
+- [Phase 57]: 57-07: el lock se regenera con npm 10.9.2 (el del VPS), no con npm 11 local; recharts queda pendiente de decision
+- [Phase 57]: 57-08: el rollback por imagen de Dokploy no sirve (rollbackActive false en web); la via es git revert -m 1 del merge commit; /blog/confirm responde 500 en el preview y vuelve a 57-07
+- [Phase 57]: 57-09: la fecha efectiva legal es el dia del merge (Juan: 'Hoy, 2026-11-24'); 57-11 se detiene y avisa si el merge cae otro dia
+- [Phase 57]: 57-09: el alt EN del Media p54-about-hero se escribe de forma aditiva en el paso del cargador (57-10 o 57-12), no antes
+- [Phase 57]: 57-09: diferencias de palabras de /blog/general aceptadas por Juan; T-55-15 corre tras el corte
+- [Phase 57]: 57-09: CAL-01 (revision humana) diferida por Juan a produccion tras el corte; sigue abierto, no cumplido
+- [Phase 57]: 57-10: respaldo verificado de juantech (sin respaldo nativo en Dokploy) y GO-02 confirmado por Juan el 2026-11-24, merge commit ejecutado por Claude
 
 ### Pending Todos
 
@@ -330,6 +393,12 @@ None yet.
 | 260814-sw0 | Wiring de GSD para los 11 issues de la auditoría SEO 2026-08 (issues #1-#11 en `Sve-nnN/website`, baseline en #12). Tres scripts nuevos bajo `scripts/seo/`, cero cambios en código de la app: `validate.sh` (un validador por issue contra el sitio en vivo, exit 1 si falla), `validate-a11y.py` (los 3 audits de accesibilidad del #10 + resumen de performance del #6 sobre reportes de unlighthouse) e `issue.sh` (`prompt`/`start`/`pr`/`close`/`status`). El gate real es `close`, que se niega a cerrar en rojo y deja la salida como comentario del issue. Probado contra producción: da rojo en los 11 defectos conocidos con conteos idénticos al baseline (14/14/10/10 placeholders) y verde en los 3 checks de regresión de hreflang. Bug encontrado y corregido en el propio validador: `grep -oc` cuenta líneas y no ocurrencias, reportaba 1 donde el baseline decía 14 — habría pasado a verde con un placeholder suelto. `--full` reservado a #5 (borrado irreversible, necesita GSC) y #6 (fuentes + middleware + next.config a la vez) | 2026-08-14 | | Complete | [260814-sw0-wire-gsd-for-seo-audit-issues](./quick/260814-sw0-wire-gsd-for-seo-audit-issues/) |
 | 260713-2q2 | React Doctor remaining findings by priority (44 of 68): unsafe-json-in-html (verified false positive, hardened doc + regression script), server-auth-actions (false positive on auth premise, added real per-IP rate limit to public contact action), 19 no-array-index-as-key sites fixed with stable Payload ids, 7 next/image fill sites given layout-correct `sizes`, 2 sequential-await sites parallelized, 6 performance findings (Intl hoisting, flatMap, hydration flicker, async-in-loop), 1 a11y autofocus removed, 7 maintainability findings (variant exports split, inline styles hoisted, RenderBlocks/Section circular dep broken via next/dynamic). New server-no-mutable-module-state finding from the rate limiter documented as false positive (persistent Node/PM2 process, not serverless) | 2026-07-13 | d892077 | Verified | [260713-2q2-fix-remaining-react-doctor-findings-by-p](./quick/260713-2q2-fix-remaining-react-doctor-findings-by-p/) |
 
+### Roadmap Evolution
+
+- Phase 51.1 inserted after Phase 51: Entorno React de mockups con componentes originales de React Bits (pedido de Juan: ver los componentes tal cual)
+- 2026-11-06: v2.3 reemplazado por v2.4 (sandbox MUI aprobado). Fases 51, 51.1 y 52 archivadas; las 53 a 55 de v2.3 nunca se crearon y los números 53 a 57 pasan a v2.4
+- 2026-11-06: v2.4 define 5 fases: 53 base, 54 páginas de conversión y utilidad, 55 casos/websites/blog/autores, 56 contenido pendiente de Juan (paralela, bloquea solo el corte), 57 gate de calidad y corte
+
 ## Deferred Items
 
 Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated to v1.4 scope — pre-existing quick tasks from before this milestone started):
@@ -343,16 +412,10 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-09-10T18:15:20.814Z
-Stopped at: Completado 50-03-PLAN.md -- Phase 50 cerrada, milestone v2.1 tecnicamente cerrado (MILESTONE GATE: PASS)
+Last session: 2026-11-24T14:05:34.266Z
+Stopped at: Completed 57-10-PLAN.md; 57-11 en curso (fecha legal, merge, deploy)
 Resume file: None
 
 ## Operator Next Steps
 
-- **Milestone v1.6 CERRADO 2026-07-17** — Phases 26-31 complete (Track A motion/UI + Track B content humanization), 20/20 requirements verified, final Lighthouse/CWV gate PASS on all 10 representative routes. See `31-VERIFICATION.md`.
-- Milestones v1.2, v1.3, v1.4, v1.5, v1.6, v1.7, v1.8 (Phase 37), and v1.9 (Phases 38-40) are all CERRADO. Only Phase 6 (Deploy + Cutover) remains open, paused, awaiting Juan's go-ahead — no active milestone is currently in progress.
-- 3 non-blocking follow-up items flagged at v1.6 close for Juan's future decision (none block deploy or any other milestone): (1) 8 posts with zero English content — needs a dedicated translation-authoring plan; (2) 6 Posts + 6 Case Studies remain unpublished drafts — publishing is Juan's editorial call, content already humanized and ready; (3) 50 of 160 routes have empty `meta.description` — pre-existing SEO gap, already partially addressed for Pages, not yet for Posts/CaseStudies.
-- When ready to resume Phase 6 (Deploy + Cutover to Hostinger): `RESEND_API_KEY` in `.env` is still a placeholder (see Blockers/Concerns) and must be replaced with a real key before contact-form email delivery can be verified in production.
-- Optional cleanup (still deferred): archive `.planning/phases/32-*` through `36-*` into `.planning/milestones/v1.7-phases/` via `/gsd:cleanup` if/when Juan wants phase directories tidied up, matching the v1.4/v1.5 precedent.
-- **Milestone v2.1 ACTIVO (2026-08-13)** — Roadmap creado: Phases 44-49, 37/37 requirements mapeados. Orden: 44 baseline+decisiones (cero cambio renderizado) → 45 disclosure legal + esquema `affiliate-links` (única migración de schema; la matriz de localización se congela y Juan la aprueba ANTES de cargar contenido) → 46 ruta `/go` + fix del matcher de middleware (una línea, radio sitewide, curl-verificar contra `/`, `/en`, `/servicios`, `/en/services`, `/blog` antes de cualquier UI) → 47 página de stack + links inline → 48 captura de email (env-gated, bloqueada por `RESEND_API_KEY`) → 49 gate contra el baseline de Phase 44. Próximo paso: `/gsd:plan-phase 44`.
-- [Milestone v2.0]: Roadmap: 3 fases nuevas (41-43), continuando la numeración desde Phase 40. Origen: auditoría externa opengraph.to (score 17/100, sin og:image en ninguna página + 8 warnings). Juan confirmó por AskUserQuestion: (1) misma cuenta Cloudinary que JuanPortfolio — reusar `og-scrim`/`Array-Bold.woff2` ya subidos, no resubir; (2) alcance completo incluyendo performance (respuesta lenta 1.58s + HTML 271KB), no solo meta tags. Orden: Phase 41 (OG image dinámico, el error crítico) primero y sola porque toca el layout raíz por primera vez; Phase 42 (resto de meta tags) depende de 41 por tocar el mismo archivo; Phase 43 (performance) es independiente, puede correr en paralelo. Pendiente de verificar en Phase 41: que `og-scrim`/`Array-Bold.woff2` realmente existan en la cuenta Cloudinary de juan-payload (Juan dijo "misma cuenta" pero no se confirmó con un fetch real todavía).
+- Planificar la primera fase del milestone v2.4 con /gsd-discuss-phase 53 o /gsd-plan-phase 53

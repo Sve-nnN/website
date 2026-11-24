@@ -1,0 +1,314 @@
+{
+  "components": [
+    {
+      "catalogId": "grain",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 204,
+          "path": "Grainient/Grainient.css",
+          "sha256Body": "7d0f38ba834b1473c201a596199fe4a029723f28c27556a93f33edcf8a9b478d"
+        },
+        {
+          "bytes": 22901,
+          "path": "Grainient/Grainient.tsx",
+          "sha256Body": "afa571b5c622ec4edfcb1046218c7fafc7c918ba14860ff638922ce5a6e21a4c"
+        }
+      ],
+      "http": 200,
+      "name": "Grainient",
+      "registryUrl": "https://reactbits.dev/r/Grainient-TS-CSS.json"
+    },
+    {
+      "catalogId": "waves",
+      "dependencies": [
+        "ogl@^1.0.11"
+      ],
+      "files": [
+        {
+          "bytes": 92,
+          "path": "PatternWaves/PatternWaves.css",
+          "sha256Body": "c7c446c11ac500c46ca02c44c084135c2eb7bd9597c73745db72f5b0469e7c92"
+        },
+        {
+          "bytes": 30772,
+          "path": "PatternWaves/PatternWaves.tsx",
+          "sha256Body": "1735d822df4e8c275490305b18eac83273d877e225595ff021bceeca6769f434"
+        }
+      ],
+      "http": 200,
+      "name": "PatternWaves",
+      "registryUrl": "https://reactbits.dev/r/PatternWaves-TS-CSS.json"
+    },
+    {
+      "catalogId": "crt",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 202,
+          "path": "CRTWarp/CRTWarp.css",
+          "sha256Body": "abc6fe89772a3297dc7706c8852934458115a7cacc531b5e4ffe32060d7ac177"
+        },
+        {
+          "bytes": 29827,
+          "path": "CRTWarp/CRTWarp.tsx",
+          "sha256Body": "ac33f11429382373f8e07910d8a2264d50ee00e510d1e0107f9f814b8e525e48"
+        }
+      ],
+      "http": 200,
+      "name": "CRTWarp",
+      "registryUrl": "https://reactbits.dev/r/CRTWarp-TS-CSS.json"
+    },
+    {
+      "catalogId": "slats",
+      "dependencies": [
+        "ogl@^1.0.11"
+      ],
+      "files": [
+        {
+          "bytes": 90,
+          "path": "MicroSlats/MicroSlats.css",
+          "sha256Body": "1d6bf5a4c189408dfc1b9245ad444d0b30d8627ad818c12f7e828bc4db536887"
+        },
+        {
+          "bytes": 31537,
+          "path": "MicroSlats/MicroSlats.tsx",
+          "sha256Body": "27c60a4018008834dcdf6075e57dd94a5991b0946349f1af530b70e8d93a15cd"
+        }
+      ],
+      "http": 200,
+      "name": "MicroSlats",
+      "registryUrl": "https://reactbits.dev/r/MicroSlats-TS-CSS.json"
+    },
+    {
+      "catalogId": "pixel-blast",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 208,
+          "path": "PixelBlast/PixelBlast.css",
+          "sha256Body": "d5b92d706298316b27b9792cfc1866789edcd1d0f390793551c074c394e44f68"
+        },
+        {
+          "bytes": 34467,
+          "path": "PixelBlast/PixelBlast.tsx",
+          "sha256Body": "e68c287ea3a31f839ceeb64c5e1e2566f7a34d5733fecdf0ab6107d12b9dc155"
+        }
+      ],
+      "http": 200,
+      "name": "PixelBlast",
+      "registryUrl": "https://reactbits.dev/r/PixelBlast-TS-CSS.json"
+    },
+    {
+      "catalogId": "pixel-card",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 1829,
+          "path": "PixelCard/PixelCard.css",
+          "sha256Body": "aa76b07b6bf13f74443b28afb18242261e6ad07559f8a7e3110fb2fe794bf5a5"
+        },
+        {
+          "bytes": 22073,
+          "path": "PixelCard/PixelCard.tsx",
+          "sha256Body": "c59730049e3bfd5f2a14914fe53eb6566447a441d3641eb0434b8f761996e19b"
+        }
+      ],
+      "http": 200,
+      "name": "PixelCard",
+      "registryUrl": "https://reactbits.dev/r/PixelCard-TS-CSS.json"
+    },
+    {
+      "catalogId": "gradient-ascii",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 214,
+          "path": "GradientASCII/GradientASCII.css",
+          "sha256Body": "5f30a34fd613c0392a9cc0902fc333960bea4fcfce00f6a6f87e3e27692d2b80"
+        },
+        {
+          "bytes": 32331,
+          "path": "GradientASCII/GradientASCII.tsx",
+          "sha256Body": "fd6411976d78c139bded4dfc1e0cf6998a9ff2892107f311f7a2ceccc03c35b5"
+        }
+      ],
+      "http": 200,
+      "name": "GradientASCII",
+      "registryUrl": "https://reactbits.dev/r/GradientASCII-TS-CSS.json"
+    },
+    {
+      "catalogId": "ascii-text",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 21113,
+          "path": "ASCIIText/ASCIIText.tsx",
+          "sha256Body": "2585bd85e40e229f9b8980885eed05255c0b6eab1e3cad8496fd051efcf0d4ac"
+        }
+      ],
+      "http": 200,
+      "name": "ASCIIText",
+      "registryUrl": "https://reactbits.dev/r/ASCIIText-TS-CSS.json"
+    },
+    {
+      "catalogId": "noise",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 539,
+          "path": "Noise/Noise.css",
+          "sha256Body": "6152752fff23854636b48d893ee74463229b1092f0183b8f3d62b584538fcddc"
+        },
+        {
+          "bytes": 10149,
+          "path": "Noise/Noise.tsx",
+          "sha256Body": "057832d28e5c6be22b9808813bc5e567cce39544fb70669064871bdb0b78b2d5"
+        }
+      ],
+      "http": 200,
+      "name": "Noise",
+      "registryUrl": "https://reactbits.dev/r/Noise-TS-CSS.json"
+    },
+    {
+      "catalogId": "dither",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 198,
+          "path": "Dither/Dither.css",
+          "sha256Body": "e78be0f2c3edd67e5d479d4b6f233bc04a6526275aea1cb455dcfb8aeee963d8"
+        },
+        {
+          "bytes": 25386,
+          "path": "Dither/Dither.tsx",
+          "sha256Body": "d853f4759b9bc468db9bb65bf95df851814b50616dbdfb9b0a1fd1365336f303"
+        }
+      ],
+      "http": 200,
+      "name": "Dither",
+      "registryUrl": "https://reactbits.dev/r/Dither-TS-CSS.json"
+    },
+    {
+      "catalogId": "halftone-reveal",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 206,
+          "path": "HalftoneReveal/HalftoneReveal.css",
+          "sha256Body": "51c09de2dcbaee1810a55a4784ce0f1c328c063cc9bf8c267c9b6cdcfb8392e1"
+        },
+        {
+          "bytes": 30668,
+          "path": "HalftoneReveal/HalftoneReveal.tsx",
+          "sha256Body": "9dcca3775a6496fb9cc29448cf17161c37c4aec0a711887e7f44e6f0392015c1"
+        }
+      ],
+      "http": 200,
+      "name": "HalftoneReveal",
+      "registryUrl": "https://reactbits.dev/r/HalftoneReveal-TS-CSS.json"
+    },
+    {
+      "catalogId": "pixel-transition",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 548,
+          "path": "PixelTransition/PixelTransition.css",
+          "sha256Body": "29edb95482f1e3992d0ed2396133677b051bc45e1952528e5442f71425e79280"
+        },
+        {
+          "bytes": 15214,
+          "path": "PixelTransition/PixelTransition.tsx",
+          "sha256Body": "b151b6a5aada72d8ceee43637c01ea05e3424a594244fa38f2efad8f19c96ddc"
+        }
+      ],
+      "http": 200,
+      "name": "PixelTransition",
+      "registryUrl": "https://reactbits.dev/r/PixelTransition-TS-CSS.json"
+    },
+    {
+      "catalogId": "faulty-terminal",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 216,
+          "path": "FaultyTerminal/FaultyTerminal.css",
+          "sha256Body": "96facfa00ce54306d6629bcd086260ded28b33b7f01910bee397ebcf264c46eb"
+        },
+        {
+          "bytes": 31460,
+          "path": "FaultyTerminal/FaultyTerminal.tsx",
+          "sha256Body": "bc8c6d04d69da1c8ac68d5182f48fdb640f71f5ba4b24cf6da92f4eb97b26a30"
+        }
+      ],
+      "http": 200,
+      "name": "FaultyTerminal",
+      "registryUrl": "https://reactbits.dev/r/FaultyTerminal-TS-CSS.json"
+    },
+    {
+      "catalogId": "spotlight-card",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 980,
+          "path": "SpotlightCard/SpotlightCard.css",
+          "sha256Body": "b646b7da4bb46f0a4d819d0af275804c49a845a5c2dc848700aaf9282db13a92"
+        },
+        {
+          "bytes": 11528,
+          "path": "SpotlightCard/SpotlightCard.tsx",
+          "sha256Body": "581d8859b8b780a61f3710b5d39b9e37a365742626cf30858a5fdbfbfb4d8807"
+        }
+      ],
+      "http": 200,
+      "name": "SpotlightCard",
+      "registryUrl": "https://reactbits.dev/r/SpotlightCard-TS-CSS.json"
+    },
+    {
+      "catalogId": "gradient-blinds",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 216,
+          "path": "GradientBlinds/GradientBlinds.css",
+          "sha256Body": "37f312e7535a79b217b635103a6fa73ef5d1ab4a5d4d0d360be7bdfd68ca9226"
+        },
+        {
+          "bytes": 21586,
+          "path": "GradientBlinds/GradientBlinds.tsx",
+          "sha256Body": "f9e06acea8268820f28c2cc66773e4b068ea182f5a74ee9fdded471945aa3118"
+        }
+      ],
+      "http": 200,
+      "name": "GradientBlinds",
+      "registryUrl": "https://reactbits.dev/r/GradientBlinds-TS-CSS.json"
+    },
+    {
+      "catalogId": "star-border",
+      "dependencies": [],
+      "files": [
+        {
+          "bytes": 1070,
+          "path": "StarBorder/StarBorder.css",
+          "sha256Body": "128fe0068b2d7964c28488d24465626ff34f3143a66082a6548a1a1f57c987d2"
+        },
+        {
+          "bytes": 22699,
+          "path": "StarBorder/StarBorder.tsx",
+          "sha256Body": "3da1c1856f3b41fbc9f9a7ecf945e6248de44464f763cd5162bb73fee0f30f17"
+        }
+      ],
+      "http": 200,
+      "name": "StarBorder",
+      "registryUrl": "https://reactbits.dev/r/StarBorder-TS-CSS.json"
+    }
+  ],
+  "license": {
+    "holder": "David Haz",
+    "name": "MIT + Commons Clause License Condition v1.0",
+    "url": "https://raw.githubusercontent.com/DavidHDev/react-bits/main/LICENSE.md"
+  },
+  "source": "https://reactbits.dev/r/",
+  "variant": "TS-CSS"
+}

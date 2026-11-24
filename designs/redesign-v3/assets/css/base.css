@@ -1,0 +1,187 @@
+/*
+ * base.css: fuentes, reset minimo, tipografia base, foco global y enlace de salto.
+ * Depende de tokens.css. Las rutas de fuentes son relativas a este archivo.
+ */
+
+@font-face {
+  font-family: "Array";
+  src: url("../fonts/Array-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist";
+  src: url("../fonts/Geist-latin-var.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Geist Mono recortada a ASCII y Latin-1: solo para ASCII y etiquetas de codigo. */
+@font-face {
+  font-family: "Geist Mono";
+  src: url("../fonts/GeistMono-400-latin.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+ * Solo mayusculas y digitos: el CSS aplica text-transform: uppercase.
+ * font-display: swap y no optional. Medido: con optional, bajo file:// la fuente llega
+ * despues del periodo de bloqueo y la pagina se queda en Geist Mono para siempre, y los
+ * <link rel="preload" crossorigin> fallan por CORS en file://. Son etiquetas cortas,
+ * el salto de layout es de unos pocos pixeles.
+ */
+@font-face {
+  font-family: "Pixel Label";
+  src: url("../fonts/GeistPixel-Square-upper.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/*
+ * Caras de metrica de fallback. Valores medidos (ver fonts/fonts-manifest.json):
+ * size-adjust = ancho de la fuente / ancho de Arial; overrides desde hhea / size-adjust.
+ */
+@font-face {
+  font-family: "Array Fallback";
+  src: local("Arial");
+  size-adjust: 92.63%;
+  ascent-override: 94.46%;
+  descent-override: 20.24%;
+  line-gap-override: 9.45%;
+}
+
+@font-face {
+  font-family: "Geist Fallback";
+  src: local("Arial");
+  size-adjust: 102.14%;
+  ascent-override: 98.39%;
+  descent-override: 28.88%;
+  line-gap-override: 0%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+}
+
+/* Array no tiene negrita real: peso 400 y sin sintesis. */
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: 1.1;
+}
+
+p {
+  margin: 0;
+}
+
+img,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+/* Enlace de salto: visible solo con foco. */
+.skip-link {
+  position: absolute;
+  top: -4rem;
+  left: var(--space-3);
+  z-index: 100;
+  padding: var(--space-2) var(--space-3);
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  top: var(--space-3);
+}
+
+/*
+ * Anillo de foco global: 2 px ambar con halo de tinta que lo separa de cualquier fondo.
+ * Prohibido quitar el outline sin reemplazo (A11Y.md).
+ */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--ink);
+}
+
+/* Marco de pagina */
+.site-header,
+.site-footer {
+  padding: var(--space-4) var(--space-6);
+}
+
+.site-footer {
+  color: var(--quiet);
+  font-size: .875rem;
+}
+
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+
+h1 {
+  font-size: var(--text-display);
+}
+
+h2 {
+  font-size: var(--text-2xl);
+}
+
+h3 {
+  font-size: var(--text-xl);
+}
+
+.lede {
+  margin-top: var(--space-3);
+  max-width: 36rem;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: .9em;
+}
+
+/* Etiquetas cortas en mayusculas. No bajar de 12 px (A11Y.md). */
+.pixel-label {
+  font-family: var(--font-pixel);
+  font-size: .75rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+  .site-header,
+  .site-footer {
+    padding: var(--space-3) var(--space-4);
+  }
+}

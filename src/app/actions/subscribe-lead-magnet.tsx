@@ -8,6 +8,7 @@ import { getPayload } from 'payload'
 
 import config from '@payload-config'
 import { ConfirmLeadMagnet } from '@/emails/ConfirmLeadMagnet'
+import { isPreviewReadonly } from '@/lib/preview'
 import { resolveSiteUrl } from '@/lib/resolve-site-url'
 import { isResendConfigured } from '@/lib/resend-configured'
 import { mintDownloadToken } from '@/lib/download-token'
@@ -63,7 +64,10 @@ function relationId(value: number | { id: number } | null | undefined): number |
 }
 
 export async function subscribeToLeadMagnetAction(formData: FormData): Promise<void> {
-  const postPath = String(formData.get('postPath') ?? '/blog')
+  // WR-05: solo rutas internas. Un valor como `//otro.sitio/x` o `https://...`
+  // redirigiria a otro origen, y sin limite de largo se guardaria tal cual en `source`.
+  const rawPath = String(formData.get('postPath') ?? '/blog')
+  const postPath = /^\/(?!\/)[^\s\\]*$/.test(rawPath) ? rawPath.slice(0, 200) : '/blog'
   const locale = String(formData.get('locale') ?? 'es') === 'en' ? 'en' : 'es'
 
   // Honeypot: lo llenan los bots que completan todos los campos. Se descarta
@@ -84,6 +88,14 @@ export async function subscribeToLeadMagnetAction(formData: FormData): Promise<v
 
   if (await isRateLimited()) {
     redirect(`${postPath}?subscribed=error`)
+  }
+
+  // Preview de solo lectura (fase 53, D-03): mismo destino que el camino feliz
+  // con Resend. Va antes de cualquier find/create/update/sendEmail y fuera del
+  // try. Sin esta compuerta, la rama MAIL-04 (sin RESEND_API_KEY) marcaría al
+  // suscriptor `confirmed` y escribiría en la base (RESEARCH Pitfall 7).
+  if (isPreviewReadonly()) {
+    redirect(`${postPath}?subscribed=pending`)
   }
 
   // `redirect()` throws internamente (NEXT_REDIRECT) — todo el trabajo de
@@ -129,13 +141,32 @@ export async function subscribeToLeadMagnetAction(formData: FormData): Promise<v
         // se reenvía nada — igual que `subscribeAction` con un `confirmed`.
         target = `${postPath}?subscribed=already`
       } else {
-        const token = randomBytes(32).toString('hex')
+        // WR-04: un suscriptor `confirmed` conserva estado, fechas y token. Cambiarlos
+        // con solo conocer su correo lo dejaría sin newsletter hasta reconfirmar y
+        // invalidaría los enlaces de baja de correos anteriores (`subscribeAction`
+        // evita lo mismo con su retorno temprano). El magnet se entrega por correo
+        // con su token actual: el enlace solo le llega a quien controla el buzón.
+        const keepConfirmed = current?.status === 'confirmed'
+        const token =
+          keepConfirmed && current?.token ? current.token : randomBytes(32).toString('hex')
         const resendReady = isResendConfigured()
         const nowIso = new Date().toISOString()
 
         let subscriberId: number
 
-        if (current) {
+        if (current && keepConfirmed) {
+          const updated = await payload.update({
+            collection: 'subscribers',
+            id: current.id,
+            data: {
+              optInReason: 'lead-magnet',
+              leadMagnet: leadMagnet.id,
+              // Solo si la ficha no tenia token (no hay enlaces previos que invalidar).
+              ...(current.token ? {} : { token }),
+            },
+          })
+          subscriberId = updated.id
+        } else if (current) {
           // Cualquier otro caso (nuevo pending reenviando, solo-newsletter
           // sumando el magnet, o reactivando desde `unsubscribed`) arranca de
           // cero: las fechas/estado de un ciclo anterior no describen este

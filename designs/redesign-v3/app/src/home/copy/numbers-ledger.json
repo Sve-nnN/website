@@ -1,0 +1,189 @@
+{
+  "nota": "Inventario de TODAS las cifras visibles de la home v4 (/ y /en). valor es la cadena de digitos sin separadores; texto es como se pinta. estado=confirmed exige fuente verificable; estado=pending exige que la seccion ya muestre un marcador de pendiente visible (RETRATO/PENDIENTE/PENDING o una nota stamp). Este archivo es la unica fuente de cifras permitidas (D-05).",
+  "cifras": [
+    {
+      "valor": "360",
+      "texto": "360",
+      "seccion": "global",
+      "idiomas": ["es", "en"],
+      "fuente": "Nombre del producto del brief (Auditoria 360), en el copy de la home: hero.scopeTitle, cta y footer.ctaTitle en designs/redesign-v3/app/src/home/copy/{es,en}.json",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "15",
+      "texto": "15",
+      "seccion": "clientes",
+      "idiomas": ["es", "en"],
+      "fuente": "Conteo vivo del grupo de clientes de SEO: SEO_CLIENTS.length en designs/redesign-v3/app/src/home/clients.ts (bloque vivo de logos de la home, 52-COPY-MAP.md 3.1 y 4)",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "13",
+      "texto": "13",
+      "seccion": "clientes",
+      "idiomas": ["es", "en"],
+      "fuente": "Conteo vivo del grupo de clientes de desarrollo: DEV_CLIENTS.length en designs/redesign-v3/app/src/home/clients.ts (bloque vivo de logos de la home, 52-COPY-MAP.md 3.1 y 4)",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "1.8",
+      "texto": "1.8 s",
+      "seccion": "medicion",
+      "idiomas": ["es", "en"],
+      "fuente": "Valor de muestra del medidor de LCP, explicitamente etiquetado como no real en medicion.note (\"Los valores de esta franja son de muestra\") en designs/redesign-v3/app/src/home/copy/{es,en}.json",
+      "estado": "pending"
+    },
+    {
+      "valor": "0.05",
+      "texto": "0.05",
+      "seccion": "medicion",
+      "idiomas": ["es", "en"],
+      "fuente": "Valor de muestra del medidor de CLS, etiquetado como no real en medicion.note en designs/redesign-v3/app/src/home/copy/{es,en}.json",
+      "estado": "pending"
+    },
+    {
+      "valor": "120",
+      "texto": "120 ms",
+      "seccion": "medicion",
+      "idiomas": ["es", "en"],
+      "fuente": "Valor de muestra del medidor de INP, etiquetado como no real en medicion.note en designs/redesign-v3/app/src/home/copy/{es,en}.json",
+      "estado": "pending"
+    },
+    {
+      "valor": "0.4",
+      "texto": "0.4 s",
+      "seccion": "medicion",
+      "idiomas": ["es", "en"],
+      "fuente": "Valor de muestra del medidor de TTFB, etiquetado como no real en medicion.note en designs/redesign-v3/app/src/home/copy/{es,en}.json",
+      "estado": "pending"
+    },
+    {
+      "valor": "2.5",
+      "texto": "2.5 s",
+      "seccion": "medicion",
+      "idiomas": ["es", "en"],
+      "fuente": "Umbral publicado por Google para LCP (2.5 s) en los Core Web Vitals: https://web.dev/articles/vitals (guia 4.1 regla 4, dato de referencia externo)",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "0.1",
+      "texto": "0.1",
+      "seccion": "medicion",
+      "idiomas": ["es", "en"],
+      "fuente": "Umbral publicado por Google para CLS (0.1) en los Core Web Vitals: https://web.dev/articles/vitals",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "200",
+      "texto": "200 ms",
+      "seccion": "medicion",
+      "idiomas": ["es", "en"],
+      "fuente": "Umbral publicado por Google para INP (200 ms) en los Core Web Vitals: https://web.dev/articles/vitals",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "0.8",
+      "texto": "0.8 s",
+      "seccion": "medicion",
+      "idiomas": ["es", "en"],
+      "fuente": "Umbral publicado por Google para TTFB (0.8 s) en los Core Web Vitals: https://web.dev/articles/vitals",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "10",
+      "texto": "10 dias habiles",
+      "seccion": "servicios",
+      "idiomas": ["es", "en"],
+      "fuente": "Plazo de entrega de la Auditoria 360 en el brief: 52-COPY-MAP.md 3.9 y 4 (\"Entrega en 10 dias habiles\")",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "406",
+      "texto": "406",
+      "seccion": "casos",
+      "idiomas": ["es", "en"],
+      "fuente": "Metrica del caso del urologo en la pagina viva de casos (Search Console): https://juan-tech.com/case-studies (52-COPY-MAP.md 3.3 y 4)",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "309",
+      "texto": "309",
+      "seccion": "casos",
+      "idiomas": ["es", "en"],
+      "fuente": "Metrica del caso del despacho de inmigracion en la pagina viva de casos (Search Console): https://juan-tech.com/case-studies",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "83",
+      "texto": "83",
+      "seccion": "casos",
+      "idiomas": ["es", "en"],
+      "fuente": "Metrica del caso de defensa criminal en la pagina viva de casos (Search Console): https://juan-tech.com/case-studies",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "86000",
+      "texto": "86 000",
+      "seccion": "casos",
+      "idiomas": ["es", "en"],
+      "fuente": "Clics organicos anuales del caso de defensa criminal en la pagina viva de casos: https://juan-tech.com/case-studies (52-COPY-MAP.md 3.3 y 4)",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "83",
+      "texto": "83 Performance",
+      "seccion": "websites",
+      "idiomas": ["es", "en"],
+      "fuente": "Puntaje publicado de Apturio en la pagina viva de websites: https://juan-tech.com/websites (52-COPY-MAP.md 3.4 y 4); la fecha y la herramienta de la medicion siguen pendientes en la seccion",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "73",
+      "texto": "73 Performance",
+      "seccion": "websites",
+      "idiomas": ["es", "en"],
+      "fuente": "Puntaje publicado de Arianna Lupi en la pagina viva de websites: https://juan-tech.com/websites",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "67",
+      "texto": "67 Performance",
+      "seccion": "websites",
+      "idiomas": ["es", "en"],
+      "fuente": "Puntaje publicado de Estylopia en la pagina viva de websites: https://juan-tech.com/websites",
+      "estado": "confirmed"
+    },
+    {
+      "valor": "1",
+      "texto": "1",
+      "seccion": "testimonios",
+      "idiomas": ["es", "en"],
+      "fuente": "Cantidad de testimonios de la vista de maqueta del selector de previsualizacion; la seccion muestra marcadores de pendiente porque solo existe una cita real (52-COPY-MAP.md 3.8)",
+      "estado": "pending"
+    },
+    {
+      "valor": "3",
+      "texto": "3",
+      "seccion": "testimonios",
+      "idiomas": ["es", "en"],
+      "fuente": "Cantidad de testimonios de la vista de maqueta del selector de previsualizacion; la seccion muestra marcadores de pendiente",
+      "estado": "pending"
+    },
+    {
+      "valor": "8",
+      "texto": "8",
+      "seccion": "testimonios",
+      "idiomas": ["es", "en"],
+      "fuente": "Cantidad de testimonios de la vista de maqueta del selector de previsualizacion; la seccion muestra marcadores de pendiente",
+      "estado": "pending"
+    },
+    {
+      "valor": "2026",
+      "texto": "2026",
+      "seccion": "footer",
+      "idiomas": ["es", "en"],
+      "fuente": "Ano del aviso de derechos del pie vivo: https://juan-tech.com/ (52-COPY-MAP.md 3.12 y 4)",
+      "estado": "confirmed"
+    }
+  ]
+}
