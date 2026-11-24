@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: planning
-stopped_at: Completed 57-08-PLAN.md
-last_updated: "2026-11-24T06:46:12.910Z"
+stopped_at: Completed 57-09-PLAN.md (CAL-01 diferido); 57-10 Task 1 en curso
+last_updated: "2026-11-24T13:48:13.042Z"
 last_activity: 2026-11-10
 last_activity_desc: Phase 55 complete, transitioned to Phase 6
-state_head: e7bf7a0febd49b8a9955119f0b572939d57c3629
+state_head: e5c3a69514a98e381f0626db81c01e6bcb1458a4
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 61
-  completed_plans: 57
+  completed_plans: 58
   percent: 60
 ---
 
@@ -176,6 +176,7 @@ Last activity: 2026-11-10 — Phase 55 complete, transitioned to Phase 6
 | Phase 56 P01 | 12min | 3 tasks | 12 files |
 | Phase 57 P07 | ~1h | 3 tasks | 105 files |
 | Phase 57 P08 | ~3h50m | 3 tasks | 12 files |
+| Phase 57 P09 | 3 sesiones | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -348,6 +349,10 @@ Recent decisions affecting current work:
 - [Phase 6]: 55-09: lecciones de casos ocultas sin datos; comparativos de clics calculados en el servidor desde results.metrics (sin dato nuevo)
 - [Phase 57]: 57-07: el lock se regenera con npm 10.9.2 (el del VPS), no con npm 11 local; recharts queda pendiente de decision
 - [Phase 57]: 57-08: el rollback por imagen de Dokploy no sirve (rollbackActive false en web); la via es git revert -m 1 del merge commit; /blog/confirm responde 500 en el preview y vuelve a 57-07
+- [Phase 57]: 57-09: la fecha efectiva legal es el dia del merge (Juan: 'Hoy, 2026-11-24'); 57-11 se detiene y avisa si el merge cae otro dia
+- [Phase 57]: 57-09: el alt EN del Media p54-about-hero se escribe de forma aditiva en el paso del cargador (57-10 o 57-12), no antes
+- [Phase 57]: 57-09: diferencias de palabras de /blog/general aceptadas por Juan; T-55-15 corre tras el corte
+- [Phase 57]: 57-09: CAL-01 (revision humana) diferida por Juan a produccion tras el corte; sigue abierto, no cumplido
 
 ### Pending Todos
 
@@ -405,8 +410,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-24T06:46:12.347Z
-Stopped at: Completed 57-08-PLAN.md
+Last session: 2026-11-24T13:48:12.453Z
+Stopped at: Completed 57-09-PLAN.md (CAL-01 diferido); 57-10 Task 1 en curso
 Resume file: None
 
 ## Operator Next Steps
