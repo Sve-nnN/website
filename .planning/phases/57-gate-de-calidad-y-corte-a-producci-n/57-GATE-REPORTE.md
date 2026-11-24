@@ -1,27 +1,27 @@
 # Reporte del gate de calidad de la fase 57
 
-Generado: 2026-11-24T06:41:47.073Z. Preview: https://dev.juan-tech.com. Producción: https://juan-tech.com. Commit del repo: 90f8b6f.
+Generado: 2026-11-24T08:56:27.650Z. Preview: https://dev.juan-tech.com. Producción: https://juan-tech.com. Commit del repo: 19d0a09.
 
 Juan, este reporte reúne la medición final del preview contra producción. Todo es lectura por HTTP: no escribe en la base ni envía correos.
 
 ## Resumen de una pantalla
 
-Resultado: el corte NO está listo. Hay 5 bloqueo(s), listados en "Bloquea el corte".
+Resultado: el corte NO está listo. Hay 2 bloqueo(s), listados en "Bloquea el corte".
 
 | Área | Estado | Bloqueos |
 |---|---|---|
-| SEO contra producción | **FAIL** | 2 |
+| SEO contra producción | PASS | 0 |
 | Clases utilitarias en el HTML | PASS | 0 |
 | Accesibilidad automática | PASS | 0 |
 | Rendimiento contra producción | PASS | 0 |
 | Peso del bundle | PASS | 0 |
 | Hallazgos F1 a F5 y F13 | PASS | 0 |
-| Batería de pasos | **FAIL** | 2 |
+| Batería de pasos | **FAIL** | 1 |
 | Gate de decisiones de la 56 | **FAIL** | 1 |
 
-Qué pasa: Clases utilitarias en el HTML; Accesibilidad automática; Rendimiento contra producción; Peso del bundle; Hallazgos F1 a F5 y F13.
+Qué pasa: SEO contra producción; Clases utilitarias en el HTML; Accesibilidad automática; Rendimiento contra producción; Peso del bundle; Hallazgos F1 a F5 y F13.
 
-Qué falla: SEO contra producción (FAIL); Batería de pasos (FAIL); Gate de decisiones de la 56 (FAIL).
+Qué falla: Batería de pasos (FAIL); Gate de decisiones de la 56 (FAIL).
 
 Qué necesita tu aceptación: 2 diferencia(s) legítima(s) y 1 decisión(es) pendiente(s).
 
@@ -29,10 +29,7 @@ Qué necesita tu aceptación: 2 diferencia(s) legítima(s) y 1 decisión(es) pen
 
 | Área | Qué | Causa | Clasificación |
 |---|---|---|---|
-| SEO | /blog/confirm (estado): el preview responde 500 (producción 200) | El preview responde 500 en /blog/confirm y /en/blog/confirm; producción responde 200 y en 57-06 la URL daba 200. La página la reescribió 57-07 (e682bab y 8783482) y usa Box component={CheckCircle} y Box component={XCircle} dentro de un Server Component: pasa una referencia de componente a un Client Component de MUI, que no es serializable. Es el único uso de component con un icono en src. Causa probable, no reproducida en local porque la página exige la base de datos. Corrección sugerida: poner el icono como hijo (<CheckCircle size={48} aria-hidden /> dentro de un Box) o moverlo a un componente de cliente. Dueño: plan 57-07 | defecto a corregir (código del plan 57-07) |
-| SEO | /en/blog/confirm (estado): el preview responde 500 (producción 200) | El preview responde 500 en /blog/confirm y /en/blog/confirm; producción responde 200 y en 57-06 la URL daba 200. La página la reescribió 57-07 (e682bab y 8783482) y usa Box component={CheckCircle} y Box component={XCircle} dentro de un Server Component: pasa una referencia de componente a un Client Component de MUI, que no es serializable. Es el único uso de component con un icono en src. Causa probable, no reproducida en local porque la página exige la base de datos. Corrección sugerida: poner el icono como hijo (<CheckCircle size={48} aria-hidden /> dentro de un Box) o moverlo a un componente de cliente. Dueño: plan 57-07 | defecto a corregir (código del plan 57-07) |
-| Batería | 56-run-all --live: 55 regresion: 54 regresion: 54-about da FAIL | /en/sobre-mi no tiene ninguna img con alt no vacío: la foto de Sobre mí tiene alt en ES y alt vacío en EN. Ya figuraba en la línea base de 57-01. La fila ALT-about-hero está aprobada y es cargable, pero el cargador del corte solo escribe el alt de las 6 capturas, no el de p54-about-hero, así que no se resuelve solo en el corte. Arreglarlo exige escribir el alt EN en Media (escritura aditiva en producción), que no se hace desde este plan. Dueño: Juan, antes del corte (plan 57-10 o una carga puntual del alt) | defecto de contenido (carga de un alt en Media) |
-| Batería | 56-run-all --live: 55 regresion: 54 regresion: 53-computed-styles da FAIL | Dentro de 56-run-all --live el paso dio 6 PASS y 2 FAIL en 75 s, pero en cuatro corridas aisladas posteriores (tres sueltas y una dentro de 54-run-all) dio 7 PASS y OK en unos 49 s. No se pudo reproducir ni leer el cheque que falló, porque 56-run-all no conserva las líneas internas. No se cambió el script sin una causa visible. Se vuelve a medir en la repetición completa tras corregir /blog/confirm y, si reaparece, 57-08 abre su corrección. Dueño: repetición de la batería tras 57-07 | falso positivo intermitente, sin reproducir |
+| Batería | 56-run-all --live: 55 regresion: 54 regresion: 54-about da FAIL | /en/sobre-mi no tiene ninguna img con alt no vacío: la foto de Sobre mí tiene alt en ES y alt vacío en EN. Ya figuraba en la línea base de 57-01 y reaparece en la repetición de la batería tras 19d0a09. La fila ALT-about-hero está aprobada y es cargable, pero el cargador del corte solo escribe el alt de las 6 capturas, no el de p54-about-hero, así que no se resuelve solo en el corte. Arreglarlo exige escribir el alt EN en Media (escritura aditiva en producción), que no se hace desde este plan. Decisión de contenido de Juan. Dueño: Juan, antes del corte (plan 57-10 o una carga puntual del alt) | defecto de contenido (carga de un alt en Media) |
 | Gate de decisiones | CUT-legal-date-efectiva | CUT-legal-date-efectiva: estado pendiente (Fecha efectiva de la politica de privacidad y de los terminos (el dia del corte)); Juan debe responder antes del corte | decisión de Juan |
 
 ## Diferencias que aceptas por escrito en 57-09
@@ -44,14 +41,12 @@ Qué necesita tu aceptación: 2 diferencia(s) legítima(s) y 1 decisión(es) pen
 
 ## SEO por URL
 
-170 de 174 URLs sin diferencias. Enlaces internos revisados: 177, con 0 fallo(s). Redirects revisados: 38, con 0 distinto(s).
+172 de 174 URLs sin diferencias. Enlaces internos revisados: 177, con 0 fallo(s). Redirects revisados: 38, con 0 distinto(s).
 
 | URL | Campo | Diferencia | Clase | Motivo |
 |---|---|---|---|---|
 | /blog/general | palabras | palabras en main: 120 contra 135 en producción (11.1% menos; tolerancia 2%) | b | Categoría general vacía: el rediseño quita el contador "0 artículos" y la fila repetida "Otros temas del blog" con sus cuatro enlaces. El copy propio de la página es idéntico. Juan lo acepta en 57-09 |
 | /en/blog/general | palabras | palabras en main: 124 contra 138 en producción (10.1% menos; tolerancia 2%) | b | Categoría general vacía: el rediseño quita el contador "0 artículos" y la fila repetida "Otros temas del blog" con sus cuatro enlaces. El copy propio de la página es idéntico. Juan lo acepta en 57-09 |
-| /blog/confirm | estado | el preview responde 500 (producción 200) | sin-clasificar |  |
-| /en/blog/confirm | estado | el preview responde 500 (producción 200) | sin-clasificar |  |
 
 Clase a: defecto a corregir. Clase b: diferencia legítima que Juan acepta en 57-09. Sin clasificar: se trata como defecto.
 
@@ -89,19 +84,19 @@ Lighthouse móvil, mediana por URL. Regla: LCP, TTFB y TBT del preview no supera
 
 | URL | LCP preview / prod (límite) | TTFB preview / prod (límite) | TBT preview / prod (límite) | CLS | A11y | Veredicto |
 |---|---|---|---|---|---|---|
-| / | 2630 ms / 3537 ms (3891 ms) | 248 ms / 240 ms (290 ms) | 58 ms / 12 ms (62 ms) | 0 / 0 | 1 | PASS |
-| /en | 2661 ms / 3740 ms (4114 ms) | 258 ms / 249 ms (299 ms) | 25 ms / 51 ms (101 ms) | 0 / 0 | 1 | PASS |
-| /servicios/ai-seo-geo | 2594 ms / 3497 ms (3846 ms) | 242 ms / 253 ms (303 ms) | 33 ms / 6 ms (56 ms) | 0 / 0 | 1 | PASS |
-| /blog/seo/estrategia-seo | 2585 ms / 4107 ms (4518 ms) | 245 ms / 1558 ms (1714 ms) | 37 ms / 49 ms (99 ms) | 0 / 0.013 | 1 | PASS |
+| / | 2462 ms / 3491 ms (3840 ms) | 275 ms / 275 ms (325 ms) | 32 ms / 16 ms (66 ms) | 0 / 0 | 1 | PASS |
+| /en | 2542 ms / 3812 ms (4193 ms) | 273 ms / 277 ms (327 ms) | 51 ms / 61 ms (111 ms) | 0 / 0 | 1 | PASS |
+| /servicios/ai-seo-geo | 2281 ms / 3765 ms (4142 ms) | 276 ms / 296 ms (346 ms) | 12 ms / 17 ms (67 ms) | 0 / 0 | 1 | PASS |
+| /blog/seo/estrategia-seo | 2622 ms / 4289 ms (4718 ms) | 277 ms / 1506 ms (1657 ms) | 31 ms / 29 ms (79 ms) | 0 / 0.013 | 1 | PASS |
 
 Proxy de INP medido con Playwright (no es INP de campo y no entra en la regla):
 
 | URL | Preview | Producción |
 |---|---|---|
-| / | 152 ms | 64 ms |
-| /en | 160 ms | 56 ms |
-| /servicios/ai-seo-geo | 128 ms | 56 ms |
-| /blog/seo/estrategia-seo | 144 ms | 56 ms |
+| / | 152 ms | 56 ms |
+| /en | 152 ms | 56 ms |
+| /servicios/ai-seo-geo | 136 ms | 56 ms |
+| /blog/seo/estrategia-seo | 152 ms | 56 ms |
 
 ## Bundle antes y después del retiro de Tailwind
 
@@ -134,7 +129,7 @@ Clases utilitarias en el HTML: PASS (174 URLs revisadas).
 | 57-a11y-sweep | PASS |  |
 | 57-perf-compare | PASS |  |
 | 57-bundle-weight | PASS |  |
-| 56-run-all --live | **FAIL** | FAIL 55 regresion: 54 regresion: 54-about (4 PASS, 1 FAIL, 0 WARN lineas, salida 1, 10.0s) / FAIL 55 regresion: 54 regresion: 53-computed-styles (6 PASS, 2 FAIL, 0 WARN lineas, salida 1, 75.1s) |
+| 56-run-all --live | **FAIL** | FAIL 55 regresion: 54 regresion: 54-about (4 PASS, 1 FAIL, 0 WARN lineas, salida 1, 7.3s) / FAIL 55 regresion: 54 regresion: 54-about |
 
 ## Estado del gate de decisiones de la 56
 

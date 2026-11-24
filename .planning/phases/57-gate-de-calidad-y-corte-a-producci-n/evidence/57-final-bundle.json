@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-11-24T06:15:36.062Z",
+  "measuredAt": "2026-11-24T08:30:07.861Z",
   "base": "https://dev.juan-tech.com",
   "totals": {
     "css": {
@@ -20,7 +20,7 @@
       "status": 200,
       "html": {
         "raw": 369769,
-        "gzip": 53115
+        "gzip": 53129
       },
       "css": {
         "count": 1,
@@ -67,7 +67,7 @@
       "status": 200,
       "html": {
         "raw": 366783,
-        "gzip": 51654
+        "gzip": 51673
       },
       "css": {
         "count": 1,
@@ -114,7 +114,7 @@
       "status": 200,
       "html": {
         "raw": 193535,
-        "gzip": 31146
+        "gzip": 31145
       },
       "css": {
         "count": 1,
@@ -262,8 +262,8 @@
       "path": "/blog/seo",
       "status": 200,
       "html": {
-        "raw": 171197,
-        "gzip": 29477
+        "raw": 171240,
+        "gzip": 29480
       },
       "css": {
         "count": 1,
@@ -314,7 +314,7 @@
       "status": 200,
       "html": {
         "raw": 342685,
-        "gzip": 56628
+        "gzip": 56852
       },
       "css": {
         "count": 1,
@@ -410,7 +410,7 @@
       "status": 200,
       "html": {
         "raw": 246329,
-        "gzip": 38987
+        "gzip": 38992
       },
       "css": {
         "count": 1,
@@ -458,8 +458,8 @@
       "path": "/websites",
       "status": 200,
       "html": {
-        "raw": 207143,
-        "gzip": 31898
+        "raw": 207132,
+        "gzip": 32011
       },
       "css": {
         "count": 1,
@@ -510,7 +510,7 @@
       "status": 200,
       "html": {
         "raw": 360452,
-        "gzip": 51681
+        "gzip": 51680
       },
       "css": {
         "count": 1,
@@ -658,8 +658,8 @@
       "path": "/stack",
       "status": 200,
       "html": {
-        "raw": 233164,
-        "gzip": 39226
+        "raw": 233153,
+        "gzip": 39215
       },
       "css": {
         "count": 1,
@@ -709,7 +709,7 @@
       "status": 200,
       "html": {
         "raw": 132631,
-        "gzip": 23658
+        "gzip": 23657
       },
       "css": {
         "count": 1,

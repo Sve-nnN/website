@@ -2,19 +2,22 @@
   {
     "match": "/blog/confirm",
     "clase": "defecto a corregir (código del plan 57-07)",
-    "causa": "El preview responde 500 en /blog/confirm y /en/blog/confirm; producción responde 200 y en 57-06 la URL daba 200. La página la reescribió 57-07 (e682bab y 8783482) y usa Box component={CheckCircle} y Box component={XCircle} dentro de un Server Component: pasa una referencia de componente a un Client Component de MUI, que no es serializable. Es el único uso de component con un icono en src. Causa probable, no reproducida en local porque la página exige la base de datos. Corrección sugerida: poner el icono como hijo (<CheckCircle size={48} aria-hidden /> dentro de un Box) o moverlo a un componente de cliente.",
+    "estado": "resuelto en 19d0a09",
+    "causa": "RESUELTO. El preview respondía 500 en /blog/confirm y /en/blog/confirm porque la página, reescrita por 57-07 (e682bab y 8783482), pasaba CheckCircle y XCircle como component de un Box de MUI desde un Server Component (una referencia de componente no es serializable hacia un Client Component). El commit 19d0a09 saca los iconos de component. El preview se redesplegó en ese commit (despliegue done, contenedor running) y la batería 2026-11-24 ya no reporta ninguna diferencia de estado en esas dos URLs. Esta regla queda solo como constancia: si el 500 reaparece, vuelve a bloquear.",
     "dueno": "plan 57-07"
   },
   {
     "match": "54-about",
     "clase": "defecto de contenido (carga de un alt en Media)",
-    "causa": "/en/sobre-mi no tiene ninguna img con alt no vacío: la foto de Sobre mí tiene alt en ES y alt vacío en EN. Ya figuraba en la línea base de 57-01. La fila ALT-about-hero está aprobada y es cargable, pero el cargador del corte solo escribe el alt de las 6 capturas, no el de p54-about-hero, así que no se resuelve solo en el corte. Arreglarlo exige escribir el alt EN en Media (escritura aditiva en producción), que no se hace desde este plan.",
+    "estado": "abierto",
+    "causa": "/en/sobre-mi no tiene ninguna img con alt no vacío: la foto de Sobre mí tiene alt en ES y alt vacío en EN. Ya figuraba en la línea base de 57-01 y reaparece en la repetición de la batería tras 19d0a09. La fila ALT-about-hero está aprobada y es cargable, pero el cargador del corte solo escribe el alt de las 6 capturas, no el de p54-about-hero, así que no se resuelve solo en el corte. Arreglarlo exige escribir el alt EN en Media (escritura aditiva en producción), que no se hace desde este plan. Decisión de contenido de Juan.",
     "dueno": "Juan, antes del corte (plan 57-10 o una carga puntual del alt)"
   },
   {
     "match": "53-computed-styles",
     "clase": "falso positivo intermitente, sin reproducir",
-    "causa": "Dentro de 56-run-all --live el paso dio 6 PASS y 2 FAIL en 75 s, pero en cuatro corridas aisladas posteriores (tres sueltas y una dentro de 54-run-all) dio 7 PASS y OK en unos 49 s. No se pudo reproducir ni leer el cheque que falló, porque 56-run-all no conserva las líneas internas. No se cambió el script sin una causa visible. Se vuelve a medir en la repetición completa tras corregir /blog/confirm y, si reaparece, 57-08 abre su corrección.",
+    "estado": "no reaparece",
+    "causa": "Intermitente: el único FAIL ocurrió dentro de 56-run-all --live del 2026-11-24 a primera hora (6 PASS y 2 FAIL en 75 s). Cuatro corridas aisladas y la repetición completa tras 19d0a09 (56-run-all --live con 52 PASS y solo 54-about en FAIL) dieron PASS. No se pudo leer el cheque que falló, porque 56-run-all no conserva las líneas internas. No se cambió el script sin una causa visible. Si reaparece en el monitoreo o en una corrida posterior, se abre su corrección.",
     "dueno": "repetición de la batería tras 57-07"
   }
 ]

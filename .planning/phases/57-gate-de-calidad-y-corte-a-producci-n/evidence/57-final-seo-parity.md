@@ -1,8 +1,8 @@
 # Paridad SEO del preview contra producción
 
-Generado 2026-11-24T05:56:34.533Z con `scripts/verify/57-seo-parity-all.mjs`. Preview https://dev.juan-tech.com, producción https://juan-tech.com.
+Generado 2026-11-24T08:09:52.186Z con `scripts/verify/57-seo-parity-all.mjs`. Preview https://dev.juan-tech.com, producción https://juan-tech.com.
 
-Resultado: **FAIL**. 170 de 174 URLs sin diferencias (166 del sitemap de producción, 6 fuera del sitemap, 2 rutas nuevas). Diferencias totales: 4 (b: 2, sin-clasificar: 2).
+Resultado: **FAIL**. 172 de 174 URLs sin diferencias (166 del sitemap de producción, 6 fuera del sitemap, 2 rutas nuevas). Diferencias totales: 2 (b: 2).
 
 Clases: **a** se corrige en 57-06; **b** diferencia legítima del rediseño que Juan acepta por escrito en 57-09; **c** falso positivo del extractor, corregido en el script.
 
@@ -12,8 +12,6 @@ Clases: **a** se corrige en 57-06; **b** diferencia legítima del rediseño que 
 |---|---|---|---|---|
 | /blog/general | palabras | palabras en main: 120 contra 135 en producción (11.1% menos; tolerancia 2%) | b | Categoría general vacía: el rediseño quita el contador "0 artículos" y la fila repetida "Otros temas del blog" con sus cuatro enlaces. El copy propio de la página es idéntico. Juan lo acepta en 57-09 |
 | /en/blog/general | palabras | palabras en main: 124 contra 138 en producción (10.1% menos; tolerancia 2%) | b | Categoría general vacía: el rediseño quita el contador "0 artículos" y la fila repetida "Otros temas del blog" con sus cuatro enlaces. El copy propio de la página es idéntico. Juan lo acepta en 57-09 |
-| /blog/confirm | estado | el preview responde 500 (producción 200) | sin-clasificar |  |
-| /en/blog/confirm | estado | el preview responde 500 (producción 200) | sin-clasificar |  |
 
 ## Presupuesto del autor (F5)
 
@@ -28,25 +26,25 @@ Destinos revisados en el preview: 177. Fallos: 0. Enlaces a gemelos noindex en p
 
 | Plantilla | URLs | Preview medio | Producción medio | Preview máximo | Producción máximo |
 |---|---|---|---|---|---|
-| stack | 2 | 231721 | 172721 | 233153 | 173785 |
-| landing-local | 4 | 210118 | 101870 | 216829 | 103585 |
-| servicio | 8 | 286508 | 182239 | 303109 | 190799 |
-| servicios | 4 | 192737 | 86792 | 193524 | 87462 |
+| stack | 2 | 231721 | 172743 | 233153 | 173828 |
+| landing-local | 4 | 210118 | 101881 | 216829 | 103585 |
+| servicio | 8 | 286508 | 182277 | 303109 | 190928 |
+| servicios | 4 | 192740 | 86765 | 193535 | 87381 |
 | legal | 4 | 164282 | 66666 | 174539 | 68292 |
-| contacto | 2 | 189398 | 71124 | 190004 | 71436 |
-| blog | 2 | 263531 | 151029 | 265434 | 151610 |
-| home | 2 | 368249 | 205063 | 369715 | 205702 |
-| post | 96 | 309260 | 338505 | 469082 | 594585 |
+| contacto | 2 | 189398 | 71145 | 190004 | 71436 |
+| blog | 2 | 263552 | 151072 | 265434 | 151610 |
+| home | 2 | 368276 | 205020 | 369758 | 205659 |
+| post | 96 | 309260 | 338506 | 469082 | 594585 |
 | caso | 14 | 242076 | 113711 | 247585 | 116604 |
 | autor | 2 | 357416 | 2516455 | 360441 | 2785008 |
-| sitio | 12 | 217348 | 75220 | 219297 | 76118 |
-| blog-categoria | 10 | 168211 | 127993 | 185610 | 159154 |
+| sitio | 12 | 217355 | 75235 | 219297 | 76161 |
+| blog-categoria | 10 | 168211 | 127972 | 185610 | 159111 |
 | sitios | 2 | 206500 | 70653 | 207132 | 70950 |
 | casos | 2 | 184444 | 80545 | 185231 | 80978 |
 | autores | 2 | 162180 | 62811 | 162415 | 63068 |
 | busqueda | 2 | 132071 | 60071 | 132631 | 60294 |
-| blog-confirmacion | 2 | 86801 | 56551 | 87326 | 56783 |
-| sobre-mi | 2 | 207674 | 5316 | 209568 | 5319 |
+| blog-confirmacion | 2 | 107895 | 56551 | 108457 | 56783 |
+| sobre-mi | 2 | 207685 | 5316 | 209579 | 5319 |
 
 ## Todas las URLs
 
@@ -220,8 +218,8 @@ Destinos revisados en el preview: 177. Fallos: 0. Enlaces a gemelos noindex en p
 | /en/authors | sitemap | 200 | 141 / 11 | PASS |
 | /search | fuera-del-sitemap | 200 | 9 / 2 | PASS |
 | /en/search | fuera-del-sitemap | 200 | 8 / 2 | PASS |
-| /blog/confirm | fuera-del-sitemap | 500 | - / - | FAIL (estado) |
-| /en/blog/confirm | fuera-del-sitemap | 500 | - / - | FAIL (estado) |
+| /blog/confirm | fuera-del-sitemap | 200 | 28 / 28 | PASS |
+| /en/blog/confirm | fuera-del-sitemap | 200 | 29 / 29 | PASS |
 | /services | fuera-del-sitemap | 200 | 432 / 149 | PASS |
 | /en/servicios | fuera-del-sitemap | 200 | 427 / 150 | PASS |
 | /sobre-mi | nueva | 200 | 556 / - | PASS |

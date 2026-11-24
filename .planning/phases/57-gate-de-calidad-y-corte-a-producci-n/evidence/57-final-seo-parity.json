@@ -1,5 +1,5 @@
 {
-  "generado": "2026-11-24T05:56:34.533Z",
+  "generado": "2026-11-24T08:09:52.186Z",
   "modo": "preview-contra-produccion",
   "preview": "https://dev.juan-tech.com",
   "produccion": "https://juan-tech.com",
@@ -12,16 +12,15 @@
     "delSitemap": 166,
     "fueraDelSitemap": 6,
     "rutasNuevas": 2,
-    "urlsPass": 170,
-    "urlsFail": 4,
+    "urlsPass": 172,
+    "urlsFail": 2,
     "enlacesInternosRevisados": 177,
     "enlacesFail": 0,
     "redirectsRevisados": 38,
     "redirectsFail": 0,
-    "diferencias": 4,
+    "diferencias": 2,
     "porClase": {
-      "b": 2,
-      "sin-clasificar": 2
+      "b": 2
     }
   },
   "diferencias": [
@@ -38,20 +37,6 @@
       "message": "palabras en main: 124 contra 138 en producción (10.1% menos; tolerancia 2%)",
       "clase": "b",
       "motivo": "Categoría general vacía: el rediseño quita el contador \"0 artículos\" y la fila repetida \"Otros temas del blog\" con sus cuatro enlaces. El copy propio de la página es idéntico. Juan lo acepta en 57-09"
-    },
-    {
-      "path": "/blog/confirm",
-      "field": "estado",
-      "message": "el preview responde 500 (producción 200)",
-      "clase": "sin-clasificar",
-      "motivo": ""
-    },
-    {
-      "path": "/en/blog/confirm",
-      "field": "estado",
-      "message": "el preview responde 500 (producción 200)",
-      "clase": "sin-clasificar",
-      "motivo": ""
     }
   ],
   "urls": [
@@ -65,7 +50,7 @@
       },
       "bytes": {
         "preview": 233153,
-        "produccion": 173785
+        "produccion": 173828
       },
       "palabras": {
         "preview": {
@@ -200,7 +185,7 @@
       },
       "bytes": {
         "preview": 215131,
-        "produccion": 102612
+        "produccion": 102655
       },
       "palabras": {
         "preview": {
@@ -227,7 +212,7 @@
       },
       "bytes": {
         "preview": 271201,
-        "produccion": 179000
+        "produccion": 179043
       },
       "palabras": {
         "preview": {
@@ -254,7 +239,7 @@
       },
       "bytes": {
         "preview": 268847,
-        "produccion": 177206
+        "produccion": 177249
       },
       "palabras": {
         "preview": {
@@ -281,7 +266,7 @@
       },
       "bytes": {
         "preview": 282195,
-        "produccion": 173979
+        "produccion": 173936
       },
       "palabras": {
         "preview": {
@@ -308,7 +293,7 @@
       },
       "bytes": {
         "preview": 280033,
-        "produccion": 172209
+        "produccion": 172252
       },
       "palabras": {
         "preview": {
@@ -335,7 +320,7 @@
       },
       "bytes": {
         "preview": 294515,
-        "produccion": 190799
+        "produccion": 190928
       },
       "palabras": {
         "preview": {
@@ -362,7 +347,7 @@
       },
       "bytes": {
         "preview": 291947,
-        "produccion": 188992
+        "produccion": 189078
       },
       "palabras": {
         "preview": {
@@ -442,7 +427,7 @@
         "produccion": 200
       },
       "bytes": {
-        "preview": 193524,
+        "preview": 193535,
         "produccion": 87381
       },
       "palabras": {
@@ -632,7 +617,7 @@
       },
       "bytes": {
         "preview": 188791,
-        "produccion": 70811
+        "produccion": 70854
       },
       "palabras": {
         "preview": {
@@ -685,8 +670,8 @@
         "produccion": 200
       },
       "bytes": {
-        "preview": 261627,
-        "produccion": 150447
+        "preview": 261670,
+        "produccion": 150533
       },
       "palabras": {
         "preview": {
@@ -712,8 +697,8 @@
         "produccion": 200
       },
       "bytes": {
-        "preview": 369715,
-        "produccion": 205702
+        "preview": 369758,
+        "produccion": 205659
       },
       "palabras": {
         "preview": {
@@ -739,8 +724,8 @@
         "produccion": 200
       },
       "bytes": {
-        "preview": 366783,
-        "produccion": 204423
+        "preview": 366794,
+        "produccion": 204380
       },
       "palabras": {
         "preview": {
@@ -1064,7 +1049,7 @@
       },
       "bytes": {
         "preview": 314951,
-        "produccion": 282243
+        "produccion": 282200
       },
       "palabras": {
         "preview": {
@@ -1118,7 +1103,7 @@
       },
       "bytes": {
         "preview": 300010,
-        "produccion": 282171
+        "produccion": 282214
       },
       "palabras": {
         "preview": {
@@ -1603,7 +1588,7 @@
         "produccion": 200
       },
       "bytes": {
-        "preview": 327755,
+        "preview": 327798,
         "produccion": 287700
       },
       "palabras": {
@@ -1712,7 +1697,7 @@
       },
       "bytes": {
         "preview": 312756,
-        "produccion": 310685
+        "produccion": 310728
       },
       "palabras": {
         "preview": {
@@ -1928,7 +1913,7 @@
       },
       "bytes": {
         "preview": 318374,
-        "produccion": 288366
+        "produccion": 288323
       },
       "palabras": {
         "preview": {
@@ -2009,7 +1994,7 @@
       },
       "bytes": {
         "preview": 302532,
-        "produccion": 486108
+        "produccion": 486151
       },
       "palabras": {
         "preview": {
@@ -2144,7 +2129,7 @@
       },
       "bytes": {
         "preview": 291848,
-        "produccion": 308505
+        "produccion": 308462
       },
       "palabras": {
         "preview": {
@@ -2170,7 +2155,7 @@
         "produccion": 200
       },
       "bytes": {
-        "preview": 273503,
+        "preview": 273460,
         "produccion": 476567
       },
       "palabras": {
@@ -2549,7 +2534,7 @@
       },
       "bytes": {
         "preview": 289164,
-        "produccion": 313425
+        "produccion": 313382
       },
       "palabras": {
         "preview": {
@@ -2576,7 +2561,7 @@
       },
       "bytes": {
         "preview": 326633,
-        "produccion": 279537
+        "produccion": 279494
       },
       "palabras": {
         "preview": {
@@ -2792,7 +2777,7 @@
       },
       "bytes": {
         "preview": 297129,
-        "produccion": 271830
+        "produccion": 271873
       },
       "palabras": {
         "preview": {
@@ -2873,7 +2858,7 @@
       },
       "bytes": {
         "preview": 318236,
-        "produccion": 313497
+        "produccion": 313540
       },
       "palabras": {
         "preview": {
@@ -3116,7 +3101,7 @@
       },
       "bytes": {
         "preview": 350503,
-        "produccion": 517662
+        "produccion": 517748
       },
       "palabras": {
         "preview": {
@@ -3818,7 +3803,7 @@
       },
       "bytes": {
         "preview": 214366,
-        "produccion": 75044
+        "produccion": 75087
       },
       "palabras": {
         "preview": {
@@ -3844,7 +3829,7 @@
         "produccion": 200
       },
       "bytes": {
-        "preview": 218126,
+        "preview": 218169,
         "produccion": 75586
       },
       "palabras": {
@@ -3871,7 +3856,7 @@
         "produccion": 200
       },
       "bytes": {
-        "preview": 216963,
+        "preview": 217006,
         "produccion": 74852
       },
       "palabras": {
@@ -3926,7 +3911,7 @@
       },
       "bytes": {
         "preview": 218028,
-        "produccion": 74744
+        "produccion": 74787
       },
       "palabras": {
         "preview": {
@@ -4034,7 +4019,7 @@
       },
       "bytes": {
         "preview": 216689,
-        "produccion": 75065
+        "produccion": 75108
       },
       "palabras": {
         "preview": {
@@ -4061,7 +4046,7 @@
       },
       "bytes": {
         "preview": 218494,
-        "produccion": 76118
+        "produccion": 76161
       },
       "palabras": {
         "preview": {
@@ -4142,7 +4127,7 @@
       },
       "bytes": {
         "preview": 176670,
-        "produccion": 146129
+        "produccion": 146086
       },
       "palabras": {
         "preview": {
@@ -4169,7 +4154,7 @@
       },
       "bytes": {
         "preview": 185610,
-        "produccion": 159154
+        "produccion": 159111
       },
       "palabras": {
         "preview": {
@@ -4257,7 +4242,7 @@
       },
       "bytes": {
         "preview": 145768,
-        "produccion": 84031
+        "produccion": 83988
       },
       "palabras": {
         "preview": {
@@ -4291,7 +4276,7 @@
       },
       "bytes": {
         "preview": 164352,
-        "produccion": 121355
+        "produccion": 121312
       },
       "palabras": {
         "preview": {
@@ -4345,7 +4330,7 @@
       },
       "bytes": {
         "preview": 171272,
-        "produccion": 131816
+        "produccion": 131773
       },
       "palabras": {
         "preview": {
@@ -4610,62 +4595,54 @@
       "origen": "fuera-del-sitemap",
       "plantilla": "blog-confirmacion",
       "estado": {
-        "preview": 500,
+        "preview": 200,
         "produccion": 200
       },
       "bytes": {
-        "preview": 87326,
+        "preview": 108457,
         "produccion": 56783
       },
       "palabras": {
         "preview": {
-          "main": null,
-          "body": 6
+          "main": 28,
+          "body": 204
         },
-        "produccion": null
-      },
-      "h1": 0,
-      "saltos": [],
-      "fallos": [
-        {
-          "field": "estado",
-          "message": "el preview responde 500 (producción 200)",
-          "clase": "sin-clasificar",
-          "motivo": ""
+        "produccion": {
+          "main": 28,
+          "body": 207
         }
-      ],
-      "enlacesInternos": 0
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
     },
     {
       "path": "/en/blog/confirm",
       "origen": "fuera-del-sitemap",
       "plantilla": "blog-confirmacion",
       "estado": {
-        "preview": 500,
+        "preview": 200,
         "produccion": 200
       },
       "bytes": {
-        "preview": 86276,
+        "preview": 107332,
         "produccion": 56318
       },
       "palabras": {
         "preview": {
-          "main": null,
-          "body": 5
+          "main": 29,
+          "body": 193
         },
-        "produccion": null
-      },
-      "h1": 0,
-      "saltos": [],
-      "fallos": [
-        {
-          "field": "estado",
-          "message": "el preview responde 500 (producción 200)",
-          "clase": "sin-clasificar",
-          "motivo": ""
+        "produccion": {
+          "main": 29,
+          "body": 197
         }
-      ],
-      "enlacesInternos": 0
+      },
+      "h1": 1,
+      "saltos": [],
+      "fallos": [],
+      "enlacesInternos": 26
     },
     {
       "path": "/services",
@@ -4677,7 +4654,7 @@
       },
       "bytes": {
         "preview": 193454,
-        "produccion": 87462
+        "produccion": 87354
       },
       "palabras": {
         "preview": {
@@ -4730,7 +4707,7 @@
         "produccion": 404
       },
       "bytes": {
-        "preview": 209568,
+        "preview": 209579,
         "produccion": 5312
       },
       "palabras": {
@@ -4754,7 +4731,7 @@
         "produccion": 404
       },
       "bytes": {
-        "preview": 205780,
+        "preview": 205791,
         "produccion": 5319
       },
       "palabras": {
@@ -4854,6 +4831,7 @@
           "/en/case-studies",
           "/en/authors",
           "/en/search",
+          "/en/blog/confirm",
           "/en/servicios"
         ]
       },
@@ -4938,6 +4916,7 @@
           "/en/case-studies",
           "/en/authors",
           "/en/search",
+          "/en/blog/confirm",
           "/en/servicios"
         ]
       },
@@ -5549,30 +5528,30 @@
     "stack": {
       "urls": 2,
       "previewMax": 233153,
-      "produccionMax": 173785,
+      "produccionMax": 173828,
       "previewMedio": 231721,
-      "produccionMedio": 172721
+      "produccionMedio": 172743
     },
     "landing-local": {
       "urls": 4,
       "previewMax": 216829,
       "produccionMax": 103585,
       "previewMedio": 210118,
-      "produccionMedio": 101870
+      "produccionMedio": 101881
     },
     "servicio": {
       "urls": 8,
       "previewMax": 303109,
-      "produccionMax": 190799,
+      "produccionMax": 190928,
       "previewMedio": 286508,
-      "produccionMedio": 182239
+      "produccionMedio": 182277
     },
     "servicios": {
       "urls": 4,
-      "previewMax": 193524,
-      "produccionMax": 87462,
-      "previewMedio": 192737,
-      "produccionMedio": 86792
+      "previewMax": 193535,
+      "produccionMax": 87381,
+      "previewMedio": 192740,
+      "produccionMedio": 86765
     },
     "legal": {
       "urls": 4,
@@ -5586,28 +5565,28 @@
       "previewMax": 190004,
       "produccionMax": 71436,
       "previewMedio": 189398,
-      "produccionMedio": 71124
+      "produccionMedio": 71145
     },
     "blog": {
       "urls": 2,
       "previewMax": 265434,
       "produccionMax": 151610,
-      "previewMedio": 263531,
-      "produccionMedio": 151029
+      "previewMedio": 263552,
+      "produccionMedio": 151072
     },
     "home": {
       "urls": 2,
-      "previewMax": 369715,
-      "produccionMax": 205702,
-      "previewMedio": 368249,
-      "produccionMedio": 205063
+      "previewMax": 369758,
+      "produccionMax": 205659,
+      "previewMedio": 368276,
+      "produccionMedio": 205020
     },
     "post": {
       "urls": 96,
       "previewMax": 469082,
       "produccionMax": 594585,
       "previewMedio": 309260,
-      "produccionMedio": 338505
+      "produccionMedio": 338506
     },
     "caso": {
       "urls": 14,
@@ -5626,16 +5605,16 @@
     "sitio": {
       "urls": 12,
       "previewMax": 219297,
-      "produccionMax": 76118,
-      "previewMedio": 217348,
-      "produccionMedio": 75220
+      "produccionMax": 76161,
+      "previewMedio": 217355,
+      "produccionMedio": 75235
     },
     "blog-categoria": {
       "urls": 10,
       "previewMax": 185610,
-      "produccionMax": 159154,
+      "produccionMax": 159111,
       "previewMedio": 168211,
-      "produccionMedio": 127993
+      "produccionMedio": 127972
     },
     "sitios": {
       "urls": 2,
@@ -5667,16 +5646,16 @@
     },
     "blog-confirmacion": {
       "urls": 2,
-      "previewMax": 87326,
+      "previewMax": 108457,
       "produccionMax": 56783,
-      "previewMedio": 86801,
+      "previewMedio": 107895,
       "produccionMedio": 56551
     },
     "sobre-mi": {
       "urls": 2,
-      "previewMax": 209568,
+      "previewMax": 209579,
       "produccionMax": 5319,
-      "previewMedio": 207674,
+      "previewMedio": 207685,
       "produccionMedio": 5316
     }
   },
