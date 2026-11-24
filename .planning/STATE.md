@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: planning
-stopped_at: Completed 56-01-PLAN.md
-last_updated: "2026-11-10T22:02:58.137Z"
+stopped_at: Completed 57-07-PLAN.md
+last_updated: "2026-11-24T02:55:51.137Z"
 last_activity: 2026-11-10
 last_activity_desc: Phase 55 complete, transitioned to Phase 6
-state_head: eb8cb68129366bb8e4884ce1cae07808260bc656
+state_head: c9aa03c8f5f3531bab5cf0a9009e2475223d3e1c
 progress:
   total_phases: 5
   completed_phases: 3
-  total_plans: 49
-  completed_plans: 35
+  total_plans: 61
+  completed_plans: 56
   percent: 60
 ---
 
@@ -174,6 +174,7 @@ Last activity: 2026-11-10 — Phase 55 complete, transitioned to Phase 6
 | Phase 55 P11 | 95min | 3 tasks | 17 files |
 | Phase 55 P13 | 32min | 3 tasks | 2 files |
 | Phase 56 P01 | 12min | 3 tasks | 12 files |
+| Phase 57 P07 | ~1h | 3 tasks | 105 files |
 
 ## Accumulated Context
 
@@ -344,6 +345,7 @@ Recent decisions affecting current work:
 - [Phase 6]: 54-14: HomeData gana sectionsB; el enlace de SiteCard va a /websites/<slug>; los verificadores de la fase 48 se retiran en el corte de la fase 57
 - [Phase 6]: 54-15: el inlineStat de Madrid tambien es un marcador y no pinta aside; los botones del hero de las landings locales se conservan como LocalHeroActions; el contrato 54-dual-urls.mjs ya pasa contra produccion como linea base
 - [Phase 6]: 55-09: lecciones de casos ocultas sin datos; comparativos de clics calculados en el servidor desde results.metrics (sin dato nuevo)
+- [Phase 57]: 57-07: el lock se regenera con npm 10.9.2 (el del VPS), no con npm 11 local; recharts queda pendiente de decision
 
 ### Pending Todos
 
@@ -401,8 +403,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-10T22:02:56.867Z
-Stopped at: Completed 56-01-PLAN.md
+Last session: 2026-11-24T02:55:50.570Z
+Stopped at: Completed 57-07-PLAN.md
 Resume file: None
 
 ## Operator Next Steps

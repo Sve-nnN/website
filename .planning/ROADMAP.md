@@ -171,17 +171,17 @@ Plans:
   5. **Gate humano (GO-02):** Juan da confirmación explícita antes del merge a master; sin esa confirmación no hay merge.
   6. Tras el deploy, el sitio juan-tech.com live pasa el mismo crawl y la misma medición, y queda documentado y probado el rollback (revertir el merge y redesplegar el commit anterior en Dokploy; la DB no necesita regreso porque las migraciones son aditivas).
 
-**Plans**: 12 plans
+**Plans**: 7/12 plans executed
 
 Plans:
 
-- [ ] 57-01-PLAN.md — Herramientas de solo lectura de Dokploy y disco del VPS, push del preview y línea base
-- [ ] 57-02-PLAN.md — Crawl de paridad SEO de las 169 URLs y rutas nuevas, y barrido de clases Tailwind con control positivo
-- [ ] 57-03-PLAN.md — Barridos de accesibilidad (axe y teclado), rendimiento (Lighthouse) y peso de bundle, y lista de revisión humana desde A11Y.md
-- [ ] 57-04-PLAN.md — Limpieza de sobras diferidas de las fases 54 y 55 (IN-01 a IN-04, comentario del sitemap, claves sin uso, A7)
-- [ ] 57-05-PLAN.md — Decisiones de Juan del gate 56, decisiones pequeñas y siembra sombra aditiva con checkpoint de base
-- [ ] 57-06-PLAN.md — Correcciones de los hallazgos de la auditoría: Critical-CH, x-powered-by, TTFB del post e imagen LCP
-- [ ] 57-07-PLAN.md — Retirada de Tailwind, shadcn/Radix y componentes viejos sin cambiar el aspecto
+- [x] 57-01-PLAN.md — Herramientas de solo lectura de Dokploy y disco del VPS, push del preview y línea base
+- [x] 57-02-PLAN.md — Crawl de paridad SEO de las 169 URLs y rutas nuevas, y barrido de clases Tailwind con control positivo
+- [x] 57-03-PLAN.md — Barridos de accesibilidad (axe y teclado), rendimiento (Lighthouse) y peso de bundle, y lista de revisión humana desde A11Y.md
+- [x] 57-04-PLAN.md — Limpieza de sobras diferidas de las fases 54 y 55 (IN-01 a IN-04, comentario del sitemap, claves sin uso, A7)
+- [x] 57-05-PLAN.md — Decisiones de Juan del gate 56, decisiones pequeñas y siembra sombra aditiva con checkpoint de base
+- [x] 57-06-PLAN.md — Correcciones de los hallazgos de la auditoría: Critical-CH, x-powered-by, TTFB del post e imagen LCP
+- [x] 57-07-PLAN.md — Retirada de Tailwind, shadcn/Radix y componentes viejos sin cambiar el aspecto
 - [ ] 57-08-PLAN.md — Batería de la fase, reporte del gate para Juan, rollback ensayado y plan de monitoreo
 - [ ] 57-09-PLAN.md — Revisión humana de accesibilidad y diseño, y aceptación escrita de cada excepción
 - [ ] 57-10-PLAN.md — Volcado de respaldo verificado y confirmación escrita del merge a master
@@ -196,7 +196,7 @@ Plans:
 | 54. Páginas de conversión y utilidad | 16/16 | Complete    | 2026-11-08 |
 | 55. Casos, websites, blog y autores | 13/13 | Complete    | 2026-11-10 |
 | 56. Contenido pendiente de Juan | 1/14 | In Progress|  - |
-| 57. Gate de calidad y corte a producción | 0/12 | Not started | - |
+| 57. Gate de calidad y corte a producción | 7/12 | In Progress | - |
 
 <details>
 <summary>🗄 v2.3 Rediseño Visual v3 (mockups HTML) - REEMPLAZADO por v2.4 el 2026-11-06</summary>

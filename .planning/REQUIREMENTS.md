@@ -38,7 +38,7 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 
 - [ ] **CAL-01**: Cada plantilla cumple WCAG 2.2 AA según A11Y.md, con Lighthouse a11y 100 y revisión manual de teclado.
 - [ ] **CAL-02**: El Lighthouse mobile de cada plantilla no empeora frente al baseline de producción (LCP, CLS, INP).
-- [ ] **CAL-03**: No queda código de Tailwind ni shadcn/Radix sin usar en el bundle final.
+- [x] **CAL-03**: No queda código de Tailwind ni shadcn/Radix sin usar en el bundle final.
 
 ### Contenido pendiente de Juan (CONT)
 
@@ -91,7 +91,7 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 | SEO-03 | Phase 57 | Pending |
 | CAL-01 | Phase 57 | Pending |
 | CAL-02 | Phase 57 | Pending |
-| CAL-03 | Phase 57 | Pending |
+| CAL-03 | Phase 57 | Complete |
 | CONT-01 | Phase 56 | Pending |
 | CONT-02 | Phase 56 | Pending |
 | CONT-03 | Phase 56 | Pending |
