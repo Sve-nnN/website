@@ -37,7 +37,7 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 ### Accesibilidad y rendimiento (CAL)
 
 - [ ] **CAL-01**: Cada plantilla cumple WCAG 2.2 AA según A11Y.md, con Lighthouse a11y 100 y revisión manual de teclado.
-- [ ] **CAL-02**: El Lighthouse mobile de cada plantilla no empeora frente al baseline de producción (LCP, CLS, INP).
+- [x] **CAL-02**: El Lighthouse mobile de cada plantilla no empeora frente al baseline de producción (LCP, CLS, INP).
 - [x] **CAL-03**: No queda código de Tailwind ni shadcn/Radix sin usar en el bundle final.
 
 ### Contenido pendiente de Juan (CONT)
@@ -48,7 +48,7 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 
 ### Corte a producción (GO)
 
-- [ ] **GO-01**: Existe un reporte de gate con SEO, accesibilidad y rendimiento contra el preview.
+- [x] **GO-01**: Existe un reporte de gate con SEO, accesibilidad y rendimiento contra el preview.
 - [ ] **GO-02**: Juan da confirmación explícita antes del merge a master.
 - [ ] **GO-03**: Tras el deploy se valida contra juan-tech.com live y queda documentado el rollback.
 
@@ -90,12 +90,12 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 | SEO-02 | Phase 57 | Pending |
 | SEO-03 | Phase 57 | Pending |
 | CAL-01 | Phase 57 | Pending |
-| CAL-02 | Phase 57 | Pending |
+| CAL-02 | Phase 57 | Complete |
 | CAL-03 | Phase 57 | Complete |
 | CONT-01 | Phase 56 | Pending |
 | CONT-02 | Phase 56 | Pending |
 | CONT-03 | Phase 56 | Pending |
-| GO-01 | Phase 57 | Pending |
+| GO-01 | Phase 57 | Complete |
 | GO-02 | Phase 57 | Pending |
 | GO-03 | Phase 57 | Pending |
 

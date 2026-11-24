@@ -5,16 +5,16 @@ milestone_name: Rediseño MUI en producción
 current_phase: 6
 current_phase_name: deploy + cutover (en pausa, pendiente de decisión de infraestructura de juan)
 status: planning
-stopped_at: Completed 57-07-PLAN.md
-last_updated: "2026-11-24T02:55:51.137Z"
+stopped_at: Completed 57-08-PLAN.md
+last_updated: "2026-11-24T06:46:12.910Z"
 last_activity: 2026-11-10
 last_activity_desc: Phase 55 complete, transitioned to Phase 6
-state_head: c9aa03c8f5f3531bab5cf0a9009e2475223d3e1c
+state_head: e7bf7a0febd49b8a9955119f0b572939d57c3629
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 61
-  completed_plans: 56
+  completed_plans: 57
   percent: 60
 ---
 
@@ -175,6 +175,7 @@ Last activity: 2026-11-10 — Phase 55 complete, transitioned to Phase 6
 | Phase 55 P13 | 32min | 3 tasks | 2 files |
 | Phase 56 P01 | 12min | 3 tasks | 12 files |
 | Phase 57 P07 | ~1h | 3 tasks | 105 files |
+| Phase 57 P08 | ~3h50m | 3 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -346,6 +347,7 @@ Recent decisions affecting current work:
 - [Phase 6]: 54-15: el inlineStat de Madrid tambien es un marcador y no pinta aside; los botones del hero de las landings locales se conservan como LocalHeroActions; el contrato 54-dual-urls.mjs ya pasa contra produccion como linea base
 - [Phase 6]: 55-09: lecciones de casos ocultas sin datos; comparativos de clics calculados en el servidor desde results.metrics (sin dato nuevo)
 - [Phase 57]: 57-07: el lock se regenera con npm 10.9.2 (el del VPS), no con npm 11 local; recharts queda pendiente de decision
+- [Phase 57]: 57-08: el rollback por imagen de Dokploy no sirve (rollbackActive false en web); la via es git revert -m 1 del merge commit; /blog/confirm responde 500 en el preview y vuelve a 57-07
 
 ### Pending Todos
 
@@ -403,8 +405,8 @@ Items acknowledged and deferred at v1.4 milestone close on 2026-07-12 (unrelated
 
 ## Session Continuity
 
-Last session: 2026-11-24T02:55:50.570Z
-Stopped at: Completed 57-07-PLAN.md
+Last session: 2026-11-24T06:46:12.347Z
+Stopped at: Completed 57-08-PLAN.md
 Resume file: None
 
 ## Operator Next Steps
