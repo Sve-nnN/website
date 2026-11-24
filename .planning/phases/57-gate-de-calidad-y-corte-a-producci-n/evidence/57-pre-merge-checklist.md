@@ -10,18 +10,18 @@ Leyenda: CUMPLIDO, ABIERTO (bloquea el merge hasta que Juan responda), DIFERIDO 
 
 | # | Precondición | Estado | Evidencia |
 |---|---|---|---|
-| 1 | Gate de decisiones de la 56 en 0 (`tsx scripts/verify/56-gate.ts --gate`) | **ABIERTO** | Código de salida **1**. Un ítem bloquea: `CUT-legal-date-efectiva` (fecha efectiva de la política de privacidad y de los términos, el día del corte), pendiente de respuesta de Juan (D-07: con ítems abiertos no hay corte). Además 10 advertencias de ítems en `propuesto` (fila 14) que no bloquean pero hay que anotar en el handoff. |
+| 1 | Gate de decisiones de la 56 en 0 (`tsx scripts/verify/56-gate.ts --gate`) | **ABIERTO (respondido, se cierra en 57-11)** | Código de salida **1**. Un ítem bloquea: `CUT-legal-date-efectiva`. Juan respondió el 2026-11-24 "Hoy, 2026-11-24" (ver `57-exceptions.md`). El ítem pasa a `aprobado` en el código solo en 57-11, el día del merge, con esa fecha; hasta entonces el gate sale 1 por diseño (D-07: con ítems abiertos no hay corte). Además 10 advertencias de ítems en `propuesto` (fila 14) que no bloquean pero hay que anotar en el handoff. |
 | 2 | Preview desplegado en el commit actual y sano | CUMPLIDO | `57-dokploy-status --app preview`: despliegue `done`, contenedor `running`, 0 salidas en 10 min, commit `19d0a09`. |
 | 3 | `/blog/confirm` y `/en/blog/confirm` sin 500 | CUMPLIDO | Corregido en `19d0a09` (los iconos ya no se pasan como `component` de MUI desde un Server Component). La batería del 2026-11-24 no reporta ninguna diferencia de estado en esas URLs. Constancia en `57-final-clasificacion.json`. |
-| 4 | Reporte regenerado sin filas que bloqueen sin excepción propuesta | **ABIERTO** | `57-GATE-REPORTE.md` regenerado sobre `19d0a09`: 2 bloqueos. (a) `54-about`: sin excepción propuesta, es una decisión de contenido de Juan (fila 12). (b) `CUT-legal-date-efectiva` (fila 1). Más 2 diferencias legítimas que Juan debe aceptar por escrito (fila 11). |
+| 4 | Reporte regenerado sin filas que bloqueen sin excepción propuesta | **ABIERTO (con decisión escrita de Juan, falta ejecutar)** | `57-GATE-REPORTE.md` regenerado sobre `19d0a09`: 2 bloqueos. (a) `54-about`: Juan decidió "Escribirlo en 57-10" (fila 12), pendiente de la escritura. (b) `CUT-legal-date-efectiva`: Juan respondió "Hoy, 2026-11-24" (fila 1), pendiente de 57-11. Las 2 diferencias legítimas están aceptadas (fila 11). |
 | 5 | `57-run-all --selftests --strict` en 0 | CUMPLIDO | Salida 0, los 15 autotests en PASS. |
 | 6 | Batería viva contra el preview | **ABIERTO** | 6 de 8 pasos PASS: `53-crawl-parity`, `57-legacy-render-sweep`, `57-headers-check`, `57-a11y-sweep`, `57-perf-compare`, `57-bundle-weight`. Fallan `57-seo-parity-all` (solo las 2 diferencias de palabras de la fila 11) y `56-run-all --live` (solo `54-about`, fila 12). |
 | 7 | Hallazgo F1 (TTFB y LCP del post) | CUMPLIDO | Corregido: `57-headers-check` PASS (`s-maxage` presente, sin `no-store` en el post). LCP del post 2585 ms contra 4107 ms en producción; TTFB 245 ms contra 1558 ms. |
 | 8 | Hallazgo F2 (`Critical-CH` y su 307) | CUMPLIDO | Corregido: sin `accept-ch` ni `critical-ch` fuera de `/admin`. El tema automático del admin se revisa a mano tras el corte (el preview responde 404 en `/admin` a propósito). |
 | 9 | Hallazgo F3 (imagen LCP sin `fetchpriority`) | CUMPLIDO | No aplica: el elemento LCP de las URLs medidas no es una imagen. |
 | 10 | Hallazgos F4, F5 y F13 | CUMPLIDO | F4: 0 destinos con enlaces a gemelos EN noindex ni enlaces rotos en el preview. F5: perfil de autor en 360.441 bytes (ES) y 354.390 (EN) contra un presupuesto de 500.000. F13: sin `x-powered-by`. La decisión de los 17 posts solo en español con gemelo EN noindex ya está tomada en `translation-gaps.ts`. |
-| 11 | Diferencias legítimas aceptadas por Juan por escrito (D-04) | **ABIERTO** | `/blog/general (palabras)` (120 contra 135, 11,1% menos) y `/en/blog/general (palabras)` (124 contra 138, 10,1% menos). Causa: la categoría vacía pierde el contador "0 artículos" y la fila repetida "Otros temas del blog". Sin respuesta escrita de Juan todavía (T-57-32). |
-| 12 | `54-about`: alt EN de la foto de Sobre mí | **ABIERTO** | `/en/sobre-mi` no tiene ninguna imagen con alt no vacío. La fila `ALT-about-hero` está aprobada y es cargable, pero el cargador del corte solo escribe el alt de las 6 capturas. Exige una escritura aditiva en Media o una excepción. Decisión de Juan. |
+| 11 | Diferencias legítimas aceptadas por Juan por escrito (D-04) | CUMPLIDO | `/blog/general (palabras)` (120 contra 135, 11,1% menos) y `/en/blog/general (palabras)` (124 contra 138, 10,1% menos). Causa: la categoría vacía pierde el contador "0 artículos" y la fila repetida "Otros temas del blog". Juan, 2026-11-24: "Acepto la excepción". Constancia en `57-exceptions.md` (T-57-32). |
+| 12 | `54-about`: alt EN de la foto de Sobre mí | **ABIERTO (decidido, falta la escritura)** | `/en/sobre-mi` no tiene ninguna imagen con alt no vacío. La fila `ALT-about-hero` está aprobada y es cargable. Juan, 2026-11-24: "Escribirlo en 57-10". Es una escritura aditiva en el Media `p54-about-hero`, que se hace en el paso del cargador (57-10 o 57-12) tras la confirmación del merge y con el respaldo verificado. No se ejecutó todavía. |
 | 13 | `53-computed-styles` intermitente | INFORMATIVO | El único FAIL ocurrió dentro de `56-run-all --live` a primera hora. No reapareció en cuatro corridas aisladas ni en la repetición completa tras `19d0a09`. Sin causa visible, el script no se tocó. Se vigila en el monitoreo. |
 | 14 | Ítems `propuesto` del gate de decisiones (no bloquean) | INFORMATIVO | `D-11-lead`, `CUT-cta-master-landings-servicio`, `HEAD-legal`, `HEAD-lecciones`, `MSG-emailCapture-description`, `-alreadyBody`, `-errorBody`, `-privacyPrefix`, `-privacySuffix` y `-pendingBody`. Van al handoff. |
 | 15 | Rendimiento contra producción con la regla max(10%, 50 ms) | CUMPLIDO | Las 4 URLs en PASS, CLS 0 (0,013 en el post), accesibilidad Lighthouse 1. El proxy de INP (Playwright, no entra en la regla) es más alto en el preview: 128 a 160 ms contra 56 a 64 ms en producción. Queda anotado para que Juan lo vea. |
@@ -31,18 +31,20 @@ Leyenda: CUMPLIDO, ABIERTO (bloquea el merge hasta que Juan responda), DIFERIDO 
 | 19 | Snapshot de producción previo al corte (D-13) | CUMPLIDO | `evidence/57-prod-snapshot-pre.json`, tomado el 2026-11-24 08:48 UTC: 174 URLs (172 con 200; `/sobre-mi` y `/en/sobre-mi` dan 404 en producción, es la página nueva), sitemap de 166 locs, 38 redirects, `robots.txt`, `llms.txt` y `llms-full.txt` con 200. Sin cookies ni cabeceras de sesión. |
 | 20 | Diff de sitemap y llms contra el snapshot vacío | CUMPLIDO | Producción contra su propio snapshot, minutos después: 0 diferencias en estado, head, JSON-LD, palabras, sitemap, `robots.txt`, `llms.txt`, `llms-full.txt` y redirects. El único ruido son 15 hallazgos de enlaces internos que ya tiene producción (14 enlaces a gemelos EN noindex y `/en/sitemap.html` con 404), es decir el F4 original que el preview ya corrigió. Siguen en la línea base como defecto de producción, no como cambio. |
 | 21 | Revisión humana de accesibilidad y diseño (CAL-01, tarea 2) | **DIFERIDO** | Diferida por Juan a la revisión en producción tras el corte. Juan, 2026-11-24: "con respecto a la revision humana difierela y la reviso todo en produccion." No está hecha: ver "Riesgos y puntos abiertos conocidos". |
-| 22 | Revalidación de admin a preview (T-55-15) | DIFERIDO | Es la prueba opcional del punto 6 de la tarea 2 y no se ejecutó. No hay escrituras en producción desde este plan. La decisión de ejecutarla o descartarla (tras el corte admin y sitio comparten proceso) queda con Juan. |
-| 23 | Una respuesta escrita de Juan por cada excepción y diferencia (tarea 3) | **ABIERTO** | No ejecutada. Necesita las respuestas por ID que se piden en el checkpoint. Sin ellas no hay confirmación del merge en 57-10. |
+| 22 | Revalidación de admin a preview (T-55-15) | DIFERIDO (decidido) | Juan, 2026-11-24: "Acepto todo, ejecuta T-55-15". Se ejecuta tras el corte como cambio inocuo y reversible. No se ejecutó y no hay escrituras en producción desde este plan. |
+| 23 | Una respuesta escrita de Juan por cada excepción y diferencia (tarea 3) | CUMPLIDO | Respuestas literales del 2026-11-24 en `57-exceptions.md`: fecha legal, alt EN, las 2 diferencias de palabras, F1 a F5 y F13 sin excepción necesaria, proxy de INP aceptado, 10 ítems `propuesto` al handoff. |
 
 ## Qué queda abierto
 
-Bloquea el merge hasta que Juan responda:
+Juan ya respondió todo lo que se le preguntó (`57-exceptions.md`). Lo que sigue abierto es ejecución, no decisión:
 
-1. `CUT-legal-date-efectiva`: la fecha efectiva de privacidad y términos.
-2. `54-about`: cargar el alt EN de la foto de Sobre mí (escritura aditiva en Media) o aceptar la excepción.
-3. `/blog/general (palabras)` y `/en/blog/general (palabras)`: aceptar la diferencia o pedir corrección.
+1. `CUT-legal-date-efectiva`: se fija en el código en 57-11 el día del merge. Si el merge no cae el 2026-11-24, 57-11 se detiene y avisa.
+2. `54-about`: escribir el alt EN en el Media `p54-about-hero` (escritura aditiva, 57-10 o 57-12).
+3. GO-02: la frase literal de Juan para el merge (57-10, tarea 3).
+4. CAL-01: revisión humana diferida a producción (fila 21).
+5. T-55-15: se ejecuta tras el corte (fila 22).
 
-No bloquea, pero Juan debe verlo: los 10 ítems `propuesto` de la fila 14 y el proxy de INP de la fila 15.
+No bloquea: los 10 ítems `propuesto` de la fila 14 van al handoff y el proxy de INP de la fila 15 está aceptado.
 
 ## Riesgos y puntos abiertos conocidos
 
