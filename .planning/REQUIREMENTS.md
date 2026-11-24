@@ -49,7 +49,7 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 ### Corte a producción (GO)
 
 - [x] **GO-01**: Existe un reporte de gate con SEO, accesibilidad y rendimiento contra el preview.
-- [ ] **GO-02**: Juan da confirmación explícita antes del merge a master.
+- [x] **GO-02**: Juan da confirmación explícita antes del merge a master.
 - [ ] **GO-03**: Tras el deploy se valida contra juan-tech.com live y queda documentado el rollback.
 
 ## v2 Requirements
@@ -96,7 +96,7 @@ Alcance del milestone v2.4: llevar a producción el diseño MUI aprobado por Jua
 | CONT-02 | Phase 56 | Pending |
 | CONT-03 | Phase 56 | Pending |
 | GO-01 | Phase 57 | Complete |
-| GO-02 | Phase 57 | Pending |
+| GO-02 | Phase 57 | Complete |
 | GO-03 | Phase 57 | Pending |
 
 **Coverage:** 27/27 requirements mapeados, sin huérfanos ni duplicados.

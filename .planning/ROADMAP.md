@@ -171,7 +171,7 @@ Plans:
   5. **Gate humano (GO-02):** Juan da confirmación explícita antes del merge a master; sin esa confirmación no hay merge.
   6. Tras el deploy, el sitio juan-tech.com live pasa el mismo crawl y la misma medición, y queda documentado y probado el rollback (revertir el merge y redesplegar el commit anterior en Dokploy; la DB no necesita regreso porque las migraciones son aditivas).
 
-**Plans**: 9/12 plans executed
+**Plans**: 10/12 plans executed
 
 Plans:
 
@@ -184,7 +184,7 @@ Plans:
 - [x] 57-07-PLAN.md — Retirada de Tailwind, shadcn/Radix y componentes viejos sin cambiar el aspecto
 - [x] 57-08-PLAN.md — Batería de la fase, reporte del gate para Juan, rollback ensayado y plan de monitoreo
 - [x] 57-09-PLAN.md — Revisión humana de accesibilidad y diseño, y aceptación escrita de cada excepción (excepciones firmadas el 2026-11-24; la revisión humana CAL-01 quedó diferida por Juan a producción tras el corte, NO cumplida)
-- [ ] 57-10-PLAN.md — Volcado de respaldo verificado y confirmación escrita del merge a master
+- [x] 57-10-PLAN.md — Volcado de respaldo verificado y confirmación escrita del merge a master
 - [ ] 57-11-PLAN.md — Fecha legal del día, merge con merge commit y verificación del deploy de web en Dokploy
 - [ ] 57-12-PLAN.md — Cargador del corte, validación live, prueba del formulario, Search Console y monitoreo abierto
 
@@ -196,7 +196,7 @@ Plans:
 | 54. Páginas de conversión y utilidad | 16/16 | Complete    | 2026-11-08 |
 | 55. Casos, websites, blog y autores | 13/13 | Complete    | 2026-11-10 |
 | 56. Contenido pendiente de Juan | 1/14 | In Progress|  - |
-| 57. Gate de calidad y corte a producción | 9/12 | In Progress | - |
+| 57. Gate de calidad y corte a producción | 10/12 | In Progress | - |
 
 <details>
 <summary>🗄 v2.3 Rediseño Visual v3 (mockups HTML) - REEMPLAZADO por v2.4 el 2026-11-06</summary>
