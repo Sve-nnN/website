@@ -1,3 +1,7 @@
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Chip from '@mui/material/Chip'
+import Typography from '@mui/material/Typography'
 import { getTranslations } from 'next-intl/server'
 
 import type { AffiliateLink } from '@/payload-types'
@@ -7,9 +11,7 @@ import type { AffiliateLink } from '@/payload-types'
 // transitivamente los importe) — reabriría el hazard de TDZ/import circular
 // documentado en el docblock de `richTextBlockConverters.tsx` (ese módulo
 // importa este converter, y `RichTextRenderer` importa ese módulo).
-import { Badge } from '@/components/ui/badge'
-import { buttonVariants } from '@/components/ui/button-variants'
-import { AffiliateLink as AffiliateLinkAnchor } from '@/components/AffiliateLink'
+import { AFFILIATE_REL } from '@/components/AffiliateLink'
 import { resolveAffiliateCta } from '@/lib/affiliate-cta'
 
 /**
@@ -39,23 +41,49 @@ export async function AffiliateInlineCard({
   const { name, tagline } = resolved
   const cta = resolveAffiliateCta(resolved, name, t('ctaDefault', { tool: name }))
 
+  // Plan 57-07 (D-06): MUI en lugar de utilidades Tailwind. Este es el respaldo de los
+  // bloques de un cuerpo sin convertidores MUI; el post usa el de `mui/rich-text/blocks`.
   return (
-    <div className="not-prose my-8 rounded-lg border border-border bg-card shadow-sm p-6">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <p className="text-label uppercase tracking-wide opacity-70">{t('inlineEyebrow')}</p>
-          <p className="font-heading text-heading">{name}</p>
-          {tagline && <p className="text-body text-muted-foreground">{tagline}</p>}
-        </div>
+    <Box
+      sx={{
+        my: 4,
+        p: 3,
+        borderRadius: 2,
+        border: 1,
+        borderColor: 'divider',
+        bgcolor: 'background.paper',
+      }}
+    >
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 2 }}>
+        <Box>
+          <Typography variant="overline" component="p" sx={{ opacity: 0.7 }}>
+            {t('inlineEyebrow')}
+          </Typography>
+          <Typography variant="h6" component="p">
+            {name}
+          </Typography>
+          {tagline && (
+            <Typography variant="body1" component="p" sx={{ color: 'text.secondary' }}>
+              {tagline}
+            </Typography>
+          )}
+        </Box>
         {cta.kind === 'active' && (
-          <AffiliateLinkAnchor href={cta.href} className={buttonVariants({ size: 'sm' })}>
+          <Button
+            component="a"
+            href={cta.href}
+            target="_blank"
+            rel={AFFILIATE_REL}
+            variant="contained"
+            size="small"
+          >
             {cta.label}
-          </AffiliateLinkAnchor>
+          </Button>
         )}
-        {cta.kind === 'pending' && <Badge variant="outline">{t('badgePending')}</Badge>}
+        {cta.kind === 'pending' && <Chip label={t('badgePending')} variant="outlined" size="small" />}
         {/* cta.kind === 'none' (GSC): nada en este slot — ningún post de esta
             fase referencia el doc de GSC desde el bloque inline. */}
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }

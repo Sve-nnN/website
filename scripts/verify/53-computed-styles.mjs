@@ -1,12 +1,12 @@
 /**
  * READ-ONLY. Comprobaciones de navegador contra una página servida de verdad.
- * Complementa a 53-layer-check.mjs (forma del CSS compilado) y a
+ * Complementa a 53-layer-check.mjs (contrato de capas y retiro de Tailwind) y a
  * 53-shell-contract.mjs (contrato del HTML): este arranca Chromium y prueba el
  * comportamiento real del shell.
  *
  * Secciones (variable CHECKS, lista separada por comas; por defecto todas):
  *   styles    `body` con fondo rgb(24, 24, 24) (#181818, el tema oscuro de MUI
- *             gana al reset de Tailwind porque `tailwind` queda bajo `mui`) y
+ *             gana al reinicio base de globals.css porque `reset` queda bajo `mui`) y
  *             primer `.MuiButton-contained` con fondo rgb(255, 122, 69)
  *             (#FF7A45). Sin botón: falla solo con REQUIRE_BUTTON=1, si no
  *             imprime `SKIP botón`. (plan 53-01)

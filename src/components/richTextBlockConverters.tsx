@@ -2,6 +2,8 @@ import type { JSXConvertersFunction } from '@payloadcms/richtext-lexical/react'
 import type { AffiliateLink } from '@/payload-types'
 
 import React from 'react'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import { RichText, defaultJSXConverters } from '@payloadcms/richtext-lexical/react'
 import { Plus } from 'lucide-react'
 import { AffiliateInlineCard } from '@/components/AffiliateInlineCard'
@@ -86,18 +88,27 @@ type FaqBlockNodeFields = {
     | null
 }
 
+// Plan 57-07 (D-06): los dos respaldos siguientes pasaron de utilidades Tailwind a MUI. Solo
+// se pintan cuando el cuerpo no trae los convertidores de `mui/rich-text/blocks` (el post
+// siempre los trae); sin ellos Payload dejaba el bloque en blanco.
 function CodeBlockNode({ language, code }: CodeBlockNodeFields) {
   if (!code) return null
 
   return (
-    <div className="my-6 rounded-md bg-secondary text-secondary-foreground overflow-x-auto">
+    <Box sx={{ my: 3, borderRadius: 1, bgcolor: 'secondary.main', color: 'secondary.contrastText', overflowX: 'auto' }}>
       {language && (
-        <div className="px-4 py-2 text-label border-b border-white/10">{language}</div>
+        <Typography
+          variant="overline"
+          component="div"
+          sx={{ px: 2, py: 1, borderBottom: 1, borderColor: 'rgb(255 255 255 / 0.1)' }}
+        >
+          {language}
+        </Typography>
       )}
-      <pre className="p-4 text-sm">
+      <Box component="pre" sx={{ m: 0, p: 2, typography: 'mono' }}>
         <code>{code}</code>
-      </pre>
-    </div>
+      </Box>
+    </Box>
   )
 }
 
@@ -105,30 +116,55 @@ function FaqBlockNode({ title, faqs }: FaqBlockNodeFields) {
   if (!faqs?.length) return null
 
   return (
-    <section className="my-10">
-      {title && <h2 className="font-heading text-heading mb-6">{title}</h2>}
-      <div className="space-y-3">
+    <Box component="section" sx={{ my: 5 }}>
+      {title && (
+        <Typography variant="h4" component="h2" sx={{ mb: 3 }}>
+          {title}
+        </Typography>
+      )}
+      <Box sx={{ display: 'grid', gap: 1.5 }}>
         {faqs.map((item, i) => (
-          <details
+          <Box
+            component="details"
             key={item.id ?? i}
-            className="group rounded-lg border border-border bg-card px-6 shadow-sm"
+            sx={{
+              borderRadius: 2,
+              border: 1,
+              borderColor: 'divider',
+              bgcolor: 'background.paper',
+              px: 3,
+              '&[open] > summary > svg': { transform: 'rotate(45deg)' },
+            }}
           >
-            <summary className="cursor-pointer font-sans font-semibold text-body list-none flex items-center justify-between py-4">
+            <Typography
+              component="summary"
+              variant="subtitle1"
+              sx={{
+                cursor: 'pointer',
+                listStyle: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                py: 2,
+                '&::-webkit-details-marker': { display: 'none' },
+              }}
+            >
               {item.question}
               <Plus
-                className="ml-4 size-5 text-primary transition-transform duration-fast ease-out group-open:rotate-45"
+                size={20}
                 aria-hidden="true"
+                style={{ marginLeft: 16, flexShrink: 0, transition: 'transform 150ms cubic-bezier(0.22, 1, 0.36, 1)' }}
               />
-            </summary>
+            </Typography>
             {item.answer && (
-              <div className="pb-4">
+              <Box sx={{ pb: 2 }}>
                 <RichText data={item.answer} converters={richTextConverters} />
-              </div>
+              </Box>
             )}
-          </details>
+          </Box>
         ))}
-      </div>
-    </section>
+      </Box>
+    </Box>
   )
 }
 
@@ -212,7 +248,7 @@ function TableFromNode({
   return (
     // `overflow-x-auto`: una tabla de cinco columnas en un telefono desborda
     // el ancho de la pagina entera si no scrollea dentro de su propio marco.
-    <div className="lexical-table-container my-6 overflow-x-auto">
+    <div className="lexical-table-container" style={{ margin: '24px 0', overflowX: 'auto' }}>
       <table className="lexical-table" style={{ borderCollapse: 'collapse' }}>
         {!declaresHeaders && firstRow ? (
           <>

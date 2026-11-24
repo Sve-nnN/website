@@ -47,7 +47,7 @@ export const geistSans = Geist({
 // GeistMono was 71.3 KB with no unicode-range, preloaded on every route
 // including the ones without a single line of code. The first instinct was to
 // drop the preload and keep the file; the better answer is not to ship one at
-// all. `theme.fontFamily.mono` in tailwind.config.ts now names the platform
+// all. The `code, kbd, samp, pre` rule in globals.css names the platform
 // monospace stack — SF Mono on macOS, Consolas on Windows, DejaVu Sans Mono on
 // Linux — which costs zero bytes and is already resident. GitHub, Stack
 // Overflow and MDN all render code the same way.

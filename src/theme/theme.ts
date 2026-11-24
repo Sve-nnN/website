@@ -46,9 +46,8 @@ const options: ThemeOptions = {
         html: { scrollBehavior: 'smooth', scrollPaddingTop: 96, scrollPaddingBottom: 72, [reduced]: { scrollBehavior: 'auto' } },
         body: { WebkitFontSmoothing: 'antialiased', textWrap: 'pretty', overflowX: 'hidden' },
         ':focus-visible': { outline: `2px solid ${theme.vars.palette.accentText}`, outlineOffset: 2, borderRadius: 4 },
-        // Sin reset global de listas: la capa `mui` gana a `tailwind`, asi que un `ul, ol` aqui
-        // aplastaria list-disc, pl-6 y mb-4 del contenido heredado (Prose, case studies).
-        // Preflight de Tailwind ya resetea las listas; las del shell lo declaran en su propio sx.
+        // Sin reset global de listas: la capa `mui` gana a `reset`, y el reinicio base de
+        // globals.css ya deja las listas sin vinetas. Las del shell lo declaran en su propio sx.
       }),
     },
     // Fase 57 (A11Y.md seccion 4, hallazgo de 57-03): ButtonBase fija `outline: 0` y anulaba el

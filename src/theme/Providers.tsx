@@ -10,9 +10,9 @@ import { MotionStateProvider } from './motion'
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider theme={theme} defaultMode="dark">
-      {/* Orden de capas: idempotente con el plugin PostCSS. El primero de los
-          dos que aparezca en el documento fija `tailwind` por debajo de `mui`. */}
-      <GlobalStyles styles="@layer tailwind, mui;" />
+      {/* Orden de capas: idempotente con la sentencia de globals.css. La primera de las
+          dos que aparezca en el documento fija `reset` por debajo de `mui`. */}
+      <GlobalStyles styles="@layer reset, mui;" />
       {/* Movimiento (D-16). Las variables alimentan las transiciones del tema y
           en pausa valen 0ms. `!important` es intencional: tiene que ganar a las
           capas y a los estilos en linea de MUI. */}

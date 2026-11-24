@@ -1,3 +1,8 @@
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Link from '@mui/material/Link'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 import { getLocale, getTranslations } from 'next-intl/server'
 
 // CONSTRAINT DURA (T-48-09, re-afirmada por 49-UI-SPEC.md Component Contract
@@ -10,9 +15,20 @@ import { getLocale, getTranslations } from 'next-intl/server'
 // corre un grep literal sobre esos tres nombres en este archivo, así que ni
 // siquiera en prosa deben aparecer acá — mismo criterio ya aplicado en
 // `secure-download.ts`/`download-token.ts` (49-01-SUMMARY.md).
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { subscribeToLeadMagnetAction } from '@/app/actions/subscribe-lead-magnet'
+
+// Oculto a la vista y visible para el lector de pantalla (mismo objeto que MuiRichText).
+const visuallyHidden = {
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  margin: '-1px',
+  padding: 0,
+  overflow: 'hidden',
+  clip: 'rect(0 0 0 0)',
+  whiteSpace: 'nowrap',
+  border: 0,
+} as const
 
 const SUBSCRIBED_STATES = ['pending', 'already', 'error'] as const
 type SubscribedState = (typeof SUBSCRIBED_STATES)[number]
@@ -45,63 +61,81 @@ export async function EmailCaptureCard({
   const privacyHref = locale === 'en' ? '/en/privacy' : '/privacy'
   const state = isSubscribedState(subscribedState) ? subscribedState : null
 
+  // Plan 57-07 (D-06): MUI en lugar de utilidades Tailwind. Respaldo del bloque cuando el
+  // cuerpo no trae los convertidores de `mui/rich-text/blocks` (el post siempre los trae).
   return (
-    <div className="not-prose my-8 rounded-lg border border-border bg-card shadow-sm p-6">
-      <p className="text-label uppercase tracking-wide opacity-70">{t('eyebrow')}</p>
-      <p className="font-heading text-heading mt-1">{t('heading')}</p>
-      <p className="text-body text-muted-foreground mt-2">{t('description')}</p>
+    <Box sx={{ my: 4, p: 3, borderRadius: 2, border: 1, borderColor: 'divider', bgcolor: 'background.paper' }}>
+      <Typography variant="overline" component="p" sx={{ opacity: 0.7 }}>
+        {t('eyebrow')}
+      </Typography>
+      <Typography variant="h6" component="p" sx={{ mt: 0.5 }}>
+        {t('heading')}
+      </Typography>
+      <Typography variant="body1" component="p" sx={{ mt: 1, color: 'text.secondary' }}>
+        {t('description')}
+      </Typography>
 
       {state === 'pending' && (
-        <div className="mt-4">
-          <p className="font-heading text-heading">{t('pendingHeading')}</p>
-          <p className="text-body mt-2">{t('pendingBody')}</p>
-        </div>
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="h6" component="p">
+            {t('pendingHeading')}
+          </Typography>
+          <Typography variant="body1" component="p" sx={{ mt: 1 }}>
+            {t('pendingBody')}
+          </Typography>
+        </Box>
       )}
 
       {state === 'already' && (
-        <div className="mt-4">
-          <p className="font-heading text-heading">{t('alreadyHeading')}</p>
-          <p className="text-body mt-2">{t('alreadyBody')}</p>
-        </div>
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="h6" component="p">
+            {t('alreadyHeading')}
+          </Typography>
+          <Typography variant="body1" component="p" sx={{ mt: 1 }}>
+            {t('alreadyBody')}
+          </Typography>
+        </Box>
       )}
 
       {state === 'error' && (
-        <div className="mt-4">
-          <p className="text-body text-destructive">{t('errorBody')}</p>
-        </div>
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="body1" component="p" sx={{ color: 'error.main' }}>
+            {t('errorBody')}
+          </Typography>
+        </Box>
       )}
 
       {!state && (
-        <form action={subscribeToLeadMagnetAction} className="mt-4">
+        <Box component="form" action={subscribeToLeadMagnetAction} sx={{ mt: 2 }}>
           {/* SEO-11.4 (mismo precedente que ContactFormBlockComponent): la
-              etiqueta es un <label> real, no un placeholder — el eyebrow +
-              heading de arriba ya dejan visualmente claro el propósito del
-              campo, así que sr-only es aceptable acá (a diferencia del
-              formulario de contacto, con 3 campos indiferenciados). */}
-          <label htmlFor="email-capture-email" className="sr-only">
+              etiqueta es un <label> real, no un placeholder, solo oculta a la vista. */}
+          <Box component="label" htmlFor="email-capture-email" sx={visuallyHidden}>
             {t('emailLabel')}
-          </label>
+          </Box>
           <input type="hidden" name="postPath" value={postPath} />
           <input type="hidden" name="locale" value={locale} />
-          <div className="flex flex-col sm:flex-row gap-2">
-            <Input
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 1 }}>
+            <TextField
               id="email-capture-email"
               type="email"
               name="email"
               required
               autoComplete="email"
               placeholder={t('emailPlaceholder')}
-              className="h-11 flex-1"
+              sx={{ flex: 1 }}
             />
-            <Button type="submit" className="h-11 shrink-0">
+            <Button type="submit" variant="contained" sx={{ flexShrink: 0 }}>
               {t('submitLabel')}
             </Button>
-          </div>
+          </Box>
           {/* Honeypot: oculto vía CSS a usuarios reales, mismo patrón que
               ContactFormBlockComponent/subscribe-lead-magnet.tsx ya esperan
               (`company_website`) — un bot que completa todos los campos cae
               acá y la Server Action lo descarta en silencio. */}
-          <div className="absolute -left-[9999px] w-px h-px overflow-hidden" aria-hidden="true">
+          <Box
+            aria-hidden="true"
+            sx={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}
+          >
             <label htmlFor="email-capture-company-website">Company website</label>
             <input
               type="text"
@@ -110,16 +144,16 @@ export async function EmailCaptureCard({
               tabIndex={-1}
               autoComplete="off"
             />
-          </div>
-          <p className="text-label text-muted-foreground mt-3">
+          </Box>
+          <Typography variant="caption" component="p" sx={{ mt: 1.5, color: 'text.secondary' }}>
             {t('privacyPrefix')}
-            <a href={privacyHref} className="text-primary-text underline">
+            <Link href={privacyHref} underline="always">
               {t('privacyLinkText')}
-            </a>
+            </Link>
             {t('privacySuffix')}
-          </p>
-        </form>
+          </Typography>
+        </Box>
       )}
-    </div>
+    </Box>
   )
 }
