@@ -680,6 +680,10 @@ export interface CaseStudy {
   } | null;
   heroImage?: (number | null) | Media;
   author?: (number | null) | Author;
+  /**
+   * Se completa sola con la primera publicación. Alimenta datePublished en los datos estructurados.
+   */
+  publishedAt?: string | null;
   slug?: string | null;
   meta?: {
     title?: string | null;
@@ -3030,6 +3034,7 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   conclusion?: T;
   heroImage?: T;
   author?: T;
+  publishedAt?: T;
   slug?: T;
   meta?:
     | T
