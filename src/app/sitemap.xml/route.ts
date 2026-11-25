@@ -31,13 +31,14 @@ export async function GET() {
       const loc = escapeXml(entry.url)
       const lastmod = escapeXml(new Date(entry.lastModified).toISOString())
       const esAlt = escapeXml(entry.alternates.es)
-      const enAlt = escapeXml(entry.alternates.en)
+      const enAlt = entry.alternates.en
+        ? `\n    <xhtml:link rel="alternate" hreflang="en" href="${escapeXml(entry.alternates.en)}"/>`
+        : ''
 
       return `  <url>
     <loc>${loc}</loc>
     <lastmod>${lastmod}</lastmod>
-    <xhtml:link rel="alternate" hreflang="es" href="${esAlt}"/>
-    <xhtml:link rel="alternate" hreflang="en" href="${enAlt}"/>
+    <xhtml:link rel="alternate" hreflang="es" href="${esAlt}"/>${enAlt}
   </url>`
     })
     .join('\n')

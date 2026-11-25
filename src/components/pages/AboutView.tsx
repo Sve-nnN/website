@@ -24,6 +24,7 @@ import { UL } from '@/components/mui/lists'
 import { PageHero } from '@/components/mui/PageHero'
 import { visuallyHidden } from '@/components/mui/ScoreRing'
 import { TranslationNotice } from '@/components/mui/TranslationNotice'
+import { cloudinarySrcSet, cloudinaryWidth } from '@/lib/cloudinary-resize'
 import type { AboutCounter, AboutData, AboutDateRange, AboutStage } from '@/lib/about-data'
 import type { CtaData } from '@/lib/cta-data'
 import { buildServicesIndexHref } from '@/lib/service-slugs'
@@ -206,7 +207,9 @@ export function AboutView({ data, locale, cta }: Props) {
               <GrainBlob feather={22} sx={{ inset: '-8%', zIndex: 0 }} />
               <Box
                 component="img"
-                src={hero.photo.url}
+                src={cloudinaryWidth(hero.photo.url, 840)}
+                srcSet={cloudinarySrcSet(hero.photo.url, [420, 640, 840])}
+                sizes="(min-width: 600px) 420px, 100vw"
                 alt={hero.photo.alt}
                 width={hero.photo.width}
                 height={hero.photo.height}

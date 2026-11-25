@@ -293,12 +293,10 @@ for (const locale of ['es', 'en'] as const) {
 }
 
 // ---- Aviso de traduccion (D-31) --------------------------------------------
+// EN_TRANSLATION_INCOMPLETE esta vacia: ningun post muestra el aviso.
 {
-  const incomplete = renderPost(BODY, { locale: 'en', slug: 'recursividad' })
-  check(/role="note"/.test(incomplete.html) && /not available in English yet/.test(incomplete.html), 'EN incompleto: muestra TranslationNotice', 'sin aviso')
-  check(/href="\/blog\/categoria-inventada\/recursividad"/.test(incomplete.html), 'EN incompleto: el aviso enlaza a la ruta ES sin prefijo', 'enlace mal formado')
-  const complete = renderPost(BODY, { locale: 'en', slug: 'post-inventado' })
-  check(!/not available in English yet/.test(complete.html), 'EN completo: sin aviso', 'mostro el aviso')
+  const translated = renderPost(BODY, { locale: 'en', slug: 'recursividad' })
+  check(!/not available in English yet/.test(translated.html), 'EN traducido: sin aviso', 'mostro el aviso')
   const es = renderPost(BODY, { locale: 'es', slug: 'recursividad' })
   check(!/todavía no está disponible en inglés/.test(es.html), 'ES con el mismo slug: sin aviso', 'mostro el aviso en ES')
 }
