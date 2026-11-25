@@ -11,7 +11,6 @@ import { About } from './About'
 import { AuditOffer } from './AuditOffer'
 import { AuditorHighlightCard } from './AuditorHighlightCard'
 import { Cases } from './Cases'
-import { CodeFixes } from './CodeFixes'
 import { Faq } from './Faq'
 import { Hero } from './Hero'
 import { Process } from './Process'
@@ -81,9 +80,8 @@ export function HomeView({ data, locale, fallbackTitle }: Props) {
       )}
       {data.tagline && <div lang={copyLang}><Tagline text={data.tagline} /></div>}
       {data.vitals && <div lang={copyLang}><Vitals vitals={data.vitals} /></div>}
-      {b.codeFixes && <CodeFixes block={b.codeFixes} />}
-      {data.services && <div lang={copyLang}><Services services={data.services} locale={locale} /></div>}
       {b.cases && <div lang={copyLang}><Cases cases={b.cases} /></div>}
+      {data.services && <div lang={copyLang}><Services services={data.services} locale={locale} /></div>}
       {b.auditor && <AuditorHighlightCard auditor={b.auditor} />}
       {b.process && <div lang={copyLang}><Process process={b.process} /></div>}
       {b.sites && <div lang={copyLang}><Sites sites={b.sites} /></div>}
