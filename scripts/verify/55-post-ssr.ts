@@ -303,7 +303,7 @@ for (const locale of ['es', 'en'] as const) {
   check(!/todavía no está disponible en inglés/.test(es.html), 'ES con el mismo slug: sin aviso', 'mostro el aviso en ES')
 }
 
-// ---- JSON-LD Article extraido sin cambios (D-04, T-55-39) --------------------
+// ---- JSON-LD Article (D-04, T-55-39); el publisher lleva el @id del sitio ----
 {
   const refs = {
     siteUrl: 'https://sitio.invalid',
@@ -328,7 +328,7 @@ for (const locale of ['es', 'en'] as const) {
     datePublished: '2026-03-15T10:00:00.000Z',
     dateModified: '2026-03-20T10:00:00.000Z',
     author: { '@type': 'Person', name: 'Autor Inventado', ...refs.personRef },
-    publisher: { '@type': 'Person', name: 'Juan Carlos Angulo', url: 'https://sitio.invalid' },
+    publisher: { '@type': 'Person', '@id': refs.personRef['@id'], name: 'Juan Carlos Angulo', url: 'https://sitio.invalid' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://sitio.invalid/en/blog/categoria-inventada/post-inventado' },
     image: fallbackImage,
     articleSection: 'Categoria inventada',

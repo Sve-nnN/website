@@ -710,12 +710,12 @@ export function buildArticleJsonLd(
           author: {
             '@type': 'Person',
             name: author.name,
-            ...(author.slug === refs.sitePersonSlug ? refs.personRef : {}),
+            ...(author.slug === refs.sitePersonSlug ? { url: refs.siteUrl, ...refs.personRef } : {}),
           },
         }
       : {}),
     // Portfolio personal: el publisher ES la persona.
-    publisher: { '@type': 'Person', name: 'Juan Carlos Angulo', url: refs.siteUrl },
+    publisher: { '@type': 'Person', ...refs.personRef, name: 'Juan Carlos Angulo', url: refs.siteUrl },
     mainEntityOfPage: { '@type': 'WebPage', '@id': articleUrl },
     image: articleImage,
     articleSection: args.categoryTitle,
