@@ -2,7 +2,9 @@
  * Autoprueba de render de la landing de servicio (fase 54, plan 54-09).
  *
  * Descarga el doc REAL de seo-technical-audit de la API publica anonima de
- * produccion (solo lectura), arma los fixtures de cada seccion con
+ * produccion (solo lectura), resuelve el caso de la prueba como la pagina
+ * (`getCaseProof`: el elegido en el bloque o, si no esta publicado, el mas
+ * reciente), arma los fixtures de cada seccion con
  * `composeServiceSlots` y las renderiza con el arnes de servidor. No toca la
  * base. Comprueba estructura: un h1, niveles de encabezado sin saltos, lista de
  * Que incluye con tantos items como parrafos, lista ordenada con numerales
@@ -71,6 +73,34 @@ async function getJson<T>(url: string): Promise<T> {
   throw new Error(`red: ${url} fallo dos veces (${lastErr instanceof Error ? lastErr.message : String(lastErr)})`)
 }
 
+type CaseRow = { slug?: string | null; title?: string | null; heroMetric?: string | null; sector?: string | null }
+
+/**
+ * Mismo criterio que `getCaseProof`: el caso elegido en el bloque; si la API
+ * anonima responde 404 (despublicado o borrado), el publicado mas reciente.
+ * Cualquier otro fallo de red se propaga. Sin ningun caso devuelve null y la
+ * prueba falla: nunca se inventan datos de relleno.
+ */
+async function fetchCaseProof(locale: 'es' | 'en', caseId: number | null): Promise<CaseProof | null> {
+  let doc: CaseRow | null = null
+  if (caseId) {
+    try {
+      doc = await getJson<CaseRow>(`${BASE}/api/case-studies/${caseId}?locale=${locale}&depth=0`)
+    } catch (err) {
+      if (!(err instanceof Error && err.message.includes('(HTTP 404)'))) throw err
+      console.log(`WARN ${locale}: el caso ${caseId} del bloque no esta publicado; se usa el mas reciente, como la pagina`)
+    }
+  }
+  if (!doc) {
+    const json = await getJson<{ docs?: CaseRow[] }>(
+      `${BASE}/api/case-studies?sort=-createdAt&limit=1&depth=0&locale=${locale}`,
+    )
+    doc = json.docs?.[0] ?? null
+  }
+  if (!doc?.slug || !doc.title) return null
+  return { slug: doc.slug, title: doc.title, heroMetric: doc.heroMetric || null, sector: doc.sector || null }
+}
+
 type Doc = { title: string; slug: string; content?: { layout?: ServiceLayoutBlock[] } }
 
 async function fetchDoc(slug: string, locale: 'es' | 'en'): Promise<Doc> {
@@ -106,16 +136,10 @@ async function runLocale(locale: 'es' | 'en'): Promise<void> {
   const trail = buildTrail(locale, { slug: doc.slug, title: doc.title })
   const crumbs = trail.map((c) => ({ label: c.label, href: c.url }))
   const caseId = typeof caseSec.block.caseStudy === 'number' ? caseSec.block.caseStudy : null
-  const caseDoc = caseId
-    ? await getJson<{ slug: string; title: string; heroMetric?: string | null; sector?: string | null }>(
-        `${BASE}/api/case-studies/${caseId}?locale=${locale}&depth=0`,
-      )
-    : null
-  const proof: CaseProof = {
-    slug: caseDoc?.slug ?? 'caso',
-    title: caseDoc?.title ?? 'Caso',
-    heroMetric: caseDoc?.heroMetric ?? '+406% clics interanuales',
-    sector: caseDoc?.sector ?? null,
+  const proof = await fetchCaseProof(locale, caseId)
+  if (!proof) {
+    check(false, `${tag} fixtures`, 'no hay ningun caso publicado con slug y titulo')
+    return
   }
   const others: OtherService[] = []
   for (const slug of ['seo-consulting', 'fullstack-development', 'ai-seo-geo'] as const) {
@@ -249,6 +273,7 @@ async function runLocale(locale: 'es' | 'en'): Promise<void> {
 
   // ---- Prueba de caso, FAQ y otros ----
   check(caseHtml.includes(`href="${locale === 'en' ? '/en' : ''}/case-studies/${proof.slug}"`), `${tag}: el caso enlaza a /case-studies/<slug>`, 'href ausente')
+  check(textOf(caseHtml).includes(textOf(renderToHtml(createElement('span', null, proof.title), locale))), `${tag}: la tarjeta del caso muestra su titulo`, `falta ${proof.title}`)
   const closed = (faq.block.faqs ?? [])
     .slice(1)
     .map((f) => textOf(renderToHtml(createElement(MuiRichText, { data: f.answer as never }), locale)))
