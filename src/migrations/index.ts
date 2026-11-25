@@ -41,6 +41,7 @@ import * as migration_20260908_014507_phase49_subscribers_lead_magnets from './2
 import * as migration_20261108_043335_phase54_shadow_content from './20261108_043335_phase54_shadow_content';
 import * as migration_20261109_044123_phase55_case_lessons from './20261109_044123_phase55_case_lessons';
 import * as migration_20261110_220805_phase56_legal_shadow from './20261110_220805_phase56_legal_shadow';
+import * as migration_20261125_013226_security_upgrade_payload_394 from './20261125_013226_security_upgrade_payload_394';
 
 export const migrations = [
   {
@@ -256,6 +257,11 @@ export const migrations = [
   {
     up: migration_20261110_220805_phase56_legal_shadow.up,
     down: migration_20261110_220805_phase56_legal_shadow.down,
-    name: '20261110_220805_phase56_legal_shadow'
+    name: '20261110_220805_phase56_legal_shadow',
+  },
+  {
+    up: migration_20261125_013226_security_upgrade_payload_394.up,
+    down: migration_20261125_013226_security_upgrade_payload_394.down,
+    name: '20261125_013226_security_upgrade_payload_394'
   },
 ];
