@@ -241,7 +241,7 @@ const T = {
   more: /Más casos de éxito|More case studies/,
   author: /Sobre el autor|About the author/,
   compare: /Cómo se compara con mis otros casos|How it compares with my other cases/,
-  compareNote: /no entran en esta comparación|are left out of this comparison/,
+  compareNote: /no incluye los casos que miden|leaves out cases that measure/,
   lessons: /Lecciones aprendidas|Lessons learned/,
 }
 
@@ -458,6 +458,9 @@ function mainDetail(): void {
   const ldOwn = buildCaseStudyJsonLd({ title: 'X', slug: 'x', author: { name: 'Juan', slug: 'juan-carlos-angulo' } }, 'es', 'x') as Record<string, any>
   check(typeof ldOwn.author?.['@id'] === 'string' && ldOwn.url.includes('/case-studies/x') && !ldOwn.url.includes('/en/'), 'JSON-LD: el autor del sitio referencia la entidad Person por @id', JSON.stringify(ldOwn.author))
 
+  const ldDated = buildCaseStudyJsonLd({ title: 'X', slug: 'x', publishedAt: '2026-03-04T00:00:00.000Z' }, 'es', 'x') as Record<string, any>
+  check(ldDated.datePublished === '2026-03-04T00:00:00.000Z', 'JSON-LD: datePublished sale de publishedAt', JSON.stringify(ldDated.datePublished))
+
   // Fixtures defectuosos: deben fallar.
   const good = renderDetail(c, 'es', { related })
   check(detailFailures(good.replace('</section>', '<h1>otro</h1></section>'), c).some((r) => r.includes('h1')), 'defectuoso detalle: dos h1 se detecta', 'no se detecto')
@@ -583,7 +586,7 @@ function mainCompare(): void {
   check(detailFailures(onlyCompareNoCaption, c, cmpAlfa).some((r) => r.includes('tabla 2') && r.includes('caption')), 'defectuoso: la tabla comparativa sin caption se detecta', 'no se detecto')
   check(detailFailures(good.replace(/scope="col"/g, ''), c, cmpAlfa).some((r) => r.includes('scope col')), 'defectuoso: tablas sin scope col se detectan', 'no se detecto')
   check(detailFailures(migHtml.replace('</section>', '<h2>Cómo se compara con mis otros casos</h2></section>'), mig, null).some((r) => r.includes('comparativos') || r.includes('huerfano')), 'defectuoso: comparacion en el caso de migracion se detecta', 'no se detecto')
-  check(detailFailures(migHtml.replace('</section>', '<p>Los casos que miden otra métrica, como el tráfico mensual, no entran en esta comparación de clics anuales.</p></section>'), mig, null).some((r) => r.includes('nota')), 'defectuoso: la nota de excluidos sin comparacion se detecta', 'no se detecto')
+  check(detailFailures(migHtml.replace('</section>', '<p>Esta tabla no incluye los casos que miden otra métrica u otro periodo.</p></section>'), mig, null).some((r) => r.includes('nota')), 'defectuoso: la nota de excluidos sin comparacion se detecta', 'no se detecto')
   const noLessonsProps = toCaseDetailProps({ ...DETAIL_DOC, lessons: [] }, 'es')!
   const withHeading = renderDetail(noLessonsProps, 'es').replace('</section>', '<h2>Lecciones aprendidas</h2></section>')
   check(detailFailures(withHeading, noLessonsProps, null).some((r) => r.includes('lecciones') || r.includes('huerfano')), 'defectuoso: encabezado de lecciones sin lecciones se detecta', 'no se detecto')

@@ -69,7 +69,17 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI,
       // node-postgres defaults to max:10 with no connectionTimeoutMillis, so
       // a starved pool hangs a request rather than failing it fast. Set
-      // explicitly rather than trusting the default: `getSitemapEntries`
+      // explicitly rather than trusting the default.
+      //
+      // `max` went from 5 to 10 on 2026-11-24, after bursts of "timeout
+      // exceeded when trying to connect". Measured that day: max_connections
+      // is 100 (3 reserved for superusers), the whole server had 5 client
+      // backends, the app role has no connection limit of its own and the
+      // service runs one replica. Deploys use start-first, so two containers
+      // overlap and this app can reach 20. A bigger pool does not protect
+      // against a table lock: all 10 connections would wait just the same.
+      //
+      // Why the explicit value matters: `getSitemapEntries`
       // alone used to open up to 6 connections at once (5 collection queries
       // in a `Promise.all` plus one more for categories — now serialized, see
       // src/lib/sitemap-data.ts), and that was enough on its own to starve
@@ -77,7 +87,7 @@ export default buildConfig({
       // both served a 500 with an empty urlset on 2026-08-15 — the route's
       // own fallback for exactly this failure, working as designed, just
       // triggered by a self-inflicted cause.
-      max: 5,
+      max: 10,
       connectionTimeoutMillis: 5000,
     },
     // Producción: las migraciones son la única fuente de cambios de schema.

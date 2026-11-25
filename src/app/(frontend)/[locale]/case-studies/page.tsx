@@ -71,8 +71,8 @@ export default async function CaseStudiesListPage({
         title={locale === 'es' ? 'Casos de éxito' : 'Case Studies'}
         lead={
           locale === 'es'
-            ? 'Cada caso muestra qué estaba fallando, qué corregí en el código y qué cambió después. Los números salen de Search Console, los clientes van anonimizados.'
-            : 'Every case shows what was failing, what I fixed in the code and what changed afterwards. The numbers come from Search Console, the clients stay anonymous.'
+            ? 'Cada caso explica de dónde partía el sitio, en qué trabajé y qué cambió después. Cada uno indica los periodos que compara.'
+            : 'Each case explains where the site started, what I worked on and what changed afterwards. Each one states the periods it compares.'
         }
         items={items}
       />

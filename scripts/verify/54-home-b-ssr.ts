@@ -17,7 +17,6 @@ import { About } from '../../src/components/home/About'
 import { AuditOffer } from '../../src/components/home/AuditOffer'
 import { AuditorHighlightCard } from '../../src/components/home/AuditorHighlightCard'
 import { Cases } from '../../src/components/home/Cases'
-import { CodeFixes } from '../../src/components/home/CodeFixes'
 import { Faq } from '../../src/components/home/Faq'
 import { HomeView } from '../../src/components/home/HomeView'
 import { Process } from '../../src/components/home/Process'
@@ -33,6 +32,7 @@ import {
   assembleTestimonials,
   emptySectionsB,
   hostnameOf,
+  mapCaseImage,
   mapFeaturedCases,
   mapHomeGlobalB,
   mapLegacyBlocks,
@@ -118,6 +118,17 @@ const CASE_DOCS = [
     { id: 9, slug: 'ok', title: 'Completo', heroMetric: '+5%' },
   ])
   check(sparse.length === 1 && sparse[0]?.href === '/case-studies/ok', 'casos: omite ids sin poblar y entradas sin slug, titulo o cifra', JSON.stringify(sparse))
+
+  // Captura de Search Console en la tarjeta (feat/home-casos-gsc)
+  const img = mapCaseImage({ url: 'https://res.example.test/gsc.jpg', alt: 'Grafico de clics', width: 1166, height: 451 })
+  check(img?.url === 'https://res.example.test/gsc.jpg' && img.width === 1166 && img.height === 451, 'caso imagen: url, alt y medidas salen de la portada poblada', JSON.stringify(img))
+  check(mapCaseImage(12) === null && mapCaseImage(null) === null && mapCaseImage({ url: 'x' }) === null && mapCaseImage({ alt: 'a' }) === null, 'caso imagen: id sin poblar, sin url o sin alt da null', 'devolvio una imagen')
+  {
+    const withImg = assembleCases(globalB.casesText, items.map((i, n) => (n === 0 ? { ...i, image: img } : i)))
+    const h = strip(renderToHtml(createElement(Cases, { cases: withImg! })))
+    check(countOf(h, /<img[^>]*src="https:\/\/res\.example\.test\/gsc\.jpg"[^>]*alt="Grafico de clics"[^>]*loading="lazy"/) === 1 && /<img[^>]*width="1166"[^>]*height="451"/.test(h), 'caso imagen: una sola captura con alt, medidas y carga diferida', 'falta img, alt, medidas o lazy')
+    check(countOf(h, /<img/) === 1, 'caso imagen: las tarjetas sin captura no pintan recuadro vacio', `imagenes: ${countOf(h, /<img/)}`)
+  }
 
   const cases = assembleCases(globalB.casesText, items)
   check(cases !== null && cases.items[1]?.label === HOME_COPY_ES.cases.metricSuffix, 'casos: la etiqueta ausente cae a metricSuffix', JSON.stringify(cases?.items[1]))
@@ -364,29 +375,6 @@ const legacy = mapLegacyBlocks(LAYOUT as never, 'es', 'Pedir auditoría 360')
   check(none.codeFixes === null && none.auditor === null && none.auditOffer === null && mapLegacyBlocks(null, 'es', null).auditor === null, 'bloques: un bloque ausente da null', JSON.stringify(none))
   check(mapLegacyBlocks([{ blockType: 'auditorHighlight', description: 'x' }] as never, 'es', null).auditor === null, 'bloques: auditor sin nota de plan gratuito se omite', 'devolvio el auditor')
 
-  // CodeFixes
-  if (legacy.codeFixes) {
-    const html = strip(renderToHtml(createElement(CodeFixes, { block: legacy.codeFixes })))
-    const regions = [...html.matchAll(/<div[^>]*role="region"[^>]*>/g)].map((m) => m[0])
-    check(regions.length === 3 && regions.every((r) => /tabindex="0"/.test(r) && /aria-label="Código del arreglo [^"]+"/.test(r)), 'codefixes: tres regiones con tabindex 0, role region y aria-label con el nombre del arreglo', JSON.stringify(regions))
-    check(/aria-label="Código del arreglo Google recibia dos hreflang"/.test(html), 'codefixes: el nombre de la region es el sintoma', 'falta el nombre')
-    check(/<a[^>]*href="https:\/\/github\.com\/juantech\/juan-payload\/commit\/abc1234"[^>]*target="_blank"[^>]*rel="noopener noreferrer"/.test(html) && html.includes('abc1234'), 'codefixes: el commit como chip con enlace externo en pestaña nueva', 'falta el chip del commit')
-    check(countOf(html, /commit\/(abc1234|fff0000)/) === 2 && !/javascript:/.test(html), 'codefixes: el commit con esquema peligroso no llega al HTML', 'aparece javascript: o un enlace de mas')
-    check(countOf(html, /se abre en otra pestaña/) === 3, 'codefixes: sufijo de nueva pestaña en repo y en los dos commits', `sufijos: ${countOf(html, /se abre en otra pestaña/)}`)
-    // IN-04 (57-04): sin sha, el chip del commit toma el rotulo de messages (home.codeFixes.commitFallback).
-    const noSha = { ...legacy.codeFixes, fixes: [{ ...legacy.codeFixes.fixes[0]!, commitSha: null }] }
-    for (const loc of ['es', 'en'] as const) {
-      const chip = strip(renderToHtml(createElement(CodeFixes, { block: noSha }), loc))
-      check(/commit\/abc1234"[\s\S]*?>commit</.test(chip) && !chip.includes('commitFallback'), `codefixes ${loc}: sin sha el chip dice commit desde messages`, 'falta el rotulo del commit')
-    }
-    check(html.includes('&lt;script&gt;alert(1)&lt;/script&gt;') && !/<script>alert/.test(html), 'codefixes: el codigo se escapa como texto (sin HTML en crudo)', 'el codigo llego sin escapar')
-    check(countOf(html, /<h3[\s>]/) === 3 && /<h2[^>]*id="codigo-t"/.test(html), 'codefixes: h2 y tres h3', JSON.stringify(headingLevels(html)))
-    check(html.includes('src/lib/canonical.ts') && html.includes('Cero errores en Search Console') && html.includes('Ver el repositorio'), 'codefixes: archivo, resultado y enlace al repo', 'falta archivo, resultado o repo')
-    check(!/<main[\s>]/.test(html) && !/\{\{/.test(html), 'codefixes: sin main ni llaves dobles', 'main o llaves')
-  }
-  const emptyFixes = renderToHtml(createElement(CodeFixes, { block: { title: 'T', intro: null, repoLabel: null, repoUrl: null, fixes: [] } }))
-  check(!/<section/.test(emptyFixes) && !/<h2/.test(emptyFixes), 'codefixes: con cero arreglos no deja encabezado', 'pinto una seccion vacia')
-
   // Auditor
   if (legacy.auditor) {
     const html = strip(renderToHtml(createElement(AuditorHighlightCard, { auditor: legacy.auditor })))
@@ -446,9 +434,9 @@ const legacy = mapLegacyBlocks(LAYOUT as never, 'es', 'Pedir auditoría 360')
   const jump = levels.findIndex((l, i) => i > 0 && l > (levels[i - 1] as number) + 1)
   check(jump === -1, 'home: los niveles de encabezado nunca saltan', `salto en el indice ${jump}: ${JSON.stringify(levels)}`)
 
-  const ORDER = ['inicio', 'clientes', 'medicion', 'codigo', 'servicios', 'casos', 'auditor', 'proceso', 'sitios', 'sobre', 'testimonios', 'oferta', 'faq', 'contacto']
+  const ORDER = ['inicio', 'clientes', 'medicion', 'casos', 'servicios', 'auditor', 'proceso', 'sitios', 'sobre', 'testimonios', 'oferta', 'faq', 'contacto']
   const positions = ORDER.map((id) => html.indexOf(` id="${id}"`))
-  check(positions.every((p) => p >= 0), 'home: aparecen las catorce secciones', `ausentes: ${ORDER.filter((_, i) => positions[i] === -1).join(', ')}`)
+  check(positions.every((p) => p >= 0), 'home: aparecen las trece secciones', `ausentes: ${ORDER.filter((_, i) => positions[i] === -1).join(', ')}`)
   check(positions.every((p, i) => i === 0 || p > (positions[i - 1] as number)), 'home: las secciones salen en el orden aprobado', ORDER.map((id, i) => `${id}@${positions[i]}`).join(' '))
 
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1])
@@ -465,7 +453,7 @@ const legacy = mapLegacyBlocks(LAYOUT as never, 'es', 'Pedir auditoría 360')
 
   // Sin la segunda mitad la home sigue como en el plan 08
   const half = render({ ...data, sectionsB: emptySectionsB() })
-  check(!/id="(codigo|casos|auditor|proceso|sitios|sobre|testimonios|oferta|faq|contacto)"/.test(half) && /id="servicios"/.test(half), 'home: con la segunda mitad vacia solo quedan las secciones de la primera', 'quedo una seccion de la segunda mitad')
+  check(!/id="(casos|auditor|proceso|sitios|sobre|testimonios|oferta|faq|contacto)"/.test(half) && /id="servicios"/.test(half), 'home: con la segunda mitad vacia solo quedan las secciones de la primera', 'quedo una seccion de la segunda mitad')
   // Una seccion caida no se lleva a las demas
   const noSites = render({ ...data, sectionsB: { ...sectionsB, sites: null } })
   check(!/id="sitios"/.test(noSites) && /id="casos"/.test(noSites) && /id="faq"/.test(noSites) && /id="contacto"/.test(noSites), 'home: sin sitios las demas secciones siguen', 'una seccion cayo con la de sitios')
@@ -474,7 +462,7 @@ const legacy = mapLegacyBlocks(LAYOUT as never, 'es', 'Pedir auditoría 360')
   const en = render({ ...fixtureHome, clients, isFallback: true, sectionsB }, 'en')
   check(/role="note"/.test(en) && countOf(en, /lang="es"/) >= 9, 'home EN respaldo: aviso y las secciones del global en lang es', `lang es: ${countOf(en, /lang="es"/)}`)
   const esLangBlocks = (id: string) => new RegExp(`<div lang="es"><(?:section|div)[^>]*id="${id}"`).test(en)
-  check(!esLangBlocks('codigo') && !esLangBlocks('auditor') && !esLangBlocks('oferta'), 'home EN respaldo: los bloques del doc home no van en lang es', 'un bloque del doc home quedo en lang es')
+  check(!esLangBlocks('auditor') && !esLangBlocks('oferta'), 'home EN respaldo: los bloques del doc home no van en lang es', 'un bloque del doc home quedo en lang es')
   check(['proceso', 'casos', 'sitios', 'sobre', 'testimonios', 'faq'].every((id) => esLangBlocks(id)), 'home EN respaldo: proceso, casos, sitios, sobre mi, testimonios y FAQ envueltos en lang es', 'falta algun envoltorio')
 }
 

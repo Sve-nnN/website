@@ -19,6 +19,8 @@ type Props = {
   /** `band` sobre una franja oscura, `paper` sobre el fondo de la pagina. */
   tone?: 'band' | 'paper'
   as?: 'li' | 'div'
+  /** Captura del grafico de Search Console. Sin ella la tarjeta queda solo con la cifra. */
+  image?: { url: string; alt: string; width?: number | null; height?: number | null } | null
 }
 
 /**
@@ -27,7 +29,7 @@ type Props = {
  * none y el foco se dibuja en la tarjeta con `:has(a:focus-visible)`. El
  * nombre accesible del enlace es el titulo visible.
  */
-export function CaseMetricCard({ href, tag, metric, title, suffix, tone = 'band', as = 'li' }: Props) {
+export function CaseMetricCard({ href, tag, metric, title, suffix, tone = 'band', as = 'li', image = null }: Props) {
   const band = tone === 'band'
   return (
     <Box
@@ -57,6 +59,29 @@ export function CaseMetricCard({ href, tag, metric, title, suffix, tone = 'band'
         },
       }}
     >
+      {image && (
+        <Box
+          sx={{
+            borderRadius: 1,
+            overflow: 'hidden',
+            border: 1,
+            borderColor: band ? 'band.border' : 'divider',
+            bgcolor: 'common.white',
+            lineHeight: 0,
+          }}
+        >
+          <Box
+            component="img"
+            src={image.url}
+            alt={image.alt}
+            width={image.width ?? 1166}
+            height={image.height ?? 451}
+            loading="lazy"
+            decoding="async"
+            sx={{ width: '100%', height: 'auto', display: 'block' }}
+          />
+        </Box>
+      )}
       {tag && (
         <Chip
           label={tag}

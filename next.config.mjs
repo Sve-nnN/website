@@ -6,6 +6,30 @@ import { parsePreviewFlag } from './src/lib/preview-flag.mjs'
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
+// Auditoria SEO 2026-11: CSP en modo SOLO INFORME. El navegador anota en su
+// consola lo que habria bloqueado y no bloquea nada. Describe lo que el sitio
+// publico carga hoy: todo propio, imagenes y medios de Cloudinary, y los
+// scripts y estilos en linea que generan Next (datos de RSC) y Emotion, que sin
+// nonce exigen 'unsafe-inline' porque las paginas se sirven desde cache.
+//
+// Antes de volverla bloqueante hay que revisar la consola en todas las
+// plantillas y decidir que hacer con los 'unsafe-inline'. El admin de Payload y
+// la API quedan fuera: cargan recursos propios del editor.
+const CSP_REPORT_ONLY = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://res.cloudinary.com",
+  "media-src 'self' https://res.cloudinary.com",
+  "font-src 'self' data:",
+  "connect-src 'self'",
+  "frame-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+].join('; ')
+
 // Fase 53 (D-04, D-05): el preview del rediseño (dev.juan-tech.com) corre este
 // mismo código contra la base de producción. `PREVIEW_READONLY=true` debe estar
 // presente AL CONSTRUIR: `headers()` y `rewrites()` se evalúan en el build y
@@ -54,9 +78,9 @@ const nextConfig = {
   // downgrade. No es factor de ranking; se arregla porque el sitio vende
   // auditorias tecnicas y esto es lo primero que un cliente mira.
   //
-  // Deliberadamente SIN Content-Security-Policy: el admin de Payload inyecta
-  // estilos y scripts inline propios, y una CSP escrita a ciegas lo rompe.
-  // Eso necesita su propia medicion, no una linea mas en esta lista.
+  // Sin `Content-Security-Policy` bloqueante: el admin de Payload inyecta
+  // estilos y scripts inline propios, y una CSP escrita a ciegas lo rompe. Lo
+  // que hay es la version Report-Only de abajo, que sirve para medir.
   async headers() {
     return [
       {
@@ -80,6 +104,10 @@ const nextConfig = {
           // assets), donde el middleware nunca corre.
           ...(isPreview ? [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] : []),
         ],
+      },
+      {
+        source: '/((?!admin(?:/|$)|api(?:/|$)).*)',
+        headers: [{ key: 'Content-Security-Policy-Report-Only', value: CSP_REPORT_ONLY }],
       },
     ]
   },

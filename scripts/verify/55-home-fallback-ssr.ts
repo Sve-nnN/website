@@ -77,6 +77,7 @@ const CURATED_CASE: HomeCaseItem = {
   metric: '+999 %',
   label: null,
   title: 'Caso curado por Juan',
+  image: null,
 }
 
 const SHOT = (n: number) => ({ id: n, alt: `Pagina de inicio del sitio ${n}`, url: `https://res.example.test/s-${n}.webp`, width: 1280, height: 800 })

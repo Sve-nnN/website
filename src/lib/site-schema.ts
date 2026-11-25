@@ -19,12 +19,11 @@
 import type { Locale } from '@/lib/cache'
 import { PERSON_ID, personRef } from '@/lib/person'
 import { SITE_URL } from '@/lib/sitemap-data'
+import { WEBSITE_ID, websiteRef } from '@/lib/website-ref'
 
-export const WEBSITE_ID = `${SITE_URL}/#website`
 export const BUSINESS_ID = `${SITE_URL}/#business`
 
-/** Referencia corta al sitio, para el `isPartOf` de una WebPage. */
-export const websiteRef = { '@id': WEBSITE_ID }
+export { WEBSITE_ID, websiteRef }
 
 const COPY = {
   es: {
@@ -126,8 +125,9 @@ export function buildProfessionalService(locale: Locale): Record<string, unknown
  *
  * `provider` sí corresponde acá: en `Service` es la propiedad correcta para
  * apuntar a quién lo presta, al revés de lo que pasaba en el nodo del negocio.
- * Referencia el `@id` del `ProfessionalService` en vez de repetirlo, así la
- * landing suma al mismo nodo en vez de crear un negocio nuevo por ciudad.
+ * Usa el `@id` del `ProfessionalService`, así la landing suma al mismo nodo en
+ * vez de crear un negocio nuevo por ciudad. Lleva tipo, nombre y URL porque la
+ * definición completa solo viaja en la home.
  *
  * `serviceType` es texto libre, y el que va es el que la página realmente
  * ofrece, no una categoría inventada para llenar el campo.
@@ -147,7 +147,13 @@ export function buildLocalService(params: {
     name: params.name,
     ...(params.description ? { description: params.description } : {}),
     serviceType: params.locale === 'es' ? 'SEO técnico' : 'Technical SEO',
-    provider: { '@id': BUSINESS_ID },
+    provider: {
+      '@type': 'ProfessionalService',
+      '@id': BUSINESS_ID,
+      name: COPY[params.locale].serviceName,
+      url: SITE_URL,
+      founder: personRef,
+    },
     url: params.url,
     areaServed: {
       '@type': 'City',
