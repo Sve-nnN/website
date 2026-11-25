@@ -1001,6 +1001,42 @@
       font-size: 2.25rem;
     }
   }
+  /* Captura de Search Console: el marco es blanco como la propia captura. */
+  .jt-capture {
+    margin: 0;
+    min-width: 0;
+  }
+  .jt-capture__frame {
+    padding: calc(1.5 * var(--jt-spacing));
+    background-color: #fff;
+    border: 1px solid var(--jt-palette-divider);
+    border-radius: 16px;
+  }
+  .jt-capture__img {
+    display: block;
+    width: 100%;
+    min-width: var(--jt-capture-min);
+    height: auto;
+  }
+  .jt-capture__caption {
+    display: grid;
+    gap: var(--jt-spacing);
+    margin-top: calc(2 * var(--jt-spacing));
+  }
+  .jt-capture__hint {
+    font-weight: 600;
+  }
+  /* Misma frontera que `sizes` en CaseCaptureFigure: desde 828px caben los 754
+     de una captura de 1508 (48 de contenedor y 26 de marco). */
+  @media (min-width: 828px) {
+    .jt-capture__hint {
+      display: none;
+    }
+  }
+  .jt-capture__full {
+    display: inline-block;
+    padding: calc(0.5 * var(--jt-spacing)) 0;
+  }
   .jt-case-context {
     display: grid;
     grid-template-columns: minmax(0, 1fr);

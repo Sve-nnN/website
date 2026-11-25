@@ -15,6 +15,7 @@ import { AppLink } from '@/components/static/AppLink'
 import { LinkButton } from '@/components/static/LinkButton'
 import type { CaseComparison, CaseDetailProps, CaseIndexItem } from '@/lib/case-study-data'
 
+import { CaseCaptureFigure } from './CaseCaptureFigure'
 import { CaseCard } from './CaseCard'
 import { CaseCompareTable } from './CaseCompareTable'
 
@@ -61,7 +62,7 @@ function DotList({ items, label }: { items: string[]; label: string }) {
 
 /**
  * Detalle de un caso de exito (D-08). Orden: hero con la cifra y el subtitulo,
- * KPIs, contexto y reto, solucion, testimonio, resultados antes y despues,
+ * KPIs, captura de Search Console (solo si el caso la tiene), contexto y reto, solucion, testimonio, resultados antes y despues,
  * comparativos, lecciones (solo si hay) y conclusion; al final el autor
  * (E-E-A-T) y mas casos. El cierre (CtaSection)
  * lo pone el Server Component de la ruta. No declara landmark principal.
@@ -122,6 +123,12 @@ export function CaseDetailView({ crumbs, caseStudy: c, clientContent, conclusion
               </div>
             ))}
           </dl>
+        </Section>
+      )}
+
+      {c.capture && (
+        <Section id="captura" title={t('captureTitle')}>
+          <CaseCaptureFigure capture={c.capture} periodMeasured={c.periodAfter} periodCompared={c.periodBefore} />
         </Section>
       )}
 

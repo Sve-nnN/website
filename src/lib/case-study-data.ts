@@ -7,6 +7,7 @@
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 
 import { formatSector, splitHeroMetric } from '@/components/mui/split-hero-metric'
+import { toCaseCapture, type CaseCapture } from '@/lib/case-capture'
 import { getFallbackHeroImage } from '@/lib/heroImageFallback'
 import { personRef, SITE_PERSON_SLUG } from '@/lib/person'
 import { SITE_URL } from '@/lib/sitemap-data'
@@ -171,6 +172,8 @@ export type CaseDetailProps = {
   metricLabel: string | null
   deck: string | null
   kpis: Array<{ label: string; value: string }>
+  /** Captura de Search Console (`heroImage`), o null: la vista no emite la seccion. */
+  capture: CaseCapture | null
   periodBefore: string | null
   periodAfter: string | null
   /** Lexical con texto, o null: la vista no emite encabezado para una seccion vacia. */
@@ -302,6 +305,7 @@ export function toCaseDetailProps(doc: CaseDetailDocLike, _locale: 'es' | 'en'):
     metricLabel: label,
     deck: text(doc.heroSubtitle),
     kpis: pairs(doc.kpis, ['label', 'value'] as const),
+    capture: toCaseCapture(doc.heroImage),
     periodBefore: text(doc.results?.periodBefore),
     periodAfter: text(doc.results?.periodAfter),
     clientContext: lexicalOrNull(doc.clientContext),
