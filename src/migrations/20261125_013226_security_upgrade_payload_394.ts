@@ -1,6 +1,15 @@
 import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  // Limites solo para esta transaccion. Sin `lock_timeout`, un ALTER TABLE que
+  // espera un bloqueo deja en cola todas las consultas siguientes sobre esa tabla
+  // y agota el pool de la app. Con el limite la migracion aborta entera, sin
+  // cambios a medias, y se puede reintentar. El segundo limite suelta los
+  // bloqueos si la conexion (por ejemplo un tunel) muere a mitad.
+  await db.execute(sql`
+   SET LOCAL lock_timeout = '3s';
+   SET LOCAL idle_in_transaction_session_timeout = '30s';
+  `)
   await db.execute(sql`
    ALTER TABLE "pages_blocks_related_case_study_block" DROP CONSTRAINT "pages_blocks_related_case_study_block_case_study_id_case_studies_id_fk";
   
