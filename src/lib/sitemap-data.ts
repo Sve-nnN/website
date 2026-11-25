@@ -235,6 +235,29 @@ async function fetchSitemapEntries(): Promise<SitemapEntry[]> {
     ...getHubEntries(collectionEntries, 'websites', '/websites', '/en/websites'),
     ...getHubEntries(collectionEntries, 'case-studies', '/case-studies', '/en/case-studies'),
     ...getHubEntries(collectionEntries, 'authors', '/authors', '/en/authors'),
+    ...(await getAboutEntries(payload)),
+  ]
+}
+
+/**
+ * Sobre mi (`/sobre-mi` y `/en/sobre-mi`). Es una ruta escrita a mano que sale
+ * del global `about-page`, no un doc de `pages`, asi que ninguna query de
+ * `SITEMAP_COLLECTIONS` la emite. Se excluyo antes del corte por ser parte del
+ * preview; ese motivo ya no aplica y la pagina responde 200, es indexable y
+ * lleva hreflang reciproco. Sin fecha de modificacion legible, queda fuera.
+ */
+async function getAboutEntries(
+  payload: Awaited<ReturnType<typeof getPayload>>,
+): Promise<SitemapEntry[]> {
+  const about = await payload.findGlobal({ slug: 'about-page', depth: 0 })
+  const updatedAt = (about as { updatedAt?: string | null }).updatedAt
+  if (!updatedAt) return []
+
+  const alternates = { es: `${SITE_URL}/sobre-mi`, en: `${SITE_URL}/en/sobre-mi` }
+
+  return [
+    { url: alternates.es, locale: 'es', lastModified: updatedAt, group: 'pages', alternates },
+    { url: alternates.en, locale: 'en', lastModified: updatedAt, group: 'pages', alternates },
   ]
 }
 
