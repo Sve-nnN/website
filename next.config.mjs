@@ -58,7 +58,9 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
-        pathname: '/**',
+        // Solo la nube propia: el optimizador no procesa imagenes de terceros.
+        // El nombre de la nube es publico, aparece en cada URL de imagen.
+        pathname: '/dmufha3qv/**',
       },
     ],
     // AVIF primero, WebP de respaldo (SEO-06.3). Antes servia solo WebP para no
