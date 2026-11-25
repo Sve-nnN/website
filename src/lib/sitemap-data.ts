@@ -71,7 +71,8 @@ export type SitemapEntry = {
   locale: SitemapLocale
   lastModified: string | Date
   group: 'pages' | 'blog' | 'case-studies' | 'authors' | 'websites'
-  alternates: { es: string; en: string }
+  /** `en` falta cuando la versión inglesa va en noindex: no se anuncia. */
+  alternates: { es: string; en?: string }
 }
 
 export type SitemapGroup = SitemapEntry['group']
@@ -192,8 +193,6 @@ async function fetchSitemapEntries(): Promise<SitemapEntry[]> {
           enUrl = path ? `${SITE_URL}/en/${path}` : `${SITE_URL}/en`
         }
 
-        const alternates = { es: esUrl, en: enUrl }
-
         // SEO-07: los posts con la traduccion inglesa incompleta van con
         // `noindex` en /en (src/lib/translation-gaps.ts). Anunciar en el
         // sitemap una URL que le pedimos a Google que no indexe es pedirle que
@@ -201,6 +200,10 @@ async function fetchSitemapEntries(): Promise<SitemapEntry[]> {
         const enIsNoindex =
           collection === 'posts' &&
           EN_TRANSLATION_INCOMPLETE.has((doc as { slug?: string }).slug ?? '')
+
+        // Tampoco como hreflang de la entrada ES: la pagina ya lo omite
+        // (buildAlternates con `omitEn`) y el sitemap tiene que decir lo mismo.
+        const alternates = enIsNoindex ? { es: esUrl } : { es: esUrl, en: enUrl }
 
         // Emit one <url> entry per locale (not one per doc) so each language
         // variant is independently indexable, per Google's hreflang sitemap
@@ -235,6 +238,29 @@ async function fetchSitemapEntries(): Promise<SitemapEntry[]> {
     ...getHubEntries(collectionEntries, 'websites', '/websites', '/en/websites'),
     ...getHubEntries(collectionEntries, 'case-studies', '/case-studies', '/en/case-studies'),
     ...getHubEntries(collectionEntries, 'authors', '/authors', '/en/authors'),
+    ...(await getAboutEntries(payload)),
+  ]
+}
+
+/**
+ * Sobre mi (`/sobre-mi` y `/en/sobre-mi`). Es una ruta escrita a mano que sale
+ * del global `about-page`, no un doc de `pages`, asi que ninguna query de
+ * `SITEMAP_COLLECTIONS` la emite. Se excluyo antes del corte por ser parte del
+ * preview; ese motivo ya no aplica y la pagina responde 200, es indexable y
+ * lleva hreflang reciproco. Sin fecha de modificacion legible, queda fuera.
+ */
+async function getAboutEntries(
+  payload: Awaited<ReturnType<typeof getPayload>>,
+): Promise<SitemapEntry[]> {
+  const about = await payload.findGlobal({ slug: 'about-page', depth: 0 })
+  const updatedAt = (about as { updatedAt?: string | null }).updatedAt
+  if (!updatedAt) return []
+
+  const alternates = { es: `${SITE_URL}/sobre-mi`, en: `${SITE_URL}/en/sobre-mi` }
+
+  return [
+    { url: alternates.es, locale: 'es', lastModified: updatedAt, group: 'pages', alternates },
+    { url: alternates.en, locale: 'en', lastModified: updatedAt, group: 'pages', alternates },
   ]
 }
 

@@ -1,0 +1,9 @@
+# Node con parches de seguridad para el build de Dokploy (Nixpacks).
+#
+# Sin esto Nixpacks usa el nixpkgs fijado en su binario, que trae Node 22.14.0.
+# Payload 3.94 exige ^22.23.5. El hash es la revision publicada del canal
+# nixos-26.05 el 2026-11-22 (Node 22.23.5, con binarios ya en cache.nixos.org).
+# La version mayor la sigue decidiendo `engines.node` de package.json. Al subir
+# de version de Node, actualizar las dos cosas juntas.
+[phases.setup]
+nixpkgsArchive = "0dc498bfe49baeb18b0f9891e800b53bb2603193"
