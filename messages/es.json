@@ -374,7 +374,7 @@
       "compareCaption": "Clics orgánicos anuales de cada caso, el año anterior contra el periodo medido",
       "compareRankBoth": "Este caso ocupa el lugar {pct} de {pctTotal} en crecimiento porcentual y el lugar {abs} de {absTotal} en clics absolutos.",
       "compareRankAbs": "Este caso ocupa el lugar {abs} de {absTotal} en clics absolutos. No tiene crecimiento porcentual porque partió de cero.",
-      "compareNote": "Los casos que miden otra métrica, como el tráfico mensual, no entran en esta comparación de clics anuales.",
+      "compareNote": "Esta tabla no incluye los casos que miden otra métrica u otro periodo.",
       "compareScrollLabel": "Tabla de comparación con desplazamiento horizontal",
       "compareThis": "Este caso",
       "compareNoBase": "Sin base",

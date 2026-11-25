@@ -6,6 +6,7 @@ import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { ArrowRight } from 'lucide-react'
 import { useTranslations } from 'next-intl'
+import { Suspense } from 'react'
 
 import type { Crumb } from '@/components/mui/Crumbs'
 import { linkFor } from '@/components/mui/links'
@@ -16,15 +17,18 @@ import { visuallyHidden } from '@/components/mui/ScoreRing'
 import type { BlogClosingData, BlogIndexProps, BlogPostItem, NewsletterNotice } from '@/lib/blog-data'
 
 import { BlogClosingMui } from './BlogClosingMui'
-import { BlogNewsletter } from './BlogNewsletter'
+import { BlogNewsletter, BlogNewsletterWithNotice } from './BlogNewsletter'
 import { BlogSearch } from './BlogSearch'
 import { CategoryNav } from './CategoryNav'
 
 type Props = BlogIndexProps & {
   /** Migas de `buildBlogTrail`, ya con `href`. */
   crumbs: Crumb[]
-  /** Estado de `?newsletter=` ya validado, o null. */
-  newsletterNotice: NewsletterNotice | null
+  /**
+   * Estado fijado desde fuera (pruebas SSR). La pagina NO lo pasa: el estado de
+   * `?newsletter=` se lee en el cliente, ver BlogNewsletterWithNotice.
+   */
+  newsletterNotice?: NewsletterNotice | null
   /** Cierre del blog (promo global), o null. */
   closing: BlogClosingData | null
 }
@@ -139,7 +143,11 @@ export function BlogIndexView({
         ))}
       </BlogSearch>
 
-      {newsletter && <BlogNewsletter data={newsletter} notice={newsletterNotice} />}
+      {newsletter && (
+        <Suspense fallback={<BlogNewsletter data={newsletter} notice={newsletterNotice ?? null} />}>
+          <BlogNewsletterWithNotice data={newsletter} forced={newsletterNotice} />
+        </Suspense>
+      )}
       {closing && <BlogClosingMui closing={closing} />}
     </>
   )
