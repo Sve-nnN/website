@@ -1,0 +1,6490 @@
+{
+ "id": 74,
+ "slug": "geo-seo-guia",
+ "sourceUpdatedAt": "2026-11-17T17:10:19.772Z",
+ "sourceContent": {
+  "root": {
+   "type": "root",
+   "format": "",
+   "indent": 0,
+   "version": 1,
+   "children": [
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Cada vez más preguntas terminan en una respuesta escrita por una IA, y en esa respuesta aparecen dos o tres enlaces como mucho. Si tu página no está entre ellos, para esa persona no existes, aunque estés en la primera página de Google. El GEO SEO trata justamente de eso, de que los motores generativos lean tu contenido, lo entiendan y lo citen.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Llevo años haciendo ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/blog/tech-seo/technical-seo-guide",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "SEO técnico",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": " y programando los sitios que optimizo, así que esta guía la escribo desde ese ángulo. Te voy a contar qué es el GEO, qué parte del trabajo ya la conoces si haces SEO bien, qué parte cambia de verdad y en qué orden lo ataco cuando reviso un sitio. También te voy a decir dónde creo que hay humo, porque en este tema hay bastante.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h2",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Qué es el GEO SEO",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "GEO viene de Generative Engine Optimization, optimización para motores generativos. Un motor generativo es cualquier sistema que responde a una pregunta con texto redactado por un modelo de lenguaje y que, para escribir esa respuesta, busca y lee páginas web. Hoy los más visibles son ChatGPT con búsqueda, Perplexity, Copilot de Microsoft, Gemini y los AI Overviews y el AI Mode de Google.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "El término nació en la academia. En 2023 un grupo de investigadores de Princeton, Georgia Tech, el Allen Institute for AI y el IIT Delhi publicó un paper llamado \"GEO: Generative Engine Optimization\". Armaron un banco de pruebas con miles de consultas y midieron qué cambios en el texto de una página hacían que un motor generativo la mostrara más en sus respuestas. Algunos métodos subieron la visibilidad hasta un 40% en sus pruebas. Los que mejor funcionaron fueron agregar citas de fuentes, incluir datos concretos y sumar frases textuales de expertos. Meter más palabras clave casi no movió nada.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Ese dato de 40% circula por todos lados sin contexto, así que te doy el mío: es un resultado de laboratorio, con motores simulados y un conjunto de consultas propio. Me sirve como dirección, no como promesa. Lo que sí me parece valioso del paper es el patrón, porque coincide con lo que veo en la práctica: los modelos citan lo que pueden verificar y extraer, no lo que repite la keyword.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "En el mercado vas a ver otros nombres para lo mismo o para cosas muy cercanas, como AEO (optimización para motores de respuesta), LLMO o \"SEO para IA\". No vale la pena pelear por la etiqueta. En mi ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/servicios/ai-seo-geo",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "servicio de SEO para IA",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": " uso GEO porque es el término que más gente busca en español y porque describe bien el objetivo, que es ser la fuente que el modelo cita.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h2",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Cómo decide una IA qué páginas citar",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Para optimizar algo tienes que entender cómo funciona por dentro, aunque sea a grandes rasgos. Los motores generativos que citan fuentes siguen un proceso parecido, que en la literatura técnica aparece como RAG (retrieval augmented generation, generación aumentada por recuperación).",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "ol",
+     "type": "list",
+     "start": 1,
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "type": "listitem",
+       "value": 1,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "La persona escribe una pregunta, muchas veces larga y conversacional.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 2,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "El sistema la reescribe en una o varias búsquedas. Google llama a esto \"query fan-out\" en AI Mode: una pregunta se abre en varias subconsultas que corren en paralelo.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 3,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Con esas búsquedas recupera páginas de un índice. Puede ser el índice de Google, el de Bing o uno propio, como el que arma OpenAI con su rastreador de búsqueda.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 4,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Parte esas páginas en fragmentos y elige los que mejor responden a cada subconsulta.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 5,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "El modelo redacta la respuesta usando esos fragmentos y enlaza algunos como fuente.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      }
+     ],
+     "listType": "number",
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "De ese proceso salen tres consecuencias prácticas. La primera es que si tu página no entra en el índice que usa ese motor, no hay GEO posible, por eso el SEO técnico de base sigue mandando. La segunda es que el modelo no lee tu página entera como un humano, lee fragmentos sueltos, así que cada pasaje tiene que entenderse solo. La tercera es que compites por subconsultas, no por una keyword: una sola pregunta del usuario te puede traer por un ángulo que nunca pensaste.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h2",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "GEO y SEO en qué se parecen y en qué no",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "La pregunta que más me hacen es si el GEO reemplaza al SEO. No. Lo complementa, y la mayor parte del trabajo se solapa. Te lo resumo así:",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "ul",
+     "type": "list",
+     "start": 1,
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "type": "listitem",
+       "value": 1,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Lo que no cambia: el rastreo, la indexación, la velocidad, los enlaces internos, la autoridad del dominio y el contenido útil. Si fallas en eso, fallas en las dos cosas.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 2,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Lo que cambia de peso: la estructura del texto a nivel de párrafo, los datos verificables, la claridad sobre quién escribe y la frescura del contenido.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 3,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Lo nuevo de verdad: otros rastreadores que leer y permitir, otras métricas (menciones y citas en lugar de posiciones) y una competencia que se decide por fragmento, no por URL.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      }
+     ],
+     "listType": "bullet",
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Hay un punto que me gusta remarcar porque cambia cómo priorizo. En el SEO clásico una página puede rankear bien con un texto mediocre si tiene autoridad y enlaces. En una respuesta generada, el modelo elige el pasaje que mejor contesta, y un párrafo claro de un sitio chico le puede ganar a un párrafo confuso de un medio grande. Eso abre una puerta real para sitios especializados, y es la razón por la que le dedico tiempo a este tema.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h2",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "La base técnica que la IA necesita para leerte",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Aquí es donde un perfil técnico tiene ventaja, porque buena parte de los problemas de GEO que encuentro no son de contenido. Son de acceso.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h3",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Rastreadores de IA y robots.txt",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Cada empresa usa sus propios bots y conviene conocerlos por nombre, porque cumplen funciones distintas:",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "ul",
+     "type": "list",
+     "start": 1,
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "type": "listitem",
+       "value": 1,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "OpenAI usa GPTBot para recolectar datos de entrenamiento, OAI-SearchBot para el índice de búsqueda de ChatGPT y ChatGPT-User cuando un usuario le pide que abra una página.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 2,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Anthropic usa ClaudeBot para entrenamiento, Claude-SearchBot para búsqueda y Claude-User para pedidos de usuarios.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 3,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Perplexity usa PerplexityBot para su índice y Perplexity-User para las visitas que dispara un usuario.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 4,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Google no tiene un bot aparte para los AI Overviews. Esas respuestas salen del índice de Googlebot. El token Google-Extended en robots.txt controla si Google usa tu contenido para entrenar y alimentar Gemini, pero no afecta tu aparición en la búsqueda ni en los AI Overviews.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      }
+     ],
+     "listType": "bullet",
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "La decisión importante es separar entrenamiento de búsqueda. Puedes bloquear GPTBot si no quieres que tu contenido entrene modelos y aun así permitir OAI-SearchBot para aparecer citado en ChatGPT. Lo que veo seguido es lo contrario: un plugin de seguridad o una regla de Cloudflare que bloquea todo lo que suene a IA, y el sitio desaparece de ChatGPT sin que nadie lo haya decidido. Antes de tocar contenido, reviso el ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/blog/tech-seo/robots-txt-best-practices",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "robots.txt",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": " y las reglas del firewall.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "block",
+     "fields": {
+      "id": "1794935378919c3cd38",
+      "code": "# Permito los bots que citan en búsqueda\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: Claude-SearchBot\nAllow: /\n\n# Bloqueo solo el entrenamiento, si así lo decides\nUser-agent: GPTBot\nDisallow: /",
+      "language": "typescript",
+      "blockName": "",
+      "blockType": "code-block"
+     },
+     "format": "",
+     "version": 2
+    },
+    {
+     "tag": "h3",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "JavaScript y renderizado",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Este punto me toca de cerca porque construyo sitios en Next.js. Googlebot renderiza JavaScript, con demora pero lo hace. La mayoría de los rastreadores de IA no. Un análisis que publicó Vercel a fines de 2024 sobre el tráfico de su red mostró que los bots de OpenAI y Anthropic descargan los archivos JavaScript pero no los ejecutan. Si tu contenido se pinta en el navegador, para esos bots tu página está vacía.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "La solución es la misma que vengo recomendando para SEO desde hace años: que el HTML que devuelve el servidor ya traiga el texto. Renderizado en servidor o generación estática, según el caso. Si tienes dudas sobre cuál conviene, en mi guía de ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/blog/tech-seo/ssr-vs-csr-seo",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "SSR vs CSR para SEO",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": " explico cómo lo decido, y en la de ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/blog/tech-seo/javascript-seo",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "SEO para JavaScript",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": " cómo comprobar qué ve un bot. La prueba rápida que hago es pedir la página con curl y buscar en la respuesta una frase del cuerpo del artículo. Si no aparece, tienes un problema de GEO aunque Google te indexe bien.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h3",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Velocidad e indexación",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Los motores que hacen búsqueda en vivo tienen poco tiempo para traer las páginas. Un servidor que tarda varios segundos en responder o una página que devuelve un error intermitente pierde contra otra fuente que responde rápido. No tengo un umbral publicado por ninguna de estas empresas, así que no te voy a dar un número inventado, pero el criterio es el mismo de las ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/blog/tech-seo/core-web-vitals-guide",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Core Web Vitals",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": ": un TTFB bajo y un HTML liviano.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Y lo obvio que se olvida: si Google o Bing no indexan la página, los motores que dependen de esos índices tampoco la van a encontrar. ChatGPT, por ejemplo, combina su propio índice con resultados de proveedores de búsqueda. Revisar la cobertura en ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/blog/tech-seo/guia-google-search-console",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Google Search Console",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": " y en Bing Webmaster Tools sigue siendo el primer paso.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h3",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Datos estructurados",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Los ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/blog/tech-seo/structured-data-seo",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "datos estructurados",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": " no son un atajo para que te citen, y desconfío de quien lo vende así. Lo que sí hacen es dejar explícito lo que el texto dice de forma implícita: quién es el autor, cuándo se publicó y actualizó, qué organización está detrás y de qué trata la página. Para un sistema que tiene que decidir si una fuente es confiable, esas señales ayudan a desambiguar. Uso Article con autor y fechas, Organization o Person según el sitio, y FAQPage solo cuando la página realmente tiene preguntas y respuestas visibles.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h2",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "El archivo llms.txt",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "El llms.txt es un archivo de texto en Markdown que vive en la raíz del sitio y le resume a un modelo de lenguaje qué hay en tu web y dónde está lo importante. Lo propuso Jeremy Howard en septiembre de 2024 y no es un estándar oficial de nadie.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "En este mismo sitio tengo un llms.txt y un llms-full.txt escritos a mano, con unas quince URLs estables. Los mantengo porque cuestan poco y porque algunos agentes y herramientas de programación sí los leen. Pero no te voy a vender que mueven posiciones: gente de Google dijo en público que su buscador no lo usa, y no conozco datos sólidos de que ChatGPT o Perplexity lo tengan en cuenta para citar.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Si quieres el detalle completo, con el formato, un ejemplo real y cuándo vale la pena, lo explico en mi ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/blog/tech-seo/llms-txt-guia",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "guía de llms.txt",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": ".",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h2",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Cómo escribir contenido que la IA pueda citar",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Cuando el acceso técnico está resuelto, el trabajo pasa al texto. Mi regla de trabajo es simple: cada sección tiene que poder copiarse sola en una respuesta y seguir teniendo sentido.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h3",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Respuesta primero",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Pongo la respuesta en las dos primeras frases de cada sección y después desarrollo. Si alguien pregunta \"qué es el GEO SEO\", el primer párrafo bajo ese encabezado tiene que contestarlo con una definición completa, sin \"como vimos antes\" ni pronombres que apunten a otra parte de la página. Es lo mismo que hacía para los fragmentos destacados de Google, solo que ahora aplica a cada sección y no solo a la principal.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h3",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Pasajes autocontenidos",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Un fragmento que dice \"esto mejora el rendimiento\" no le sirve a nadie fuera de contexto. Uno que dice \"el renderizado en servidor mejora el LCP porque el navegador recibe el HTML ya armado\" sí. Repito el sujeto en lugar de usar pronombres, nombro las cosas por su nombre y evito los párrafos que dependen del anterior para entenderse. Suena un poco más redundante para un humano que lee de corrido, y lo acepto a cambio de que cada pasaje funcione solo.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h3",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Datos con fuente y fecha",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "El paper original de GEO y lo que veo en las respuestas coinciden: los modelos prefieren afirmaciones verificables. Una cifra con su fuente y su fecha tiene más chances de aparecer citada que una opinión vaga. Eso no significa inventar estadísticas, que es lo peor que puedes hacer porque un modelo puede contrastarlas. Significa que si tienes datos propios, de tus proyectos, de tus pruebas o de tu sector, los publiques con claridad.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h3",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Estructura que se pueda extraer",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Encabezados que dicen lo que contienen, listas cuando el contenido es una lista, tablas cuando comparas cosas y pasos numerados cuando explicas un proceso. Nada de esto es nuevo, pero en GEO pesa más porque el sistema corta tu página en pedazos y la estructura le marca dónde empieza y dónde termina cada idea.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Todo esto lo desarrollo con ejemplos de antes y después en mi guía sobre ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/blog/tech-seo/citabilidad-contenido-ia",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "contenido citable por IA",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": ".",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h2",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Autoridad y menciones fuera de tu sitio",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Los modelos no solo leen tu web. También aprendieron de lo que otros dicen de ti, y cuando buscan en vivo encuentran foros, comparativas, directorios y artículos de terceros. Si preguntas a ChatGPT por \"las mejores herramientas de X\", la respuesta suele armarse con listas y reseñas publicadas en otros sitios.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Para GEO eso significa que las menciones de marca importan, aunque no tengan enlace. Aparecer en las comparativas de tu nicho, en hilos donde la gente pide recomendaciones y en medios del sector suma. Es ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/blog/seo/seo-off-page-guia",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "SEO off page",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": " con otro objetivo: no buscas solo el enlace, buscas que tu nombre aparezca asociado al tema correcto en muchos lugares distintos.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Y el autor importa. Un artículo firmado por alguien con trayectoria comprobable en el tema, con una página de autor que lo respalde, encaja con lo que Google describe como ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/blog/seo/guia-eeat",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "E-E-A-T",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": ". Yo firmo todo lo que publico con mi nombre y enlazo mi perfil por esa razón.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h2",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Cómo medir el GEO",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Aquí está la parte más inmadura del tema, y prefiero decirlo de frente. No existe un \"ranking de ChatGPT\" equivalente a las posiciones de Google. Lo que sí puedes medir son tres cosas:",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "ul",
+     "type": "list",
+     "start": 1,
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "type": "listitem",
+       "value": 1,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "El tráfico que llega desde asistentes de IA, que en GA4 aparece como referido desde dominios como chatgpt.com o perplexity.ai. ChatGPT además agrega el parámetro utm_source=chatgpt.com a muchos de los enlaces que muestra.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 2,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Las menciones y citas en las respuestas para un conjunto fijo de preguntas, revisadas a mano o con herramientas de seguimiento de prompts.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 3,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Señales indirectas, como el aumento de búsquedas de marca en Search Console.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      }
+     ],
+     "listType": "bullet",
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Un detalle que confunde a mucha gente: los clics desde los AI Overviews y el AI Mode de Google cuentan dentro del tráfico web normal de Search Console. Google no los separa en un informe propio, así que no los vas a ver como una fuente aparte.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Cómo armo ese seguimiento paso a paso, con el filtro para GA4 y el método de prompts fijos, lo cuento en mi guía para ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/blog/tech-seo/medir-citas-ia",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "medir citas en IA",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": ".",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "h2",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Errores comunes que veo en GEO",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "tag": "ul",
+     "type": "list",
+     "start": 1,
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "type": "listitem",
+       "value": 1,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Bloquear a todos los bots de IA por defecto, sin separar entrenamiento de búsqueda.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 2,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Publicar el contenido detrás de JavaScript que los rastreadores no ejecutan.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 3,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Escribir para la keyword en lugar de responder la pregunta, con introducciones largas que tardan tres párrafos en decir algo.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 4,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Comprar herramientas de \"visibilidad en IA\" antes de revisar que los bots pueden entrar al sitio.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 5,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Generar contenido masivo con IA esperando que otra IA lo cite. Los modelos ya tienen esa información. Lo que les falta es experiencia propia, datos nuevos y criterio.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 6,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Tratar el llms.txt como la solución completa, cuando es un archivo opcional que Google no usa.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      }
+     ],
+     "listType": "bullet",
+     "direction": "ltr"
+    },
+    {
+     "tag": "h2",
+     "type": "heading",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Por dónde empiezo cuando reviso un sitio",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Este es el orden que sigo, de lo que más bloquea a lo que más afina:",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "tag": "ol",
+     "type": "list",
+     "start": 1,
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "type": "listitem",
+       "value": 1,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Acceso: robots.txt, reglas del firewall o CDN y logs del servidor para ver qué bots de IA llegan y qué código de respuesta reciben.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 2,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Renderizado: compruebo que el texto principal está en el HTML del servidor y no depende de JavaScript.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 3,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Indexación: cobertura en Google y Bing de las páginas que importan.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 4,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Medición base: segmento de tráfico de IA en GA4 y una lista de 20 a 50 preguntas reales del negocio para seguir cada mes.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 5,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Contenido: reescribo primero las páginas que ya reciben tráfico o que responden a esas preguntas, con respuesta primero y pasajes autocontenidos.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 6,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Señales de autoría y datos estructurados.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "type": "listitem",
+       "value": 7,
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "Presencia fuera del sitio, que es lo más lento y lo que más depende del negocio.",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      }
+     ],
+     "listType": "number",
+     "direction": "ltr"
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Los tres primeros pasos casi siempre son trabajo técnico de una o dos semanas. Lo que viene después es continuo, igual que el SEO.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    },
+    {
+     "type": "block",
+     "fields": {
+      "id": "17949353996046b0c64",
+      "faqs": [
+       {
+        "id": "89e59a81da678b439dd2dd15",
+        "answer": {
+         "root": {
+          "type": "root",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+           {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+             {
+              "mode": "normal",
+              "text": "No. El GEO se apoya en el SEO: si tu página no se rastrea ni se indexa, ningún motor generativo la va a citar. Lo que hace el GEO es sumar una capa de trabajo sobre la estructura del texto, el acceso de los bots de IA y la medición de citas.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+             }
+            ],
+            "direction": "ltr",
+            "textFormat": 0
+           }
+          ],
+          "direction": "ltr"
+         }
+        },
+        "question": "¿El GEO SEO reemplaza al SEO tradicional?"
+       },
+       {
+        "id": "5f0fa3b64cef574058d66b46",
+        "answer": {
+         "root": {
+          "type": "root",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+           {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+             {
+              "mode": "normal",
+              "text": "Los arreglos técnicos, como desbloquear un rastreador o servir el contenido en el HTML, pueden notarse en cuestión de semanas, cuando los bots vuelven a pasar. Los cambios de contenido y de autoridad llevan más tiempo y dependen de cada nicho, así que no prometo plazos fijos.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+             }
+            ],
+            "direction": "ltr",
+            "textFormat": 0
+           }
+          ],
+          "direction": "ltr"
+         }
+        },
+        "question": "¿Cuánto tarda en notarse el GEO?"
+       },
+       {
+        "id": "8aee749ee6c2e7dc24b5b358",
+        "answer": {
+         "root": {
+          "type": "root",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+           {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+             {
+              "mode": "normal",
+              "text": "No. ChatGPT y Perplexity citan páginas que no tienen llms.txt todo el tiempo. Es un archivo opcional y barato de mantener, pero no reemplaza el acceso de los bots ni un contenido bien estructurado.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+             }
+            ],
+            "direction": "ltr",
+            "textFormat": 0
+           }
+          ],
+          "direction": "ltr"
+         }
+        },
+        "question": "¿Necesito un llms.txt para aparecer en ChatGPT?"
+       },
+       {
+        "id": "45f513deb16d09d90e1172a8",
+        "answer": {
+         "root": {
+          "type": "root",
+          "format": "",
+          "indent": 0,
+          "version": 1,
+          "children": [
+           {
+            "type": "paragraph",
+            "format": "",
+            "indent": 0,
+            "version": 1,
+            "children": [
+             {
+              "mode": "normal",
+              "text": "Sí, en buena medida. OpenAI, Anthropic y Perplexity usan bots distintos para entrenamiento y para búsqueda, así que puedes bloquear unos y permitir otros en tu robots.txt. En Google, Google-Extended controla el uso para Gemini sin afectar tu presencia en la búsqueda ni en los AI Overviews.",
+              "type": "text",
+              "style": "",
+              "detail": 0,
+              "format": 0,
+              "version": 1
+             }
+            ],
+            "direction": "ltr",
+            "textFormat": 0
+           }
+          ],
+          "direction": "ltr"
+         }
+        },
+        "question": "¿Puedo bloquear el entrenamiento de IA sin desaparecer de las respuestas?"
+       }
+      ],
+      "title": "Preguntas frecuentes sobre GEO SEO",
+      "blockName": "",
+      "blockType": "faq"
+     },
+     "format": "",
+     "version": 2
+    },
+    {
+     "type": "paragraph",
+     "format": "",
+     "indent": 0,
+     "version": 1,
+     "children": [
+      {
+       "mode": "normal",
+       "text": "Si prefieres que lo revise yo en tu sitio, en mi servicio de ",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      },
+      {
+       "type": "link",
+       "fields": {
+        "url": "/servicios/ai-seo-geo",
+        "newTab": false,
+        "linkType": "custom"
+       },
+       "format": "",
+       "indent": 0,
+       "version": 1,
+       "children": [
+        {
+         "mode": "normal",
+         "text": "SEO para IA",
+         "type": "text",
+         "style": "",
+         "detail": 0,
+         "format": 0,
+         "version": 1
+        }
+       ],
+       "direction": "ltr"
+      },
+      {
+       "mode": "normal",
+       "text": " empiezo por el acceso de los bots y la citabilidad de tus páginas actuales, y te dejo un plan priorizado para que ChatGPT, Perplexity y Google tengan motivos para citarte.",
+       "type": "text",
+       "style": "",
+       "detail": 0,
+       "format": 0,
+       "version": 1
+      }
+     ],
+     "direction": "ltr",
+     "textFormat": 0
+    }
+   ],
+   "direction": "ltr"
+  }
+ },
+ "es": {
+  "title": "GEO SEO guía completa para aparecer en respuestas de IA",
+  "excerpt": "El GEO SEO busca que ChatGPT, Perplexity y los AI Overviews de Google citen tu contenido en sus respuestas. Te explico cómo funciona, qué parte es SEO técnico de toda la vida y qué parte es nueva, con el orden en que yo lo trabajo.",
+  "metaTitle": "GEO SEO guía para que ChatGPT y Google te citen",
+  "metaDescription": "Qué es el GEO SEO, en qué se parece y en qué no al SEO de siempre, cómo leen tu sitio los rastreadores de IA y qué cambio primero para que te citen.",
+  "content": {
+   "root": {
+    "type": "root",
+    "format": "",
+    "indent": 0,
+    "version": 1,
+    "children": [
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Cada vez más preguntas terminan en una respuesta escrita por una IA, y esa respuesta enlaza solo unas pocas fuentes. Si tu página no está entre ellas, quien pregunta puede no llegar a verte aunque aparezcas en la primera página de Google. El GEO SEO trata justamente de eso, de que los motores generativos lean tu contenido, lo entiendan y lo citen.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Llevo años haciendo ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/blog/tech-seo/technical-seo-guide",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "SEO técnico",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " y programando los sitios que optimizo, así que escribo esta guía desde ese ángulo. Te voy a contar qué es el GEO, qué parte del trabajo ya conoces si haces SEO bien, qué parte cambia de verdad y en qué orden la abordo cuando reviso un sitio. También te diré dónde veo promesas sin respaldo, porque en este tema abundan.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Qué es el GEO SEO",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "GEO viene de Generative Engine Optimization, optimización para motores generativos. Un motor generativo es un sistema que responde a una pregunta con texto redactado por un modelo de lenguaje y que, para escribirlo, busca y lee páginas web. Entre los más visibles están ChatGPT con búsqueda, Perplexity, Microsoft Copilot, Gemini y los AI Overviews y el AI Mode de Google.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "El nombre llegó desde la academia. En noviembre de 2023, investigadores del IIT Delhi y de Princeton, junto con dos investigadores independientes, publicaron en arXiv el paper \"GEO: Generative Engine Optimization\", aceptado después en el congreso KDD 2024. Crearon un banco de pruebas de 10.000 consultas y midieron qué cambios en el texto de una página hacían que un motor generativo le diera más visibilidad en sus respuestas. Los mejores métodos fueron citar fuentes, añadir datos concretos e incorporar citas textuales, con mejoras de hasta un 40% en sus métricas. Rellenar el texto con más palabras clave dio resultados pobres.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Ese 40% circula a menudo sin contexto, así que conviene precisarlo. Sale de métricas de visibilidad definidas por los propios autores y medidas sobre un motor generativo montado para el experimento, que respondía a partir de las cinco primeras fuentes que devolvía Google. Los autores añadieron una prueba en Perplexity.ai, con mejoras de hasta el 37%. Para mí marca una dirección, no una promesa. Lo valioso es el patrón: en esas pruebas ayudó el contenido que se podía comprobar y extraer, no la repetición de la palabra clave.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "En el mercado verás otros nombres para lo mismo o para ideas muy cercanas, como AEO (optimización para motores de respuesta), LLMO o \"SEO para IA\". Google, por su parte, considera que optimizar para sus funciones de IA sigue siendo SEO. No vale la pena pelear por la etiqueta. En mi ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/servicios/ai-seo-geo",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "servicio de SEO para IA",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " uso GEO porque describe bien el objetivo, que es ser la fuente que el modelo cita.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Cómo decide una IA qué páginas citar",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Para optimizar algo hay que entender cómo funciona, aunque sea a grandes rasgos. Los motores generativos que citan fuentes siguen un proceso parecido, conocido como RAG (retrieval augmented generation, generación aumentada por recuperación). Los detalles cambian de un producto a otro, pero el esquema general es este:",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "ol",
+      "type": "list",
+      "start": 1,
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "listitem",
+        "value": 1,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "La persona escribe una pregunta, a menudo larga y conversacional.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 2,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "El sistema la convierte en una o varias búsquedas. Google llama a esto \"query fan-out\": a partir de una pregunta lanza a la vez varias consultas relacionadas.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 3,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Con esas búsquedas recupera páginas de un índice. Puede ser el de Google, el de Bing, uno propio (OpenAI usa OAI-SearchBot para la búsqueda de ChatGPT) o resultados de proveedores de búsqueda externos.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 4,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Selecciona los pasajes que mejor responden a cada consulta.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 5,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "El modelo redacta la respuesta a partir de ese material y enlaza algunas páginas como fuente.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       }
+      ],
+      "listType": "number",
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "De ese proceso salen tres consecuencias prácticas. La primera es que si tu página no está disponible para el índice que usa el motor, difícilmente podrá citarte, así que el SEO técnico de base sigue mandando. La segunda es que un sistema de este tipo puede trabajar con fragmentos de tu página, así que conviene que cada pasaje se entienda solo. Google aclara que no exige trocear el contenido, de modo que escribe para personas. La tercera es que una sola pregunta se abre en varias búsquedas y tu página puede entrar por un ángulo que no habías previsto. Eso no justifica crear una página por cada variación, algo que Google considera abuso de contenido a escala cuando el fin es manipular los resultados.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "GEO y SEO en qué se parecen y en qué no",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Una duda habitual es si el GEO reemplaza al SEO. No lo hace. Lo complementa, y buena parte del trabajo se solapa. Así lo resumo:",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "ul",
+      "type": "list",
+      "start": 1,
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "listitem",
+        "value": 1,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Lo que no cambia: el rastreo, la indexación, la velocidad, los enlaces internos, la autoridad y el contenido útil. Si fallas en eso, fallas en las dos cosas.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 2,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Lo que gana peso: la claridad de cada párrafo, los datos verificables, saber quién escribe y mantener el contenido al día.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 3,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Lo nuevo: más rastreadores que identificar y permitir, otras métricas (menciones y citas además de posiciones) y una competencia que se juega pasaje a pasaje, no solo URL a URL.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       }
+      ],
+      "listType": "bullet",
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Hay un punto que cambia mi forma de priorizar. En una respuesta generada pesa mucho qué pasaje contesta mejor, y un párrafo claro de un sitio pequeño puede competir con uno confuso de un medio grande. Para los sitios especializados es una oportunidad, y por eso le dedico tiempo a este tema.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "La base técnica que la IA necesita para leerte",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Aquí un perfil técnico tiene ventaja, porque algunos problemas de GEO no son de contenido, sino de acceso.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Rastreadores de IA y robots.txt",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Cada empresa usa sus propios bots, y conviene conocerlos por su nombre porque cumplen funciones distintas:",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "ul",
+      "type": "list",
+      "start": 1,
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "listitem",
+        "value": 1,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "OpenAI usa GPTBot para recopilar contenido que puede servir para entrenar sus modelos, OAI-SearchBot para mostrar sitios en la búsqueda de ChatGPT y ChatGPT-User cuando la petición de una persona obliga a visitar una página.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 2,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Anthropic usa ClaudeBot para entrenamiento, Claude-SearchBot para mejorar sus resultados de búsqueda y Claude-User para las consultas que inicia una persona.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 3,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Perplexity usa PerplexityBot para mostrar y enlazar sitios en sus resultados y Perplexity-User para las visitas que dispara una persona.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 4,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Google no tiene un bot aparte para los AI Overviews ni para AI Mode, porque esas funciones se apoyan en el índice de la Búsqueda. El token Google-Extended de robots.txt controla si tu contenido sirve para entrenar futuros modelos generativos de Google, como los de Gemini, y para darles contexto en productos ajenos a la Búsqueda. No afecta tu inclusión ni tu posición en la Búsqueda. Para decidir si tu contenido aparece en las funciones de IA de la Búsqueda existe el control Search generative AI de Search Console.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       }
+      ],
+      "listType": "bullet",
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "La decisión importante es separar entrenamiento y búsqueda. Puedes bloquear GPTBot si no quieres que tu contenido entrene modelos y, a la vez, permitir OAI-SearchBot para aparecer en las respuestas de ChatGPT. Las visitas que inicia una persona se comportan de otra forma: OpenAI avisa de que robots.txt puede no aplicarse a ChatGPT-User, y Perplexity indica que Perplexity-User suele ignorarlo. El error que conviene descartar es el contrario, un plugin de seguridad, una regla del firewall o las políticas de rastreadores de IA de Cloudflare que bloquean más de lo que querías. Antes de tocar contenido reviso el ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/blog/tech-seo/robots-txt-best-practices",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "robots.txt",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " y las reglas del firewall.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "block",
+      "fields": {
+       "id": "1794935378919c3cd38",
+       "code": "# Permito los bots de búsqueda\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: Claude-SearchBot\nAllow: /\n\n# Bloqueo solo el entrenamiento, si así lo decides\nUser-agent: GPTBot\nDisallow: /\n\nUser-agent: ClaudeBot\nDisallow: /",
+       "language": "typescript",
+       "blockName": "",
+       "blockType": "code-block"
+      },
+      "format": "",
+      "version": 2
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "JavaScript y renderizado",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Este punto me toca de cerca porque construyo sitios en Next.js. Googlebot renderiza JavaScript, aunque la página puede esperar en una cola antes de que lo haga. Con otros rastreadores de IA no cuentes con ello. Un análisis de Vercel sobre el tráfico de su red, publicado en diciembre de 2024, concluyó que los principales rastreadores de IA no ejecutaban JavaScript: los de OpenAI y Anthropic descargaban algunos archivos JavaScript, pero no los ejecutaban. Las excepciones eran Gemini, que se apoya en la infraestructura de Googlebot, y Applebot. Si tu contenido solo se pinta en el navegador, un bot así puede encontrar la página vacía.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "La solución es la de siempre en SEO: que el HTML que devuelve el servidor ya traiga el texto, con renderizado en servidor o generación estática según el caso. Si dudas cuál conviene, en mi guía de ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/blog/tech-seo/ssr-vs-csr-seo",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "SSR vs CSR para SEO",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " explico cómo decidirlo, y en la de ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/blog/tech-seo/javascript-seo",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "SEO para JavaScript",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " cómo comprobar qué ve un bot. Mi prueba rápida es pedir la página con curl y buscar en la respuesta una frase del cuerpo del artículo. Si no aparece, tienes un problema de GEO aunque Google te indexe bien.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Velocidad e indexación",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Un motor que busca en vivo depende de que tu servidor conteste. Una respuesta muy lenta o un error intermitente pueden hacer que acabe usando otra fuente. No voy a darte un umbral porque la documentación de rastreadores que cito aquí no publica ninguno, pero el criterio coincide con el de las ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/blog/tech-seo/core-web-vitals-guide",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Core Web Vitals",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": ": un TTFB bajo y un HTML ligero.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Y lo obvio que se olvida: si un buscador no indexa la página, los motores que dependen de su índice tampoco la encontrarán. ChatGPT, por ejemplo, recurre en ocasiones a proveedores de búsqueda externos además de a su propio rastreador. Revisar la cobertura en ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/blog/tech-seo/guia-google-search-console",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Google Search Console",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " y en Bing Webmaster Tools sigue siendo el primer paso.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Datos estructurados",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Los ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/blog/tech-seo/structured-data-seo",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "datos estructurados",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " no son un atajo para que te citen, y desconfío de quien los vende así. Google afirma que no hacen falta para aparecer en sus funciones de IA y que no existe un marcado especial para ello. Lo que sí hacen es dejar explícito quién es el autor, cuándo se publicó y actualizó la página, qué organización está detrás y de qué trata, además de optar a resultados enriquecidos. Uso Article con autor y fechas, Organization o Person según el sitio, y FAQPage solo cuando la página tiene preguntas y respuestas visibles.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "El archivo llms.txt",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "El llms.txt es un archivo en Markdown que vive en la raíz del sitio y resume para un modelo de lenguaje qué hay en tu web y dónde está lo importante. Jeremy Howard lo propuso en septiembre de 2024. Es una propuesta, no un estándar oficial.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Este sitio tiene un llms.txt y un llms-full.txt. Los mantengo porque cuestan poco y pueden servir a agentes y herramientas que decidan leerlos. No te voy a vender que mejoran tu visibilidad: Google indica en su documentación que su buscador no usa estos archivos y que tenerlos ni ayuda ni perjudica en la Búsqueda. La documentación de rastreadores de OpenAI y Perplexity tampoco los pide para aparecer en sus resultados.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Cómo escribir contenido que la IA pueda citar",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Con el acceso técnico resuelto, el trabajo pasa al texto. Mi regla es simple: cada sección debe poder copiarse sola en una respuesta y seguir teniendo sentido. Ningún buscador lo exige, es una forma de escribir con claridad.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Respuesta primero",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Pongo la respuesta en las dos primeras frases de cada sección y después desarrollo. Si alguien pregunta \"qué es el GEO SEO\", el primer párrafo bajo ese encabezado tiene que contestar con una definición completa, sin \"como vimos antes\" ni pronombres que apunten a otra parte de la página.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Pasajes autocontenidos",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Un fragmento que dice \"esto mejora el rendimiento\" no le sirve a nadie fuera de contexto. Uno que dice \"el renderizado en servidor puede mejorar el LCP porque el navegador recibe el HTML ya armado\" sí. Repito el sujeto cuando un pronombre dejaría dudas, nombro las cosas por su nombre y evito los párrafos que dependen del anterior para entenderse. Para quien lee de corrido suena algo más redundante, y lo acepto a cambio de que cada pasaje funcione solo.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Datos con fuente y fecha",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "En el experimento del paper de GEO, añadir fuentes, estadísticas y citas textuales mejoró la visibilidad. Además, una cifra con su fuente y su fecha se puede comprobar, cosa que una opinión vaga no permite. Eso no significa inventar estadísticas, que es lo peor que puedes hacer. Significa que, si tienes datos propios de tus proyectos, de tus pruebas o de tu sector, los publiques con claridad.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Estructura que se pueda extraer",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Usa encabezados que digan lo que contienen, listas cuando el contenido es una lista, tablas para comparar y pasos numerados para explicar un proceso. Nada de esto es nuevo. Ayuda a quien lee y deja claro a cualquier sistema dónde empieza y dónde termina cada idea.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Autoridad y menciones fuera de tu sitio",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Los modelos no solo se alimentan de tu web. Cuando buscan en vivo también pueden encontrar foros, comparativas, directorios y artículos de terceros que hablan de ti. Si alguien pide a un asistente \"las mejores herramientas de X\", es razonable esperar que la respuesta se apoye en listas y reseñas publicadas en otros sitios.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Por eso las menciones de marca pueden importar aunque no lleven enlace. Aparecer de forma legítima en las comparativas de tu nicho, en hilos donde la gente pide recomendaciones y en medios del sector suma. Es ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/blog/seo/seo-off-page-guia",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "SEO off page",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " con otro objetivo: además del enlace, buscas que tu nombre aparezca asociado al tema correcto. Fabricar menciones artificiales no compensa, y Google advierte que ayudan menos de lo que parece.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "El autor también importa. Un artículo firmado por alguien con trayectoria comprobable en el tema, con una página de autor que la respalde, encaja con lo que Google describe como ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/blog/seo/guia-eeat",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "E-E-A-T",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": ". Por esa razón firmo lo que publico con mi nombre y enlazo mi perfil.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Cómo medir el GEO",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Aquí está la parte más inmadura del tema, y prefiero decirlo de frente. No existe un \"ranking de ChatGPT\" equivalente a las posiciones de Google. Sí puedes medir varias cosas:",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "ul",
+      "type": "list",
+      "start": 1,
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "listitem",
+        "value": 1,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "El tráfico que llega desde asistentes de IA. GA4 tiene un canal AI Assistant que agrupa las visitas cuyo origen coincide con su lista de asistentes, sin incluir AI Overviews ni AI Mode. ChatGPT añade además el parámetro utm_source=chatgpt.com a sus enlaces de referencia.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 2,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Las impresiones en las funciones de IA de Google, con el informe de rendimiento de IA generativa de Search Console.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 3,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Las menciones y citas en las respuestas para un conjunto fijo de preguntas, revisadas a mano o con herramientas de seguimiento de prompts.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 4,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Señales indirectas, como el aumento de las búsquedas de marca en Search Console.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       }
+      ],
+      "listType": "bullet",
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Un detalle que confunde: el informe de IA generativa muestra impresiones de AI Overviews y AI Mode por página, país, fecha y dispositivo, y esos datos salen del tipo de búsqueda Web del informe de rendimiento. No sumes ambos como si fueran tráfico distinto. Si tu sitio no reúne suficientes impresiones, es posible que el informe no aparezca.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Errores comunes en GEO",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "tag": "ul",
+      "type": "list",
+      "start": 1,
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "listitem",
+        "value": 1,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Bloquear todos los bots de IA por defecto, sin separar entrenamiento y búsqueda.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 2,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Publicar el contenido detrás de JavaScript que muchos rastreadores no ejecutan.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 3,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Escribir para la palabra clave en lugar de responder la pregunta, con introducciones que tardan tres párrafos en decir algo.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 4,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Comprar herramientas de \"visibilidad en IA\" antes de comprobar que los bots pueden entrar al sitio.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 5,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Generar contenido en masa con IA esperando que otra IA lo cite. Lo que aporta valor es la experiencia propia, los datos nuevos y el criterio.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 6,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Tratar el llms.txt como la solución completa, cuando es un archivo opcional que la Búsqueda de Google no usa.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       }
+      ],
+      "listType": "bullet",
+      "direction": "ltr"
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Por dónde empiezo cuando reviso un sitio",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Este es el orden que sigo, de lo que más bloquea a lo que más afina:",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "ol",
+      "type": "list",
+      "start": 1,
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "listitem",
+        "value": 1,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Acceso: robots.txt, reglas del firewall o del CDN y logs del servidor para ver qué bots de IA llegan y qué código de respuesta reciben.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 2,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Renderizado: compruebo que el texto principal está en el HTML del servidor y no depende de JavaScript.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 3,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Indexación: cobertura en Google y Bing de las páginas que importan.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 4,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Medición base: tráfico desde asistentes de IA en GA4, el informe de IA generativa de Search Console y una lista de 20 a 50 preguntas reales del negocio para seguir cada mes.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 5,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Contenido: reescribo primero las páginas que ya reciben tráfico o responden a esas preguntas, con la respuesta primero y pasajes autocontenidos.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 6,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Señales de autoría y datos estructurados.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 7,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Presencia fuera del sitio, que es lo más lento y lo que más depende del negocio.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       }
+      ],
+      "listType": "number",
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Los tres primeros pasos son sobre todo trabajo técnico. Lo que viene después es continuo, igual que el SEO.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "block",
+      "fields": {
+       "id": "17949353996046b0c64",
+       "faqs": [
+        {
+         "id": "89e59a81da678b439dd2dd15",
+         "answer": {
+          "root": {
+           "type": "root",
+           "format": "",
+           "indent": 0,
+           "version": 1,
+           "children": [
+            {
+             "type": "paragraph",
+             "format": "",
+             "indent": 0,
+             "version": 1,
+             "children": [
+              {
+               "mode": "normal",
+               "text": "No. El GEO se apoya en el SEO: si tu página no se puede rastrear ni indexar, difícilmente la citará un motor generativo. El GEO suma trabajo sobre la claridad del texto, el acceso de los bots de IA y la medición de citas.",
+               "type": "text",
+               "style": "",
+               "detail": 0,
+               "format": 0,
+               "version": 1
+              }
+             ],
+             "direction": "ltr",
+             "textFormat": 0
+            }
+           ],
+           "direction": "ltr"
+          }
+         },
+         "question": "¿El GEO SEO reemplaza al SEO tradicional?"
+        },
+        {
+         "id": "5f0fa3b64cef574058d66b46",
+         "answer": {
+          "root": {
+           "type": "root",
+           "format": "",
+           "indent": 0,
+           "version": 1,
+           "children": [
+            {
+             "type": "paragraph",
+             "format": "",
+             "indent": 0,
+             "version": 1,
+             "children": [
+              {
+               "mode": "normal",
+               "text": "Depende. OpenAI y Perplexity indican que un cambio en robots.txt puede tardar unas 24 horas en reflejarse en sus sistemas. Los efectos de los cambios de contenido y de autoridad dependen de cuándo vuelvan los rastreadores y de cada nicho, así que no prometo plazos fijos.",
+               "type": "text",
+               "style": "",
+               "detail": 0,
+               "format": 0,
+               "version": 1
+              }
+             ],
+             "direction": "ltr",
+             "textFormat": 0
+            }
+           ],
+           "direction": "ltr"
+          }
+         },
+         "question": "¿Cuánto tarda en notarse el GEO?"
+        },
+        {
+         "id": "8aee749ee6c2e7dc24b5b358",
+         "answer": {
+          "root": {
+           "type": "root",
+           "format": "",
+           "indent": 0,
+           "version": 1,
+           "children": [
+            {
+             "type": "paragraph",
+             "format": "",
+             "indent": 0,
+             "version": 1,
+             "children": [
+              {
+               "mode": "normal",
+               "text": "No. OpenAI pide permitir OAI-SearchBot para aparecer en la búsqueda de ChatGPT y no menciona el llms.txt como requisito. Es un archivo opcional y barato de mantener, pero no sustituye el acceso de los bots ni un contenido bien estructurado.",
+               "type": "text",
+               "style": "",
+               "detail": 0,
+               "format": 0,
+               "version": 1
+              }
+             ],
+             "direction": "ltr",
+             "textFormat": 0
+            }
+           ],
+           "direction": "ltr"
+          }
+         },
+         "question": "¿Necesito un llms.txt para aparecer en ChatGPT?"
+        },
+        {
+         "id": "45f513deb16d09d90e1172a8",
+         "answer": {
+          "root": {
+           "type": "root",
+           "format": "",
+           "indent": 0,
+           "version": 1,
+           "children": [
+            {
+             "type": "paragraph",
+             "format": "",
+             "indent": 0,
+             "version": 1,
+             "children": [
+              {
+               "mode": "normal",
+               "text": "En buena medida, sí. OpenAI y Anthropic usan bots distintos para entrenamiento y para búsqueda, así que puedes bloquear unos y permitir otros en tu robots.txt. En Google, Google-Extended limita el uso de tu contenido para entrenar futuros modelos sin afectar tu presencia en la Búsqueda, y el control Search generative AI de Search Console decide si apareces en AI Overviews y AI Mode.",
+               "type": "text",
+               "style": "",
+               "detail": 0,
+               "format": 0,
+               "version": 1
+              }
+             ],
+             "direction": "ltr",
+             "textFormat": 0
+            }
+           ],
+           "direction": "ltr"
+          }
+         },
+         "question": "¿Puedo bloquear el entrenamiento de IA sin desaparecer de las respuestas?"
+        }
+       ],
+       "title": "Preguntas frecuentes sobre GEO SEO",
+       "blockName": "",
+       "blockType": "faq"
+      },
+      "format": "",
+      "version": 2
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Si prefieres que lo revise yo en tu sitio, en mi servicio de ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/servicios/ai-seo-geo",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "SEO para IA",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " empiezo por el acceso de los bots y la citabilidad de tus páginas actuales, y te dejo un plan priorizado para que ChatGPT, Perplexity y Google tengan motivos para citarte.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     }
+    ],
+    "direction": "ltr"
+   }
+  }
+ },
+ "en": {
+  "title": "GEO SEO Complete Guide to Appearing in AI Answers",
+  "excerpt": "GEO SEO aims to get ChatGPT, Perplexity, and Google AI Overviews to cite your content in their answers. I explain how it works, which part is classic technical SEO, which part is new, and the order in which I tackle it.",
+  "metaTitle": "GEO SEO Guide to Getting Cited by ChatGPT and Google",
+  "metaDescription": "What GEO SEO is, where it overlaps with classic SEO, how AI crawlers read your site, and what to fix first so ChatGPT and Google can cite you.",
+  "content": {
+   "root": {
+    "type": "root",
+    "format": "",
+    "indent": 0,
+    "version": 1,
+    "children": [
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "More and more questions end in an answer written by an AI, and that answer links to only a handful of sources. If your page is not among them, the person asking may never see you, even when you rank on the first page of Google. That is what GEO SEO is about: getting generative engines to read your content, understand it, and cite it.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "I have spent years doing ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/en/blog/tech-seo/technical-seo-guide",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "technical SEO",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " and writing the code of the sites I optimize, so I approach this guide from that angle. I will cover what GEO is, which part of the work you already know if you do SEO well, which part truly changes, and the order in which I tackle it when I review a site. I will also point out where I see unsupported promises, because this subject is full of them.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "What GEO SEO Is",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "GEO stands for Generative Engine Optimization. A generative engine is a system that answers a question with text written by a language model and that searches and reads web pages in order to write it. Among the most visible ones are ChatGPT search, Perplexity, Microsoft Copilot, Gemini, and Google AI Overviews and AI Mode.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "The name came from academia. In November 2023, researchers from IIT Delhi and Princeton, together with two independent researchers, posted the paper \"GEO: Generative Engine Optimization\" on arXiv, and the KDD 2024 conference later accepted it. They built a benchmark of 10,000 queries and measured which changes to the text of a page led a generative engine to give it more visibility in its answers. The strongest methods were citing sources, adding concrete figures, and including direct quotations, with gains of up to 40% on their metrics. Stuffing the text with more keywords performed poorly.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "That 40% often circulates without context, so it deserves a closer look. It comes from visibility metrics that the authors defined themselves, measured on a generative engine built for the experiment, which answered from the top five sources Google returned. The authors also ran a test on Perplexity.ai and saw gains of up to 37%. I read it as a direction, not a promise. The pattern is the valuable part: in those tests, content that readers could verify and extract did better than keyword repetition.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "You will come across other names for the same work or for closely related ideas, such as AEO (answer engine optimization), LLMO, or \"AI SEO.\" Google, for its part, regards optimizing for its AI features as SEO. The label is not worth a fight. In my ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/en/services/ai-seo-geo",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "AI SEO service",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " I use GEO because it describes the goal well, which is to be the source the model cites.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "How an AI Decides Which Pages to Cite",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "You need to understand how something works before you can optimize it, even in broad strokes. Generative engines that cite sources follow a similar process known as RAG (retrieval augmented generation). The details vary from one product to another, but the general outline looks like this:",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "ol",
+      "type": "list",
+      "start": 1,
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "listitem",
+        "value": 1,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Someone types a question, often a long and conversational one.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 2,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "The system turns it into one or more searches. Google calls this \"query fan-out\": a single question triggers several related queries at once.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 3,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "It uses those searches to retrieve pages from an index. That index may belong to Google or Bing, the engine may rely on its own (OpenAI uses OAI-SearchBot for ChatGPT search), or it may draw on results from external search providers.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 4,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "It picks the passages that best answer each query.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 5,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "The model writes the answer from that material and links some pages as sources.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       }
+      ],
+      "listType": "number",
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Three practical consequences follow. First, if the index an engine relies on cannot reach your page, the engine can hardly cite you, so basic technical SEO still rules. Second, a system like this may work with fragments of your page, which means each passage should make sense on its own. Google clarifies that it does not require you to break content into chunks, so write for people. Third, one question branches into several searches, and your page may come in through an angle you never anticipated. That does not justify a separate page for every variation, which Google treats as scaled content abuse when the aim is to manipulate results.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Where GEO and SEO Overlap and Where They Differ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "People often wonder whether GEO replaces SEO. It does not. It complements SEO, and much of the work overlaps. Here is how I sum it up:",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "ul",
+      "type": "list",
+      "start": 1,
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "listitem",
+        "value": 1,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "What stays the same: crawling, indexing, speed, internal links, authority, and useful content. If you fail at these, you fail at both.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 2,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "What gains weight: the clarity of each paragraph, verifiable data, a clear author, and content that stays current.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 3,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "What is new: more crawlers to identify and allow, different metrics (mentions and citations alongside rankings), and competition that plays out passage by passage as well as URL by URL.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       }
+      ],
+      "listType": "bullet",
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "One point changes how I set priorities. In a generated answer, the passage that responds best matters a great deal, and a clear paragraph from a small site can compete with a muddled one from a major publication. Specialized sites have an opening here, which is why I spend time on this subject.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "The Technical Foundation AI Needs to Read You",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "A technical background helps at this stage, because some GEO problems have nothing to do with content and everything to do with access.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "AI Crawlers and robots.txt",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Each company runs its own bots, and it pays to know them by name because they serve different purposes:",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "ul",
+      "type": "list",
+      "start": 1,
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "listitem",
+        "value": 1,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "OpenAI uses GPTBot to collect content that may go into model training, OAI-SearchBot to surface sites in ChatGPT search, and ChatGPT-User when a person asks for something that requires visiting a page.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 2,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Anthropic uses ClaudeBot for training, Claude-SearchBot to improve its search results, and Claude-User for requests that a person initiates.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 3,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Perplexity uses PerplexityBot to surface and link sites in its results and Perplexity-User for visits that a person triggers.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 4,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Google has no separate bot for AI Overviews or AI Mode, because those features rest on the Search index. The Google-Extended token in robots.txt controls whether your content can train future Google generative models, such as the ones behind Gemini, and ground them in products outside Search. It affects neither your inclusion nor your ranking in Search. To decide whether your content appears in the AI features of Search, use the Search generative AI control in Search Console.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       }
+      ],
+      "listType": "bullet",
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "The key decision is to separate training from search. You can block GPTBot if you do not want your content to train models and still allow OAI-SearchBot so that you show up in ChatGPT answers. Visits that a person initiates behave differently: OpenAI warns that robots.txt rules may not apply to ChatGPT-User, and Perplexity states that Perplexity-User generally ignores them. The mistake to rule out runs the other way, a security plugin, a firewall rule, or the AI crawler policies in Cloudflare blocking more than you intended. Before touching any content, I check ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/en/blog/tech-seo/robots-txt-best-practices",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "robots.txt",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " and the firewall rules.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "block",
+      "fields": {
+       "id": "1794935378919c3cd38",
+       "code": "# Allow the search bots\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: Claude-SearchBot\nAllow: /\n\n# Block training only, if you choose to\nUser-agent: GPTBot\nDisallow: /\n\nUser-agent: ClaudeBot\nDisallow: /",
+       "language": "typescript",
+       "blockName": "",
+       "blockType": "code-block"
+      },
+      "format": "",
+      "version": 2
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "JavaScript and Rendering",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "This one is close to home because I build sites with Next.js. Googlebot renders JavaScript, although a page may wait in a queue before that happens. Do not count on other AI crawlers to do the same. A Vercel analysis of traffic across its network, published in December 2024, found that the major AI crawlers did not execute JavaScript: the OpenAI and Anthropic bots downloaded some JavaScript files but never ran them. The exceptions were Gemini, which relies on Googlebot infrastructure, and Applebot. If your content only appears once the browser draws it, a bot like that may find an empty page.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "The fix is the one SEO has always called for: the HTML your server returns should already contain the text, through server-side rendering or static generation, depending on the case. If you are unsure which suits you, my guide to ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/en/blog/tech-seo/ssr-vs-csr-seo",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "SSR vs CSR for SEO",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " explains how to decide, and the one on ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/en/blog/tech-seo/javascript-seo",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "JavaScript SEO",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " shows how to check what a bot sees. My quick test is to request the page with curl and search the response for a sentence from the body of the article. If it is missing, you have a GEO problem even if Google indexes you well.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Speed and Indexing",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "An engine that searches in real time depends on your server answering. A very slow response or an intermittent error can push it toward another source. I will not give you a threshold, because the crawler documentation I cite here publishes none, but the standard matches that of ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/en/blog/tech-seo/core-web-vitals-guide",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Core Web Vitals",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": ": a low TTFB and lightweight HTML.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Then there is the obvious point people forget: if a search engine does not index a page, the engines that depend on its index will not find it either. ChatGPT, for instance, sometimes turns to external search providers in addition to its own crawler. Checking coverage in ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/en/blog/tech-seo/guia-google-search-console",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Google Search Console",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " and Bing Webmaster Tools remains the first step.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Structured Data",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "link",
+        "fields": {
+         "url": "/en/blog/tech-seo/structured-data-seo",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Structured data",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " is no shortcut to citations, and I distrust anyone who sells it that way. Google states that you do not need it to appear in its AI features and that no special markup exists for that purpose. What it does is spell out who the author is, when the page went live and when it last changed, which organization stands behind it, and what it covers, while keeping you eligible for rich results. I use Article with author and dates, Organization or Person depending on the site, and FAQPage only when the page shows real questions and answers.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "The llms.txt File",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "An llms.txt file is a Markdown file at the root of a site that summarizes for a language model what the site contains and where the important material lives. Jeremy Howard proposed it in September 2024. It is a proposal, not an official standard.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "This site has both an llms.txt and an llms-full.txt. I keep them because they cost little and may help agents and tools that choose to read them. I will not tell you they improve your visibility: Google documents that its search engine does not use these files and that having them neither helps nor harms you in Search. The crawler documentation from OpenAI and Perplexity does not ask for them either as a condition for appearing in their results.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "How to Write Content AI Can Cite",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Once technical access is sorted, the work moves to the text. My rule is simple: someone should be able to lift any section into an answer and have it still make sense. No search engine demands this. It is simply a way of writing clearly.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Answer First",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "I put the answer in the first two sentences of each section and expand afterward. If someone asks \"what is GEO SEO,\" the first paragraph under that heading has to respond with a complete definition, with no \"as we saw earlier\" and no pronouns pointing elsewhere on the page.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Self-Contained Passages",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "A fragment that says \"this improves performance\" helps nobody out of context. One that says \"server-side rendering can improve LCP because the browser receives HTML that is already built\" does. I repeat the subject whenever a pronoun would leave room for doubt, call things by their names, and avoid paragraphs that depend on the previous one to be understood. It reads as slightly more repetitive from start to finish, and I accept that so each passage can stand alone.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Data With a Source and a Date",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "In the GEO paper experiment, adding sources, statistics, and direct quotations improved visibility. A figure with its source and date can also be checked, which a vague opinion never can. None of this means inventing statistics, which is the worst thing you could do. It means that if you have first-hand data from your projects, your tests, or your industry, you should publish it clearly.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h3",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Structure That Can Be Extracted",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Use headings that say what the section contains, lists when the content is a list, tables for comparisons, and numbered steps to explain a process. None of this is new. It helps readers and shows any system where each idea begins and ends.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Authority and Mentions Beyond Your Site",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Models draw on more than your website. When they search in real time, they may also find forums, comparisons, directories, and third-party articles that talk about you. If someone asks an assistant for \"the best tools for X,\" it is reasonable to expect the answer to lean on lists and reviews published elsewhere.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "That is why brand mentions can matter even without a link. Earning a legitimate place in the comparisons for your niche, in threads where people ask for recommendations, and in industry publications adds up. It is ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/en/blog/seo/seo-off-page-guia",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "off-page SEO",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " with a different aim: beyond the link, you want your name associated with the right topic. Manufacturing artificial mentions does not pay off, and Google warns that they help less than they appear to.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "The author matters too. An article signed by someone with a verifiable record in the field, backed by an author page, fits what Google describes as ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/en/blog/seo/guia-eeat",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "E-E-A-T",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": ". For that reason I sign what I publish with my name and link my profile.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "How to Measure GEO",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "This is the least mature part of the subject, and I would rather say so openly. There is no \"ChatGPT ranking\" equivalent to positions on Google. You can still measure several things:",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "ul",
+      "type": "list",
+      "start": 1,
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "listitem",
+        "value": 1,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Traffic arriving from AI assistants. GA4 has an AI Assistant channel that groups visits whose referrer matches its list of assistants, and it excludes AI Overviews and AI Mode. ChatGPT also appends the utm_source=chatgpt.com parameter to its referral links.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 2,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Impressions in Google AI features, through the generative AI performance report in Search Console.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 3,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Mentions and citations in answers to a fixed set of questions, reviewed by hand or with prompt tracking tools.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 4,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Indirect signals, such as growth in branded searches in Search Console.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       }
+      ],
+      "listType": "bullet",
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "One detail causes confusion: the generative AI report shows impressions from AI Overviews and AI Mode by page, country, date, and device, and that data comes from the Web search type in the Performance report. Do not add the two together as if they were separate traffic. If your site does not gather enough impressions, the report may not show up at all.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Common GEO Mistakes",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "tag": "ul",
+      "type": "list",
+      "start": 1,
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "listitem",
+        "value": 1,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Blocking every AI bot by default without separating training from search.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 2,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Publishing content behind JavaScript that many crawlers never execute.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 3,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Writing for the keyword instead of answering the question, with introductions that take three paragraphs to say anything.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 4,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Buying \"AI visibility\" tools before confirming that bots can get into the site.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 5,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Mass-producing content with AI in the hope that another AI will cite it. First-hand experience, new data, and judgment are what add value.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 6,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Treating llms.txt as the whole solution when it is an optional file that Google Search does not use.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       }
+      ],
+      "listType": "bullet",
+      "direction": "ltr"
+     },
+     {
+      "tag": "h2",
+      "type": "heading",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "Where I Start When I Review a Site",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "This is the order I follow, from the biggest blockers to the finest adjustments:",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "tag": "ol",
+      "type": "list",
+      "start": 1,
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "type": "listitem",
+        "value": 1,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Access: robots.txt, firewall or CDN rules, and server logs to see which AI bots arrive and which status codes they receive.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 2,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Rendering: I confirm that the main text is in the server HTML and does not depend on JavaScript.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 3,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Indexing: coverage on Google and Bing for the pages that matter.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 4,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Baseline measurement: traffic from AI assistants in GA4, the generative AI report in Search Console, and a list of 20 to 50 real business questions to track every month.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 5,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Content: I first rewrite the pages that already receive traffic or answer those questions, leading with the answer and using self-contained passages.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 6,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Authorship signals and structured data.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "type": "listitem",
+        "value": 7,
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "Presence beyond the site, which takes the longest and depends the most on the business.",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       }
+      ],
+      "listType": "number",
+      "direction": "ltr"
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "The first three steps are mostly technical work. What comes after never really ends, just like SEO.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     },
+     {
+      "type": "block",
+      "fields": {
+       "id": "17949353996046b0c64",
+       "faqs": [
+        {
+         "id": "89e59a81da678b439dd2dd15",
+         "answer": {
+          "root": {
+           "type": "root",
+           "format": "",
+           "indent": 0,
+           "version": 1,
+           "children": [
+            {
+             "type": "paragraph",
+             "format": "",
+             "indent": 0,
+             "version": 1,
+             "children": [
+              {
+               "mode": "normal",
+               "text": "No. GEO builds on SEO: if search engines cannot crawl or index your page, a generative engine is unlikely to cite it. GEO adds work on the clarity of the text, access for AI bots, and citation tracking.",
+               "type": "text",
+               "style": "",
+               "detail": 0,
+               "format": 0,
+               "version": 1
+              }
+             ],
+             "direction": "ltr",
+             "textFormat": 0
+            }
+           ],
+           "direction": "ltr"
+          }
+         },
+         "question": "Does GEO SEO replace traditional SEO?"
+        },
+        {
+         "id": "5f0fa3b64cef574058d66b46",
+         "answer": {
+          "root": {
+           "type": "root",
+           "format": "",
+           "indent": 0,
+           "version": 1,
+           "children": [
+            {
+             "type": "paragraph",
+             "format": "",
+             "indent": 0,
+             "version": 1,
+             "children": [
+              {
+               "mode": "normal",
+               "text": "It depends. OpenAI and Perplexity state that a change to robots.txt can take around 24 hours to register in their systems. The effect of content and authority changes depends on when crawlers return and on each niche, so I do not promise fixed timelines.",
+               "type": "text",
+               "style": "",
+               "detail": 0,
+               "format": 0,
+               "version": 1
+              }
+             ],
+             "direction": "ltr",
+             "textFormat": 0
+            }
+           ],
+           "direction": "ltr"
+          }
+         },
+         "question": "How long does it take to see results from GEO?"
+        },
+        {
+         "id": "8aee749ee6c2e7dc24b5b358",
+         "answer": {
+          "root": {
+           "type": "root",
+           "format": "",
+           "indent": 0,
+           "version": 1,
+           "children": [
+            {
+             "type": "paragraph",
+             "format": "",
+             "indent": 0,
+             "version": 1,
+             "children": [
+              {
+               "mode": "normal",
+               "text": "No. OpenAI asks you to allow OAI-SearchBot in order to appear in ChatGPT search and does not list llms.txt as a requirement. The file is optional and cheap to maintain, but it replaces neither bot access nor well-structured content.",
+               "type": "text",
+               "style": "",
+               "detail": 0,
+               "format": 0,
+               "version": 1
+              }
+             ],
+             "direction": "ltr",
+             "textFormat": 0
+            }
+           ],
+           "direction": "ltr"
+          }
+         },
+         "question": "Do I need an llms.txt file to appear in ChatGPT?"
+        },
+        {
+         "id": "45f513deb16d09d90e1172a8",
+         "answer": {
+          "root": {
+           "type": "root",
+           "format": "",
+           "indent": 0,
+           "version": 1,
+           "children": [
+            {
+             "type": "paragraph",
+             "format": "",
+             "indent": 0,
+             "version": 1,
+             "children": [
+              {
+               "mode": "normal",
+               "text": "To a large extent, yes. OpenAI and Anthropic use separate bots for training and for search, so you can block some and allow others in your robots.txt. On Google, Google-Extended limits the use of your content for training future models without affecting your presence in Search, while the Search generative AI control in Search Console decides whether you appear in AI Overviews and AI Mode.",
+               "type": "text",
+               "style": "",
+               "detail": 0,
+               "format": 0,
+               "version": 1
+              }
+             ],
+             "direction": "ltr",
+             "textFormat": 0
+            }
+           ],
+           "direction": "ltr"
+          }
+         },
+         "question": "Can I block AI training without disappearing from answers?"
+        }
+       ],
+       "title": "GEO SEO Frequently Asked Questions",
+       "blockName": "",
+       "blockType": "faq"
+      },
+      "format": "",
+      "version": 2
+     },
+     {
+      "type": "paragraph",
+      "format": "",
+      "indent": 0,
+      "version": 1,
+      "children": [
+       {
+        "mode": "normal",
+        "text": "If you would like me to review your site, my ",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       },
+       {
+        "type": "link",
+        "fields": {
+         "url": "/en/services/ai-seo-geo",
+         "newTab": false,
+         "linkType": "custom"
+        },
+        "format": "",
+        "indent": 0,
+        "version": 1,
+        "children": [
+         {
+          "mode": "normal",
+          "text": "AI SEO service",
+          "type": "text",
+          "style": "",
+          "detail": 0,
+          "format": 0,
+          "version": 1
+         }
+        ],
+        "direction": "ltr"
+       },
+       {
+        "mode": "normal",
+        "text": " starts with bot access and the citability of your current pages, and leaves you with a prioritized plan so that ChatGPT, Perplexity, and Google have reasons to cite you.",
+        "type": "text",
+        "style": "",
+        "detail": 0,
+        "format": 0,
+        "version": 1
+       }
+      ],
+      "direction": "ltr",
+      "textFormat": 0
+     }
+    ],
+    "direction": "ltr"
+   }
+  }
+ }
+}
