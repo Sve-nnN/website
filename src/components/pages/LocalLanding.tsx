@@ -19,7 +19,7 @@ import { isPlaceholder, omitPlaceholder, withoutPlaceholders } from '@/lib/place
  */
 export function LocalHeroStat({ text }: { text: string | null | undefined }) {
   if (!text || isPlaceholder(text)) return null
-  const { figure, caption } = splitInlineStat(text)
+  const { prefix, figure, caption } = splitInlineStat(text)
   if (!figure && !caption) return null
   return (
     <Card
@@ -27,6 +27,11 @@ export function LocalHeroStat({ text }: { text: string | null | undefined }) {
       {...(caption ? { 'aria-labelledby': 'local-stat-caption' } : { 'aria-label': figure ?? undefined })}
       sx={{ p: { xs: 3, md: 4 }, display: 'grid', gap: 1.5, boxShadow: '0 24px 48px -24px rgba(0,0,0,0.25)' }}
     >
+      {prefix && (
+        <Typography variant="body2" color="text.secondary" sx={{ mb: -1 }}>
+          {prefix}
+        </Typography>
+      )}
       {figure && (
         <Typography
           component="p"

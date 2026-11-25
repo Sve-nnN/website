@@ -25,6 +25,7 @@ import { PageHero } from '@/components/mui/PageHero'
 import { visuallyHidden } from '@/components/mui/ScoreRing'
 import { TranslationNotice } from '@/components/mui/TranslationNotice'
 import type { AboutCounter, AboutData, AboutDateRange, AboutStage } from '@/lib/about-data'
+import { isMinimumAttendance } from '@/lib/attendees'
 import type { CtaData } from '@/lib/cta-data'
 import { buildServicesIndexHref } from '@/lib/service-slugs'
 
@@ -506,7 +507,9 @@ export function AboutView({ data, locale, cta }: Props) {
                           <Chip
                             size="small"
                             icon={<Users size={14} aria-hidden="true" />}
-                            label={t('attendees', { count: talk.attendees })}
+                            label={t(isMinimumAttendance(talk.attendees, talk.description) ? 'attendeesOver' : 'attendees', {
+                              count: talk.attendees,
+                            })}
                             lang={talksLang ? locale : undefined}
                             sx={QUIET_BAND_CHIP}
                           />
