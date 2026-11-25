@@ -18,10 +18,6 @@
       "groupLabel": "Measurement readings",
       "ariaLabel": "{name} for juan-tech.com: {label}, within the good range"
     },
-    "codeFixes": {
-      "regionLabel": "Code for the fix {name}",
-      "commitFallback": "commit"
-    },
     "sites": {
       "screenshotAlt": "Screenshot of {domain}",
       "note": "PageSpeed Insights mobile scores, measured on {date}. The technologies come from each site's headers and code.",

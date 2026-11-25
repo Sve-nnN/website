@@ -30,7 +30,7 @@ export function Cases({ cases }: { cases: HomeCases }) {
         }}
       >
         {cases.items.map((c) => (
-          <CaseMetricCard key={c.id} href={c.href} tag={c.tag} metric={c.metric} title={c.title} suffix={c.label} tone="band" />
+          <CaseMetricCard key={c.id} href={c.href} tag={c.tag} metric={c.metric} title={c.title} suffix={c.label} tone="band" image={c.image} />
         ))}
       </UL>
       {(cases.note || cases.ctaLabel) && (
