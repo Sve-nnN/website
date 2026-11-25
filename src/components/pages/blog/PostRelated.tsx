@@ -1,11 +1,6 @@
-'use client'
-
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
+// Sin 'use client' (fase 60): no tiene nada interactivo.
 import { useTranslations } from 'next-intl'
 
-import { UL } from '@/components/mui/lists'
 import { PostCard } from '@/components/mui/PostCard'
 import type { BlogPostItem } from '@/lib/blog-data'
 
@@ -19,20 +14,12 @@ export function PostRelated({ items }: { items: BlogPostItem[] }) {
   if (items.length === 0) return null
 
   return (
-    <Box component="section" aria-labelledby="post-related-t" sx={{ py: { xs: 8, md: 10 }, bgcolor: 'raised' }}>
-      <Container maxWidth="lg">
-        <Typography id="post-related-t" variant="h4" component="h2" sx={{ mb: 4 }}>
+    <section className="jt-post-related" aria-labelledby="post-related-t">
+      <div className="jt-container">
+        <h2 id="post-related-t" className="jt-h4 jt-post-related__title">
           {t('title')}
-        </Typography>
-        <UL
-          aria-label={t('listLabel')}
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: { xs: 'minmax(0,1fr)', md: 'repeat(2, minmax(0,1fr))', lg: 'repeat(3, minmax(0,1fr))' },
-            gap: 2,
-            '& > li': { display: 'grid', minWidth: 0 },
-          }}
-        >
+        </h2>
+        <ul className="jt-cardgrid" role="list" aria-label={t('listLabel')}>
           {items.map((item) => (
             <li key={item.href}>
               <PostCard
@@ -44,8 +31,8 @@ export function PostRelated({ items }: { items: BlogPostItem[] }) {
               />
             </li>
           ))}
-        </UL>
-      </Container>
-    </Box>
+        </ul>
+      </div>
+    </section>
   )
 }

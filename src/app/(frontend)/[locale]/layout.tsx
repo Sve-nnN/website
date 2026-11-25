@@ -10,6 +10,7 @@ import { SITE_URL } from '@/lib/sitemap-data'
 import { isPreviewReadonly } from '@/lib/preview'
 import { BRAND, BRAND_SUFFIX } from '@/lib/page-title'
 import '../../globals.css'
+import '@/theme/static.css'
 
 // This file has no src/app/layout.tsx above it — it IS the root of the
 // public frontend tree, so the base URL for resolving relative metadata

@@ -1,3 +1,4 @@
+import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 
 import { BlogIndexView } from '@/components/pages/blog/BlogIndexView'
@@ -69,6 +70,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function BlogPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
+  // Los componentes de servidor que traducen leen el idioma de aqui (ISR).
+  setRequestLocale(locale)
   const loc = locale as 'es' | 'en'
   const doc = await getBlogPage(locale)
 

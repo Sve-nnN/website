@@ -1,3 +1,4 @@
+import { setRequestLocale } from 'next-intl/server'
 import { JsonLd } from '@/components/JsonLd'
 import { CtaSection } from '@/components/mui/CtaSection'
 import { CaseStudiesIndexView } from '@/components/pages/cases/CaseStudiesIndexView'
@@ -50,6 +51,8 @@ export default async function CaseStudiesListPage({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  // Los componentes de servidor que traducen leen el idioma de aqui (ISR).
+  setRequestLocale(locale)
   const loc = locale as 'es' | 'en'
 
   // La lectura lanza dentro de la cache y aqui NO se captura: si falla una

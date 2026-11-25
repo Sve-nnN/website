@@ -1,17 +1,11 @@
-'use client'
-
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
+// Sin 'use client' (fase 60): la lista es estatica; solo el boton del estado
+// vacio y el cierre son componentes cliente.
 import { useTranslations } from 'next-intl'
 
 import type { Crumb } from '@/components/mui/Crumbs'
-import { linkFor } from '@/components/mui/links'
-import { UL } from '@/components/mui/lists'
 import { PageHero } from '@/components/mui/PageHero'
 import { PostCard } from '@/components/mui/PostCard'
-import { visuallyHidden } from '@/components/mui/ScoreRing'
+import { LinkButton } from '@/components/static/LinkButton'
 import type { BlogClosingData, CategoryPageProps } from '@/lib/blog-data'
 import { blogIndexPath } from '@/lib/blog-paths'
 
@@ -41,45 +35,27 @@ export function CategoryPageView({ crumbs, category, items, nav, closing }: Prop
     <>
       <PageHero crumbs={crumbs} title={category.title} lead={category.description ?? undefined}>
         <CategoryNav items={nav} activeSlug={category.slug} />
-        {!empty && (
-          <Typography variant="body2" color="text.secondary">
-            {t('count', { count: items.length })}
-          </Typography>
-        )}
+        {!empty && <p className="jt-body2">{t('count', { count: items.length })}</p>}
       </PageHero>
 
-      <Box component="section" aria-labelledby="blog-list-t" sx={{ pb: { xs: 8, md: 12 } }}>
-        <Container maxWidth="lg">
+      <section className="jt-blog-list" aria-labelledby="blog-list-t">
+        <div className="jt-container">
           {empty ? (
-            <Box sx={{ display: 'grid', gap: 2, justifyItems: 'center', textAlign: 'center', py: 8 }}>
-              <Typography id="blog-list-t" variant="h3" component="h2">
+            <div className="jt-blog-empty">
+              <h2 id="blog-list-t" className="jt-h3">
                 {t('emptyTitle')}
-              </Typography>
-              <Typography variant="body1" color="text.secondary">
-                {t('emptyText')}
-              </Typography>
-              <Button component={linkFor(blogIndexPath())} href={blogIndexPath()} variant="outlined" sx={{ minHeight: 40 }}>
+              </h2>
+              <p className="jt-body1">{t('emptyText')}</p>
+              <LinkButton href={blogIndexPath()} variant="outlined" sx={{ minHeight: 40 }}>
                 {t('backToBlog')}
-              </Button>
-            </Box>
+              </LinkButton>
+            </div>
           ) : (
             <>
-              <Typography id="blog-list-t" variant="h3" component="h2" sx={visuallyHidden}>
+              <h2 id="blog-list-t" className="jt-h3 jt-sr-only">
                 {t('listTitle')}
-              </Typography>
-              <UL
-                aria-label={t('listLabel')}
-                sx={{
-                  display: 'grid',
-                  gridTemplateColumns: {
-                    xs: 'minmax(0,1fr)',
-                    md: 'repeat(2, minmax(0,1fr))',
-                    lg: 'repeat(3, minmax(0,1fr))',
-                  },
-                  gap: 2,
-                  '& > li': { display: 'grid', minWidth: 0 },
-                }}
-              >
+              </h2>
+              <ul className="jt-cardgrid" role="list" aria-label={t('listLabel')}>
                 {items.map((item) => (
                   <li key={item.href}>
                     <PostCard
@@ -91,11 +67,11 @@ export function CategoryPageView({ crumbs, category, items, nav, closing }: Prop
                     />
                   </li>
                 ))}
-              </UL>
+              </ul>
             </>
           )}
-        </Container>
-      </Box>
+        </div>
+      </section>
 
       {closing && <BlogClosingMui closing={closing} />}
     </>

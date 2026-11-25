@@ -1,3 +1,4 @@
+import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 
 import { AboutView } from '@/components/pages/AboutView'
@@ -46,6 +47,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
+  // Los componentes de servidor que traducen leen el idioma de aqui (ISR).
+  setRequestLocale(locale)
   const typedLocale: 'es' | 'en' = locale === 'en' ? 'en' : 'es'
   const [data, cta] = await Promise.all([getAboutData(typedLocale), getCtaData(typedLocale)])
 

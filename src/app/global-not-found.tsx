@@ -5,6 +5,7 @@ import { NotFoundView } from '@/components/pages/NotFoundView'
 import { SiteDocument } from '@/components/shell/SiteDocument'
 import { BRAND_SUFFIX } from '@/lib/page-title'
 import './globals.css'
+import '@/theme/static.css'
 
 // 404 de una URL que no coincide con ninguna ruta (PAG-11).
 //
