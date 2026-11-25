@@ -379,7 +379,7 @@
       "compareCaption": "Annual organic clicks for each case, the previous year against the measured period",
       "compareRankBoth": "This case ranks number {pct} of {pctTotal} in percentage growth and number {abs} of {absTotal} in absolute clicks.",
       "compareRankAbs": "This case ranks number {abs} of {absTotal} in absolute clicks. It has no percentage growth because it started from zero.",
-      "compareNote": "Cases that measure a different metric, such as monthly traffic, are left out of this comparison of annual clicks.",
+      "compareNote": "This table leaves out cases that measure a different metric or period.",
       "compareScrollLabel": "Comparison table with horizontal scrolling",
       "compareThis": "This case",
       "compareNoBase": "No baseline",

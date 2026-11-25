@@ -7,8 +7,13 @@ import Typography from '@mui/material/Typography'
 import { ArrowRight } from 'lucide-react'
 import { useLocale, useTranslations } from 'next-intl'
 
+import { cloudinarySrcSet, cloudinaryWidth } from '@/lib/cloudinary-resize'
+
 import { formatLongDateUtc } from './format-date'
 import { linkFor } from './links'
+
+/** Anchos pedidos a Cloudinary: tarjeta movil, tarjeta de escritorio y destacada. */
+const CARD_IMAGE_WIDTHS = [480, 800, 1200] as const
 
 export type PostCardImage = {
   url: string
@@ -99,7 +104,9 @@ export function PostCard({
         >
           <Box
             component="img"
-            src={image.url}
+            src={cloudinaryWidth(image.url, 800)}
+            srcSet={cloudinarySrcSet(image.url, CARD_IMAGE_WIDTHS)}
+            sizes={sideBySide ? '(min-width: 900px) 55vw, 100vw' : '(min-width: 1200px) 400px, (min-width: 900px) 50vw, 100vw'}
             alt={image.alt ?? ''}
             width={image.width && image.height ? image.width : 1200}
             height={image.width && image.height ? image.height : 525}

@@ -251,14 +251,14 @@ export function buildHomeCopy(locale: HomeLocale): HomeCopy | HomeCopyEn {
     cases: {
       title: t('Resultados en Search Console', 'Results in Search Console'),
       lead: t(
-        'Cada cifra compara los clics de un año contra el año anterior, en el mismo periodo.',
-        'Each figure compares the clicks of one year against the previous year, over the same period.',
+        'Cada caso indica los periodos que compara.',
+        'Each case states the periods it compares.',
       ),
       ctaLabel: cta('cases-cta'),
       metricSuffix: t('clics interanuales', 'year-over-year clicks'),
       note: t(
-        'Los datos salen de Search Console. Mantengo anónimos a los clientes.',
-        'The data comes from Search Console. I keep clients anonymous.',
+        'Los datos salen de Search Console.',
+        'The data comes from Search Console.',
       ),
     },
     process: {
