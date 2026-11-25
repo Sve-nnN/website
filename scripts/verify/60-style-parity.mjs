@@ -3,7 +3,10 @@
  * en dos servidores y compara, elemento por elemento:
  *
  *   - estructura: etiqueta, texto propio y atributos (sin `class` ni `style`)
- *   - estilos computados de todas las propiedades, tambien de ::before y ::after
+ *   - estilos computados de todas las propiedades, tambien de ::before y ::after.
+ *     Se omiten `-webkit-box-align`, `-webkit-box-pack` y `-webkit-box-flex`
+ *     cuando ninguna de las dos versiones usa `display: -webkit-box`: Emotion las
+ *     agrega como prefijo antiguo y no afectan a flex ni a grid.
  *   - caja en pantalla
  *   - estados :hover y :focus-visible forzados por CDP en enlaces, botones y
  *     tarjetas, con las transiciones apagadas
@@ -12,7 +15,7 @@
  * Uso:
  *   node scripts/verify/60-style-parity.mjs --antes http://localhost:3641 \
  *     --despues http://localhost:3642 [--routes /a,/b] [--widths 360,1200] \
- *     [--states] [--reduced] [--shots /carpeta] [--out /ruta.json]
+ *     [--states] [--reduced] [--motion paused|running] [--shots /carpeta] [--out /ruta.json]
  *
  * Sale con 1 si hay alguna diferencia.
  */
@@ -42,7 +45,7 @@ function snapshot() {
   const skip = new Set(['SCRIPT', 'STYLE', 'TEMPLATE', 'NOSCRIPT', 'LINK', 'META', 'NEXT-ROUTE-ANNOUNCER'])
   const list = []
   // Los ids de useId cambian con la forma del arbol: se comparan normalizados.
-  const normalize = (v) => v.replace(/(:|«|_)[Rr][0-9a-z]*(:|»|_)/g, 'ID').replace(/mui-[0-9a-z-]+/g, 'mui-ID')
+  const normalize = (v) => v.replace(/\$ACTION_ID_[0-9a-f]+/g, '$ACTION_ID_X').replace(/(:|«|_)[Rr][0-9a-z]*(:|»|_)/g, 'ID').replace(/mui-[0-9a-z-]+/g, 'mui-ID')
   const styleOf = (el, pseudo) => {
     const cs = getComputedStyle(el, pseudo)
     if (pseudo && (cs.content === 'none' || cs.content === 'normal')) return null
@@ -62,11 +65,13 @@ function snapshot() {
     const attrs = {}
     for (const a of el.attributes) {
       if (a.name === 'class' || a.name === 'style') continue
-      attrs[a.name] = normalize(a.value)
+      attrs[normalize(a.name)] = normalize(a.value)
     }
     const text = [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').replace(/\s+/g, ' ').trim()
     const r = el.getBoundingClientRect()
     list.push({
+      // Tarjetas: cambian al pasar el puntero aunque no sean enlaces.
+      card: el.classList.contains('MuiCard-root') || el.classList.contains('jt-card'),
       path,
       tag: el.tagName.toLowerCase(),
       attrs,
@@ -118,10 +123,15 @@ async function open(browser, base, route, width, { motion, reduced }) {
   return { context, page }
 }
 
+const LEGACY_BOX = new Set(['-webkit-box-align', '-webkit-box-pack', '-webkit-box-flex'])
+const legacyBoxOnly = (key, a, b) => LEGACY_BOX.has(key) && a.display !== '-webkit-box' && b.display !== '-webkit-box'
+
 const diffStyles = (a, b) => {
   if (!a && !b) return []
   if (!a || !b) return [['(pseudo)', a ? 'presente' : 'ausente', b ? 'presente' : 'ausente']]
-  return Object.keys({ ...a, ...b }).filter((k) => a[k] !== b[k]).map((k) => [k, a[k], b[k]])
+  return Object.keys({ ...a, ...b })
+    .filter((k) => a[k] !== b[k] && !legacyBoxOnly(k, a, b))
+    .map((k) => [k, a[k], b[k]])
 }
 
 function compare(a, b) {
@@ -188,7 +198,7 @@ async function compareStates(a, b, list) {
   const seen = new Map()
   const targets = []
   list.forEach((item, index) => {
-    if (!['a', 'button'].includes(item.tag)) return
+    if (!['a', 'button'].includes(item.tag) && !item.card) return
     const key = `${item.tag}|${item.style.color}|${item.style.display}|${item.style['font-size']}|${item.style['background-color']}|${item.path.replace(/:\d+/g, '')}|${item.attrs['aria-current'] ?? ''}`
     const count = seen.get(key) ?? 0
     seen.set(key, count + 1)
@@ -196,7 +206,8 @@ async function compareStates(a, b, list) {
   })
   const diffs = []
   for (const index of targets) {
-    for (const pseudo of ['hover', 'focus', 'active']) {
+    // Una tarjeta no es enfocable: forzarle el foco mediria un estado que no existe.
+    for (const pseudo of list[index].card && !['a', 'button'].includes(list[index].tag) ? ['hover'] : ['hover', 'focus', 'active']) {
       const x = await forced(a.page, clients[0], index, pseudo)
       const y = await forced(b.page, clients[1], index, pseudo)
       if (!x || !y) continue
@@ -242,7 +253,7 @@ let failed = 0
 try {
   for (const route of routes) {
     for (const width of widths) {
-      const motion = flag('--states') ? 'running' : 'paused'
+      const motion = value('--motion', flag('--states') ? 'running' : 'paused')
       const options = { motion, reduced: flag('--reduced') }
       const a = await open(browser, before, route, width, options)
       const b = await open(browser, after, route, width, options)

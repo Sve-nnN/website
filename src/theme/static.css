@@ -133,7 +133,7 @@
     overflow: hidden;
     clip: rect(0 0 0 0);
     white-space: nowrap;
-    border: 0;
+    border: 0 solid;
   }
 
   /* Enlace: equivale a `Link` de MUI (hereda tipografia). */
@@ -320,6 +320,10 @@
     border-radius: var(--jt-shape-borderRadius);
     color: var(--jt-palette-text-secondary);
   }
+  /* Gana al radio del `:focus-visible` global, que se declara despues. */
+  .jt-footer__social-link:focus-visible {
+    border-radius: var(--jt-shape-borderRadius);
+  }
   .jt-footer__social-link svg {
     width: 20px;
     height: 20px;
@@ -437,9 +441,12 @@
   .jt-catnav__link:hover {
     background-color: var(--jt-palette-raised);
   }
+  /* El `:focus-visible` global de CssBaseline llega despues que esta hoja y
+     pondria su radio de 4px: aqui se repone el del elemento. */
   .jt-catnav__link:focus-visible {
     outline: 2px solid var(--jt-palette-accentText);
     outline-offset: 2px;
+    border-radius: calc(9999 * var(--jt-shape-borderRadius));
   }
   .jt-catnav__link[aria-current='page'] {
     border-color: var(--jt-palette-text-primary);
