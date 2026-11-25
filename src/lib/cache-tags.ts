@@ -50,7 +50,10 @@ export const CACHE_TTL_SECONDS = 60
  */
 function safeRevalidateTag(tag: string): void {
   try {
-    revalidateTag(tag)
+    // Next 16 exige el segundo argumento. `{ expire: 0 }` conserva lo que hacia
+    // la forma de un argumento en Next 15: la siguiente peticion espera el dato
+    // nuevo, sin servir el viejo mientras revalida.
+    revalidateTag(tag, { expire: 0 })
   } catch {
     // No request context (standalone script / CLI). Nothing to invalidate.
   }
