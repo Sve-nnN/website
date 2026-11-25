@@ -1,7 +1,7 @@
 import type React from 'react'
 import { NextIntlClientProvider } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter'
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v16-appRouter'
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript'
 
 import { array, khand, geistSans } from '@/fonts'

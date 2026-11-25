@@ -433,10 +433,10 @@ function selftest() {
     console.log(`FAIL selftest parseIncompleteSlugs: ${JSON.stringify(slugs)}`)
   }
   const real = readIncompleteSlugs()
-  if (real.size === 17 && real.has('recursividad') && real.has('mejores-cursos-seo-espanol')) console.log('PASS selftest translation-gaps.ts: 17 slugs leidos del archivo real')
+  if (real.size === 0) console.log('PASS selftest translation-gaps.ts: lista vacia leida del archivo real')
   else {
     bad += 1
-    console.log(`FAIL selftest translation-gaps.ts: ${real.size} slugs (se esperaban 17)`)
+    console.log(`FAIL selftest translation-gaps.ts: ${real.size} slugs (se esperaba la lista vacia)`)
   }
 
   const stats = bodyHeadingStats({ root: { children: [{ type: 'heading', tag: 'h1' }, { type: 'heading', tag: 'h3' }, { type: 'heading', tag: 'h4' }] } })
