@@ -452,6 +452,7 @@ type JsonLdDoc = {
   slug?: string | null
   heroSubtitle?: string | null
   kpis?: ReadonlyArray<{ label?: string | null; value?: string | null } | null> | null
+  publishedAt?: string | null
   createdAt?: string | null
   updatedAt?: string | null
   heroImage?: unknown
@@ -460,11 +461,11 @@ type JsonLdDoc = {
 }
 
 /**
- * JSON-LD `CreativeWork` del caso. Es el mismo objeto que la ruta construia en
- * linea antes de la fase 55 (D-04): ningun campo cambia. SEO-09: `about` es un
- * Thing, `image`, `url` y `dateCreated` van siempre que existan y los valores
- * vacios se omiten. No lleva `datePublished`: la coleccion no tiene
- * `publishedAt` y `createdAt` no se hace pasar por fecha editorial.
+ * JSON-LD `CreativeWork` del caso. SEO-09: `about` es un Thing, `image`, `url` y
+ * `dateCreated` van siempre que existan y los valores vacios se omiten.
+ * `datePublished` sale solo de `publishedAt`, la fecha de la primera version
+ * publicada (src/lib/case-published-at.ts); `createdAt` no se hace pasar por
+ * fecha editorial.
  */
 export function buildCaseStudyJsonLd(
   doc: JsonLdDoc,
@@ -500,11 +501,12 @@ export function buildCaseStudyJsonLd(
           author: {
             '@type': 'Person',
             name: author.name,
-            ...(author.slug === SITE_PERSON_SLUG ? personRef : {}),
+            ...(author.slug === SITE_PERSON_SLUG ? { ...personRef, url: SITE_URL } : {}),
           },
         }
       : {}),
     dateCreated: doc.createdAt,
+    ...(doc.publishedAt ? { datePublished: doc.publishedAt } : {}),
     dateModified: doc.updatedAt,
     ...(client?.name ? { creator: { '@type': 'Organization', name: client.name } } : {}),
     ...(doc.kpis && doc.kpis.length > 0

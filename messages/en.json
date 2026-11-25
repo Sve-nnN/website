@@ -224,7 +224,8 @@
       "eyebrow": "Service",
       "durationLabel": "Duration",
       "faqTitle": "Frequently asked questions",
-      "otherTitle": "Other services"
+      "otherTitle": "Other services",
+      "updated": "Last updated {date}"
     }
   },
   "about": {

@@ -22,19 +22,10 @@ import type { Author, Media } from '@/payload-types'
 import { SITE_URL } from '@/lib/sitemap-data'
 import { CACHE_TAGS, CACHE_TTL_SECONDS } from '@/lib/cache-tags'
 import type { Locale } from '@/lib/cache'
+import { PERSON_ID, personRef, personStub, SITE_PERSON_SLUG } from '@/lib/person-id'
+import { websiteRef } from '@/lib/website-ref'
 
-/** Slug del autor que representa al dueño del sitio. */
-export const SITE_PERSON_SLUG = 'juan-carlos-angulo'
-
-/**
- * Identificador canónico de la entidad. Vive en la raíz del sitio y no en
- * /authors, porque la persona es la entidad del dominio entero y no el
- * contenido de una página.
- */
-export const PERSON_ID = `${SITE_URL}/#person`
-
-/** Referencia corta, para el `author` de un Article o un CreativeWork. */
-export const personRef = { '@id': PERSON_ID }
+export { PERSON_ID, personRef, personStub, SITE_PERSON_SLUG }
 
 function resolveAvatarUrl(avatar: Author['avatar']): string | null {
   if (!avatar || typeof avatar !== 'object') return null
@@ -104,6 +95,31 @@ export async function buildSitePerson(locale: Locale): Promise<Record<string, un
     ...(doc.bio ? { description: doc.bio } : {}),
     ...(doc.expertise?.length ? { knowsAbout: doc.expertise.map((e) => e.topic) } : {}),
     ...buildEducationProps(doc.education),
+  }
+}
+
+/**
+ * `ProfilePage` de Sobre mí: la página que trata sobre la persona.
+ *
+ * El Person va completo dentro de `mainEntity`, con el mismo `@id` que la home y
+ * el perfil de autor. Se le quita `mainEntityOfPage` porque aquí la relación ya
+ * la declara la propia `ProfilePage`.
+ */
+export async function buildProfilePageJsonLd(
+  locale: Locale,
+  path: string,
+): Promise<Record<string, unknown>> {
+  const { '@context': _context, mainEntityOfPage: _page, ...person } = await buildSitePerson(locale)
+  const url = `${SITE_URL}${path}`
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    '@id': `${url}#profilepage`,
+    url,
+    inLanguage: locale,
+    isPartOf: websiteRef,
+    mainEntity: person,
   }
 }
 

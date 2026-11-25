@@ -7,21 +7,11 @@
 // index + detail. Inlining the schema would mean four copies drifting apart,
 // which is exactly how `/blog` ended up with no structured data at all.
 
+import { personStub } from '@/lib/person-id'
 import { SITE_URL } from '@/lib/sitemap-data'
 import { buildServiceHref, buildServicesIndexHref } from '@/lib/service-slugs'
 
 export type Locale = 'es' | 'en'
-
-/**
- * The provider is a person, not an organisation — this is a personal
- * portfolio. Emitting an `Organization` here would assert a company that does
- * not exist.
- *
- * No `areaServed`: the site states plainly that the work is remote and run
- * from Lima, and `/seo-tecnico-madrid` explicitly says there is no Madrid
- * office. Claiming a service area would contradict the site's own copy.
- */
-const PROVIDER = { '@type': 'Person', name: 'Juan Carlos Angulo', url: SITE_URL } as const
 
 /**
  * `Service` for a single service landing.
@@ -42,7 +32,11 @@ export function buildServiceJsonLd(
     name: title,
     ...(description ? { description } : {}),
     url: `${SITE_URL}${buildServiceHref(locale, slug)}`,
-    provider: PROVIDER,
+    // The provider is a person, not an organisation: this is a personal
+    // portfolio. It carries the canonical `@id` shared by every Person node. No
+    // `areaServed`: the work is remote and run from Lima, and
+    // `/seo-tecnico-madrid` states there is no Madrid office.
+    provider: personStub,
     serviceType: title,
   }
 }

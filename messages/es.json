@@ -224,7 +224,8 @@
       "eyebrow": "Servicio",
       "durationLabel": "Duración",
       "faqTitle": "Preguntas frecuentes",
-      "otherTitle": "Otros servicios"
+      "otherTitle": "Otros servicios",
+      "updated": "Actualizado el {date}"
     }
   },
   "about": {
