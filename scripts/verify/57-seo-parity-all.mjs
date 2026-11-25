@@ -803,9 +803,11 @@ function selftest() {
 
   // Test 3: enlaces a gemelos noindex y a redirects.
   console.log('Test 3: enlaces internos')
-  const slugs = loadIncompleteSlugs()
-  if (slugs.size === 17 && slugs.has('react-19') && slugs.has('mejores-cursos-seo-espanol') && !slugs.has('guia-eeat')) pass(`Test 3 EN_TRANSLATION_INCOMPLETE leído del .ts: ${slugs.size} slugs`)
-  else fail('Test 3 lectura de EN_TRANSLATION_INCOMPLETE', JSON.stringify([...slugs]))
+  const real = loadIncompleteSlugs()
+  if (real.size === 0) pass('Test 3 EN_TRANSLATION_INCOMPLETE leído del .ts: lista vacía')
+  else fail('Test 3 lectura de EN_TRANSLATION_INCOMPLETE', JSON.stringify([...real]))
+  // La regla se prueba con un conjunto fijo: la lista real puede estar vacía.
+  const slugs = new Set(['react-19', 'que-es-css'])
   const linkMap = (html, page) => new Map(facts(html).links.map((l) => [l, [page]]))
   const ok200 = (m) => new Map([...m.keys()].map((k) => [k, { status: 200 }]))
   const react = linkMap(fixture(), '/blog/development/react-19')
