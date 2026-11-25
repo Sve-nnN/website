@@ -15,7 +15,7 @@ import { createElement } from 'react'
 
 import { MuiRichText } from '../../src/components/mui/rich-text/MuiRichText'
 import { buildHeadingIdMap, extractHeadings, slugify } from '../../src/components/mui/rich-text/lexical-toc'
-import { countOf, renderToHtml } from './54-ssr-harness'
+import { countOf, renderToHtml, staticRule } from './54-ssr-harness'
 
 // tsx no transforma JSX con `jsx: preserve` y cae al runtime clasico, que busca
 // `React` global al renderizar los componentes .tsx. Solo se usa en esta autoprueba.
@@ -68,7 +68,13 @@ function idCount(html: string, id: string): number {
     check(`sintetico: id "${id}" aparece una vez en el HTML`, n === 1, `aparece ${n} veces`)
   }
   check('sintetico: el h2 sale como h2 y el h3 como h3', countOf(html, /<h2[\s>]/) === 2 && countOf(html, /<h3[\s>]/) === 1, `h2=${countOf(html, /<h2[\s>]/)} h3=${countOf(html, /<h3[\s>]/)}`)
-  check('sintetico: los encabezados llevan scroll-margin-top de 96px', /scroll-margin-top:\s*96px/.test(html), 'falta scroll-margin-top: 96px en el CSS emitido')
+  check(
+    'sintetico: los encabezados llevan scroll-margin-top de 96px',
+    countOf(html, /<h2 class="[^"]*jt-prose__h2/) === 2 &&
+      countOf(html, /<h3 class="[^"]*jt-prose__h3/) === 1 &&
+      ['.jt-prose__h2', '.jt-prose__h3'].every((s) => /scroll-margin-top:\s*96px/.test(staticRule(s))),
+    'falta la clase del encabezado o scroll-margin-top: 96px en static.css',
+  )
   check('sintetico: no hay HTML inyectado en crudo', !/dangerouslySetInnerHTML/.test(html), 'aparece dangerouslySetInnerHTML')
 }
 

@@ -31,7 +31,7 @@ const { postHasAffiliateInline, postHasAmazonAffiliateInline } = await import('.
 const { buildHeadingIdMap } = await import('../../src/components/mui/rich-text/lexical-toc')
 const { splitContentForOffer } = await import('../../src/lib/lexical-split')
 const { buildArticleJsonLd, toPostViewProps } = await import('../../src/lib/blog-data')
-const { countOf, headingLevels, renderToHtml, textOf } = await import('./54-ssr-harness')
+const { countOf, headingLevels, renderToHtml, staticRule, textOf } = await import('./54-ssr-harness')
 
 import type { BlogClosingData, BlogPostItem, PostViewProps } from '../../src/lib/blog-data'
 
@@ -699,9 +699,10 @@ function listDocs(): Array<Parameters<typeof pickRelated>[0][number]> {
 {
   const { readFileSync } = await import('node:fs')
   const source = readFileSync(new URL('../../src/components/mui/rich-text/MuiRichText.tsx', import.meta.url), 'utf8')
-  const wraps = (src: string) => /overflowWrap:\s*'(?:break-word|anywhere)'/.test(src)
-  check(wraps(source), 'MuiRichText: la prosa parte palabras largas (overflowWrap), sin ensanchar la pagina a 320 px', 'falta overflowWrap en la raiz de MuiRichText')
-  check(!wraps(source.replace(/overflowWrap:\s*'break-word',?/, '')), 'defectuoso: MuiRichText sin overflowWrap se detecta', 'la auditoria no lo distingue')
+  const wraps = (src: string) =>
+    /<div className="jt-prose"/.test(src) && /overflow-wrap:\s*(?:break-word|anywhere)/.test(staticRule('.jt-prose'))
+  check(wraps(source), 'MuiRichText: la prosa parte palabras largas (overflowWrap), sin ensanchar la pagina a 320 px', 'falta overflow-wrap en la raiz de MuiRichText')
+  check(!wraps(source.replace('<div className="jt-prose"', '<div')), 'defectuoso: MuiRichText sin la clase de prosa se detecta', 'la auditoria no lo distingue')
 }
 
 // ---- Fixtures defectuosos: deben fallar --------------------------------------
