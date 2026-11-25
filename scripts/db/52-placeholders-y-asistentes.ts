@@ -1,12 +1,13 @@
 /**
  * Landings de Lima y Madrid y cifra de asistentes (decisiones de Juan, 2026-11-25).
  *
- * 1. "Elimino los PLACEHOLDER": en Madrid se borra el bloque localProofSection, que era relleno
- *    entero (la vista no pintaba nada), y se vacia la estadistica del hero, otro marcador.
- *    En Lima el bloque conserva una tarjeta visible (18 asistentes), y el esquema exige tres
- *    estadisticas y un testimonio completo, asi que no se puede vaciar campo a campo. Solo se
- *    borra con --drop-lima-block, que requiere la confirmacion de Juan.
- * 2. "Son 'mas de 18'": estadisticas y texto de Lima y descripcion del taller en speaking-events.
+ * 1. "Elimino los PLACEHOLDER" y "Borrar el bloque de Lima": se borra el bloque
+ *    localProofSection de las dos landings. El esquema exige tres estadisticas y un testimonio
+ *    completo, asi que no se puede vaciar campo a campo. En Madrid era relleno entero. En Lima
+ *    desaparece tambien la tarjeta de los 18 asistentes, dato que sigue en la estadistica del
+ *    hero y en el texto. En Madrid se vacia ademas la estadistica del hero, otro marcador.
+ * 2. "Son 'mas de 18'": estadistica del hero y texto de Lima y descripcion del taller en
+ *    speaking-events.
  *
  * Uso: ver data/51-content-lib.ts. Dry-run por defecto.
  */
@@ -23,14 +24,13 @@ const dropLocalProof = {
 }
 
 // Parrafo de la landing de Lima que cuenta el taller.
-const PROSE = 'content.layout.2.columns.0.richText.root.children.2.children.0.text'
+// Posicion tras borrar el bloque de marcadores.
+const PROSE = 'content.layout.1.columns.0.richText.root.children.2.children.0.text'
 const PROSE_ES =
   'En 2025 co-dicté un taller de 4 horas de "SEO + IA" en Lima junto con Arianna Lupi (consultora SEO, instructora SEO y fundadora), organizado con Lm Marketing (agencia SEO), con 18 asistentes entre profesionales, marketers y emprendedores. No es una credencial de LinkedIn sin sustento: es trabajo real hecho aquí, con gente real de la comunidad SEO local.'
 const PROSE_EN =
   "In 2025 I co-taught a 4-hour \"SEO + AI\" workshop in Lima together with Arianna Lupi (SEO consultant, SEO instructor, and founder), organized with Lm Marketing (SEO agency), with 18 attendees including professionals, marketers, and entrepreneurs. This isn't an unsupported LinkedIn credential: it's real work done here, with real people from the local SEO community."
 const prose = (old: string, from: string, to: string) => ({ path: PROSE, old, new: old.replace(from, to) })
-
-const STAT = 'content.layout.1.stats.0.value'
 
 const lima: DocPlan = {
   key: 'pages-seo-tecnico-lima',
@@ -45,7 +45,6 @@ const lima: DocPlan = {
         new: 'Más de 18 asistentes en el taller SEO + IA 2025 (con Arianna Lupi)',
       },
       prose(PROSE_ES, 'con 18 asistentes', 'con más de 18 asistentes'),
-      { path: STAT, old: '18', new: 'Más de 18' },
     ],
     en: [
       {
@@ -54,10 +53,9 @@ const lima: DocPlan = {
         new: 'More than 18 attendees at the 2025 SEO + AI workshop (with Arianna Lupi)',
       },
       prose(PROSE_EN, 'with 18 attendees', 'with more than 18 attendees'),
-      { path: STAT, old: '18', new: '18+' },
     ],
   },
-  shared: process.argv.includes('--drop-lima-block') ? dropLocalProof : undefined,
+  shared: dropLocalProof,
 }
 
 const MADRID_STAT = 'content.layout.0.inlineStat'

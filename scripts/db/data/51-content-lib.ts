@@ -28,7 +28,11 @@ export type DocPlan = {
   /** Slug esperado: protege contra un id equivocado. */
   slug?: string
   ops: Record<Locale, Op[]>
-  /** Cambio estructural compartido por ambos idiomas (se aplica despues de las ops). */
+  /**
+   * Cambio estructural compartido por ambos idiomas. Se aplica antes de las ops, asi que sus
+   * rutas se refieren al documento ya transformado y una segunda ejecucion no falla. Debe ser
+   * idempotente.
+   */
   shared?: { label: string; apply: (doc: Doc) => Doc }
 }
 
@@ -179,10 +183,11 @@ export async function runPlans(title: string, plans: DocPlan[]): Promise<void> {
     const final = {} as Record<Locale, Doc>
     console.log(`\n[${p.key}]`)
     for (const l of LOCALES) {
-      const { doc, changed } = applyOps(before[l], p.ops[l], `${p.key} [${l}]`)
-      final[l] = p.shared ? p.shared.apply(doc) : doc
+      const base = p.shared ? p.shared.apply(structuredClone(before[l])) : before[l]
+      const { doc, changed } = applyOps(base, p.ops[l], `${p.key} [${l}]`)
+      final[l] = doc
       for (const op of changed) console.log(`  ${l} ${op.path}\n     - ${JSON.stringify(op.old)}\n     + ${JSON.stringify(op.new)}`)
-      if (p.shared && sameDoc(doc, final[l]).length > 0) console.log(`  ${l} ${p.shared.label}`)
+      if (p.shared && sameDoc(before[l], base).length > 0) console.log(`  ${l} ${p.shared.label}`)
     }
     prepared.push({ p, before, final })
   }
@@ -199,8 +204,8 @@ export async function runPlans(title: string, plans: DocPlan[]): Promise<void> {
       const now = await readDoc(payload, p, l)
       if (sameDoc(now, final[l]).length === 0) continue
       // Se reconstruye sobre lo leido ahora para no pisar nada que haya cambiado en medio.
-      const { doc } = applyOps(now, p.ops[l], `${p.key} [${l}]`)
-      const next = p.shared ? p.shared.apply(doc) : doc
+      const base = p.shared ? p.shared.apply(structuredClone(now)) : now
+      const { doc: next } = applyOps(base, p.ops[l], `${p.key} [${l}]`)
       const data: Doc = {}
       for (const f of topFields(now, next)) data[f] = next[f]
       if (p.global) {
