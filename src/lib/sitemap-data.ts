@@ -71,7 +71,8 @@ export type SitemapEntry = {
   locale: SitemapLocale
   lastModified: string | Date
   group: 'pages' | 'blog' | 'case-studies' | 'authors' | 'websites'
-  alternates: { es: string; en: string }
+  /** `en` falta cuando la versión inglesa va en noindex: no se anuncia. */
+  alternates: { es: string; en?: string }
 }
 
 export type SitemapGroup = SitemapEntry['group']
@@ -192,8 +193,6 @@ async function fetchSitemapEntries(): Promise<SitemapEntry[]> {
           enUrl = path ? `${SITE_URL}/en/${path}` : `${SITE_URL}/en`
         }
 
-        const alternates = { es: esUrl, en: enUrl }
-
         // SEO-07: los posts con la traduccion inglesa incompleta van con
         // `noindex` en /en (src/lib/translation-gaps.ts). Anunciar en el
         // sitemap una URL que le pedimos a Google que no indexe es pedirle que
@@ -201,6 +200,10 @@ async function fetchSitemapEntries(): Promise<SitemapEntry[]> {
         const enIsNoindex =
           collection === 'posts' &&
           EN_TRANSLATION_INCOMPLETE.has((doc as { slug?: string }).slug ?? '')
+
+        // Tampoco como hreflang de la entrada ES: la pagina ya lo omite
+        // (buildAlternates con `omitEn`) y el sitemap tiene que decir lo mismo.
+        const alternates = enIsNoindex ? { es: esUrl } : { es: esUrl, en: enUrl }
 
         // Emit one <url> entry per locale (not one per doc) so each language
         // variant is independently indexable, per Google's hreflang sitemap
