@@ -60,9 +60,11 @@ export const viewport: Viewport = {
   themeColor: '#181818',
 }
 
-export function generateStaticParams() {
-  return routing.locales.map((locale) => ({ locale }))
-}
+// Sin `generateStaticParams` aqui a proposito: el build de Dokploy no llega a la
+// base, asi que no puede prerenderizar ninguna ruta. Desde Next 16 los params
+// del layout hacen que se prerendericen `/es` y `/en` de cada pagina aunque la
+// pagina devuelva `[]`. Cada pagina declara la suya (lista vacia, ISR bajo
+// demanda) o es `force-dynamic`.
 
 export default async function RootLayout({
   children,
