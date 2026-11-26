@@ -1,26 +1,15 @@
-'use client'
-
-import Box from '@mui/material/Box'
-import Chip from '@mui/material/Chip'
-import Link from '@mui/material/Link'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Typography from '@mui/material/Typography'
+// Sin 'use client' (fase 60): tabla estatica; solo `ScrollRegion` es cliente.
+// Estilos en `src/theme/static.css`.
 import { useLocale, useTranslations } from 'next-intl'
 
 import { formatChange } from '@/components/mui/BeforeAfter'
-import { linkFor } from '@/components/mui/links'
 import { ScrollRegion } from '@/components/mui/ScrollRegion'
+import { AppLink } from '@/components/static/AppLink'
 import type { CaseComparison } from '@/lib/case-study-data'
 
 type Props = {
   comparison: CaseComparison
 }
-
-const MONO = { fontFamily: 'var(--font-geist-mono)' } as const
 
 /**
  * Tabla comparativa de clics organicos anuales entre casos (D-09, D-29).
@@ -30,89 +19,73 @@ const MONO = { fontFamily: 'var(--font-geist-mono)' } as const
  * su columna entera es `aria-hidden` y el numero esta en texto. El caso actual
  * se marca con texto ("Este caso") y `aria-current`, no solo con color.
  *
- * Los enlaces a los otros casos usan `linkFor`; el caso actual no es enlace.
+ * Los enlaces a los otros casos usan `AppLink`; el caso actual no es enlace.
  */
 export function CaseCompareTable({ comparison }: Props) {
   const t = useTranslations('cases.detail')
   const locale = useLocale()
 
   return (
-    <Box sx={{ border: 1, borderColor: 'divider', borderRadius: 2, overflow: 'hidden' }}>
+    <div className="jt-compare">
       <ScrollRegion label={t('compareScrollLabel')}>
-        <Table sx={{ minWidth: 640 }}>
-          <Box
-            component="caption"
-            sx={{ captionSide: 'top', textAlign: 'left', px: 2, py: 1.5, color: 'text.secondary', fontSize: '0.875rem', lineHeight: '1.25rem' }}
-          >
-            {t('compareCaption')}
-          </Box>
-          <TableHead>
-            <TableRow>
-              <TableCell scope="col">{t('caseColumn')}</TableCell>
-              <TableCell scope="col">{t('sectorColumn')}</TableCell>
-              <TableCell scope="col" align="right">
+        <table className="jt-table">
+          <caption>{t('compareCaption')}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{t('caseColumn')}</th>
+              <th scope="col">{t('sectorColumn')}</th>
+              <th scope="col" className="jt-cell--right">
                 {t('before')}
-              </TableCell>
-              <TableCell scope="col" align="right">
+              </th>
+              <th scope="col" className="jt-cell--right">
                 {t('after')}
-              </TableCell>
-              <TableCell scope="col" align="right">
+              </th>
+              <th scope="col" className="jt-cell--right">
                 {t('changeColumn')}
-              </TableCell>
-              <TableCell scope="col" aria-hidden="true" sx={{ display: { xs: 'none', md: 'table-cell' }, minWidth: 160 }}>
+              </th>
+              <th scope="col" aria-hidden="true" className="jt-cell--scale">
                 {t('scaleColumn')}
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
             {comparison.rows.map((r) => (
-              <TableRow key={r.slug} sx={r.current ? { bgcolor: 'raised' } : undefined}>
-                <TableCell component="th" scope="row" sx={{ minWidth: 220 }}>
+              <tr key={r.slug} className={r.current ? 'jt-compare__current' : undefined}>
+                <th scope="row" className="jt-cell--case">
                   {r.current ? (
-                    <Box sx={{ display: 'grid', gap: 0.5 }}>
-                      <Typography variant="body2" aria-current="page" sx={{ fontWeight: 600 }}>
+                    <div className="jt-compare__this">
+                      <p className="jt-body2 jt-compare__title" aria-current="page">
                         {r.title}
-                      </Typography>
-                      <Chip label={t('compareThis')} size="small" sx={{ justifySelf: 'start' }} />
-                    </Box>
+                      </p>
+                      <div className="jt-chip jt-chip--small jt-justify-start">
+                        <span className="jt-chip__label">{t('compareThis')}</span>
+                      </div>
+                    </div>
                   ) : (
-                    <Link
-                      component={linkFor(`/case-studies/${r.slug}`)}
-                      href={`/case-studies/${r.slug}`}
-                      underline="hover"
-                      sx={{ color: 'text.primary', fontWeight: 600, fontSize: '0.875rem' }}
-                    >
+                    <AppLink className="jt-link jt-link--hover jt-compare__link" href={`/case-studies/${r.slug}`}>
                       {r.title}
-                    </Link>
+                    </AppLink>
                   )}
-                </TableCell>
-                <TableCell sx={{ whiteSpace: 'nowrap' }}>{r.sector}</TableCell>
-                <TableCell align="right" sx={MONO}>
-                  {r.before}
-                </TableCell>
-                <TableCell align="right" sx={{ ...MONO, fontWeight: 600 }}>
-                  {r.after}
-                </TableCell>
-                <TableCell align="right" sx={{ ...MONO, color: 'accentText', fontWeight: 600 }}>
+                </th>
+                <td className="jt-cell--nowrap">{r.sector}</td>
+                <td className="jt-cell--right jt-cell--mono">{r.before}</td>
+                <td className="jt-cell--right jt-cell--mono jt-cell--strong">{r.after}</td>
+                <td className="jt-cell--right jt-cell--mono jt-cell--accent">
                   {r.pct === null ? t('compareNoBase') : formatChange(r.pct, locale)}
-                </TableCell>
-                <TableCell aria-hidden="true" sx={{ display: { xs: 'none', md: 'table-cell' } }}>
-                  <Box sx={{ height: 10, borderRadius: 9999, bgcolor: 'raised', overflow: 'hidden' }}>
-                    <Box
-                      sx={{
-                        width: `${Math.max(2, r.share * 100)}%`,
-                        height: '100%',
-                        borderRadius: 9999,
-                        bgcolor: r.current ? 'primary.main' : 'fieldBorder',
-                      }}
+                </td>
+                <td aria-hidden="true" className="jt-cell--scale">
+                  <div className="jt-bar jt-bar--thin">
+                    <div
+                      className={r.current ? 'jt-bar__fill--strong' : undefined}
+                      style={{ width: `${Math.max(2, r.share * 100)}%` }}
                     />
-                  </Box>
-                </TableCell>
-              </TableRow>
+                  </div>
+                </td>
+              </tr>
             ))}
-          </TableBody>
-        </Table>
+          </tbody>
+        </table>
       </ScrollRegion>
-    </Box>
+    </div>
   )
 }

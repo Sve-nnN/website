@@ -1,3 +1,4 @@
+import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 
 import { JsonLd } from '@/components/JsonLd'
@@ -97,6 +98,8 @@ export default async function CaseStudyPage({
   params: Promise<{ locale: string; slug: string }>
 }) {
   const { locale, slug } = await params
+  // Los componentes de servidor que traducen leen el idioma de aqui (ISR).
+  setRequestLocale(locale)
   const loc = locale as 'es' | 'en'
   const doc = await getCaseStudy(locale, slug)
 

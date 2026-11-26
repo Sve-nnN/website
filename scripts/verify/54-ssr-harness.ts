@@ -156,3 +156,17 @@ const isMain = process.argv[1] ? path.resolve(process.argv[1]) === fileURLToPath
 if (isMain && process.argv.includes('--selftest')) {
   process.exit(selftest())
 }
+
+/**
+ * Declaraciones que `src/theme/static.css` aplica a un selector exacto (fase 60:
+ * las vistas estaticas ya no emiten CSS con Emotion). Junta todas las reglas cuya
+ * lista de selectores incluye `selector`, tambien las que van dentro de media
+ * queries.
+ */
+export function staticRule(selector: string): string {
+  const css = fs.readFileSync(new URL('../../src/theme/static.css', import.meta.url), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '')
+  return [...css.matchAll(/([^{};]+)\{([^{}]*)\}/g)]
+    .filter((m) => m[1].split(',').some((s) => s.trim() === selector))
+    .map((m) => m[2].replace(/\s+/g, ' ').trim())
+    .join(' ')
+}

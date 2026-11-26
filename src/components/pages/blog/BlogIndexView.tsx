@@ -1,19 +1,13 @@
-'use client'
-
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
+// Sin 'use client' (fase 60): destacada y secciones se pintan en el servidor y
+// no se hidratan. La busqueda, el alta al correo y el cierre siguen en cliente.
 import { ArrowRight } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { Suspense } from 'react'
 
 import type { Crumb } from '@/components/mui/Crumbs'
-import { linkFor } from '@/components/mui/links'
-import { UL } from '@/components/mui/lists'
 import { PageHero } from '@/components/mui/PageHero'
 import { PostCard } from '@/components/mui/PostCard'
-import { visuallyHidden } from '@/components/mui/ScoreRing'
+import { LinkButton } from '@/components/static/LinkButton'
 import type { BlogClosingData, BlogIndexProps, BlogPostItem, NewsletterNotice } from '@/lib/blog-data'
 
 import { BlogClosingMui } from './BlogClosingMui'
@@ -32,13 +26,6 @@ type Props = BlogIndexProps & {
   /** Cierre del blog (promo global), o null. */
   closing: BlogClosingData | null
 }
-
-const CARD_GRID = {
-  display: 'grid',
-  gridTemplateColumns: { xs: 'minmax(0,1fr)', md: 'repeat(2, minmax(0,1fr))', lg: 'repeat(3, minmax(0,1fr))' },
-  gap: 2,
-  '& > li': { display: 'grid', minWidth: 0 },
-} as const
 
 function card(item: BlogPostItem, withCategory = false, featured = false) {
   return (
@@ -86,60 +73,50 @@ export function BlogIndexView({
 
       <BlogSearch posts={searchList}>
         {latest && (
-          <Box component="section" aria-labelledby="blog-latest-t" sx={{ pb: { xs: 6, md: 8 } }}>
-            <Container maxWidth="lg">
-              <Typography id="blog-latest-t" variant="overline" component="h2" sx={{ color: 'accentText', display: 'block', mb: 2 }}>
+          <section className="jt-blog-latest" aria-labelledby="blog-latest-t">
+            <div className="jt-container">
+              <h2 id="blog-latest-t" className="jt-overline jt-accent jt-blog-latest__title">
                 {t('latestTitle')}
-              </Typography>
+              </h2>
               {card(latest, true, true)}
-            </Container>
-          </Box>
+            </div>
+          </section>
         )}
 
         {sections.map((section, i) => (
-          <Box
+          <section
             key={section.slug}
-            component="section"
+            className={i % 2 === 1 ? 'jt-blog-section jt-blog-section--alt' : 'jt-blog-section'}
             aria-labelledby={`blog-cat-${section.slug}`}
-            sx={{ py: { xs: 6, md: 8 }, ...(i % 2 === 1 ? { bgcolor: 'raised' } : {}) }}
           >
-            <Container maxWidth="lg">
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 3, mb: 4 }}>
-                <Box sx={{ maxWidth: 720, display: 'grid', gap: 1.5 }}>
-                  <Typography variant="overline" component="p" sx={{ color: 'accentText' }}>
-                    {t('count', { count: section.total })}
-                  </Typography>
-                  <Typography id={`blog-cat-${section.slug}`} variant="h3" component="h2">
+            <div className="jt-container">
+              <div className="jt-blog-section__head">
+                <div className="jt-blog-section__text">
+                  <p className="jt-overline jt-accent">{t('count', { count: section.total })}</p>
+                  <h2 id={`blog-cat-${section.slug}`} className="jt-h3">
                     {section.title}
-                  </Typography>
-                  {section.description && (
-                    <Typography variant="body1" color="text.secondary">
-                      {section.description}
-                    </Typography>
-                  )}
-                </Box>
+                  </h2>
+                  {section.description && <p className="jt-body1">{section.description}</p>}
+                </div>
                 {section.hasMore && (
-                  <Button
-                    component={linkFor(section.href)}
+                  <LinkButton
                     href={section.href}
                     variant="outlined"
                     sx={{ minHeight: 40 }}
                     endIcon={<ArrowRight size={18} aria-hidden="true" />}
                   >
                     {viewAllLabel ?? t('viewMore')}
-                    <Box component="span" sx={visuallyHidden}>
-                      {`: ${section.title}`}
-                    </Box>
-                  </Button>
+                    <span className="jt-sr-only">{`: ${section.title}`}</span>
+                  </LinkButton>
                 )}
-              </Box>
-              <UL aria-label={t('sectionListLabel', { category: section.title })} sx={CARD_GRID}>
+              </div>
+              <ul className="jt-cardgrid" role="list" aria-label={t('sectionListLabel', { category: section.title })}>
                 {section.items.map((item) => (
                   <li key={item.href}>{card(item)}</li>
                 ))}
-              </UL>
-            </Container>
-          </Box>
+              </ul>
+            </div>
+          </section>
         ))}
       </BlogSearch>
 

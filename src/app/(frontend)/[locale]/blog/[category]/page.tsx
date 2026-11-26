@@ -1,3 +1,4 @@
+import { setRequestLocale } from 'next-intl/server'
 import { notFound, permanentRedirect } from 'next/navigation'
 
 import { JsonLd } from '@/components/JsonLd'
@@ -96,6 +97,8 @@ export default async function BlogCategoryPage({
   params: Promise<{ locale: string; category: string }>
 }) {
   const { locale: rawLocale, category: categorySlug } = await params
+  // Los componentes de servidor que traducen leen el idioma de aqui (ISR).
+  setRequestLocale(rawLocale)
   const locale = rawLocale as 'es' | 'en'
 
   const [category, categories] = await Promise.all([

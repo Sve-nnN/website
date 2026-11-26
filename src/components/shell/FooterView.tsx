@@ -1,18 +1,15 @@
-'use client'
-
-// Vista cliente del footer (D-11). Recibe solo datos ya resueltos y saneados por
-// el server component `SiteFooter`. Cada bloque se dibuja solo si tiene datos
+// Vista del footer (D-11). Recibe solo datos ya resueltos y saneados por el
+// server component `SiteFooter`. Cada bloque se dibuja solo si tiene datos
 // (empty, zero-one-many); la marca, el tagline y la barra inferior siempre estan.
+//
+// Fase 60: Server Component sin componentes de MUI. Esta en todas las paginas y
+// no tiene nada interactivo, asi que no se hidrata. Estilos en
+// `src/theme/static.css`.
 import Image from 'next/image'
-import NextLink from 'next/link'
 import { useTranslations } from 'next-intl'
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
 
-import { Link as LocaleLink, isPrefixableHref } from '@/i18n/navigation'
 import { SocialIcon, socialLabels } from '@/components/SocialIcon'
+import { AppLink } from '@/components/static/AppLink'
 
 export type FooterViewItem = { id: string; label: string; href: string }
 export type FooterViewColumn = { id: string; title: string | null; items: FooterViewItem[] }
@@ -30,29 +27,10 @@ type Props = {
 
 const EXTERNAL = /^https?:\/\//i
 
-// Solo para lectores de pantalla (el sufijo de "otra pestana").
-const srOnly = {
-  position: 'absolute',
-  width: '1px',
-  height: '1px',
-  margin: '-1px',
-  padding: 0,
-  overflow: 'hidden',
-  clip: 'rect(0 0 0 0)',
-  whiteSpace: 'nowrap',
-  border: 0,
-} as const
-
-/**
- * Los internos sin prefijo usan el `Link` de next-intl (agrega `/en` solo en
- * ingles). Los que ya traen el prefijo (servicios en ingles), los absolutos,
- * mailto, tel y anclas van con `next/link` plano. Los absolutos http abren en
- * otra pestana con `rel` seguro (T-53-32).
- */
+/** Los absolutos http abren en otra pestana con `rel` seguro (T-53-32). */
 function linkAttrs(href: string) {
   const external = EXTERNAL.test(href)
   return {
-    component: isPrefixableHref(href) ? LocaleLink : NextLink,
     external,
     extra: external ? ({ target: '_blank', rel: 'noopener noreferrer' } as const) : {},
   }
@@ -60,32 +38,15 @@ function linkAttrs(href: string) {
 
 export function FooterView({ columns, socialLinks, legalLinks, copyrightText, logo }: Props) {
   const t = useTranslations('shell')
+  // Solo para lectores de pantalla (el sufijo de "otra pestana").
+  const newTab = <span className="jt-sr-only">{` ${t('opensInNewTab')}`}</span>
 
   return (
-    <Box
-      component="footer"
-      aria-label={t('landmarks.footer')}
-      sx={{ borderTop: 1, borderColor: 'divider', py: 8 }}
-    >
-      <Container maxWidth="lg">
-        <Box
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: {
-              xs: 'minmax(0, 1fr)',
-              md: columns.length > 0 ? 'minmax(220px, 1fr) minmax(0, 3fr)' : 'minmax(0, 1fr)',
-            },
-            gap: 4,
-          }}
-        >
-          <Box>
-            <Link
-              component={LocaleLink}
-              href="/"
-              underline="none"
-              aria-label={t('brandAria')}
-              sx={{ display: 'inline-flex', alignItems: 'center', gap: 1, color: 'text.primary', fontWeight: 600 }}
-            >
+    <footer className="jt-footer" aria-label={t('landmarks.footer')}>
+      <div className="jt-container">
+        <div className={columns.length > 0 ? 'jt-footer__grid jt-footer__grid--columns' : 'jt-footer__grid'}>
+          <div>
+            <AppLink className="jt-link jt-footer__brand" href="/" aria-label={t('brandAria')}>
               {logo && (
                 <Image
                   src={logo.url}
@@ -96,142 +57,76 @@ export function FooterView({ columns, socialLinks, legalLinks, copyrightText, lo
                 />
               )}
               <span>Juan Carlos Angulo</span>
-            </Link>
-            <Typography variant="body2" color="text.secondary" sx={{ mt: 1.5, maxWidth: 280 }}>
-              {t('tagline')}
-            </Typography>
-          </Box>
+            </AppLink>
+            <p className="jt-body2 jt-footer__tagline">{t('tagline')}</p>
+          </div>
 
           {columns.length > 0 && (
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-                gap: 4,
-                alignContent: 'start',
-              }}
-            >
+            <div className="jt-footer__columns">
               {columns.map((column) => (
-                <Box
+                <nav
                   key={column.id}
-                  component="nav"
                   aria-label={column.title ? t('groupLabel', { title: column.title }) : t('landmarks.navFooter')}
                 >
-                  {column.title && (
-                    <Typography
-                      variant="overline"
-                      component="h2"
-                      color="text.secondary"
-                      sx={{ display: 'block', mb: 1.5, overflowWrap: 'anywhere' }}
-                    >
-                      {column.title}
-                    </Typography>
-                  )}
-                  <Box component="ul" sx={{ display: 'grid', gap: 0.5, listStyle: 'none', m: 0, p: 0 }}>
+                  {column.title && <h2 className="jt-overline jt-footer__title">{column.title}</h2>}
+                  <ul className="jt-footer__list">
                     {column.items.map((item) => {
                       const attrs = linkAttrs(item.href)
                       return (
                         <li key={item.id}>
-                          <Link
-                            component={attrs.component}
-                            href={item.href}
-                            underline="hover"
-                            {...attrs.extra}
-                            sx={{
-                              color: 'text.primary',
-                              minHeight: 32,
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              overflowWrap: 'anywhere',
-                            }}
-                          >
+                          <AppLink className="jt-link jt-link--hover jt-footer__item" href={item.href} {...attrs.extra}>
                             {item.label}
-                            {attrs.external && <Box component="span" sx={srOnly}>{` ${t('opensInNewTab')}`}</Box>}
-                          </Link>
+                            {attrs.external && newTab}
+                          </AppLink>
                         </li>
                       )
                     })}
-                  </Box>
-                </Box>
+                  </ul>
+                </nav>
               ))}
-            </Box>
+            </div>
           )}
-        </Box>
+        </div>
 
-        <Box
-          sx={{
-            mt: 6,
-            pt: 3,
-            borderTop: 1,
-            borderColor: 'divider',
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            gap: 3,
-            color: 'text.secondary',
-          }}
-        >
-          <Typography variant="caption">{copyrightText}</Typography>
+        <div className="jt-footer__bar">
+          <span className="jt-caption">{copyrightText}</span>
 
           {legalLinks.length > 0 && (
-            <Box component="nav" aria-label={t('legalLabel')}>
-              <Box component="ul" sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, listStyle: 'none', m: 0, p: 0 }}>
+            <nav aria-label={t('legalLabel')}>
+              <ul className="jt-footer__legal">
                 {legalLinks.map((legal) => {
                   const attrs = linkAttrs(legal.href)
                   return (
                     <li key={legal.id}>
-                      <Link
-                        component={attrs.component}
-                        href={legal.href}
-                        underline="hover"
-                        {...attrs.extra}
-                        sx={{
-                          color: 'inherit',
-                          fontSize: '0.75rem',
-                          minHeight: 32,
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                        }}
-                      >
+                      <AppLink className="jt-link jt-link--hover jt-footer__legal-link" href={legal.href} {...attrs.extra}>
                         {legal.label}
-                        {attrs.external && <Box component="span" sx={srOnly}>{` ${t('opensInNewTab')}`}</Box>}
-                      </Link>
+                        {attrs.external && newTab}
+                      </AppLink>
                     </li>
                   )
                 })}
-              </Box>
-            </Box>
+              </ul>
+            </nav>
           )}
 
           {socialLinks.length > 0 && (
-            <Box role="group" aria-label={t('socialLabel')} sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+            <div className="jt-footer__social" role="group" aria-label={t('socialLabel')}>
               {socialLinks.map((social) => (
-                <Link
+                <a
                   key={social.id}
+                  className="jt-link jt-footer__social-link"
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  underline="none"
                   aria-label={`${socialLabels[social.platform] ?? social.platform} ${t('opensInNewTab')}`}
-                  sx={{
-                    width: 44,
-                    height: 44,
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 1,
-                    color: 'text.secondary',
-                    '& svg': { width: 20, height: 20 },
-                    '&:hover': { color: 'text.primary', bgcolor: 'raised' },
-                  }}
                 >
                   <SocialIcon platform={social.platform} />
-                </Link>
+                </a>
               ))}
-            </Box>
+            </div>
           )}
-        </Box>
-      </Container>
-    </Box>
+        </div>
+      </div>
+    </footer>
   )
 }

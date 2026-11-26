@@ -1,23 +1,18 @@
-'use client'
-
+// Sin 'use client' (fase 60): la vista es estatica. Solo el avatar, el boton, el
+// blob de grano y la region desplazable de la tabla son componentes cliente.
+// Estilos en `src/theme/static.css`.
 import Avatar from '@mui/material/Avatar'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import Container from '@mui/material/Container'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
 import { ArrowRight, Lightbulb, Quote } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import type { ReactNode } from 'react'
+import type { CSSProperties, ReactNode } from 'react'
 
 import { BeforeAfter } from '@/components/mui/BeforeAfter'
 import type { Crumb } from '@/components/mui/Crumbs'
 import { GrainBlob } from '@/components/mui/GrainBlob'
-import { linkFor } from '@/components/mui/links'
-import { OL, UL } from '@/components/mui/lists'
 import { PageHero } from '@/components/mui/PageHero'
 import { Section } from '@/components/mui/Section'
+import { AppLink } from '@/components/static/AppLink'
+import { LinkButton } from '@/components/static/LinkButton'
 import type { CaseComparison, CaseDetailProps, CaseIndexItem } from '@/lib/case-study-data'
 
 import { CaseCard } from './CaseCard'
@@ -47,32 +42,20 @@ type Props = {
 // a 48 px (escala display aceptada el 2026-11-08), igual que en CaseCard.
 const LONG_METRIC = 9
 
+/** Columnas desde `md` para las rejillas que dependen del numero de elementos. */
+const columns = (n: number) => ({ '--jt-columns': n }) as CSSProperties
+
 /** Lista con un punto de color a la izquierda, sobre la franja `band`. */
 function DotList({ items, label }: { items: string[]; label: string }) {
   return (
-    <UL aria-label={label} sx={{ display: 'grid', gap: 1.5 }}>
+    <ul className="jt-dotlist" role="list" aria-label={label}>
       {items.map((text, i) => (
-        <Box
-          key={`${i}-${text}`}
-          component="li"
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: 'auto 1fr',
-            gap: 2,
-            p: 2.5,
-            borderRadius: 2,
-            bgcolor: 'band.surface',
-            border: 1,
-            borderColor: 'band.border',
-          }}
-        >
-          <Box aria-hidden="true" sx={{ width: 10, height: 10, mt: '8px', borderRadius: '50%', bgcolor: 'error.main' }} />
-          <Typography variant="body2" sx={{ lineHeight: '1.5rem' }}>
-            {text}
-          </Typography>
-        </Box>
+        <li key={`${i}-${text}`}>
+          <div className="jt-dotlist__dot" aria-hidden="true" />
+          <p className="jt-body2 jt-dotlist__text">{text}</p>
+        </li>
       ))}
-    </UL>
+    </ul>
   )
 }
 
@@ -110,68 +93,35 @@ export function CaseDetailView({ crumbs, caseStudy: c, clientContent, conclusion
         lead={c.deck ?? undefined}
         aside={
           c.metric ? (
-            <Box sx={{ position: 'relative', display: 'grid', placeItems: 'center', minHeight: 280 }}>
+            <div className="jt-case-metric">
               <GrainBlob feather={24} sx={{ inset: '-6%', zIndex: 0 }} />
-              <Box sx={{ position: 'relative', zIndex: 1, textAlign: 'center', p: 3 }}>
-                <Typography
-                  component="p"
-                  sx={{
-                    fontSize: long ? '3rem' : '4.5rem',
-                    lineHeight: 1,
-                    fontWeight: 600,
-                    letterSpacing: '-0.03em',
-                    overflowWrap: 'anywhere',
-                    color: 'primary.contrastText',
-                  }}
+              <div className="jt-case-metric__inner">
+                <p
+                  className={
+                    long
+                      ? 'jt-body1 jt-case-metric__value jt-case-metric__value--long'
+                      : 'jt-body1 jt-case-metric__value'
+                  }
                 >
                   {c.metric}
-                </Typography>
-                {c.metricLabel && (
-                  <Typography variant="subtitle1" component="p" sx={{ color: 'primary.contrastText', mt: 1 }}>
-                    {c.metricLabel}
-                  </Typography>
-                )}
-              </Box>
-            </Box>
+                </p>
+                {c.metricLabel && <p className="jt-subtitle1 jt-case-metric__label">{c.metricLabel}</p>}
+              </div>
+            </div>
           ) : undefined
         }
       />
 
       {c.kpis.length > 0 && (
         <Section id="numeros" title={t('statsTitle')}>
-          <Box
-            component="dl"
-            sx={{
-              m: 0,
-              display: 'grid',
-              gridTemplateColumns: {
-                xs: 'repeat(2, minmax(0,1fr))',
-                md: `repeat(${Math.min(c.kpis.length, 4)}, minmax(0,1fr))`,
-              },
-              gap: 2,
-            }}
-          >
+          <dl className="jt-case-kpis" style={columns(Math.min(c.kpis.length, 4))}>
             {c.kpis.map((k, i) => (
-              <Card key={`${i}-${k.label}`} component="div" sx={{ p: 3, display: 'grid', gap: 0.5, alignContent: 'start' }}>
-                <Typography component="dt" variant="body2" color="text.secondary">
-                  {k.label}
-                </Typography>
-                <Typography
-                  component="dd"
-                  sx={{
-                    m: 0,
-                    fontSize: { xs: '1.75rem', md: '2.25rem' },
-                    lineHeight: 1.1,
-                    fontWeight: 600,
-                    color: 'accentText',
-                    overflowWrap: 'anywhere',
-                  }}
-                >
-                  {k.value}
-                </Typography>
-              </Card>
+              <div key={`${i}-${k.label}`} className="jt-card jt-case-kpi">
+                <dt className="jt-body2">{k.label}</dt>
+                <dd className="jt-body1 jt-case-kpi__value">{k.value}</dd>
+              </div>
             ))}
-          </Box>
+          </dl>
         </Section>
       )}
 
@@ -181,113 +131,66 @@ export function CaseDetailView({ crumbs, caseStudy: c, clientContent, conclusion
           band
           title={hasClient && hasChallenge ? t('contextTitle') : hasClient ? t('clientTitle') : t('challengeTitle')}
         >
-          <Box
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: {
-                xs: 'minmax(0,1fr)',
-                md: hasClient && hasChallenge ? 'repeat(2, minmax(0,1fr))' : 'minmax(0,1fr)',
-              },
-              gap: { xs: 4, md: 8 },
-              alignItems: 'start',
-            }}
-          >
+          <div className={hasClient && hasChallenge ? 'jt-case-context jt-case-context--split' : 'jt-case-context'}>
             {hasClient && (
-              <Box sx={{ display: 'grid', gap: 2, minWidth: 0 }}>
-                {hasChallenge && (
-                  <Typography variant="h5" component="h3">
-                    {t('clientTitle')}
-                  </Typography>
-                )}
+              <div className="jt-stack">
+                {hasChallenge && <h3 className="jt-h5">{t('clientTitle')}</h3>}
                 {clientContent}
-              </Box>
+              </div>
             )}
             {hasChallenge && (
-              <Box sx={{ display: 'grid', gap: 2, minWidth: 0 }}>
-                {hasClient && (
-                  <Typography variant="h5" component="h3">
-                    {t('challengeTitle')}
-                  </Typography>
-                )}
+              <div className="jt-stack">
+                {hasClient && <h3 className="jt-h5">{t('challengeTitle')}</h3>}
                 <DotList items={c.challenge} label={t('challengeTitle')} />
-              </Box>
+              </div>
             )}
-          </Box>
+          </div>
         </Section>
       )}
 
       {c.solution.length > 0 && (
         <Section id="solucion" title={t('solutionTitle')}>
-          <OL
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: {
-                xs: 'minmax(0,1fr)',
-                md: `repeat(${Math.min(c.solution.length, 3)}, minmax(0,1fr))`,
-              },
-              gap: 2,
-            }}
-          >
+          <ol className="jt-grid jt-grid--upto3" role="list" style={columns(Math.min(c.solution.length, 3))}>
             {c.solution.map((s, i) => (
-              <Card key={`${i}-${s.title}`} component="li" sx={{ p: 3, display: 'grid', gap: 1.5, alignContent: 'start' }}>
-                <Typography
-                  aria-hidden="true"
-                  component="span"
-                  sx={{ fontFamily: 'var(--font-geist-mono)', fontSize: '2rem', lineHeight: 1, fontWeight: 600, color: 'accentText' }}
-                >
+              <li key={`${i}-${s.title}`} className="jt-card jt-case-step">
+                <span className="jt-body1 jt-case-step__number" aria-hidden="true">
                   {String(i + 1).padStart(2, '0')}
-                </Typography>
-                <Typography variant="h6" component="h3">
-                  {s.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ lineHeight: '1.375rem' }}>
-                  {s.body}
-                </Typography>
-              </Card>
+                </span>
+                <h3 className="jt-h6">{s.title}</h3>
+                <p className="jt-body2 jt-case-step__body">{s.body}</p>
+              </li>
             ))}
-          </OL>
+          </ol>
         </Section>
       )}
 
       {c.testimonial && (
-        <Box sx={{ pb: { xs: 8, md: 12 } }}>
-          <Container maxWidth="lg">
-            <Card component="figure" sx={{ m: 0, p: { xs: 3, md: 5 }, display: 'grid', gap: 3, bgcolor: 'raised' }}>
-              <Box aria-hidden="true" sx={{ color: 'accentText', display: 'flex' }}>
+        <div className="jt-case-quote-wrap">
+          <div className="jt-container">
+            <figure className="jt-card jt-case-quote">
+              <div className="jt-case-quote__icon" aria-hidden="true">
                 <Quote size={28} />
-              </Box>
-              <Typography component="blockquote" variant="h5" sx={{ m: 0, maxWidth: 820 }}>
-                {`“${c.testimonial.quote}”`}
-              </Typography>
-              <Box component="figcaption">
-                <Typography variant="subtitle1" component="p" sx={{ fontSize: '1rem' }}>
-                  {c.testimonial.authorName}
-                </Typography>
-                {c.testimonial.authorRole && (
-                  <Typography variant="body2" color="text.secondary">
-                    {c.testimonial.authorRole}
-                  </Typography>
-                )}
-              </Box>
-            </Card>
-          </Container>
-        </Box>
+              </div>
+              <blockquote className="jt-h5 jt-case-quote__text">{`“${c.testimonial.quote}”`}</blockquote>
+              <figcaption>
+                <p className="jt-subtitle1 jt-case-quote__author">{c.testimonial.authorName}</p>
+                {c.testimonial.authorRole && <p className="jt-body2">{c.testimonial.authorRole}</p>}
+              </figcaption>
+            </figure>
+          </div>
+        </div>
       )}
 
       {c.results.length > 0 && (
         <Section id="resultados" title={t('resultsTitle')}>
-          {periods && (
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-              {periods}
-            </Typography>
-          )}
+          {periods && <p className="jt-body2 jt-case-periods">{periods}</p>}
           <BeforeAfter results={c.results} />
         </Section>
       )}
 
       {comparison && (
         <Section id="comparar" title={t('compareTitle')}>
-          <Typography variant="body1" color="text.secondary" sx={{ fontSize: '1.125rem', lineHeight: '1.75rem', maxWidth: 820, mb: 4 }}>
+          <p className="jt-body1 jt-compare-intro">
             {comparison.rankPct !== null
               ? t('compareRankBoth', {
                   pct: comparison.rankPct,
@@ -296,66 +199,25 @@ export function CaseDetailView({ crumbs, caseStudy: c, clientContent, conclusion
                   absTotal: comparison.totalAbs,
                 })
               : t('compareRankAbs', { abs: comparison.rankAbs, absTotal: comparison.totalAbs })}
-          </Typography>
+          </p>
           <CaseCompareTable comparison={comparison} />
-          {comparison.excluded > 0 && (
-            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 2 }}>
-              {t('compareNote')}
-            </Typography>
-          )}
+          {comparison.excluded > 0 && <span className="jt-caption jt-compare-note">{t('compareNote')}</span>}
         </Section>
       )}
 
       {c.lessons && c.lessons.length > 0 && (
         <Section id="lecciones" band title={t('lessonsTitle')}>
-          <UL
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: {
-                xs: 'minmax(0,1fr)',
-                md: `repeat(${Math.min(c.lessons.length, 3)}, minmax(0,1fr))`,
-              },
-              gap: 2,
-            }}
-          >
+          <ul className="jt-grid jt-grid--upto3" role="list" style={columns(Math.min(c.lessons.length, 3))}>
             {c.lessons.map((l, i) => (
-              <Box
-                key={`${i}-${l.title}`}
-                component="li"
-                sx={{
-                  p: 3,
-                  borderRadius: 2,
-                  bgcolor: 'band.surface',
-                  border: 1,
-                  borderColor: 'band.border',
-                  display: 'grid',
-                  gap: 1.5,
-                  alignContent: 'start',
-                }}
-              >
-                <Box
-                  aria-hidden="true"
-                  sx={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: '50%',
-                    bgcolor: 'primary.main',
-                    color: 'primary.contrastText',
-                    display: 'grid',
-                    placeItems: 'center',
-                  }}
-                >
+              <li key={`${i}-${l.title}`} className="jt-lesson">
+                <div className="jt-lesson__icon" aria-hidden="true">
                   <Lightbulb size={18} />
-                </Box>
-                <Typography variant="h6" component="h3">
-                  {l.title}
-                </Typography>
-                <Typography variant="body2" sx={{ color: 'band.muted', lineHeight: '1.5rem' }}>
-                  {l.body}
-                </Typography>
-              </Box>
+                </div>
+                <h3 className="jt-h6">{l.title}</h3>
+                <p className="jt-body2 jt-lesson__body">{l.body}</p>
+              </li>
             ))}
-          </UL>
+          </ul>
         </Section>
       )}
 
@@ -366,71 +228,53 @@ export function CaseDetailView({ crumbs, caseStudy: c, clientContent, conclusion
       )}
 
       {c.author && (
-        <Box component="aside" aria-labelledby="autor-t" sx={{ pb: { xs: 8, md: 12 } }}>
-          <Container maxWidth="lg">
-            <Card
-              sx={{
-                p: { xs: 3, md: 4 },
-                display: 'grid',
-                gridTemplateColumns: c.author.avatar ? 'auto minmax(0,1fr)' : 'minmax(0,1fr)',
-                gap: 3,
-                alignItems: 'start',
-              }}
+        <aside className="jt-case-author-wrap" aria-labelledby="autor-t">
+          <div className="jt-container">
+            <div
+              className={
+                c.author.avatar ? 'jt-card jt-case-author jt-case-author--avatar' : 'jt-card jt-case-author'
+              }
             >
               {c.author.avatar && <Avatar src={c.author.avatar.url} alt="" sx={{ width: 72, height: 72 }} />}
-              <Box sx={{ display: 'grid', gap: 1, minWidth: 0 }}>
-                <Typography variant="overline" component="p" sx={{ color: 'accentText' }}>
-                  {t('authorLabel')}
-                </Typography>
-                <Typography id="autor-t" variant="h5" component="h2">
-                  <Link component={linkFor(c.author.href)} href={c.author.href} underline="hover" sx={{ color: 'inherit' }}>
+              <div className="jt-case-author__text">
+                <p className="jt-overline jt-accent">{t('authorLabel')}</p>
+                <h2 id="autor-t" className="jt-h5">
+                  <AppLink className="jt-link jt-link--hover jt-inherit" href={c.author.href}>
                     {c.author.name}
-                  </Link>
-                </Typography>
-                {c.author.jobTitle && (
-                  <Typography variant="body2" color="text.secondary">
-                    {c.author.jobTitle}
-                  </Typography>
-                )}
-                {c.author.bio && <Typography variant="body1">{c.author.bio}</Typography>}
-              </Box>
-            </Card>
-          </Container>
-        </Box>
+                  </AppLink>
+                </h2>
+                {c.author.jobTitle && <p className="jt-body2">{c.author.jobTitle}</p>}
+                {c.author.bio && <p className="jt-body1">{c.author.bio}</p>}
+              </div>
+            </div>
+          </div>
+        </aside>
       )}
 
       {related.length > 0 && (
-        <Box component="section" aria-labelledby="mas-t" sx={{ pb: { xs: 8, md: 10 } }}>
-          <Container maxWidth="lg">
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 2, mb: 4 }}>
-              <Typography id="mas-t" variant="h4" component="h2">
+        <section className="jt-case-more" aria-labelledby="mas-t">
+          <div className="jt-container">
+            <div className="jt-case-more__head">
+              <h2 id="mas-t" className="jt-h4">
                 {t('moreTitle')}
-              </Typography>
-              <Button
-                component={linkFor('/case-studies')}
+              </h2>
+              <LinkButton
                 href="/case-studies"
                 variant="outlined"
                 endIcon={<ArrowRight size={18} aria-hidden="true" />}
               >
                 {t('viewAll')}
-              </Button>
-            </Box>
-            <UL
-              sx={{
-                display: 'grid',
-                gridTemplateColumns: { xs: 'minmax(0,1fr)', md: 'repeat(3, minmax(0,1fr))' },
-                gap: 2,
-                '& > li': { display: 'grid', minWidth: 0 },
-              }}
-            >
+              </LinkButton>
+            </div>
+            <ul className="jt-grid jt-grid--cases" role="list">
               {related.map((item) => (
                 <li key={item.slug}>
                   <CaseCard item={item} />
                 </li>
               ))}
-            </UL>
-          </Container>
-        </Box>
+            </ul>
+          </div>
+        </section>
       )}
     </>
   )

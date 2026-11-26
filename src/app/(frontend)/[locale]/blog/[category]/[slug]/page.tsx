@@ -1,3 +1,4 @@
+import { setRequestLocale } from 'next-intl/server'
 import { notFound, permanentRedirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 
@@ -125,6 +126,8 @@ export default async function PostPage({
   params: Promise<{ locale: string; category: string; slug: string }>
 }) {
   const { locale: rawLocale, category, slug } = await params
+  // Los componentes de servidor que traducen leen el idioma de aqui (ISR).
+  setRequestLocale(rawLocale)
   const locale = rawLocale as 'es' | 'en'
   const doc = await getPost(locale, slug)
 

@@ -1,14 +1,9 @@
-'use client'
-
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Chip from '@mui/material/Chip'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
+// Sin 'use client' (fase 60): tarjeta estatica. Estilos en
+// `src/theme/static.css`.
 import { ArrowRight } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
-import { linkFor } from '@/components/mui/links'
+import { AppLink } from '@/components/static/AppLink'
 import type { CaseIndexItem } from '@/lib/case-study-data'
 
 type Props = {
@@ -37,94 +32,45 @@ export function CaseCard({ item, featured, headingLevel = 3 }: Props) {
   const heading = `h${headingLevel}` as 'h2' | 'h3'
   const long = item.metric.length > LONG_METRIC
 
+  const Variant = featured ? 'jt-h4' : 'jt-h6'
+  const Heading = heading
+
   return (
-    <Card
-      sx={{
-        position: 'relative',
-        p: { xs: 3, md: featured ? 5 : 4 },
-        display: 'grid',
-        gap: 2,
-        alignContent: 'start',
-        height: '100%',
-        minWidth: 0,
-        ...(featured ? { bgcolor: 'band.bg', color: 'band.text', borderColor: 'band.border' } : {}),
-        transition: 'transform var(--jt-motion-slow, 500ms), border-color var(--jt-motion-slow, 500ms)',
-        '&:hover': { transform: 'translateY(-4px)', borderColor: featured ? 'primary.main' : 'text.primary' },
-        'html[data-motion="paused"] &:hover': { transform: 'none' },
-        '&:has(a:focus-visible)': {
-          outline: '2px solid var(--jt-palette-accentText)',
-          outlineOffset: '2px',
-        },
-      }}
-    >
+    <div className={featured ? 'jt-card jt-casecard jt-casecard--featured' : 'jt-card jt-casecard'}>
       {item.sector && (
-        <Chip
-          label={item.sector}
-          size="small"
-          sx={{
-            justifySelf: 'start',
-            maxWidth: '100%',
-            height: 'auto',
-            '& .MuiChip-label': { whiteSpace: 'normal', py: 0.5 },
-            ...(featured ? { bgcolor: 'transparent', color: 'band.text', borderColor: 'band.border' } : {}),
-          }}
-        />
+        <div
+          className={
+            featured
+              ? 'jt-chip jt-chip--small jt-chip--band jt-casecard__sector'
+              : 'jt-chip jt-chip--small jt-casecard__sector'
+          }
+        >
+          <span className="jt-chip__label">{item.sector}</span>
+        </div>
       )}
       {item.metric && (
-        <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1.5, flexWrap: 'wrap', minWidth: 0 }}>
-          <Typography
-            component="p"
-            sx={{
-              fontSize: long ? '3rem' : '4.5rem',
-              lineHeight: 1,
-              fontWeight: 600,
-              letterSpacing: '-0.02em',
-              overflowWrap: 'anywhere',
-              color: featured ? 'primary.main' : 'accentText',
-            }}
+        <div className="jt-casecard__figure">
+          <p
+            className={
+              long
+                ? 'jt-body1 jt-casecard__metric jt-casecard__metric--long'
+                : 'jt-body1 jt-casecard__metric'
+            }
           >
             {item.metric}
-          </Typography>
-          {item.metricLabel && (
-            <Typography variant="body2" sx={{ color: featured ? 'band.muted' : 'text.secondary' }}>
-              {item.metricLabel}
-            </Typography>
-          )}
-        </Box>
+          </p>
+          {item.metricLabel && <p className="jt-body2 jt-casecard__label">{item.metricLabel}</p>}
+        </div>
       )}
-      <Typography variant={featured ? 'h4' : 'h6'} component={heading}>
-        <Link
-          component={linkFor(href)}
-          href={href}
-          underline="none"
-          sx={{
-            color: 'inherit',
-            outline: 'none',
-            '&::after': { content: '""', position: 'absolute', inset: 0 },
-          }}
-        >
+      <Heading className={Variant}>
+        <AppLink className="jt-link jt-casecard__link jt-stretched" href={href}>
           {item.title}
-        </Link>
-      </Typography>
-      {item.subtitle && (
-        <Typography variant="body2" sx={{ color: featured ? 'band.muted' : 'text.secondary', maxWidth: 640 }}>
-          {item.subtitle}
-        </Typography>
-      )}
-      <Typography
-        variant="body2"
-        aria-hidden="true"
-        sx={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: 0.5,
-          fontWeight: 600,
-          mt: 1,
-          color: featured ? 'primary.main' : 'accentText',
-        }}
-      >
+        </AppLink>
+      </Heading>
+      {item.subtitle && <p className="jt-body2 jt-casecard__subtitle">{item.subtitle}</p>}
+      <p className="jt-body2 jt-casecard__more" aria-hidden="true">
         {t('viewCase')} <ArrowRight size={16} />
-      </Typography>
-    </Card>
+      </p>
+    </div>
   )
 }

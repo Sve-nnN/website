@@ -1,8 +1,5 @@
-'use client'
-
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
+// Sin 'use client' (fase 60): marcado estatico con las clases de
+// `src/theme/static.css`.
 import type { ReactNode } from 'react'
 
 type Props = {
@@ -33,36 +30,27 @@ type Props = {
 export function Section({ id, title, lead, band, children, labelledBy, pt = 0, py }: Props) {
   const doubled = band || py
   const nameId = title ? `${id}-t` : labelledBy
+  const className = ['jt-section', doubled ? 'jt-section--double' : '', band ? 'jt-band' : '']
+    .filter(Boolean)
+    .join(' ')
   return (
-    <Box
-      component="section"
+    <section
       id={id}
+      className={className}
       aria-labelledby={nameId}
-      sx={{
-        py: doubled ? { xs: 8, md: 12 } : undefined,
-        pt: doubled ? undefined : pt,
-        pb: doubled ? undefined : { xs: 8, md: 12 },
-        ...(band ? { bgcolor: 'band.bg', color: 'band.text' } : {}),
-      }}
+      style={!doubled && pt ? { paddingTop: `calc(${pt} * var(--jt-spacing))` } : undefined}
     >
-      <Container maxWidth="lg">
+      <div className="jt-container">
         {title && (
-          <Box sx={{ display: 'grid', gap: 2, maxWidth: 680, mb: 6 }}>
-            <Typography id={`${id}-t`} variant="h3" component="h2">
+          <div className="jt-section__head">
+            <h2 id={`${id}-t`} className="jt-h3">
               {title}
-            </Typography>
-            {lead && (
-              <Typography
-                variant="body1"
-                sx={{ fontSize: '1.25rem', lineHeight: '1.875rem', color: band ? 'band.muted' : 'text.secondary' }}
-              >
-                {lead}
-              </Typography>
-            )}
-          </Box>
+            </h2>
+            {lead && <p className="jt-body1 jt-section__lead">{lead}</p>}
+          </div>
         )}
         {children}
-      </Container>
-    </Box>
+      </div>
+    </section>
   )
 }
