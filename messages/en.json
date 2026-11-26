@@ -236,7 +236,8 @@
     "by": "by {name}",
     "dateRange": "{from} to {to}",
     "dateRangeOpen": "{from} to today",
-    "attendees": "{count, plural, one {# attendee} other {# attendees}}"
+    "attendees": "{count, plural, one {# attendee} other {# attendees}}",
+    "attendeesOver": "More than {count} attendees"
   },
   "contact": {
     "eyebrow": "Let's talk",
@@ -494,6 +495,7 @@
       "years": "{years}+ years of experience",
       "by": "by {name}",
       "attendees": "{count, plural, one {# attendee} other {# attendees}}",
+      "attendeesOver": "More than {count} attendees",
       "coSpeakers": "With {names}",
       "eventLink": "Learn more",
       "socialLabel": "{name} on other platforms",

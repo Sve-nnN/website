@@ -1,0 +1,501 @@
+[
+ {
+  "key": "estrategia-de-contenidos",
+  "id": 38,
+  "slug": "estrategia-de-contenidos",
+  "ops": {
+   "es": [
+    {
+     "path": "content.root.children.66.children.0.text",
+     "old": "Casos de éxito y análisis comparativo",
+     "new": "Escenarios ilustrativos y análisis comparativo"
+    },
+    {
+     "path": "content.root.children.67.children.0.text",
+     "old": "Estrategias implementadas en empresas tecnológicas",
+     "new": "Estrategias que una empresa tecnológica puede aplicar"
+    },
+    {
+     "path": "content.root.children.68.children.2.text",
+     "old": ", varias empresas tecnológicas han establecido prácticas que muestran cómo una planificación adecuada puede impulsar el crecimiento y la visibilidad en el mercado. Un caso relevante es el de Tableau, que logró transformar su enfoque de contenido centrándose en la educación del cliente. Creando tutoriales, webinars y estudios de caso, Tableau posicionó su marca como referente en análisis de datos. Al invertir en contenido educativo, captó la atención de nuevas audiencias y fomentó la lealtad de sus clientes existentes.",
+     "new": ", las empresas tecnológicas pueden usar una planificación adecuada para impulsar su crecimiento y su visibilidad en el mercado. Imagina un proveedor de software de análisis de datos que reorienta su contenido hacia la educación del cliente. Con tutoriales, webinars y estudios de caso puede posicionar su marca como referente en análisis de datos. Una inversión así en contenido educativo puede captar la atención de nuevas audiencias y fortalecer la lealtad de sus clientes actuales."
+    },
+    {
+     "path": "content.root.children.69.children.0.text",
+     "old": "De manera similar, como se ve en el caso de Agentforce, implementar agentes de inteligencia artificial en la personalización del contenido permite ofrecer experiencias más relevantes a los consumidores. Esto optimiza las interacciones, también mejora la tasa de conversión al dirigirse a las necesidades específicas de cada cliente.",
+     "new": "De manera similar, una empresa que implemente agentes de inteligencia artificial para personalizar el contenido puede ofrecer experiencias más relevantes a los consumidores. Esto puede mejorar las interacciones y la tasa de conversión al responder a las necesidades específicas de cada cliente."
+    },
+    {
+     "path": "content.root.children.70.children.0.text",
+     "old": "Resultados obtenidos y lecciones aplicables",
+     "new": "Resultados esperados y lecciones aplicables"
+    },
+    {
+     "path": "content.root.children.71.children.0.text",
+     "old": "Los resultados que obtuvieron estas empresas muestran la efectividad de una ",
+     "new": "Escenarios como estos ilustran lo que busca una "
+    },
+    {
+     "path": "content.root.children.71.children.2.text",
+     "old": " bien elaborada. En el caso de Tableau, se reportó un aumento significativo en la retención de clientes y la expansión de su base de usuarios. Este tipo de resultados demuestra que la educación del cliente y crear contenido que aporte valor son factores cruciales para fomentar conexiones duraderas.",
+     "new": " bien elaborada. En el escenario del contenido educativo, los objetivos son retener más clientes y ampliar la base de usuarios. La educación del cliente y el contenido que aporta valor pesan de forma decisiva al crear conexiones duraderas."
+    },
+    {
+     "path": "content.root.children.72.children.0.children.0.children.0.children.0.text",
+     "old": "Empresa",
+     "new": "Escenario"
+    },
+    {
+     "path": "content.root.children.72.children.0.children.2.children.0.children.0.text",
+     "old": "Resultados",
+     "new": "Resultados buscados"
+    },
+    {
+     "path": "content.root.children.72.children.1.children.0.children.0.children.0.text",
+     "old": "Tableau",
+     "new": "Proveedor de software de analítica"
+    },
+    {
+     "path": "content.root.children.72.children.1.children.2.children.0.children.0.text",
+     "old": "Aumento en la retención de clientes y crecimiento en la base de usuarios",
+     "new": "Mayor retención de clientes y crecimiento de la base de usuarios"
+    },
+    {
+     "path": "content.root.children.72.children.2.children.0.children.0.children.0.text",
+     "old": "Agentforce",
+     "new": "Empresa con agentes de IA"
+    },
+    {
+     "path": "content.root.children.72.children.2.children.2.children.0.children.0.text",
+     "old": "Mejora en la tasa de conversión y satisfacción del cliente",
+     "new": "Mejor tasa de conversión y mayor satisfacción del cliente"
+    },
+    {
+     "path": "content.root.children.75.children.0.text",
+     "old": "La transformación digital, apoyada por una sólida estrategia de contenidos, ha demostrado ser un motor de crecimiento en empresas como Slack. Al fomentar la colaboración y la comunicación entre equipos, mejoraron la calidad del contenido producido y, con eso, la satisfacción del cliente. Los empresarios deben tener presente que la innovación en los procesos y en el contenido es la base para destacar en un mercado competitivo. En este sentido, las lecciones de estos casos de éxito dan un marco valioso para diseñar y ajustar estrategias que resuenen con el cliente y que, a su vez, sostengan el crecimiento empresarial a largo plazo.",
+     "new": "La transformación digital, apoyada por una sólida estrategia de contenidos, puede convertirse en un motor de crecimiento. Fomentar la colaboración y la comunicación entre equipos les ayuda a mejorar la calidad del contenido que producen y, con eso, la satisfacción del cliente. Los empresarios deben tener presente que la innovación en los procesos y en el contenido es la base para destacar en un mercado competitivo. En este sentido, estos escenarios ofrecen un marco para diseñar y ajustar estrategias que resuenen con el cliente y que, a su vez, sostengan el crecimiento empresarial a largo plazo."
+    }
+   ],
+   "en": []
+  }
+ },
+ {
+  "key": "seo-off-page-guia",
+  "id": 36,
+  "slug": "seo-off-page-guia",
+  "ops": {
+   "es": [
+    {
+     "path": "content.root.children.13.children.0.text",
+     "old": "Los motores de búsqueda usan algoritmos complejos que consideran múltiples factores para determinar la relevancia de un sitio en los resultados. El SEO off page puede representar más del 50% de la ponderación total en el ranking, lo que lo convierte en un componente crítico a la hora de evaluar la posición de un sitio en las páginas de resultados (SERP). Esto incluye la calidad de los enlaces entrantes, la autoridad del dominio y las menciones en plataformas externas. Un sitio bien fundamentado en SEO off page mejora su visibilidad, también amplía su audiencia potencial.",
+     "new": "Los motores de búsqueda usan algoritmos complejos que consideran múltiples factores para determinar la relevancia de un sitio en los resultados. Las señales off page pueden influir mucho en la clasificación, pero Google no publica cuánto pesa cada una, así que conviene desconfiar de cualquier porcentaje exacto. Entre esas señales suelen citarse la calidad de los enlaces entrantes, la autoridad del sitio y las menciones en plataformas externas. Un sitio bien trabajado en SEO off page puede ganar visibilidad y ampliar su audiencia potencial."
+    },
+    {
+     "path": "content.root.children.44.children.0.text",
+     "old": "Una vez identificados, es clave desautorizarlos usando herramientas como ",
+     "new": "Una vez identificados, valora si de verdad hace falta actuar. Google explica que la mayoría de los sitios no necesita desautorizar enlaces. Su herramienta de desautorización, que es una página aparte de los informes de "
+    },
+    {
+     "path": "content.root.children.44.children.2.text",
+     "old": ", para minimizar el impacto negativo en el ranking del sitio. La evaluación continua y el manejo proactivo de enlaces tóxicos son estrategias clave dentro de una campaña sólida de SEO off page.",
+     "new": ", está pensada para una acción manual por enlaces no naturales, o para el caso en que probablemente la recibas, cuando no logras retirar esos enlaces. Usada sin cuidado puede perjudicar tu rendimiento en la búsqueda, así que revisar el perfil de enlaces con regularidad aporta más que desautorizar por precaución."
+    },
+    {
+     "path": "content.root.children.68.children.0.text",
+     "old": "Nuevas técnicas y recomendaciones para 2024",
+     "new": "Nuevas técnicas y recomendaciones"
+    },
+    {
+     "path": "content.root.children.69.children.0.text",
+     "old": "De cara a 2024, se esperan nuevas técnicas y recomendaciones en el campo del SEO off page. Es probable que el marketing de contenidos se fusione aún más con las iniciativas de SEO off page. Crear contenido valioso, optimizado para atraer enlaces de manera orgánica, va a ser fundamental. Las estrategias de multimedia, como videos y podcasts, también van a jugar un papel clave, porque estos formatos se comparten y enlazan con más facilidad. Además, personalizar contenidos para audiencias específicas usando datos analíticos avanzados va a aumentar la efectividad de las estrategias de SEO off page. Estas prácticas ayudan a construir una red de enlaces más sólida y relevante.",
+     "new": "El marketing de contenidos y el SEO off page comparten buena parte del trabajo. Crear contenido valioso, optimizado para atraer enlaces de manera orgánica, sigue siendo fundamental. Los formatos multimedia, como videos y podcasts, también pueden ayudar porque se comparten y se enlazan con facilidad. Adaptar el contenido a audiencias específicas con datos analíticos puede hacer más efectiva la estrategia. Estas prácticas ayudan a construir una red de enlaces más sólida y relevante."
+    }
+   ],
+   "en": [
+    {
+     "path": "content.root.children.13.children.0.text",
+     "old": "Search engines use complex algorithms that weigh many factors to determine how relevant a site is for the results. Off-page signals weigh heavily in rankings, which makes off-page SEO a critical component when evaluating a site's position on the search engine results pages (SERPs). This includes inbound link quality, domain authority, and mentions on external platforms. A site with a solid off-page SEO foundation improves its visibility and also expands its potential audience.",
+     "new": "Search engines use complex algorithms that weigh many factors to determine how relevant a site is for the results. Off-page signals can strongly influence rankings, yet Google does not publish how much each one counts, so treat any exact percentage with suspicion. People usually point to inbound link quality, site authority, and mentions on external platforms. A site with solid off-page SEO can gain visibility and expand its potential audience."
+    },
+    {
+     "path": "content.root.children.44.children.0.text",
+     "old": "Once you identify them, you need to disavow them with tools such as ",
+     "new": "Once you identify them, decide whether you really need to act. Google explains that most sites never need to disavow links. Its disavow tool, a page separate from the "
+    },
+    {
+     "path": "content.root.children.44.children.2.text",
+     "old": " to minimize the negative impact on the site's rankings. Continuous evaluation and proactive handling of toxic links are essential strategies within a solid off-page SEO campaign.",
+     "new": " reports, is meant for a manual action over unnatural links, or for cases where one is likely, when you cannot get those links removed. Careless use can harm your performance in Search, so reviewing your link profile regularly pays off more than disavowing as a precaution."
+    },
+    {
+     "path": "content.root.children.68.children.0.text",
+     "old": "New Techniques and Recommendations for 2024",
+     "new": "New Techniques and Recommendations"
+    },
+    {
+     "path": "content.root.children.69.children.0.text",
+     "old": "Looking ahead to 2024, the field of off-page SEO expects new techniques and recommendations. Content marketing will probably merge even further with off-page SEO initiatives. Creating valuable content optimized to attract links organically will be fundamental. Multimedia strategies such as videos and podcasts will also play an important role, because people share and link to these formats more readily. Tailoring content to specific audiences with advanced analytics data will also make off-page SEO strategies more effective. These practices help you build a stronger and more relevant link network.",
+     "new": "Content marketing and off-page SEO share much of the same work. Creating valuable content optimized to attract links organically remains fundamental. Multimedia formats such as videos and podcasts can help too, because people share and link to them readily. Tailoring content to specific audiences with analytics data can make your strategy more effective. These practices help you build a stronger and more relevant link network."
+    }
+   ]
+  }
+ },
+ {
+  "key": "complejidad-algoritmica",
+  "id": 71,
+  "slug": "complejidad-algoritmica",
+  "ops": {
+   "es": [
+    {
+     "path": "content.root.children.15.children.4.text",
+     "old": " del tiempo de ejecución (o espacio) de un algoritmo. En términos sencillos, Big-O nos indica el ",
+     "new": " del tiempo de ejecución (o espacio) de un algoritmo. Big-O no equivale al "
+    },
+    {
+     "path": "content.root.children.15.children.6.text",
+     "old": " de un algoritmo, garantizando que el tiempo de ejecución nunca excederá una cierta tasa de crecimiento a medida que el tamaño de la entrada ",
+     "new": ": puedes usarla para describir el peor caso, el mejor o el promedio. Solo afirma que, a partir de cierto tamaño de la entrada "
+    },
+    {
+     "path": "content.root.children.15.children.8.text",
+     "old": " tiende a infinito. Esto es clave para sistemas que requieren garantías de rendimiento bajo cargas máximas.",
+     "new": ", la función no crece más rápido que la cota, salvo un factor constante. En la práctica suele aplicarse al peor caso, porque es lo que conviene garantizar en sistemas con requisitos de rendimiento bajo cargas máximas."
+    },
+    {
+     "path": "content.root.children.18.children.0.children.3.text",
+     "old": " del tiempo de ejecución. Indica el ",
+     "new": " del tiempo de ejecución. Tampoco equivale al "
+    },
+    {
+     "path": "content.root.children.18.children.0.children.5.text",
+     "old": " de un algoritmo, es decir, el tiempo mínimo que tardará en completarse. Por ejemplo, en una búsqueda lineal, si el elemento buscado es el primero, su complejidad es Ω(1).",
+     "new": ": también sirve para acotar por debajo el peor caso o el promedio. Por ejemplo, el peor caso de la búsqueda lineal es Ω(n) porque obliga a revisar todos los elementos."
+    },
+    {
+     "path": "content.root.children.18.children.1.children.3.text",
+     "old": " (tight bound). Se utiliza cuando el mejor caso (Ω) y el peor caso (O) de un algoritmo tienen la misma tasa de crecimiento. En otras palabras, Θ(f(n)) significa que el tiempo de ejecución del algoritmo crece de forma directamente proporcional a f(n) tanto en su límite inferior como superior, proporcionando una estimación más precisa del ",
+     "new": " (tight bound). Θ(f(n)) significa que f(n) acota la función por arriba y por abajo, salvo factores constantes. Por sí sola tampoco describe el "
+    },
+    {
+     "path": "content.root.children.18.children.1.children.5.text",
+     "old": " cuando no hay grandes variaciones entre el mejor y el peor caso.",
+     "new": ": cada escenario tiene su propia cota. En la búsqueda lineal, el peor caso y el promedio son Θ(n), y el mejor caso es Θ(1)."
+    },
+    {
+     "path": "content.root.children.19.children.0.text",
+     "old": "Aunque Big-O es la más utilizada por su enfoque en el peor caso (que es lo que interesa garantizar en muchos escenarios), entender Ω y Θ ofrece una perspectiva más rica del algoritmo.",
+     "new": "Big-O es la notación más usada porque casi siempre interesa garantizar una cota superior. La notación (O, Ω o Θ) indica el tipo de cota, y el escenario (peor, mejor o promedio) indica sobre qué entradas la calculas. Son dos decisiones independientes."
+    },
+    {
+     "path": "content.root.children.73.children.0.children.1.text",
+     "old": " Si el elemento buscado es el primer elemento de la lista, el algoritmo lo encuentra inmediatamente, resultando en una complejidad O(1) o Ω(1).",
+     "new": " Si el elemento buscado es el primer elemento de la lista, el algoritmo lo encuentra inmediatamente, así que el mejor caso es Θ(1)."
+    },
+    {
+     "path": "content.root.children.73.children.1.children.1.text",
+     "old": " Si un algoritmo de ordenación como el Bubble Sort recibe una lista ya ordenada, puede detectar esto en una sola pasada en el mejor caso, aunque su complejidad general sigue siendo O(n²).",
+     "new": " Si un algoritmo de ordenación como el Bubble Sort recibe una lista ya ordenada y comprueba si hubo intercambios, termina en una sola pasada: su mejor caso es Θ(n), aunque el peor sigue siendo Θ(n²)."
+    },
+    {
+     "path": "content.root.children.74.children.0.text",
+     "old": "Aunque el mejor caso es menos útil para garantías de rendimiento (ya que rara vez se da en la práctica), es valioso para comprender la lógica interna del algoritmo y establecer un límite inferior teórico.",
+     "new": "Aunque el mejor caso es menos útil para garantías de rendimiento (ya que rara vez se da en la práctica), es valioso para comprender la lógica interna del algoritmo y saber cómo se comporta con la entrada más favorable."
+    }
+   ],
+   "en": [
+    {
+     "path": "content.root.children.15.children.3.text",
+     "old": " of an algorithm's running time (or space). In simple terms, Big-O tells you the ",
+     "new": " of an algorithm's running time (or space). Big-O does not mean the "
+    },
+    {
+     "path": "content.root.children.15.children.5.text",
+     "old": " of an algorithm and guarantees that running time will never exceed a certain growth rate as the input size ",
+     "new": ": you can use it to describe the worst, the best, or the average case. It only states that, beyond a certain input size "
+    },
+    {
+     "path": "content.root.children.15.children.7.text",
+     "old": " approaches infinity. This is essential for systems that require performance guarantees under peak load.",
+     "new": ", the function grows no faster than the bound, up to a constant factor. In practice people mostly apply it to the worst case, because that is what systems with peak load requirements need to guarantee."
+    },
+    {
+     "path": "content.root.children.18.children.0.children.3.text",
+     "old": " of running time. It indicates the ",
+     "new": " of running time. It does not mean the "
+    },
+    {
+     "path": "content.root.children.18.children.0.children.5.text",
+     "old": " of an algorithm, that is, the minimum time it will take to finish. In a linear search, for example, if the target element comes first, the complexity is Ω(1).",
+     "new": " either: it can also bound the worst or the average case from below. For example, the worst case of a linear search is Ω(n) because it has to check every element."
+    },
+    {
+     "path": "content.root.children.18.children.1.children.3.text",
+     "old": ". You use it when the best case (Ω) and the worst case (O) of an algorithm share the same growth rate. In other words, Θ(f(n)) means that the algorithm's running time grows in direct proportion to f(n) at both its lower and upper bounds, which gives a more precise estimate of ",
+     "new": ". Θ(f(n)) means that f(n) bounds the function from above and below, up to constant factors. Nor does it describe "
+    },
+    {
+     "path": "content.root.children.18.children.1.children.5.text",
+     "old": " when the best and worst cases do not differ much.",
+     "new": " by itself: each case has its own bound. In a linear search the worst and average cases are Θ(n), and the best case is Θ(1)."
+    },
+    {
+     "path": "content.root.children.19.children.0.text",
+     "old": "Big-O is the most widely used because it focuses on the worst case (which is what many scenarios need to guarantee), but understanding Ω and Θ gives you a richer view of the algorithm.",
+     "new": "Big-O is the most widely used notation because you usually care about guaranteeing an upper bound. The notation (O, Ω, or Θ) tells you which kind of bound you are stating, while the case (worst, best, or average) tells you which inputs you are measuring. Those are two independent choices."
+    },
+    {
+     "path": "content.root.children.73.children.0.children.1.text",
+     "old": " If the target is the first element in the list, the algorithm finds it immediately, which results in O(1) or Ω(1) complexity.",
+     "new": " If the target is the first element in the list, the algorithm finds it immediately, so the best case is Θ(1)."
+    },
+    {
+     "path": "content.root.children.73.children.1.children.1.text",
+     "old": " If a sorting algorithm such as Bubble Sort receives an already sorted list, it can detect this in a single pass in the best case, although its general complexity remains O(n²).",
+     "new": " If a sorting algorithm such as Bubble Sort receives an already sorted list and checks whether any swaps occurred, it finishes in a single pass: its best case is Θ(n), although its worst case remains Θ(n²)."
+    },
+    {
+     "path": "content.root.children.74.children.0.text",
+     "old": "The best case is less useful for performance guarantees (it rarely occurs in practice), but it is valuable for understanding the algorithm's internal logic and establishing a theoretical lower bound.",
+     "new": "The best case is less useful for performance guarantees (it rarely occurs in practice), but it is valuable for understanding the algorithm's internal logic and how it behaves on the most favorable input."
+    }
+   ]
+  }
+ },
+ {
+  "key": "hidratacion-web",
+  "id": 6,
+  "slug": "hidratacion-web",
+  "ops": {
+   "es": [
+    {
+     "path": "content.root.children.28.children.0.text",
+     "old": "Las implicaciones en el rendimiento derivadas de la hidratación son significativas. El proceso de recuperación, que es la fase más costosa, puede traducirse en tiempos de espera que oscilan entre 10 segundos o más en dispositivos móviles, dependiendo de la complejidad de la aplicación. Cada segundo adicional de carga puede resultar en un alto porcentaje de usuarios que abandonan la aplicación antes de que se vuelva interactiva. Esto afecta la satisfacción del usuario y también puede impactar negativamente en métricas críticas como el ",
+     "new": "Las implicaciones en el rendimiento derivadas de la hidratación son significativas. El proceso de recuperación suele ser la fase más costosa y, según la complejidad de la aplicación, puede alargar notablemente la espera en dispositivos móviles. Cuanto más tarda la página en volverse interactiva, más probable resulta que el usuario la abandone. Esto afecta la satisfacción del usuario y también puede impactar negativamente en métricas críticas como el "
+    },
+    {
+     "path": "content.root.children.55.children.0.text",
+     "old": "La hidratación web es un proceso esencial en el desarrollo de aplicaciones interactivas, y hay diversas herramientas y frameworks que pueden optimizar o facilitar este proceso. A continuación, se presentan las categorías más relevantes de estas soluciones, junto con una comparativa de rendimiento que permite analizar su eficacia.",
+     "new": "La hidratación web es un proceso esencial en el desarrollo de aplicaciones interactivas, y hay diversas herramientas y frameworks que pueden optimizar o facilitar este proceso. A continuación, se presentan las categorías más relevantes de estas soluciones, junto con una comparación entre ambos enfoques."
+    },
+    {
+     "path": "content.root.children.60.children.0.text",
+     "old": "Soluciones que apoyan la resumabilidad",
+     "new": "Resumabilidad e hidratación parcial en la práctica"
+    },
+    {
+     "path": "content.root.children.61.children.0.text",
+     "old": "A medida que crece la necesidad de soluciones más eficientes, algunas herramientas están comenzando a adoptar el enfoque de resumabilidad en lugar de la hidratación tradicional. Esto incluye:",
+     "new": "Qwik es el framework construido alrededor de la resumabilidad: pausa la ejecución en el servidor y la reanuda en el navegador sin hidratar la aplicación. Otras herramientas conocidas sí hidratan, y cada una lo gestiona a su manera:"
+    },
+    {
+     "path": "content.root.children.62.children.0.children.1.text",
+     "old": ": Directamente enfocado en la optimización del rendimiento, este framework de React facilita la serialización del estado y se enfoca en la carga de páginas en el lado del servidor, minimizando así la necesidad de un proceso de hidratación pesado.",
+     "new": ": Usa la hidratación de React. Con los Server Components del App Router, el código de los componentes de servidor no llega al navegador y solo se hidratan los componentes de cliente."
+    },
+    {
+     "path": "content.root.children.62.children.1.children.1.text",
+     "old": ": A diferencia de otros frameworks, Svelte compila el código a JavaScript altamente eficiente, eliminando la necesidad de hidratar el DOM por completo, lo que mejora la velocidad y la experiencia de usuario.",
+     "new": ": Compila los componentes a JavaScript y también hidrata. Con SvelteKit, el navegador hidrata de forma predeterminada el HTML que renderiza el servidor, y puedes desactivar el JavaScript en las páginas que no lo necesitan."
+    },
+    {
+     "path": "content.root.children.62.children.2.children.1.text",
+     "old": ": Con la filosofía de enviar el menor JavaScript posible al cliente, Astro permite a los desarrolladores optar por componentes estáticos o dinámicos, gestionando la interactividad sin las sobrecargas comunes de la hidratación.",
+     "new": ": Aplica hidratación parcial mediante islas. Genera HTML estático y solo hidrata los componentes que marques como interactivos."
+    },
+    {
+     "path": "content.root.children.63.children.0.text",
+     "old": "Comparativa de rendimiento entre enfoques",
+     "new": "Comparación entre ambos enfoques"
+    },
+    {
+     "path": "content.root.children.64.children.0.text",
+     "old": "Para entender mejor las diferencias entre los enfoques de hidratación tradicional y resumabilidad, se presenta la siguiente tabla comparativa. En ella se analizan aspectos clave como el tiempo de recuperación y la carga inicial requerida.",
+     "new": "Para entender mejor las diferencias entre la hidratación tradicional y la resumabilidad, la siguiente tabla compara el trabajo al arrancar, la carga inicial, la interactividad y la madurez del ecosistema."
+    },
+    {
+     "path": "content.root.children.65.children.1.children.0.children.0.children.0.text",
+     "old": "Tiempo de Recuperación",
+     "new": "Trabajo al arrancar"
+    },
+    {
+     "path": "content.root.children.65.children.1.children.1.children.0.children.0.text",
+     "old": "Hasta 10 segundos en móviles",
+     "new": "Vuelve a ejecutar componentes para activar la interactividad"
+    },
+    {
+     "path": "content.root.children.65.children.1.children.2.children.0.children.0.text",
+     "old": "Menos de 2 segundos",
+     "new": "Reanuda desde el estado serializado"
+    },
+    {
+     "path": "content.root.children.65.children.2.children.1.children.0.children.0.text",
+     "old": "Alto (código y estado duplicado)",
+     "new": "Suele ser mayor (código y estado duplicados)"
+    },
+    {
+     "path": "content.root.children.65.children.2.children.2.children.0.children.0.text",
+     "old": "Bajo (solo lo necesario)",
+     "new": "Suele ser menor (carga bajo demanda)"
+    },
+    {
+     "path": "content.root.children.65.children.3.children.1.children.0.children.0.text",
+     "old": "Retardada por la carga y ejecución",
+     "new": "Depende de descargar y ejecutar el JavaScript"
+    },
+    {
+     "path": "content.root.children.65.children.3.children.2.children.0.children.0.text",
+     "old": "Inmediata, optimizada al máximo",
+     "new": "Necesita muy poco JavaScript al inicio"
+    },
+    {
+     "path": "content.root.children.65.children.4.children.0.children.0.children.0.text",
+     "old": "Simplificación del Código",
+     "new": "Madurez del ecosistema"
+    },
+    {
+     "path": "content.root.children.65.children.4.children.1.children.0.children.0.text",
+     "old": "Alto nivel de complejidad",
+     "new": "Amplia y muy documentada"
+    },
+    {
+     "path": "content.root.children.65.children.4.children.2.children.0.children.0.text",
+     "old": "Enfoque modular y ágil",
+     "new": "Más reciente y centrada en Qwik"
+    },
+    {
+     "path": "content.root.children.66.children.0.text",
+     "old": "La tabla deja bastante claro por qué la resumabilidad le está ganando terreno a la hidratación tradicional. Qué framework usar depende del proyecto, pero entender bien cómo funciona la hidratación, y cuándo te está costando rendimiento, es algo que todo el que trabaja con SSR debería tener claro.",
+     "new": "La tabla resume la diferencia de enfoque. Qué framework usar depende del proyecto, pero entender bien cómo funciona la hidratación, y cuándo te está costando rendimiento, es algo que todo el que trabaja con SSR debería tener claro."
+    }
+   ],
+   "en": [
+    {
+     "path": "content.root.children.28.children.0.text",
+     "old": "Hydration has significant performance implications. Recovery, the most expensive phase, can translate into waits of 10 seconds or more on mobile devices, depending on how complex the application is. Every extra second of loading can lead a high percentage of users to abandon the application before it becomes interactive. This affects user satisfaction and can also hurt critical metrics such as ",
+     "new": "Hydration has significant performance implications. Recovery is usually the most expensive phase and, depending on how complex the application is, it can noticeably lengthen the wait on mobile devices. The longer a page takes to become interactive, the more likely users are to abandon it. This affects user satisfaction and can also hurt critical metrics such as "
+    },
+    {
+     "path": "content.root.children.55.children.0.text",
+     "old": "Web hydration is an essential process in building interactive applications, and various tools and frameworks can optimize or ease it. Below you will find the most relevant categories of these solutions, along with a performance comparison that lets you analyze how effective they are.",
+     "new": "Web hydration is an essential process in building interactive applications, and various tools and frameworks can optimize or ease it. Below you will find the most relevant categories of these solutions, along with a comparison of both approaches."
+    },
+    {
+     "path": "content.root.children.60.children.0.text",
+     "old": "Solutions That Support Resumability",
+     "new": "Resumability and Partial Hydration in Practice"
+    },
+    {
+     "path": "content.root.children.61.children.0.text",
+     "old": "As the need for more efficient solutions grows, some tools are starting to adopt resumability instead of traditional hydration. These include:",
+     "new": "Qwik is the framework built around resumability: it pauses execution on the server and resumes it in the browser without hydrating the application. Other well-known tools do hydrate, and each one handles it in its own way:"
+    },
+    {
+     "path": "content.root.children.62.children.0.children.1.text",
+     "old": ": Squarely focused on performance optimization, this React framework facilitates state serialization and concentrates on loading pages on the server side, which minimizes the need for a heavy hydration process.",
+     "new": ": It relies on React hydration. With Server Components in the App Router, the code of server components never reaches the browser and only client components hydrate."
+    },
+    {
+     "path": "content.root.children.62.children.1.children.1.text",
+     "old": ": Unlike other frameworks, Svelte compiles code into highly efficient JavaScript, which removes the need to hydrate the DOM altogether and improves speed and user experience.",
+     "new": ": It compiles components to JavaScript and hydrates as well. With SvelteKit the browser hydrates server-rendered HTML by default, and you can turn JavaScript off on pages that do not need it."
+    },
+    {
+     "path": "content.root.children.62.children.2.children.1.text",
+     "old": ": With its philosophy of sending as little JavaScript as possible to the client, Astro lets developers choose static or dynamic components and manage interactivity without the usual hydration overhead.",
+     "new": ": It applies partial hydration through islands. It renders static HTML and hydrates only the components you mark as interactive."
+    },
+    {
+     "path": "content.root.children.63.children.0.text",
+     "old": "Performance Comparison Between Approaches",
+     "new": "A Comparison of Both Approaches"
+    },
+    {
+     "path": "content.root.children.64.children.0.text",
+     "old": "To better understand the differences between traditional hydration and resumability, take a look at the following comparison table. It examines key aspects such as recovery time and the initial load required.",
+     "new": "To better understand how traditional hydration and resumability differ, the following table compares startup work, initial load, interactivity, and ecosystem maturity."
+    },
+    {
+     "path": "content.root.children.65.children.1.children.0.children.0.children.0.text",
+     "old": "Recovery Time",
+     "new": "Startup Work"
+    },
+    {
+     "path": "content.root.children.65.children.1.children.1.children.0.children.0.text",
+     "old": "Up to 10 seconds on mobile",
+     "new": "Runs components again to wire up interactivity"
+    },
+    {
+     "path": "content.root.children.65.children.1.children.2.children.0.children.0.text",
+     "old": "Under 2 seconds",
+     "new": "Resumes from serialized state"
+    },
+    {
+     "path": "content.root.children.65.children.2.children.1.children.0.children.0.text",
+     "old": "High (duplicated code and state)",
+     "new": "Usually larger (duplicated code and state)"
+    },
+    {
+     "path": "content.root.children.65.children.2.children.2.children.0.children.0.text",
+     "old": "Low (only the essentials)",
+     "new": "Usually smaller (loads on demand)"
+    },
+    {
+     "path": "content.root.children.65.children.3.children.1.children.0.children.0.text",
+     "old": "Waits on loading and execution",
+     "new": "Depends on downloading and running JavaScript"
+    },
+    {
+     "path": "content.root.children.65.children.3.children.2.children.0.children.0.text",
+     "old": "Immediate and fully optimized",
+     "new": "Needs very little JavaScript up front"
+    },
+    {
+     "path": "content.root.children.65.children.4.children.0.children.0.children.0.text",
+     "old": "Code Simplification",
+     "new": "Ecosystem Maturity"
+    },
+    {
+     "path": "content.root.children.65.children.4.children.1.children.0.children.0.text",
+     "old": "High level of complexity",
+     "new": "Broad and well documented"
+    },
+    {
+     "path": "content.root.children.65.children.4.children.2.children.0.children.0.text",
+     "old": "Modular and agile approach",
+     "new": "Newer and centered on Qwik"
+    },
+    {
+     "path": "content.root.children.66.children.0.text",
+     "old": "The table makes it quite clear why resumability is gaining ground on traditional hydration. Which framework to use depends on the project, but understanding how hydration works, and when it is costing you performance, is something everyone who works with SSR should have down.",
+     "new": "The table sums up how the two approaches differ. Which framework to use depends on the project, but understanding how hydration works, and when it is costing you performance, is something everyone who works with SSR should have down."
+    }
+   ]
+  }
+ },
+ {
+  "key": "topic-clusters-seo",
+  "id": 39,
+  "slug": "topic-clusters-seo",
+  "ops": {
+   "es": [
+    {
+     "path": "content.root.children.71.children.0.text",
+     "old": "Casos prácticos y ejemplos de éxito en posicionamiento SEO con topic clusters",
+     "new": "Un ejemplo hipotético de topic clusters"
+    },
+    {
+     "path": "content.root.children.72.children.0.text",
+     "old": "Analizar casos que funcionaron sirve de inspiración. Varios sitios que usaron topic clusters junto con una estrategia de contenido robusta lograron un crecimiento real en su ranking. Vale la pena ver cómo estructuraron sus clústeres, qué temáticas eligieron y cómo pensaron en el usuario: son lecciones que ayudan a entender qué funciona y cómo replicarlo.",
+     "new": "Imagina un sitio de jardinería que crea una página pilar sobre huertos urbanos y la rodea de páginas de clúster sobre macetas, riego y plagas, todas enlazadas entre sí. El ejemplo es hipotético y no describe resultados medidos. Sirve para pensar cómo estructurar tus clústeres, qué temáticas elegir y qué necesita el usuario en cada paso."
+    }
+   ],
+   "en": [
+    {
+     "path": "content.root.children.22.children.0.text",
+     "old": "Looking at real topic cluster examples across different industries shows these benefits in practice, and how each one uses this organizational method to get better SEO results and content that actually resonates with its audience.",
+     "new": "Sketching topic cluster examples for different industries, even hypothetical ones, helps you picture how these benefits could play out and how each case might use this organizational method to reach better SEO results and content that resonates with its audience."
+    }
+   ]
+  }
+ }
+]

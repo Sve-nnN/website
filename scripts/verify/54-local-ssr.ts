@@ -86,6 +86,10 @@ function runPure(): void {
   check(c.figure === '98' && c.caption === '% de aciertos', `${tag}: el numero es solo el prefijo numerico`, JSON.stringify(c))
   const d = splitInlineStat(null)
   check(d.figure === null && d.caption === '', `${tag}: null no lanza`, JSON.stringify(d))
+  const e = splitInlineStat('Más de 18 asistentes')
+  check(e.prefix === 'Más de' && e.figure === '18' && e.caption === 'asistentes', `${tag}: "Más de 18" separa prefijo y cifra`, JSON.stringify(e))
+  const f = splitInlineStat('More than 18 attendees')
+  check(f.prefix === 'More than' && f.figure === '18' && f.caption === 'attendees', `${tag}: "More than 18" separa prefijo y cifra`, JSON.stringify(f))
 
   const html = noStyle(renderToHtml(createElement(LocalHeroStat, { text: '+40 proyectos entregados' })))
   check(
@@ -256,20 +260,18 @@ async function runDoc(slug: (typeof SLUGS)[number], locale: 'es' | 'en'): Promis
   const realStats = (proof?.block.stats ?? []).filter((s) => !isPlaceholder(s.value) && !isPlaceholder(s.label))
   const cards = countOf(proofHtml, /<li[\s>]/)
   check(cards === realStats.length, `${tag}: una tarjeta por estadistica real`, `tarjetas ${cards}, reales ${realStats.length}`)
-  if (slug === 'seo-tecnico-lima') {
-    check(realStats.length === 1 && cards === 1, `${tag}: Lima produce una tarjeta con su dato real`, `reales ${realStats.length}, tarjetas ${cards}`)
+  // Los bloques de prueba local de Lima y Madrid salieron de las paginas el 25 de
+  // noviembre (scripts/db/52): sin datos reales no puede quedar marcado, y si
+  // vuelve un dato real su etiqueta tiene que verse.
+  const realQuote = proof?.block.testimonial?.quote && !isPlaceholder(proof.block.testimonial.quote)
+  if (realStats.length === 0 && !realQuote) {
+    check(proofHtml.trim() === '', `${tag}: sin datos reales la prueba local no produce marcado`, proofHtml.slice(0, 200))
+  } else {
     check(
       realStats.every((s) => textOf(proofHtml).includes((s.label ?? '').trim())),
       `${tag}: la etiqueta real aparece en el HTML`,
       'falta la etiqueta',
     )
-  } else {
-    const realQuote = proof?.block.testimonial?.quote && !isPlaceholder(proof.block.testimonial.quote)
-    if (realStats.length === 0 && !realQuote) {
-      check(proofHtml.trim() === '', `${tag}: Madrid no produce marcado alguno en la prueba local`, proofHtml.slice(0, 200))
-    } else {
-      console.log(`INFO ${tag}: ya trae datos reales (${realStats.length} estadisticas), se omite la comprobacion de vacio`)
-    }
   }
 
   // ---- Hero ----
