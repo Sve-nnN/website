@@ -72,7 +72,7 @@ export const CASES: CaseFix[] = [
       { value: '+136%', label: { es: 'Clics frente a las mismas fechas', en: 'Clicks against the same dates' } },
       { value: '926', label: { es: 'Clics orgánicos', en: 'Organic clicks' } },
       { value: '679,895', label: IMPRESSIONS },
-      { value: '19.2', label: { es: 'Posición media (antes 53.7)', en: 'Average position (was 53.7)' } },
+      { value: '19.3', label: { es: 'Posición media (antes 53.8)', en: 'Average position (was 53.8)' } },
     ],
     clientContext: {
       es: 'Phixser Solutions ofrece servicios del hogar en Florida y Carolina del Norte.',
@@ -80,8 +80,8 @@ export const CASES: CaseFix[] = [
     },
     challenge: [
       {
-        es: 'Entre el 13 de julio y el 23 de noviembre de 2025 el sitio sumó 392 clics, con una posición media de 53.7.',
-        en: 'Between July 13 and November 23, 2025, the site earned 392 clicks at an average position of 53.7.',
+        es: 'Entre el 13 de julio y el 23 de noviembre de 2025 el sitio sumó 392 clics, con una posición media de 53.8.',
+        en: 'Between July 13 and November 23, 2025, the site earned 392 clicks at an average position of 53.8.',
       },
       {
         es: 'Casi la mitad de esos clics, 191, venía de búsquedas con el nombre de la empresa. Las consultas visibles sin el nombre aportaban 7.',
@@ -91,7 +91,7 @@ export const CASES: CaseFix[] = [
     metrics: [
       { before: '392', after: '926', label: CLICKS },
       { before: '82,531', after: '679,895', label: IMPRESSIONS },
-      { before: '53.7', after: '19.2', label: POSITION },
+      { before: '53.8', after: '19.3', label: POSITION },
       { before: '129', after: '213', label: { es: 'Clics desde el enlace de la ficha de Google', en: 'Clicks from the Google listing link' } },
     ],
     lessons: [
