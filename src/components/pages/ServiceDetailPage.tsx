@@ -9,6 +9,7 @@
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
 import { notFound } from 'next/navigation'
 import { Fragment } from 'react'
 import { getTranslations } from 'next-intl/server'
@@ -95,6 +96,17 @@ export async function ServiceDetailPage({ locale, slug }: { locale: Locale; slug
   ])
 
   const aside = firstCta ? ctaLink(firstCta, locale) : null
+
+  // Auditoria SEO 2026-11: la fecha de la ultima edicion, visible en la pagina.
+  // Sale de `updatedAt` del documento; sin ella no se pinta nada.
+  const updatedLabel = doc.updatedAt
+    ? new Intl.DateTimeFormat(locale === 'es' ? 'es-PE' : 'en-US', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        timeZone: 'America/Lima',
+      }).format(new Date(doc.updatedAt))
+    : null
 
   const renderSection = (s: ServiceSection, i: number) => {
     const key = s.block.id ?? i
@@ -195,6 +207,13 @@ export async function ServiceDetailPage({ locale, slug }: { locale: Locale; slug
         cta={aside}
       />
       {sections.map(renderSection)}
+      {updatedLabel && (
+        <Container maxWidth="lg" sx={{ pb: 4 }}>
+          <Typography variant="body2" color="text.secondary">
+            <time dateTime={doc.updatedAt}>{t('updated', { date: updatedLabel })}</time>
+          </Typography>
+        </Container>
+      )}
       <OtherServices items={others} />
       {ctaData && (
         <div lang={ctaData.isFallback && locale === 'en' ? 'es' : undefined}>

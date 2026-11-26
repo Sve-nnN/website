@@ -8,7 +8,7 @@ import { buildAlternates } from '@/lib/canonical'
 import { pageTitle } from '@/lib/page-title'
 import { JsonLd } from '@/components/JsonLd'
 import { SITE_URL } from '@/lib/sitemap-data'
-import { personRef } from '@/lib/person'
+import { personStub } from '@/lib/person-id'
 import { websiteRef, BUSINESS_ID } from '@/lib/site-schema'
 
 // Self-hosted deploy (Dokploy/Nixpacks) builds in a container with no
@@ -86,7 +86,7 @@ export default async function ContactPage({
     inLanguage: locale === 'en' ? 'en' : 'es',
     isPartOf: websiteRef,
     about: { '@id': BUSINESS_ID },
-    mainEntity: personRef,
+    mainEntity: personStub,
   }
 
   return (

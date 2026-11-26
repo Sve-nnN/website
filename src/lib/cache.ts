@@ -626,6 +626,7 @@ export function getCachedCaseStudyBySlug(slug: string, locale: Locale) {
           heroImage: true,
           author: true,
           meta: true,
+          publishedAt: true,
           createdAt: true,
           updatedAt: true,
         },

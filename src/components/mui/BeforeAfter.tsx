@@ -1,17 +1,8 @@
-'use client'
-
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Typography from '@mui/material/Typography'
+// Sin 'use client' (fase 60): tarjetas, barras y tabla estaticas. Estilos en
+// `src/theme/static.css`.
 import { useLocale, useTranslations } from 'next-intl'
+import type { CSSProperties } from 'react'
 
-import { UL } from '@/components/mui/lists'
-import { visuallyHidden } from '@/components/mui/ScoreRing'
 import type { CaseResultRow } from '@/lib/case-study-data'
 
 type Props = {
@@ -29,16 +20,9 @@ export function formatChange(pct: number, locale: string): string {
 
 function Bar({ share, strong }: { share: number; strong?: boolean }) {
   return (
-    <Box aria-hidden="true" sx={{ height: 12, borderRadius: 9999, bgcolor: 'raised', overflow: 'hidden' }}>
-      <Box
-        sx={{
-          width: `${Math.max(2, share * 100)}%`,
-          height: '100%',
-          borderRadius: 9999,
-          bgcolor: strong ? 'primary.main' : 'fieldBorder',
-        }}
-      />
-    </Box>
+    <div className="jt-bar" aria-hidden="true">
+      <div className={strong ? 'jt-bar__fill--strong' : undefined} style={{ width: `${Math.max(2, share * 100)}%` }} />
+    </div>
   )
 }
 
@@ -54,25 +38,11 @@ function ValueRow({
   strong?: boolean
 }) {
   return (
-    <Box
-      sx={{
-        display: 'grid',
-        gridTemplateColumns: share === null ? '72px minmax(0,1fr)' : '72px minmax(0,1fr) auto',
-        alignItems: 'center',
-        gap: 1.5,
-      }}
-    >
-      <Typography variant="caption" color="text.secondary">
-        {label}
-      </Typography>
+    <div className={share === null ? 'jt-result__row jt-result__row--nobar' : 'jt-result__row'}>
+      <span className="jt-caption">{label}</span>
       {share !== null && <Bar share={share} strong={strong} />}
-      <Typography
-        variant="mono"
-        sx={{ minWidth: share === null ? 0 : 64, textAlign: share === null ? 'left' : 'right', overflowWrap: 'anywhere' }}
-      >
-        {value}
-      </Typography>
-    </Box>
+      <span className="jt-mono jt-result__value">{value}</span>
+    </div>
   )
 }
 
@@ -94,60 +64,47 @@ export function BeforeAfter({ results }: Props) {
 
   return (
     <>
-      <UL
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: {
-            xs: 'minmax(0,1fr)',
-            md: `repeat(${Math.min(results.length, 3)}, minmax(0,1fr))`,
-          },
-          gap: 2,
-        }}
+      <ul
+        className="jt-grid jt-grid--upto3"
+        role="list"
+        style={{ '--jt-columns': Math.min(results.length, 3) } as CSSProperties}
       >
         {results.map((r, i) => (
-          <Card key={`${i}-${r.label}`} component="li" sx={{ p: 3, display: 'grid', gap: 2.5, alignContent: 'start' }}>
-            <Typography variant="subtitle1" component="h3">
-              {r.label}
-            </Typography>
-            <Box aria-hidden="true" sx={{ display: 'grid', gap: 2.5 }}>
-              {r.pct !== null && (
-                <Typography component="p" sx={{ fontSize: '3rem', lineHeight: 1, fontWeight: 600, color: 'accentText' }}>
-                  {formatChange(r.pct, locale)}
-                </Typography>
-              )}
-              <Box sx={{ display: 'grid', gap: 1 }}>
+          <li key={`${i}-${r.label}`} className="jt-card jt-result">
+            <h3 className="jt-subtitle1">{r.label}</h3>
+            <div className="jt-result__figures" aria-hidden="true">
+              {r.pct !== null && <p className="jt-body1 jt-result__change">{formatChange(r.pct, locale)}</p>}
+              <div className="jt-result__rows">
                 <ValueRow label={t('before')} value={r.before} share={r.beforeShare} />
                 <ValueRow label={t('after')} value={r.after} share={r.afterShare} strong />
-              </Box>
-            </Box>
-          </Card>
+              </div>
+            </div>
+          </li>
         ))}
-      </UL>
-      <Box sx={visuallyHidden}>
-        <Table>
-          <Box component="caption">{t('resultsCaption')}</Box>
-          <TableHead>
-            <TableRow>
-              <TableCell scope="col">{t('metricColumn')}</TableCell>
-              <TableCell scope="col">{t('before')}</TableCell>
-              <TableCell scope="col">{t('after')}</TableCell>
-              <TableCell scope="col">{t('changeColumn')}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
+      </ul>
+      <div className="jt-sr-only">
+        <table className="jt-table">
+          <caption>{t('resultsCaption')}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{t('metricColumn')}</th>
+              <th scope="col">{t('before')}</th>
+              <th scope="col">{t('after')}</th>
+              <th scope="col">{t('changeColumn')}</th>
+            </tr>
+          </thead>
+          <tbody>
             {results.map((r, i) => (
-              <TableRow key={`${i}-${r.label}`}>
-                <TableCell component="th" scope="row">
-                  {r.label}
-                </TableCell>
-                <TableCell>{r.before}</TableCell>
-                <TableCell>{r.after}</TableCell>
-                <TableCell>{r.pct === null ? t('noBase') : formatChange(r.pct, locale)}</TableCell>
-              </TableRow>
+              <tr key={`${i}-${r.label}`}>
+                <th scope="row">{r.label}</th>
+                <td>{r.before}</td>
+                <td>{r.after}</td>
+                <td>{r.pct === null ? t('noBase') : formatChange(r.pct, locale)}</td>
+              </tr>
             ))}
-          </TableBody>
-        </Table>
-      </Box>
+          </tbody>
+        </table>
+      </div>
     </>
   )
 }

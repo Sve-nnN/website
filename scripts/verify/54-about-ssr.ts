@@ -23,7 +23,7 @@ import {
 } from '../../src/lib/about-data'
 import { ABOUT_COPY_ES } from '../db/data/54-about-copy'
 import { checkAboutPage } from './54-about.mjs'
-import { countOf, hasId, headingLevels, renderToHtml, textOf } from './54-ssr-harness'
+import { countOf, hasId, headingLevels, renderToHtml, textOf, staticRule } from './54-ssr-harness'
 
 // tsx usa el runtime clasico con jsx: preserve; los componentes .tsx necesitan React global.
 ;(globalThis as { React?: typeof React }).React = React
@@ -151,18 +151,18 @@ function render(data: AboutData, locale: 'es' | 'en' = 'es'): string {
   check(countOf(html, /<li[^>]*MuiTimelineItem-root/) === N_STAGES, `el timeline tiene ${N_STAGES} items`, `items = ${countOf(html, /<li[^>]*MuiTimelineItem-root/)}`)
   check(countOf(html, /<h3[\s>]/) >= N_STAGES, 'cada etapa tiene su h3', `h3 = ${countOf(html, /<h3[\s>]/)}`)
 
-  // Punto: relleno si es la etapa actual, aro si no. Se lee de las reglas de Emotion.
+  // Punto: relleno si es la etapa actual, aro si no. Se lee de static.css.
   const raw = renderRaw(build())
-  const css = (raw.match(/<style[\s\S]*?<\/style>/g) ?? []).join('\n')
-  const dotCss = (current: boolean): string => {
-    const m = new RegExp(`<span[^>]*class="([^"]*MuiTimelineDot-root[^"]*)"[^>]*data-current="${current}"`).exec(raw)
-    if (!m) return ''
-    return m[1].split(/\s+/).map((c) => (new RegExp(`\\.${c.replace(/[^\w-]/g, '\\$&')}\\{([^}]*)\\}`).exec(css)?.[1] ?? '')).join(';')
-  }
-  const currentDot = dotCss(true)
-  const pastDot = dotCss(false)
-  check(currentDot !== '' && pastDot !== '', 'los puntos llevan data-current', 'no se encontro el punto actual o el pasado')
-  check(!/3px solid/.test(currentDot) && /3px solid/.test(pastDot), 'la etapa actual tiene el punto relleno y las otras el aro de 3px', `actual="${currentDot.slice(0, 120)}" pasado="${pastDot.slice(0, 120)}"`)
+  const dotClass = (current: boolean): boolean =>
+    new RegExp(`<span[^>]*class="[^"]*jt-timeline__dot[^"]*MuiTimelineDot-root[^"]*"[^>]*data-current="${current}"`).test(raw)
+  const currentDot = staticRule(".jt-timeline__dot[data-current='true']")
+  const pastDot = staticRule('.jt-timeline__dot')
+  check(dotClass(true) && dotClass(false), 'los puntos llevan data-current', 'no se encontro el punto actual o el pasado')
+  check(
+    /background-color: var\(--jt-palette-primary-main\)/.test(currentDot) && !/3px solid/.test(currentDot) && /3px solid/.test(pastDot),
+    'la etapa actual tiene el punto relleno y las otras el aro de 3px',
+    `actual="${currentDot.slice(0, 120)}" pasado="${pastDot.slice(0, 120)}"`,
+  )
   check(countOf(raw, /data-current="true"/) === N_CURRENT && countOf(raw, /data-current="false"/) === N_PAST, `${N_CURRENT} etapas actuales y ${N_PAST} pasadas (derivado del copy)`, 'conteo de data-current distinto')
 
   // Fase 56: el marcador de fecha NO debe estar en el texto renderizado ni en ningun atributo.

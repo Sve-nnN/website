@@ -1,8 +1,5 @@
-'use client'
-
-import Box from '@mui/material/Box'
-import Container from '@mui/material/Container'
-import Typography from '@mui/material/Typography'
+// Sin 'use client' (fase 60): solo `GrainBlob` es cliente. El resto es marcado
+// estatico con las clases de `src/theme/static.css`.
 import type { ReactNode } from 'react'
 
 import { Crumbs, type Crumb } from './Crumbs'
@@ -28,11 +25,7 @@ type Props = {
  */
 export function PageHero({ crumbs, eyebrow, title, lead, children, aside, compact }: Props) {
   return (
-    <Box
-      component="section"
-      aria-labelledby="page-title"
-      sx={{ position: 'relative', overflow: 'hidden', pt: { xs: 16, md: 20 }, pb: { xs: 6, md: 10 } }}
-    >
+    <section className="jt-hero" aria-labelledby="page-title">
       <GrainBlob
         feather={28}
         sx={{
@@ -44,50 +37,21 @@ export function PageHero({ crumbs, eyebrow, title, lead, children, aside, compac
           zIndex: 0,
         }}
       />
-      <Container
-        maxWidth="lg"
-        sx={{
-          position: 'relative',
-          zIndex: 1,
-          display: 'grid',
-          gridTemplateColumns: aside
-            ? { xs: 'minmax(0,1fr)', md: 'minmax(0,1.15fr) minmax(0,0.85fr)' }
-            : 'minmax(0,1fr)',
-          gap: { xs: 5, md: 8 },
-          alignItems: 'center',
-        }}
-      >
-        <Box sx={{ display: 'grid', gap: 3, justifyItems: 'start', minWidth: 0 }}>
+      <div className={aside ? 'jt-container jt-hero__inner jt-hero__inner--aside' : 'jt-container jt-hero__inner'}>
+        <div className="jt-hero__body">
           <Crumbs items={crumbs} />
-          {eyebrow && (
-            <Typography variant="overline" sx={{ color: 'accentText' }}>
-              {eyebrow}
-            </Typography>
-          )}
-          <Typography
+          {eyebrow && <span className="jt-overline jt-accent">{eyebrow}</span>}
+          <h1
             id="page-title"
-            variant="h1"
-            component="h1"
-            sx={{
-              maxWidth: 820,
-              ...(compact ? { fontSize: 'clamp(2rem, 4.5vw, 3rem)', lineHeight: 1.1 } : {}),
-            }}
+            className={compact ? 'jt-h1 jt-hero__title jt-hero__title--compact' : 'jt-h1 jt-hero__title'}
           >
             {title}
-          </Typography>
-          {lead && (
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              sx={{ fontSize: '1.25rem', lineHeight: '1.875rem', maxWidth: 720 }}
-            >
-              {lead}
-            </Typography>
-          )}
+          </h1>
+          {lead && <p className="jt-body1 jt-hero__lead">{lead}</p>}
           {children}
-        </Box>
+        </div>
         {aside}
-      </Container>
-    </Box>
+      </div>
+    </section>
   )
 }

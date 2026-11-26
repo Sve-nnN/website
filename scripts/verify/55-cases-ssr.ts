@@ -458,6 +458,9 @@ function mainDetail(): void {
   const ldOwn = buildCaseStudyJsonLd({ title: 'X', slug: 'x', author: { name: 'Juan', slug: 'juan-carlos-angulo' } }, 'es', 'x') as Record<string, any>
   check(typeof ldOwn.author?.['@id'] === 'string' && ldOwn.url.includes('/case-studies/x') && !ldOwn.url.includes('/en/'), 'JSON-LD: el autor del sitio referencia la entidad Person por @id', JSON.stringify(ldOwn.author))
 
+  const ldDated = buildCaseStudyJsonLd({ title: 'X', slug: 'x', publishedAt: '2026-03-04T00:00:00.000Z' }, 'es', 'x') as Record<string, any>
+  check(ldDated.datePublished === '2026-03-04T00:00:00.000Z', 'JSON-LD: datePublished sale de publishedAt', JSON.stringify(ldDated.datePublished))
+
   // Fixtures defectuosos: deben fallar.
   const good = renderDetail(c, 'es', { related })
   check(detailFailures(good.replace('</section>', '<h1>otro</h1></section>'), c).some((r) => r.includes('h1')), 'defectuoso detalle: dos h1 se detecta', 'no se detecto')

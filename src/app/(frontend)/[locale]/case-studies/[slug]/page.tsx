@@ -1,3 +1,4 @@
+import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 
 import { JsonLd } from '@/components/JsonLd'
@@ -76,12 +77,9 @@ export async function generateMetadata({
       // SEO-47: un caso de exito se comparte como pieza firmada, no como
       // pagina institucional.
       //
-      // Sin `publishedTime` a proposito: la coleccion no tiene campo de
-      // publicacion, y el JSON-LD de esta misma pagina ya decidio no hacer
-      // pasar `createdAt` por `datePublished` (ver el comentario en el bloque
-      // de structured data). Emitir aca una fecha que alla se descarto seria
-      // contradecirnos en la misma respuesta.
+      // `publishedTime` y el `datePublished` del JSON-LD salen del mismo campo.
       article: {
+        publishedTime: doc.publishedAt ?? undefined,
         modifiedTime: doc.updatedAt ?? undefined,
         authors: ['Juan Carlos Angulo'],
       },
@@ -100,6 +98,8 @@ export default async function CaseStudyPage({
   params: Promise<{ locale: string; slug: string }>
 }) {
   const { locale, slug } = await params
+  // Los componentes de servidor que traducen leen el idioma de aqui (ISR).
+  setRequestLocale(locale)
   const loc = locale as 'es' | 'en'
   const doc = await getCaseStudy(locale, slug)
 

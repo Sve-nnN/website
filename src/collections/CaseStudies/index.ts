@@ -6,6 +6,7 @@ import { authenticatedOrPublished } from '@/access/authenticatedOrPublished'
 import { slugField } from '@/fields/slug'
 import { TestimonialSection } from '@/blocks/TestimonialSection/config'
 import { revalidateCaseStudiesCache, revalidateCaseStudiesCacheOnDelete } from '@/lib/cache-tags'
+import { setCaseStudyPublishedAt } from '@/lib/case-published-at'
 
 export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
@@ -21,6 +22,7 @@ export const CaseStudies: CollectionConfig = {
   // unstable_cache tags (src/lib/cache.ts) — also covers
   // getCachedFeaturedContent, tagged with case-studies:all.
   hooks: {
+    beforeChange: [setCaseStudyPublishedAt],
     afterChange: [revalidateCaseStudiesCache],
     afterDelete: [revalidateCaseStudiesCacheOnDelete],
   },
@@ -123,6 +125,18 @@ export const CaseStudies: CollectionConfig = {
     // type. Backfilled to the single real Author doc via
     // scripts/backfill-case-study-author.ts.
     { name: 'author', type: 'relationship', relationTo: 'authors', required: false },
+    // Auditoría SEO 2026-11: alimenta `datePublished` del JSON-LD del caso.
+    {
+      name: 'publishedAt',
+      label: 'Fecha de publicación',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+        description:
+          'Se completa sola con la primera publicación. Alimenta datePublished en los datos estructurados.',
+      },
+      hooks: { beforeDuplicate: [() => null] },
+    },
     slugField(),
   ],
 }

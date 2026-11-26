@@ -1,10 +1,8 @@
-'use client'
-
-import Link from '@mui/material/Link'
+// Sin 'use client' (fase 60): enlaces estaticos con las clases de
+// `src/theme/static.css`.
 import { useTranslations } from 'next-intl'
 
-import { linkFor } from '@/components/mui/links'
-import { UL } from '@/components/mui/lists'
+import { AppLink } from '@/components/static/AppLink'
 import type { BlogNavItem } from '@/lib/blog-data'
 import { blogIndexPath } from '@/lib/blog-paths'
 
@@ -20,8 +18,8 @@ type Props = {
  * objetivos de 40 px. El nombre de cada categoria viene de Payload (D-22);
  * `general` no entra porque la lista ya llega sin ella.
  *
- * Los hrefs van sin prefijo de idioma: `linkFor` resuelve el prefijo en el
- * cliente, igual que el resto de las vistas.
+ * Los hrefs van sin prefijo de idioma: `AppLink` resuelve el prefijo, igual que
+ * el resto de las vistas.
  */
 export function CategoryNav({ items, activeSlug }: Props) {
   const t = useTranslations('blog.nav')
@@ -33,40 +31,19 @@ export function CategoryNav({ items, activeSlug }: Props) {
 
   return (
     <nav aria-label={t('label')}>
-      <UL sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-        {entries.map((entry) => {
-          const on = entry.slug === active
-          return (
-            <li key={entry.href}>
-              <Link
-                component={linkFor(entry.href)}
-                href={entry.href}
-                aria-current={on ? 'page' : undefined}
-                underline="none"
-                sx={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  minHeight: 40,
-                  px: 2,
-                  borderRadius: 9999,
-                  border: 1,
-                  borderColor: on ? 'text.primary' : 'fieldBorder',
-                  bgcolor: on ? 'text.primary' : 'transparent',
-                  color: on ? 'background.default' : 'text.primary',
-                  fontWeight: 600,
-                  fontSize: '0.875rem',
-                  lineHeight: '1.25rem',
-                  transition: 'background-color 200ms',
-                  '&:hover': { bgcolor: on ? 'text.primary' : 'raised' },
-                  '&:focus-visible': { outline: '2px solid var(--jt-palette-accentText)', outlineOffset: 2 },
-                }}
-              >
-                {entry.title}
-              </Link>
-            </li>
-          )
-        })}
-      </UL>
+      <ul className="jt-catnav" role="list">
+        {entries.map((entry) => (
+          <li key={entry.href}>
+            <AppLink
+              className="jt-link jt-catnav__link"
+              href={entry.href}
+              aria-current={entry.slug === active ? 'page' : undefined}
+            >
+              {entry.title}
+            </AppLink>
+          </li>
+        ))}
+      </ul>
     </nav>
   )
 }

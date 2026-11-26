@@ -7,19 +7,16 @@ import type { JSXConvertersFunction } from '@payloadcms/richtext-lexical/react'
 import type { ReactNode } from 'react'
 
 import { RichText } from '@payloadcms/richtext-lexical/react'
-import Box from '@mui/material/Box'
-import Link from '@mui/material/Link'
-import Typography from '@mui/material/Typography'
 import { useLocale, useTranslations } from 'next-intl'
 
 import { resolveLinkHref, sanitizeHref, type NavLinkInput } from '@/lib/nav-links'
 import { buildRichTextConverters, richTextConverters } from '@/components/richTextBlockConverters'
 import { rewriteIncompleteEnPostHref } from '@/lib/translation-gaps'
 
-import { UL, OL } from '../lists'
+import { AppLink } from '@/components/static/AppLink'
+
 import { muiBlockConverters, type RichTextOverrides, type Translate } from './blocks'
 import { buildHeadingIdMap, type LexicalNodeLike, type LexicalRootLike } from './lexical-toc'
-import { RichTextLink } from './RichTextLink'
 
 type Props = {
   data: SerializedEditorState | null | undefined
@@ -49,20 +46,6 @@ type Props = {
    */
   overrides?: RichTextOverrides
 }
-
-// Oculto a la vista y visible para el lector de pantalla. Va local porque este
-// archivo es un Server Component y no puede leer valores de un módulo cliente.
-const visuallyHidden = {
-  position: 'absolute',
-  width: '1px',
-  height: '1px',
-  margin: '-1px',
-  padding: 0,
-  overflow: 'hidden',
-  clip: 'rect(0 0 0 0)',
-  whiteSpace: 'nowrap',
-  border: 0,
-} as const
 
 type LinkFields = {
   url?: string | null
@@ -125,32 +108,23 @@ export function MuiRichText({ data, maxWidth = 760, headingIds, ctx, overrides }
     const external = (/^https?:/i.test(href) && !sameSite) || Boolean(fields?.newTab)
     if (external) {
       return (
-        <Link
-          key={key}
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          underline="always"
-          sx={{ color: 'accentText' }}
-        >
+        <a key={key} className="jt-link jt-link--always" href={href} target="_blank" rel="noopener noreferrer">
           {children}
-          <Box component="span" sx={visuallyHidden}>
-            {` (${t('opensInNewTab')})`}
-          </Box>
-        </Link>
+          <span className="jt-sr-only">{` (${t('opensInNewTab')})`}</span>
+        </a>
       )
     }
     if (sameSite) {
       return (
-        <Link key={key} href={href} underline="always" sx={{ color: 'accentText' }}>
+        <a key={key} className="jt-link jt-link--always" href={href}>
           {children}
-        </Link>
+        </a>
       )
     }
     return (
-      <RichTextLink key={key} href={href}>
+      <AppLink key={key} className="jt-link jt-link--always" href={href}>
         {children}
-      </RichTextLink>
+      </AppLink>
     )
   }
 
@@ -189,26 +163,16 @@ export function MuiRichText({ data, maxWidth = 760, headingIds, ctx, overrides }
         // mapa de ids, lleva id y entra al índice.
         if ((node.tag === 'h2' || node.tag === 'h1') && id) {
           return (
-            <Typography
-              variant="h4"
-              component="h2"
-              id={id}
-              sx={{ mt: '48px', mb: 2, scrollMarginTop: '96px', color: 'text.primary' }}
-            >
+            <h2 className="jt-h4 jt-prose__h2" id={id}>
               {children}
-            </Typography>
+            </h2>
           )
         }
         if (node.tag === 'h3' && id) {
           return (
-            <Typography
-              variant="h5"
-              component="h3"
-              id={id}
-              sx={{ mt: '32px', mb: 2, scrollMarginTop: '96px', color: 'text.primary' }}
-            >
+            <h3 className="jt-h5 jt-prose__h3" id={id}>
               {children}
-            </Typography>
+            </h3>
           )
         }
         // h4 a h6 (y un h1 sin id): convertidor del sitio (baja h1 a h2, SEO-44).
@@ -217,27 +181,15 @@ export function MuiRichText({ data, maxWidth = 760, headingIds, ctx, overrides }
       },
       paragraph: ({ node, nodesToJSX }) => {
         const children = nodesToJSX({ nodes: node.children })
-        if (!children?.length) return <Box component="br" />
-        return (
-          <Typography variant="body1" component="p" sx={{ color: 'text.primary', mb: 2 }}>
-            {children}
-          </Typography>
-        )
+        if (!children?.length) return <br />
+        return <p className="jt-body1 jt-prose__p">{children}</p>
       },
       list: ({ node, nodesToJSX }) => {
         const n = node as unknown as ListNode
         const children = nodesToJSX({ nodes: node.children })
-        const ordered = n.tag === 'ol'
-        const List = ordered ? OL : UL
+        const List = n.tag === 'ol' ? 'ol' : 'ul'
         return (
-          <List
-            sx={{
-              listStyleType: ordered ? 'decimal' : 'disc',
-              paddingLeft: '24px',
-              mb: 2,
-              color: 'text.primary',
-            }}
-          >
+          <List className="jt-prose__list" role="list">
             {children}
           </List>
         )
@@ -247,18 +199,12 @@ export function MuiRichText({ data, maxWidth = 760, headingIds, ctx, overrides }
         const hasSubLists = (n.children ?? []).some((c) => c.type === 'list')
         const children = nodesToJSX({ nodes: node.children })
         return (
-          <Box
-            component="li"
+          <li
+            className={hasSubLists ? 'jt-body1 jt-prose__li jt-prose__li--nested' : 'jt-body1 jt-prose__li'}
             value={n.value}
-            sx={{
-              mb: 1,
-              typography: 'body1',
-              ...(hasSubLists ? { listStyleType: 'none' } : {}),
-              '& > ul, & > ol': { mb: 0, mt: 1 },
-            }}
           >
             {children}
-          </Box>
+          </li>
         )
       },
       link: ({ node, nodesToJSX }) =>
@@ -266,49 +212,19 @@ export function MuiRichText({ data, maxWidth = 760, headingIds, ctx, overrides }
       autolink: ({ node, nodesToJSX }) =>
         renderLink((node as unknown as { fields?: LinkFields }).fields, nodesToJSX({ nodes: node.children })),
       quote: ({ node, nodesToJSX }) => (
-        <Typography
-          component="blockquote"
-          variant="body1"
-          sx={{
-            m: 0,
-            mb: 2,
-            pl: 3,
-            borderLeft: '2px solid',
-            borderColor: 'divider',
-            color: 'text.secondary',
-          }}
-        >
-          {nodesToJSX({ nodes: node.children })}
-        </Typography>
+        <blockquote className="jt-body1 jt-prose__quote">{nodesToJSX({ nodes: node.children })}</blockquote>
       ),
     }
   }
 
   return (
-    <Box
-      sx={{
-        maxWidth,
-        // Un texto largo sin espacios (una URL pegada tal cual en un parrafo, medido
-        // en /blog/development/que-es-css) no debe ensanchar la pagina: parte la
-        // palabra solo cuando no cabe. `break-word` no cambia el ancho minimo de
-        // las tablas, que siguen desplazandose dentro de ScrollRegion.
-        overflowWrap: 'break-word',
-        '& > :first-child': { mt: 0 },
-        // Lo que no pasa por un convertidor de MUI (h4 a h6, código en línea,
-        // contenedores de bloque) hereda la tipografía del tema.
-        '& h4, & h5, & h6': { mt: 3, mb: 2, color: 'text.primary' },
-        '& code': {
-          fontFamily: 'var(--font-geist-mono)',
-          fontSize: '0.9em',
-          px: 0.5,
-          borderRadius: 0.75,
-          bgcolor: 'raised',
-          border: 1,
-          borderColor: 'divider',
-        },
-      }}
-    >
+    // Un texto largo sin espacios (una URL pegada tal cual en un parrafo, medido
+    // en /blog/development/que-es-css) no debe ensanchar la pagina: `jt-prose`
+    // parte la palabra solo cuando no cabe, sin cambiar el ancho minimo de las
+    // tablas, que siguen desplazandose dentro de ScrollRegion. Lo que no pasa por
+    // un convertidor (h4 a h6, codigo en linea) lo viste la misma clase.
+    <div className="jt-prose" style={{ maxWidth }}>
       <RichText data={data} converters={converters} disableContainer />
-    </Box>
+    </div>
   )
 }

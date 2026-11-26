@@ -208,7 +208,7 @@ export const HEADINGS: HeadingRow[] = [
   },
 
   // ---- home, bloque CodeFixes (lo sirve master desde el doc pages home)
-  master('H-28', 2, 'codefixes', 'es', ['/'], 'Errores reales, con el commit que los corrige', 'Errores reales y el commit que los corrige', 'Bloque codeFixesBlock del doc pages home (semilla scripts/seed-home.ts).'),
+  master('H-28', 2, 'codefixes', 'es', ['/'], 'Errores reales, con el commit que los corrige', 'Errores reales y el commit que los corrige', 'Bloque codeFixesBlock del doc pages home (semilla scripts/seed-home.ts). Retirado de la home en feat/home-casos-gsc (2026-11-24): ya no se renderiza, el dato sigue en el doc.'),
   master('H-29', 2, 'codefixes', 'en', ['/en'], 'Real bugs, with the commit that fixes them', 'Real bugs and the commit that fixes them', 'Mismo bloque, locale EN.'),
 
   // ---- landings de servicio (las sirve master desde docs pages)

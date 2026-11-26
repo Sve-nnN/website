@@ -1,29 +1,17 @@
-'use client'
-
-import Timeline from '@mui/lab/Timeline'
-import TimelineConnector from '@mui/lab/TimelineConnector'
-import TimelineContent from '@mui/lab/TimelineContent'
-import TimelineDot from '@mui/lab/TimelineDot'
-import TimelineItem, { timelineItemClasses } from '@mui/lab/TimelineItem'
-import TimelineSeparator from '@mui/lab/TimelineSeparator'
-import Box from '@mui/material/Box'
+// Sin 'use client' (fase 60): la vista es estatica. Solo los botones, el blob de
+// grano, el aviso de traduccion y el cierre con formulario son componentes
+// cliente. Estilos en `src/theme/static.css`. El recorrido conserva las clases de
+// `Timeline` de `@mui/lab`, que usan los contratos de verify.
 import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import Chip from '@mui/material/Chip'
-import Container from '@mui/material/Container'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography'
 import { Briefcase, ExternalLink, Globe, GraduationCap, MapPin, Mic, Users } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 
 import { CtaSection } from '@/components/mui/CtaSection'
 import { GrainBlob } from '@/components/mui/GrainBlob'
-import { linkFor } from '@/components/mui/links'
-import { UL } from '@/components/mui/lists'
 import { PageHero } from '@/components/mui/PageHero'
-import { visuallyHidden } from '@/components/mui/ScoreRing'
 import { TranslationNotice } from '@/components/mui/TranslationNotice'
+import { LinkButton } from '@/components/static/LinkButton'
 import { cloudinarySrcSet, cloudinaryWidth } from '@/lib/cloudinary-resize'
 import type { AboutCounter, AboutData, AboutDateRange, AboutStage } from '@/lib/about-data'
 import { isMinimumAttendance } from '@/lib/attendees'
@@ -58,45 +46,25 @@ function Block({
   children: ReactNode
 }) {
   return (
-    <Box
-      component="section"
-      aria-labelledby={`${id}-t`}
-      id={id}
-      sx={{ py: { xs: 8, md: 12 }, ...(band ? { bgcolor: 'band.bg', color: 'band.text' } : {}) }}
-    >
-      <Container maxWidth="lg">
-        <Typography
-          id={`${id}-t`}
-          variant="h3"
-          component="h2"
-          lang={lang}
-          sx={{ mb: 5, display: 'flex', alignItems: 'center', gap: 1.5 }}
-        >
+    <section className={band ? 'jt-block jt-band' : 'jt-block'} aria-labelledby={`${id}-t`} id={id}>
+      <div className="jt-container">
+        <h2 id={`${id}-t`} className="jt-h3 jt-block__title" lang={lang}>
           {icon}
           {title}
-        </Typography>
+        </h2>
         {children}
-      </Container>
-    </Box>
+      </div>
+    </section>
   )
 }
-
-const QUIET_BAND_CHIP = { bgcolor: 'transparent', color: 'band.text', borderColor: 'band.border' } as const
 
 function CounterCard({ counter, display }: { counter: AboutCounter; display: string }) {
   return (
     // dt primero en el código fuente y la cifra primero en pantalla (order).
-    <Card sx={{ p: 3, display: 'grid', gap: 0.5 }}>
-      <Typography component="dt" variant="body2" color="text.secondary" sx={{ order: 2 }}>
-        {counter.label}
-      </Typography>
-      <Typography
-        component="dd"
-        sx={{ m: 0, fontSize: '3rem', lineHeight: 1, fontWeight: 600, color: 'accentText', order: 1 }}
-      >
-        {display}
-      </Typography>
-    </Card>
+    <div className="jt-card jt-about-counter">
+      <dt className="jt-body2">{counter.label}</dt>
+      <dd className="jt-body1 jt-about-counter__value">{display}</dd>
+    </div>
   )
 }
 
@@ -104,28 +72,25 @@ function StageContent({ stage, last }: { stage: AboutStage; last: boolean }) {
   const tCommon = useTranslations('common')
   const link = stage.link
   return (
-    <TimelineContent sx={{ pt: 0, pb: last ? 0 : 5, pl: 3, minWidth: 0 }}>
+    <div
+      className={
+        last
+          ? 'jt-body1 jt-timeline__content jt-timeline__content--last MuiTimelineContent-root'
+          : 'jt-body1 jt-timeline__content MuiTimelineContent-root'
+      }
+    >
       {stage.when && (
-        <Typography
-          variant="overline"
-          sx={{ color: stage.current ? 'accentText' : 'text.secondary', display: 'block' }}
+        <span
+          className={
+            stage.current ? 'jt-overline jt-timeline__when jt-timeline__when--current' : 'jt-overline jt-timeline__when'
+          }
         >
           {stage.when}
-        </Typography>
+        </span>
       )}
-      <Typography variant="h5" component="h3">
-        {stage.role}
-      </Typography>
-      {stage.org && (
-        <Typography variant="body1" sx={{ fontWeight: 600 }}>
-          {stage.org}
-        </Typography>
-      )}
-      {stage.body && (
-        <Typography variant="body1" color="text.secondary" sx={{ mt: 1, maxWidth: 680 }}>
-          {stage.body}
-        </Typography>
-      )}
+      <h3 className="jt-h5">{stage.role}</h3>
+      {stage.org && <p className="jt-body1 jt-semibold">{stage.org}</p>}
+      {stage.body && <p className="jt-body1 jt-timeline__body">{stage.body}</p>}
       {link &&
         (link.external ? (
           <Button
@@ -138,23 +103,17 @@ function StageContent({ stage, last }: { stage: AboutStage; last: boolean }) {
             sx={{ px: 0, mt: 1 }}
           >
             {link.label}
-            <Box component="span" sx={visuallyHidden}>
+            <span className="jt-sr-only">
               {' '}
               ({tCommon('opensInNewTab')})
-            </Box>
+            </span>
           </Button>
         ) : (
-          <Button
-            component={linkFor(link.href)}
-            href={link.href}
-            variant="text"
-            size="small"
-            sx={{ px: 0, mt: 1 }}
-          >
+          <LinkButton href={link.href} variant="text" size="small" sx={{ px: 0, mt: 1 }}>
             {link.label}
-          </Button>
+          </LinkButton>
         ))}
-    </TimelineContent>
+    </div>
   )
 }
 
@@ -201,13 +160,10 @@ export function AboutView({ data, locale, cta }: Props) {
         lead={hero.lead ?? undefined}
         aside={
           hero.photo ? (
-            <Box
-              component="figure"
-              sx={{ position: 'relative', m: 0, width: '100%', maxWidth: 420, justifySelf: 'center' }}
-            >
+            <figure className="jt-about-figure">
               <GrainBlob feather={22} sx={{ inset: '-8%', zIndex: 0 }} />
-              <Box
-                component="img"
+              <img
+                className="jt-about-photo"
                 src={cloudinaryWidth(hero.photo.url, 840)}
                 srcSet={cloudinarySrcSet(hero.photo.url, [420, 640, 840])}
                 sizes="(min-width: 600px) 420px, 100vw"
@@ -216,143 +172,82 @@ export function AboutView({ data, locale, cta }: Props) {
                 height={hero.photo.height}
                 loading="eager"
                 fetchPriority="high"
-                sx={{
-                  position: 'relative',
-                  zIndex: 1,
-                  width: '100%',
-                  height: 'auto',
-                  aspectRatio: '4 / 5',
-                  objectFit: 'cover',
-                  borderRadius: 3,
-                  display: 'block',
-                  boxShadow: '0 32px 64px -24px rgba(0,0,0,0.5)',
-                }}
               />
-            </Box>
+            </figure>
           ) : undefined
         }
       >
         {hero.chips.length > 0 && (
-          <Stack
-            direction="row"
-            useFlexGap
-            spacing={1.5}
-            lang={copyLang}
-            sx={{ flexWrap: 'wrap', alignItems: 'center' }}
-          >
+          <div className="jt-row jt-row--center" lang={copyLang}>
             {hero.chips.map((chip) => (
-              <Chip
-                key={chip.label}
-                icon={
-                  chip.icon === 'map-pin' ? (
-                    <MapPin size={16} aria-hidden="true" />
-                  ) : chip.icon === 'globe' ? (
-                    <Globe size={16} aria-hidden="true" />
-                  ) : undefined
-                }
-                label={chip.label}
-              />
+              <div key={chip.label} className="jt-chip">
+                {chip.icon === 'map-pin' ? (
+                  <MapPin size={16} aria-hidden="true" />
+                ) : chip.icon === 'globe' ? (
+                  <Globe size={16} aria-hidden="true" />
+                ) : null}
+                <span className="jt-chip__label">{chip.label}</span>
+              </div>
             ))}
-          </Stack>
+          </div>
         )}
       </PageHero>
 
       {showBioBlock && (
-        <Box
-          component="section"
+        <section
+          className="jt-about-bio"
           {...(bio?.title ? { 'aria-labelledby': 'about-bio-t' } : { 'aria-label': data.name })}
-          sx={{ pb: { xs: 8, md: 10 } }}
         >
-          <Container
-            maxWidth="lg"
-            sx={{
-              display: 'grid',
-              gridTemplateColumns:
-                bio && counterCards.length > 0
-                  ? { xs: 'minmax(0,1fr)', md: 'minmax(0,1.3fr) minmax(0,0.7fr)' }
-                  : 'minmax(0,1fr)',
-              gap: { xs: 5, md: 8 },
-              alignItems: 'start',
-            }}
+          <div
+            className={
+              bio && counterCards.length > 0
+                ? 'jt-container jt-about-bio__grid jt-about-bio__grid--split'
+                : 'jt-container jt-about-bio__grid'
+            }
           >
             {bio && (
-              <Box sx={{ display: 'grid', gap: 2.5, minWidth: 0 }}>
+              <div className="jt-about-bio__text">
                 {bio.title && (
-                  <Typography id="about-bio-t" variant="h3" component="h2" lang={copyLang}>
+                  <h2 id="about-bio-t" className="jt-h3" lang={copyLang}>
                     {bio.title}
-                  </Typography>
+                  </h2>
                 )}
                 {bio.paragraphs.map((paragraph, i) => (
-                  <Typography
-                    key={`${i}-${paragraph.slice(0, 24)}`}
-                    variant="body1"
-                    color="text.secondary"
-                  >
+                  <p key={`${i}-${paragraph.slice(0, 24)}`} className="jt-body1">
                     {paragraph}
-                  </Typography>
+                  </p>
                 ))}
-                <Stack direction="row" useFlexGap spacing={1.5} sx={{ flexWrap: 'wrap', mt: 1 }}>
-                  <Button component={linkFor(servicesHref)} href={servicesHref} variant="contained">
+                <div className="jt-row jt-about-bio__actions">
+                  <LinkButton href={servicesHref} variant="contained">
                     {t('seeServices')}
-                  </Button>
-                  <Button component={linkFor('/stack')} href="/stack" variant="outlined">
+                  </LinkButton>
+                  <LinkButton href="/stack" variant="outlined">
                     {t('myStack')}
-                  </Button>
-                </Stack>
-              </Box>
+                  </LinkButton>
+                </div>
+              </div>
             )}
             {counterCards.length > 0 && (
-              <Box component="dl" lang={copyLang} sx={{ m: 0, display: 'grid', gap: 2, minWidth: 0 }}>
+              <dl className="jt-about-counters" lang={copyLang}>
                 {counterCards.map((card) => (
                   <CounterCard key={card.key} counter={card.counter} display={card.display} />
                 ))}
-              </Box>
+              </dl>
             )}
-          </Container>
-        </Box>
+          </div>
+        </section>
       )}
 
       {specialties && (
         <Block id="about-areas" title={specialties.title} band lang={copyLang}>
-          <UL
-            lang={copyLang}
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: {
-                xs: 'minmax(0,1fr)',
-                sm: 'repeat(2, minmax(0,1fr))',
-                md: 'repeat(4, minmax(0,1fr))',
-              },
-              gap: 2,
-            }}
-          >
+          <ul className="jt-grid jt-grid--areas" role="list" lang={copyLang}>
             {specialties.items.map((item) => (
-              <Box
-                key={item.title}
-                component="li"
-                sx={{
-                  p: 3,
-                  borderRadius: 2,
-                  bgcolor: 'band.surface',
-                  border: 1,
-                  borderColor: 'band.border',
-                  display: 'grid',
-                  gap: 1,
-                  alignContent: 'start',
-                  minWidth: 0,
-                }}
-              >
-                <Typography variant="h6" component="h3">
-                  {item.title}
-                </Typography>
-                {item.detail && (
-                  <Typography variant="body2" sx={{ color: 'band.muted' }}>
-                    {item.detail}
-                  </Typography>
-                )}
-              </Box>
+              <li key={item.title} className="jt-band-card">
+                <h3 className="jt-h6">{item.title}</h3>
+                {item.detail && <p className="jt-body2 jt-band-muted">{item.detail}</p>}
+              </li>
             ))}
-          </UL>
+          </ul>
         </Block>
       )}
 
@@ -363,45 +258,26 @@ export function AboutView({ data, locale, cta }: Props) {
           icon={<Briefcase size={28} aria-hidden="true" />}
           lang={copyLang}
         >
-          <Box lang={copyLang}>
-            {experience.lead && (
-              <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 720, mb: 5 }}>
-                {experience.lead}
-              </Typography>
-            )}
-            <Timeline
-              position="right"
-              aria-label={t('timelineLabel')}
-              sx={{
-                p: 0,
-                m: 0,
-                maxWidth: 860,
-                [`& .${timelineItemClasses.root}:before`]: { flex: 0, padding: 0 },
-              }}
-            >
+          <div lang={copyLang}>
+            {experience.lead && <p className="jt-body1 jt-experience-lead">{experience.lead}</p>}
+            <ul className="jt-timeline MuiTimeline-root" aria-label={t('timelineLabel')}>
               {experience.stages.map((stage, i) => {
                 const last = i === experience.stages.length - 1
                 return (
-                  <TimelineItem key={`${i}-${stage.org ?? ''}-${stage.role}`}>
-                    <TimelineSeparator aria-hidden="true">
-                      <TimelineDot
+                  <li key={`${i}-${stage.org ?? ''}-${stage.role}`} className="jt-timeline__item MuiTimelineItem-root">
+                    <div className="jt-timeline__separator" aria-hidden="true">
+                      <span
+                        className="jt-timeline__dot MuiTimelineDot-root"
                         data-current={stage.current ? 'true' : 'false'}
-                        sx={{
-                          m: '6px 0',
-                          boxShadow: 'none',
-                          ...(stage.current
-                            ? { bgcolor: 'primary.main', borderColor: 'primary.main' }
-                            : { bgcolor: 'background.default', border: '3px solid', borderColor: 'divider' }),
-                        }}
                       />
-                      {!last && <TimelineConnector sx={{ bgcolor: 'divider' }} />}
-                    </TimelineSeparator>
+                      {!last && <span className="jt-timeline__connector" />}
+                    </div>
                     <StageContent stage={stage} last={last} />
-                  </TimelineItem>
+                  </li>
                 )
               })}
-            </Timeline>
-          </Box>
+            </ul>
+          </div>
         </Block>
       )}
       {education && (
@@ -411,34 +287,18 @@ export function AboutView({ data, locale, cta }: Props) {
           icon={<GraduationCap size={28} aria-hidden="true" />}
           lang={copyLang}
         >
-          <UL
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: { xs: 'minmax(0,1fr)', md: 'repeat(2, minmax(0,1fr))' },
-              gap: 2,
-            }}
-          >
+          <ul className="jt-grid jt-grid--two" role="list">
             {education.items.map((item) => {
               const dates = dateLine(item.dates)
               return (
-                <Card
-                  key={`${item.degree}-${item.institution ?? ''}`}
-                  component="li"
-                  sx={{ p: 3, display: 'grid', gap: 0.5, minWidth: 0 }}
-                >
-                  <Typography variant="h6" component="h3">
-                    {item.degree}
-                  </Typography>
-                  {item.institution && <Typography variant="body1">{item.institution}</Typography>}
-                  {dates && (
-                    <Typography variant="body2" color="text.secondary">
-                      {dates}
-                    </Typography>
-                  )}
-                </Card>
+                <li key={`${item.degree}-${item.institution ?? ''}`} className="jt-card jt-education">
+                  <h3 className="jt-h6">{item.degree}</h3>
+                  {item.institution && <p className="jt-body1">{item.institution}</p>}
+                  {dates && <p className="jt-body2">{dates}</p>}
+                </li>
               )
             })}
-          </UL>
+          </ul>
         </Block>
       )}
 
@@ -450,85 +310,52 @@ export function AboutView({ data, locale, cta }: Props) {
           band
           lang={copyLang}
         >
-          <UL
-            lang={talksLang}
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: { xs: 'minmax(0,1fr)', md: 'repeat(2, minmax(0,1fr))' },
-              gap: 2,
-            }}
-          >
+          <ul className="jt-grid jt-grid--two" role="list" lang={talksLang}>
             {talks.items.map((talk) => (
-              <Box key={`${talk.title}-${talk.by ?? ''}`} component="li" sx={{ display: 'grid', minWidth: 0 }}>
-                <Box
-                  sx={{
-                    borderRadius: 2,
-                    bgcolor: 'band.surface',
-                    border: 1,
-                    borderColor: 'band.border',
-                    overflow: 'hidden',
-                    display: 'grid',
-                    alignContent: 'start',
-                  }}
-                >
+              <li key={`${talk.title}-${talk.by ?? ''}`} className="jt-talk">
+                <div className="jt-talk__card">
                   {talk.flyer && (
-                    <Box
-                      component="img"
+                    <img
+                      className="jt-talk__flyer"
                       src={talk.flyer.url}
                       alt={talk.flyer.alt}
                       width={talk.flyer.width}
                       height={talk.flyer.height}
                       loading="lazy"
-                      sx={{ width: '100%', height: 'auto', aspectRatio: '16 / 9', objectFit: 'cover', display: 'block' }}
                     />
                   )}
-                  <Box sx={{ p: 3, display: 'grid', gap: 1.5, minWidth: 0 }}>
-                    <Typography variant="h5" component="h3">
+                  <div className="jt-talk__body">
+                    <h3 className="jt-h5">
                       {talk.title}
-                      {talk.by && (
-                        <Typography component="span" variant="body2" sx={{ color: 'band.muted', display: 'block' }}>
-                          {t('by', { name: talk.by })}
-                        </Typography>
-                      )}
-                    </Typography>
-                    {talk.role && (
-                      <Typography variant="subtitle1" component="p" sx={{ fontSize: '1rem', color: 'primary.main' }}>
-                        {talk.role}
-                      </Typography>
-                    )}
+                      {talk.by && <span className="jt-body2 jt-talk__by">{t('by', { name: talk.by })}</span>}
+                    </h3>
+                    {talk.role && <p className="jt-subtitle1 jt-talk__role">{talk.role}</p>}
                     {(talk.location || talk.attendees !== null) && (
-                      <Stack direction="row" useFlexGap spacing={1} sx={{ flexWrap: 'wrap' }}>
+                      <div className="jt-row jt-row--tight">
                         {talk.location && (
-                          <Chip
-                            size="small"
-                            icon={<MapPin size={14} aria-hidden="true" />}
-                            label={talk.location}
-                            sx={QUIET_BAND_CHIP}
-                          />
+                          <div className="jt-chip jt-chip--small jt-chip--band">
+                            <MapPin size={14} aria-hidden="true" />
+                            <span className="jt-chip__label">{talk.location}</span>
+                          </div>
                         )}
                         {talk.attendees !== null && (
-                          <Chip
-                            size="small"
-                            icon={<Users size={14} aria-hidden="true" />}
-                            label={t(isMinimumAttendance(talk.attendees, talk.description) ? 'attendeesOver' : 'attendees', {
-                              count: talk.attendees,
-                            })}
-                            lang={talksLang ? locale : undefined}
-                            sx={QUIET_BAND_CHIP}
-                          />
+                          <div className="jt-chip jt-chip--small jt-chip--band" lang={talksLang ? locale : undefined}>
+                            <Users size={14} aria-hidden="true" />
+                            <span className="jt-chip__label">
+                              {t(isMinimumAttendance(talk.attendees, talk.description) ? 'attendeesOver' : 'attendees', {
+                                count: talk.attendees,
+                              })}
+                            </span>
+                          </div>
                         )}
-                      </Stack>
+                      </div>
                     )}
-                    {talk.description && (
-                      <Typography variant="body2" sx={{ color: 'band.muted', lineHeight: '1.375rem' }}>
-                        {talk.description}
-                      </Typography>
-                    )}
-                  </Box>
-                </Box>
-              </Box>
+                    {talk.description && <p className="jt-body2 jt-talk__description">{talk.description}</p>}
+                  </div>
+                </div>
+              </li>
             ))}
-          </UL>
+          </ul>
         </Block>
       )}
 
