@@ -236,7 +236,8 @@
     "by": "por {name}",
     "dateRange": "{from} a {to}",
     "dateRangeOpen": "{from} a hoy",
-    "attendees": "{count, plural, one {# asistente} other {# asistentes}}"
+    "attendees": "{count, plural, one {# asistente} other {# asistentes}}",
+    "attendeesOver": "Más de {count} asistentes"
   },
   "contact": {
     "eyebrow": "Hablemos",
@@ -486,6 +487,7 @@
       "years": "{years}+ años de experiencia",
       "by": "por {name}",
       "attendees": "{count, plural, one {# asistente} other {# asistentes}}",
+      "attendeesOver": "Más de {count} asistentes",
       "coSpeakers": "Con {names}",
       "eventLink": "Ver más",
       "socialLabel": "Perfiles de {name} en otras plataformas",

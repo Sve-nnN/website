@@ -27,14 +27,24 @@ export type LocalSlots = {
 /**
  * Separa el número inicial de la estadística del resto del texto.
  * "+40 proyectos entregados" da `{ figure: '+40', caption: 'proyectos entregados' }`.
+ * "Más de 18 asistentes" (o "More than 18 attendees") añade `prefix`, que la vista pinta
+ * encima de la cifra grande.
  * Sin número al inicio devuelve `{ figure: null, caption: text }`: la cifra grande
  * solo se pinta cuando existe.
  */
-export function splitInlineStat(text: string | null | undefined): { figure: string | null; caption: string } {
+export function splitInlineStat(text: string | null | undefined): {
+  prefix?: string
+  figure: string | null
+  caption: string
+} {
   const value = (text ?? '').trim()
-  const match = value.match(/^([+\-−]?\d[\d.,]*)\s*(.*)$/)
+  const match = value.match(/^(?:(m[aá]s de|more than)\s+)?([+\-−]?\d[\d.,]*)\s*(.*)$/i)
   if (!match) return { figure: null, caption: value }
-  return { figure: match[1] ?? null, caption: (match[2] ?? '').trim() }
+  return {
+    ...(match[1] ? { prefix: match[1] } : {}),
+    figure: match[2] ?? null,
+    caption: (match[3] ?? '').trim(),
+  }
 }
 
 /**

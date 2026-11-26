@@ -14,6 +14,7 @@ import { TranslationNotice } from '@/components/mui/TranslationNotice'
 import { LinkButton } from '@/components/static/LinkButton'
 import { cloudinarySrcSet, cloudinaryWidth } from '@/lib/cloudinary-resize'
 import type { AboutCounter, AboutData, AboutDateRange, AboutStage } from '@/lib/about-data'
+import { isMinimumAttendance } from '@/lib/attendees'
 import type { CtaData } from '@/lib/cta-data'
 import { buildServicesIndexHref } from '@/lib/service-slugs'
 
@@ -340,7 +341,11 @@ export function AboutView({ data, locale, cta }: Props) {
                         {talk.attendees !== null && (
                           <div className="jt-chip jt-chip--small jt-chip--band" lang={talksLang ? locale : undefined}>
                             <Users size={14} aria-hidden="true" />
-                            <span className="jt-chip__label">{t('attendees', { count: talk.attendees })}</span>
+                            <span className="jt-chip__label">
+                              {t(isMinimumAttendance(talk.attendees, talk.description) ? 'attendeesOver' : 'attendees', {
+                                count: talk.attendees,
+                              })}
+                            </span>
                           </div>
                         )}
                       </div>

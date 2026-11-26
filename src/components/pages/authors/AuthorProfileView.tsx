@@ -21,6 +21,7 @@ import { visuallyHidden } from '@/components/mui/ScoreRing'
 import { Section } from '@/components/mui/Section'
 import { TechChips } from '@/components/mui/TechChips'
 import { CaseCard } from '@/components/pages/cases/CaseCard'
+import { isMinimumAttendance } from '@/lib/attendees'
 import type { AuthorEventItem, AuthorProfileProps, AuthorSocialLink } from '@/lib/authors-data'
 
 import { AuthorTimeline } from './AuthorTimeline'
@@ -142,7 +143,9 @@ function EventCard({ event }: { event: AuthorEventItem }) {
                 <Chip
                   size="small"
                   icon={<Users size={14} aria-hidden="true" />}
-                  label={t('attendees', { count: event.attendees })}
+                  label={t(isMinimumAttendance(event.attendees, event.description) ? 'attendeesOver' : 'attendees', {
+                    count: event.attendees,
+                  })}
                   lang={locale === 'en' ? 'en' : undefined}
                   sx={QUIET_BAND_CHIP}
                 />
