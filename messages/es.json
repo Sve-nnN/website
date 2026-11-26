@@ -383,6 +383,14 @@
       "caseColumn": "Caso",
       "sectorColumn": "Sector",
       "scaleColumn": "Escala",
+      "captureTitle": "La evidencia en Search Console",
+      "captureSource": "Fuente: Google Search Console.",
+      "captureMeasured": "Periodo medido: {period}.",
+      "captureCompared": "Periodo de comparación: {period}.",
+      "captureRange": "del {from} al {to}",
+      "captureFull": "Ver la captura a tamaño completo ({width} × {height} px)",
+      "captureScrollLabel": "Captura de Search Console con desplazamiento horizontal",
+      "captureScrollHint": "Desliza hacia los lados para ver toda la captura",
       "lessonsTitle": "Lecciones aprendidas"
     }
   },

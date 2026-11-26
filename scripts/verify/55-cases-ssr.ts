@@ -30,6 +30,7 @@ import {
   type CaseDocLike,
   type CaseIndexItem,
 } from '../../src/lib/case-study-data'
+import { buildOpenGraph } from '../../src/lib/og-image'
 import { countOf, headingLevels, renderToHtml, textOf } from './54-ssr-harness'
 
 // tsx usa el runtime clasico con jsx: preserve; los componentes .tsx necesitan React global.
@@ -593,10 +594,65 @@ function mainCompare(): void {
   check(detailFailures(renderDetail(noLessonsProps, 'es', {}), c, null).some((r) => r.includes('leccion')), 'defectuoso: lecciones esperadas y ausentes se detectan', 'no se detecto')
 }
 
+// ---------------------------------------------------------------------------
+// Captura de Search Console: figura del detalle e imagen social
+// ---------------------------------------------------------------------------
+
+const MEDIA_BASE = 'https://res.cloudinary.com/demo/image/upload/f_auto,q_auto/v1/media'
+
+const captureMedia = (name: string) => ({
+  url: `${MEDIA_BASE}/${name}?_a=x`,
+  filename: `media/${name}`,
+  alt: 'Grafico inventado de clics',
+  width: 1508,
+  height: 800,
+})
+
+function mainCapture(): void {
+  const shot = captureMedia('gsc-inventada')
+  const withShot = toCaseDetailProps(
+    {
+      ...DETAIL_DOC,
+      heroImage: shot,
+      results: { ...DETAIL_DOC.results, periodBefore: '2025-07-13 / 2025-11-23', periodAfter: '2026-07-12 / 2026-11-22' },
+    },
+    'es',
+  )!
+  const html = renderDetail(withShot, 'es')
+  check(countOf(html, /<figure class="jt-capture"/g) === 1, 'captura: una figura', 'no hay exactamente una figura')
+  check(/<img[^>]*alt="Grafico inventado de clics"[^>]*width="1508"[^>]*height="800"/.test(html), 'captura: alt y dimensiones reservadas', 'falta alt, width o height')
+  check(/srcSet="[^"]*w_754\/[^"]* 754w[^"]*w_1508\/[^"]* 1508w/i.test(html), 'captura: srcSet por ancho', 'falta srcSet')
+  const text = textOf(html)
+  check(text.includes('Fuente: Google Search Console.') && text.includes('Periodo medido: del 12 de julio de 2026 al 22 de noviembre de 2026.') && text.includes('Periodo de comparación: del 13 de julio de 2025 al 23 de noviembre de 2025.'), 'captura: pie con fuente y periodos', 'pie incompleto')
+  const free = toCaseDetailProps({ ...DETAIL_DOC, heroImage: shot, results: { ...DETAIL_DOC.results, periodBefore: null, periodAfter: 'Jul 2025 a Jun 2026' } }, 'en')!
+  const freeText = textOf(renderDetail(free, 'en'))
+  check(freeText.includes('Measured period: Jul 2025 a Jun 2026.') && !freeText.includes('Comparison period'), 'captura: periodo libre literal y sin comparacion inventada', 'el pie no respeta el dato')
+
+  const rejected: Array<[string, unknown]> = [
+    ['sin portada', null],
+    ['id sin poblar', 85],
+    ['portada de relleno', captureMedia('fallback-image-17')],
+    ['sin alt', { ...shot, alt: ' ' }],
+    ['sin medidas', { ...shot, width: null }],
+  ]
+  for (const [name, heroImage] of rejected) {
+    const props = toCaseDetailProps({ ...DETAIL_DOC, heroImage }, 'es')!
+    check(props.capture === null && !renderDetail(props, 'es').includes('id="captura"'), `captura ${name}: sin seccion`, 'emitio la seccion')
+  }
+
+  const og = (heroImage: unknown) =>
+    (buildOpenGraph({ title: 'Titulo inventado, con coma', url: '/x', locale: 'es', slug: 'x', heroImage: heroImage as never }).images as Array<{ url: string }>)[0]!.url
+  const framed = og(shot)
+  check(framed.includes('c_limit,w_848,h_448') && framed.includes('l_text:Roboto_44_bold_center:Titulo%20inventado%252C%20con%20coma') && !framed.includes('og-scrim') && framed.includes('/media/gsc-inventada'), 'og captura: enmarcada, sin velo ni titulo encima', framed)
+  const plain = og(captureMedia('portada-normal'))
+  check(plain.includes('og-scrim') && plain.includes('Array-Bold') && !plain.includes('c_lpad'), 'og resto de paginas: composicion anterior', plain)
+}
+
 function main(): void {
   mainIndex()
   mainDetail()
   mainCompare()
+  mainCapture()
   if (failures > 0) process.exit(1)
   console.log('PASS 55-cases-ssr')
 }
